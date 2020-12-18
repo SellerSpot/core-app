@@ -1,7 +1,7 @@
 {
   "name": "core-app",
   "version": "1.0.0",
-  "description": "Core tenant dashboard ",
+  "description": "SellerSpot Core tenant dashboard ",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --mode development --env development",
