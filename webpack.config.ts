@@ -41,7 +41,7 @@ const webpackConfiguration = (env: {
                 template: path.join(__dirname, '/public/index.html'),
             }),
             new webpack.DefinePlugin({
-                'process.env.NODE_ENV': isProduction ? 'production' : 'development',
+                'process.env.ENV': isProduction ? 'production' : 'development',
                 'process.env.APP_NAME': JSON.stringify(packageJson.name),
                 'process.env.APP_VERSION': JSON.stringify(packageJson.version),
             }),
@@ -53,8 +53,7 @@ const webpackConfiguration = (env: {
         ],
         devServer: {
             port: 8000,
-            contentBase: 'dist',
-            publicPath: 'dist',
+            publicPath: '/',
         },
         devtool: !isProduction ? 'source-map' : false,
     };

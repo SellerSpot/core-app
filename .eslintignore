@@ -1,3 +1,4 @@
 node_modules
 global.d.ts
+webpack.config.ts
 server
