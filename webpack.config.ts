@@ -11,7 +11,7 @@ const webpackConfiguration = (env: {
 }): Configuration => {
     const isProduction = env.production ? true : false;
     return {
-        entry: 'src',
+        entry: './src',
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
             plugins: [new TsconfigPathsPlugin()],
@@ -47,13 +47,14 @@ const webpackConfiguration = (env: {
             }),
             new ForkTsCheckerWebpackPlugin({
                 eslint: {
-                    files: 'src',
+                    files: './src',
                 },
             }),
         ],
         devServer: {
-            publicPath: '/',
             port: 8000,
+            contentBase: 'dist',
+            publicPath: 'dist',
         },
         devtool: !isProduction ? 'source-map' : false,
     };

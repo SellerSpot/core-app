@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import { ROUTES } from 'config/routes';
+import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './styles/index.css';
-import { ROUTES } from './config/routes';
 
-export const App: FC = (): JSX.Element => {
+export const App = (): ReactElement => {
     return (
         <div>
             <Switch>
