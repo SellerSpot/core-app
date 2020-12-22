@@ -8,7 +8,7 @@
     "dev": "webpack serve --mode development --env development",
     "build": "webpack --mode production --env production",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
+    "lint:fix": "eslint src --fix"
   },
   "keywords": [],
   "author": "",
@@ -44,9 +44,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
+    "axios": "^0.21.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "socket.io-client": "^3.0.4"
   }
 }

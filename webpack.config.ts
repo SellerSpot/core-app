@@ -80,7 +80,7 @@ const webpackConfiguration = (env: {
         devServer: {
             port: 8000,
             open: true,
-            hot: true,
+            hot: false,
             contentBase: 'public',
             publicPath: '/',
             historyApiFallback: true,
