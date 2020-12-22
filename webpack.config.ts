@@ -6,8 +6,8 @@ import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import packageJson from './package.json';
 
 const webpackConfiguration = (env: {
-    production: boolean;
-    development: boolean;
+    production?: boolean;
+    development?: boolean;
 }): Configuration => {
     const isProduction = env.production ? true : false;
     return {
@@ -31,17 +31,43 @@ const webpackConfiguration = (env: {
                     exclude: [/dist/, /node_modules/],
                 },
                 {
-                    test: /\.css$/i,
+                    test: /\.(png|jpe?g|gif|svg)$/i,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                        },
+                    ],
+                },
+                {
+                    test: /\.(css|scss)$/,
+                    use: [
+                        'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 1,
+                                modules: {
+                                    localIdentName: '[name]__[local]___[hash:base64:5]',
+                                },
+                            },
+                        },
+                    ],
+                    include: /\.module\.css$/,
+                },
+                {
+                    test: /\.(css|scss)$/,
                     use: ['style-loader', 'css-loader'],
+                    exclude: /\.module\.css$/,
                 },
             ],
         },
         plugins: [
             new HtmlWebpackPlugin({
+                inject: true,
                 template: path.join(__dirname, '/public/index.html'),
             }),
             new webpack.DefinePlugin({
-                'process.env.ENV': isProduction ? 'production' : 'development',
+                'process.env.ENV': JSON.stringify(isProduction ? 'production' : 'development'),
                 'process.env.APP_NAME': JSON.stringify(packageJson.name),
                 'process.env.APP_VERSION': JSON.stringify(packageJson.version),
             }),
@@ -53,7 +79,11 @@ const webpackConfiguration = (env: {
         ],
         devServer: {
             port: 8000,
+            open: true,
+            hot: true,
+            contentBase: 'public',
             publicPath: '/',
+            historyApiFallback: true,
         },
         devtool: !isProduction ? 'source-map' : false,
     };
