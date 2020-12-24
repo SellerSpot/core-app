@@ -13,7 +13,7 @@ initializeGlobals();
 export const App = (): ReactElement => {
     const hearBeatState = useSelector(heartBeatSelector);
     return (
-        <div className={'baseWrapper'}>
+        <div className={`baseWrapper`}>
             <Switch>
                 <Route path={ROUTES.Auth}>
                     <Auth />
