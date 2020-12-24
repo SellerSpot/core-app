@@ -5,4 +5,5 @@ export const ROUTES = {
     Auth_SIGN_UP: '/auth/signup',
     Auth_FORGOT: '/auth/forgot',
     DASHBOARD: '/',
+    HOME: '/',
 };
