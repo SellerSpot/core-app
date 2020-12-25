@@ -71,6 +71,7 @@ export const SignUp = (): ReactElement => {
                                 <InputField
                                     label={'Name'}
                                     type={'text'}
+                                    value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
@@ -78,6 +79,7 @@ export const SignUp = (): ReactElement => {
                                 <InputField
                                     label={'Email Address'}
                                     type={'email'}
+                                    value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
@@ -85,6 +87,7 @@ export const SignUp = (): ReactElement => {
                                 <InputField
                                     label={'Password'}
                                     type={'password'}
+                                    value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>

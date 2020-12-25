@@ -7,20 +7,22 @@ export interface IInputFieldProps {
     label: string;
     labelStyle?: React.CSSProperties;
     inputStyle?: React.CSSProperties;
+    value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const defaultProps: IInputFieldProps = {
     type: 'text',
     label: '',
+    value: '',
     labelStyle: {},
     inputStyle: {},
     onChange: undefined,
 };
 
 export const InputField = (props: IInputFieldProps): ReactElement => {
-    const requiredProps = lodash.defaultsDeep(props, defaultProps);
-    const { label, type, inputStyle, labelStyle, onChange } = requiredProps;
+    const requiredProps: IInputFieldProps = lodash.defaultsDeep(props, defaultProps);
+    const { label, type, inputStyle, labelStyle, onChange, value } = requiredProps;
     return (
         <div className={styles.inputFieldWrapper}>
             <label className={styles.inputFieldLabel} style={inputStyle}>
@@ -29,6 +31,7 @@ export const InputField = (props: IInputFieldProps): ReactElement => {
             <input
                 className={styles.inputField}
                 type={type}
+                value={value}
                 style={labelStyle}
                 onChange={onChange}
             />
