@@ -95,9 +95,9 @@ export class SocketService {
                         (socketResponse) => {
                             // on success
                             if (socketResponse.status === true) {
-                                return resolve(socketResponse);
+                                resolve(socketResponse);
                             } else {
-                                return reject(socketResponse);
+                                reject(socketResponse);
                             }
                         },
                         (timeoutResponse) => {
