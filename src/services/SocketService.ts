@@ -3,12 +3,14 @@ import { SOCKET_EVENTS } from 'config/socketEvents';
 import { io, Socket } from 'socket.io-client';
 import { updateHeartBeatStatus } from 'store/models/heartBeat';
 import { store } from 'store/store';
+import { IResponse } from 'typings/request.types';
 export class SocketService {
     private onlinServerSocket: Socket;
     constructor() {
         this.onlinServerSocket = null;
     }
 
+    // connection utils - initialize/re-establish and more related to connectivity
     public initiateService = async (): Promise<void> => {
         /**
          * 1. check localstorage and set auth token if available
@@ -26,13 +28,101 @@ export class SocketService {
      * should be used in future to decide where the fetch should occur, either in onlineServerSocket/offlineServerSocket
      */
     private addHearBeatListener = async (): Promise<void> => {
-        this.onlinServerSocket.on(SOCKET_EVENTS.NATIVE.CONNECT, () => {
+        this.onlinServerSocket.on(SOCKET_EVENTS.NATIVE_CONNECT, () => {
             store.dispatch(updateHeartBeatStatus({ onlineServerStatus: true }));
         });
-        this.onlinServerSocket.on(SOCKET_EVENTS.NATIVE.DISCONNECT, () => {
+        this.onlinServerSocket.on(SOCKET_EVENTS.NATIVE_DISCONNECT, () => {
             store.dispatch(updateHeartBeatStatus({ onlineServerStatus: false }));
         });
     };
 
+    /**
+     * hence socket.io has no in-built timeout handler for callback response delay, we are writing one.
+     */
+
+    private withTimeout = (
+        onSuccess: (response: IResponse) => void,
+        onTimeout: (timeoutResponse: IResponse) => void,
+        timeout: number,
+    ) => {
+        let called = false;
+
+        const timer = setTimeout(() => {
+            if (called) return;
+            called = true;
+            onTimeout({
+                status: false,
+                statusCode: 408,
+                data: [
+                    {
+                        name: 'timeout',
+                        message:
+                            'Please try again after sometime or check your internet connection / reload the site.',
+                    },
+                ],
+            });
+        }, timeout);
+
+        return (...args: unknown[]) => {
+            if (called) return;
+            called = true;
+            clearTimeout(timer);
+            onSuccess.apply(this, args);
+        };
+    };
+
     // all operations goes under here
+    /**
+     *
+     * @param eventName type of event, which is the keyof typeof socket_event config file
+     * @param data is the body of the request
+     * @param volatile @optional defaults to false => it tells the socket service to treat the current request as volativel event that when anomaly happends on connectivity this event will not be added to the buffer to deliver to the server on successfull reconnection
+     * @remarks
+     * no need to attach token on body of the requrest, will be attached globaly with the service itself.
+     */
+    public async request(
+        eventName: keyof typeof SOCKET_EVENTS,
+        data: unknown,
+        volatile = false,
+    ): Promise<IResponse> {
+        const socket = !volatile ? this.onlinServerSocket : this.onlinServerSocket.volatile;
+        try {
+            const response: IResponse = await new Promise((resolve, reject) => {
+                socket.emit(
+                    SOCKET_EVENTS[eventName],
+                    data,
+                    this.withTimeout(
+                        (socketResponse) => {
+                            // on success
+                            if (socketResponse.status === true) {
+                                return resolve(socketResponse);
+                            } else {
+                                return reject(socketResponse);
+                            }
+                        },
+                        (timeoutResponse) => {
+                            // on timeout
+                            reject(timeoutResponse);
+                        },
+                        2000, // 2 seconds timout, wait for response => after that it will through promise reject with 408 status code.
+                    ),
+                );
+            });
+            return Promise.resolve(response);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    public setAsyncEvent = (): void => {
+        console.log('setting a async event');
+    };
+
+    public removeAsyncEvent = (): void => {
+        console.log('removing a async event');
+    };
+
+    public removeAllAsyncEvents = (): void => {
+        console.log('removing a async event');
+    };
 }

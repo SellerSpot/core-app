@@ -7,6 +7,7 @@ export interface IInputFieldProps {
     label: string;
     labelStyle?: React.CSSProperties;
     inputStyle?: React.CSSProperties;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const defaultProps: IInputFieldProps = {
@@ -14,17 +15,23 @@ const defaultProps: IInputFieldProps = {
     label: '',
     labelStyle: {},
     inputStyle: {},
+    onChange: undefined,
 };
 
 export const InputField = (props: IInputFieldProps): ReactElement => {
     const requiredProps = lodash.defaultsDeep(props, defaultProps);
-    const { label, type, inputStyle, labelStyle } = requiredProps;
+    const { label, type, inputStyle, labelStyle, onChange } = requiredProps;
     return (
         <div className={styles.inputFieldWrapper}>
             <label className={styles.inputFieldLabel} style={inputStyle}>
                 {label}
             </label>
-            <input className={styles.inputField} type={type} style={labelStyle} />
+            <input
+                className={styles.inputField}
+                type={type}
+                style={labelStyle}
+                onChange={onChange}
+            />
         </div>
     );
 };

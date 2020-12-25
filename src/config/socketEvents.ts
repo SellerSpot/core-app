@@ -1,6 +1,10 @@
 export const SOCKET_EVENTS = {
-    NATIVE: {
-        CONNECT: 'connect',
-        DISCONNECT: 'disconnect',
-    },
+    // Native events
+    NATIVE_CONNECT: 'connect',
+    NATIVE_DISCONNECT: 'disconnect',
+    // Auth events
+    AUTH_SIGN_UP: 'signup',
+    AUTH_SIGN_IN: 'signin',
+
+    // Async events goes under here
 };
