@@ -1,5 +1,5 @@
 /* animation names */
-.fadeInAnimation {
+.animateFadeIn {
     animation-name: fadeInAnimationKeyFrames;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .duration1Pt5s {
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 
 

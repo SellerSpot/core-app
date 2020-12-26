@@ -5,6 +5,7 @@ export const SOCKET_EVENTS = {
     // Auth events
     AUTH_SIGN_UP: 'signup',
     AUTH_SIGN_IN: 'signin',
+    AUTH_VERIFY_TOKEN: 'verifytoken',
 
     // Async events goes under here
 };

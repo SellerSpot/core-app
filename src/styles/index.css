@@ -13,8 +13,15 @@ body {
 .baseWrapper {
     width: 100vw;
     height: 100vh;
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.baseContainer {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 

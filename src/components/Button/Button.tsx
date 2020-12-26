@@ -7,6 +7,7 @@ export interface IButtonProps {
     label: string;
     style?: React.CSSProperties;
     onClick?: () => void;
+    tabIndex?: number;
 }
 
 const defaultProps: IButtonProps = {
@@ -14,13 +15,20 @@ const defaultProps: IButtonProps = {
     label: 'fuck',
     style: {},
     onClick: undefined,
+    tabIndex: undefined,
 };
 
 export const Button = (props: IButtonProps): ReactElement => {
     const requiredProps = lodash.defaultsDeep(props, defaultProps);
-    const { type, label, style, onClick } = requiredProps as IButtonProps;
+    const { type, label, style, onClick, tabIndex } = requiredProps as IButtonProps;
     return (
-        <button type={type} className={styles.button} style={style} onClick={onClick}>
+        <button
+            type={type}
+            className={styles.button}
+            style={style}
+            onClick={onClick}
+            tabIndex={tabIndex}
+        >
             {label}
         </button>
     );

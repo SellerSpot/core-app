@@ -25,7 +25,7 @@ export const Forgot = (): ReactElement => {
                     className={cn(
                         styles.forgotWrapper,
                         animationStyles.duration1s,
-                        animationStyles.fadeInAnimation,
+                        animationStyles.animateFadeIn,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>
@@ -42,7 +42,7 @@ export const Forgot = (): ReactElement => {
                                     width: 'auto',
                                     marginLeft: 8,
                                 }}
-                                onClick={() => history.push(ROUTES.Auth_SIGN_IN)}
+                                onClick={() => history.push(ROUTES.Auth_SIGN_UP)}
                             />
                         </div>
                     </div>

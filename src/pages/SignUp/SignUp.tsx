@@ -8,6 +8,8 @@ import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services';
+import { useDispatch } from 'react-redux';
+import { authenticate, IAuthState } from 'store/models/auth';
 
 export const SignUp = (): ReactElement => {
     const history = useHistory();
@@ -15,6 +17,7 @@ export const SignUp = (): ReactElement => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setTimeout(() => {
@@ -30,8 +33,20 @@ export const SignUp = (): ReactElement => {
                 password,
             };
             const response = await socketService.request('AUTH_SIGN_UP', data);
+            const tenantData: Pick<
+                IAuthState,
+                'id' | 'email' | 'name' | 'token'
+            > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
+            dispatch(
+                authenticate({
+                    email: tenantData.email,
+                    id: tenantData.id,
+                    name: tenantData.email,
+                    token: tenantData.token,
+                }),
+            );
         } catch (error) {
-            // error will have IResponse body = feel free to access with Iresponse type (damn it will get Iresponse type)
+            // error will have IResponse body = feel free to access it with IResponse type
         }
     };
     return (
@@ -43,7 +58,7 @@ export const SignUp = (): ReactElement => {
                     className={cn(
                         styles.signUpWrapper,
                         animationStyles.duration1s,
-                        animationStyles.fadeInAnimation,
+                        animationStyles.animateFadeIn,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>
@@ -60,6 +75,7 @@ export const SignUp = (): ReactElement => {
                                     width: 'auto',
                                     marginLeft: 8,
                                 }}
+                                tabIndex={5}
                                 onClick={() => history.push(ROUTES.Auth_SIGN_IN)}
                             />
                         </div>
@@ -73,6 +89,7 @@ export const SignUp = (): ReactElement => {
                                     type={'text'}
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    tabIndex={1}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -81,6 +98,7 @@ export const SignUp = (): ReactElement => {
                                     type={'email'}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    tabIndex={2}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -89,10 +107,11 @@ export const SignUp = (): ReactElement => {
                                     type={'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    tabIndex={3}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
-                                <Button label={'Create Account'} type={'submit'} />
+                                <Button label={'Create Account'} type={'submit'} tabIndex={4} />
                             </div>
                         </form>
                     </div>

@@ -8,9 +8,13 @@ import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services';
+import { authenticate, IAuthState } from 'store/models/auth';
+import { useDispatch } from 'react-redux';
+import { updateGlobalServices } from 'config/globalConfig';
 
 export const SignIn = (): ReactElement => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,6 +31,20 @@ export const SignIn = (): ReactElement => {
                 password,
             };
             const response = await socketService.request('AUTH_SIGN_IN', data);
+            const tenantData: Pick<
+                IAuthState,
+                'id' | 'email' | 'name' | 'token'
+            > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
+            dispatch(
+                authenticate({
+                    email: tenantData.email,
+                    id: tenantData.id,
+                    name: tenantData.email,
+                    token: tenantData.token,
+                }),
+            );
+            // updating the globals to know that the new token has arrived.
+            updateGlobalServices(tenantData.token);
         } catch (error) {
             // error will have IResponse body = feel free to access with Iresponse type (damn it will get Iresponse type)
         }
@@ -40,7 +58,7 @@ export const SignIn = (): ReactElement => {
                     className={cn(
                         styles.signInWrapper,
                         animationStyles.duration1s,
-                        animationStyles.fadeInAnimation,
+                        animationStyles.animateFadeIn,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>
@@ -57,6 +75,7 @@ export const SignIn = (): ReactElement => {
                                     width: 'auto',
                                     marginLeft: 8,
                                 }}
+                                tabIndex={5}
                                 onClick={() => history.push(ROUTES.Auth_SIGN_UP)}
                             />
                         </div>
@@ -70,6 +89,7 @@ export const SignIn = (): ReactElement => {
                                     type={'email'}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    tabIndex={1}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -86,6 +106,7 @@ export const SignIn = (): ReactElement => {
                                             height: 'auto',
                                             marginTop: 3,
                                         }}
+                                        tabIndex={4}
                                         onClick={() => history.push(ROUTES.Auth_FORGOT)}
                                     />
                                 </div>
@@ -95,10 +116,11 @@ export const SignIn = (): ReactElement => {
                                     type={'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    tabIndex={2}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
-                                <Button label={'Sign In'} type={'submit'} />
+                                <Button label={'Sign In'} type={'submit'} tabIndex={3} />
                             </div>
                         </form>
                     </div>

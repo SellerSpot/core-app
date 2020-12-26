@@ -1,6 +1,17 @@
 import { apiService, socketService } from 'services/index';
+import { store } from 'store/store';
 
-export const initializeGlobals = async (): Promise<void> => {
-    socketService.initiateService();
+export const initializeGlobalServices = async (): Promise<void> => {
+    const authState = store.getState().auth;
+    if (authState.isAuthenticated) {
+        socketService.initiateService(authState.token);
+    } else {
+        socketService.initiateService();
+    }
+    apiService.initiateService();
+};
+
+export const updateGlobalServices = async (token: string): Promise<void> => {
+    socketService.initiateService(token);
     apiService.initiateService();
 };

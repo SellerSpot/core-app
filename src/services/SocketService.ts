@@ -11,14 +11,28 @@ export class SocketService {
     }
 
     // connection utils - initialize/re-establish and more related to connectivity
-    public initiateService = async (): Promise<void> => {
+    public initiateService = async (token?: string): Promise<void> => {
         /**
-         * 1. check localstorage and set auth token if available
+         * 1. token will be provided by initiators set auth token if available
          * 2. if not wait for the user to authenticate once user authenticated call from that particular action block and update the socket creds
          * 3. don't forget to close the socket connection and recreate the socket connection while setting auth token on the flow
          * 4. make sure that only auth routes are  unprotected
          */
-        this.onlinServerSocket = io(CONFIG.ONLINE_SERVER_SOCKET_URL);
+        if (this.onlinServerSocket !== null) {
+            const listeners = this.onlinServerSocket.listenersAny();
+            if (listeners.length) {
+                this.onlinServerSocket.offAny();
+            }
+            if (this.onlinServerSocket.connected)
+                if (listeners) this.onlinServerSocket.disconnect();
+        }
+
+        this.onlinServerSocket = io(CONFIG.ONLINE_SERVER_SOCKET_URL, {
+            auth: {
+                token,
+            },
+        });
+
         this.addHearBeatListener();
     };
 
@@ -82,7 +96,7 @@ export class SocketService {
      */
     public async request(
         eventName: keyof typeof SOCKET_EVENTS,
-        data: unknown,
+        data?: unknown,
         volatile = false,
     ): Promise<IResponse> {
         const socket = !volatile ? this.onlinServerSocket : this.onlinServerSocket.volatile;

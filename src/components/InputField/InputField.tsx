@@ -9,6 +9,7 @@ export interface IInputFieldProps {
     inputStyle?: React.CSSProperties;
     value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    tabIndex?: number;
 }
 
 const defaultProps: IInputFieldProps = {
@@ -18,11 +19,12 @@ const defaultProps: IInputFieldProps = {
     labelStyle: {},
     inputStyle: {},
     onChange: undefined,
+    tabIndex: undefined,
 };
 
 export const InputField = (props: IInputFieldProps): ReactElement => {
     const requiredProps: IInputFieldProps = lodash.defaultsDeep(props, defaultProps);
-    const { label, type, inputStyle, labelStyle, onChange, value } = requiredProps;
+    const { label, type, inputStyle, labelStyle, onChange, value, tabIndex } = requiredProps;
     return (
         <div className={styles.inputFieldWrapper}>
             <label className={styles.inputFieldLabel} style={inputStyle}>
@@ -34,6 +36,7 @@ export const InputField = (props: IInputFieldProps): ReactElement => {
                 value={value}
                 style={labelStyle}
                 onChange={onChange}
+                tabIndex={tabIndex}
             />
         </div>
     );
