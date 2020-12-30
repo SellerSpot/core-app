@@ -1,17 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import styles from './signup.module.css';
-import animationStyles from '../../styles/animations.module.css';
-import cn from 'classnames';
 import { Loader } from 'components/Loader/Loader';
 import { InputField } from 'components/InputField/InputField';
 import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
-import { socketService } from 'services';
+import { socketService } from 'services/services';
 import { useDispatch } from 'react-redux';
 import { authenticate, IAuthState } from 'store/models/auth';
+import { cx } from '@emotion/css';
+import { getSignUpStyles } from './signup.styles';
+import { animationStyles } from 'styles/animation.styles';
 
 export const SignUp = (): ReactElement => {
+    const styles = getSignUpStyles();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState('');
@@ -55,10 +56,10 @@ export const SignUp = (): ReactElement => {
                 <Loader />
             ) : (
                 <div
-                    className={cn(
+                    className={cx(
                         styles.signUpWrapper,
-                        animationStyles.duration1s,
-                        animationStyles.animateFadeIn,
+                        animationStyles.names.fadeIn,
+                        animationStyles.durations.oneSecond,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>

@@ -1,32 +1,30 @@
-import { Button } from 'components/Button/Button';
+import { ROUTES } from 'config/routes';
+import { Home } from 'pages/Home/Home';
+import { LeftNavbar } from 'pages/LeftNavbar/LeftNavbar';
+import { TopNavbar } from 'pages/TopNavbar/TopNavbar';
 import React, { ReactElement } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { unAuthenticate } from 'store/models/auth';
-import { heartBeatSelector } from 'store/models/heartBeat';
-import styles from './dashboard.module.css';
+import { Route, Switch } from 'react-router-dom';
+import { getDashboardStyles } from './dashboard.styles';
 
 export const Dashboard = (): ReactElement => {
-    const dispatch = useDispatch();
-    const hearBeatState = useSelector(heartBeatSelector);
-    const logoutHandler = () => {
-        dispatch(unAuthenticate());
-    };
+    const styles = getDashboardStyles();
     return (
         <div className={styles.dashboardWrapper}>
-            <div>Dashboard</div>
-            <div> Health - {hearBeatState.onlineServerStatus ? 'Online' : 'Offline'}</div>
-            <Button
-                label="Logout"
-                onClick={logoutHandler}
-                type={'button'}
-                style={{
-                    width: 60,
-                    fontSize: 12,
-                    height: 30,
-                    backgroundColor: '#FF9800',
-                    color: 'white',
-                }}
-            />
+            <div className={styles.leftNavbarWrapper}>
+                <LeftNavbar />
+            </div>
+            <div className={styles.mainBodyWrapper}>
+                <div className={styles.topNavbarWrapper}>
+                    <TopNavbar />
+                </div>
+                <div className={styles.coreContentWrapper}>
+                    <Switch>
+                        <Route path={ROUTES.HOME}>
+                            <Home />
+                        </Route>
+                    </Switch>
+                </div>
+            </div>
         </div>
     );
 };

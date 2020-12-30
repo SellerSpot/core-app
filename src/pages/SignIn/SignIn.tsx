@@ -1,18 +1,19 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import styles from './signin.module.css';
-import animationStyles from '../../styles/animations.module.css';
-import cn from 'classnames';
 import { Loader } from 'components/Loader/Loader';
 import { InputField } from 'components/InputField/InputField';
 import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
-import { socketService } from 'services';
+import { socketService } from 'services/services';
 import { authenticate, IAuthState } from 'store/models/auth';
 import { useDispatch } from 'react-redux';
 import { updateGlobalServices } from 'config/globalConfig';
+import { cx } from '@emotion/css';
+import { getSignInStyles } from './signin.styles';
+import { animationStyles } from 'styles/animation.styles';
 
 export const SignIn = (): ReactElement => {
+    const styles = getSignInStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -55,10 +56,10 @@ export const SignIn = (): ReactElement => {
                 <Loader />
             ) : (
                 <div
-                    className={cn(
+                    className={cx(
                         styles.signInWrapper,
-                        animationStyles.duration1s,
-                        animationStyles.animateFadeIn,
+                        animationStyles.durations.oneSecond,
+                        animationStyles.names.fadeIn,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>

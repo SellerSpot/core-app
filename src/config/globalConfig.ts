@@ -1,4 +1,4 @@
-import { apiService, socketService } from 'services/index';
+import { apiService, socketService } from 'services/services';
 import { store } from 'store/store';
 
 export const initializeGlobalServices = async (): Promise<void> => {

@@ -1,54 +1,44 @@
 import { Loader } from 'components/Loader/Loader';
 import { initializeGlobalServices } from 'config/globalConfig';
 import { ROUTES } from 'config/routes';
-import animationStyles from './styles/animations.module.css';
 import { Auth } from 'layouts/Auth/Auth';
 import { Dashboard } from 'layouts/Dashboard/Dashboard';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { authSelector, unAuthenticate } from 'store/models/auth';
-import { socketService } from './services';
-import './styles/index.css';
-import cn from 'classnames';
+import { authSelector } from 'store/models/auth';
+import { cx } from '@emotion/css';
+import { getAppStyles } from './app.styles';
+import { verifyAuthToken } from './app.actions';
+import { injectGlobalStyles } from 'styles/styles';
+import { animationStyles } from 'styles/animation.styles';
 
-// application common initilizers goes here
-initializeGlobalServices();
+// global actions
+injectGlobalStyles(); // inject global styles into dom
+initializeGlobalServices(); // application common initilizers goes here
 
 export const App = (): ReactElement => {
+    const styles = getAppStyles();
     const authState = useSelector(authSelector);
-    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const verifyAuthToken = async () => {
-            try {
-                if (authState.isAuthenticated) {
-                    const response = await socketService.request('AUTH_VERIFY_TOKEN');
-                    if (!response.status) {
-                        // previously authenticated and token expired or not found state - clearing auth state(loging out the user)
-                        throw response;
-                    }
-                }
-            } catch (error) {
-                // show some message that relogin again - login expired
-                dispatch(unAuthenticate());
-            }
+        (async () => {
+            await verifyAuthToken();
             setIsLoading(false);
-        };
-        verifyAuthToken();
+        }).call(null);
     }, []);
 
     return (
-        <div className={'baseWrapper'}>
+        <div className={styles.appWrapper}>
             {isLoading ? (
                 <Loader />
             ) : (
                 <div
-                    className={cn(
-                        'baseContainer',
-                        animationStyles.animateFadeIn,
-                        animationStyles.durationPt5s,
+                    className={cx(
+                        styles.appContainer,
+                        animationStyles.names.fadeIn,
+                        animationStyles.durations.onePointFiveSecond,
                     )}
                 >
                     <Switch>

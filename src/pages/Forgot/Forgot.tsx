@@ -1,14 +1,15 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import styles from './forgot.module.css';
-import animationStyles from '../../styles/animations.module.css';
-import cn from 'classnames';
 import { Loader } from 'components/Loader/Loader';
 import { InputField } from 'components/InputField/InputField';
 import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
+import { cx } from '@emotion/css';
+import { getForgotStyles } from './forgot.styles';
+import { animationStyles } from 'styles/animation.styles';
 
 export const Forgot = (): ReactElement => {
+    const styles = getForgotStyles();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -22,10 +23,10 @@ export const Forgot = (): ReactElement => {
                 <Loader />
             ) : (
                 <div
-                    className={cn(
+                    className={cx(
                         styles.forgotWrapper,
-                        animationStyles.duration1s,
-                        animationStyles.animateFadeIn,
+                        animationStyles.names.fadeIn,
+                        animationStyles.durations.oneSecond,
                     )}
                 >
                     <div className={styles.redirectActionHolder}>
