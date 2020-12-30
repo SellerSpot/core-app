@@ -19,6 +19,16 @@ export const Dashboard = (): ReactElement => {
                 </div>
                 <div className={styles.coreContentWrapper}>
                     <Switch>
+                        <Route path={ROUTES.INSTALLED_APPS}>
+                            <Home />
+                        </Route>
+                        <Route path={ROUTES.APP_STORE}>
+                            <Home />
+                        </Route>
+                        <Route path={ROUTES.BILLING}>
+                            <Home />
+                        </Route>
+                        {/* / route => placing atlast */}
                         <Route path={ROUTES.HOME}>
                             <Home />
                         </Route>
