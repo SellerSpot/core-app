@@ -1,0 +1,9 @@
+export const COLORS = {
+    // foregrounds
+    FOREGROUND_PRIMARY: '#FF9800',
+    FOREGROUND_SECONDARY: '#000000',
+    FOREGROUND_TERTIARY: '#707070',
+    // backgrounds
+    BACKGROUND_PRIMARY: '#FFFFFF',
+    BACKGROUND_SECONDARY: '#F7F6F3',
+};

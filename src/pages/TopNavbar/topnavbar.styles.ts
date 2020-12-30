@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { COLORS } from 'config/cssVariables';
+import { COLORS } from 'config/colors';
 
 export const getStyles = (): {
     topNavbarWrapper: string;

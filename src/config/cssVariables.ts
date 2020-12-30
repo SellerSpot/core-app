@@ -1,4 +1,0 @@
-export const COLORS = {
-    BACKGROUND_PRIMARY: '#FFFFFF',
-    BACKGROUND_SECONDARY: '#F7F6F3',
-};

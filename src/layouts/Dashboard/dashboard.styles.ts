@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { COLORS } from 'config/cssVariables';
+import { COLORS } from 'config/colors';
 
 export const getDashboardStyles = (): {
     dashboardWrapper: string;
@@ -12,7 +12,7 @@ export const getDashboardStyles = (): {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 250px 1fr;
         background: ${COLORS.BACKGROUND_PRIMARY};
         overflow: hidden;
     `;

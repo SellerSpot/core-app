@@ -6,4 +6,7 @@ export const ROUTES = {
     Auth_FORGOT: '/auth/forgot',
     DASHBOARD: '/',
     HOME: '/',
+    INSTALLED_APPS: '/',
+    APP_STORE: '/',
+    BILLING: '/',
 };
