@@ -1,12 +1,11 @@
 import React, { ReactElement } from 'react';
-import promoImage from 'images/auth-promo.png';
-import logoImage from 'images/logo.png';
 import { SignIn } from 'pages/SignIn/SignIn';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Forgot } from 'pages/Forgot/Forgot';
 import { getAuthStyles } from './auth.styles';
+import { LogoImage, PromotionImage } from 'images/images';
 
 export const Auth = (): ReactElement => {
     const styles = getAuthStyles();
@@ -14,9 +13,9 @@ export const Auth = (): ReactElement => {
         <div className={styles.authWrapper}>
             <div className={styles.promotionHolder}>
                 {/* need to split this into new component */}
-                <img className={styles.promotionImage} src={promoImage} alt="Promotion" />
+                <img className={styles.promotionImage} src={PromotionImage} alt="Promotion" />
                 <div className={styles.logoHolder}>
-                    <img className={styles.logoImage} src={logoImage} alt="logo" />
+                    <img className={styles.logoImage} src={LogoImage} alt="logo" />
                     <div className={styles.logoTitle}>SellerSpot</div>
                 </div>
             </div>
