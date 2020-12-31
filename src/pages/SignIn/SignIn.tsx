@@ -20,9 +20,7 @@ export const SignIn = (): ReactElement => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
+        setIsLoading(false);
     }, []);
     const onSignInHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,8 +56,8 @@ export const SignIn = (): ReactElement => {
                 <div
                     className={cx(
                         styles.signInWrapper,
-                        animationStyles.durations.oneSecond,
-                        animationStyles.names.fadeIn,
+                        animationStyles.compose.animate('fadeIn'),
+                        animationStyles.compose.duration(1),
                     )}
                 >
                     <div className={styles.redirectActionHolder}>

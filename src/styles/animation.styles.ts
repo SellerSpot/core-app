@@ -34,41 +34,6 @@ const keyframes = {
     `,
 };
 
-/* animation names */
-const names = {
-    fadeIn: css`
-        animation-name: ${keyframes.fadeIn};
-    `,
-    rotate0to180: css`
-        animation-name: ${keyframes.rotate0to180};
-    `,
-    rotate180to0: css`
-        animation-name: ${keyframes.rotate180to0};
-    `,
-    scalePoint5to1: css`
-        animation-name: ${keyframes.scalePoint5to1};
-    `,
-};
-
-/* animation durations */
-const durations = {
-    pointTwoSecond: css`
-        animation-duration: 0.2s;
-    `,
-
-    pointFiveSecond: css`
-        animation-duration: 0.5s;
-    `,
-
-    oneSecond: css`
-        animation-duration: 1s;
-    `,
-
-    onePointFiveSecond: css`
-        animation-duration: 1.5s;
-    `,
-};
-
 /* animation timing functions */
 const timingFunctions = {
     linear: css`
@@ -92,19 +57,40 @@ const timingFunctions = {
     `,
 };
 
-/* animation utils */
-const utils = {
-    combine: (...args: string[]): string => {
+/* animation compose utils */
+const compose = {
+    /**
+     *
+     * @param args list of animation keyframes will be shown as suggestions(it will (be keyof typeof animationstyles.keyframes))
+     * @example
+     * ```ts
+     * className={animationStyles.compose.animate('fadeIn', 'popIn')} // set of the keyframes will be shown via intellisense
+     *
+     * ```
+     */
+    animate: (...args: (keyof typeof keyframes)[]): string => {
         return css`
-            animation-name: ${args.join(', ')};
+            animation-name: ${args.map((arg) => keyframes[arg]).join(', ')};
+        `;
+    },
+    /**
+     *
+     * @param args list of duration in seconds (numeric) corresponding to the animate compose utils
+     * @example
+     * ```ts
+     * className={animationStyles.compose.duration(0.5, 2)}  // note her 0.5 corresponds to animation keyframe one and 2 corresponds to animation keyframe two composed using animationStyles.compose.aniamte() util
+     *
+     * ```
+     */
+    duration: (...args: number[]): string => {
+        return css`
+            animation-duration: ${args.map((arg) => `${arg}s`).join(', ')};
         `;
     },
 };
 
 export const animationStyles = {
     keyframes,
-    names,
-    durations,
     timingFunctions,
-    utils,
+    compose,
 };

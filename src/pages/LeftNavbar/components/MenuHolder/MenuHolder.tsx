@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { getMenuHolderStyles } from './menuholder.styles';
 import { IconType } from 'react-icons/lib';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { IoMdAppstore } from 'react-icons/io';
 import { IoAppsSharp, IoHome } from 'react-icons/io5';
@@ -14,15 +14,22 @@ export interface IMenuItemProps {
     Icon: IconType;
     title: string;
     onClick: React.DOMAttributes<HTMLDivElement>['onClick'];
+    routes?: string[];
+    active?: boolean;
     customClassNames?: {
         menuItem?: string;
     };
 }
 
 export const MenuItem = (props: IMenuItemProps): ReactElement => {
-    const { Icon, onClick, title, customClassNames } = props;
+    const { Icon, onClick, title, customClassNames, active } = props;
     return (
-        <div className={cx(styles.menuItem, customClassNames?.menuItem)} onClick={onClick}>
+        <div
+            className={cx(styles.menuItem, customClassNames?.menuItem, {
+                [styles.menuItemActive]: active,
+            })}
+            onClick={onClick}
+        >
             <div className={styles.menuItemIcon}>
                 <Icon />
             </div>
@@ -33,10 +40,13 @@ export const MenuItem = (props: IMenuItemProps): ReactElement => {
 
 export const MenuHolder = (): ReactElement => {
     const history = useHistory();
+    const location = useLocation();
+
     const menuItems: IMenuItemProps[] = [
         {
             Icon: IoHome,
             title: 'Home',
+            routes: [ROUTES.HOME],
             onClick: () => {
                 history.push(ROUTES.HOME);
             },
@@ -44,6 +54,7 @@ export const MenuHolder = (): ReactElement => {
         {
             Icon: IoAppsSharp,
             title: 'Installed Apps',
+            routes: [ROUTES.INSTALLED_APPS],
             onClick: () => {
                 history.push(ROUTES.INSTALLED_APPS);
             },
@@ -51,6 +62,7 @@ export const MenuHolder = (): ReactElement => {
         {
             Icon: IoMdAppstore,
             title: 'App Store',
+            routes: [ROUTES.APP_STORE],
             onClick: () => {
                 history.push(ROUTES.APP_STORE);
             },
@@ -58,6 +70,7 @@ export const MenuHolder = (): ReactElement => {
         {
             Icon: RiBillFill,
             title: 'Billing',
+            routes: [ROUTES.BILLING],
             onClick: () => {
                 history.push(ROUTES.BILLING);
             },
@@ -67,7 +80,11 @@ export const MenuHolder = (): ReactElement => {
         <div className={styles.menuHolderWrapper}>
             <div className={styles.menuContainer}>
                 {menuItems.map((menuItem, key) => (
-                    <MenuItem key={key} {...menuItem} />
+                    <MenuItem
+                        key={key}
+                        {...menuItem}
+                        active={menuItem.routes.includes(location.pathname)}
+                    />
                 ))}
             </div>
         </div>

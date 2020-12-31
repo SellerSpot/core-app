@@ -5,6 +5,7 @@ export const getMenuHolderStyles = (): {
     menuHolderWrapper: string;
     menuContainer: string;
     menuItem: string;
+    menuItemActive: string;
     menuItemIcon: string;
     menuItemTitle: string;
 } => {
@@ -34,6 +35,10 @@ export const getMenuHolderStyles = (): {
         }
     `;
 
+    const menuItemActive = css`
+        background-color: ${COLORS.BACKGROUND_PRIMARY};
+    `;
+
     const menuItemIcon = css`
         width: 100%;
         height: 100%;
@@ -57,5 +62,12 @@ export const getMenuHolderStyles = (): {
         letter-spacing: 1px;
     `;
 
-    return { menuHolderWrapper, menuContainer, menuItem, menuItemIcon, menuItemTitle };
+    return {
+        menuHolderWrapper,
+        menuContainer,
+        menuItem,
+        menuItemActive,
+        menuItemIcon,
+        menuItemTitle,
+    };
 };

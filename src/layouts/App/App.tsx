@@ -37,8 +37,8 @@ export const App = (): ReactElement => {
                 <div
                     className={cx(
                         styles.appContainer,
-                        animationStyles.names.fadeIn,
-                        animationStyles.durations.onePointFiveSecond,
+                        animationStyles.compose.animate('fadeIn'),
+                        animationStyles.compose.duration(1.5),
                     )}
                 >
                     <Switch>

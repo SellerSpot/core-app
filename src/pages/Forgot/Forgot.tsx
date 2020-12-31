@@ -13,9 +13,7 @@ export const Forgot = (): ReactElement => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
+        setIsLoading(false);
     }, []);
     return (
         <>
@@ -25,8 +23,8 @@ export const Forgot = (): ReactElement => {
                 <div
                     className={cx(
                         styles.forgotWrapper,
-                        animationStyles.names.fadeIn,
-                        animationStyles.durations.oneSecond,
+                        animationStyles.compose.animate('fadeIn'),
+                        animationStyles.compose.duration(1),
                     )}
                 >
                     <div className={styles.redirectActionHolder}>

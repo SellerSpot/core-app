@@ -68,9 +68,19 @@ export const ProfileHolder = (): ReactElement => {
                     <div className={styles.caretHolder}>
                         <FaCaretUp
                             className={cx(
-                                { [animationStyles.names.rotate0to180]: isProfileMenuActive },
-                                { [animationStyles.names.rotate180to0]: !isProfileMenuActive },
-                                animationStyles.durations.pointFiveSecond,
+                                {
+                                    [animationStyles.compose.animate(
+                                        'rotate0to180',
+                                        'fadeIn',
+                                    )]: isProfileMenuActive,
+                                },
+                                {
+                                    [animationStyles.compose.animate(
+                                        'rotate180to0',
+                                        'fadeIn',
+                                    )]: !isProfileMenuActive,
+                                },
+                                animationStyles.compose.duration(0.5),
                                 { [styles.caretOnMenuOpen]: isProfileMenuActive },
                             )}
                         />
@@ -80,8 +90,8 @@ export const ProfileHolder = (): ReactElement => {
                     <div
                         className={cx(
                             styles.profileMenuWrapper,
-                            animationStyles.names.fadeIn,
-                            animationStyles.durations.pointFiveSecond,
+                            animationStyles.compose.animate('fadeIn'),
+                            animationStyles.compose.duration(0.5),
                         )}
                     >
                         {profileMenuItems.map((profileMenuItem, key) => (

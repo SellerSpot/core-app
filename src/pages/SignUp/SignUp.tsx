@@ -21,9 +21,7 @@ export const SignUp = (): ReactElement => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
+        setIsLoading(false);
     }, []);
     const onSignUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,8 +56,8 @@ export const SignUp = (): ReactElement => {
                 <div
                     className={cx(
                         styles.signUpWrapper,
-                        animationStyles.names.fadeIn,
-                        animationStyles.durations.oneSecond,
+                        animationStyles.compose.animate('fadeIn'),
+                        animationStyles.compose.duration(1),
                     )}
                 >
                     <div className={styles.redirectActionHolder}>
