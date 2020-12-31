@@ -6,19 +6,23 @@ import { ROUTES } from 'config/routes';
 import { IoMdAppstore } from 'react-icons/io';
 import { IoAppsSharp, IoHome } from 'react-icons/io5';
 import { RiBillFill } from 'react-icons/ri';
+import { cx } from '@emotion/css';
 
 const styles = getMenuHolderStyles();
 
-interface IMenuItemProps {
+export interface IMenuItemProps {
     Icon: IconType;
     title: string;
     onClick: React.DOMAttributes<HTMLDivElement>['onClick'];
+    customClassNames?: {
+        menuItem?: string;
+    };
 }
 
-const MenuItem = (props: IMenuItemProps): ReactElement => {
-    const { Icon, onClick, title } = props;
+export const MenuItem = (props: IMenuItemProps): ReactElement => {
+    const { Icon, onClick, title, customClassNames } = props;
     return (
-        <div className={styles.menuItem} onClick={onClick}>
+        <div className={cx(styles.menuItem, customClassNames?.menuItem)} onClick={onClick}>
             <div className={styles.menuItemIcon}>
                 <Icon />
             </div>

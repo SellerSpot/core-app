@@ -6,4 +6,5 @@ export const COLORS = {
     // backgrounds
     BACKGROUND_PRIMARY: '#FFFFFF',
     BACKGROUND_SECONDARY: '#F7F6F3',
+    BACKGROUND_TERTIARY: '#ded2d2',
 };

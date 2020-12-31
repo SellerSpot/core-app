@@ -40,9 +40,9 @@ export const SignUp = (): ReactElement => {
             > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
             dispatch(
                 authenticate({
-                    email: tenantData.email,
                     id: tenantData.id,
-                    name: tenantData.email,
+                    name: tenantData.name,
+                    email: tenantData.email,
                     token: tenantData.token,
                 }),
             );

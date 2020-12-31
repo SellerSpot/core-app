@@ -9,4 +9,5 @@ export const ROUTES = {
     INSTALLED_APPS: '/apps/installed',
     APP_STORE: '/apps/store',
     BILLING: '/billing',
+    SETTINGS: '/settings',
 };

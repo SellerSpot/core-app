@@ -28,6 +28,9 @@ export const Dashboard = (): ReactElement => {
                         <Route path={ROUTES.BILLING}>
                             <Home />
                         </Route>
+                        <Route path={ROUTES.SETTINGS}>
+                            <Home />
+                        </Route>
                         {/* / route => placing atlast */}
                         <Route path={ROUTES.HOME}>
                             <Home />

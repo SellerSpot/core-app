@@ -13,9 +13,9 @@ export const getStyles = (): {
         overflow-x: hidden;
         overflow-y: auto;
         background-color: ${COLORS.BACKGROUND_SECONDARY};
-        padding: 10px 0px;
+        padding: 10px 0;
         display: grid;
-        grid-template-rows: 50px 1fr 50px;
+        grid-template-rows: 50px 1fr 60px;
         user-select: none;
     `;
 
@@ -36,9 +36,6 @@ export const getStyles = (): {
     const profileHolder = css`
         width: 100%;
         height: 100%;
-        background: ${COLORS.BACKGROUND_PRIMARY};
-        overflow-x: hidden;
-        overflow-y: hidden;
     `;
 
     return {
