@@ -1,24 +1,23 @@
-import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { ICONS } from 'utilities/icons';
-import { getHomeStyles } from './home.styles';
+import { getNotificationsStyles } from './notifications.styles';
+const styles = getNotificationsStyles();
 
-export const Home = (): ReactElement => {
+export const Notifications = (): ReactElement => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(
             clearAndPushBreadCrumbs([
                 {
-                    icon: ICONS.HOME,
-                    route: ROUTES.HOME,
-                    title: 'Home',
+                    icon: ICONS.NOTIFICATION,
+                    route: ROUTES.NOTIFICATIONS,
+                    title: 'Notifications',
                 },
             ]),
         );
     }, []);
-    const styles = getHomeStyles();
-    return <div className={cx(styles.homeWrapper)}>Home</div>;
+    return <div className={styles.notificationsWrapper}>Notifications</div>;
 };

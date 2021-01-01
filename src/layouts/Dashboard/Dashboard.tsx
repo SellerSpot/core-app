@@ -1,6 +1,11 @@
 import { ROUTES } from 'config/routes';
+import { AppStore } from 'pages/AppStore/AppStore';
+import { Billing } from 'pages/Billing/Billing';
 import { Home } from 'pages/Home/Home';
+import { InstalledApps } from 'pages/InstalledApps/InstalledApps';
 import { LeftNavbar } from 'pages/LeftNavbar/LeftNavbar';
+import { Notifications } from 'pages/Notifications/Notifications';
+import { Settings } from 'pages/Settings/Settings';
 import { TopNavbar } from 'pages/TopNavbar/TopNavbar';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -20,16 +25,19 @@ export const Dashboard = (): ReactElement => {
                 <div className={styles.coreContentWrapper}>
                     <Switch>
                         <Route path={ROUTES.INSTALLED_APPS}>
-                            <Home />
+                            <InstalledApps />
                         </Route>
                         <Route path={ROUTES.APP_STORE}>
-                            <Home />
+                            <AppStore />
                         </Route>
                         <Route path={ROUTES.BILLING}>
-                            <Home />
+                            <Billing />
                         </Route>
                         <Route path={ROUTES.SETTINGS}>
-                            <Home />
+                            <Settings />
+                        </Route>
+                        <Route path={ROUTES.NOTIFICATIONS}>
+                            <Notifications />
                         </Route>
                         {/* / route => placing atlast */}
                         <Route path={ROUTES.HOME}>

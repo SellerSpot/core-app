@@ -30,13 +30,15 @@ export const getMenuHolderStyles = (): {
         grid-template-columns: 40px 1fr;
         gap: 5px;
         cursor: pointer;
+        color: ${COLORS.FOREGROUND_TERTIARY};
         &:hover {
-            background-color: ${COLORS.BACKGROUND_PRIMARY};
+            background-color: ${COLORS.BACKGROUND_HIGHLIGHT};
         }
     `;
 
     const menuItemActive = css`
-        background-color: ${COLORS.BACKGROUND_PRIMARY};
+        color: ${COLORS.FOREGROUND_SECONDARY};
+        background-color: ${COLORS.BACKGROUND_HIGHLIGHT};
     `;
 
     const menuItemIcon = css`
@@ -46,7 +48,6 @@ export const getMenuHolderStyles = (): {
         align-items: center;
         justify-content: center;
         font-size: 22px;
-        color: ${COLORS.FOREGROUND_SECONDARY};
     `;
 
     const menuItemTitle = css`
@@ -57,8 +58,7 @@ export const getMenuHolderStyles = (): {
         align-items: center;
         justify-content: flex-start;
         font-size: 18px;
-        font-weight: bold;
-        color: ${COLORS.FOREGROUND_SECONDARY};
+        font-weight: 500;
         letter-spacing: 1px;
     `;
 

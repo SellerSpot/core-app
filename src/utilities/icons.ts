@@ -1,4 +1,4 @@
-import { IoMdAppstore } from 'react-icons/io';
+import { IoMdAppstore, IoMdNotifications } from 'react-icons/io';
 import { IoAppsSharp, IoHome } from 'react-icons/io5';
 import { RiBillFill } from 'react-icons/ri';
 import { FaUserAlt, FaCaretUp } from 'react-icons/fa';
@@ -15,4 +15,5 @@ export const ICONS = {
     USER_ALT: FaUserAlt,
     CARET_UP: FaCaretUp,
     FORWARD_SLASH: CgFormatSlash,
+    NOTIFICATION: IoMdNotifications,
 };

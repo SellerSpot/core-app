@@ -13,33 +13,22 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-    breadCrumbs: [
-        {
-            icon: ICONS.HOME,
-            title: 'Home',
-            route: ROUTES.HOME,
-        },
-        {
-            icon: ICONS.BILLING,
-            title: 'fashioin sale!',
-            route: ROUTES.APP_STORE,
-        },
-    ],
+    breadCrumbs: [],
 };
 
 const breadCrumbsSlice = createSlice({
     name: 'breadCrumbs',
     initialState,
     reducers: {
-        pushBreadCrumbs: (state, { payload }: PayloadAction<Pick<InitialState, 'breadCrumbs'>>) => {
-            state.breadCrumbs.push(...payload.breadCrumbs);
+        pushBreadCrumbs: (state, { payload }: PayloadAction<InitialState['breadCrumbs']>) => {
+            state.breadCrumbs.push(...payload);
         },
         clearAndPushBreadCrumbs: (
             state,
-            { payload }: PayloadAction<Pick<InitialState, 'breadCrumbs'>>,
+            { payload }: PayloadAction<InitialState['breadCrumbs']>,
         ) => {
             Object.assign(state, {
-                breadCrumbs: payload.breadCrumbs,
+                breadCrumbs: payload,
             } as InitialState);
         },
         clearBreadCrumbs: (state) => {

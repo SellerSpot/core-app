@@ -10,4 +10,5 @@ export const ROUTES = {
     APP_STORE: '/apps/store',
     BILLING: '/billing',
     SETTINGS: '/settings',
+    NOTIFICATIONS: '/notifications',
 };
