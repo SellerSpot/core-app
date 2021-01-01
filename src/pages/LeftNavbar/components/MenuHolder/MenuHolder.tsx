@@ -1,12 +1,10 @@
 import React, { ReactElement } from 'react';
 import { getMenuHolderStyles } from './menuholder.styles';
-import { IconType } from 'react-icons/lib';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
-import { IoMdAppstore } from 'react-icons/io';
-import { IoAppsSharp, IoHome } from 'react-icons/io5';
-import { RiBillFill } from 'react-icons/ri';
+import { IconType } from 'react-icons/lib';
 import { cx } from '@emotion/css';
+import { ICONS } from 'utilities/icons';
 
 const styles = getMenuHolderStyles();
 
@@ -44,7 +42,7 @@ export const MenuHolder = (): ReactElement => {
 
     const menuItems: IMenuItemProps[] = [
         {
-            Icon: IoHome,
+            Icon: ICONS.HOME,
             title: 'Home',
             routes: [ROUTES.HOME],
             onClick: () => {
@@ -52,7 +50,7 @@ export const MenuHolder = (): ReactElement => {
             },
         },
         {
-            Icon: IoAppsSharp,
+            Icon: ICONS.INSTALLED_APPS,
             title: 'Installed Apps',
             routes: [ROUTES.INSTALLED_APPS],
             onClick: () => {
@@ -60,7 +58,7 @@ export const MenuHolder = (): ReactElement => {
             },
         },
         {
-            Icon: IoMdAppstore,
+            Icon: ICONS.APP_STORE,
             title: 'App Store',
             routes: [ROUTES.APP_STORE],
             onClick: () => {
@@ -68,7 +66,7 @@ export const MenuHolder = (): ReactElement => {
             },
         },
         {
-            Icon: RiBillFill,
+            Icon: ICONS.BILLING,
             title: 'Billing',
             routes: [ROUTES.BILLING],
             onClick: () => {

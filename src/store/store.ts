@@ -18,15 +18,15 @@ export const store = configureStore({
     middleware: getDefaultMiddleware({
         serializableCheck: false, // try to avoid using non-serialized value in store (only use if it is really needed)
     }),
-    preloadedState: reHydrateStore(),
+    // preloadedState: reHydrateStore(),
 });
 
 // persisting store
-store.subscribe(
-    lodash.debounce(() => {
-        localStorage.setItem(CONFIG.REDUX_APP_STATE, JSON.stringify(store.getState()));
-    }, 1000),
-);
+// store.subscribe(
+//     lodash.debounce(() => {
+//         localStorage.setItem(CONFIG.REDUX_APP_STATE, JSON.stringify(store.getState()));
+//     }, 1000),
+// );
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

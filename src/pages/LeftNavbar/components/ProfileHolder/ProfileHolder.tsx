@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { getProfileHolderStyles } from './profileholder.styles';
-import { FaUserAlt, FaCaretDown, FaCaretUp } from 'react-icons/fa';
-import { RiLogoutBoxFill, RiSettings3Fill } from 'react-icons/ri';
 import { MenuItem, IMenuItemProps } from '../MenuHolder/MenuHolder';
 import { cx } from '@emotion/css';
 import { animationStyles } from 'styles/animation.styles';
@@ -9,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { authSelector, unAuthenticate } from 'store/models/auth';
+import { ICONS } from 'utilities/icons';
 const styles = getProfileHolderStyles();
 
 export const ProfileHolder = (): ReactElement => {
@@ -19,14 +18,14 @@ export const ProfileHolder = (): ReactElement => {
 
     const profileMenuItems: IMenuItemProps[] = [
         {
-            Icon: RiSettings3Fill,
+            Icon: ICONS.SETTINGS,
             title: 'Settings',
             onClick: () => {
                 history.push(ROUTES.SETTINGS);
             },
         },
         {
-            Icon: RiLogoutBoxFill,
+            Icon: ICONS.LOGOUT,
             title: 'Logout',
             onClick: () => {
                 dispatch(unAuthenticate());
@@ -58,7 +57,7 @@ export const ProfileHolder = (): ReactElement => {
                 >
                     <div className={styles.profileImageWrapper}>
                         <div className={styles.profileImageHolder}>
-                            <FaUserAlt />
+                            <ICONS.USER_ALT />
                         </div>
                     </div>
                     <div className={styles.profileUserDetailsHolder}>
@@ -66,7 +65,7 @@ export const ProfileHolder = (): ReactElement => {
                         <div className={styles.profileUserEmail}>{authState.email}</div>
                     </div>
                     <div className={styles.caretHolder}>
-                        <FaCaretUp
+                        <ICONS.CARET_UP
                             className={cx(
                                 {
                                     [animationStyles.compose.animate(
