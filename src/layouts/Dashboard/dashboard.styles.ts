@@ -45,7 +45,6 @@ export const getDashboardStyles = (): {
     const coreContentWrapper = css`
         width: 100%;
         height: 100%;
-        background: ${COLORS.BACKGROUND_SECONDARY};
     `;
 
     return {
