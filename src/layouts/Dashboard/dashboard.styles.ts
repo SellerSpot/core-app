@@ -24,13 +24,14 @@ export const getDashboardStyles = (): {
         overflow-x: hidden;
         position: relative;
     `;
+
     const mainBodyWrapper = css`
         width: 100%;
         height: 100%;
         overflow-y: auto;
         overflow-x: auto;
         position: relative;
-        padding: 0 10px;
+        padding: 10px 10px;
         display: grid;
         grid-template-rows: 50px 1fr;
         gap: 5px;
@@ -39,7 +40,6 @@ export const getDashboardStyles = (): {
     const topNavbarWrapper = css`
         width: 100%;
         height: 100%;
-        background: ${COLORS.BACKGROUND_SECONDARY};
     `;
 
     const coreContentWrapper = css`

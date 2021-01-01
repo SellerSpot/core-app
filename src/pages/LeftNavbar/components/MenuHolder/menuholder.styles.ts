@@ -14,7 +14,7 @@ export const getMenuHolderStyles = (): {
         height: 100%;
         display: flex;
         flex-direction: column;
-        padding: 5px 0px;
+        padding: 10px 0px;
     `;
 
     const menuContainer = css`

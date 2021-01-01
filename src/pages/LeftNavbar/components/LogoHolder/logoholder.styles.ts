@@ -13,6 +13,8 @@ export const getLogoHolderStyles = (): {
         position: relative;
         padding: 0 20px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
     `;
     const logoWrapper = css`
         display: flex;

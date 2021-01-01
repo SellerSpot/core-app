@@ -11,15 +11,18 @@ export const getStyles = (): {
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        background-color: ${COLORS.BACKGROUND_SECONDARY};
         display: flex;
         align-items: center;
         justify-content: space-between;
-        /* padding: 0 10px; */
     `;
 
-    const breadCrumbsHolder = css``;
-    const notificationHolder = css``;
+    const breadCrumbsHolder = css`
+        width: auto;
+    `;
+
+    const notificationHolder = css`
+        width: auto;
+    `;
 
     return {
         topNavbarWrapper,
