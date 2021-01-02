@@ -11,7 +11,7 @@ export interface IAuthState {
     profilePicture: string;
 }
 
-const actualInitialstate: IAuthState = {
+const actualInitialState: IAuthState = {
     isAuthenticated: false,
     token: '',
     name: '',
@@ -26,7 +26,7 @@ const getInitialState = (): IAuthState => {
         if (cachedAuthState) {
             const hydratedAuthState: IAuthState = JSON.parse(cachedAuthState) ?? {};
             if (
-                Object.keys(actualInitialstate).length === Object.keys(actualInitialstate).length &&
+                Object.keys(actualInitialState).length === Object.keys(actualInitialState).length &&
                 hydratedAuthState.id !== undefined
             ) {
                 return hydratedAuthState;
@@ -40,7 +40,7 @@ const getInitialState = (): IAuthState => {
         localStorage.clear();
     }
 
-    return actualInitialstate;
+    return actualInitialState;
 };
 
 const initialState: IAuthState = getInitialState();
@@ -59,7 +59,7 @@ const authSlice = createSlice({
             localStorage.setItem(CONFIG.REUDX_AUTH_STATE, JSON.stringify(state));
         },
         unAuthenticate: (state) => {
-            Object.assign(state, actualInitialstate);
+            Object.assign(state, actualInitialState);
             localStorage.clear();
         },
     },

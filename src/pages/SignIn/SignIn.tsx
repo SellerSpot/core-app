@@ -6,11 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services/services';
 import { authenticate, IAuthState } from 'store/models/auth';
-import { useDispatch } from 'react-redux';
+import { ISubDomainState, updateSubDomain } from 'store/models/subDomain';
+import { batch, useDispatch } from 'react-redux';
 import { updateGlobalServices } from 'config/globalConfig';
 import { cx } from '@emotion/css';
 import { getSignInStyles } from './signin.styles';
 import { animationStyles } from 'styles/animation.styles';
+import { ISubDomainResponse } from 'typings/request.types';
 
 export const SignIn = (): ReactElement => {
     const styles = getSignInStyles();
@@ -30,20 +32,31 @@ export const SignIn = (): ReactElement => {
                 password,
             };
             const response = await socketService.request('AUTH_SIGN_IN', data);
-            const tenantData: Pick<
+            const tenantData = response.data as Pick<
                 IAuthState,
                 'id' | 'email' | 'name' | 'token'
-            > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
-            dispatch(
-                authenticate({
-                    id: tenantData.id,
-                    name: tenantData.name,
-                    email: tenantData.email,
-                    token: tenantData.token,
-                }),
-            );
+            > & { subDomain: ISubDomainResponse };
+            console.log(tenantData);
             // updating the globals to know that the new token has arrived.
             updateGlobalServices(tenantData.token);
+            batch(() => {
+                dispatch(
+                    authenticate({
+                        id: tenantData.id,
+                        name: tenantData.name,
+                        email: tenantData.email,
+                        token: tenantData.token,
+                    }),
+                );
+                if (tenantData.subDomain._id) {
+                    dispatch(
+                        updateSubDomain({
+                            domainName: tenantData.subDomain.domainName,
+                            id: tenantData.subDomain._id,
+                        }),
+                    );
+                }
+            });
         } catch (error) {
             // error will have IResponse body = feel free to access with Iresponse type (damn it will get Iresponse type)
         }

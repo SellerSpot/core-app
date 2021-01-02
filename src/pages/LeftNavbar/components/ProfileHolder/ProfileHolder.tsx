@@ -5,9 +5,10 @@ import { cx } from '@emotion/css';
 import { animationStyles } from 'styles/animation.styles';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { authSelector, unAuthenticate } from 'store/models/auth';
 import { ICONS } from 'utilities/icons';
+import { clearSubDomain } from 'store/models/subDomain';
 const styles = getProfileHolderStyles();
 
 export const ProfileHolder = (): ReactElement => {
@@ -28,7 +29,10 @@ export const ProfileHolder = (): ReactElement => {
             Icon: ICONS.LOGOUT,
             title: 'Logout',
             onClick: () => {
-                dispatch(unAuthenticate());
+                batch(() => {
+                    dispatch(unAuthenticate());
+                    dispatch(clearSubDomain());
+                });
             },
         },
     ];

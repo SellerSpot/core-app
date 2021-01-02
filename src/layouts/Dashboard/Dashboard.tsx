@@ -1,6 +1,7 @@
 import { ROUTES } from 'config/routes';
 import { AppStore } from 'pages/AppStore/AppStore';
 import { Billing } from 'pages/Billing/Billing';
+import { SubDomainSetup } from 'pages/SubDomainSetup/SubDomainSetup';
 import { Home } from 'pages/Home/Home';
 import { InstalledApps } from 'pages/InstalledApps/InstalledApps';
 import { LeftNavbar } from 'pages/LeftNavbar/LeftNavbar';
@@ -8,11 +9,15 @@ import { Notifications } from 'pages/Notifications/Notifications';
 import { Settings } from 'pages/Settings/Settings';
 import { TopNavbar } from 'pages/TopNavbar/TopNavbar';
 import React, { ReactElement } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { getDashboardStyles } from './dashboard.styles';
+import { useSelector } from 'react-redux';
+import { subDomainSelector } from 'store/models/subDomain';
 
 export const Dashboard = (): ReactElement => {
     const styles = getDashboardStyles();
+    const subDomainState = useSelector(subDomainSelector);
+
     return (
         <div className={styles.dashboardWrapper}>
             <div className={styles.leftNavbarWrapper}>
@@ -39,9 +44,16 @@ export const Dashboard = (): ReactElement => {
                         <Route path={ROUTES.NOTIFICATIONS}>
                             <Notifications />
                         </Route>
+                        <Route path={ROUTES.SUB_DOMAIN_SETUP}>
+                            <SubDomainSetup />
+                        </Route>
                         {/* / route => placing atlast */}
                         <Route path={ROUTES.HOME}>
-                            <Home />
+                            {subDomainState.registered ? (
+                                <Home />
+                            ) : (
+                                <Redirect to={ROUTES.SUB_DOMAIN_SETUP} />
+                            )}
                         </Route>
                     </Switch>
                 </div>

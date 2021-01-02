@@ -10,9 +10,6 @@ const styles = breadCrumbsStyles();
 export const BreadCrumbs = (): ReactElement => {
     const breadCrumbsState = useSelector(breadCrumbsSelector);
     const history = useHistory();
-    useEffect(() => {
-        console.log(breadCrumbsState);
-    }, []);
     return (
         <div className={styles.breadCrumbsWrapper}>
             <div className={styles.breadCrumbsContainer}>
