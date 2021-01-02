@@ -1,9 +1,10 @@
 import { IoMdAppstore, IoMdNotifications } from 'react-icons/io';
 import { IoAppsSharp, IoHome } from 'react-icons/io5';
 import { RiBillFill } from 'react-icons/ri';
-import { FaUserAlt, FaCaretUp } from 'react-icons/fa';
+import { FaUserAlt, FaCaretUp, FaCashRegister } from 'react-icons/fa';
 import { RiLogoutBoxFill, RiSettings3Fill } from 'react-icons/ri';
 import { CgFormatSlash } from 'react-icons/cg';
+import { FiShoppingBag } from 'react-icons/fi';
 
 export const ICONS = {
     HOME: IoHome,
@@ -16,4 +17,6 @@ export const ICONS = {
     CARET_UP: FaCaretUp,
     FORWARD_SLASH: CgFormatSlash,
     NOTIFICATION: IoMdNotifications,
+    CASH_REGISTER: FaCashRegister,
+    SHOPPING_BAG: FiShoppingBag,
 };

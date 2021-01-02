@@ -25,7 +25,7 @@ export const breadCrumbsStyles = (): {
         line-height: 16px;
         height: 16px; // incase of image( in future breadcrumbs)
         font-weight: normal;
-        color: ${COLORS.FOREGROUND_TERTIARY};
+        color: ${COLORS.FOREGROUND_SECONDARY};
     `;
 
     const breadCrumb = css`
