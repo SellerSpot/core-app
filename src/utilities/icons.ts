@@ -1,11 +1,10 @@
-import { IoMdAppstore, IoMdNotifications } from 'react-icons/io';
+import { IoMdAppstore, IoMdNotifications, IoMdPlay } from 'react-icons/io';
 import { IoAppsSharp, IoHome } from 'react-icons/io5';
 import { RiBillFill } from 'react-icons/ri';
-import { FaUserAlt, FaCaretUp, FaCashRegister } from 'react-icons/fa';
+import { FaUserAlt, FaCaretUp, FaCashRegister, FaPlay, FaPlug } from 'react-icons/fa';
 import { RiLogoutBoxFill, RiSettings3Fill } from 'react-icons/ri';
 import { CgFormatSlash } from 'react-icons/cg';
 import { FiShoppingBag } from 'react-icons/fi';
-import { BsPlay, BsPlug } from 'react-icons/bs';
 
 export const ICONS = {
     HOME: IoHome,
@@ -20,6 +19,6 @@ export const ICONS = {
     NOTIFICATION: IoMdNotifications,
     CASH_REGISTER: FaCashRegister,
     SHOPPING_BAG: FiShoppingBag,
-    APP: BsPlay,
-    PLUGIN: BsPlug,
+    APP: IoMdPlay,
+    PLUGIN: FaPlug,
 };

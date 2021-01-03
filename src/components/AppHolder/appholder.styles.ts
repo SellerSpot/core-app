@@ -68,10 +68,6 @@ export const getAppHolderStyles = (
             color: ${props.installed ? COLORS.FOREGROUND_WHITE : COLORS.PLUGIN_COLOR};
             background-color: ${props.installed ? COLORS.PLUGIN_COLOR : COLORS.FOREGROUND_WHITE};
         `}
-        ${!props.installed &&
-        `
-            border: 1px solid ${props.type === 'app' ? COLORS.APP_COLOR : COLORS.PLUGIN_COLOR};
-        `}
     `;
 
     const holderTypeIcon = css`
@@ -79,6 +75,7 @@ export const getAppHolderStyles = (
         margin-top: 4px;
         display: inline-block;
         vertical-align: middle;
+        margin-right: 3px;
     `;
 
     const holderTypeText = css`

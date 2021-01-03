@@ -44,7 +44,7 @@ export const breadCrumbsStyles = (): {
     `;
 
     const iconHolder = css`
-        margin-right: 3px;
+        margin-right: 5px;
     `;
 
     const titleHolder = css`

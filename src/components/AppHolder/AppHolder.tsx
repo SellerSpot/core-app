@@ -9,6 +9,7 @@ export interface IAppHolderProps {
     data?: IAppResponse;
     type?: 'app' | 'plugin';
     installed?: boolean;
+    onClick?: React.DOMAttributes<HTMLDivElement>['onClick'];
 }
 
 export const AppHolder = (props: IAppHolderProps): ReactElement => {
@@ -23,11 +24,11 @@ export const AppHolder = (props: IAppHolderProps): ReactElement => {
     };
     const requiredProps = lodash.merge(defaultProps, props);
     const styles = getAppHolderStyles(requiredProps);
-    const { data, installed, type } = requiredProps;
+    const { data, installed, type, onClick } = requiredProps;
     const iconName = data.iconUrl as keyof typeof ICONS;
     const Icon = ICONS[iconName];
     return (
-        <div className={styles.appHolderWrapper} title={`${data.name} - ${type}`}>
+        <div className={styles.appHolderWrapper} title={`${data.name} - ${type}`} onClick={onClick}>
             <div className={styles.iconHolder}>
                 <Icon />
             </div>

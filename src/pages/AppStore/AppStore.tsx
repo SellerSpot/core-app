@@ -1,19 +1,16 @@
-import { AppHolder } from 'components/AppHolder/AppHolder';
-import { SectionTitle } from 'components/SectionTitle/SectionTitle';
-import { TilesHolder } from 'components/TilesHolder/TilesHolder';
 import { ROUTES } from 'config/routes';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
-import { IAppResponse } from 'typings/request.types';
 import { ICONS } from 'utilities/icons';
-import { getAllApps } from './appstore.actions';
 import { getAppStoreStyles } from './appstore.styles';
+import { AppEnlargedView } from './components/AppEnlargedView/AppEnlargedView';
+import { AppStoreHome } from './components/AppStoreHome/AppStoreHome';
 const styles = getAppStoreStyles();
 
 export const AppStore = (): ReactElement => {
     const dispatch = useDispatch();
-    const [apps, setApps] = useState([]);
     useEffect(() => {
         dispatch(
             clearAndPushBreadCrumbs([
@@ -24,19 +21,20 @@ export const AppStore = (): ReactElement => {
                 },
             ]),
         );
-        (async () => {
-            setApps((await getAllApps()).data as IAppResponse[]);
-        }).call(null);
     }, []);
 
     return (
         <div className={styles.appstoreWrapper}>
-            <SectionTitle style={{ paddingBottom: 15 }} title={'Latest Apps'} />
-            <TilesHolder>
-                {apps.map((app, key) => (
-                    <AppHolder key={key} data={app} />
-                ))}
-            </TilesHolder>
+            <Switch>
+                <Route path={`${ROUTES.APP_STORE_APPS}/:id`}>
+                    <AppEnlargedView />
+                </Route>
+
+                {/* slash routes hence should be place at bottom */}
+                <Route path={ROUTES.APP_STORE}>
+                    <AppStoreHome />
+                </Route>
+            </Switch>
         </div>
     );
 };
