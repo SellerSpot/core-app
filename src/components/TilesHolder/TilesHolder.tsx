@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { getTilesHolderStyles } from './tilesholder.styles';
 
 export interface ITilesHolder {
-    children?: ReactElement[];
+    children?: ReactElement | ReactElement[];
     /**
      * Tiles display direction
      *

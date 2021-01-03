@@ -10,4 +10,7 @@ export const COLORS = {
     BACKGROUND_TERTIARY: '#ded2d2',
     BACKGROUND_HIGHLIGHT: '#DAD9D6',
     BACKGROUND_DANGER: '#DC3545',
+    // iconic color
+    APP_COLOR: '#0EC120',
+    PLUGIN_COLOR: '#1C73F5',
 };

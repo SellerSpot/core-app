@@ -9,6 +9,16 @@ export interface ISubDomainResponse {
     domainName: string;
     tenantId: string;
     updatedAt: string;
-    __v: number;
     _id: string;
+}
+
+export interface IAppResponse {
+    _id?: string;
+    name?: string;
+    shortDescription?: string;
+    longDescription?: string;
+    iconUrl?: string;
+    bannerImages?: string[];
+    createdAt?: string;
+    updatedAt?: string;
 }

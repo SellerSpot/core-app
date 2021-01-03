@@ -37,7 +37,7 @@ export const SubDomainSetup = (): ReactElement => {
             const availabilityCheckData = availabilityCheck.data as { available: boolean };
             if (availabilityCheck.status && availabilityCheckData.available === true) {
                 const subDomainCreateResponse = await socketService.request(
-                    'CREATE_SUB_DOMAIN',
+                    'SUB_DOMAIN_CREATE',
                     data,
                 );
                 console.log(subDomainCreateResponse);

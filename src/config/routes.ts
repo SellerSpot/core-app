@@ -14,6 +14,6 @@ export const ROUTES = {
     SUB_DOMAIN_SETUP: '/subdomainsetup',
 
     // apps related routes
-    INSTALLED_APPS: '/apps/installed',
-    APP_STORE: '/apps/store',
+    INSTALLED_APPS: '/installedapps',
+    APP_STORE: '/appstore',
 };

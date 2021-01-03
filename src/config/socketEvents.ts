@@ -7,9 +7,12 @@ export const SOCKET_EVENTS = {
     AUTH_SIGN_IN: 'signin',
     AUTH_VERIFY_TOKEN: 'verifytoken',
     // domian setup settings
-    CREATE_SUB_DOMAIN: 'createsubdomain',
-    UPDATE_SUB_DOMAIN: 'updatesubdomain',
+    SUB_DOMAIN_CREATE: 'createsubdomain',
+    SUB_DOMAIN_UPDATE: 'updatesubdomain',
     SUB_DOMAIN_AVAILABILITY_CHECK: 'subdomainavailabilitycheck',
-
-    // Async events goes under here
+    // app events
+    APP_GET_ALL_APPS: 'getallapps',
+    APP_GET_APP_BY_ID: 'getappbyid',
+    APP_INSTALL: 'installapp',
+    APP_UNINSTALL: 'uninstallapp',
 };

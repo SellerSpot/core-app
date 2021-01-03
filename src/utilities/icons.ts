@@ -5,6 +5,7 @@ import { FaUserAlt, FaCaretUp, FaCashRegister } from 'react-icons/fa';
 import { RiLogoutBoxFill, RiSettings3Fill } from 'react-icons/ri';
 import { CgFormatSlash } from 'react-icons/cg';
 import { FiShoppingBag } from 'react-icons/fi';
+import { BsPlay, BsPlug } from 'react-icons/bs';
 
 export const ICONS = {
     HOME: IoHome,
@@ -19,4 +20,6 @@ export const ICONS = {
     NOTIFICATION: IoMdNotifications,
     CASH_REGISTER: FaCashRegister,
     SHOPPING_BAG: FiShoppingBag,
+    APP: BsPlay,
+    PLUGIN: BsPlug,
 };

@@ -1,4 +1,5 @@
 import { cx } from '@emotion/css';
+import { AppHolder } from 'components/AppHolder/AppHolder';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { TilesHolder } from 'components/TilesHolder/TilesHolder';
 import { ROUTES } from 'config/routes';
@@ -25,7 +26,9 @@ export const Home = (): ReactElement => {
     return (
         <div className={cx(styles.homeWrapper)}>
             <SectionTitle style={{ paddingBottom: 15 }} title={'Installed Apps'} />
-            <TilesHolder />
+            <TilesHolder>
+                <AppHolder />
+            </TilesHolder>
         </div>
     );
 };
