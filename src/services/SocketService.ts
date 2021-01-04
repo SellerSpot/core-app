@@ -3,7 +3,7 @@ import { SOCKET_EVENTS } from 'config/socketEvents';
 import { io, Socket } from 'socket.io-client';
 import { updateHeartBeatStatus } from 'store/models/heartBeat';
 import { store } from 'store/store';
-import { IResponse } from 'typings/request.types';
+import { IResponse } from 'typings/response.types';
 export class SocketService {
     private onlinServerSocket: Socket;
     constructor() {
@@ -129,14 +129,15 @@ export class SocketService {
     }
 
     public setAsyncEvent = (): void => {
-        console.log('setting a async event');
+        // useful for setting global notification listener
+        console.info('setting a async event');
     };
 
     public removeAsyncEvent = (): void => {
-        console.log('removing a async event');
+        console.info('removing a async event');
     };
 
     public removeAllAsyncEvents = (): void => {
-        console.log('removing a async event');
+        console.info('removing a async event');
     };
 }

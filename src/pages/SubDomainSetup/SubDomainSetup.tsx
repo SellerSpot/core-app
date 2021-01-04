@@ -8,7 +8,7 @@ import { getSubDomainSetupStyles } from './subdomainsetup.styles';
 import { animationStyles } from 'styles/animation.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { subDomainSelector, updateSubDomain } from 'store/models/subDomain';
-import { ISubDomainResponse } from 'typings/request.types';
+import { ISubDomainResponse } from 'typings/response.types';
 import { useHistory } from 'react-router-dom';
 
 export const SubDomainSetup = (): ReactElement => {
@@ -33,14 +33,12 @@ export const SubDomainSetup = (): ReactElement => {
                 'SUB_DOMAIN_AVAILABILITY_CHECK',
                 domainName,
             );
-            console.log(availabilityCheck);
             const availabilityCheckData = availabilityCheck.data as { available: boolean };
             if (availabilityCheck.status && availabilityCheckData.available === true) {
                 const subDomainCreateResponse = await socketService.request(
                     'SUB_DOMAIN_CREATE',
                     data,
                 );
-                console.log(subDomainCreateResponse);
                 if (subDomainCreateResponse.status) {
                     const subDomainCreateData = subDomainCreateResponse.data as ISubDomainResponse;
                     dispatch(
@@ -56,7 +54,7 @@ export const SubDomainSetup = (): ReactElement => {
             }
         } catch (error) {
             // error will have IResponse body = feel free to access it with IResponse type
-            console.log(error);
+            console.error(error);
         }
     };
     return (

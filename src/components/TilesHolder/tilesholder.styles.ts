@@ -7,6 +7,7 @@ export const getTilesHolderStyles = (): { tilesHolderWrapper: string } => {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 20px;
+        padding-left: 10px;
     `;
 
     return {

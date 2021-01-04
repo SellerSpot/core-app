@@ -1,28 +1,31 @@
 import { AppHolder } from 'components/AppHolder/AppHolder';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { TilesHolder } from 'components/TilesHolder/TilesHolder';
-import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { getInstalledAppsHomeStyles } from './installedappshome.styles';
+import { getTenantInstalledApps } from './installedappshome.actions';
 import { IAppResponse } from 'typings/response.types';
-import { getAllApps } from './appstorehome.actions';
-import { getAppStoreHomeStyles } from './appstorehome.styles';
+import { useHistory } from 'react-router-dom';
+import { ROUTES } from 'config/routes';
 
-const styles = getAppStoreHomeStyles();
+const styles = getInstalledAppsHomeStyles();
 
-export const AppStoreHome = (): ReactElement => {
+export const InstalledAppsHome = (): ReactElement => {
     const [apps, setApps] = useState([] as IAppResponse[]);
     const history = useHistory();
 
     useEffect(() => {
         (async () => {
-            setApps((await getAllApps()).data as IAppResponse[]);
+            const response = await getTenantInstalledApps();
+            console.log(response);
+            const apps = response.data as IAppResponse[];
+            setApps(apps);
         }).call(null);
     }, []);
 
     return (
-        <div className={styles.appStoreHomeWrapper}>
-            <SectionTitle style={{ paddingBottom: 15 }} title={'Latest Apps'} />
+        <div className={styles.installedAppsHomeWrapper}>
+            <SectionTitle style={{ paddingBottom: 15 }} title={'Installed Apps'} />
             <TilesHolder>
                 {apps.map((app, key) => {
                     return (
@@ -30,7 +33,10 @@ export const AppStoreHome = (): ReactElement => {
                             key={key}
                             data={app}
                             type={'app'}
-                            onClick={() => history.push(`${ROUTES.APP_STORE_APP}?id=${app._id}`)}
+                            installed={true}
+                            onClick={() =>
+                                history.push(`${ROUTES.INSTALLED_APPS_APP}?id=${app._id}`)
+                            }
                         />
                     );
                 })}

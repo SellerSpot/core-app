@@ -21,7 +21,7 @@ export const getAppHolderStyles = (
         background-color: ${COLORS.BACKGROUND_PRIMARY};
         padding: 20px 15px 5px 18px;
         border-radius: 15px;
-        box-shadow: 0 0 10px 0 ${COLORS.BACKGROUND_HIGHLIGHT};
+        box-shadow: 0 0 5px 0 ${COLORS.BACKGROUND_HIGHLIGHT};
         display: grid;
         grid-template-rows: 41% 10% 1fr;
         text-align: left;
@@ -29,7 +29,7 @@ export const getAppHolderStyles = (
         position: relative;
         cursor: pointer;
         &:hover {
-            box-shadow: 0 0 15px 5px ${COLORS.BACKGROUND_HIGHLIGHT};
+            box-shadow: 0 0 10px 5px ${COLORS.BACKGROUND_HIGHLIGHT};
         }
     `;
 

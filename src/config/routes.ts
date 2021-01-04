@@ -13,12 +13,17 @@ export const ROUTES = {
     NOTIFICATIONS: '/notifications',
     SUB_DOMAIN_SETUP: '/subdomainsetup',
 
-    // apps related routes
+    // installed apps routes
     INSTALLED_APPS: '/installedapps',
+    INSTALLED_APPS_HOME: '/installedapps',
+    INSTALLED_APPS_APPS: '/installedapps/apps',
+    INSTALLED_APPS_APP: '/installedapps/app', // will contain query param (?id)
+
+    // app store routes
     APP_STORE: '/appstore',
     APP_STORE_HOME: '/appstore/home',
-    APP_STORE_APPS: '/appstore/apps', // will also be used as query route (?id)
-    APP_STORE_PLUGINS: '/appstore/plugins', // will also be used as query route (?id)
-    APP_STORE_APP: '/appstore/apps/app', // will also be used as query route (?id)
-    APP_STORE_PLUGIN: '/appstore/plugins/plugin', // will also be used as query route (?id)
+    APP_STORE_APPS: '/appstore/apps',
+    APP_STORE_PLUGINS: '/appstore/plugins',
+    APP_STORE_APP: '/appstore/apps/app', // will contain query param (?id)
+    APP_STORE_PLUGIN: '/appstore/plugins/plugin', // will contain query param (?id)
 };

@@ -6,13 +6,14 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services/services';
 import { authenticate, IAuthState } from 'store/models/auth';
-import { ISubDomainState, updateSubDomain } from 'store/models/subDomain';
+import { updateSubDomain } from 'store/models/subDomain';
 import { batch, useDispatch } from 'react-redux';
 import { updateGlobalServices } from 'config/globalConfig';
 import { cx } from '@emotion/css';
 import { getSignInStyles } from './signin.styles';
 import { animationStyles } from 'styles/animation.styles';
-import { ISubDomainResponse } from 'typings/request.types';
+import { IAuthResposne, ISubDomainResponse } from 'typings/response.types';
+import { updateInstalledAppsState } from 'store/models/installedApps';
 
 export const SignIn = (): ReactElement => {
     const styles = getSignInStyles();
@@ -32,11 +33,7 @@ export const SignIn = (): ReactElement => {
                 password,
             };
             const response = await socketService.request('AUTH_SIGN_IN', data);
-            const tenantData = response.data as Pick<
-                IAuthState,
-                'id' | 'email' | 'name' | 'token'
-            > & { subDomain: ISubDomainResponse };
-            console.log(tenantData);
+            const tenantData = response.data as IAuthResposne;
             // updating the globals to know that the new token has arrived.
             updateGlobalServices(tenantData.token);
             batch(() => {
@@ -53,6 +50,13 @@ export const SignIn = (): ReactElement => {
                         updateSubDomain({
                             domainName: tenantData.subDomain.domainName,
                             id: tenantData.subDomain._id,
+                        }),
+                    );
+                }
+                if (tenantData.apps.length) {
+                    dispatch(
+                        updateInstalledAppsState({
+                            apps: tenantData.apps,
                         }),
                     );
                 }

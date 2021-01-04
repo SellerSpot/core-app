@@ -52,7 +52,12 @@ export const MenuHolder = (): ReactElement => {
         {
             Icon: ICONS.INSTALLED_APPS,
             title: 'Installed Apps',
-            routes: [ROUTES.INSTALLED_APPS],
+            routes: [
+                ROUTES.INSTALLED_APPS,
+                ROUTES.INSTALLED_APPS_HOME,
+                ROUTES.INSTALLED_APPS_APPS,
+                ROUTES.INSTALLED_APPS_APP,
+            ],
             onClick: () => {
                 history.push(ROUTES.INSTALLED_APPS);
             },

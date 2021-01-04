@@ -19,7 +19,7 @@ export const getEnlargedAppViewStyles = (): {
 } => {
     const enlargedAppViewWrapper = css`
         width: 100%;
-        height: 200%;
+        height: auto;
         display: flex;
         align-items: flex-start;
         justify-content: center;

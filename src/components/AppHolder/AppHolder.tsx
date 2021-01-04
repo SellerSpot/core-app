@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react';
-import { IAppResponse } from 'typings/request.types';
+import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getAppHolderStyles } from './appholder.styles';
 import lodash from 'lodash';
-import { icons } from 'react-icons';
 
 export interface IAppHolderProps {
     data?: IAppResponse;

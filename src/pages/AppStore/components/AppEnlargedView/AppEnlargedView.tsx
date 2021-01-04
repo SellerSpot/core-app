@@ -1,36 +1,38 @@
-import { Button } from 'components/Button/Button';
+import { Button } from '@sellerspot/universal-components';
 import { Loader } from 'components/Loader/Loader';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
-import { IAppResponse, IResponse } from 'typings/request.types';
+import { installedAppsSelector, updateInstalledAppsState } from 'store/models/installedApps';
+import { IAppResponse, IResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
-import { getAppById } from './appenlargedview.actions';
+import { getAppById, installApp } from './appenlargedview.actions';
 import { getEnlargedAppViewStyles } from './appenlargedview.styles';
 
 const styles = getEnlargedAppViewStyles();
 
 const AppIcon = (props: { appDetails: IAppResponse }) => {
     const Icon = ICONS[props.appDetails.iconUrl as keyof typeof ICONS];
-    console.log(Icon, props.appDetails.iconUrl);
     return <Icon />;
 };
 
 export const AppEnlargedView = (): ReactElement => {
-    const params = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
     const [appDetails, setAppDetails] = useState({} as IAppResponse);
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const query = new URLSearchParams(location.search);
+    const [isInstalled, setIsInstalled] = useState(false);
+    const [isInstalling, setIsInstalling] = useState(false);
+    const installedAppsState = useSelector(installedAppsSelector);
+
     useEffect(() => {
         try {
             const appId = query.get('id');
-            console.log(appId);
             if (!appId) throw 'Invalid Url';
             (async () => {
                 const response = await getAppById(appId);
@@ -50,15 +52,35 @@ export const AppEnlargedView = (): ReactElement => {
                         },
                     ]),
                 );
+                if (installedAppsState.appIds.includes(data._id)) {
+                    setIsInstalled(true);
+                }
                 setAppDetails(data);
                 setIsLoading(false);
             }).call(null);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             // show notificaiton
             history.push(ROUTES.APP_STORE);
         }
     }, []);
+
+    const handleOnLaunch = () => {
+        history.push(`${ROUTES.INSTALLED_APPS_APP}?id=${appDetails._id}`);
+    };
+
+    const handleOnInstallClick = async (): Promise<void> => {
+        setIsInstalling(true);
+        setTimeout(async () => {
+            const response = await installApp(appDetails._id);
+            console.log(response);
+            if (response.status) {
+                dispatch(updateInstalledAppsState({ apps: response.data as IAppResponse[] }));
+                setIsInstalling(false);
+                handleOnLaunch();
+            }
+        }, 4000);
+    };
 
     return isLoading ? (
         <Loader />
@@ -79,11 +101,21 @@ export const AppEnlargedView = (): ReactElement => {
                     </div>
                     <div className={styles.appCalltoAction}>
                         <Button
-                            label={'Install'}
+                            onClick={isInstalled ? handleOnLaunch : handleOnInstallClick}
+                            status={
+                                isInstalled
+                                    ? 'default'
+                                    : isInstalling
+                                    ? 'disabledLoading'
+                                    : 'default'
+                            }
+                            label={isInstalled ? 'Launch' : isInstalling ? 'Installing' : 'Install'}
                             style={{
-                                height: 'auto',
-                                width: 'auto',
-                                padding: '15px 30px',
+                                fontWeight: 'bold',
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                borderRadius: 5,
+                                fontSize: 16,
                                 color: COLORS['FOREGROUND_WHITE'],
                                 backgroundColor: COLORS['APP_COLOR'],
                             }}

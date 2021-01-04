@@ -11,9 +11,17 @@ export interface ITilesHolder {
      * horizontal
      */
     orientation?: 'vertical' | 'horizontal';
+    /**
+     * custom styles can be passed to override default styles
+     */
+    styles?: React.CSSProperties;
 }
 
 export const TilesHolder = (props: ITilesHolder): ReactElement => {
     const styles = getTilesHolderStyles();
-    return <div className={styles.tilesHolderWrapper}>{props.children}</div>;
+    return (
+        <div className={styles.tilesHolderWrapper} style={props.styles}>
+            {props.children}
+        </div>
+    );
 };
