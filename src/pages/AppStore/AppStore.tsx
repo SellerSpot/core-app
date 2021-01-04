@@ -26,7 +26,7 @@ export const AppStore = (): ReactElement => {
     return (
         <div className={styles.appstoreWrapper}>
             <Switch>
-                <Route path={`${ROUTES.APP_STORE_APPS}/:id`}>
+                <Route path={`${ROUTES.APP_STORE_APP}`}>
                     <AppEnlargedView />
                 </Route>
 

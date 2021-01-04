@@ -17,6 +17,8 @@ export const ROUTES = {
     INSTALLED_APPS: '/installedapps',
     APP_STORE: '/appstore',
     APP_STORE_HOME: '/appstore/home',
-    APP_STORE_APPS: '/appstore/apps', // will also be used as params route (:id)
-    APP_STORE_PLUGINS: '/appstore/plugins', // will also be used as params route (:id)
+    APP_STORE_APPS: '/appstore/apps', // will also be used as query route (?id)
+    APP_STORE_PLUGINS: '/appstore/plugins', // will also be used as query route (?id)
+    APP_STORE_APP: '/appstore/apps/app', // will also be used as query route (?id)
+    APP_STORE_PLUGIN: '/appstore/plugins/plugin', // will also be used as query route (?id)
 };

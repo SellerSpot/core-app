@@ -30,7 +30,7 @@ export const AppStoreHome = (): ReactElement => {
                             key={key}
                             data={app}
                             type={'app'}
-                            onClick={() => history.push(`${ROUTES.APP_STORE_APPS}/${app._id}`)}
+                            onClick={() => history.push(`${ROUTES.APP_STORE_APP}?id=${app._id}`)}
                         />
                     );
                 })}

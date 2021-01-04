@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { getMenuHolderStyles } from './menuholder.styles';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
@@ -12,6 +12,7 @@ export interface IMenuItemProps {
     Icon: IconType;
     title: string;
     onClick: React.DOMAttributes<HTMLDivElement>['onClick'];
+    /* it helps to highlight navbar on particular routes */
     routes?: string[];
     active?: boolean;
     customClassNames?: {
@@ -39,7 +40,6 @@ export const MenuItem = (props: IMenuItemProps): ReactElement => {
 export const MenuHolder = (): ReactElement => {
     const history = useHistory();
     const location = useLocation();
-
     const menuItems: IMenuItemProps[] = [
         {
             Icon: ICONS.HOME,
@@ -60,7 +60,14 @@ export const MenuHolder = (): ReactElement => {
         {
             Icon: ICONS.APP_STORE,
             title: 'App Store',
-            routes: [ROUTES.APP_STORE],
+            routes: [
+                ROUTES.APP_STORE,
+                ROUTES.APP_STORE_HOME,
+                ROUTES.APP_STORE_APPS,
+                ROUTES.APP_STORE_PLUGINS,
+                ROUTES.APP_STORE_APP,
+                ROUTES.APP_STORE_PLUGIN,
+            ],
             onClick: () => {
                 history.push(ROUTES.APP_STORE);
             },
