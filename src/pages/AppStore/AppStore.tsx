@@ -1,8 +1,10 @@
 import { ROUTES } from 'config/routes';
+import { getTenantInstalledApps } from 'pages/InstalledApps/installedapps.actions';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import { updateInstalledAppsState } from 'store/models/installedApps';
 import { ICONS } from 'utilities/icons';
 import { getAppStoreStyles } from './appstore.styles';
 import { AppEnlargedView } from './components/AppEnlargedView/AppEnlargedView';
@@ -21,6 +23,10 @@ export const AppStore = (): ReactElement => {
                 },
             ]),
         );
+        (async () => {
+            const installedApps = await getTenantInstalledApps();
+            dispatch(updateInstalledAppsState({ apps: installedApps }));
+        }).call(null);
     }, []);
 
     return (

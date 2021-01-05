@@ -26,7 +26,6 @@ export const AppEnlargedView = (): ReactElement => {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const [isInstalled, setIsInstalled] = useState(false);
     const [isInstalling, setIsInstalling] = useState(false);
     const installedAppsState = useSelector(installedAppsSelector);
 
@@ -52,9 +51,6 @@ export const AppEnlargedView = (): ReactElement => {
                         },
                     ]),
                 );
-                if (installedAppsState.appIds.includes(data._id)) {
-                    setIsInstalled(true);
-                }
                 setAppDetails(data);
                 setIsLoading(false);
             }).call(null);
@@ -75,6 +71,7 @@ export const AppEnlargedView = (): ReactElement => {
             const response = await installApp(appDetails._id);
             console.log(response);
             if (response.status) {
+                console.log(response.data);
                 dispatch(updateInstalledAppsState({ apps: response.data as IAppResponse[] }));
                 setIsInstalling(false);
                 handleOnLaunch();
@@ -101,15 +98,25 @@ export const AppEnlargedView = (): ReactElement => {
                     </div>
                     <div className={styles.appCalltoAction}>
                         <Button
-                            onClick={isInstalled ? handleOnLaunch : handleOnInstallClick}
+                            onClick={
+                                installedAppsState.appIds.includes(appDetails._id)
+                                    ? handleOnLaunch
+                                    : handleOnInstallClick
+                            }
                             status={
-                                isInstalled
+                                installedAppsState.appIds.includes(appDetails._id)
                                     ? 'default'
                                     : isInstalling
                                     ? 'disabledLoading'
                                     : 'default'
                             }
-                            label={isInstalled ? 'Launch' : isInstalling ? 'Installing' : 'Install'}
+                            label={
+                                installedAppsState.appIds.includes(appDetails._id)
+                                    ? 'Launch'
+                                    : isInstalling
+                                    ? 'Installing'
+                                    : 'Install'
+                            }
                             style={{
                                 fontWeight: 'bold',
                                 paddingTop: 15,
