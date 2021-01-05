@@ -2,8 +2,10 @@ import { Loader } from 'components/Loader/Loader';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
+import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
 import { getTenantInstalledAppById } from './installedappsdashboard.actions';
@@ -14,7 +16,7 @@ export const InstalledAppDashboard = (): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const [appDetails, setAppDetails] = useState({});
+    const [appDetails, setAppDetails] = useState({} as IAppResponse);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -52,12 +54,14 @@ export const InstalledAppDashboard = (): ReactElement => {
             history.push(ROUTES.APP_STORE);
         }
     }, []);
+    const Dashboard = installedAppDashboardService.getAppDashobard(appDetails.name);
 
     return isLoading ? (
         <Loader />
     ) : (
         <div className={styles.installedAppDashboardWrapper}>
-            {JSON.stringify(appDetails, null, 4)}
+            {/* {JSON.stringify(appDetails, null, 4)} */}
+            {Dashboard ? <Dashboard data={appDetails} /> : <Redirect to={ROUTES.INSTALLED_APPS} />}
         </div>
     );
 };
