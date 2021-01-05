@@ -8,7 +8,9 @@ export const getEnlargedAppViewStyles = (): {
     iconContainer: string;
     iconHolder: string;
     detailsHolder: string;
+    appTitleHolder: string;
     appTitle: string;
+    installationStatus: string;
     appShortDescription: string;
     appCalltoAction: string;
     bannerImageHolder: string;
@@ -67,9 +69,23 @@ export const getEnlargedAppViewStyles = (): {
         color: ${COLORS.FOREGROUND_SECONDARY};
     `;
 
+    const appTitleHolder = css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    `;
+
     const appTitle = css`
         font-size: 25px;
         font-weight: bold;
+    `;
+
+    const installationStatus = css`
+        display: block;
+        position: relative;
+        top: unset;
+        right: unset;
     `;
 
     const appShortDescription = css`
@@ -139,7 +155,9 @@ export const getEnlargedAppViewStyles = (): {
         iconContainer,
         iconHolder,
         detailsHolder,
+        appTitleHolder,
         appTitle,
+        installationStatus,
         appShortDescription,
         appCalltoAction,
         bannerImageHolder,

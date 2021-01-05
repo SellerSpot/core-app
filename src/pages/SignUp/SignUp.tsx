@@ -37,7 +37,6 @@ export const SignUp = (): ReactElement => {
                 IAuthState,
                 'id' | 'email' | 'name' | 'token'
             > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
-            console.log(tenantData);
             // updating the globals to know that the new token has arrived.
             updateGlobalServices(tenantData.token);
             dispatch(

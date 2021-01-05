@@ -5,12 +5,10 @@ export const getAllApps = async (): Promise<IAppResponse[]> => {
     let data: IAppResponse[] = [];
     try {
         const resposne = await socketService.request('APP_GET_ALL_APPS');
-        if (resposne.status) {
-            const allApps = resposne.data as IAppResponse[];
-            data = allApps;
-        }
+        const allApps = resposne.data as IAppResponse[];
+        if (allApps) data = allApps;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         data = [];
     }
     return data;

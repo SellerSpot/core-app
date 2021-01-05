@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { updateInstalledAppsState } from 'store/models/installedApps';
 import { ICONS } from 'utilities/icons';
+import { InstalledAppDashboard } from './components/InstalledAppDashboard/InstalledAppDashboard';
 import { InstalledAppsHome } from './components/InstalledAppsHome/InstalledAppsHome';
 import { getTenantInstalledApps } from './installedapps.actions';
 import { getInstalledAppsStyles } from './installedapps.styles';
@@ -35,6 +36,10 @@ export const InstalledApps = (): ReactElement => {
     return (
         <div className={styles.installedAppsWrapper}>
             <Switch>
+                <Route path={ROUTES.INSTALLED_APPS_APP}>
+                    {/* this route contains id query param */}
+                    <InstalledAppDashboard />
+                </Route>
                 {/* this is / route, should be placed at bottom */}
                 <Route path={[ROUTES.INSTALLED_APPS, ROUTES.INSTALLED_APPS_HOME]}>
                     <InstalledAppsHome />

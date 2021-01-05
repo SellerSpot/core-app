@@ -1,3 +1,6 @@
+export interface IGetTenantInstalledAppByIdRequest {
+    appId: string;
+}
 export interface IGetAppByIdRequest {
     appId: string;
 }

@@ -1,4 +1,6 @@
+import { cx } from '@emotion/css';
 import { Button } from '@sellerspot/universal-components';
+import { getAppHolderStyles } from 'components/AppHolder/appholder.styles';
 import { Loader } from 'components/Loader/Loader';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
@@ -13,6 +15,7 @@ import { getAppById, installApp } from './appenlargedview.actions';
 import { getEnlargedAppViewStyles } from './appenlargedview.styles';
 
 const styles = getEnlargedAppViewStyles();
+const appHolderStylesApp = getAppHolderStyles({ installed: true, type: 'app' });
 
 const AppIcon = (props: { appDetails: IAppResponse }) => {
     const Icon = ICONS[props.appDetails.iconUrl as keyof typeof ICONS];
@@ -22,10 +25,10 @@ const AppIcon = (props: { appDetails: IAppResponse }) => {
 export const AppEnlargedView = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const [appDetails, setAppDetails] = useState({} as IAppResponse);
-    const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const query = new URLSearchParams(location.search);
+    const [appDetails, setAppDetails] = useState({} as IAppResponse);
+    const [isLoading, setIsLoading] = useState(true);
     const [isInstalling, setIsInstalling] = useState(false);
     const installedAppsState = useSelector(installedAppsSelector);
 
@@ -34,25 +37,30 @@ export const AppEnlargedView = (): ReactElement => {
             const appId = query.get('id');
             if (!appId) throw 'Invalid Url';
             (async () => {
-                const response = await getAppById(appId);
-                const { status, data } = response as IResponse & { data: IAppResponse };
-                if (!status || !data._id) throw response;
-                dispatch(
-                    pushBreadCrumbs([
-                        {
-                            icon: ICONS.APP,
-                            route: ROUTES.APP_STORE,
-                            title: 'Apps',
-                        },
-                        {
-                            icon: ICONS[data.iconUrl as keyof typeof ICONS],
-                            route: `${ROUTES.APP_STORE_APPS}/${data._id}`,
-                            title: data.name,
-                        },
-                    ]),
-                );
-                setAppDetails(data);
-                setIsLoading(false);
+                try {
+                    const app = await getAppById(appId);
+                    if (!app) throw 'Invalid Request';
+                    dispatch(
+                        pushBreadCrumbs([
+                            {
+                                icon: ICONS.APP,
+                                route: ROUTES.APP_STORE,
+                                title: 'Apps',
+                            },
+                            {
+                                icon: ICONS[app.iconUrl as keyof typeof ICONS],
+                                route: `${ROUTES.APP_STORE_APPS}/${app._id}`,
+                                title: app.name,
+                            },
+                        ]),
+                    );
+                    setAppDetails(app);
+                    setIsLoading(false);
+                } catch (error) {
+                    console.error(error);
+                    // show notificaiton
+                    history.push(ROUTES.APP_STORE);
+                }
             }).call(null);
         } catch (error) {
             console.error(error);
@@ -68,13 +76,15 @@ export const AppEnlargedView = (): ReactElement => {
     const handleOnInstallClick = async (): Promise<void> => {
         setIsInstalling(true);
         setTimeout(async () => {
-            const response = await installApp(appDetails._id);
-            console.log(response);
-            if (response.status) {
-                console.log(response.data);
-                dispatch(updateInstalledAppsState({ apps: response.data as IAppResponse[] }));
+            const appInstallResponse = await installApp(appDetails._id);
+            if (appInstallResponse) {
+                dispatch(updateInstalledAppsState({ apps: appInstallResponse }));
                 setIsInstalling(false);
                 handleOnLaunch();
+            } else {
+                // show error message with notifieer
+                setIsInstalling(false);
+                history.push(ROUTES.APP_STORE);
             }
         }, 4000);
     };
@@ -91,7 +101,24 @@ export const AppEnlargedView = (): ReactElement => {
                         </div>
                     </div>
                     <div className={styles.detailsHolder}>
-                        <div className={styles.appTitle}>{appDetails.name}</div>
+                        <div className={styles.appTitleHolder}>
+                            <div className={styles.appTitle}>{appDetails.name}</div>
+                            {installedAppsState.appIds.includes(appDetails._id) && (
+                                <div
+                                    className={cx(
+                                        appHolderStylesApp.holderType,
+                                        styles.installationStatus,
+                                    )}
+                                >
+                                    <div className={appHolderStylesApp.holderTypeIcon}>
+                                        <ICONS.APP />
+                                    </div>
+                                    <div className={appHolderStylesApp.holderTypeText}>
+                                        Installed
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                         <div className={styles.appShortDescription}>
                             {appDetails.shortDescription}
                         </div>
