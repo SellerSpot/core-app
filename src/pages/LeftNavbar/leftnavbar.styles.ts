@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import { COLORS } from 'config/colors';
 
-export const getStyles = (): {
+export const getLeftNavBarStyles = (): {
     leftnavWrapper: string;
     logoHolder: string;
     menuHolder: string;

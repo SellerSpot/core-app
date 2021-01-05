@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import { LogoHolder } from './components/LogoHolder/LogoHolder';
 import { MenuHolder } from './components/MenuHolder/MenuHolder';
 import { ProfileHolder } from './components/ProfileHolder/ProfileHolder';
-import { getStyles } from './leftnavbar.styles';
+import { getLeftNavBarStyles } from './leftnavbar.styles';
 
 export const LeftNavbar = (): ReactElement => {
-    const styles = getStyles();
+    const styles = getLeftNavBarStyles();
     return (
         <div className={styles.leftnavWrapper}>
             <div className={styles.logoHolder}>
