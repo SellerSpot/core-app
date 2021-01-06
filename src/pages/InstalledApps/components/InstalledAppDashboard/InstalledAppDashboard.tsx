@@ -65,8 +65,11 @@ export const InstalledAppDashboard = (): ReactElement => {
         <Loader />
     ) : (
         <div className={styles.installedAppDashboardWrapper}>
-            {/* {JSON.stringify(appDetails, null, 4)} */}
-            {Dashboard ? <Dashboard data={appDetails} /> : <Redirect to={ROUTES.INSTALLED_APPS} />}
+            {Dashboard ? (
+                <Dashboard appDetails={appDetails} />
+            ) : (
+                <Redirect to={ROUTES.INSTALLED_APPS} />
+            )}
         </div>
     );
 };
