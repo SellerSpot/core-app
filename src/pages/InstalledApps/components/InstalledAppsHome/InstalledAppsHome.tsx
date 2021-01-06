@@ -5,14 +5,27 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { getInstalledAppsHomeStyles } from './installedappshome.styles';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { installedAppsSelector } from 'store/models/installedApps';
+import { ICONS } from 'utilities/icons';
+import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 
 const styles = getInstalledAppsHomeStyles();
 
 export const InstalledAppsHome = (): ReactElement => {
     const installedAppsState = useSelector(installedAppsSelector);
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    dispatch(
+        clearAndPushBreadCrumbs([
+            {
+                icon: ICONS.INSTALLED_APPS,
+                route: ROUTES.INSTALLED_APPS,
+                title: 'Installed Apps',
+            },
+        ]),
+    );
 
     return (
         <div className={styles.installedAppsHomeWrapper}>
@@ -25,9 +38,7 @@ export const InstalledAppsHome = (): ReactElement => {
                             data={app}
                             type={'app'}
                             installed={true}
-                            onClick={() =>
-                                history.push(`${ROUTES.INSTALLED_APPS_APP}?id=${app._id}`)
-                            }
+                            onClick={() => history.push(`${ROUTES.INSTALLED_APPS_APP}/${app.slug}`)}
                         />
                     );
                 })}

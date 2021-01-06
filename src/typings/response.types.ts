@@ -24,6 +24,7 @@ export interface ISubDomainResponse {
 export interface IAppResponse {
     _id?: string;
     name?: string;
+    slug?: string;
     shortDescription?: string;
     longDescription?: string;
     iconUrl?: string;

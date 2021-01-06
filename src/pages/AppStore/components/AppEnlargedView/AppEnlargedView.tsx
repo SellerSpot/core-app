@@ -70,7 +70,7 @@ export const AppEnlargedView = (): ReactElement => {
     }, []);
 
     const handleOnLaunch = () => {
-        history.push(`${ROUTES.INSTALLED_APPS_APP}?id=${appDetails._id}`);
+        history.push(`${ROUTES.INSTALLED_APPS_APP}/${appDetails.slug}`);
     };
 
     const handleOnInstallClick = async (): Promise<void> => {

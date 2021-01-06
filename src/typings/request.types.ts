@@ -1,4 +1,4 @@
-export interface IGetTenantInstalledAppByIdRequest {
+export interface IGetTenantInstalledAppByIdOrSlugRequest {
     appId: string;
 }
 export interface IGetAppByIdRequest {

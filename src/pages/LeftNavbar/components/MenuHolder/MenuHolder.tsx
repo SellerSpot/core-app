@@ -7,6 +7,9 @@ import { cx } from '@emotion/css';
 import { ICONS } from 'utilities/icons';
 
 const styles = getMenuHolderStyles();
+export interface IMenuHolderProps {
+    menuItems: IMenuItemProps[];
+}
 
 export interface IMenuItemProps {
     Icon: IconType;
@@ -21,6 +24,13 @@ export interface IMenuItemProps {
 }
 
 export const MenuItem = (props: IMenuItemProps): ReactElement => {
+    const defaultProps: IMenuItemProps = {
+        Icon: ((<i></i>) as unknown) as IconType,
+        onClick: () => void 0,
+        routes: [],
+        title: '',
+        active: false,
+    };
     const { Icon, onClick, title, customClassNames, active } = props;
     return (
         <div
@@ -37,55 +47,10 @@ export const MenuItem = (props: IMenuItemProps): ReactElement => {
     );
 };
 
-export const MenuHolder = (): ReactElement => {
+export const MenuHolder = (props: IMenuHolderProps): ReactElement => {
     const history = useHistory();
     const location = useLocation();
-    const menuItems: IMenuItemProps[] = [
-        {
-            Icon: ICONS.HOME,
-            title: 'Home',
-            routes: [ROUTES.HOME],
-            onClick: () => {
-                history.push(ROUTES.HOME);
-            },
-        },
-        {
-            Icon: ICONS.INSTALLED_APPS,
-            title: 'Installed Apps',
-            routes: [
-                ROUTES.INSTALLED_APPS,
-                ROUTES.INSTALLED_APPS_HOME,
-                ROUTES.INSTALLED_APPS_APPS,
-                ROUTES.INSTALLED_APPS_APP,
-            ],
-            onClick: () => {
-                history.push(ROUTES.INSTALLED_APPS);
-            },
-        },
-        {
-            Icon: ICONS.APP_STORE,
-            title: 'App Store',
-            routes: [
-                ROUTES.APP_STORE,
-                ROUTES.APP_STORE_HOME,
-                ROUTES.APP_STORE_APPS,
-                ROUTES.APP_STORE_PLUGINS,
-                ROUTES.APP_STORE_APP,
-                ROUTES.APP_STORE_PLUGIN,
-            ],
-            onClick: () => {
-                history.push(ROUTES.APP_STORE);
-            },
-        },
-        {
-            Icon: ICONS.BILLING,
-            title: 'Billing',
-            routes: [ROUTES.BILLING],
-            onClick: () => {
-                history.push(ROUTES.BILLING);
-            },
-        },
-    ];
+    const menuItems: IMenuItemProps[] = props.menuItems;
     return (
         <div className={styles.menuHolderWrapper}>
             <div className={styles.menuContainer}>

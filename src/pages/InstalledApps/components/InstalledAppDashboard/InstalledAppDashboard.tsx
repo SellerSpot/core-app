@@ -1,42 +1,42 @@
 import { Loader } from 'components/Loader/Loader';
+import { APP_DASHBOARD_NAMES } from 'config/dashboardNames';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
 import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
 import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
-import { getTenantInstalledAppById } from './installedappsdashboard.actions';
+import { getTenantInstalledAppByIdOrSlug } from './installedappsdashboard.actions';
 const styles = getInstalledAppDashboardStyle();
 
 export const InstalledAppDashboard = (): ReactElement => {
     const history = useHistory();
+    const params = useParams<{ slug: string }>();
     const dispatch = useDispatch();
-    const location = useLocation();
-    const query = new URLSearchParams(location.search);
     const [appDetails, setAppDetails] = useState({} as IAppResponse);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         try {
-            const appId = query.get('id');
-            if (!appId) throw 'Invalid Url';
+            const appSlug = params.slug;
+            if (!appSlug) throw 'Invalid Url';
             (async () => {
                 try {
-                    const app = await getTenantInstalledAppById(appId);
+                    const app = await getTenantInstalledAppByIdOrSlug(appSlug);
                     if (!app) throw 'Invalid Request!';
                     dispatch(
                         pushBreadCrumbs([
                             {
                                 icon: ICONS.APP,
-                                route: ROUTES.APP_STORE,
+                                route: ROUTES.INSTALLED_APPS_HOME,
                                 title: 'Apps',
                             },
                             {
                                 icon: ICONS[app.iconUrl as keyof typeof ICONS],
-                                route: `${ROUTES.APP_STORE_APPS}/${app._id}`,
+                                route: `${ROUTES.INSTALLED_APPS_APP}/${app.slug}`,
                                 title: app.name,
                             },
                         ]),
@@ -44,7 +44,7 @@ export const InstalledAppDashboard = (): ReactElement => {
                     setAppDetails(app);
                     setIsLoading(false);
                 } catch (error) {
-                    console.error('caught here');
+                    console.error(error);
                     history.push(ROUTES.APP_STORE);
                 }
             }).call(null);
@@ -54,7 +54,12 @@ export const InstalledAppDashboard = (): ReactElement => {
             history.push(ROUTES.APP_STORE);
         }
     }, []);
-    const Dashboard = installedAppDashboardService.getAppDashobard(appDetails.name);
+    const Dashboard = installedAppDashboardService.getAppDashobard(
+        (appDetails.slug ??
+            installedAppDashboardService.getDashboardNameFromAppName(
+                appDetails.name,
+            )) as keyof typeof APP_DASHBOARD_NAMES,
+    );
 
     return isLoading ? (
         <Loader />

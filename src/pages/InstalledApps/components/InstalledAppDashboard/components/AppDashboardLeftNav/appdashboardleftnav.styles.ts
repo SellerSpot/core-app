@@ -6,7 +6,9 @@ export const getAppDashboardLeftNavStyles = (): {
     logoHolder: string;
     appLogoContainer: string;
     appLogo: string;
+    appTitleHolder: string;
     appTitle: string;
+    appTitleStatusHolder: string;
     menuHolder: string;
 } => {
     const appDashboardLeftNavWrapper = css`
@@ -16,7 +18,7 @@ export const getAppDashboardLeftNavStyles = (): {
         overflow-y: auto;
         background-color: ${COLORS.BACKGROUND_SECONDARY};
         display: grid;
-        grid-template-rows: 80px 1fr 60px;
+        grid-template-rows: 90px 1fr 60px;
         user-select: none;
     `;
 
@@ -30,15 +32,16 @@ export const getAppDashboardLeftNavStyles = (): {
     const appLogoContainer = css`
         width: 100%;
         height: 100%;
-        display: flex;
+        display: grid;
         align-items: flex-start;
         justify-content: flex-start;
+        grid-template-columns: 65px 1fr;
         gap: 15px;
     `;
 
     const appLogo = css`
-        width: 60px;
-        height: 60px;
+        width: 65px;
+        height: 65px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -48,14 +51,27 @@ export const getAppDashboardLeftNavStyles = (): {
         box-shadow: 0 0 10px 0 ${COLORS.BACKGROUND_HIGHLIGHT};
     `;
 
+    const appTitleHolder = css`
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    `;
+
     const appTitle = css`
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         margin-top: 5px;
+    `;
+
+    const appTitleStatusHolder = css`
+        font-size: 12px;
+        width: 100%;
     `;
 
     const menuHolder = css`
@@ -70,7 +86,9 @@ export const getAppDashboardLeftNavStyles = (): {
         logoHolder,
         appLogoContainer,
         appLogo,
+        appTitleHolder,
         appTitle,
+        appTitleStatusHolder,
         menuHolder,
     };
 };

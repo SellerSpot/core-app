@@ -13,8 +13,10 @@ export const SOCKET_EVENTS = {
     // app events
     APP_GET_ALL_APPS: 'getallapps',
     APP_GET_APP_BY_ID: 'getappbyid',
+    APP_GET_APP_BY_SLUG: 'getappbyslug',
     APP_GET_TENANT_INSTALLED_APPS: 'gettenantinstalledapps',
     APP_GET_TENANT_INSTALLED_APP_BY_ID: 'gettenantinstalledappbyid',
+    APP_GET_TENANT_INSTALLED_APP_BY_SLUG: 'gettenantinstalledappbyslug',
     APP_INSTALL: 'installapp',
     APP_UNINSTALL: 'uninstallapp',
 };

@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { getProfileHolderStyles } from './profileholder.styles';
-import { MenuItem, IMenuItemProps } from '../MenuHolder/MenuHolder';
+import { MenuItem, IMenuItemProps, MenuHolder } from '../MenuHolder/MenuHolder';
 import { cx } from '@emotion/css';
 import { animationStyles } from 'styles/animation.styles';
 import { useHistory } from 'react-router-dom';
@@ -21,18 +21,26 @@ export const ProfileHolder = (): ReactElement => {
         {
             Icon: ICONS.SETTINGS,
             title: 'Settings',
+            routes: [ROUTES.SETTINGS],
             onClick: () => {
                 history.push(ROUTES.SETTINGS);
+            },
+            customClassNames: {
+                menuItem: cx(styles.menuItem, styles.activeHoverGray),
             },
         },
         {
             Icon: ICONS.LOGOUT,
             title: 'Logout',
+            routes: [],
             onClick: () => {
                 batch(() => {
                     dispatch(unAuthenticate());
                     dispatch(clearSubDomain());
                 });
+            },
+            customClassNames: {
+                menuItem: cx(styles.menuItem, styles.activeHoverGray),
             },
         },
     ];
@@ -97,15 +105,10 @@ export const ProfileHolder = (): ReactElement => {
                             animationStyles.compose.duration(0.5),
                         )}
                     >
-                        {profileMenuItems.map((profileMenuItem, key) => (
-                            <MenuItem
-                                key={key}
-                                {...profileMenuItem}
-                                customClassNames={{
-                                    menuItem: cx(styles.menuItem, styles.activeHoverGray),
-                                }}
-                            />
-                        ))}
+                        <MenuHolder menuItems={profileMenuItems} />
+                        {/* {profileMenuItems.map((profileMenuItem, key) => (
+                            <MenuItem key={key} {...profileMenuItem} />
+                        ))} */}
                     </div>
                 )}
             </div>

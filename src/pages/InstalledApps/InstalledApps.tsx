@@ -36,8 +36,8 @@ export const InstalledApps = (): ReactElement => {
     return (
         <div className={styles.installedAppsWrapper}>
             <Switch>
-                <Route path={ROUTES.INSTALLED_APPS_APP}>
-                    {/* this route contains id query param */}
+                <Route path={`${ROUTES.INSTALLED_APPS_APP}/:slug`}>
+                    {/* this route :slug param */}
                     <InstalledAppDashboard />
                 </Route>
                 {/* this is / route, should be placed at bottom */}
