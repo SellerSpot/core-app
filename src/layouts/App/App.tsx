@@ -12,6 +12,8 @@ import { getAppStyles } from './app.styles';
 import { verifyAuthToken } from './app.actions';
 import { injectGlobalStyles } from 'styles/styles';
 import { animationStyles } from 'styles/animation.styles';
+import { ConfirmDialog, Notify } from '@sellerspot/universal-components';
+import { confirmDialogSelector } from 'store/models/confirmDialog';
 
 // global actions
 injectGlobalStyles(); // inject global styles into dom
@@ -21,6 +23,7 @@ export const App = (): ReactElement => {
     const styles = getAppStyles();
     const authState = useSelector(authSelector);
     const [isLoading, setIsLoading] = useState(true);
+    const confirmDialogState = useSelector(confirmDialogSelector);
 
     useEffect(() => {
         (async () => {
@@ -60,6 +63,8 @@ export const App = (): ReactElement => {
                     </Switch>
                 </div>
             )}
+            {/* global components */}
+            <ConfirmDialog {...confirmDialogState} />
         </div>
     );
 };

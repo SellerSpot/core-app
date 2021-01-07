@@ -1,6 +1,9 @@
 import { SOCKET_EVENTS } from 'config/socketEvents';
 import { socketService } from 'services/services';
-import { IGetTenantInstalledAppByIdOrSlugRequest } from 'typings/request.types';
+import {
+    IGetTenantInstalledAppByIdOrSlugRequest,
+    IAppUnInstallRequest,
+} from 'typings/request.types';
 import { IAppResponse } from 'typings/response.types';
 
 export const getTenantInstalledAppByIdOrSlug = async (
@@ -18,6 +21,29 @@ export const getTenantInstalledAppByIdOrSlug = async (
         if (response.status) {
             const app = response.data as IAppResponse;
             if (app?._id) {
+                data = app;
+            } else {
+                throw response;
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    return Promise.resolve(data);
+};
+
+export const uninstallTenantInstalledAppById = async (
+    appId: string,
+): Promise<IAppResponse[] | undefined> => {
+    let data: IAppResponse[];
+    try {
+        const response = await socketService.request('APP_UNINSTALL', {
+            appId: appId,
+        } as IAppUnInstallRequest);
+        if (response.status) {
+            const app = response.data as IAppResponse[];
+            if (app) {
                 data = app;
             } else {
                 throw response;

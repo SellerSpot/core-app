@@ -7,3 +7,7 @@ export interface IGetAppByIdRequest {
 export interface IAppInstallRequest {
     appId: string;
 }
+
+export interface IAppUnInstallRequest {
+    appId: string;
+}

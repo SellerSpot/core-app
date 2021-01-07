@@ -32,3 +32,11 @@ export interface IAppResponse {
     createdAt?: string;
     updatedAt?: string;
 }
+
+export interface IInstalledAppLaunchDomainResponse {
+    tenantDomain: string;
+    appDomain: string;
+    baseDomain: string;
+    customDomain: string;
+    protocol: string;
+}
