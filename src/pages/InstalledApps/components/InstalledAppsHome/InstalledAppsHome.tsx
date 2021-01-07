@@ -39,17 +39,25 @@ export const InstalledAppsHome = (): ReactElement => {
         <div className={styles.installedAppsHomeWrapper}>
             <SectionTitle style={{ paddingBottom: 15 }} title={'Installed Apps'} />
             <TilesHolder>
-                {installedAppsState.apps.map((app, key) => {
-                    return (
-                        <AppHolder
-                            key={key}
-                            data={app}
-                            type={'app'}
-                            installed={true}
-                            onClick={() => history.push(`${ROUTES.INSTALLED_APPS_APP}/${app.slug}`)}
-                        />
-                    );
-                })}
+                <>
+                    {installedAppsState.apps.length > 0 &&
+                        installedAppsState.apps.map((app, key) => {
+                            return (
+                                <AppHolder
+                                    key={key}
+                                    data={app}
+                                    type={'app'}
+                                    installed={true}
+                                    onClick={() =>
+                                        history.push(`${ROUTES.INSTALLED_APPS_APP}/${app.slug}`)
+                                    }
+                                />
+                            );
+                        })}
+
+                    {/* install app call to action */}
+                    {installedAppsState.apps.length === 0 && <AppHolder showBadge={false} />}
+                </>
             </TilesHolder>
         </div>
     );

@@ -34,16 +34,18 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
         };
     }, []);
 
-    const handleOnUninstall = async () => {
+    const handleOnUninstall = () => {
         setIsUninstalling(true);
-        const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
-        if (appResponse) {
-            dispatch(updateInstalledAppsState({ apps: appResponse }));
-            history.push(ROUTES.INSTALLED_APPS);
-        } else {
-            // show notification about error
-            setIsUninstalling(false);
-        }
+        setTimeout(async () => {
+            const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
+            if (appResponse) {
+                dispatch(updateInstalledAppsState({ apps: appResponse }));
+                history.push(ROUTES.INSTALLED_APPS);
+            } else {
+                // show notification about error
+                setIsUninstalling(false);
+            }
+        }, 3000);
     };
 
     const confirmDialogProps: IConfirmDialogProps = {
@@ -86,7 +88,7 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
                     <div className={styles.uninstallLanunchInstruction}>
                         <div className={styles.uninstallLanunchInstruction}>
                             <SectionTitle title={`Uninstall ${props.appDetails.name} App`} />
-                            <div>You are trying to uninstall you {props.appDetails.name} App</div>
+                            <div>You are trying to uninstall your {props.appDetails.name} App</div>
                             <AlertMessage
                                 type={'danger'}
                                 label={

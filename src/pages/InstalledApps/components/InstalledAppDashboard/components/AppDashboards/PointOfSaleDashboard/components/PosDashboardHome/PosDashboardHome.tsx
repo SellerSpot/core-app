@@ -40,7 +40,7 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
         e.preventDefault();
         window.open(
             `${appDomainDetails.protocol}://${appDomainDetails.appDomain}.${appDomainDetails.tenantDomain}.${appDomainDetails.baseDomain}`,
-            '__blank',
+            '__sellerspotpos',
         );
     };
     return (
@@ -57,7 +57,7 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
                                 className={styles.welcomeInstructionLink}
                                 href={'https://pos.spark.sellerspot.in'}
                                 onClick={onLaunchHandler}
-                                target={'__blank'}
+                                target={'__sellerspotpos'}
                             >
                                 https://pos.spark.sellerspot.in
                             </a>

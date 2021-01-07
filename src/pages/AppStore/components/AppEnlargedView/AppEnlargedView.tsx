@@ -90,7 +90,7 @@ export const AppEnlargedView = (): ReactElement => {
                 setIsInstalling(false);
                 history.push(ROUTES.APP_STORE);
             }
-        }, 4000);
+        }, 3000);
     };
 
     return isLoading ? (
