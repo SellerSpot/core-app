@@ -2,7 +2,10 @@ import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import {
+    clearAndPushBreadCrumbs,
+    removePreviouslyInsertedBreadCrumbs,
+} from 'store/models/breadCrumb';
 import { updateInstalledAppsState } from 'store/models/installedApps';
 import { ICONS } from 'utilities/icons';
 import { InstalledAppDashboard } from './components/InstalledAppDashboard/InstalledAppDashboard';
@@ -31,6 +34,10 @@ export const InstalledApps = (): ReactElement => {
                 }),
             );
         }).call(null);
+
+        return () => {
+            dispatch(removePreviouslyInsertedBreadCrumbs());
+        };
     }, []);
 
     return (

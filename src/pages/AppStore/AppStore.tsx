@@ -3,7 +3,10 @@ import { getTenantInstalledApps } from 'pages/InstalledApps/installedapps.action
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import {
+    clearAndPushBreadCrumbs,
+    removePreviouslyInsertedBreadCrumbs,
+} from 'store/models/breadCrumb';
 import { updateInstalledAppsState } from 'store/models/installedApps';
 import { ICONS } from 'utilities/icons';
 import { getAppStoreStyles } from './appstore.styles';
@@ -27,6 +30,10 @@ export const AppStore = (): ReactElement => {
             const installedApps = await getTenantInstalledApps();
             dispatch(updateInstalledAppsState({ apps: installedApps }));
         }).call(null);
+
+        return () => {
+            dispatch(removePreviouslyInsertedBreadCrumbs());
+        };
     }, []);
 
     return (

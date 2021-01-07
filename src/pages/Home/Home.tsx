@@ -5,7 +5,10 @@ import { TilesHolder } from 'components/TilesHolder/TilesHolder';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import {
+    clearAndPushBreadCrumbs,
+    removePreviouslyInsertedBreadCrumbs,
+} from 'store/models/breadCrumb';
 import { ICONS } from 'utilities/icons';
 import { getHomeStyles } from './home.styles';
 
@@ -21,6 +24,9 @@ export const Home = (): ReactElement => {
                 },
             ]),
         );
+        return () => {
+            dispatch(removePreviouslyInsertedBreadCrumbs());
+        };
     }, []);
     const styles = getHomeStyles();
     return (

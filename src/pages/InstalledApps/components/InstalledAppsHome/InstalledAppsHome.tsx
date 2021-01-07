@@ -8,7 +8,10 @@ import { ROUTES } from 'config/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { installedAppsSelector } from 'store/models/installedApps';
 import { ICONS } from 'utilities/icons';
-import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import {
+    clearAndPushBreadCrumbs,
+    removePreviouslyInsertedBreadCrumbs,
+} from 'store/models/breadCrumb';
 
 const styles = getInstalledAppsHomeStyles();
 
@@ -17,15 +20,20 @@ export const InstalledAppsHome = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    dispatch(
-        clearAndPushBreadCrumbs([
-            {
-                icon: ICONS.INSTALLED_APPS,
-                route: ROUTES.INSTALLED_APPS,
-                title: 'Installed Apps',
-            },
-        ]),
-    );
+    useEffect(() => {
+        dispatch(
+            clearAndPushBreadCrumbs([
+                {
+                    icon: ICONS.INSTALLED_APPS,
+                    route: ROUTES.INSTALLED_APPS,
+                    title: 'Installed Apps',
+                },
+            ]),
+        );
+        return () => {
+            dispatch(removePreviouslyInsertedBreadCrumbs());
+        };
+    }, []);
 
     return (
         <div className={styles.installedAppsHomeWrapper}>

@@ -7,7 +7,7 @@ import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { pushBreadCrumbs } from 'store/models/breadCrumb';
+import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
 import { installedAppsSelector, updateInstalledAppsState } from 'store/models/installedApps';
 import { IAppResponse, IResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
@@ -49,7 +49,7 @@ export const AppEnlargedView = (): ReactElement => {
                             },
                             {
                                 icon: ICONS[app.iconUrl as keyof typeof ICONS],
-                                route: `${ROUTES.APP_STORE_APPS}/${app._id}`,
+                                route: `${ROUTES.APP_STORE_APP}?id=${app._id}`,
                                 title: app.name,
                             },
                         ]),
@@ -67,6 +67,10 @@ export const AppEnlargedView = (): ReactElement => {
             // show notificaiton
             history.push(ROUTES.APP_STORE);
         }
+
+        return () => {
+            dispatch(removePreviouslyInsertedBreadCrumbs());
+        };
     }, []);
 
     const handleOnLaunch = () => {
