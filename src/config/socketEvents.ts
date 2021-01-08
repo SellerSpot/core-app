@@ -6,6 +6,8 @@ export const SOCKET_EVENTS = {
     AUTH_SIGN_UP: 'signup',
     AUTH_SIGN_IN: 'signin',
     AUTH_VERIFY_TOKEN: 'verifytoken',
+    AUTH_DELETE_TENANT_ACCOUNT: 'deleteTenantAccount',
+
     // domian setup settings
     SUB_DOMAIN_CREATE: 'createsubdomain',
     SUB_DOMAIN_UPDATE: 'updatesubdomain',
