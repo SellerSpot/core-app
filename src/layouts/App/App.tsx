@@ -64,7 +64,13 @@ export const App = (): ReactElement => {
                 </div>
             )}
             {/* global components */}
-            <ConfirmDialog {...confirmDialogState} />
+            {/* <ConfirmDialog {...confirmDialogState} />
+            <Notify
+                active={true}
+                content={<div>Hello</div>}
+                timeout={2}
+                clearNotificationCallback={() => {}}
+            /> */}
         </div>
     );
 };

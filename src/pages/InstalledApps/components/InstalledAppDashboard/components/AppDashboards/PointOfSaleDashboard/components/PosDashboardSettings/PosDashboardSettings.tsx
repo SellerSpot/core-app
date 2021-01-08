@@ -1,9 +1,10 @@
+import { css } from '@emotion/css';
 import { AlertMessage, Button, IConfirmDialogProps } from '@sellerspot/universal-components';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
 import { uninstallTenantInstalledAppById } from 'pages/InstalledApps/components/InstalledAppDashboard/installedappsdashboard.actions';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
@@ -40,6 +41,7 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
             const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
             if (appResponse) {
                 dispatch(updateInstalledAppsState({ apps: appResponse }));
+                dispatch(closeConfirmDialog());
                 history.push(ROUTES.INSTALLED_APPS);
             } else {
                 // show notification about error
@@ -48,38 +50,63 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
         }, 3000);
     };
 
-    const confirmDialogProps: IConfirmDialogProps = {
-        title: (
-            <div>
-                Uninstall <b>{props.appDetails.name}</b>
-            </div>
-        ),
-        content: (
-            <div>
-                <AlertMessage type={'danger'} label={'We sure hope you know what you are doing'} />
-            </div>
-        ),
-        footer: (
-            <div>
-                <Button
-                    status={isUninstalling ? 'disabledLoading' : 'default'}
-                    label={'Cancel'}
-                    onClick={() => dispatch(closeConfirmDialog())}
-                />
-                <Button
-                    type={'button'}
-                    status={isUninstalling ? 'disabledLoading' : 'default'}
-                    label={isUninstalling ? 'Uninstalling' : 'Uninstall'}
-                    onClick={handleOnUninstall}
-                />
-            </div>
-        ),
-    };
-    const onLaunchHandler = (
+    const onUninstallButtonClickHandler = (
         e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
     ) => {
         e.preventDefault();
-        dispatch(openConfirmDialog(confirmDialogProps));
+        dispatch(
+            openConfirmDialog({
+                className: {
+                    content: css`
+                        padding: 20px !important;
+                        height: auto !important;
+                    `,
+                },
+                title: <SectionTitle title={`Confirm Uninstalling ${props.appDetails.name} App`} />,
+                content: (
+                    <div
+                        style={{
+                            padding: '15px 0px',
+                        }}
+                    >
+                        <AlertMessage
+                            type={'danger'}
+                            label={'We sure hope you know what you are doing'}
+                        />
+                    </div>
+                ),
+                footer: (
+                    <div
+                        className={css`
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: 20px;
+                        `}
+                    >
+                        <Button
+                            style={{
+                                width: 'auto',
+                            }}
+                            status={isUninstalling ? 'disabledLoading' : 'default'}
+                            label={'Cancel'}
+                            onClick={() => dispatch(closeConfirmDialog())}
+                        />
+                        <Button
+                            style={{
+                                width: 'auto',
+                                backgroundColor: COLORS.BACKGROUND_DANGER,
+                                color: COLORS.FOREGROUND_WHITE,
+                            }}
+                            type={'button'}
+                            status={isUninstalling ? 'disabledLoading' : 'default'}
+                            label={isUninstalling ? 'Uninstalling' : 'Uninstall'}
+                            onClick={handleOnUninstall}
+                        />
+                    </div>
+                ),
+            }),
+        );
     };
     return (
         <div className={styles.posDashboardSettingsWrapper}>
@@ -92,7 +119,7 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
                             <AlertMessage
                                 type={'danger'}
                                 label={
-                                    'This is a desctructive opearation!, All data generated in this app will be deleted permanenlty!'
+                                    'This is a destructive opearation!, All data generated in this app will be deleted permanenlty!'
                                 }
                             />
                         </div>

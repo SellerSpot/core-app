@@ -49,7 +49,7 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
                 <div className={styles.welcomeContainer}>
                     <div className={styles.welcomeContainerLanunchInstruction}>
                         <div className={styles.welcomeInstructiontitle}>
-                            Your <b>Point of Sale </b> App is Deployed at following url, Happy
+                            Your <b>Point of Sale </b> App is Deployed at the following url, Happy
                             Selling!
                         </div>
                         <div className={styles.welcomeInstructionLinkHolder}>
