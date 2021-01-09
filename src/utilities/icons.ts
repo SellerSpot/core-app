@@ -4,7 +4,7 @@ import { RiBillFill } from 'react-icons/ri';
 import { FaUserAlt, FaCaretUp, FaCashRegister, FaPlug } from 'react-icons/fa';
 import { RiLogoutBoxFill, RiSettings3Fill } from 'react-icons/ri';
 import { CgFormatSlash } from 'react-icons/cg';
-import { FiShoppingBag } from 'react-icons/fi';
+import { FiShoppingBag, FiGlobe } from 'react-icons/fi';
 import { GrInstallOption } from 'react-icons/gr';
 
 export const ICONS = {
@@ -23,4 +23,5 @@ export const ICONS = {
     APP: IoMdPlay,
     PLUGIN: FaPlug,
     INSTALL_APP: GrInstallOption,
+    GLOBE: FiGlobe,
 };

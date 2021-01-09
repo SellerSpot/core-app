@@ -1,3 +1,4 @@
+import { UnderDevelopment } from 'components/UnderDevelopment/UnderDevelopment';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -19,5 +20,9 @@ export const Notifications = (): ReactElement => {
             ]),
         );
     }, []);
-    return <div className={styles.notificationsWrapper}>Notifications</div>;
+    return (
+        <div className={styles.notificationsWrapper}>
+            <UnderDevelopment />
+        </div>
+    );
 };

@@ -7,6 +7,8 @@ import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { ICONS } from 'utilities/icons';
 import { getBillingStyles } from './billing.styles';
 
+const styles = getBillingStyles();
+
 export const Billing = (): ReactElement => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -20,68 +22,13 @@ export const Billing = (): ReactElement => {
             ]),
         );
     }, []);
-    const styles = {
-        billiingWrapper: css`
-            width: 100%;
-            height: 100%;
-            padding: 50px;
-            position: relative;
-        `,
 
-        exploreImageWrapper: css`
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 40%;
-            height: auto;
-        `,
-
-        contentWrapper: css`
-            margin-top: 50px;
-            width: 60%;
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-        `,
-
-        promotionTitle: css`
-            font-size: 28px;
-            font-weight: bold;
-            line-height: 45px;
-        `,
-
-        promotionSubTitle: css`
-            font-size: 25px;
-        `,
-
-        requestContainer: css``,
-
-        requestTitle: css`
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        `,
-
-        requestItems: css`
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-left: 20px;
-            margin-top: 20px;
-        `,
-
-        requestItem: css`
-            display: flex;
-            font-size: 20px;
-            gap: 10px;
-        `,
-    };
     return (
         <div className={styles.billiingWrapper}>
             <div className={styles.contentWrapper}>
                 <div className={styles.contentWrapper}>
                     <div className={styles.promotionTitle}>
-                        Thanks for being a Beta Tester, <br />
+                        Thanks for being a Alpha Tester, <br />
                         You&apos;ve got all Apps and Plugins for free!.
                     </div>
                     <div className={styles.promotionSubTitle}>

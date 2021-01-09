@@ -58,6 +58,14 @@ export const LeftNavbar = (): ReactElement => {
                 history.push(ROUTES.BILLING);
             },
         },
+        {
+            Icon: ICONS.GLOBE,
+            title: 'Domain Settings',
+            routes: [ROUTES.SUB_DOMAIN_SETUP],
+            onClick: () => {
+                history.push(ROUTES.SUB_DOMAIN_SETUP);
+            },
+        },
     ];
     return (
         <div className={styles.leftnavWrapper}>

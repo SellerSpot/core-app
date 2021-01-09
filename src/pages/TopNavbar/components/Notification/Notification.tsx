@@ -1,6 +1,7 @@
+import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
-import React, { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { ICONS } from 'utilities/icons';
 import { getNotificationStyles } from './notification.styles';
 
@@ -8,9 +9,20 @@ const styles = getNotificationStyles();
 
 export const Notification = (): ReactElement => {
     const history = useHistory();
+    const location = useLocation();
+    const notificaitonRoutesToListen = [ROUTES.NOTIFICATIONS];
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        if (notificaitonRoutesToListen.includes(location.pathname)) {
+            setIsActive(true);
+        } else {
+            setIsActive(false);
+        }
+    }, [location]);
 
     return (
-        <div className={styles.notificationWrapper}>
+        <div className={cx(styles.notificationWrapper, { [styles.notificationActive]: isActive })}>
             <div
                 className={styles.notificationContainer}
                 onClick={() => history.push(ROUTES.NOTIFICATIONS)}

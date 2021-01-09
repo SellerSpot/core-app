@@ -4,6 +4,7 @@ import { COLORS } from 'config/colors';
 export const getNotificationStyles = (): {
     notificationWrapper: string;
     notificationContainer: string;
+    notificationActive: string;
     notificationCounter: string;
 } => {
     const notificationWrapper = css`
@@ -28,6 +29,11 @@ export const getNotificationStyles = (): {
         }
     `;
 
+    const notificationActive = css`
+        border-radius: 50%;
+        background-color: ${COLORS.BACKGROUND_HIGHLIGHT};
+    `;
+
     const notificationCounter = css`
         position: absolute;
         top: 0;
@@ -44,5 +50,5 @@ export const getNotificationStyles = (): {
         justify-content: center;
     `;
 
-    return { notificationWrapper, notificationContainer, notificationCounter };
+    return { notificationWrapper, notificationContainer, notificationActive, notificationCounter };
 };

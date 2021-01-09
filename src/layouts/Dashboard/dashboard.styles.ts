@@ -31,7 +31,7 @@ export const getDashboardStyles = (): {
         overflow-y: auto;
         overflow-x: auto;
         position: relative;
-        padding: 10px 0px 10px 10px;
+        padding: 10px 0px 0px 10px;
         display: grid;
         grid-template-rows: 50px 1fr;
         gap: 5px;

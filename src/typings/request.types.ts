@@ -11,3 +11,7 @@ export interface IAppInstallRequest {
 export interface IAppUnInstallRequest {
     appId: string;
 }
+
+export interface ISubDomainUpdateRequest {
+    domainName: string;
+}

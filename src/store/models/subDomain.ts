@@ -7,7 +7,8 @@ export interface ISubDomainState {
     registered: boolean;
     domainName: string;
     id: string;
-    routePass: string;
+    routePass?: string;
+    baseDomain?: string;
 }
 
 const actualInitialState: ISubDomainState = {
@@ -15,6 +16,7 @@ const actualInitialState: ISubDomainState = {
     domainName: '',
     id: '',
     routePass: ROUTES.DASHBOARD,
+    baseDomain: '',
 };
 
 const getInitialState = (): ISubDomainState => {
@@ -48,11 +50,11 @@ const subDomainSlice = createSlice({
     reducers: {
         updateSubDomain: (
             state,
-            { payload }: PayloadAction<Omit<ISubDomainState, 'registered' | 'routePass'>>,
+            { payload }: PayloadAction<Omit<ISubDomainState, 'registered'>>,
         ) => {
             Object.assign(state, {
                 ...payload,
-                registered: true,
+                registered: payload.id ? true : false,
                 routePass: initialState.routePass,
             } as ISubDomainState);
             localStorage.setItem(CONFIG.REUDX_SUB_DOMAIN_STATE, JSON.stringify(state));

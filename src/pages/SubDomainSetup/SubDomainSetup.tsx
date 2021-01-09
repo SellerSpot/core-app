@@ -1,62 +1,89 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { InputField } from 'components/InputField/InputField';
-import { Button } from 'components/Button/Button';
-import { socketService } from 'services/services';
-import { cx } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import { getSubDomainSetupStyles } from './subdomainsetup.styles';
 import { animationStyles } from 'styles/animation.styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { subDomainSelector, updateSubDomain } from 'store/models/subDomain';
-import { ISubDomainResponse } from 'typings/response.types';
+import { batch, useSelector } from 'react-redux';
+import { subDomainSelector } from 'store/models/subDomain';
+import { AlertMessage, Button, InputField } from '@sellerspot/universal-components';
+import { COLORS } from 'config/colors';
+import {
+    checkDomainAvailability,
+    createTenantSubDomain,
+    updateTenantSubDomain,
+} from './subDomainSetup.actions';
+import { ROUTES } from 'config/routes';
 import { useHistory } from 'react-router-dom';
 
 export const SubDomainSetup = (): ReactElement => {
     const styles = getSubDomainSetupStyles();
     const history = useHistory();
-    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [domainName, setDomainName] = useState('');
     const subDomainState = useSelector(subDomainSelector);
+    const [isStartedSearching, setIsStartedSearching] = useState(false);
+    const [isDomainAvailable, setIsDomainAvailable] = useState(false);
+    const [inputDomain, setInputDomain] = useState('');
 
     useEffect(() => {
         setIsLoading(false);
     }, []);
 
-    const onCreateDomainHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const data = {
-                domainName,
-            };
-            const availabilityCheck = await socketService.request(
-                'SUB_DOMAIN_AVAILABILITY_CHECK',
-                domainName,
-            );
-            const availabilityCheckData = availabilityCheck.data as { available: boolean };
-            if (availabilityCheck.status && availabilityCheckData.available === true) {
-                const subDomainCreateResponse = await socketService.request(
-                    'SUB_DOMAIN_CREATE',
-                    data,
-                );
-                if (subDomainCreateResponse.status) {
-                    const subDomainCreateData = subDomainCreateResponse.data as ISubDomainResponse;
-                    dispatch(
-                        updateSubDomain({
-                            domainName: subDomainCreateData.domainName,
-                            id: subDomainCreateData._id,
-                        }),
-                    );
-                    history.push(subDomainState.routePass);
-                } else {
-                    throw subDomainCreateResponse;
+    const onCreateDomainHandler = useCallback(
+        async (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            if (isDomainAvailable && inputDomain) {
+                const isRegistered = subDomainState.registered;
+                const isDomainUpdated = subDomainState.registered
+                    ? await updateTenantSubDomain(inputDomain)
+                    : await createTenantSubDomain(inputDomain);
+                if (isDomainUpdated) {
+                    /**
+                     * show notification
+                     * reset input field
+                     * if from auth redirect to home
+                     */
+                    batch(() => {
+                        setIsDomainAvailable(false);
+                        setIsStartedSearching(false);
+                        setInputDomain('');
+                        setIsLoading(false);
+                    });
+
+                    if (!isRegistered) history.push(ROUTES.DASHBOARD);
                 }
+            } else {
+                // show tooltip error to fill domain
             }
-        } catch (error) {
-            // error will have IResponse body = feel free to access it with IResponse type
-            console.error(error);
-        }
-    };
+        },
+        [
+            isDomainAvailable,
+            updateTenantSubDomain,
+            inputDomain,
+            setIsStartedSearching,
+            setIsDomainAvailable,
+            setIsLoading,
+        ],
+    );
+
+    const handlOnChange = useCallback(
+        async (domainName: string) => {
+            const sanitizedDomainName = domainName.replace(/[^a-zA-Z\d]+/g, '');
+            setInputDomain(sanitizedDomainName);
+            if (!(sanitizedDomainName.length > 0 && sanitizedDomainName.length <= 15)) return;
+            if (!sanitizedDomainName) {
+                setIsStartedSearching(false);
+                return;
+            }
+            if (!isStartedSearching) setIsStartedSearching(true);
+            if (await checkDomainAvailability(sanitizedDomainName)) {
+                setIsDomainAvailable(true);
+            } else {
+                setIsDomainAvailable(false);
+            }
+        },
+        [isStartedSearching, setIsStartedSearching, setInputDomain, setIsDomainAvailable],
+    );
+
     return (
         <>
             {isLoading ? (
@@ -75,22 +102,117 @@ export const SubDomainSetup = (): ReactElement => {
                             Note: All the applications will be hosted under this domain. (Custom
                             domain feature is under construction)
                         </div>
+                        {subDomainState.registered && (
+                            <div className={styles.inputGroup} style={{ paddingBottom: 0 }}>
+                                <InputField
+                                    size={'default'}
+                                    label={'Your Current Domain is'}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 20,
+                                            fontWeight: 'bold',
+                                        },
+                                        inputStyle: {
+                                            fontSize: 20,
+                                            textAlign: 'left',
+                                            letterSpacing: 4,
+                                            paddingLeft: 10,
+                                        },
+                                    }}
+                                    disabled={true}
+                                    value={`${subDomainState.domainName}.${subDomainState.baseDomain}`}
+                                />
+                            </div>
+                        )}
                         <form className={styles.formContainer} onSubmit={onCreateDomainHandler}>
                             <div className={styles.inputGroup}>
                                 <InputField
-                                    label={'Domain Name'}
-                                    type={'text'}
-                                    value={domainName}
-                                    onChange={(e) => setDomainName(e.target.value)}
-                                    tabIndex={1}
+                                    size={'default'}
+                                    label={
+                                        subDomainState.registered
+                                            ? 'Update Domain'
+                                            : 'Choose Domain'
+                                    }
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 20,
+                                            fontWeight: 'bold',
+                                        },
+                                        inputStyle: {
+                                            fontSize: 20,
+                                            textAlign: 'right',
+                                            letterSpacing: 4,
+                                            paddingRight: 10,
+                                        },
+                                        suffixStyle: {
+                                            width: 450,
+                                            textAlign: 'left',
+                                            justifyContent: 'flex-start',
+                                            fontSize: 20,
+                                            letterSpacing: 4,
+                                            paddingLeft: 10,
+                                            fontWeight: 'bold',
+                                        },
+                                    }}
+                                    suffix={<div>.{subDomainState.baseDomain}</div>}
+                                    error={{
+                                        showError: isStartedSearching && !isDomainAvailable,
+                                        errorMessage:
+                                            'Not Available - (minimum 3 and maximum 10 characters)',
+                                    }}
+                                    className={{
+                                        helperLabel: css`
+                                            color: ${isStartedSearching && isDomainAvailable
+                                                ? 'green !important'
+                                                : ''};
+                                        `,
+                                    }}
+                                    onChange={(e) => {
+                                        handlOnChange(e.target.value);
+                                    }}
+                                    helperText={
+                                        isStartedSearching && isDomainAvailable
+                                            ? 'Domain Available, Submit to Continue. - (minimum 3 and maximum 10 characters)'
+                                            : 'Search for Domain Availability - (minimum 3 and maximum 10 characters)'
+                                    }
+                                    value={inputDomain}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
-                                Your could change this later via domain settings in Dashboard. (Sub
-                                Domains are allocated based on availability)
+                                You could change this domain anytime via domain settings menu in
+                                Dashboard. (Sub Domains are allocated based on availability)
                             </div>
                             <div className={styles.inputGroup}>
-                                <Button label={'Continue'} type={'submit'} tabIndex={4} />
+                                <AlertMessage
+                                    style={{
+                                        labelWrapperStyle: {
+                                            paddingTop: 10,
+                                            paddingBottom: 10,
+                                        },
+                                    }}
+                                    type={'warning'}
+                                    label={
+                                        'This is a destructive operation!, All SEO done for the current subdomain will be invalid.(you may loose user traction to your ecommerce site incase the ecommerce app is installed)'
+                                    }
+                                />
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <Button
+                                    label={
+                                        subDomainState.registered
+                                            ? 'Update Domain'
+                                            : 'Create Domain'
+                                    }
+                                    type={'submit'}
+                                    status={isDomainAvailable ? 'default' : 'disabled'}
+                                    style={{
+                                        color: COLORS.FOREGROUND_WHITE,
+                                        backgroundColor: COLORS.FOREGROUND_PRIMARY,
+                                        width: '50%',
+                                        fontWeight: 'bold',
+                                        opacity: isDomainAvailable ? 1 : 0.5,
+                                    }}
+                                />
                             </div>
                         </form>
                     </div>

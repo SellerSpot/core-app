@@ -45,11 +45,12 @@ export const SignIn = (): ReactElement => {
                         token: tenantData.token,
                     }),
                 );
-                if (tenantData.subDomain._id) {
+                if (tenantData.subDomain.baseDomain) {
                     dispatch(
                         updateSubDomain({
                             domainName: tenantData.subDomain.domainName,
                             id: tenantData.subDomain._id,
+                            baseDomain: tenantData.subDomain.baseDomain,
                         }),
                     );
                 }

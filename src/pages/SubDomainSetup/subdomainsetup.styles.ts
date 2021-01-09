@@ -19,7 +19,7 @@ export const getSubDomainSetupStyles = (): {
 
     const subDomainSetupContainer = css`
         text-align: left;
-        margin-top: 10%;
+        margin-top: 100px;
         width: 500px;
     `;
 

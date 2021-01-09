@@ -19,6 +19,7 @@ export interface ISubDomainResponse {
     tenantId: string;
     updatedAt: string;
     _id: string;
+    baseDomain: string;
 }
 
 export interface IAppResponse {
@@ -39,4 +40,8 @@ export interface IInstalledAppLaunchDomainResponse {
     baseDomain: string;
     customDomain: string;
     protocol: string;
+}
+
+export interface ISubDomainCheckResponse {
+    available: boolean;
 }

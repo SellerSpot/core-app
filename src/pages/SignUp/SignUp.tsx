@@ -11,6 +11,8 @@ import { cx } from '@emotion/css';
 import { getSignUpStyles } from './signup.styles';
 import { animationStyles } from 'styles/animation.styles';
 import { updateGlobalServices } from 'config/globalConfig';
+import { IAuthResposne } from 'typings/response.types';
+import { updateSubDomain } from 'store/models/subDomain';
 
 export const SignUp = (): ReactElement => {
     const styles = getSignUpStyles();
@@ -33,10 +35,7 @@ export const SignUp = (): ReactElement => {
                 password,
             };
             const response = await socketService.request('AUTH_SIGN_UP', data);
-            const tenantData: Pick<
-                IAuthState,
-                'id' | 'email' | 'name' | 'token'
-            > = response.data as Pick<IAuthState, 'id' | 'email' | 'name' | 'token'>;
+            const tenantData = response.data as IAuthResposne;
             // updating the globals to know that the new token has arrived.
             updateGlobalServices(tenantData.token);
             dispatch(
@@ -47,6 +46,15 @@ export const SignUp = (): ReactElement => {
                     token: tenantData.token,
                 }),
             );
+            if (tenantData.subDomain.baseDomain) {
+                dispatch(
+                    updateSubDomain({
+                        domainName: tenantData.subDomain.domainName,
+                        id: tenantData.subDomain._id,
+                        baseDomain: tenantData.subDomain.baseDomain,
+                    }),
+                );
+            }
         } catch (error) {
             // error will have IResponse body = feel free to access it with IResponse type
         }
