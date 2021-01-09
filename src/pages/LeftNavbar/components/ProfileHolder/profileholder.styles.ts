@@ -22,7 +22,7 @@ export const getProfileHolderStyles = (): {
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        padding: 0 10px 0 10px;
+        padding: 0 5px 0 5px;
     `;
 
     const profileHolderContainer = css`
@@ -40,7 +40,7 @@ export const getProfileHolderStyles = (): {
         border-radius: 5px;
         display: grid;
         grid-template-columns: 40px 1fr 10px;
-        gap: 10px;
+        gap: 15px;
         &:hover {
             background-color: ${COLORS.BACKGROUND_PRIMARY};
         }
@@ -122,8 +122,8 @@ export const getProfileHolderStyles = (): {
     `;
 
     const menuItem = css`
-        padding: 0 15px;
-        gap: 8px;
+        padding: 0 10px;
+        gap: 15px;
     `;
 
     const activeHoverGray = css`

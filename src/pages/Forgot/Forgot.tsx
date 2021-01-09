@@ -7,6 +7,8 @@ import { ROUTES } from 'config/routes';
 import { cx } from '@emotion/css';
 import { getForgotStyles } from './forgot.styles';
 import { animationStyles } from 'styles/animation.styles';
+import { UnderConstruction } from 'images/images';
+import { UnderDevelopment } from 'components/UnderDevelopment/UnderDevelopment';
 
 export const Forgot = (): ReactElement => {
     const styles = getForgotStyles();
@@ -62,6 +64,14 @@ export const Forgot = (): ReactElement => {
                                 <Button label={'Send Reset Instructions'} type={'submit'} />
                             </div>
                         </form>
+                        <div
+                            style={{
+                                height: 'auto',
+                                marginTop: 50,
+                            }}
+                        >
+                            <UnderDevelopment />
+                        </div>
                     </div>
                 </div>
             )}

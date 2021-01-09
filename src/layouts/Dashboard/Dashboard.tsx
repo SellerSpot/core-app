@@ -8,18 +8,32 @@ import { LeftNavbar } from 'pages/LeftNavbar/LeftNavbar';
 import { Notifications } from 'pages/Notifications/Notifications';
 import { Settings } from 'pages/Settings/Settings';
 import { TopNavbar } from 'pages/TopNavbar/TopNavbar';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { getDashboardStyles } from './dashboard.styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { subDomainSelector } from 'store/models/subDomain';
 import { cx } from '@emotion/css';
 import { commonSelector } from 'store/models/common';
+import { getTenantInstalledApps } from 'pages/InstalledApps/installedapps.actions';
+import { updateInstalledAppsState } from 'store/models/installedApps';
 
 export const Dashboard = (): ReactElement => {
     const styles = getDashboardStyles();
     const subDomainState = useSelector(subDomainSelector);
     const commonState = useSelector(commonSelector);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        (async () => {
+            const tenantInstalledApps = await getTenantInstalledApps();
+            dispatch(
+                updateInstalledAppsState({
+                    apps: tenantInstalledApps,
+                }),
+            );
+        }).call(null);
+    }, []);
 
     return (
         <div className={cx(styles.dashboardWrapper)}>

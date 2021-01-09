@@ -19,6 +19,7 @@ export const getPosdashboardHomeStyles = (): {
         justify-content: center;
     `;
     const homeContainer = css`
+        margin-top: 100px;
         width: 80%;
         height: auto;
     `;

@@ -22,7 +22,8 @@ export const getPosdashboardSettingsStyles = (): {
     `;
 
     const uninstallContainer = css`
-        padding: 50px;
+        margin-top: 100px;
+        padding: 25px 50px;
         width: 100%;
         height: auto;
         box-shadow: 0 0 5px 0 ${COLORS.BACKGROUND_HIGHLIGHT};
