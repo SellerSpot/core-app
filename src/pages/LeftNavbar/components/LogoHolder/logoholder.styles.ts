@@ -19,7 +19,7 @@ export const getLogoHolderStyles = (): {
     const logoWrapper = css`
         display: flex;
         flex-direction: row;
-        gap: 5px;
+        gap: 15px;
         align-items: center;
         justify-content: flex-start;
     `;

@@ -13,14 +13,21 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { getDashboardStyles } from './dashboard.styles';
 import { useSelector } from 'react-redux';
 import { subDomainSelector } from 'store/models/subDomain';
+import { cx } from '@emotion/css';
+import { commonSelector } from 'store/models/common';
 
 export const Dashboard = (): ReactElement => {
     const styles = getDashboardStyles();
     const subDomainState = useSelector(subDomainSelector);
+    const commonState = useSelector(commonSelector);
 
     return (
-        <div className={styles.dashboardWrapper}>
-            <div className={styles.leftNavbarWrapper}>
+        <div className={cx(styles.dashboardWrapper)}>
+            <div
+                className={cx(styles.leftNavbarWrapper, {
+                    [styles.leftNavBarExpanded]: commonState.isLeftNavBarExpanded,
+                })}
+            >
                 <LeftNavbar />
             </div>
             <div className={styles.mainBodyWrapper}>

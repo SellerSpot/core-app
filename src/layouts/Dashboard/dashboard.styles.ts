@@ -1,9 +1,10 @@
-import { css } from '@emotion/css';
+import { css, keyframes } from '@emotion/css';
 import { COLORS } from 'config/colors';
 
 export const getDashboardStyles = (): {
     dashboardWrapper: string;
     leftNavbarWrapper: string;
+    leftNavBarExpanded: string;
     mainBodyWrapper: string;
     topNavbarWrapper: string;
     coreContentWrapper: string;
@@ -12,17 +13,22 @@ export const getDashboardStyles = (): {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: 250px 1fr;
+        grid-template-columns: min-content 1fr;
         background: ${COLORS.BACKGROUND_PRIMARY};
         overflow: hidden;
     `;
 
     const leftNavbarWrapper = css`
-        width: 100%;
+        width: 70px;
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
         position: relative;
+        transition: width 0.3s;
+    `;
+
+    const leftNavBarExpanded = css`
+        width: 250px;
     `;
 
     const mainBodyWrapper = css`
@@ -52,6 +58,7 @@ export const getDashboardStyles = (): {
 
     return {
         dashboardWrapper,
+        leftNavBarExpanded,
         leftNavbarWrapper,
         mainBodyWrapper,
         topNavbarWrapper,

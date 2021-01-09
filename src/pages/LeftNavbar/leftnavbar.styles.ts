@@ -6,9 +6,17 @@ export const getLeftNavBarStyles = (): {
     logoHolder: string;
     menuHolder: string;
     profileHolder: string;
+    leftNavContainer: string;
 } => {
     const leftnavWrapper = css`
         width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    `;
+
+    const leftNavContainer = css`
+        width: 250px;
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
@@ -40,6 +48,7 @@ export const getLeftNavBarStyles = (): {
 
     return {
         leftnavWrapper,
+        leftNavContainer,
         logoHolder,
         menuHolder,
         profileHolder,

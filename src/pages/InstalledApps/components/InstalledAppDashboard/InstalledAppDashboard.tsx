@@ -2,10 +2,11 @@ import { Loader } from 'components/Loader/Loader';
 import { APP_DASHBOARD_NAMES } from 'config/dashboardNames';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
 import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
+import { commonSelector, updateCommonState } from 'store/models/common';
 import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
@@ -18,9 +19,20 @@ export const InstalledAppDashboard = (): ReactElement => {
     const dispatch = useDispatch();
     const [appDetails, setAppDetails] = useState({} as IAppResponse);
     const [isLoading, setIsLoading] = useState(true);
+    const commonState = useSelector(commonSelector);
+
+    const minmizeMainNav = (maximize = false) => {
+        if (commonState.isLeftNavBarExpanded)
+            dispatch(
+                updateCommonState({
+                    isLeftNavBarExpanded: maximize,
+                }),
+            );
+    };
 
     useEffect(() => {
         try {
+            minmizeMainNav();
             const appSlug = params.slug;
             if (!appSlug) throw 'Invalid Url';
             (async () => {
@@ -53,6 +65,9 @@ export const InstalledAppDashboard = (): ReactElement => {
             // show notificaiton
             history.push(ROUTES.APP_STORE);
         }
+        return () => {
+            minmizeMainNav(true);
+        };
     }, []);
     const Dashboard = installedAppDashboardService.getAppDashobard(
         (appDetails.slug ??
@@ -64,7 +79,7 @@ export const InstalledAppDashboard = (): ReactElement => {
     return isLoading ? (
         <Loader />
     ) : (
-        <div className={styles.installedAppDashboardWrapper}>
+        <div className={styles.installedAppDashboardWrapper} onClick={() => minmizeMainNav()}>
             {Dashboard ? (
                 <Dashboard appDetails={appDetails} />
             ) : (

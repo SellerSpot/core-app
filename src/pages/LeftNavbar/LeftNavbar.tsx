@@ -1,6 +1,8 @@
 import { ROUTES } from 'config/routes';
 import React, { ReactElement } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { commonSelector, updateCommonState } from 'store/models/common';
 import { ICONS } from 'utilities/icons';
 import { LogoHolder } from './components/LogoHolder/LogoHolder';
 import { IMenuItemProps, MenuHolder } from './components/MenuHolder/MenuHolder';
@@ -10,6 +12,8 @@ import { getLeftNavBarStyles } from './leftnavbar.styles';
 export const LeftNavbar = (): ReactElement => {
     const styles = getLeftNavBarStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const commonState = useSelector(commonSelector);
     const menuItems: IMenuItemProps[] = [
         {
             Icon: ICONS.HOME,
@@ -67,16 +71,27 @@ export const LeftNavbar = (): ReactElement => {
             },
         },
     ];
+    const expandNavBarHandler = () => {
+        if (!commonState.isLeftNavBarExpanded)
+            dispatch(
+                updateCommonState({
+                    isLeftNavBarExpanded: true,
+                }),
+            );
+    };
+
     return (
-        <div className={styles.leftnavWrapper}>
-            <div className={styles.logoHolder}>
-                <LogoHolder />
-            </div>
-            <div className={styles.menuHolder}>
-                <MenuHolder menuItems={menuItems} />
-            </div>
-            <div className={styles.profileHolder}>
-                <ProfileHolder />
+        <div className={styles.leftnavWrapper} onClick={expandNavBarHandler}>
+            <div className={styles.leftNavContainer}>
+                <div className={styles.logoHolder}>
+                    <LogoHolder />
+                </div>
+                <div className={styles.menuHolder}>
+                    <MenuHolder menuItems={menuItems} />
+                </div>
+                <div className={styles.profileHolder}>
+                    <ProfileHolder />
+                </div>
             </div>
         </div>
     );

@@ -28,7 +28,7 @@ export const getMenuHolderStyles = (): {
         padding: 0px 18px;
         display: grid;
         grid-template-columns: 40px 1fr;
-        gap: 5px;
+        gap: 15px;
         cursor: pointer;
         color: ${COLORS.FOREGROUND_TERTIARY};
         &:hover {

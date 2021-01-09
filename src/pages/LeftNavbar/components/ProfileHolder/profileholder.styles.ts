@@ -122,7 +122,7 @@ export const getProfileHolderStyles = (): {
     `;
 
     const menuItem = css`
-        padding: 0 10px;
+        padding: 0 15px;
         gap: 8px;
     `;
 

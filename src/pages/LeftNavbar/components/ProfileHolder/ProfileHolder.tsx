@@ -20,7 +20,7 @@ export const ProfileHolder = (): ReactElement => {
     const profileMenuItems: IMenuItemProps[] = [
         {
             Icon: ICONS.SETTINGS,
-            title: 'Settings',
+            title: 'Account Settings',
             routes: [ROUTES.SETTINGS],
             onClick: () => {
                 history.push(ROUTES.SETTINGS);
