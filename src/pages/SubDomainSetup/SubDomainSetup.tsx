@@ -199,20 +199,22 @@ export const SubDomainSetup = (): ReactElement => {
                                 You could change this domain anytime via domain settings menu in
                                 Dashboard. (Sub Domains are allocated based on availability)
                             </div>
-                            <div className={styles.inputGroup}>
-                                <AlertMessage
-                                    style={{
-                                        labelWrapperStyle: {
-                                            paddingTop: 10,
-                                            paddingBottom: 10,
-                                        },
-                                    }}
-                                    type={'warning'}
-                                    label={
-                                        'This is a destructive operation!, All SEO done for the current subdomain will be invalid.(you may loose user traction to your ecommerce site incase the ecommerce app is installed)'
-                                    }
-                                />
-                            </div>
+                            {subDomainState.registered && (
+                                <div className={styles.inputGroup}>
+                                    <AlertMessage
+                                        style={{
+                                            labelWrapperStyle: {
+                                                paddingTop: 10,
+                                                paddingBottom: 10,
+                                            },
+                                        }}
+                                        type={'warning'}
+                                        label={
+                                            'This is a destructive operation!, All SEO done for the current subdomain will be invalid.(you may loose user traction to your ecommerce site incase the ecommerce app is installed)'
+                                        }
+                                    />
+                                </div>
+                            )}
                             <div className={styles.inputGroup}>
                                 <Button
                                     label={

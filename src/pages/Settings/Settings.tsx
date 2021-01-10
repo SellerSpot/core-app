@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { unAuthenticate } from 'store/models/auth';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { closeConfirmDialog } from 'store/models/confirmDialog';
+import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { deleteTenantAccount } from './settings.actions';
 
@@ -29,18 +30,17 @@ export const Settings = (): ReactElement => {
         );
     }, []);
 
-    const handleOnDelete = () => {
+    const handleOnDelete = async () => {
         setIsDeleting(true);
-        setTimeout(async () => {
-            const response = await deleteTenantAccount();
-            if (response) {
-                dispatch(unAuthenticate());
-                dispatch(closeConfirmDialog());
-            } else {
-                // show notification about error
-                setIsDeleting(false);
-            }
-        }, 3000);
+        await introduceDelay();
+        const response = await deleteTenantAccount();
+        if (response) {
+            dispatch(unAuthenticate());
+            dispatch(closeConfirmDialog());
+        } else {
+            // show notification about error
+            setIsDeleting(false);
+        }
     };
 
     const styles = {

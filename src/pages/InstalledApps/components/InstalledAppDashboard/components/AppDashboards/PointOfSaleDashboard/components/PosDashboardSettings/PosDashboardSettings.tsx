@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
 import { closeConfirmDialog, openConfirmDialog } from 'store/models/confirmDialog';
 import { updateInstalledAppsState } from 'store/models/installedApps';
+import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
 import { getPosdashboardSettingsStyles } from './posdashboardsettings.styles';
@@ -35,79 +36,20 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
         };
     }, []);
 
-    const handleOnUninstall = () => {
+    const handleOnUninstall = async () => {
         setIsUninstalling(true);
-        setTimeout(async () => {
-            const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
-            if (appResponse) {
-                dispatch(updateInstalledAppsState({ apps: appResponse }));
-                dispatch(closeConfirmDialog());
-                history.push(ROUTES.INSTALLED_APPS);
-            } else {
-                // show notification about error
-                setIsUninstalling(false);
-            }
-        }, 3000);
+        await introduceDelay();
+        const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
+        if (appResponse) {
+            dispatch(updateInstalledAppsState({ apps: appResponse }));
+            dispatch(closeConfirmDialog());
+            history.push(ROUTES.INSTALLED_APPS);
+        } else {
+            // show notification about error
+            setIsUninstalling(false);
+        }
     };
 
-    const onUninstallButtonClickHandler = (
-        e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
-    ) => {
-        e.preventDefault();
-        dispatch(
-            openConfirmDialog({
-                className: {
-                    content: css`
-                        padding: 20px !important;
-                        height: auto !important;
-                    `,
-                },
-                title: <SectionTitle title={`Confirm Uninstalling ${props.appDetails.name} App`} />,
-                content: (
-                    <div
-                        style={{
-                            padding: '15px 0px',
-                        }}
-                    >
-                        <AlertMessage
-                            type={'danger'}
-                            label={'We sure hope you know what you are doing'}
-                        />
-                    </div>
-                ),
-                footer: (
-                    <div
-                        className={css`
-                            display: flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            gap: 20px;
-                        `}
-                    >
-                        <Button
-                            style={{
-                                width: 'auto',
-                            }}
-                            status={isUninstalling ? 'disabledLoading' : 'default'}
-                            label={'Cancel'}
-                            onClick={() => dispatch(closeConfirmDialog())}
-                        />
-                        <Button
-                            style={{
-                                width: 'auto',
-                                backgroundColor: COLORS.BACKGROUND_DANGER,
-                                color: COLORS.FOREGROUND_WHITE,
-                            }}
-                            type={'button'}
-                            status={isUninstalling ? 'disabledLoading' : 'default'}
-                            label={isUninstalling ? 'Uninstalling' : 'Uninstall'}
-                            onClick={handleOnUninstall}
-                        />
-                    </div>
-                ),
-            }),
-        );
-    };
     return (
         <div className={styles.posDashboardSettingsWrapper}>
             <div className={styles.settingsContainer}>
