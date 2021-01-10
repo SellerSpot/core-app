@@ -14,6 +14,7 @@ import {
 } from './subDomainSetup.actions';
 import { ROUTES } from 'config/routes';
 import { useHistory, useLocation } from 'react-router-dom';
+import { showMessage } from 'utilities/notify';
 
 export const SubDomainSetup = (): ReactElement => {
     const styles = getSubDomainSetupStyles();
@@ -44,6 +45,10 @@ export const SubDomainSetup = (): ReactElement => {
                      * reset input field
                      * if from auth redirect to home
                      */
+                    showMessage(
+                        `Domain Name ${!isRegistered ? 'Created' : 'Updated'} Successfully!`,
+                        'success',
+                    );
                     const returnPath = query.get('return');
                     if (returnPath) {
                         // validate somehow before pusing
@@ -61,6 +66,7 @@ export const SubDomainSetup = (): ReactElement => {
                 }
             } else {
                 // show tooltip error to fill domain
+                showMessage(`Entered Domain name doesn't meet the criteria`, 'danger');
             }
         },
         [
@@ -125,11 +131,11 @@ export const SubDomainSetup = (): ReactElement => {
                                     size={'default'}
                                     label={'Your Current Domain is'}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 20,
                                             fontWeight: 'bold',
                                         },
-                                        inputStyle: {
+                                        input: {
                                             fontSize: 20,
                                             textAlign: 'left',
                                             letterSpacing: 4,
@@ -151,17 +157,17 @@ export const SubDomainSetup = (): ReactElement => {
                                             : 'Choose Domain'
                                     }
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 20,
                                             fontWeight: 'bold',
                                         },
-                                        inputStyle: {
+                                        input: {
                                             fontSize: 20,
                                             textAlign: 'right',
                                             letterSpacing: 4,
                                             paddingRight: 10,
                                         },
-                                        suffixStyle: {
+                                        suffixWrapper: {
                                             width: 450,
                                             textAlign: 'left',
                                             justifyContent: 'flex-start',

@@ -16,6 +16,7 @@ import { Button, InputField } from '@sellerspot/universal-components';
 import { COLORS } from 'config/colors';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { Space } from 'components/Space/Space';
+import { showMessage } from 'utilities/notify';
 
 export const SignIn = (): ReactElement => {
     const styles = getSignInStyles();
@@ -74,6 +75,7 @@ export const SignIn = (): ReactElement => {
             if (customError.status !== undefined && customError.data) {
                 const customErrorData = error.data as IErrorMessageResponse[];
                 if (customErrorData[0].name === 'notFound') {
+                    showMessage(customErrorData[0].message, 'danger');
                     batch(() => {
                         setIsError(true);
                         setErrorMessage(customErrorData[0].message);
@@ -81,9 +83,10 @@ export const SignIn = (): ReactElement => {
                 }
             } else {
                 console.error(error);
+                showMessage('Email or password is incorrect!', 'danger');
             }
+            setIsProcessing(false);
         }
-        setIsProcessing(false);
     };
     return (
         <>
@@ -125,10 +128,10 @@ export const SignIn = (): ReactElement => {
                                     label={'Email Address'}
                                     type={'email'}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
+                                        input: {
                                             fontSize: 18,
                                             padding: '0 10px',
                                         },
@@ -167,10 +170,10 @@ export const SignIn = (): ReactElement => {
                                     value={password}
                                     required={true}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
+                                        input: {
                                             fontSize: 18,
                                             padding: '0 10px',
                                         },

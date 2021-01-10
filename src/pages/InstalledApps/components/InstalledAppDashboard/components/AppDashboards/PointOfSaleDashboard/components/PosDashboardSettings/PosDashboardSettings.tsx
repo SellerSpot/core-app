@@ -13,6 +13,7 @@ import { updateInstalledAppsState } from 'store/models/installedApps';
 import { animationStyles } from 'styles/animation.styles';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
+import { showMessage } from 'utilities/notify';
 import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
 import { getPosdashboardSettingsStyles } from './posdashboardsettings.styles';
 
@@ -42,11 +43,12 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
         await introduceDelay();
         const appResponse = await uninstallTenantInstalledAppById(props.appDetails._id);
         if (appResponse) {
+            showMessage(`${props.appDetails.name} App Uninstalled Successfully! `, 'success');
             dispatch(updateInstalledAppsState({ apps: appResponse }));
-            dispatch(closeConfirmDialog());
             history.push(ROUTES.INSTALLED_APPS);
         } else {
             // show notification about error
+            showMessage('Something went wrong uninstalling App, Please try again later!', 'danger');
             setIsUninstalling(false);
         }
     };

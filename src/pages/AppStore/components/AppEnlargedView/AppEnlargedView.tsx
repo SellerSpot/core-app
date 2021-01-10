@@ -14,6 +14,7 @@ import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse, IResponse } from 'typings/response.types';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
+import { showMessage } from 'utilities/notify';
 import { getAppById, installApp } from './appenlargedview.actions';
 import { getEnlargedAppViewStyles } from './appenlargedview.styles';
 
@@ -62,11 +63,13 @@ export const AppEnlargedView = (): ReactElement => {
                     setIsLoading(false);
                 } catch (error) {
                     console.error(error);
+                    showMessage(error.message ?? `${error}`, 'danger');
                     // show notificaiton
                     history.push(ROUTES.APP_STORE);
                 }
             }).call(null);
         } catch (error) {
+            showMessage(error.message ?? `${error}`, 'danger');
             console.error(error);
             // show notificaiton
             history.push(ROUTES.APP_STORE);
@@ -84,6 +87,7 @@ export const AppEnlargedView = (): ReactElement => {
     const handleOnInstallClick = async (): Promise<void> => {
         setIsInstalling(true);
         if (!sudDomainState.registered) {
+            showMessage('Please Create Subdomain to install Apps', 'warning');
             history.push(
                 `${ROUTES.SUB_DOMAIN_SETUP}?return=${ROUTES.APP_STORE_APP}?id=${appDetails._id}`,
             );
@@ -93,10 +97,15 @@ export const AppEnlargedView = (): ReactElement => {
         const appInstallResponse = await installApp(appDetails._id);
         if (appInstallResponse) {
             dispatch(updateInstalledAppsState({ apps: appInstallResponse }));
+            showMessage(`${appDetails.name} App Installed Successfully!`, 'success');
             setIsInstalling(false);
             handleOnLaunch();
         } else {
             // show error message with notifieer
+            showMessage(
+                'Something Went Wrong, Please try again later or reload the site!',
+                'danger',
+            );
             setIsInstalling(false);
             history.push(ROUTES.APP_STORE);
         }

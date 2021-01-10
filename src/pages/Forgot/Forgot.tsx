@@ -63,10 +63,10 @@ export const Forgot = (): ReactElement => {
                                     label={'Email Address'}
                                     type={'email'}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
+                                        input: {
                                             fontSize: 18,
                                             padding: '0 10px',
                                         },

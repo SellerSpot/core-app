@@ -14,6 +14,7 @@ import { updateSubDomain } from 'store/models/subDomain';
 import { Button, InputField } from '@sellerspot/universal-components';
 import { COLORS } from 'config/colors';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
+import { showMessage } from 'utilities/notify';
 
 export const SignUp = (): ReactElement => {
     const styles = getSignUpStyles();
@@ -100,13 +101,17 @@ export const SignUp = (): ReactElement => {
                     }),
                 );
             }
+            showMessage(
+                'Welcome to Sellerspot! Create your free subdomain to install Apps',
+                'success',
+            );
         } catch (error) {
             // error will have IResponse body = feel free to access it with IResponse type
-            console.error(error);
             const customError = error as IResponse;
             if (customError.status !== undefined && customError.data) {
                 const customErrorData = error.data as IErrorMessageResponse[];
                 if (customErrorData[0].name === 'alreadyFound') {
+                    showMessage(customErrorData[0].message, 'danger');
                     setErrorState({
                         ...errorState,
                         email: {
@@ -117,9 +122,10 @@ export const SignUp = (): ReactElement => {
                 }
             } else {
                 console.error(error);
+                showMessage('Something went wrong check fields or try again later!', 'danger');
             }
+            setIsProcessing(false);
         }
-        setIsProcessing(false);
     };
     return (
         <>
@@ -178,11 +184,11 @@ export const SignUp = (): ReactElement => {
                                         errorMessage: errorState.userName.message,
                                     }}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
-                                            fontSize: 18,
+                                        input: {
+                                            fontSize: 16,
                                             padding: '0 10px',
                                         },
                                     }}
@@ -200,11 +206,11 @@ export const SignUp = (): ReactElement => {
                                         errorMessage: errorState.email.message,
                                     }}
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
-                                            fontSize: 18,
+                                        input: {
+                                            fontSize: 16,
                                             padding: '0 10px',
                                         },
                                     }}
@@ -228,11 +234,11 @@ export const SignUp = (): ReactElement => {
                                         'Use combinations of letter, number and special characters, White space is not allowed, minimum of 5 characters required'
                                     }
                                     style={{
-                                        lableStyle: {
+                                        label: {
                                             fontSize: 18,
                                         },
-                                        inputStyle: {
-                                            fontSize: 18,
+                                        input: {
+                                            fontSize: 16,
                                             padding: '0 10px',
                                         },
                                     }}

@@ -15,6 +15,7 @@ export const COLORS = {
     PLUGIN_COLOR: '#1C73F5',
     // status colros
     COLOR_DANGER: '#DC3545',
-    COLOR_SUCCESS: '#28A745',
+    COLOR_SUCCESS: '#0EC120',
     COLOR_WARNING: '#EDB203',
+    COLOR_INFO: '#1C73F5',
 };

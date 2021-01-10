@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
 import { CONFIG } from 'config/config';
-import { ROUTES } from 'config/routes';
 import { RootState } from '../store';
 
 export interface ISubDomainState {
     registered: boolean;
     domainName: string;
     id: string;
-    routePass?: string;
     baseDomain?: string;
 }
 
@@ -15,7 +13,6 @@ const actualInitialState: ISubDomainState = {
     registered: false,
     domainName: '',
     id: '',
-    routePass: ROUTES.DASHBOARD,
     baseDomain: '',
 };
 
@@ -55,7 +52,6 @@ const subDomainSlice = createSlice({
             Object.assign(state, {
                 ...payload,
                 registered: payload.id ? true : false,
-                routePass: initialState.routePass,
             } as ISubDomainState);
             localStorage.setItem(CONFIG.REUDX_SUB_DOMAIN_STATE, JSON.stringify(state));
         },

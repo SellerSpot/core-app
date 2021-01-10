@@ -5,18 +5,16 @@ import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { unAuthenticate } from 'store/models/auth';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
-import { closeConfirmDialog } from 'store/models/confirmDialog';
 import { animationStyles } from 'styles/animation.styles';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
+import { showMessage } from 'utilities/notify';
 import { deleteTenantAccount } from './settings.actions';
 
 export const Settings = (): ReactElement => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [isDeletings, setIsDeleting] = useState(false);
 
     useEffect(() => {
@@ -36,10 +34,11 @@ export const Settings = (): ReactElement => {
         await introduceDelay();
         const response = await deleteTenantAccount();
         if (response) {
+            showMessage(`Account Deleted Successfully, We Hope You'll Comeback Soon!`, 'success');
             dispatch(unAuthenticate());
-            dispatch(closeConfirmDialog());
         } else {
             // show notification about error
+            showMessage('Error Deleting Account, Try again later or Contact Support!', 'danger');
             setIsDeleting(false);
         }
     };
