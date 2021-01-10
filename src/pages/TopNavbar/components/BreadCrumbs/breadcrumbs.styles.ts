@@ -4,6 +4,7 @@ import { COLORS } from 'config/colors';
 export const breadCrumbsStyles = (): {
     breadCrumbsWrapper: string;
     breadCrumbsContainer: string;
+    breadCrumbNode: string;
     breadCrumb: string;
     breadCrumbWithLink: string;
     iconHolder: string;
@@ -26,6 +27,7 @@ export const breadCrumbsStyles = (): {
         height: 16px; // incase of image( in future breadcrumbs)
         font-weight: normal;
         color: ${COLORS.FOREGROUND_SECONDARY};
+        padding-left: 10px;
     `;
 
     const breadCrumb = css`
@@ -34,6 +36,12 @@ export const breadCrumbsStyles = (): {
         justify-content: center;
         padding: 5px 5px;
         border-radius: 5px;
+    `;
+
+    const breadCrumbNode = css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
     `;
 
     const breadCrumbWithLink = css`
@@ -64,6 +72,7 @@ export const breadCrumbsStyles = (): {
     return {
         breadCrumbsWrapper,
         breadCrumbsContainer,
+        breadCrumbNode,
         breadCrumb,
         breadCrumbWithLink,
         iconHolder,

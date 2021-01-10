@@ -10,6 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
 import { installedAppsSelector, updateInstalledAppsState } from 'store/models/installedApps';
 import { subDomainSelector } from 'store/models/subDomain';
+import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse, IResponse } from 'typings/response.types';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
@@ -104,7 +105,13 @@ export const AppEnlargedView = (): ReactElement => {
     return isLoading ? (
         <Loader />
     ) : (
-        <div className={styles.enlargedAppViewWrapper}>
+        <div
+            className={cx(
+                styles.enlargedAppViewWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <div className={styles.enlargedAppViewContainer}>
                 <div className={styles.appviewHeader}>
                     <div className={styles.iconContainer}>

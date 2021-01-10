@@ -1,7 +1,9 @@
+import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import { IMenuItemProps } from 'pages/LeftNavbar/components/MenuHolder/MenuHolder';
 import React, { ReactElement } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import {
     AppDashboardLeftNav,
@@ -41,7 +43,13 @@ export const PointOfSaleDasboard = (props: IInstalledAppDashboardProps): ReactEl
         },
     };
     return (
-        <div className={styles.pointOfSaleDashboardWrappper}>
+        <div
+            className={cx(
+                styles.pointOfSaleDashboardWrappper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             {/* Point of sale dashboard <pre>{JSON.stringify(props.appDetails, null, 4)}</pre> */}
             <div className={styles.leftNavWrapper}>
                 <AppDashboardLeftNav menuItems={menuItems} header={navHeader} />

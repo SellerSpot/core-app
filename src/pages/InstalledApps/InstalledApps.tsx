@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,6 +8,7 @@ import {
     removePreviouslyInsertedBreadCrumbs,
 } from 'store/models/breadCrumb';
 import { updateInstalledAppsState } from 'store/models/installedApps';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import { InstalledAppDashboard } from './components/InstalledAppDashboard/InstalledAppDashboard';
 import { InstalledAppsHome } from './components/InstalledAppsHome/InstalledAppsHome';
@@ -41,7 +43,13 @@ export const InstalledApps = (): ReactElement => {
     }, []);
 
     return (
-        <div className={styles.installedAppsWrapper}>
+        <div
+            className={cx(
+                styles.installedAppsWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <Switch>
                 <Route path={`${ROUTES.INSTALLED_APPS_APP}/:slug`}>
                     {/* this route :slug param */}

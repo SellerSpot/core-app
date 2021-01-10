@@ -10,7 +10,7 @@ export const getSectionTitleStyles = (): { sectionTitleWrapper: string } => {
         font-size: 20px;
         font-weight: bold;
         color: ${COLORS.FOREGROUND_SECONDARY};
-        padding: 10px 0;
+        padding: 10px 10px;
         cursor: pointer;
         user-select: none;
     `;

@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css';
 import { AlertMessage, Button } from '@sellerspot/universal-components';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
@@ -5,6 +6,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
+import { animationStyles } from 'styles/animation.styles';
 import { IAppDomainUrl } from 'typings/utilities.types';
 import { getDomainUrlFromAppDomainDetails } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
@@ -42,7 +44,13 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
         }
     };
     return (
-        <div className={styles.posDashboardHomeWrapper}>
+        <div
+            className={cx(
+                styles.posDashboardHomeWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <div className={styles.homeContainer}>
                 <div className={styles.welcomeContainer}>
                     <div className={styles.welcomeContainerLanunchInstruction}>

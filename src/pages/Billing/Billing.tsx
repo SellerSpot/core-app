@@ -1,9 +1,10 @@
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import { BillingExploreImage } from 'images/images';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import { getBillingStyles } from './billing.styles';
 
@@ -24,7 +25,13 @@ export const Billing = (): ReactElement => {
     }, []);
 
     return (
-        <div className={styles.billiingWrapper}>
+        <div
+            className={cx(
+                styles.billiingWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <div className={styles.contentWrapper}>
                 <div className={styles.contentWrapper}>
                     <div className={styles.promotionTitle}>

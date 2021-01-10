@@ -13,6 +13,7 @@ import {
     removePreviouslyInsertedBreadCrumbs,
 } from 'store/models/breadCrumb';
 import { installedAppsSelector } from 'store/models/installedApps';
+import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getHomeStyles } from './home.styles';
@@ -43,7 +44,13 @@ export const Home = (): ReactElement => {
     const styles = getHomeStyles();
 
     return (
-        <div className={cx(styles.homeWrapper)}>
+        <div
+            className={cx(
+                styles.homeWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <SectionTitle style={{ paddingBottom: 15 }} title={'Installed Apps'} />
             <TilesHolder>
                 <>

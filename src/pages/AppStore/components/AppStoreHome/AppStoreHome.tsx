@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css';
 import { AppHolder } from 'components/AppHolder/AppHolder';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { TilesHolder } from 'components/TilesHolder/TilesHolder';
@@ -6,6 +7,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { installedAppsSelector } from 'store/models/installedApps';
+import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse } from 'typings/response.types';
 import { getAllApps } from './appstorehome.actions';
 import { getAppStoreHomeStyles } from './appstorehome.styles';
@@ -24,7 +26,13 @@ export const AppStoreHome = (): ReactElement => {
     }, []);
 
     return (
-        <div className={styles.appStoreHomeWrapper}>
+        <div
+            className={cx(
+                styles.appStoreHomeWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <SectionTitle style={{ paddingBottom: 15 }} title={'Latest Apps'} />
             <TilesHolder>
                 {apps.map((app, key) => {

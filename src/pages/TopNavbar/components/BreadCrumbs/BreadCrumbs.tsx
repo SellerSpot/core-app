@@ -3,6 +3,7 @@ import React, { Fragment, ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { breadCrumbsSelector } from 'store/models/breadCrumb';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import { breadCrumbsStyles } from './breadcrumbs.styles';
 const styles = breadCrumbsStyles();
@@ -15,7 +16,14 @@ export const BreadCrumbs = (): ReactElement => {
             <div className={styles.breadCrumbsContainer}>
                 {breadCrumbsState.breadCrumbs.map((breadCrumb, key) => {
                     return (
-                        <Fragment key={key}>
+                        <div
+                            className={cx(
+                                styles.breadCrumbNode,
+                                animationStyles.compose.animate('fadeIn'),
+                                animationStyles.compose.duration(1),
+                            )}
+                            key={key}
+                        >
                             {key !== 0 && (
                                 <div className={styles.breadCrumbSeparator}>
                                     {<ICONS.FORWARD_SLASH />}
@@ -39,7 +47,7 @@ export const BreadCrumbs = (): ReactElement => {
                                     <div className={styles.titleHolder}>{breadCrumb.title}</div>
                                 )}
                             </div>
-                        </Fragment>
+                        </div>
                     );
                 })}
             </div>

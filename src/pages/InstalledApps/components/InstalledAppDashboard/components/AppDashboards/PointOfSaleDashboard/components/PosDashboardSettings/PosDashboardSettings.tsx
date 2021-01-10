@@ -1,4 +1,4 @@
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import { AlertMessage, Button, IConfirmDialogProps } from '@sellerspot/universal-components';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { COLORS } from 'config/colors';
@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
 import { closeConfirmDialog, openConfirmDialog } from 'store/models/confirmDialog';
 import { updateInstalledAppsState } from 'store/models/installedApps';
+import { animationStyles } from 'styles/animation.styles';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
@@ -51,7 +52,13 @@ export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactE
     };
 
     return (
-        <div className={styles.posDashboardSettingsWrapper}>
+        <div
+            className={cx(
+                styles.posDashboardSettingsWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <div className={styles.settingsContainer}>
                 <div className={styles.uninstallContainer}>
                     <div className={styles.uninstallLanunchInstruction}>

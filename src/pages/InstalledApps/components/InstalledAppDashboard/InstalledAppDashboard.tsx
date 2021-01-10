@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css';
 import { Loader } from 'components/Loader/Loader';
 import { APP_DASHBOARD_NAMES } from 'config/dashboardNames';
 import { ROUTES } from 'config/routes';
@@ -8,6 +9,7 @@ import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
 import { commonSelector, updateCommonState } from 'store/models/common';
 import { subDomainSelector } from 'store/models/subDomain';
+import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse, IInstalledAppLaunchDomainResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
@@ -89,7 +91,14 @@ export const InstalledAppDashboard = (): ReactElement => {
     return isLoading ? (
         <Loader />
     ) : (
-        <div className={styles.installedAppDashboardWrapper} onClick={() => minmizeMainNav()}>
+        <div
+            className={cx(
+                styles.installedAppDashboardWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+            onClick={() => minmizeMainNav()}
+        >
             {Dashboard ? (
                 <Dashboard appDetails={appDetails} appDomainDetails={appDomainDetails} />
             ) : (

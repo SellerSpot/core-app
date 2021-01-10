@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import { getTenantInstalledApps } from 'pages/InstalledApps/installedapps.actions';
 import React, { ReactElement, useEffect } from 'react';
@@ -8,6 +9,7 @@ import {
     removePreviouslyInsertedBreadCrumbs,
 } from 'store/models/breadCrumb';
 import { updateInstalledAppsState } from 'store/models/installedApps';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import { getAppStoreStyles } from './appstore.styles';
 import { AppEnlargedView } from './components/AppEnlargedView/AppEnlargedView';
@@ -37,7 +39,13 @@ export const AppStore = (): ReactElement => {
     }, []);
 
     return (
-        <div className={styles.appstoreWrapper}>
+        <div
+            className={cx(
+                styles.appstoreWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <Switch>
                 <Route path={`${ROUTES.APP_STORE_APP}`}>
                     <AppEnlargedView />

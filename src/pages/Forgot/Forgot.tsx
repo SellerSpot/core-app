@@ -1,14 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { InputField } from 'components/InputField/InputField';
-import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { cx } from '@emotion/css';
 import { getForgotStyles } from './forgot.styles';
 import { animationStyles } from 'styles/animation.styles';
-import { UnderConstruction } from 'images/images';
 import { UnderDevelopment } from 'components/UnderDevelopment/UnderDevelopment';
+import { Button, InputField } from '@sellerspot/universal-components';
+import { COLORS } from 'config/colors';
 
 export const Forgot = (): ReactElement => {
     const styles = getForgotStyles();
@@ -42,6 +41,8 @@ export const Forgot = (): ReactElement => {
                                     padding: 0,
                                     width: 'auto',
                                     marginLeft: 8,
+                                    border: 'none',
+                                    fontSize: 18,
                                 }}
                                 onClick={() => history.push(ROUTES.Auth_SIGN_UP)}
                             />
@@ -58,10 +59,34 @@ export const Forgot = (): ReactElement => {
                         </div>
                         <form className={styles.formContainer}>
                             <div className={styles.inputGroup}>
-                                <InputField label={'Email Address'} type={'email'} />
+                                <InputField
+                                    label={'Email Address'}
+                                    type={'email'}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
+                                    required={true}
+                                />
                             </div>
                             <div className={styles.inputGroup}>
-                                <Button label={'Send Reset Instructions'} type={'submit'} />
+                                <Button
+                                    label={'Send Reset Instructions'}
+                                    type={'submit'}
+                                    style={{
+                                        background: COLORS.FOREGROUND_PRIMARY,
+                                        color: COLORS.FOREGROUND_WHITE,
+                                        fontSize: 18,
+                                        height: 50,
+                                        fontWeight: 'bold',
+                                        opacity: 1,
+                                    }}
+                                />
                             </div>
                         </form>
                         <div

@@ -1,4 +1,4 @@
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import { AlertMessage, Button } from '@sellerspot/universal-components';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { COLORS } from 'config/colors';
@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { unAuthenticate } from 'store/models/auth';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { closeConfirmDialog } from 'store/models/confirmDialog';
+import { animationStyles } from 'styles/animation.styles';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { deleteTenantAccount } from './settings.actions';
@@ -91,7 +92,13 @@ export const Settings = (): ReactElement => {
     };
 
     return (
-        <div className={styles.settingsWrapper}>
+        <div
+            className={cx(
+                styles.settingsWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <div className={styles.settingsMainContainer}>
                 <div className={styles.deleteContainer}>
                     <div className={styles.deleteLanunchInstruction}>

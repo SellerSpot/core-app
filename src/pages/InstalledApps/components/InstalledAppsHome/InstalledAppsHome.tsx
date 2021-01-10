@@ -12,6 +12,8 @@ import {
     clearAndPushBreadCrumbs,
     removePreviouslyInsertedBreadCrumbs,
 } from 'store/models/breadCrumb';
+import { cx } from '@emotion/css';
+import { animationStyles } from 'styles/animation.styles';
 
 const styles = getInstalledAppsHomeStyles();
 
@@ -36,7 +38,13 @@ export const InstalledAppsHome = (): ReactElement => {
     }, []);
 
     return (
-        <div className={styles.installedAppsHomeWrapper}>
+        <div
+            className={cx(
+                styles.installedAppsHomeWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+        >
             <SectionTitle style={{ paddingBottom: 15 }} title={'Installed Apps'} />
             <TilesHolder>
                 <>

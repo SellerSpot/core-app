@@ -1,8 +1,10 @@
+import { cx } from '@emotion/css';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { commonSelector, updateCommonState } from 'store/models/common';
+import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
 import { LogoHolder } from './components/LogoHolder/LogoHolder';
 import { IMenuItemProps, MenuHolder } from './components/MenuHolder/MenuHolder';
@@ -81,7 +83,14 @@ export const LeftNavbar = (): ReactElement => {
     };
 
     return (
-        <div className={styles.leftnavWrapper} onClick={expandNavBarHandler}>
+        <div
+            className={cx(
+                styles.leftnavWrapper,
+                animationStyles.compose.animate('fadeIn'),
+                animationStyles.compose.duration(1),
+            )}
+            onClick={expandNavBarHandler}
+        >
             <div className={styles.leftNavContainer}>
                 <div className={styles.logoHolder}>
                     <LogoHolder />
