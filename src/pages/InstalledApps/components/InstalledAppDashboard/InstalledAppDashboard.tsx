@@ -7,7 +7,8 @@ import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
 import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
 import { commonSelector, updateCommonState } from 'store/models/common';
-import { IAppResponse } from 'typings/response.types';
+import { subDomainSelector } from 'store/models/subDomain';
+import { IAppResponse, IInstalledAppLaunchDomainResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
 import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
 import { getTenantInstalledAppByIdOrSlug } from './installedappsdashboard.actions';
@@ -20,6 +21,7 @@ export const InstalledAppDashboard = (): ReactElement => {
     const [appDetails, setAppDetails] = useState({} as IAppResponse);
     const [isLoading, setIsLoading] = useState(true);
     const commonState = useSelector(commonSelector);
+    const subDomainState = useSelector(subDomainSelector);
 
     const minmizeMainNav = (maximize = false) => {
         if (commonState.isLeftNavBarExpanded)
@@ -76,12 +78,20 @@ export const InstalledAppDashboard = (): ReactElement => {
             )) as keyof typeof APP_DASHBOARD_NAMES,
     );
 
+    const appDomainDetails: IInstalledAppLaunchDomainResponse = {
+        appDomain: appDetails.domainName,
+        baseDomain: subDomainState.baseDomain,
+        customDomain: '',
+        protocol: 'https',
+        tenantDomain: subDomainState.domainName,
+    };
+
     return isLoading ? (
         <Loader />
     ) : (
         <div className={styles.installedAppDashboardWrapper} onClick={() => minmizeMainNav()}>
             {Dashboard ? (
-                <Dashboard appDetails={appDetails} />
+                <Dashboard appDetails={appDetails} appDomainDetails={appDomainDetails} />
             ) : (
                 <Redirect to={ROUTES.INSTALLED_APPS} />
             )}

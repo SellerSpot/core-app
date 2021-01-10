@@ -1,19 +1,21 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { InputField } from 'components/InputField/InputField';
-import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services/services';
-import { authenticate, IAuthState } from 'store/models/auth';
+import { authenticate } from 'store/models/auth';
 import { updateSubDomain } from 'store/models/subDomain';
 import { batch, useDispatch } from 'react-redux';
 import { updateGlobalServices } from 'config/globalConfig';
 import { cx } from '@emotion/css';
 import { getSignInStyles } from './signin.styles';
 import { animationStyles } from 'styles/animation.styles';
-import { IAuthResposne, ISubDomainResponse } from 'typings/response.types';
+import { IAuthResposne, IErrorMessageResponse, IResponse } from 'typings/response.types';
 import { updateInstalledAppsState } from 'store/models/installedApps';
+import { Button, InputField } from '@sellerspot/universal-components';
+import { COLORS } from 'config/colors';
+import { SectionTitle } from 'components/SectionTitle/SectionTitle';
+import { Space } from 'components/Space/Space';
 
 export const SignIn = (): ReactElement => {
     const styles = getSignInStyles();
@@ -22,11 +24,16 @@ export const SignIn = (): ReactElement => {
     const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isProcessing, setIsProcessing] = useState(false);
     useEffect(() => {
         setIsLoading(false);
     }, []);
     const onSignInHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (isProcessing) return;
+        setIsProcessing(true);
         try {
             const data = {
                 email,
@@ -63,8 +70,20 @@ export const SignIn = (): ReactElement => {
                 }
             });
         } catch (error) {
-            // error will have IResponse body = feel free to access with Iresponse type (damn it will get Iresponse type)
+            const customError = error as IResponse;
+            if (customError.status !== undefined && customError.data) {
+                const customErrorData = error.data as IErrorMessageResponse[];
+                if (customErrorData[0].name === 'notFound') {
+                    batch(() => {
+                        setIsError(true);
+                        setErrorMessage(customErrorData[0].message);
+                    });
+                }
+            } else {
+                console.error(error);
+            }
         }
+        setIsProcessing(false);
     };
     return (
         <>
@@ -91,22 +110,36 @@ export const SignIn = (): ReactElement => {
                                     padding: 0,
                                     width: 'auto',
                                     marginLeft: 8,
+                                    border: 'none',
+                                    fontSize: 18,
                                 }}
-                                tabIndex={5}
                                 onClick={() => history.push(ROUTES.Auth_SIGN_UP)}
                             />
                         </div>
                     </div>
                     <div className={styles.signInContainer}>
-                        <div className={styles.signInTitle}>Sign in to SellerSpot</div>
+                        <SectionTitle style={{ fontSize: 30 }} title={'Sigin in to SellerSpot'} />
                         <form className={styles.formContainer} onSubmit={onSignInHandler}>
                             <div className={styles.inputGroup}>
                                 <InputField
                                     label={'Email Address'}
                                     type={'email'}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
+                                    required={true}
+                                    error={{
+                                        showError: isError,
+                                        errorMessage: errorMessage,
+                                    }}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    tabIndex={1}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -122,8 +155,8 @@ export const SignIn = (): ReactElement => {
                                             width: 'auto',
                                             height: 'auto',
                                             marginTop: 3,
+                                            border: 'none',
                                         }}
-                                        tabIndex={4}
                                         onClick={() => history.push(ROUTES.Auth_FORGOT)}
                                     />
                                 </div>
@@ -132,12 +165,34 @@ export const SignIn = (): ReactElement => {
                                     label={'Password'}
                                     type={'password'}
                                     value={password}
+                                    required={true}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    tabIndex={2}
                                 />
                             </div>
+                            <Space size={20} />
                             <div className={styles.inputGroup}>
-                                <Button label={'Sign In'} type={'submit'} tabIndex={3} />
+                                <Button
+                                    style={{
+                                        background: COLORS.FOREGROUND_PRIMARY,
+                                        color: COLORS.FOREGROUND_WHITE,
+                                        fontSize: 18,
+                                        height: 50,
+                                        fontWeight: 'bold',
+                                        opacity: isProcessing ? 0.5 : 1,
+                                    }}
+                                    status={isProcessing ? 'disabledLoading' : 'default'}
+                                    label={isProcessing ? 'Signing In' : 'Sign In'}
+                                    type={'submit'}
+                                />
                             </div>
                         </form>
                     </div>

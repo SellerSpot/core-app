@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
 import { installedAppsSelector, updateInstalledAppsState } from 'store/models/installedApps';
+import { subDomainSelector } from 'store/models/subDomain';
 import { IAppResponse, IResponse } from 'typings/response.types';
+import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { getAppById, installApp } from './appenlargedview.actions';
 import { getEnlargedAppViewStyles } from './appenlargedview.styles';
@@ -31,6 +33,7 @@ export const AppEnlargedView = (): ReactElement => {
     const [isLoading, setIsLoading] = useState(true);
     const [isInstalling, setIsInstalling] = useState(false);
     const installedAppsState = useSelector(installedAppsSelector);
+    const sudDomainState = useSelector(subDomainSelector);
 
     useEffect(() => {
         try {
@@ -79,18 +82,23 @@ export const AppEnlargedView = (): ReactElement => {
 
     const handleOnInstallClick = async (): Promise<void> => {
         setIsInstalling(true);
-        setTimeout(async () => {
-            const appInstallResponse = await installApp(appDetails._id);
-            if (appInstallResponse) {
-                dispatch(updateInstalledAppsState({ apps: appInstallResponse }));
-                setIsInstalling(false);
-                handleOnLaunch();
-            } else {
-                // show error message with notifieer
-                setIsInstalling(false);
-                history.push(ROUTES.APP_STORE);
-            }
-        }, 3000);
+        if (!sudDomainState.registered) {
+            history.push(
+                `${ROUTES.SUB_DOMAIN_SETUP}?return=${ROUTES.APP_STORE_APP}?id=${appDetails._id}`,
+            );
+            return;
+        }
+        await introduceDelay();
+        const appInstallResponse = await installApp(appDetails._id);
+        if (appInstallResponse) {
+            dispatch(updateInstalledAppsState({ apps: appInstallResponse }));
+            setIsInstalling(false);
+            handleOnLaunch();
+        } else {
+            // show error message with notifieer
+            setIsInstalling(false);
+            history.push(ROUTES.APP_STORE);
+        }
     };
 
     return isLoading ? (

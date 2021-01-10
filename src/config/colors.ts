@@ -13,4 +13,8 @@ export const COLORS = {
     // iconic color
     APP_COLOR: '#0EC120',
     PLUGIN_COLOR: '#1C73F5',
+    // status colros
+    COLOR_DANGER: '#DC3545',
+    COLOR_SUCCESS: '#28A745',
+    COLOR_WARNING: '#EDB203',
 };

@@ -13,11 +13,13 @@ import {
     updateTenantSubDomain,
 } from './subDomainSetup.actions';
 import { ROUTES } from 'config/routes';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export const SubDomainSetup = (): ReactElement => {
     const styles = getSubDomainSetupStyles();
     const history = useHistory();
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
     const [isLoading, setIsLoading] = useState(true);
     const subDomainState = useSelector(subDomainSelector);
     const [isStartedSearching, setIsStartedSearching] = useState(false);
@@ -42,14 +44,20 @@ export const SubDomainSetup = (): ReactElement => {
                      * reset input field
                      * if from auth redirect to home
                      */
-                    batch(() => {
-                        setIsDomainAvailable(false);
-                        setIsStartedSearching(false);
-                        setInputDomain('');
-                        setIsLoading(false);
-                    });
+                    const returnPath = query.get('return');
+                    if (returnPath) {
+                        // validate somehow before pusing
+                        history.push(returnPath);
+                    } else {
+                        batch(() => {
+                            setIsDomainAvailable(false);
+                            setIsStartedSearching(false);
+                            setInputDomain('');
+                            setIsLoading(false);
+                        });
 
-                    if (!isRegistered) history.push(ROUTES.DASHBOARD);
+                        if (!isRegistered) history.push(ROUTES.DASHBOARD);
+                    }
                 }
             } else {
                 // show tooltip error to fill domain
@@ -67,9 +75,18 @@ export const SubDomainSetup = (): ReactElement => {
 
     const handlOnChange = useCallback(
         async (domainName: string) => {
-            const sanitizedDomainName = domainName.replace(/[^a-zA-Z\d]+/g, '');
+            const sanitizedDomainName = domainName
+                .replace(/[^a-zA-Z]+/g, '')
+                .trim()
+                .toLowerCase(); // allows only alphabets
             setInputDomain(sanitizedDomainName);
-            if (!(sanitizedDomainName.length > 0 && sanitizedDomainName.length <= 15)) return;
+            if (!(sanitizedDomainName.length >= 3 && sanitizedDomainName.length <= 15)) {
+                batch(() => {
+                    setIsStartedSearching(true);
+                    setIsDomainAvailable(false);
+                });
+                return;
+            }
             if (!sanitizedDomainName) {
                 setIsStartedSearching(false);
                 return;
@@ -158,7 +175,7 @@ export const SubDomainSetup = (): ReactElement => {
                                     error={{
                                         showError: isStartedSearching && !isDomainAvailable,
                                         errorMessage:
-                                            'Not Available - (minimum 3 and maximum 10 characters)',
+                                            'Not Available - (minimum 3 and maximum 10 characters) (only alphabets are allowed)',
                                     }}
                                     className={{
                                         helperLabel: css`
@@ -172,8 +189,8 @@ export const SubDomainSetup = (): ReactElement => {
                                     }}
                                     helperText={
                                         isStartedSearching && isDomainAvailable
-                                            ? 'Domain Available, Submit to Continue. - (minimum 3 and maximum 10 characters)'
-                                            : 'Search for Domain Availability - (minimum 3 and maximum 10 characters)'
+                                            ? 'Domain Available, Submit to Continue. - (minimum 3 and maximum 10 characters) (only alphabets are allowed)'
+                                            : 'Search for Domain Availability - (minimum 3 and maximum 10 characters) (only alphabets are allowed)'
                                     }
                                     value={inputDomain}
                                 />

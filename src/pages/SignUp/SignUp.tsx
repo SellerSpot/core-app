@@ -1,33 +1,78 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { InputField } from 'components/InputField/InputField';
-import { Button } from 'components/Button/Button';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { socketService } from 'services/services';
 import { useDispatch } from 'react-redux';
-import { authenticate, IAuthState } from 'store/models/auth';
+import { authenticate } from 'store/models/auth';
 import { cx } from '@emotion/css';
 import { getSignUpStyles } from './signup.styles';
 import { animationStyles } from 'styles/animation.styles';
 import { updateGlobalServices } from 'config/globalConfig';
-import { IAuthResposne } from 'typings/response.types';
+import { IAuthResposne, IErrorMessageResponse, IResponse } from 'typings/response.types';
 import { updateSubDomain } from 'store/models/subDomain';
+import { Button, InputField } from '@sellerspot/universal-components';
+import { COLORS } from 'config/colors';
+import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 
 export const SignUp = (): ReactElement => {
     const styles = getSignUpStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const initialErrorState = {
+        email: {
+            active: false,
+            message: '',
+        },
+        userName: {
+            active: false,
+            message: '',
+        },
+        password: {
+            active: false,
+            message: '',
+        },
+    };
+    const [errorState, setErrorState] = useState(initialErrorState);
 
     useEffect(() => {
         setIsLoading(false);
     }, []);
+
+    const validateInput = (): boolean => {
+        const validateErrorState: typeof initialErrorState = { ...initialErrorState };
+        let isValid = true;
+        // username validation
+        if (!name || name.length < 3 || name.length > 15) {
+            validateErrorState.userName.active = true;
+            validateErrorState.userName.message =
+                'Only AlphaNumeric Characters are allowed. Minimumm 3 and maximum 15 characters are allowed';
+
+            isValid = false;
+        }
+        // password validation
+        if (!password || password.length < 3 || password.length > 15) {
+            validateErrorState.password.active = true;
+            validateErrorState.password.message =
+                'Use combinations of letter, number and special characters, White space is not allowed, minimum of 5 characters required';
+
+            isValid = false;
+        }
+
+        setErrorState(validateErrorState);
+        return !isValid;
+    };
+
     const onSignUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (isProcessing) return;
+        if (validateInput()) return;
+        setIsProcessing(true);
         try {
             const data = {
                 name,
@@ -57,7 +102,24 @@ export const SignUp = (): ReactElement => {
             }
         } catch (error) {
             // error will have IResponse body = feel free to access it with IResponse type
+            console.error(error);
+            const customError = error as IResponse;
+            if (customError.status !== undefined && customError.data) {
+                const customErrorData = error.data as IErrorMessageResponse[];
+                if (customErrorData[0].name === 'alreadyFound') {
+                    setErrorState({
+                        ...errorState,
+                        email: {
+                            active: true,
+                            message: customErrorData[0].message,
+                        },
+                    });
+                }
+            } else {
+                console.error(error);
+            }
         }
+        setIsProcessing(false);
     };
     return (
         <>
@@ -84,22 +146,46 @@ export const SignUp = (): ReactElement => {
                                     padding: 0,
                                     width: 'auto',
                                     marginLeft: 8,
+                                    border: 'none',
+                                    fontSize: 18,
                                 }}
-                                tabIndex={5}
                                 onClick={() => history.push(ROUTES.Auth_SIGN_IN)}
                             />
                         </div>
                     </div>
                     <div className={styles.signUpContainer}>
-                        <div className={styles.signUpTitle}>Sign up to SellerSpot</div>
+                        <SectionTitle style={{ fontSize: 30 }} title={'Sign up to SellerSpot'} />
                         <form className={styles.formContainer} onSubmit={onSignUpHandler}>
                             <div className={styles.inputGroup}>
                                 <InputField
                                     label={'Name'}
                                     type={'text'}
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    tabIndex={1}
+                                    onChange={(e) =>
+                                        setName(
+                                            e.target.value
+                                                .replace(/[^a-zA-Z\d]+/g, '')
+                                                .trimLeft()
+                                                .trimRight(),
+                                        )
+                                    }
+                                    helperText={
+                                        'Only AlphaNumeric Characters are allowed. Minimumm 3 and maximum 15 characters are allowed'
+                                    }
+                                    required={true}
+                                    error={{
+                                        showError: errorState.userName.active,
+                                        errorMessage: errorState.userName.message,
+                                    }}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -108,7 +194,20 @@ export const SignUp = (): ReactElement => {
                                     type={'email'}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    tabIndex={2}
+                                    required={true}
+                                    error={{
+                                        showError: errorState.email.active,
+                                        errorMessage: errorState.email.message,
+                                    }}
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
@@ -116,12 +215,43 @@ export const SignUp = (): ReactElement => {
                                     label={'Password'}
                                     type={'password'}
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    tabIndex={3}
+                                    required={true}
+                                    error={{
+                                        showError: errorState.password.active,
+                                        errorMessage: errorState.password.message,
+                                    }}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/[\s]+/g, '');
+                                        setPassword(value);
+                                    }}
+                                    helperText={
+                                        'Use combinations of letter, number and special characters, White space is not allowed, minimum of 5 characters required'
+                                    }
+                                    style={{
+                                        lableStyle: {
+                                            fontSize: 18,
+                                        },
+                                        inputStyle: {
+                                            fontSize: 18,
+                                            padding: '0 10px',
+                                        },
+                                    }}
                                 />
                             </div>
                             <div className={styles.inputGroup}>
-                                <Button label={'Create Account'} type={'submit'} tabIndex={4} />
+                                <Button
+                                    style={{
+                                        background: COLORS.FOREGROUND_PRIMARY,
+                                        color: COLORS.FOREGROUND_WHITE,
+                                        fontSize: 18,
+                                        height: 50,
+                                        fontWeight: 'bold',
+                                        opacity: isProcessing ? 0.5 : 1,
+                                    }}
+                                    status={isProcessing ? 'disabledLoading' : 'default'}
+                                    label={isProcessing ? 'Creating Account' : 'Create Account'}
+                                    type={'submit'}
+                                />
                             </div>
                         </form>
                     </div>

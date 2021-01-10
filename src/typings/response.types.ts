@@ -30,6 +30,7 @@ export interface IAppResponse {
     longDescription?: string;
     iconUrl?: string;
     bannerImages?: string[];
+    domainName?: string;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -44,4 +45,9 @@ export interface IInstalledAppLaunchDomainResponse {
 
 export interface ISubDomainCheckResponse {
     available: boolean;
+}
+
+export interface IErrorMessageResponse {
+    name: string;
+    message: string;
 }

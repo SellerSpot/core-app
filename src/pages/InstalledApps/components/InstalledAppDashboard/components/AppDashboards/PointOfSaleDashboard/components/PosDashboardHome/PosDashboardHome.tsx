@@ -1,10 +1,12 @@
-import { Button } from '@sellerspot/universal-components';
+import { AlertMessage, Button } from '@sellerspot/universal-components';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
-import { IInstalledAppLaunchDomainResponse } from 'typings/response.types';
+import { IAppDomainUrl } from 'typings/utilities.types';
+import { getDomainUrlFromAppDomainDetails } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
 import { getPosdashboardHomeStyles } from './posdashboardhome.styles';
@@ -13,13 +15,10 @@ const styles = getPosdashboardHomeStyles();
 
 export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactElement => {
     const dispatch = useDispatch();
-    const [appDomainDetails, setAppDomainDetails] = useState({
-        tenantDomain: 'spark',
-        appDomain: 'pos',
-        baseDomain: 'sellerspot.in',
-        customDomain: '',
-        protocol: 'https',
-    } as IInstalledAppLaunchDomainResponse);
+    const history = useHistory();
+    const [appUrl, setAppUrl] = useState<IAppDomainUrl>(
+        getDomainUrlFromAppDomainDetails(props.appDomainDetails),
+    );
     useEffect(() => {
         dispatch(
             pushBreadCrumbs([
@@ -38,10 +37,9 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
         e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
     ) => {
         e.preventDefault();
-        window.open(
-            `${appDomainDetails.protocol}://${appDomainDetails.appDomain}.${appDomainDetails.tenantDomain}.${appDomainDetails.baseDomain}`,
-            '__sellerspotpos',
-        );
+        if (appUrl.isValid) {
+            window.open(appUrl.url);
+        }
     };
     return (
         <div className={styles.posDashboardHomeWrapper}>
@@ -53,31 +51,57 @@ export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactEleme
                             Selling!
                         </div>
                         <div className={styles.welcomeInstructionLinkHolder}>
-                            <a
-                                className={styles.welcomeInstructionLink}
-                                href={'https://pos.spark.sellerspot.in'}
-                                onClick={onLaunchHandler}
-                                target={'__sellerspotpos'}
-                            >
-                                https://pos.spark.sellerspot.in
-                            </a>
+                            {appUrl.isValid ? (
+                                <a
+                                    className={styles.welcomeInstructionLink}
+                                    href={appUrl.url}
+                                    onClick={onLaunchHandler}
+                                    target={'__sellerspotpos'}
+                                >
+                                    {appUrl.url}
+                                </a>
+                            ) : (
+                                <AlertMessage
+                                    type={'info'}
+                                    label={`Seems like you haven't created your domain yet, create domain to launch any App`}
+                                    style={{
+                                        alertMessageWrapperStyle: {
+                                            padding: 20,
+                                        },
+                                    }}
+                                    actionButton={
+                                        <Button
+                                            label={'Create Domain Now'}
+                                            style={{
+                                                marginLeft: 10,
+                                                whiteSpace: 'nowrap',
+                                                background: COLORS.COLOR_SUCCESS,
+                                                color: COLORS.FOREGROUND_WHITE,
+                                            }}
+                                            onClick={() => history.push(ROUTES.SUB_DOMAIN_SETUP)}
+                                        />
+                                    }
+                                />
+                            )}
                         </div>
                     </div>
                     <div className={styles.welcomeContainerLanunchCallToAction}>
-                        <Button
-                            onClick={onLaunchHandler}
-                            status={'default'}
-                            label={'Launch'}
-                            style={{
-                                fontWeight: 'bold',
-                                paddingTop: 15,
-                                paddingBottom: 15,
-                                borderRadius: 5,
-                                fontSize: 16,
-                                color: COLORS['FOREGROUND_WHITE'],
-                                backgroundColor: COLORS['APP_COLOR'],
-                            }}
-                        />
+                        {appUrl.isValid && (
+                            <Button
+                                onClick={onLaunchHandler}
+                                status={'default'}
+                                label={'Launch'}
+                                style={{
+                                    fontWeight: 'bold',
+                                    paddingTop: 15,
+                                    paddingBottom: 15,
+                                    borderRadius: 5,
+                                    fontSize: 16,
+                                    color: COLORS['FOREGROUND_WHITE'],
+                                    backgroundColor: COLORS['APP_COLOR'],
+                                }}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
