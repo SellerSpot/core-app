@@ -19,6 +19,7 @@ export const showMessage = (
                         color: COLORS.FOREGROUND_WHITE,
                         padding: 10,
                         wordBreak: 'keep-all',
+                        lineHeight: '18px',
                     }}
                 >
                     {message}
