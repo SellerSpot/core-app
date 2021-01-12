@@ -1,9 +1,11 @@
 import path from 'path';
-import webpack, { Configuration } from 'webpack';
+import { Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import packageJson from './package.json';
+import { getEnvironmentVariables } from './src/config/dotenv';
+import webpack from 'webpack';
+const envKeys = getEnvironmentVariables();
 
 const webpackConfiguration = (env: {
     production?: boolean;
@@ -19,6 +21,10 @@ const webpackConfiguration = (env: {
                     extensions: ['.ts', '.tsx', '.js', '.css', '.module.css'],
                 }),
             ],
+            fallback: {
+                path: require.resolve('path-browserify'),
+                fs: require.resolve('fs'),
+            },
         },
         output: {
             path: path.join(__dirname, '/dist'),
@@ -66,14 +72,10 @@ const webpackConfiguration = (env: {
             ],
         },
         plugins: [
+            new webpack.DefinePlugin(envKeys),
             new HtmlWebpackPlugin({
                 inject: true,
                 template: path.join(__dirname, '/public/index.html'),
-            }),
-            new webpack.DefinePlugin({
-                'process.env.ENV': JSON.stringify(isProduction ? 'production' : 'development'),
-                'process.env.APP_NAME': JSON.stringify(packageJson.name),
-                'process.env.APP_VERSION': JSON.stringify(packageJson.version),
             }),
             new ForkTsCheckerWebpackPlugin({
                 eslint: {
