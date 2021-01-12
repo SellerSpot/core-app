@@ -160,7 +160,10 @@ export const SignUp = (): ReactElement => {
                         </div>
                     </div>
                     <div className={styles.signUpContainer}>
-                        <SectionTitle style={{ fontSize: 30 }} title={'Sign up to SellerSpot'} />
+                        <SectionTitle
+                            style={{ fontSize: 30, paddingLeft: 0 }}
+                            title={'Sign up to SellerSpot'}
+                        />
                         <form className={styles.formContainer} onSubmit={onSignUpHandler}>
                             <div className={styles.inputGroup}>
                                 <InputField

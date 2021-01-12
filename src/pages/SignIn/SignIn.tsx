@@ -121,7 +121,10 @@ export const SignIn = (): ReactElement => {
                         </div>
                     </div>
                     <div className={styles.signInContainer}>
-                        <SectionTitle style={{ fontSize: 30 }} title={'Sigin in to SellerSpot'} />
+                        <SectionTitle
+                            style={{ fontSize: 30, paddingLeft: 0 }}
+                            title={'Sigin in to SellerSpot'}
+                        />
                         <form className={styles.formContainer} onSubmit={onSignInHandler}>
                             <div className={styles.inputGroup}>
                                 <InputField
