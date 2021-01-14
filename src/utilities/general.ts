@@ -37,6 +37,6 @@ export const getDomainUrlFromAppDomainDetails = (
     });
     return {
         isValid,
-        url: `${appDomainDetails.protocol}://${appDomainDetails.appDomain}.${appDomainDetails.tenantDomain}.${appDomainDetails.baseDomain}`,
+        url: `${appDomainDetails.protocol}://${appDomainDetails.tenantDomain}.${appDomainDetails.appDomain}.${appDomainDetails.baseDomain}`,
     };
 };

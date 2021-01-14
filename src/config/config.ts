@@ -8,5 +8,3 @@ export const CONFIG = {
     REUDX_AUTH_STATE: 'authState',
     REUDX_SUB_DOMAIN_STATE: 'subDomainState',
 };
-
-console.log(CONFIG);
