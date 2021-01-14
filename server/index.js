@@ -17,6 +17,6 @@ app.get('*', (_req, res) => {
     res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
 });
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
     console.info('server started on port', port);
 });

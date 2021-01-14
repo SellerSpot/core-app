@@ -27,6 +27,6 @@ COPY --from=dependencies /app/dist ./dist
 # copy app sources
 COPY --from=dependencies /app/server ./server
 # expose port and define CMD
-EXPOSE 6000
+EXPOSE 3000
 # executable
 CMD ["node", "server"]
