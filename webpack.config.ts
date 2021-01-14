@@ -5,13 +5,13 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { getEnvironmentVariables } from './src/config/dotenv';
 import webpack from 'webpack';
-const envKeys = getEnvironmentVariables();
 
 const webpackConfiguration = (env: {
     production?: boolean;
     development?: boolean;
 }): Configuration => {
     const isProduction = env.production ? true : false;
+    const envVariables = getEnvironmentVariables(isProduction);
     return {
         entry: './src',
         resolve: {
@@ -72,7 +72,7 @@ const webpackConfiguration = (env: {
             ],
         },
         plugins: [
-            new webpack.DefinePlugin(envKeys),
+            new webpack.DefinePlugin(envVariables), // setting environment variables 
             new HtmlWebpackPlugin({
                 inject: true,
                 template: path.join(__dirname, '/public/index.html'),
