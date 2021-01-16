@@ -12,6 +12,7 @@ const webpackConfiguration = (env: {
 }): Configuration => {
     const isProduction = env.production ? true : false;
     const envVariables = getEnvironmentVariables(isProduction);
+    const devPort = Number(JSON.parse(envVariables['process.env.PORT']));
     return {
         entry: './src',
         resolve: {
@@ -72,10 +73,11 @@ const webpackConfiguration = (env: {
             ],
         },
         plugins: [
-            new webpack.DefinePlugin(envVariables), // setting environment variables 
+            new webpack.DefinePlugin(envVariables), // setting environment variables
             new HtmlWebpackPlugin({
                 inject: true,
                 template: path.join(__dirname, '/public/index.html'),
+                favicon: path.join(__dirname, '/public/favicon.ico'),
             }),
             new ForkTsCheckerWebpackPlugin({
                 eslint: {
@@ -84,7 +86,7 @@ const webpackConfiguration = (env: {
             }),
         ],
         devServer: {
-            port: 8000,
+            port: devPort,
             open: true,
             hot: false,
             contentBase: 'public',

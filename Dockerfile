@@ -18,18 +18,18 @@ RUN npm install
 FROM base AS build
 # install ALL node_modules, including 'devDependencies'
 RUN npm install
-# install ALL node_modules, including 'devDependencies'
+# build application
 RUN npm run build
 
 # ---- Release ----
 FROM base AS release
+# setting node environment to production
+ENV NODE_ENV=production
 # copy node_modules from dependencies stage
 COPY --from=dependencies /app/node_modules ./node_modules
 # copy dist from build stage
 COPY --from=build /app/dist ./dist
-# copy server from base stage
-COPY ./server ./server
 # expose port
 EXPOSE 3000
 # define CMD
-CMD ["node", "server"]
+CMD ["npm", "start"]
