@@ -19,11 +19,11 @@ export const getAppHolderStyles = (
         background: gray;
         color: ${COLORS.FOREGROUND_SECONDARY};
         background-color: ${COLORS.BACKGROUND_PRIMARY};
-        padding: 20px 15px 5px 18px;
+        padding: 20px 10px 5px 18px;
         border-radius: 15px;
         box-shadow: 0 0 5px 0 ${COLORS.BACKGROUND_HIGHLIGHT};
         display: grid;
-        grid-template-rows: 41% 10% 1fr;
+        grid-template-rows: 40% 10% 1fr;
         text-align: left;
         user-select: none;
         position: relative;
@@ -39,13 +39,13 @@ export const getAppHolderStyles = (
     `;
 
     const titleHolder = css`
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
     `;
 
     const descriptionHolder = css`
-        font-size: 12px;
-        padding-top: 12px;
+        font-size: 11px;
+        padding-top: 10px;
         font-weight: snormal;
         width: 100%;
         height: 100%;

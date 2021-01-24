@@ -42,7 +42,7 @@ const webpackConfiguration = (env: {
                     exclude: [/dist/, /node_modules/],
                 },
                 {
-                    test: /\.(png|jpe?g|gif|svg)$/i,
+                    test: /\.(png|jpe?g|gif|svg|ttf|woff|woff2)$/i,
                     use: [
                         {
                             loader: 'file-loader',

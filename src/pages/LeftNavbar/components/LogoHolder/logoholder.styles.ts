@@ -28,7 +28,7 @@ export const getLogoHolderStyles = (): {
         height: 38px;
     `;
     const logoTitle = css`
-        font-size: 30px;
+        font-size: 28px;
         font-weight: bold;
         color: ${COLORS.FOREGROUND_PRIMARY};
         letter-spacing: 2px;

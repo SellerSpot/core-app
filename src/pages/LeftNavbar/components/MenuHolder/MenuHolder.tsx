@@ -1,10 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
 import { getMenuHolderStyles } from './menuholder.styles';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ROUTES } from 'config/routes';
 import { IconType } from 'react-icons/lib';
 import { cx } from '@emotion/css';
-import { ICONS } from 'utilities/icons';
 
 const styles = getMenuHolderStyles();
 export interface IMenuHolderProps {

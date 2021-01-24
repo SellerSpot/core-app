@@ -22,7 +22,7 @@ export const breadCrumbsStyles = (): {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        font-size: 16px;
+        font-size: 15px;
         line-height: 16px;
         height: 16px; // incase of image( in future breadcrumbs)
         font-weight: normal;

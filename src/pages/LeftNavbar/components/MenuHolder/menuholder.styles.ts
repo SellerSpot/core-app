@@ -57,7 +57,7 @@ export const getMenuHolderStyles = (): {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         letter-spacing: 1px;
     `;

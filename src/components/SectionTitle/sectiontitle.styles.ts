@@ -7,7 +7,7 @@ export const getSectionTitleStyles = (): { sectionTitleWrapper: string } => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         color: ${COLORS.FOREGROUND_SECONDARY};
         padding: 10px 10px;
