@@ -5,12 +5,16 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { getEnvironmentVariables } from './src/config/dotenv';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const webpackConfiguration = (env: {
     production?: boolean;
     development?: boolean;
+    analyze?: boolean;
 }): Configuration => {
     const isProduction = env.production ? true : false;
+    const isAnalyze = env.analyze ? true : false;
+    1;
     const envVariables = getEnvironmentVariables(isProduction);
     const devPort = Number(JSON.parse(envVariables['process.env.PORT']));
     return {
@@ -84,6 +88,9 @@ const webpackConfiguration = (env: {
                     files: './src',
                 },
             }),
+            isAnalyze
+                ? new BundleAnalyzerPlugin({ analyzerMode: 'static' })
+                : new webpack.DefinePlugin({}),
         ],
         devServer: {
             port: devPort,
