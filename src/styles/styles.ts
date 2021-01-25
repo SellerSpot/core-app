@@ -8,8 +8,6 @@ src: local('Open Sans') url(${openSans}) format('ttf'); */
 
 export const injectGlobalStyles = (): void => {
     injectGlobal` 
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
-
         * {
             margin: 0;
             padding: 0;
