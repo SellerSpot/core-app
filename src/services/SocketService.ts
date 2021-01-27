@@ -38,7 +38,6 @@ export class SocketService {
 
     /**
      * adds listener for the active status of the users connection - predicts from user's ping to the socket server
-     * @remarks
      * should be used in future to decide where the fetch should occur, either in onlineServerSocket/offlineServerSocket
      */
     private addHearBeatListener = async (): Promise<void> => {
@@ -91,7 +90,6 @@ export class SocketService {
      * @param eventName type of event, which is the keyof typeof socket_event config file
      * @param data is the body of the request
      * @param volatile @optional defaults to false => it tells the socket service to treat the current request as volativel event that when anomaly happends on connectivity this event will not be added to the buffer to deliver to the server on successfull reconnection
-     * @remarks
      * no need to attach token on body of the requrest, will be attached globaly with the service itself.
      */
     public async request(
@@ -128,6 +126,7 @@ export class SocketService {
         }
     }
 
+    // will be usedLater later
     public setAsyncEvent = (): void => {
         // useful for setting global notification listener
         console.info('setting a async event');

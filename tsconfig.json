@@ -24,7 +24,8 @@
             "services/*": ["services/*"],
             "store/*": ["store/*"],
             "styles/*": ["styles/*"],
-            "typings/*": ["typings/*"]
+            "typings/*": ["typings/*"],
+            "utilities/*": ["utilities/*"]
         }
     },
     "include": ["src"]
