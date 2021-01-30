@@ -4,5 +4,11 @@
         "source.fixAll.eslint": false,
         "source.fixAll.tslint": false,
         "source.fixAll.stylelint": false
-    }
+    },
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#6b185f",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#952184"
+    },
+    "peacock.color": "#6b185f"
 }
