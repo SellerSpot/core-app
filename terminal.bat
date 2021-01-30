@@ -1,1 +1,1 @@
-wt -M nt -d ..\core-server ; sp -V -d ..\core-app ; sp -V -d ..\database-models ; sp -H -d ..\universal-types ; sp -H -d ..\universal-components
+wt -M nt -d ..\core-server ; sp -V -d ..\core-app 
