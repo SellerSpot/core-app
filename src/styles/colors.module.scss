@@ -2,103 +2,104 @@
 
 // foregrounds
 .foreground_primary_color {
-    color: $foreground_primary;
+    color: $foreground_primary !important;
 }
+
 .foreground_primary_background {
-    background-color: $foreground_primary;
+    background-color: $foreground_primary !important;
 }
 
 .foreground_secondary_color {
-    color: $foreground_secondary;
+    color: $foreground_secondary !important;
 }
 .foreground_secondary_background {
-    background-color: $foreground_secondary;
+    background-color: $foreground_secondary !important;
 }
 
 .foreground_tertiary_color {
-    color: $foreground_tertiary;
+    color: $foreground_tertiary !important;
 }
 .foreground_tertiary_background {
-    background-color: $foreground_tertiary;
+    background-color: $foreground_tertiary !important;
 }
 
 .foreground_white_color {
-    color: $foreground_white;
+    color: $foreground_white !important;
 }
 .foreground_white_background {
-    background-color: $foreground_white;
+    background-color: $foreground_white !important;
 }
 
 // backgrounds
 .background_primary_color {
-    color: $background_primary;
+    color: $background_primary !important;
 }
 .background_primary_background {
-    background-color: $background_primary;
+    background-color: $background_primary !important;
 }
 
 .background_secondary_color {
-    color: $background_secondary;
+    color: $background_secondary !important;
 }
 .background_secondary_background {
-    background-color: $background_secondary;
+    background-color: $background_secondary !important;
 }
 
 .background_tertiary_color {
-    color: $background_tertiary;
+    color: $background_tertiary !important;
 }
 .background_tertiary_background {
-    background-color: $background_tertiary;
+    background-color: $background_tertiary !important;
 }
 
 .highlight_color {
-    color: $background_highlight;
+    color: $background_highlight !important;
 }
 .highlight_background {
-    background-color: $background_highlight;
+    background-color: $background_highlight !important;
 }
 
 // iconic color
 .app_color {
-    color: $app_color;
+    color: $app_color !important;
 }
 .app_background {
-    background-color: $app_color;
+    background-color: $app_color !important;
 }
 
 .plugin_color {
-    color: $plugin_color;
+    color: $plugin_color !important;
 }
 .plugin_background {
-    background-color: $plugin_color;
+    background-color: $plugin_color !important;
 }
 
 // status colros
 .danger_color {
-    color: $color_danger;
+    color: $color_danger !important;
 }
 
 .danger_background {
-    background-color: $color_danger;
+    background-color: $color_danger !important;
 }
 
 .success_color {
-    color: $color_success;
+    color: $color_success !important;
 }
 .success_background {
-    background-color: $color_success;
+    background-color: $color_success !important;
 }
 
 .warning_color {
-    color: $color_warning;
+    color: $color_warning !important;
 }
 .warning_background {
-    background-color: $color_warning;
+    background-color: $color_warning !important;
 }
 
 .info_color {
-    color: $color_info;
+    color: $color_info !important;
 }
 .info_background {
-    background-color: $color_info;
+    background-color: $color_info !important;
 }

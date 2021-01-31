@@ -16,7 +16,7 @@ import { ICONS } from 'utilities/icons';
 import { showMessage } from 'utilities/notify';
 import { getAppById, installApp } from './appenlargedview.actions';
 import styles from './appenlargedview.module.scss';
-import appHolderStyles from 'components/AppHolder/appholder.module.scss';
+import appHolderStyles from '../../../../components/AppHolder/appholder.module.scss';
 
 const AppIcon = (props: { appDetails: IAppResponse }) => {
     const Icon = ICONS[props.appDetails.iconUrl as keyof typeof ICONS];
@@ -133,6 +133,7 @@ export const AppEnlargedView = (): ReactElement => {
                                     className={cx(
                                         appHolderStyles.holderType,
                                         styles.installationStatus,
+                                        appHolderStyles.holderTypeAppInstalled,
                                     )}
                                 >
                                     <div className={appHolderStyles.holderTypeIcon}>

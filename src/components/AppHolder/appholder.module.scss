@@ -40,7 +40,7 @@
 
 @mixin holderTypeMixin($type: 'app', $installed: true) {
     @if $type == 'app' {
-        @if $installed == 'true' {
+        @if $installed {
             color: $foreground_white;
             background-color: $app_color;
         } @else {

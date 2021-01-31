@@ -45,7 +45,7 @@
     flex-direction: column;
     gap: 15px;
     margin-top: 10px;
-    color: $background_secondary;
+    color: $foreground_secondary;
 }
 
 .appTitleHolder {
@@ -61,10 +61,10 @@
 }
 
 .installationStatus {
-    display: block;
-    position: relative;
-    top: unset;
-    right: unset;
+    display: block !important;
+    position: relative !important;
+    top: unset !important;
+    right: unset !important;
 }
 
 .appShortDescription {
