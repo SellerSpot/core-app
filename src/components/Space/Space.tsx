@@ -1,6 +1,6 @@
 import { cx } from '@emotion/css';
 import React, { ReactElement } from 'react';
-import { getSpaceStyles } from './space.styles';
+import styles from './space.module.scss';
 import lodash from 'lodash';
 
 export interface ISpaceProps {
@@ -29,15 +29,16 @@ export const Space = (props: ISpaceProps): ReactElement => {
         orientation: 'vertical',
         size: 20,
     };
-
     const requiredProps = lodash.merge(defaultProps, props);
-
-    const styles = getSpaceStyles(requiredProps);
 
     return (
         <div
             className={cx(styles.spaceWrapper, requiredProps.className)}
-            style={requiredProps.style}
+            style={{
+                width: `${requiredProps.orientation === 'vertical' ? 0 : requiredProps.size}px`,
+                height: `${requiredProps.orientation === 'vertical' ? requiredProps.size : 0}px`,
+                ...requiredProps.style,
+            }}
         ></div>
     );
 };

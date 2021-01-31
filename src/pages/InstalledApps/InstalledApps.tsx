@@ -13,8 +13,7 @@ import { ICONS } from 'utilities/icons';
 import { InstalledAppDashboard } from './components/InstalledAppDashboard/InstalledAppDashboard';
 import { InstalledAppsHome } from './components/InstalledAppsHome/InstalledAppsHome';
 import { getTenantInstalledApps } from './installedapps.actions';
-import { getInstalledAppsStyles } from './installedapps.styles';
-const styles = getInstalledAppsStyles();
+import styles from './installedapps.module.scss';
 
 export const InstalledApps = (): ReactElement => {
     const dispatch = useDispatch();

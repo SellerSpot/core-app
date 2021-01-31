@@ -9,11 +9,10 @@ import {
     AppDashboardLeftNav,
     IAppDashboardLeftNavProps,
 } from '../../AppDashboardLeftNav/AppDashboardLeftNav';
-import { IInstalledAppDashboardProps } from '../installedappdashboard.types';
+import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
 import { PosDashboardHome } from './components/PosDashboardHome/PosDashboardHome';
 import { PosDashboardSettings } from './components/PosDashboardSettings/PosDashboardSettings';
-import { getPointOfSaleDashboardStyles } from './pointofsaledashboard.styles';
-const styles = getPointOfSaleDashboardStyles();
+import styles from './pointofsaledashboard.module.scss';
 
 export const PointOfSaleDasboard = (props: IInstalledAppDashboardProps): ReactElement => {
     const history = useHistory();

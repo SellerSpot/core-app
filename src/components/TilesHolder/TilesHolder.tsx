@@ -1,6 +1,5 @@
-import { AppHolder } from 'components/AppHolder/AppHolder';
 import React, { ReactElement } from 'react';
-import { getTilesHolderStyles } from './tilesholder.styles';
+import styles from './tilesholder.module.scss';
 
 export interface ITilesHolder {
     children?: ReactElement | ReactElement[];
@@ -18,7 +17,6 @@ export interface ITilesHolder {
 }
 
 export const TilesHolder = (props: ITilesHolder): ReactElement => {
-    const styles = getTilesHolderStyles();
     return (
         <div className={styles.tilesHolderWrapper} style={props.styles}>
             {props.children}

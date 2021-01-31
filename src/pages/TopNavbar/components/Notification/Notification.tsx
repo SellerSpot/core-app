@@ -3,9 +3,7 @@ import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ICONS } from 'utilities/icons';
-import { getNotificationStyles } from './notification.styles';
-
-const styles = getNotificationStyles();
+import styles from './notification.module.scss';
 
 export const Notification = (): ReactElement => {
     const history = useHistory();

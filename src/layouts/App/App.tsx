@@ -8,19 +8,17 @@ import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { authSelector } from 'store/models/auth';
 import { cx } from '@emotion/css';
-import { getAppStyles } from './app.styles';
 import { verifyAuthToken } from './app.actions';
-import { injectGlobalStyles } from 'styles/styles';
 import { animationStyles } from 'styles/animation.styles';
 import { notifySelector } from 'store/models/notify';
 import { Notify } from '@sellerspot/universal-components';
+import '../../styles/core.scss';
+import styles from './app.module.scss';
 
 // global actions
-injectGlobalStyles(); // inject global styles into dom
 initializeGlobalServices(); // application common initilizers goes here
 
 export const App = (): ReactElement => {
-    const styles = getAppStyles();
     const authState = useSelector(authSelector);
     const [isLoading, setIsLoading] = useState(true);
     const notifyState = useSelector(notifySelector);

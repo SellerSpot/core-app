@@ -16,7 +16,7 @@ import { installedAppsSelector } from 'store/models/installedApps';
 import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
-import { getHomeStyles } from './home.styles';
+import styles from './home.module.scss';
 
 export const Home = (): ReactElement => {
     const dispatch = useDispatch();
@@ -41,7 +41,6 @@ export const Home = (): ReactElement => {
             dispatch(removePreviouslyInsertedBreadCrumbs());
         };
     }, []);
-    const styles = getHomeStyles();
 
     return (
         <div

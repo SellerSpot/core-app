@@ -1,0 +1,46 @@
+.dashboardWrapper {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    background: $background_primary;
+    overflow: hidden;
+}
+
+.leftNavbarWrapper {
+    width: 70px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    transition: width 0.3s;
+}
+
+.leftNavBarExpanded {
+    width: 250px;
+}
+
+.mainBodyWrapper {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: relative;
+    padding: 10px 0px 0px 10px;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    gap: 5px;
+}
+
+.topNavbarWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.coreContentWrapper {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: relative;
+}

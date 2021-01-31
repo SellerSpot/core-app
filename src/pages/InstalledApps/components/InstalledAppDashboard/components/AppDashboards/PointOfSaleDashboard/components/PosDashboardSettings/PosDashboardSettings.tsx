@@ -1,23 +1,20 @@
-import { css, cx } from '@emotion/css';
-import { AlertMessage, Button, IConfirmDialogProps } from '@sellerspot/universal-components';
+import { cx } from '@emotion/css';
+import { AlertMessage, Button } from '@sellerspot/universal-components';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
 import { uninstallTenantInstalledAppById } from 'pages/InstalledApps/components/InstalledAppDashboard/installedappsdashboard.actions';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { pushBreadCrumbs, removePreviouslyInsertedBreadCrumbs } from 'store/models/breadCrumb';
-import { closeConfirmDialog, openConfirmDialog } from 'store/models/confirmDialog';
 import { updateInstalledAppsState } from 'store/models/installedApps';
 import { animationStyles } from 'styles/animation.styles';
 import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { showMessage } from 'utilities/notify';
-import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
-import { getPosdashboardSettingsStyles } from './posdashboardsettings.styles';
-
-const styles = getPosdashboardSettingsStyles();
+import { IInstalledAppDashboardProps } from '../../../../../installedappdashboard.types';
+import styles from './posdashboardsettings.module.scss';
 
 export const PosDashboardSettings = (props: IInstalledAppDashboardProps): ReactElement => {
     const dispatch = useDispatch();

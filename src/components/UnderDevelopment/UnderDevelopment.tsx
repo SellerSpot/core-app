@@ -1,8 +1,6 @@
 import { UnderConstruction } from 'images/images';
 import React, { ReactElement } from 'react';
-import { getUnderDevelopmentStyles } from './underDevelopment.styles';
-
-const styles = getUnderDevelopmentStyles();
+import styles from './underDevelopment.module.scss';
 
 export const UnderDevelopment = (): ReactElement => {
     return (

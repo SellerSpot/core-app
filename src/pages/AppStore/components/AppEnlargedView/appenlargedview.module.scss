@@ -1,0 +1,128 @@
+.enlargedAppViewWrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5%;
+}
+.enlargedAppViewContainer {
+    width: 60%;
+    height: auto;
+}
+.appviewHeader {
+    display: grid;
+    grid-template-columns: 150px 1fr 150px;
+    gap: 25px;
+    width: 100%;
+    height: 120px;
+}
+
+.iconContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconHolder {
+    width: 120px;
+    height: 120px;
+    box-shadow: 0 0 10px 0 $background_highlight;
+    background-color: $background_primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border-radius: 15px;
+}
+
+.detailsHolder {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    color: $background_secondary;
+}
+
+.appTitleHolder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.appTitle {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.installationStatus {
+    display: block;
+    position: relative;
+    top: unset;
+    right: unset;
+}
+
+.appShortDescription {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.appCalltoAction {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bannerImageHolder {
+    margin-top: 50px;
+    width: 100%;
+    height: 250px;
+    overflow-x: auto;
+}
+
+.bannerImageWrapper {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    overflow-x: auto;
+    align-items: center;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(350px, 1fr);
+    gap: 30px;
+    padding: 20px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.bannerImageContainer {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 0 $background_highlight;
+}
+
+.bannerImage {
+    width: auto;
+    height: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.longDescriptionWrapper {
+    font-size: 16px;
+    margin-top: 30px;
+    line-height: 25px;
+    padding: 15px;
+}

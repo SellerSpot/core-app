@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { getProfileHolderStyles } from './profileholder.styles';
-import { MenuItem, IMenuItemProps, MenuHolder } from '../MenuHolder/MenuHolder';
+import styles from './profileholder.module.scss';
+import { IMenuItemProps, MenuHolder } from '../MenuHolder/MenuHolder';
 import { cx } from '@emotion/css';
 import { animationStyles } from 'styles/animation.styles';
 import { useHistory } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { batch, useDispatch, useSelector } from 'react-redux';
 import { authSelector, unAuthenticate } from 'store/models/auth';
 import { ICONS } from 'utilities/icons';
 import { clearSubDomain } from 'store/models/subDomain';
-const styles = getProfileHolderStyles();
 
 export const ProfileHolder = (): ReactElement => {
     const history = useHistory();

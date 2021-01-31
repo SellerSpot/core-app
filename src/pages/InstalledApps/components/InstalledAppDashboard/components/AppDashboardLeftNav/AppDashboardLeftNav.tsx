@@ -1,11 +1,9 @@
 import { cx } from '@emotion/css';
 import React, { ReactElement } from 'react';
-import { getAppDashboardLeftNavStyles } from './appdashboardleftnav.styles';
+import styles from './appdashboardleftnav.module.scss';
 import { IStatusFlagProps, StatusFlag } from '@sellerspot/universal-components';
 import { IMenuItemProps, MenuHolder } from 'pages/LeftNavbar/components/MenuHolder/MenuHolder';
 import { IconType } from 'react-icons';
-
-const styles = getAppDashboardLeftNavStyles();
 
 export interface IAppDashboardLeftNavProps {
     header: {

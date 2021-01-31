@@ -4,7 +4,7 @@ import { APP_DASHBOARD_NAMES } from 'config/dashboardNames';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory, useLocation, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { installedAppDashboardService } from 'services/services';
 import { pushBreadCrumbs } from 'store/models/breadCrumb';
 import { commonSelector, updateCommonState } from 'store/models/common';
@@ -12,9 +12,8 @@ import { subDomainSelector } from 'store/models/subDomain';
 import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse, IInstalledAppLaunchDomainResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
-import { getInstalledAppDashboardStyle } from './installedappdashboard.styles';
+import styles from './installedappdashboard.module.scss';
 import { getTenantInstalledAppByIdOrSlug } from './installedappsdashboard.actions';
-const styles = getInstalledAppDashboardStyle();
 
 export const InstalledAppDashboard = (): ReactElement => {
     const history = useHistory();

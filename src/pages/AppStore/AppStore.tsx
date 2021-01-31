@@ -11,10 +11,9 @@ import {
 import { updateInstalledAppsState } from 'store/models/installedApps';
 import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
-import { getAppStoreStyles } from './appstore.styles';
+import styles from './appstore.module.scss';
 import { AppEnlargedView } from './components/AppEnlargedView/AppEnlargedView';
 import { AppStoreHome } from './components/AppStoreHome/AppStoreHome';
-const styles = getAppStoreStyles();
 
 export const AppStore = (): ReactElement => {
     const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import { AppHolder } from 'components/AppHolder/AppHolder';
 import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { TilesHolder } from 'components/TilesHolder/TilesHolder';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { getInstalledAppsHomeStyles } from './installedappshome.styles';
+import React, { ReactElement, useEffect } from 'react';
+import styles from './installedappshome.module.scss';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +14,6 @@ import {
 } from 'store/models/breadCrumb';
 import { cx } from '@emotion/css';
 import { animationStyles } from 'styles/animation.styles';
-
-const styles = getInstalledAppsHomeStyles();
 
 export const InstalledAppsHome = (): ReactElement => {
     const installedAppsState = useSelector(installedAppsSelector);

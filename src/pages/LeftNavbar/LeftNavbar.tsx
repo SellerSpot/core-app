@@ -9,10 +9,9 @@ import { ICONS } from 'utilities/icons';
 import { LogoHolder } from './components/LogoHolder/LogoHolder';
 import { IMenuItemProps, MenuHolder } from './components/MenuHolder/MenuHolder';
 import { ProfileHolder } from './components/ProfileHolder/ProfileHolder';
-import { getLeftNavBarStyles } from './leftnavbar.styles';
+import styles from './leftnavbar.module.scss';
 
 export const LeftNavbar = (): ReactElement => {
-    const styles = getLeftNavBarStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const commonState = useSelector(commonSelector);

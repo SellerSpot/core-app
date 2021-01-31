@@ -1,10 +1,9 @@
-import React, { ReactElement, useEffect } from 'react';
-import { getMenuHolderStyles } from './menuholder.styles';
+import React, { ReactElement } from 'react';
+import styles from './menuholder.module.scss';
 import { useHistory, useLocation } from 'react-router-dom';
 import { IconType } from 'react-icons/lib';
 import { cx } from '@emotion/css';
 
-const styles = getMenuHolderStyles();
 export interface IMenuHolderProps {
     menuItems: IMenuItemProps[];
 }

@@ -1,0 +1,52 @@
+.posDashboardHomeWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.homeContainer {
+    margin-top: 100px;
+    width: 80%;
+    height: auto;
+}
+
+.welcomeContainer {
+    padding: 50px;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 5px 0 $background_highlight;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+}
+
+.welcomeContainerLanunchInstruction {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 25px;
+}
+
+.welcomeInstructiontitle {
+    font-size: 25px;
+}
+
+.welcomeInstructionLinkHolder {
+    width: auto;
+    height: auto;
+}
+
+.welcomeInstructionLink {
+    font-size: 25px;
+}
+
+.welcomeContainerLanunchCallToAction {
+    width: auto;
+    height: auto;
+}

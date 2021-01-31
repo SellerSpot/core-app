@@ -3,10 +3,9 @@ import React, { ReactElement } from 'react';
 import { animationStyles } from 'styles/animation.styles';
 import { BreadCrumbs } from './components/BreadCrumbs/BreadCrumbs';
 import { Notification } from './components/Notification/Notification';
-import { getStyles } from './topnavbar.styles';
+import styles from './topnavbar.module.scss';
 
 export const TopNavbar = (): ReactElement => {
-    const styles = getStyles();
     return (
         <div
             className={cx(

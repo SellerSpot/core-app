@@ -3,14 +3,13 @@ import { Loader } from 'components/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { cx } from '@emotion/css';
-import { getForgotStyles } from './forgot.styles';
+import styles from './forgot.module.scss';
 import { animationStyles } from 'styles/animation.styles';
 import { UnderDevelopment } from 'components/UnderDevelopment/UnderDevelopment';
 import { Button, InputField } from '@sellerspot/universal-components';
 import { COLORS } from 'config/colors';
 
 export const Forgot = (): ReactElement => {
-    const styles = getForgotStyles();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {

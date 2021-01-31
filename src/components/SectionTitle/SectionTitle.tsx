@@ -1,6 +1,6 @@
 import { cx } from '@emotion/css';
 import React, { ReactElement } from 'react';
-import { getSectionTitleStyles } from './sectiontitle.styles';
+import styles from './sectiontitle.module.scss';
 
 export interface ISectionTitleProps {
     title: string | ReactElement;
@@ -9,7 +9,6 @@ export interface ISectionTitleProps {
 }
 
 export const SectionTitle = (props: ISectionTitleProps): ReactElement => {
-    const styles = getSectionTitleStyles();
     return (
         <div className={cx(styles.sectionTitleWrapper, props.className)} style={props.style}>
             {props.title}

@@ -6,8 +6,7 @@ import { useDispatch } from 'react-redux';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
-import { getNotificationsStyles } from './notifications.styles';
-const styles = getNotificationsStyles();
+import styles from './notifications.module.scss';
 
 export const Notifications = (): ReactElement => {
     const dispatch = useDispatch();

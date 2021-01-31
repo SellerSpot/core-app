@@ -1,6 +1,5 @@
 import { cx } from '@emotion/css';
 import { Button } from '@sellerspot/universal-components';
-import { getAppHolderStyles } from 'components/AppHolder/appholder.styles';
 import { Loader } from 'components/Loader/Loader';
 import { COLORS } from 'config/colors';
 import { ROUTES } from 'config/routes';
@@ -16,10 +15,8 @@ import { introduceDelay } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import { showMessage } from 'utilities/notify';
 import { getAppById, installApp } from './appenlargedview.actions';
-import { getEnlargedAppViewStyles } from './appenlargedview.styles';
-
-const styles = getEnlargedAppViewStyles();
-const appHolderStylesApp = getAppHolderStyles({ installed: true, type: 'app' });
+import styles from './appenlargedview.module.scss';
+import appHolderStyles from 'components/AppHolder/appholder.module.scss';
 
 const AppIcon = (props: { appDetails: IAppResponse }) => {
     const Icon = ICONS[props.appDetails.iconUrl as keyof typeof ICONS];
@@ -134,16 +131,14 @@ export const AppEnlargedView = (): ReactElement => {
                             {installedAppsState.appIds.includes(appDetails._id) && (
                                 <div
                                     className={cx(
-                                        appHolderStylesApp.holderType,
+                                        appHolderStyles.holderType,
                                         styles.installationStatus,
                                     )}
                                 >
-                                    <div className={appHolderStylesApp.holderTypeIcon}>
+                                    <div className={appHolderStyles.holderTypeIcon}>
                                         <ICONS.APP />
                                     </div>
-                                    <div className={appHolderStylesApp.holderTypeText}>
-                                        Installed
-                                    </div>
+                                    <div className={appHolderStyles.holderTypeText}>Installed</div>
                                 </div>
                             )}
                         </div>

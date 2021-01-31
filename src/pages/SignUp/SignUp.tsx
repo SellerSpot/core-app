@@ -6,7 +6,7 @@ import { socketService } from 'services/services';
 import { useDispatch } from 'react-redux';
 import { authenticate } from 'store/models/auth';
 import { cx } from '@emotion/css';
-import { getSignUpStyles } from './signup.styles';
+import styles from './signup.module.scss';
 import { animationStyles } from 'styles/animation.styles';
 import { updateGlobalServices } from 'config/globalConfig';
 import { IAuthResposne, IErrorMessageResponse, IResponse } from 'typings/response.types';
@@ -17,7 +17,6 @@ import { SectionTitle } from 'components/SectionTitle/SectionTitle';
 import { showMessage } from 'utilities/notify';
 
 export const SignUp = (): ReactElement => {
-    const styles = getSignUpStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);

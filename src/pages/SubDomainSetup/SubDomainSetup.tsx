@@ -1,12 +1,12 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { css, cx } from '@emotion/css';
-import { getSubDomainSetupStyles } from './subdomainsetup.styles';
+import { cx } from '@emotion/css';
+import styles from './subdomainsetup.module.scss';
 import { animationStyles } from 'styles/animation.styles';
 import { batch, useSelector } from 'react-redux';
 import { subDomainSelector } from 'store/models/subDomain';
 import { AlertMessage, Button, InputField } from '@sellerspot/universal-components';
-import { COLORS } from 'config/colors';
+import colors from '../../styles/colors.module.scss';
 import {
     checkDomainAvailability,
     createTenantSubDomain,
@@ -17,7 +17,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { showMessage } from 'utilities/notify';
 
 export const SubDomainSetup = (): ReactElement => {
-    const styles = getSubDomainSetupStyles();
     const history = useHistory();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
@@ -184,11 +183,10 @@ export const SubDomainSetup = (): ReactElement => {
                                             'Not Available - (minimum 3 and maximum 10 characters) (only alphabets are allowed)',
                                     }}
                                     className={{
-                                        helperLabel: css`
-                                            color: ${isStartedSearching && isDomainAvailable
-                                                ? 'green !important'
-                                                : ''};
-                                        `,
+                                        helperLabel: cx({
+                                            [colors.success_color]:
+                                                isStartedSearching && isDomainAvailable,
+                                        }),
                                     }}
                                     onChange={(e) => {
                                         handlOnChange(e.target.value);
@@ -230,9 +228,11 @@ export const SubDomainSetup = (): ReactElement => {
                                     }
                                     type={'submit'}
                                     status={isDomainAvailable ? 'default' : 'disabled'}
+                                    className={cx(
+                                        colors.foreground_white_color,
+                                        colors.foreground_primary_background,
+                                    )}
                                     style={{
-                                        color: COLORS.FOREGROUND_WHITE,
-                                        backgroundColor: COLORS.FOREGROUND_PRIMARY,
                                         width: '50%',
                                         fontWeight: 'bold',
                                         opacity: isDomainAvailable ? 1 : 0.5,

@@ -1,0 +1,104 @@
+@import './_colors.scss';
+
+// foregrounds
+.foreground_primary_color {
+    color: $foreground_primary;
+}
+.foreground_primary_background {
+    background-color: $foreground_primary;
+}
+
+.foreground_secondary_color {
+    color: $foreground_secondary;
+}
+.foreground_secondary_background {
+    background-color: $foreground_secondary;
+}
+
+.foreground_tertiary_color {
+    color: $foreground_tertiary;
+}
+.foreground_tertiary_background {
+    background-color: $foreground_tertiary;
+}
+
+.foreground_white_color {
+    color: $foreground_white;
+}
+.foreground_white_background {
+    background-color: $foreground_white;
+}
+
+// backgrounds
+.background_primary_color {
+    color: $background_primary;
+}
+.background_primary_background {
+    background-color: $background_primary;
+}
+
+.background_secondary_color {
+    color: $background_secondary;
+}
+.background_secondary_background {
+    background-color: $background_secondary;
+}
+
+.background_tertiary_color {
+    color: $background_tertiary;
+}
+.background_tertiary_background {
+    background-color: $background_tertiary;
+}
+
+.highlight_color {
+    color: $background_highlight;
+}
+.highlight_background {
+    background-color: $background_highlight;
+}
+
+// iconic color
+.app_color {
+    color: $app_color;
+}
+.app_background {
+    background-color: $app_color;
+}
+
+.plugin_color {
+    color: $plugin_color;
+}
+.plugin_background {
+    background-color: $plugin_color;
+}
+
+// status colros
+.danger_color {
+    color: $color_danger;
+}
+
+.danger_background {
+    background-color: $color_danger;
+}
+
+.success_color {
+    color: $color_success;
+}
+.success_background {
+    background-color: $color_success;
+}
+
+.warning_color {
+    color: $color_warning;
+}
+.warning_background {
+    background-color: $color_warning;
+}
+
+.info_color {
+    color: $color_info;
+}
+.info_background {
+    background-color: $color_info;
+}

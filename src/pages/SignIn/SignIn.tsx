@@ -8,7 +8,7 @@ import { updateSubDomain } from 'store/models/subDomain';
 import { batch, useDispatch } from 'react-redux';
 import { updateGlobalServices } from 'config/globalConfig';
 import { cx } from '@emotion/css';
-import { getSignInStyles } from './signin.styles';
+import styles from './signin.module.scss';
 import { animationStyles } from 'styles/animation.styles';
 import { IAuthResposne, IErrorMessageResponse, IResponse } from 'typings/response.types';
 import { updateInstalledAppsState } from 'store/models/installedApps';
@@ -19,7 +19,6 @@ import { Space } from 'components/Space/Space';
 import { showMessage } from 'utilities/notify';
 
 export const SignIn = (): ReactElement => {
-    const styles = getSignInStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);

@@ -10,10 +10,8 @@ import { animationStyles } from 'styles/animation.styles';
 import { IAppDomainUrl } from 'typings/utilities.types';
 import { getDomainUrlFromAppDomainDetails } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
-import { IInstalledAppDashboardProps } from '../../../installedappdashboard.types';
-import { getPosdashboardHomeStyles } from './posdashboardhome.styles';
-
-const styles = getPosdashboardHomeStyles();
+import { IInstalledAppDashboardProps } from '../../../../../installedappdashboard.types';
+import styles from './posdashboardhome.module.scss';
 
 export const PosDashboardHome = (props: IInstalledAppDashboardProps): ReactElement => {
     const dispatch = useDispatch();

@@ -10,9 +10,7 @@ import { installedAppsSelector } from 'store/models/installedApps';
 import { animationStyles } from 'styles/animation.styles';
 import { IAppResponse } from 'typings/response.types';
 import { getAllApps } from './appstorehome.actions';
-import { getAppStoreHomeStyles } from './appstorehome.styles';
-
-const styles = getAppStoreHomeStyles();
+import styles from './appstorehome.module.scss';
 
 export const AppStoreHome = (): ReactElement => {
     const [apps, setApps] = useState([] as IAppResponse[]);

@@ -6,9 +6,7 @@ import { useDispatch } from 'react-redux';
 import { clearAndPushBreadCrumbs } from 'store/models/breadCrumb';
 import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
-import { getBillingStyles } from './billing.styles';
-
-const styles = getBillingStyles();
+import styles from './billing.module.scss';
 
 export const Billing = (): ReactElement => {
     const dispatch = useDispatch();

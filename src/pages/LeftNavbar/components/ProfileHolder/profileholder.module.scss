@@ -1,0 +1,115 @@
+.profileHolderWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 0 5px 0 5px;
+}
+
+.profileHolderContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.profileContentWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 40px 1fr 10px;
+    gap: 15px;
+    &:hover {
+        background-color: $background_primary;
+    }
+}
+
+.profileImageWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.profileImageHolder {
+    font-size: 20px;
+    width: 42px;
+    height: 42px;
+    color: $background_secondary;
+    background-color: $background_tertiary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileUserDetailsHolder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profileUserName {
+    font-size: 15px;
+    font-weight: bold;
+    color: $foreground_secondary;
+    text-transform: capitalize;
+}
+
+.profileUserEmail {
+    font-size: 13px;
+    font-weight: normal;
+    color: $foreground_tertiary;
+}
+
+.caretHolder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: $foreground_tertiary;
+}
+
+.caretOnMenuOpen {
+    transform: rotate(180deg);
+}
+
+// profile menu holder styles
+.profileMenuWrapper {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 8px;
+    background-color: $background_primary;
+    padding-bottom: 60px;
+    box-shadow: 0 0 10px 0 $background_tertiary;
+    z-index: 0;
+}
+
+.menuItem {
+    padding: 0 10px;
+    gap: 15px;
+}
+
+.activeHoverGray {
+    &:hover {
+        background-color: $background_secondary;
+    }
+}

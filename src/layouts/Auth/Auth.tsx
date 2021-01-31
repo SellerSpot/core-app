@@ -4,11 +4,10 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Forgot } from 'pages/Forgot/Forgot';
-import { getAuthStyles } from './auth.styles';
 import { LogoImage, PromotionImage } from 'images/images';
+import styles from './auth.module.scss';
 
 export const Auth = (): ReactElement => {
-    const styles = getAuthStyles();
     return (
         <div className={styles.authWrapper}>
             <div className={styles.promotionHolder}>

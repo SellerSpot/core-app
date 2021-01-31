@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import { IAppResponse } from 'typings/response.types';
 import { ICONS } from 'utilities/icons';
-import { getAppHolderStyles } from './appholder.styles';
+import { cx } from '@emotion/css';
+import styles from './appholder.module.scss';
 import lodash from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
@@ -28,7 +29,6 @@ export const AppHolder = (props: IAppHolderProps): ReactElement => {
         onClick: () => history.push(ROUTES.APP_STORE),
     };
     const requiredProps = lodash.merge(defaultProps, props);
-    const styles = getAppHolderStyles(requiredProps);
     const { data, installed, type, showBadge, onClick } = requiredProps;
     const iconName = data.iconUrl as keyof typeof ICONS;
     const Icon = ICONS[iconName];
@@ -40,7 +40,19 @@ export const AppHolder = (props: IAppHolderProps): ReactElement => {
             <div className={styles.titleHolder}>{data.name}</div>
             <div className={styles.descriptionHolder}>{data.shortDescription}</div>
             {showBadge && (
-                <div className={styles.holderType} title={type}>
+                <div
+                    className={cx(styles.holderType, {
+                        [styles.holderTypeAppInstalled]:
+                            requiredProps.type === 'app' && requiredProps.installed,
+                        [styles.holderTypeAppNotInstalled]:
+                            requiredProps.type === 'app' && !requiredProps.installed,
+                        [styles.holderTypePluginInstalled]:
+                            requiredProps.type === 'plugin' && requiredProps.installed,
+                        [styles.holderTypePluginNotInstalled]:
+                            requiredProps.type === 'plugin' && !requiredProps.installed,
+                    })}
+                    title={type}
+                >
                     <div className={styles.holderTypeIcon}>
                         {type === 'app' ? <ICONS.APP /> : <ICONS.PLUGIN />}
                     </div>

@@ -2,8 +2,7 @@ import { ROUTES } from 'config/routes';
 import { LogoImage } from 'images/images';
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getLogoHolderStyles } from './logoholder.styles';
-const styles = getLogoHolderStyles();
+import styles from './logoholder.module.scss';
 
 export const LogoHolder = (): ReactElement => {
     const history = useHistory();

@@ -5,8 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { breadCrumbsSelector } from 'store/models/breadCrumb';
 import { animationStyles } from 'styles/animation.styles';
 import { ICONS } from 'utilities/icons';
-import { breadCrumbsStyles } from './breadcrumbs.styles';
-const styles = breadCrumbsStyles();
+import styles from './breadcrumbs.module.scss';
 
 export const BreadCrumbs = (): ReactElement => {
     const breadCrumbsState = useSelector(breadCrumbsSelector);

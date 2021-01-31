@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { APP_DASHBOARD_NAMES } from 'config/dashboardNames';
 import { PointOfSaleDasboard } from 'pages/InstalledApps/components/InstalledAppDashboard/components/AppDashboards/PointOfSaleDashboard/PointOfSaleDasboard';
-import { IInstalledAppDashboardProps } from 'pages/InstalledApps/components/InstalledAppDashboard/components/AppDashboards/installedappdashboard.types';
+import { IInstalledAppDashboardProps } from 'pages/InstalledApps/components/InstalledAppDashboard/installedappdashboard.types';
 
 export class InstalledAppDashboardService {
     private appDashboards: Map<
