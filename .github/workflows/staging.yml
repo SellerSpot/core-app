@@ -33,14 +33,14 @@ jobs:
             - name: Make envfile
               uses: SpicyPizza/create-envfile@v1
               with:
-                  envKey_NODE_ENV: ${{ secrets.NODE_ENV_STAGING }}
-                  envKey_ENV: ${{ secrets.ENV_STAGING }}
-                  envKey_APP_NAME: ${{ secrets.APP_NAME_STAGING }}
-                  envKey_APP_VERSION: ${{ secrets.APP_VERSION_STAGING }}
-                  envKey_PORT: ${{ secrets.PORT_STAGING }}
-                  envKey_ONLINE_SERVER_API_URL: ${{ secrets.ONLINE_SERVER_API_URL_STAGING }}
-                  envKey_ONLINE_SERVER_SOCKET_URL: ${{ secrets.ONLINE_SERVER_SOCKET_URL_STAGING }}
-                  envKey_BASE_DOMAIN_NAME: ${{ secrets.BASE_DOMAIN_NAME_STAGING }}
+                  envKey_NODE_ENV: ${{ secrets.STAGING_NODE_ENV }}
+                  envKey_ENV: ${{ secrets.STAGING_ENV }}
+                  envKey_APP_NAME: ${{ secrets.STAGING_APP_NAME }}
+                  envKey_APP_VERSION: ${{ secrets.STAGING_APP_VERSION }}
+                  envKey_PORT: ${{ secrets.STAGING_PORT }}
+                  envKey_ONLINE_SERVER_API_URL: ${{ secrets.STAGING_ONLINE_SERVER_API_URL }}
+                  envKey_ONLINE_SERVER_SOCKET_URL: ${{ secrets.STAGING_ONLINE_SERVER_SOCKET_URL }}
+                  envKey_BASE_DOMAIN_NAME: ${{ secrets.STAGING_BASE_DOMAIN_NAME }}
                   #   directory: <directory_name> # change later
                   #   file_name: .env # change later
 
