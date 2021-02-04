@@ -24,12 +24,6 @@ jobs:
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v1
 
-            - name: Login to DockerHub
-              uses: docker/login-action@v1
-              with:
-                  username: ${{ secrets.DOCKER_USERNAME }}
-                  password: ${{ secrets.DOCKER_PASSWORD }}
-
             - name: Make .env file
               run: |
                   tee -a .env <<EOF
@@ -43,20 +37,13 @@ jobs:
                   BASE_DOMAIN_NAME=${{ secrets.STAGING_BASE_DOMAIN_NAME }}
                   EOF
 
-            - name: .env file create checkout
-              run: cat .env
-
-            - name: Build and Push Docker Image
-              id: docker_build
-              uses: docker/build-push-action@v2
+            - name: Login, Build, Push Latest, Push Snapshot to DockerHub
+              uses: elgohr/Publish-Docker-Github-Action@master
               with:
-                  context: .
-                  file: ./Dockerfile
-                  push: true
-                  tags: ${{ env.DOCKER_REPO_NAME }}:latest # hold it as latest tag for now, in future we may need to do semantic versioning on docker images
-
-            - name: Docker Image Digest
-              run: echo ${{ steps.docker_build.outputs.digest }}
+                  name: ${{ env.DOCKER_REPO_NAME }}
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
+                  snapshot: true
 
             - name: k8s Update Deployment
               uses: actions-hub/kubectl@master
