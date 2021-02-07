@@ -1,8 +1,0 @@
-NODE_ENV=production
-ENV=production
-APP_NAME=sellerspot-core-app
-APP_VERSION=1.0.0
-PORT=3000
-ONLINE_SERVER_API_URL=https://core.api.sellerspotdev.tech
-ONLINE_SERVER_SOCKET_URL=https://core.api.sellerspotdev.tech
-BASE_DOMAIN_NAME=sellerspotdev.tech
