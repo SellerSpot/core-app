@@ -12,24 +12,14 @@ env:
 
 jobs:
     staging:
-        name: 'core-app-staging'
+        name: core-app-staging
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v2
 
             - name: Make .env file
-              run: |
-                  tee -a .env <<EOF
-                  NODE_ENV=${{ secrets.STAGING_NODE_ENV }}
-                  ENV=${{ secrets.STAGING_ENV }}
-                  APP_NAME=${{ secrets.STAGING_APP_NAME }}
-                  APP_VERSION=${{ secrets.STAGING_APP_VERSION }}
-                  PORT=${{ secrets.STAGING_PORT }}
-                  ONLINE_SERVER_API_URL=${{ secrets.STAGING_ONLINE_SERVER_API_URL }}
-                  ONLINE_SERVER_SOCKET_URL=${{ secrets.STAGING_ONLINE_SERVER_SOCKET_URL }}
-                  BASE_DOMAIN_NAME=${{ secrets.STAGING_BASE_DOMAIN_NAME }}
-                  EOF
+              run: echo ${{ secrets.STAGING_ENVIRONMENT_VARIABLES }} | base64 --decode > .env
 
             - name: Login, Build, Push Latest, Push Snapshot to DockerHub
               uses: elgohr/Publish-Docker-Github-Action@master
@@ -43,6 +33,6 @@ jobs:
             - name: k8s Update Deployment
               uses: actions-hub/kubectl@master
               env:
-                  KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_SECRET }}
+                  KUBE_CONFIG: ${{ secrets.STAGING_KUBE_CONFIG }}
               with:
                   args: rollout restart deploy ${{ env.K8S_DEPLOYMENT_NAME }} -n ${{ env.K8S_DEPLOYMENT_NAMESPACE }}

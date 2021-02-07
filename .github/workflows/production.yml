@@ -12,7 +12,7 @@ env:
 
 jobs:
     production:
-        name: 'core-app-production'
+        name: core-app-production
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
