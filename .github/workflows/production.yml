@@ -1,6 +1,7 @@
 name: core-app-production
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - production
@@ -13,6 +14,7 @@ env:
 jobs:
     production:
         name: core-app-production
+        if: github.ref == 'refs/heads/production'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo

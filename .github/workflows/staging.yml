@@ -1,6 +1,7 @@
 name: core-app-staging
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - staging
@@ -13,6 +14,7 @@ env:
 jobs:
     staging:
         name: core-app-staging
+        if: github.ref == 'refs/heads/staging'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
