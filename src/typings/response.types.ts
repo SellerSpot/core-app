@@ -16,7 +16,7 @@ export interface IAuthResposne {
 export interface ISubDomainResponse {
     createdAt: string;
     domainName: string;
-    tenantId: string;
+    tenant: string;
     updatedAt: string;
     _id: string;
     baseDomain: string;
