@@ -1,19 +1,4 @@
-// foregrounds
-$foreground_primary: #ff9800;
-$foreground_secondary: #37352f;
-$foreground_tertiary: #a1a09c;
-$foreground_white: #ffffff;
-// backgrounds
-$background_primary: #ffffff;
-$background_secondary: #f7f6f3;
-$background_tertiary: #ded2d2;
-$background_highlight: #dad9d6;
-$background_danger: #dc3545;
-// iconic color
-$app_color: #0ec120;
-$plugin_color: #1c73f5;
-// status colros
-$color_danger: #dc3545;
-$color_success: #0ec120;
-$color_warning: #edb203;
-$color_info: #1c73f5;
+/* we will be getting values from css varianbles , this would help in themeing  */
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$tertiary-color: var(--tertiary-color);

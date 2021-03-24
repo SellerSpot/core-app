@@ -1,3 +1,5 @@
+// subject to change on theme integration
+
 export const COLORS = {
     // foregrounds
     FOREGROUND_PRIMARY: '#FF9800',

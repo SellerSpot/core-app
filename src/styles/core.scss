@@ -25,3 +25,10 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
+:root {
+    // theming variables will be set dynamically from js (the following variables will assigned to scss variables in _colors.scss (which is used in all coloring thing internally))
+    --primary-color: #ff9800;
+    --secondary-color: #37352f;
+    --tertiary-color: #a1a09c;
+}
