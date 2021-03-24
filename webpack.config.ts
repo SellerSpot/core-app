@@ -11,26 +11,37 @@ const webpackConfiguration = (env: {
     production?: boolean;
     development?: boolean;
     analyze?: boolean;
+    story?: boolean;
 }): Configuration => {
     const isProduction = env.production ? true : false;
     const isAnalyze = env.analyze ? true : false;
-    1;
+    const isStory = env.story ? true : false;
     const envVariables = getEnvironmentVariables(isProduction);
     const devPort = Number(JSON.parse(envVariables['process.env.PORT']));
+    const resolve = isStory
+        ? {
+              extensions: ['.ts', '.tsx', '.js'],
+              plugins: [
+                  new TsconfigPathsPlugin({
+                      extensions: ['.ts', '.tsx', '.js', '.css', '.module.css'],
+                  }),
+              ],
+          }
+        : {
+              extensions: ['.ts', '.tsx', '.js'],
+              plugins: [
+                  new TsconfigPathsPlugin({
+                      extensions: ['.ts', '.tsx', '.js', '.css', '.module.css'],
+                  }),
+              ],
+              fallback: {
+                  path: require.resolve('path-browserify'),
+                  fs: require.resolve('fs'),
+              },
+          };
     return {
         entry: './src',
-        resolve: {
-            extensions: ['.ts', '.tsx', '.js'],
-            plugins: [
-                new TsconfigPathsPlugin({
-                    extensions: ['.ts', '.tsx', '.js', '.css', '.module.css'],
-                }),
-            ],
-            fallback: {
-                path: require.resolve('path-browserify'),
-                fs: require.resolve('fs'),
-            },
-        },
+        resolve,
         output: {
             path: path.join(__dirname, '/dist'),
             filename: 'index.js',

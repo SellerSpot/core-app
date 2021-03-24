@@ -9,12 +9,20 @@
     "build": "webpack --mode production --env NODE_ENV=production --env production",
     "build:analyze": "webpack --mode production --env NODE_ENV=production --env production --env analyze",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "storybook": "start-storybook -p 9006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/node-logger": "^6.1.21",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.1.21",
     "@types/classnames": "^2.2.11",
     "@types/lodash": "^4.14.166",
     "@types/node": "^14.14.14",
