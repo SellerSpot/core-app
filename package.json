@@ -70,7 +70,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "formik": "^2.2.6",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
