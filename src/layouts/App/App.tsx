@@ -1,4 +1,3 @@
-import { Loader } from 'components/Loader/Loader';
 import { initializeGlobalServices } from 'config/globalConfig';
 import { ROUTES } from 'config/routes';
 import { Dashboard } from 'layouts/Dashboard/Dashboard';
@@ -7,6 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
 import '../../styles/core.scss';
 import styles from './app.module.scss';
+import { CircularProgress } from '@material-ui/core';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
@@ -23,7 +23,7 @@ export const App = (): ReactElement => {
     return (
         <div className={styles.appWrapper}>
             {isLoading ? (
-                <Loader />
+                <CircularProgress />
             ) : (
                 <div className={cn(styles.appContainer)}>
                     <Switch>
