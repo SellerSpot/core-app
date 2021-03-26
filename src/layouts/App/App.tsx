@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
 import '../../styles/core.scss';
 import styles from './app.module.scss';
-import { CircularProgress } from '@material-ui/core';
+import AppPreloader from 'components/AppPreloader/AppPreloader';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
@@ -14,16 +14,16 @@ initializeGlobalServices(); // application common initilizers goes here
 export const App = (): ReactElement => {
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        (async () => {
-            setIsLoading(false);
-        }).call(null);
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         setIsLoading(false);
+    //     }).call(null);
+    // }, []);
 
     return (
         <div className={styles.appWrapper}>
             {isLoading ? (
-                <CircularProgress />
+                <AppPreloader />
             ) : (
                 <div className={cn(styles.appContainer)}>
                     <Switch>

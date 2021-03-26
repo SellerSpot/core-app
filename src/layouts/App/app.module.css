@@ -1,0 +1,13 @@
+.appWrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.appContainer {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}/*# sourceMappingURL=app.module.css.map */

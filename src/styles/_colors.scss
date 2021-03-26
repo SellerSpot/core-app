@@ -1,4 +1,21 @@
 /* we will be getting values from css varianbles , this would help in themeing  */
+$success-color: var(--success-color);
+$successLight-color: var(--successLight-color);
+$danger-color: var(--danger-color);
+$dangerLight-color: var(--dangerLight-color);
+$warning-color: var(--warning-color);
+$warningLight-color: var(--warningLight-color);
+$info-color: var(--info-color);
+$default-color: var(--default-color);
+
+$foregroundPrimary-color: var(--foregroundPrimary-color);
+$foregroundSecondary-color: var(--foregroundSecondary-color);
+$foregroundTertiary-color: var(--foregroundTertiary-color);
+
+$backgroundPrimary-color: var(--backgroundPrimary-color);
+$backgroundSecondary-color: var(--backgroundSecondary-color);
+$backgroundTertiary-color: var(--backgroundTertiary-color);
+
 $primary-color: var(--primary-color);
-$secondary-color: var(--secondary-color);
-$tertiary-color: var(--tertiary-color);
+$primaryLight-color: var(--primaryLight-color);
+$accent-color: var(--accent-color);

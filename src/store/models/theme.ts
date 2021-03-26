@@ -10,28 +10,12 @@ const initialState: IThemeState = {
     colors: themes.default,
 };
 
-// initial apply
-Object.keys(initialState.colors).forEach((key) => {
-    document.documentElement.style.setProperty(
-        `--${key}-color`,
-        initialState.colors[key as keyof IThemeColors],
-    );
-});
-
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        udpateThemeState: (state, { payload }: PayloadAction<IThemeState>) => {
-            (<(keyof IThemeState)[]>Object.keys(payload)).map((key) => {
-                state[key] = payload[key];
-            });
-            Object.keys(state.colors).forEach((key) => {
-                document.documentElement.style.setProperty(
-                    `--${key}-color`,
-                    state.colors[key as keyof IThemeColors],
-                );
-            });
+        udpateThemeColors: (state, { payload }: PayloadAction<IThemeState>) => {
+            state.colors = payload.colors;
         },
         resetThemeState: (state) => {
             Object.assign(state, initialState);
@@ -43,7 +27,7 @@ const themeSlice = createSlice({
 export default themeSlice.reducer;
 
 // exporting actions
-export const { udpateThemeState, resetThemeState } = themeSlice.actions;
+export const { udpateThemeColors, resetThemeState } = themeSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const themeSelector: Selector<RootState, IThemeState> = (state: RootState) => state.theme;

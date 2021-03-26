@@ -28,7 +28,24 @@ body {
 
 :root {
     // theming variables will be set dynamically from js (the following variables will assigned to scss variables in _colors.scss (which is used in all coloring thing internally))
-    --primary-color: #ff9800;
-    --secondary-color: #37352f;
-    --tertiary-color: #a1a09c;
+    --success-color: '#43AA8B',
+    --successLight-color: '#EDF7ED',
+    --danger-color: '#F44336',
+    --dangerLight-color: '#FDECEA',
+    --warning-color: '#FF9800',
+    --warningLight-color: '#FFF4E5',
+    --info-color: '#2196F3',
+    --default-color: '#878682',
+
+    --foregroundPrimary-color: '#5A5A5A',
+    --foregroundSecondary-color: '#767676',
+    --foregroundTertiary-color: '#C6C5C4',
+    
+    --backgroundPrimary-color: '#FAFAFA',
+    --backgroundSecondary-color: '#F2F2F2',
+    --backgroundTertiary-color: '#DAD9D6',
+    
+    --primary-color: '#1A73E8',
+    --primaryLight-color: '#D9E8FC',
+    --accent-color: '#EE8572',
 }
