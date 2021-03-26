@@ -1,3 +1,13 @@
+export interface IThemeFontSizes {
+    h1: string;
+    h2: string;
+    h3: string;
+    h4: string;
+    h5: string;
+    h6: string;
+    p: string;
+}
+
 export interface IThemeColors {
     // basic colors
     success: string;
@@ -23,7 +33,7 @@ export interface IThemeColors {
 }
 
 const inferColorTypes = <T extends { [key: string]: IThemeColors }>(arg: T): T => arg; // Infering types from Route object with autocomplete support.
-
+const inferFontStyleTypes = <T extends { [key: string]: IThemeFontSizes }>(arg: T): T => arg; // Infering types from Route object with autocomplete support.
 export type TThemes = keyof typeof themes;
 
 export const themes = inferColorTypes({
@@ -45,5 +55,17 @@ export const themes = inferColorTypes({
         primary: '#1A73E8',
         primaryLight: '#D9E8FC',
         accent: '#EE8572',
+
+        fontSizes: inferFontStyleTypes({
+            default: {
+                h1: '32px',
+                h2: '24px',
+                h3: '20px',
+                h4: '18px',
+                h5: '16px',
+                h6: '14px',
+                p: '12px',
+            },
+        }),
     },
 });

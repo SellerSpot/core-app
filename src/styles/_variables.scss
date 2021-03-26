@@ -1,11 +1,9 @@
 /* Values */
 /* font-sizes */
-$font-size-large-1: 36px;
-$font-size-large-2: 26px;
-$font-size-large-3: 24px;
-$font-size-header-1: 20px;
-$font-size-header-2: 18px;
-
-$font-size-primary: 16px;
-$font-size-secondary: 14px;
-$font-size-tertiary: 12px;
+$h1-fontsize: var(--h1-fontsize);
+$h2-fontsize: var(--h2-fontsize);
+$h3-fontsize: var(--h3-fontsize);
+$h4-fontsize: var(--h4-fontsize);
+$h5-fontsize: var(--h5-fontsize);
+$h6-fontsize: var(--h6-fontsize);
+$p-fontsize: var(--p-fontsize);

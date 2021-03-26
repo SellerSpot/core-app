@@ -1,7 +1,7 @@
 import { initializeGlobalServices } from 'config/globalConfig';
 import { ROUTES } from 'config/routes';
 import { Dashboard } from 'layouts/Dashboard/Dashboard';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
 import '../../styles/core.scss';

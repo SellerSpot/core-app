@@ -1,11 +1,11 @@
-@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     vertical-align: baseline;
     box-sizing: border-box;
-    font-family: Inter, Helvetica, sans-serif;
+    font-family: 'Roboto', Helvetica, sans-serif;
     scroll-behavior: smooth;
 }
 
@@ -24,6 +24,41 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+}
+
+h1{
+    font-size: $h1-fontsize;
+    font-weight: bold;
+}
+
+h2{
+    font-size: $h2-fontsize;
+    font-weight: bold;
+}
+
+h3{
+    font-size: $h3-fontsize;
+    font-weight: bold;
+}
+
+h4{
+    font-size: $h4-fontsize;
+    font-weight: 500;
+}
+
+h5{
+    font-size: $h5-fontsize;
+    font-weight: 500;
+}
+
+h6{
+    font-size: $h6-fontsize;
+    font-weight: 500;
+}
+
+p{
+    font-size: $p-fontsize;
+    font-weight: 400;
 }
 
 :root {
@@ -48,4 +83,12 @@ body {
     --primary-color: '#1A73E8',
     --primaryLight-color: '#D9E8FC',
     --accent-color: '#EE8572',
+
+    --h1-fontsize: 32px;
+    --h2-fontsize: 24px;
+    --h3-fontsize: 20px;
+    --h4-fontsize: 18px;
+    --h5-fontsize: 16px;
+    --h6-fontsize: 14px;
+    --p-fontsize: 12px;
 }
