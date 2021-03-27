@@ -6,7 +6,7 @@ import { RootState } from '../store';
 interface IThemeState {
     colors: IColors;
     fontSizes: IFontSizes;
-    muiTheme: Theme;
+    muiTheme: Omit<Theme, 'props'>;
 }
 
 const initialState: IThemeState = {
@@ -28,16 +28,9 @@ const themeSlice = createSlice({
         ) => {
             state.fontSizes = payload.fontSizes;
         },
-        // updateMUITheme: (
-        //     state,
-        //     {
-        //         payload,
-        //     }: PayloadAction<{
-        //         muiTheme: Theme;
-        //     }>,
-        // ) => {
-        //     state.muiTheme = payload.muiTheme;
-        // },
+        updateMUITheme: (state, { payload }: PayloadAction<Pick<IThemeState, 'muiTheme'>>) => {
+            state.muiTheme = payload.muiTheme;
+        },
         resetThemeState: (state) => {
             Object.assign(state, initialState);
         },
