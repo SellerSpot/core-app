@@ -18,7 +18,7 @@ const Template: Story<IWelcomeComponentProps> = (args: IWelcomeComponentProps) =
 
 export const WelcomeComponent = Template.bind({});
 WelcomeComponent.args = {
-    message: 'Welcome to Core-App Storybook',
+    message: 'Welcome to Sellerspot Core App Storybook',
 } as IWelcomeComponentProps;
 
 export default {
