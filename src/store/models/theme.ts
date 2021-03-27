@@ -1,38 +1,43 @@
+import { Theme } from '@material-ui/core';
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { IThemeColors, themes } from 'config/themes';
+import { colorThemes, fontSizeThemes, IColors, IFontSizes, muiThemes } from 'config/themes';
 import { RootState } from '../store';
 
 interface IThemeState {
-    colors: IThemeColors;
+    colors: IColors;
+    fontSizes: IFontSizes;
+    muiTheme: Theme;
 }
 
 const initialState: IThemeState = {
-    colors: themes.default,
+    colors: colorThemes.default,
+    fontSizes: fontSizeThemes.default,
+    muiTheme: muiThemes.default,
 };
-
-// initial apply
-Object.keys(initialState.colors).forEach((key) => {
-    document.documentElement.style.setProperty(
-        `--${key}-color`,
-        initialState.colors[key as keyof IThemeColors],
-    );
-});
 
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        udpateThemeState: (state, { payload }: PayloadAction<IThemeState>) => {
-            (<(keyof IThemeState)[]>Object.keys(payload)).map((key) => {
-                state[key] = payload[key];
-            });
-            Object.keys(state.colors).forEach((key) => {
-                document.documentElement.style.setProperty(
-                    `--${key}-color`,
-                    state.colors[key as keyof IThemeColors],
-                );
-            });
+        updateColorsTheme: (state, { payload }: PayloadAction<Pick<IThemeState, 'colors'>>) => {
+            state.colors = payload.colors;
         },
+        updateFontSizesTheme: (
+            state,
+            { payload }: PayloadAction<Pick<IThemeState, 'fontSizes'>>,
+        ) => {
+            state.fontSizes = payload.fontSizes;
+        },
+        // updateMUITheme: (
+        //     state,
+        //     {
+        //         payload,
+        //     }: PayloadAction<{
+        //         muiTheme: Theme;
+        //     }>,
+        // ) => {
+        //     state.muiTheme = payload.muiTheme;
+        // },
         resetThemeState: (state) => {
             Object.assign(state, initialState);
         },
@@ -43,7 +48,7 @@ const themeSlice = createSlice({
 export default themeSlice.reducer;
 
 // exporting actions
-export const { udpateThemeState, resetThemeState } = themeSlice.actions;
+export const { updateColorsTheme, updateFontSizesTheme, resetThemeState } = themeSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const themeSelector: Selector<RootState, IThemeState> = (state: RootState) => state.theme;
