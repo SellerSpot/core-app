@@ -7,6 +7,7 @@ import cn from 'classnames';
 import '../../styles/core.scss';
 import styles from './app.module.scss';
 import AppPreloader from 'components/AppPreloader/AppPreloader';
+import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
@@ -21,20 +22,22 @@ export const App = (): ReactElement => {
     // }, []);
 
     return (
-        <div className={styles.appWrapper}>
-            {isLoading ? (
-                <AppPreloader />
-            ) : (
-                <div className={cn(styles.appContainer)}>
-                    <Switch>
-                        {/* all other routes should be nested above this route because it is '/' route hence should be placed atlast */}
-                        <Route path={ROUTES.DASHBOARD}>
-                            <Dashboard />
-                        </Route>
-                    </Switch>
-                </div>
-            )}
-            {/* global components */}
-        </div>
+        <ThemeProvider>
+            <div className={styles.appWrapper}>
+                {isLoading ? (
+                    <AppPreloader />
+                ) : (
+                    <div className={cn(styles.appContainer)}>
+                        <Switch>
+                            {/* all other routes should be nested above this route because it is '/' route hence should be placed atlast */}
+                            <Route path={ROUTES.DASHBOARD}>
+                                <Dashboard />
+                            </Route>
+                        </Switch>
+                    </div>
+                )}
+                {/* global components */}
+            </div>
+        </ThemeProvider>
     );
 };

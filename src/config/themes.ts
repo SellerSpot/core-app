@@ -1,14 +1,10 @@
-export interface IThemeFontSizes {
-    h1: string;
-    h2: string;
-    h3: string;
-    h4: string;
-    h5: string;
-    h6: string;
-    p: string;
-}
+import { createMuiTheme, Theme } from '@material-ui/core';
 
-export interface IThemeColors {
+// // Infering types from Route object with autocomplete support.
+// const inferColorTypes = <T extends { [key: string]: IThemeColors }>(arg: T): T => arg;
+
+// interface for the different colors used in the app
+export interface IColors {
     // basic colors
     success: string;
     successLight: string;
@@ -32,11 +28,36 @@ export interface IThemeColors {
     accent: string;
 }
 
-const inferColorTypes = <T extends { [key: string]: IThemeColors }>(arg: T): T => arg; // Infering types from Route object with autocomplete support.
-const inferFontStyleTypes = <T extends { [key: string]: IThemeFontSizes }>(arg: T): T => arg; // Infering types from Route object with autocomplete support.
-export type TThemes = keyof typeof themes;
+// interface for the fontsizes used in the app
+export interface IFontSizes {
+    h1: string;
+    h2: string;
+    h3: string;
+    h4: string;
+    h5: string;
+    h6: string;
+    p: string;
+}
 
-export const themes = inferColorTypes({
+// Contains the different color themes used in the app
+interface IColorThemes {
+    default: IColors;
+}
+
+// Interface for the different font size themes used in the app
+interface IFontSizeThemes {
+    default: IFontSizes;
+}
+
+// Interface for the different Material UI themes used in the app
+interface IMuiThemes {
+    default: Theme;
+}
+
+/**
+ * Contains the different color themes used in the app
+ */
+export const colorThemes: IColorThemes = {
     default: {
         success: '#43AA8B',
         successLight: '#EDF7ED',
@@ -55,17 +76,39 @@ export const themes = inferColorTypes({
         primary: '#1A73E8',
         primaryLight: '#D9E8FC',
         accent: '#EE8572',
-
-        fontSizes: inferFontStyleTypes({
-            default: {
-                h1: '32px',
-                h2: '24px',
-                h3: '20px',
-                h4: '18px',
-                h5: '16px',
-                h6: '14px',
-                p: '12px',
-            },
-        }),
     },
-});
+};
+
+/**
+ * Contains the different font size themes used in the app
+ */
+export const fontSizeThemes: IFontSizeThemes = {
+    default: {
+        h1: '32px',
+        h2: '24px',
+        h3: '20px',
+        h4: '18px',
+        h5: '16px',
+        h6: '14px',
+        p: '12px',
+    },
+};
+
+/**
+ * Contains the different Material UI themes used in the app
+ */
+export const muiThemes: IMuiThemes = {
+    default: createMuiTheme({
+        palette: {
+            primary: {
+                main: colorThemes.default.primary,
+            },
+            secondary: {
+                main: colorThemes.default.accent,
+            },
+            text: {
+                primary: colorThemes.default.primary,
+            },
+        },
+    }),
+};

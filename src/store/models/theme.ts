@@ -1,25 +1,43 @@
+import { Theme } from '@material-ui/core';
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { IThemeColors, IThemeFontSizes, themes } from 'config/themes';
+import { colorThemes, fontSizeThemes, IColors, IFontSizes, muiThemes } from 'config/themes';
 import { RootState } from '../store';
 
 interface IThemeState {
-    colors: IThemeColors;
-    fontSizes: IThemeFontSizes;
+    colors: IColors;
+    fontSizes: IFontSizes;
+    muiTheme: Theme;
 }
 
 const initialState: IThemeState = {
-    colors: themes.default,
-    fontSizes: themes.default.fontSizes.default,
+    colors: colorThemes.default,
+    fontSizes: fontSizeThemes.default,
+    muiTheme: muiThemes.default,
 };
 
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        updateTheme: (state, { payload }: PayloadAction<IThemeState>) => {
+        updateColorsTheme: (state, { payload }: PayloadAction<Pick<IThemeState, 'colors'>>) => {
             state.colors = payload.colors;
+        },
+        updateFontSizesTheme: (
+            state,
+            { payload }: PayloadAction<Pick<IThemeState, 'fontSizes'>>,
+        ) => {
             state.fontSizes = payload.fontSizes;
         },
+        // updateMUITheme: (
+        //     state,
+        //     {
+        //         payload,
+        //     }: PayloadAction<{
+        //         muiTheme: Theme;
+        //     }>,
+        // ) => {
+        //     state.muiTheme = payload.muiTheme;
+        // },
         resetThemeState: (state) => {
             Object.assign(state, initialState);
         },
@@ -30,7 +48,7 @@ const themeSlice = createSlice({
 export default themeSlice.reducer;
 
 // exporting actions
-export const { updateTheme, resetThemeState } = themeSlice.actions;
+export const { updateColorsTheme, updateFontSizesTheme, resetThemeState } = themeSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const themeSelector: Selector<RootState, IThemeState> = (state: RootState) => state.theme;
