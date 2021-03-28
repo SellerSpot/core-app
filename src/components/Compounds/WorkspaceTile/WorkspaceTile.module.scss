@@ -1,0 +1,21 @@
+.wrapper {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: transparent;
+    border-radius: $border-radius;
+
+    transition: all 200ms ease;
+}
+
+.expanded {
+    width: 200px;
+}
+
+.selected {
+    background-color: $primaryLight-color;
+}
