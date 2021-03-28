@@ -9,13 +9,26 @@
     background-color: transparent;
     border-radius: $border-radius;
 
-    transition: all 200ms ease;
+    transition: all $animation-duration-short ease;
 }
 
-.expanded {
+.wrapperExpanded {
     width: 200px;
 }
 
-.selected {
+.wrapperSelected {
     background-color: $primaryLight-color;
+}
+
+.title {
+    color: $foregroundPrimary-color;
+    display: none;
+}
+
+.titleExpanded {
+    display: block;
+}
+
+.titleSelected {
+    color: $primary-color;
 }

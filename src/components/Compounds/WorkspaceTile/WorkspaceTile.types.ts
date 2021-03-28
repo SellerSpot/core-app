@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 export interface IWorkspaceTileProps {
     /**
@@ -6,12 +6,18 @@ export interface IWorkspaceTileProps {
      */
     className?: {
         wrapper?: string;
+        expanded?: string;
+        selected?: string;
+        avatar?: string;
+        title?: string;
     };
     /**
      * Custom inline styling for the component
      */
     style?: {
         wrapper?: React.CSSProperties;
+        avatar?: React.CSSProperties;
+        title?: string;
     };
     /**
      * The workspace icon to show
@@ -28,4 +34,9 @@ export interface IWorkspaceTileProps {
      * @default false
      */
     selected?: boolean;
+    /**
+     * Title for the tile
+     * @default "Home"
+     */
+    workspaceTitle?: string;
 }

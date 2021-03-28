@@ -17,8 +17,10 @@ const Template: Story<IWorkspaceTileProps> = (args: IWorkspaceTileProps) => (
 
 export const WorkspaceTileComponent = Template.bind({});
 WorkspaceTileComponent.args = {
-    expanded: false,
-    selected: false,
+    expanded: true,
+    selected: true,
+    workspaceTitle: 'Home',
+    workspaceIcon: <ICONS.HomeWorkspace />,
 } as IWorkspaceTileProps;
 
 export default {
