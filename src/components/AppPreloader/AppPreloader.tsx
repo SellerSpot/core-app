@@ -1,10 +1,10 @@
 import { CircularProgress } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import appPreloaderStyles from './appPreloader.module.scss';
+import styles from './AppPreloader.module.scss';
 
 export default function AppPreloader(): ReactElement {
     return (
-        <div className={appPreloaderStyles.container}>
+        <div className={styles.container}>
             <CircularProgress />
         </div>
     );
