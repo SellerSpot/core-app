@@ -1,0 +1,22 @@
+.disabled {
+    background-color: transparent !important;
+    color: $default-color !important;
+}
+
+.selected {
+    background-color: $primaryLight-color !important;
+    color: $primary-color !important;
+    cursor: pointer !important;
+}
+
+.unselected {
+    background-color: transparent !important;
+    color: $foregroundPrimary-color !important;
+    cursor: pointer !important;
+}
+
+.selectedNoBg {
+    background-color: transparent !important;
+    color: $primary-color !important;
+    cursor: pointer !important;
+}
