@@ -22,16 +22,14 @@ export default function Avatar(props: IAvatarProps) {
     );
 
     return (
-        <div>
-            <MUIAvatar
-                className={className}
-                alt={'image'}
-                variant={requiredProps.varient}
-                src={requiredProps.imgSrc}
-                style={requiredProps.style}
-            >
-                {requiredProps.content}
-            </MUIAvatar>
-        </div>
+        <MUIAvatar
+            className={className}
+            alt={'image'}
+            variant={requiredProps.varient}
+            src={requiredProps.imgSrc}
+            style={requiredProps.style}
+        >
+            {requiredProps.content}
+        </MUIAvatar>
     );
 }
