@@ -17,6 +17,6 @@ export const AppPreloaderComponent = Template.bind({});
 AppPreloaderComponent.args = {};
 
 export default {
-    title: 'Components',
+    title: 'Components/Atoms',
     component: AppPreloaderComponent,
 } as Meta;

@@ -26,6 +26,6 @@ AvatarComponent.args = {
 } as IAvatarProps;
 
 export default {
-    title: 'Components',
+    title: 'Components/Atoms',
     component: AvatarComponent,
 } as Meta;

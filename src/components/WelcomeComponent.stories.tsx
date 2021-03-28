@@ -29,6 +29,6 @@ WelcomeComponent.args = {
 } as IWelcomeComponentProps;
 
 export default {
-    title: 'Components',
+    title: 'Welcome Component',
     component: WelcomeComponent,
 } as Meta;
