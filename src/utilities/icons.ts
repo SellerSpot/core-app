@@ -1,1 +1,5 @@
-export const ICONS = {};
+import { MdHome } from 'react-icons/md';
+
+export const ICONS = {
+    HomeWorkspace: MdHome,
+};
