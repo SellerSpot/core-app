@@ -17,6 +17,10 @@
     transition-property: color, background-color, width;
 }
 
+.wrapper:hover {
+    background-color: $backgroundTertiary-color;
+}
+
 .wrapperMini {
     width: 160px;
 }
@@ -26,11 +30,19 @@
     color: $foregroundTertiary-color;
 }
 
+.wrapperDisabled:hover {
+    background-color: transparent;
+}
+
 .avatar {
     flex-grow: 0;
 }
 
 .wrapperSelected {
+    background-color: $primaryLight-color;
+}
+
+.wrapperSelected:hover {
     background-color: $primaryLight-color;
 }
 

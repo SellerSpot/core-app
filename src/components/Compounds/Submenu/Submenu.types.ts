@@ -6,21 +6,25 @@ interface ITile {
      */
     title: string;
     /**
-     * Toggles to the selected state of the tile
+     * Toggles the disabled state for the tile
      */
-    selected: boolean;
+    disabled: boolean;
     /**
      * Toggles to indicate that the child tiles are visible
      */
-    childTilesVisible?: boolean;
+    childTilesVisible: boolean;
     /**
      * Event handlers for the tile
      */
     events?: IComponentEvents;
     /**
+     * Paths to watch for which means that this specific tile has been selected
+     */
+    pathToWatch: string[];
+    /**
      * Tile definitions for the children tiles (if present)
      */
-    childTiles?: Pick<ITile, 'title' | 'selected' | 'events'>[];
+    childTiles?: Pick<ITile, 'title' | 'events' | 'disabled' | 'pathToWatch'>[];
 }
 
 export interface ISubmenuProps {

@@ -33,10 +33,16 @@ export default function SubmenuTile(props: ISubmenuTileProps) {
         { [styles.titleDisabled]: requiredProps.disabled },
     );
 
-    const trailingIconClassName = cn(styles.trailingIcon, {
-        [styles.trailingIconSelected]: requiredProps.selected && !requiredProps.disabled,
-        [styles.trailingIconChildTilesVisible]: requiredProps.childTilesVisible,
-    });
+    const trailingIconClassName = cn(
+        styles.trailingIcon,
+        {
+            [styles.trailingIconSelected]: requiredProps.selected && !requiredProps.disabled,
+        },
+        { [styles.trailingIconChildTilesVisible]: requiredProps.childTilesVisible },
+        {
+            [styles.trailingIconDisabled]: requiredProps.disabled,
+        },
+    );
 
     return (
         <div

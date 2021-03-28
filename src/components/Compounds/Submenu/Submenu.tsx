@@ -1,6 +1,6 @@
-import cn from 'classnames';
 import { merge } from 'lodash';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import SubmenuTile from '../SubmenuTile/SubmenuTile';
 import styles from './Submenu.module.scss';
 import { ISubmenuProps } from './Submenu.types';
@@ -10,22 +10,26 @@ const defaultProps: ISubmenuProps = {
         {
             title: 'Sample',
             childTilesVisible: false,
-            selected: false,
+            disabled: true,
+            pathToWatch: [''],
             childTiles: [
                 {
                     title: 'SubMenu',
-                    selected: false,
+                    pathToWatch: [''],
+                    disabled: false,
                 },
             ],
         },
         {
             title: 'Sample',
             childTilesVisible: true,
-            selected: true,
+            disabled: false,
+            pathToWatch: ['/iframe.html'],
             childTiles: [
                 {
                     title: 'SubMenu',
-                    selected: true,
+                    disabled: false,
+                    pathToWatch: ['/iframe.html'],
                 },
             ],
         },
@@ -35,29 +39,39 @@ const defaultProps: ISubmenuProps = {
 export default function Submenu(props: ISubmenuProps) {
     const requiredProps = merge(defaultProps, props);
 
-    const wrapperClassName = cn(styles.wrappers);
+    // getting current app path to know which tiles are selected
+    const currentLocation = useLocation();
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.upperTiles}>
                 {requiredProps.tiles.map((tile) => {
+                    // checking if the tile is selected
+                    const isTileSelected = tile.pathToWatch.includes(currentLocation.pathname);
                     return (
                         <div className={styles.tileGroup}>
                             <SubmenuTile
                                 childTilesVisible={tile.childTilesVisible}
                                 title={tile.title}
-                                selected={tile.selected}
+                                disabled={tile.disabled}
+                                selected={isTileSelected}
                                 miniTile={false}
+                                showTailIcon={tile.childTiles?.length > 0}
                                 events={{
                                     onClick: tile.events?.onClick,
                                 }}
                             />
                             {tile.childTilesVisible
                                 ? tile.childTiles.map((childTile) => {
+                                      // checking if the tile is selected
+                                      const isChildTileSelected = childTile.pathToWatch.includes(
+                                          currentLocation.pathname,
+                                      );
                                       return (
                                           <SubmenuTile
                                               title={childTile.title}
-                                              selected={childTile.selected}
+                                              disabled={childTile.disabled}
+                                              selected={isChildTileSelected}
                                               events={{
                                                   onClick: childTile.events?.onClick,
                                               }}
