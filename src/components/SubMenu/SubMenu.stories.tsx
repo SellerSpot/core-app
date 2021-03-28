@@ -5,13 +5,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import Submenu from './Submenu';
-import { ISubmenuProps } from './Submenu.types';
+import SubMenu from './SubMenu';
+import { ISubMenuProps } from './SubMenu.types';
 
 // demo functional component to help demo the SubMenu component (since it needs state)
 function DemoLoader() {
     // storing the tiles in localstate
-    const [tilesState, setTilesState] = useState<ISubmenuProps['tiles']>([
+    const [tilesState, setTilesState] = useState<ISubMenuProps['tiles']>([
         {
             title: 'Sales',
             childTilesVisible: false,
@@ -20,7 +20,7 @@ function DemoLoader() {
             pathToWatch: ['/iframe.html'],
             events: {
                 onClick: (event) => {
-                    const dummyTilesState: ISubmenuProps['tiles'] = [];
+                    const dummyTilesState: ISubMenuProps['tiles'] = [];
                     tilesState.map((tile) => {
                         dummyTilesState.push(tile);
                     });
@@ -92,7 +92,7 @@ function DemoLoader() {
                             height: '100vh',
                         }}
                     >
-                        <Submenu tiles={tilesState} />
+                        <SubMenu tiles={tilesState} />
                     </div>
                 </ThemeProvider>
             </Provider>
@@ -100,14 +100,14 @@ function DemoLoader() {
     );
 }
 
-const Template: Story<ISubmenuProps> = (args: ISubmenuProps) => DemoLoader();
+const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => DemoLoader();
 
-export const SubmenuComponent = Template.bind({});
-SubmenuComponent.args = {};
+export const SubMenuComponent = Template.bind({});
+SubMenuComponent.args = {};
 
 export default {
     title: 'Components/Compounds',
-    component: SubmenuComponent,
+    component: SubMenuComponent,
     parameters: {
         layout: 'fullscreen',
     },

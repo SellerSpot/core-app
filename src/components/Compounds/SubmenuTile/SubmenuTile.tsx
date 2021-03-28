@@ -4,10 +4,10 @@ import { merge } from 'lodash';
 import React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { ICONS } from 'utilities/icons';
-import styles from './SubmenuTile.module.scss';
-import { ISubmenuTileProps } from './SubmenuTile.types';
+import styles from './SubMenuTile.module.scss';
+import { ISubMenuTileProps } from './SubMenuTile.types';
 
-const defaultProps: ISubmenuTileProps = {
+const defaultProps: ISubMenuTileProps = {
     leading: <ICONS.HomeWorkspace />,
     miniTile: false,
     title: 'Home',
@@ -17,7 +17,7 @@ const defaultProps: ISubmenuTileProps = {
     disabled: false,
 };
 
-export default function SubmenuTile(props: ISubmenuTileProps) {
+export default function SubMenuTile(props: ISubMenuTileProps) {
     const requiredProps = merge(defaultProps, props);
 
     const wrapperClassName = cn(styles.wrapper, {

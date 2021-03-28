@@ -1,10 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import SubmenuTile from '../SubmenuTile/SubmenuTile';
+import SubmenuTile from '../Compounds/SubmenuTile/SubmenuTile';
 import styles from './Submenu.module.scss';
-import { ISubmenuProps } from './Submenu.types';
+import { ISubMenuProps } from './SubMenu.types';
 
-export default function Submenu(props: ISubmenuProps) {
+export default function SubMenu(props: ISubMenuProps) {
     const requiredProps = props;
 
     // getting current app path to know which tiles are selected

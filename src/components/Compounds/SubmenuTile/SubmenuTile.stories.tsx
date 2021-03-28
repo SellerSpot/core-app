@@ -3,30 +3,30 @@ import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import SubmenuTile from './SubmenuTile';
-import { ISubmenuTileProps } from './SubmenuTile.types';
+import SubMenuTile from './SubMenuTile';
+import { ISubMenuTileProps } from './SubMenuTile.types';
 
-const Template: Story<ISubmenuTileProps> = (args: ISubmenuTileProps) => (
+const Template: Story<ISubMenuTileProps> = (args: ISubMenuTileProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <SubmenuTile {...args} />
+            <SubMenuTile {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const SubmenuTileComponent = Template.bind({});
-SubmenuTileComponent.args = {
+export const SubMenuTileComponent = Template.bind({});
+SubMenuTileComponent.args = {
     miniTile: false,
     title: 'Home',
     selected: false,
     childTilesVisible: false,
     showTailIcon: false,
     disabled: false,
-} as ISubmenuTileProps;
+} as ISubMenuTileProps;
 
 export default {
     title: 'Components/Compounds',
-    component: SubmenuTileComponent,
+    component: SubMenuTileComponent,
     parameters: {
         layout: 'fullscreen',
     },

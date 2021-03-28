@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { IComponentEvents } from 'typings/common.types';
 
-export interface ISubmenuTileProps {
+export interface ISubMenuTileProps {
     /**
      * Toggles tile to selected state
      * @default false
@@ -38,7 +38,7 @@ export interface ISubmenuTileProps {
      */
     events?: IComponentEvents;
     /**
-     * Toggles if the Submenu tile is disabled
+     * Toggles if the SubMenu tile is disabled
      * @default false
      */
     disabled?: boolean;

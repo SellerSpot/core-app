@@ -3,7 +3,7 @@ import { IComponentEvents } from 'typings/common.types';
 
 interface ITile {
     /**
-     * Title of SubmenuTile
+     * Title of SubMenuTile
      */
     title: string;
     /**
@@ -32,9 +32,9 @@ interface ITile {
     childTiles?: Pick<ITile, 'title' | 'events' | 'disabled' | 'pathToWatch'>[];
 }
 
-export interface ISubmenuProps {
+export interface ISubMenuProps {
     /**
-     * SubmenuTiles to be shown in menu
+     * SubMenuTiles to be shown in menu
      */
     tiles: ITile[];
 }
