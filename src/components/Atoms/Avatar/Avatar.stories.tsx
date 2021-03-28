@@ -1,11 +1,11 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
+import { ICONS } from 'utilities/icons';
 import Avatar from './Avatar';
 import { IAvatarProps } from './Avatar.types';
-import { ICONS } from 'utilities/icons';
 
 const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
     <Provider store={store}>
@@ -22,6 +22,7 @@ AvatarComponent.args = {
     theme: 'unselected',
     varient: 'rounded',
     className: '',
+    disabled: false,
     style: {},
 } as IAvatarProps;
 

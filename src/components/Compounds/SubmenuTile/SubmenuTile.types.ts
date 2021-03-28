@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { IComponentEvents } from 'typings/common.types';
 
 export interface ISubmenuTileProps {
     /**
@@ -26,4 +27,19 @@ export interface ISubmenuTileProps {
      * @default false
      */
     showTailIcon?: boolean;
+    /**
+     * Toggles the opened state of the tile
+     * (points the trailing arrow downward to indicate the child menu items are visible)
+     * @default false
+     */
+    childTilesVisible?: boolean;
+    /**
+     * Events to be captured on the listTile
+     */
+    events?: IComponentEvents;
+    /**
+     * Toggles if the Submenu tile is disabled
+     * @default false
+     */
+    disabled?: boolean;
 }

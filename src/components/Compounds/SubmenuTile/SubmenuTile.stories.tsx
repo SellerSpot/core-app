@@ -1,10 +1,10 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import { ISubmenuTileProps } from './SubmenuTile.types';
 import SubmenuTile from './SubmenuTile';
+import { ISubmenuTileProps } from './SubmenuTile.types';
 
 const Template: Story<ISubmenuTileProps> = (args: ISubmenuTileProps) => (
     <Provider store={store}>
@@ -19,6 +19,9 @@ SubmenuTileComponent.args = {
     miniTile: false,
     title: 'Home',
     selected: false,
+    childTilesVisible: false,
+    showTailIcon: false,
+    disabled: false,
 } as ISubmenuTileProps;
 
 export default {

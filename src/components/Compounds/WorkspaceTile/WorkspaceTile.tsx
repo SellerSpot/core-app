@@ -29,7 +29,13 @@ export default function WorkspaceTile(props: IWorkspaceTileProps) {
     );
 
     return (
-        <div className={wrapperClassName}>
+        <div
+            className={wrapperClassName}
+            onClick={requiredProps.events?.onClick}
+            onFocus={requiredProps.events?.onFocus}
+            onMouseOver={requiredProps.events?.oneMouseOver}
+            onMouseLeave={requiredProps.events?.onMouseLeave}
+        >
             <Avatar
                 content={requiredProps.workspaceIcon}
                 theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}

@@ -9,17 +9,20 @@ const defaultProps: IAvatarProps = {
     content: 'S',
     varient: 'rounded',
     theme: 'unselected',
+    disabled: false,
 };
 
 export default function Avatar(props: IAvatarProps) {
     const requiredProps = merge(defaultProps, props);
 
-    const className = cn(
-        styles.avatar,
-        { [styles.selectedNoBg]: props.theme === 'selectedNoBg' },
-        { [styles.selected]: props.theme === 'selected' },
-        { [styles.unselected]: props.theme === 'unselected' },
-    );
+    const className = !requiredProps.disabled
+        ? cn(
+              styles.avatar,
+              { [styles.selectedNoBg]: requiredProps.theme === 'selectedNoBg' },
+              { [styles.selected]: requiredProps.theme === 'selected' },
+              { [styles.unselected]: requiredProps.theme === 'unselected' },
+          )
+        : cn(styles.avatar, styles.disabled);
 
     return (
         <MUIAvatar
