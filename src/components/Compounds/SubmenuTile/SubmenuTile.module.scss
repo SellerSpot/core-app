@@ -1,0 +1,13 @@
+.wrapper {
+    width: 200px;
+    height: 40px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0 5px;
+
+    border-radius: $border-radius-cirular;
+    background-color: $primaryLight-color;
+}
