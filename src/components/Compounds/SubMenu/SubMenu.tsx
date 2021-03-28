@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import SubmenuTile from '../Compounds/SubmenuTile/SubmenuTile';
+import SubMenuTile from '../Compounds/SubMenuTile/SubMenuTile';
 import styles from './Submenu.module.scss';
 import { ISubMenuProps } from './SubMenu.types';
 
@@ -18,7 +18,7 @@ export default function SubMenu(props: ISubMenuProps) {
                     const isTileSelected = tile.pathToWatch.includes(currentLocation.pathname);
                     return (
                         <div className={styles.tileGroup}>
-                            <SubmenuTile
+                            <SubMenuTile
                                 childTilesVisible={tile.childTilesVisible}
                                 title={tile.title}
                                 disabled={tile.disabled}
@@ -36,7 +36,7 @@ export default function SubMenu(props: ISubMenuProps) {
                                           currentLocation.pathname,
                                       );
                                       return (
-                                          <SubmenuTile
+                                          <SubMenuTile
                                               title={childTile.title}
                                               disabled={childTile.disabled}
                                               selected={isChildTileSelected}
