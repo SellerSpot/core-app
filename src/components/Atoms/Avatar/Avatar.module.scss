@@ -8,7 +8,8 @@
 
 .disabled {
     background-color: transparent !important;
-    color: $default-color !important;
+    color: $foregroundTertiary-color !important;
+    cursor: default !important;
 }
 
 .selected {

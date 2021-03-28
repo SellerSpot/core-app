@@ -1,0 +1,29 @@
+.wrapper {
+    width: 250px;
+    height: 100%;
+
+    padding: 10px 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    transition: all $animation-duration-short ease;
+}
+
+.upperTiles {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.tileGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 5px;
+}

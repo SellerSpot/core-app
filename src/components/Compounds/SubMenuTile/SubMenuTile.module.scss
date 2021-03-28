@@ -2,6 +2,9 @@
     width: 200px;
     height: 40px;
 
+    user-select: none;
+    cursor: pointer;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,8 +18,21 @@
     transition-property: color, background-color, width;
 }
 
+.wrapper:hover {
+    background-color: $backgroundTertiary-color;
+}
+
 .wrapperMini {
     width: 160px;
+}
+
+.wrapperDisabled {
+    cursor: default;
+    color: $foregroundTertiary-color;
+}
+
+.wrapperDisabled:hover {
+    background-color: transparent;
 }
 
 .avatar {
@@ -24,6 +40,10 @@
 }
 
 .wrapperSelected {
+    background-color: $primaryLight-color;
+}
+
+.wrapperSelected:hover {
     background-color: $primaryLight-color;
 }
 
@@ -38,6 +58,10 @@
 
 .titleMini {
     padding-left: 15px;
+}
+
+.titleDisabled {
+    color: $foregroundTertiary-color;
 }
 
 .trailingIcon {
@@ -56,7 +80,14 @@
 }
 
 .trailingIconSelected {
+    color: $primary-color;
+}
+
+.trailingIconChildTilesVisible {
     transform: rotate(90deg);
     transform-origin: center;
-    color: $primary-color;
+}
+
+.trailingIconDisabled {
+    color: $foregroundTertiary-color;
 }

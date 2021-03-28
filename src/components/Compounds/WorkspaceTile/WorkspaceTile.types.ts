@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { IComponentEvents } from 'typings/common.types';
 
 export interface IWorkspaceTileProps {
     /**
@@ -21,4 +22,8 @@ export interface IWorkspaceTileProps {
      * @default "Home"
      */
     workspaceTitle?: string;
+    /**
+     * Events to be captured on the listTile
+     */
+    events?: IComponentEvents;
 }

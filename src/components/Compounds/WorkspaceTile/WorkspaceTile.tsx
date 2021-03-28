@@ -1,10 +1,10 @@
+import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
 import { merge } from 'lodash';
 import React from 'react';
 import { ICONS } from 'utilities/icons';
 import styles from './WorkspaceTile.module.scss';
 import { IWorkspaceTileProps } from './WorkspaceTile.types';
-import cn from 'classnames';
 
 const defaultProps: IWorkspaceTileProps = {
     expanded: false,
@@ -29,7 +29,13 @@ export default function WorkspaceTile(props: IWorkspaceTileProps) {
     );
 
     return (
-        <div className={wrapperClassName}>
+        <div
+            className={wrapperClassName}
+            onClick={requiredProps.events?.onClick}
+            onFocus={requiredProps.events?.onFocus}
+            onMouseOver={requiredProps.events?.oneMouseOver}
+            onMouseLeave={requiredProps.events?.onMouseLeave}
+        >
             <Avatar
                 content={requiredProps.workspaceIcon}
                 theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
