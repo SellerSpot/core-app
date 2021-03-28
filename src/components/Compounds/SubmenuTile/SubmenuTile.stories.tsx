@@ -3,7 +3,6 @@ import { Story, Meta } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import { ICONS } from 'utilities/icons';
 import { ISubmenuTileProps } from './SubmenuTile.types';
 import SubmenuTile from './SubmenuTile';
 
