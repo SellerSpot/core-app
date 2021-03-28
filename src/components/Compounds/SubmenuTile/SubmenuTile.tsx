@@ -1,11 +1,11 @@
-import React from 'react';
-import styles from './SubmenuTile.module.scss';
 import cn from 'classnames';
-import { ISubmenuTileProps } from './SubmenuTile.types';
-import { merge } from 'lodash';
 import Avatar from 'components/Atoms/Avatar/Avatar';
-import { ICONS } from 'utilities/icons';
+import { merge } from 'lodash';
+import React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { ICONS } from 'utilities/icons';
+import styles from './SubmenuTile.module.scss';
+import { ISubmenuTileProps } from './SubmenuTile.types';
 
 const defaultProps: ISubmenuTileProps = {
     leading: <ICONS.HomeWorkspace />,

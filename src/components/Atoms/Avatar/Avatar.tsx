@@ -1,9 +1,9 @@
-import React from 'react';
 import { Avatar as MUIAvatar } from '@material-ui/core';
-import { merge } from 'lodash';
-import { IAvatarProps } from './Avatar.types';
 import cn from 'classnames';
+import { merge } from 'lodash';
+import React from 'react';
 import styles from './Avatar.module.scss';
+import { IAvatarProps } from './Avatar.types';
 
 const defaultProps: IAvatarProps = {
     content: 'S',
