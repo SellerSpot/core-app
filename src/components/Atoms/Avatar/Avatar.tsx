@@ -19,7 +19,6 @@ export default function Avatar(props: IAvatarProps) {
         { [styles.selectedNoBg]: props.theme === 'selectedNoBg' },
         { [styles.selected]: props.theme === 'selected' },
         { [styles.unselected]: props.theme === 'unselected' },
-        props.className,
     );
 
     return (
@@ -28,7 +27,6 @@ export default function Avatar(props: IAvatarProps) {
             alt={'image'}
             variant={requiredProps.varient}
             src={requiredProps.imgSrc}
-            style={requiredProps.style}
         >
             {requiredProps.content}
         </MUIAvatar>

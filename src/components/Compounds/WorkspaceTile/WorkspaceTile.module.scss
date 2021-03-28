@@ -10,6 +10,7 @@
     border-radius: $border-radius;
 
     transition: all $animation-duration-short ease;
+    transition-property: color, background-color, width;
 }
 
 .wrapperExpanded {

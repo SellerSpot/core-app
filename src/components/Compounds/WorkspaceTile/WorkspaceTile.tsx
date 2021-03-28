@@ -20,29 +20,21 @@ export default function WorkspaceTile(props: IWorkspaceTileProps) {
         styles.wrapper,
         { [styles.wrapperExpanded]: requiredProps.expanded },
         { [styles.wrapperSelected]: requiredProps.selected },
-        requiredProps.className?.wrapper,
-        requiredProps.className?.selected,
-        requiredProps.className?.expanded,
     );
 
     const titleClassName = cn(
         styles.title,
         { [styles.titleSelected]: requiredProps.selected },
         { [styles.titleExpanded]: requiredProps.expanded },
-        requiredProps.className?.title,
     );
 
     return (
-        <div className={wrapperClassName} style={requiredProps.style?.wrapper}>
+        <div className={wrapperClassName}>
             <Avatar
-                className={requiredProps.className?.avatar}
-                style={requiredProps.style?.avatar}
                 content={requiredProps.workspaceIcon}
                 theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
             />
-            <h5 className={titleClassName} style={requiredProps.style?.avatar}>
-                {requiredProps.workspaceTitle}
-            </h5>
+            <h5 className={titleClassName}>{requiredProps.workspaceTitle}</h5>
         </div>
     );
 }

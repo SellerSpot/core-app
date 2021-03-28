@@ -18,6 +18,8 @@ const Template: Story<ISubmenuTileProps> = (args: ISubmenuTileProps) => (
 export const SubmenuTileComponent = Template.bind({});
 SubmenuTileComponent.args = {
     miniTile: false,
+    title: 'Home',
+    selected: false,
 } as ISubmenuTileProps;
 
 export default {
