@@ -15,6 +15,7 @@ export default function Avatar(props: IAvatarProps) {
     const requiredProps = merge(defaultProps, props);
 
     const className = cn(
+        styles.avatar,
         { [styles.selectedNoBg]: props.theme === 'selectedNoBg' },
         { [styles.selected]: props.theme === 'selected' },
         { [styles.unselected]: props.theme === 'unselected' },
