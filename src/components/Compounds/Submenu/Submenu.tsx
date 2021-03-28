@@ -1,43 +1,11 @@
-import { merge } from 'lodash';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import SubmenuTile from '../SubmenuTile/SubmenuTile';
 import styles from './Submenu.module.scss';
 import { ISubmenuProps } from './Submenu.types';
 
-const defaultProps: ISubmenuProps = {
-    tiles: [
-        {
-            title: 'Sample',
-            childTilesVisible: false,
-            disabled: true,
-            pathToWatch: [''],
-            childTiles: [
-                {
-                    title: 'SubMenu',
-                    pathToWatch: [''],
-                    disabled: false,
-                },
-            ],
-        },
-        {
-            title: 'Sample',
-            childTilesVisible: true,
-            disabled: false,
-            pathToWatch: ['/iframe.html'],
-            childTiles: [
-                {
-                    title: 'SubMenu',
-                    disabled: false,
-                    pathToWatch: ['/iframe.html'],
-                },
-            ],
-        },
-    ],
-};
-
 export default function Submenu(props: ISubmenuProps) {
-    const requiredProps = merge(defaultProps, props);
+    const requiredProps = props;
 
     // getting current app path to know which tiles are selected
     const currentLocation = useLocation();

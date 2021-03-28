@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
+import { ICONS } from 'utilities/icons';
 import Submenu from './Submenu';
 import { ISubmenuProps } from './Submenu.types';
 
@@ -12,30 +13,70 @@ function DemoLoader() {
     // storing the tiles in localstate
     const [tilesState, setTilesState] = useState<ISubmenuProps['tiles']>([
         {
-            title: 'Sample',
+            title: 'Sales',
             childTilesVisible: false,
-            disabled: true,
-            pathToWatch: [''],
+            disabled: false,
+            leading: <ICONS.SalesSubMenu />,
+            pathToWatch: ['/iframe.html'],
+            events: {
+                onClick: (event) => {
+                    const dummyTilesState: ISubmenuProps['tiles'] = [];
+                    tilesState.map((tile) => {
+                        dummyTilesState.push(tile);
+                    });
+                    console.log(dummyTilesState);
+                    dummyTilesState[0].childTilesVisible = !dummyTilesState[0].childTilesVisible;
+                    setTilesState(dummyTilesState);
+                },
+            },
             childTiles: [
                 {
-                    title: 'SubMenu',
+                    title: 'New Sales',
                     pathToWatch: [''],
                     disabled: false,
+                    events: {
+                        onClick: (event) => {
+                            console.log('Played');
+                        },
+                    },
+                },
+                {
+                    title: 'Sales History',
+                    pathToWatch: ['/iframe.html'],
+                    disabled: false,
+                    events: {
+                        onClick: (event) => {
+                            console.log('Played');
+                        },
+                    },
                 },
             ],
         },
         {
-            title: 'Sample',
-            childTilesVisible: true,
+            title: 'Inventory',
+            childTilesVisible: false,
+            leading: <ICONS.InventorySubMenu />,
             disabled: false,
-            pathToWatch: ['/iframe.html'],
+            pathToWatch: [''],
             childTiles: [
                 {
-                    title: 'SubMenu',
+                    title: 'Products',
                     disabled: false,
-                    pathToWatch: ['/iframe.html'],
+                    pathToWatch: [''],
                 },
             ],
+            events: {
+                onClick: (event) => {
+                    console.log('Played');
+                },
+            },
+        },
+        {
+            title: 'Bill Settings',
+            childTilesVisible: false,
+            leading: <ICONS.BillSettingsSubMenu />,
+            disabled: true,
+            pathToWatch: [''],
         },
     ]);
 

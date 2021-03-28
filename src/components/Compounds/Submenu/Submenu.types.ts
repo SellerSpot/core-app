@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { IComponentEvents } from 'typings/common.types';
 
 interface ITile {
@@ -5,6 +6,10 @@ interface ITile {
      * Title of SubmenuTile
      */
     title: string;
+    /**
+     * Leading icon for the SubMenuTile
+     */
+    leading: ReactElement;
     /**
      * Toggles the disabled state for the tile
      */
