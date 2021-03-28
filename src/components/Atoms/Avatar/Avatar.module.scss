@@ -1,3 +1,11 @@
+.avatar {
+    height: 45px;
+    width: 45px;
+
+    transition: all $animation-duration-short ease;
+    transition-property: color, background-color;
+}
+
 .disabled {
     background-color: transparent !important;
     color: $default-color !important;

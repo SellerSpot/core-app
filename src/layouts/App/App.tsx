@@ -5,7 +5,7 @@ import React, { ReactElement, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './app.module.scss';
-import AppPreloader from 'components/AppPreloader/AppPreloader';
+import AppPreloader from 'components/Atoms/AppPreloader/AppPreloader';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here

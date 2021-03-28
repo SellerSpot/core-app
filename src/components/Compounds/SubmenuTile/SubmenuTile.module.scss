@@ -1,0 +1,62 @@
+.wrapper {
+    width: 200px;
+    height: 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 5px;
+
+    border-radius: $border-radius-cirular;
+    background-color: transparent;
+
+    transition: all $animation-duration-short ease;
+    transition-property: color, background-color, width;
+}
+
+.wrapperMini {
+    width: 160px;
+}
+
+.avatar {
+    flex-grow: 0;
+}
+
+.wrapperSelected {
+    background-color: $primaryLight-color;
+}
+
+.title {
+    flex-grow: 10;
+    color: $foregroundPrimary-color;
+}
+
+.titleSelected {
+    color: $primary-color;
+}
+
+.titleMini {
+    padding-left: 15px;
+}
+
+.trailingIcon {
+    flex-grow: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 10px;
+    color: $foregroundPrimary-color;
+
+    transition: all $animation-duration-short ease;
+    transition-property: transform, color;
+    transform-origin: center;
+}
+
+.trailingIconSelected {
+    transform: rotate(90deg);
+    transform-origin: center;
+    color: $primary-color;
+}

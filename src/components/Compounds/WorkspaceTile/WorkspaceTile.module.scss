@@ -1,0 +1,35 @@
+.wrapper {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: transparent;
+    border-radius: $border-radius;
+
+    transition: all $animation-duration-short ease;
+    transition-property: color, background-color, width;
+}
+
+.wrapperExpanded {
+    width: 200px;
+}
+
+.wrapperSelected {
+    background-color: $primaryLight-color;
+}
+
+.title {
+    color: $foregroundPrimary-color;
+    display: none;
+}
+
+.titleExpanded {
+    display: block;
+}
+
+.titleSelected {
+    color: $primary-color;
+}
