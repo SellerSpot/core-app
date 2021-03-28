@@ -4,7 +4,6 @@ import { Dashboard } from 'layouts/Dashboard/Dashboard';
 import React, { ReactElement, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
-import '../../styles/core.scss';
 import styles from './app.module.scss';
 import AppPreloader from 'components/AppPreloader/AppPreloader';
 
