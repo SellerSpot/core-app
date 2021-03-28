@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import SubMenuTile from '../Compounds/SubMenuTile/SubMenuTile';
-import styles from './Submenu.module.scss';
+import SubMenuTile from '../SubMenuTile/SubMenuTile';
+import styles from './SubMenu.module.scss';
 import { ISubMenuProps } from './SubMenu.types';
 
 export default function SubMenu(props: ISubMenuProps) {
