@@ -8,7 +8,16 @@ import AppPreloader from './AppPreloader';
 const Template: Story = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <AppPreloader />
+            <div
+                style={{
+                    padding: 0,
+                    margin: 0,
+                    width: '100%',
+                    height: '100vh',
+                }}
+            >
+                <AppPreloader />
+            </div>
         </ThemeProvider>
     </Provider>
 );
@@ -19,4 +28,7 @@ AppPreloaderComponent.args = {};
 export default {
     title: 'Components/Atoms',
     component: AppPreloaderComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;

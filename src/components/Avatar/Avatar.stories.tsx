@@ -28,4 +28,7 @@ AvatarComponent.args = {
 export default {
     title: 'Components/Atoms',
     component: AvatarComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;
