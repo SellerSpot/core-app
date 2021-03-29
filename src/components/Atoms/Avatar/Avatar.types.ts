@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { IComponentEvents } from 'typings/common.types';
 
 export interface IAvatarProps {
     content: ReactElement | string;
@@ -21,4 +22,8 @@ export interface IAvatarProps {
      * @default false
      */
     disabled?: boolean;
+    /**
+     * Basic events to track interaction on the component
+     */
+    events?: IComponentEvents;
 }

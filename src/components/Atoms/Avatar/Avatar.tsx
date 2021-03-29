@@ -30,6 +30,10 @@ export default function Avatar(props: IAvatarProps) {
             alt={'image'}
             variant={requiredProps.varient}
             src={requiredProps.imgSrc}
+            onClick={requiredProps.events?.onClick}
+            onFocus={requiredProps.events?.onFocus}
+            onMouseOver={requiredProps.events?.oneMouseOver}
+            onMouseLeave={requiredProps.events?.onMouseLeave}
         >
             {requiredProps.content}
         </MUIAvatar>
