@@ -1,0 +1,43 @@
+.wrapper {
+    width: 50px;
+    height: 100%;
+
+    background-color: #0000ff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    transition-property: width;
+    transition-duration: $animation-duration-short;
+    transition-timing-function: ease;
+    transition-delay: $animation-duration-short;
+}
+
+.wrapper:hover {
+    width: 210px;
+}
+
+.storeInformationWrapper {
+    flex-grow: 0;
+
+    background-color: green;
+
+    height: 50px;
+    width: 100%;
+}
+
+.workspacesWrapper {
+    flex-grow: 1;
+
+    background-color: red;
+}
+
+.trademarkWrapper {
+    flex-grow: 0;
+}
+
+.trademark {
+    width: 30px;
+}
