@@ -4,6 +4,7 @@ import { BiBox } from 'react-icons/bi';
 import { RiBillLine } from 'react-icons/ri';
 import { VscChecklist, VscSettings } from 'react-icons/vsc';
 import { BsQuestionSquare } from 'react-icons/bs';
+import { CgDetailsMore } from 'react-icons/cg';
 
 export const ICONS = {
     WORKSPACES: {
@@ -19,5 +20,6 @@ export const ICONS = {
     },
     OTHER: {
         DEFAULT: BsQuestionSquare,
+        MOREDETAILS: CgDetailsMore,
     },
 };

@@ -21,4 +21,8 @@ interface WorkSpaceTiles {
 
 export interface IWorkSpaceMenuProps {
     tiles: WorkSpaceTiles[];
+    storeInformation: {
+        avatarContent: string;
+        storeName: string;
+    };
 }

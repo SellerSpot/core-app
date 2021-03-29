@@ -48,6 +48,10 @@ Component.args = {
             title: 'Catalogue',
         },
     ],
+    storeInformation: {
+        avatarContent: 'S',
+        storeName: 'Sreenithi Margin Free Store',
+    },
 } as IWorkSpaceMenuProps;
 
 export default {

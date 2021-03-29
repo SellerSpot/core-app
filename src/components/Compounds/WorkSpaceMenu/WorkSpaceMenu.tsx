@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import Avatar from 'components/Atoms/Avatar/Avatar';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -17,7 +18,16 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps) {
             onMouseOver={() => setUserHovering(true)}
             onMouseLeave={() => setUserHovering(false)}
         >
-            <div className={styles.storeInformationWrapper}></div>
+            <div className={styles.storeInformationWrapper}>
+                <Avatar
+                    content={props.storeInformation.avatarContent}
+                    theme={'selected'}
+                    varient={'circular'}
+                />
+                <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: userHovering })}>
+                    {props.storeInformation.storeName}
+                </h6>
+            </div>
             <div className={styles.workspacesWrapper}>
                 {props.tiles.map((tile, index) => {
                     // checking if the tile is selected
