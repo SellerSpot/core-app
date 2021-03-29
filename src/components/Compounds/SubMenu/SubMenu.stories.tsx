@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
-import React, { useState } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
@@ -10,75 +10,47 @@ import { ISubMenuProps } from './SubMenu.types';
 
 // demo functional component to help demo the SubMenu component (since it needs state)
 function DemoLoader() {
-    // storing the tiles in localstate
-    const [tilesState, setTilesState] = useState<ISubMenuProps['tiles']>([
-        {
-            title: 'Sales',
-            childTilesVisible: false,
-            disabled: false,
-            leading: <ICONS.SalesSubMenu />,
-            pathToWatch: ['/iframe.html'],
-            events: {
-                onClick: (event) => {
-                    const dummyTilesState: ISubMenuProps['tiles'] = [];
-                    tilesState.map((tile) => {
-                        dummyTilesState.push(tile);
-                    });
-                    console.log(dummyTilesState);
-                    dummyTilesState[0].childTilesVisible = !dummyTilesState[0].childTilesVisible;
-                    setTilesState(dummyTilesState);
-                },
-            },
-            childTiles: [
-                {
-                    title: 'New Sales',
-                    pathToWatch: [''],
-                    disabled: false,
-                    events: {
-                        onClick: (event) => {
-                            console.log('Played');
-                        },
+    const subMenuProps: ISubMenuProps = {
+        tiles: [
+            {
+                title: 'Sales',
+                disabled: false,
+                leading: <ICONS.SalesSubMenu />,
+                pathToWatch: ['/iframe.html'],
+                childTiles: [
+                    {
+                        title: 'New Sales',
+                        pathToWatch: [''],
+                        disabled: false,
                     },
-                },
-                {
-                    title: 'Sales History',
-                    pathToWatch: ['/iframe.html'],
-                    disabled: false,
-                    events: {
-                        onClick: (event) => {
-                            console.log('Played');
-                        },
+                    {
+                        title: 'Sales History',
+                        pathToWatch: ['/iframe.html'],
+                        disabled: false,
                     },
-                },
-            ],
-        },
-        {
-            title: 'Inventory',
-            childTilesVisible: false,
-            leading: <ICONS.InventorySubMenu />,
-            disabled: false,
-            pathToWatch: [''],
-            childTiles: [
-                {
-                    title: 'Products',
-                    disabled: false,
-                    pathToWatch: [''],
-                },
-            ],
-            events: {
-                onClick: (event) => {
-                    console.log('Played');
-                },
+                ],
             },
-        },
-        {
-            title: 'Bill Settings',
-            childTilesVisible: false,
-            leading: <ICONS.BillSettingsSubMenu />,
-            disabled: true,
-            pathToWatch: [''],
-        },
-    ]);
+            {
+                title: 'Inventory',
+                leading: <ICONS.InventorySubMenu />,
+                disabled: false,
+                pathToWatch: [''],
+                childTiles: [
+                    {
+                        title: 'Products',
+                        disabled: false,
+                        pathToWatch: [''],
+                    },
+                ],
+            },
+            {
+                title: 'Bill Settings',
+                leading: <ICONS.BillSettingsSubMenu />,
+                disabled: true,
+                pathToWatch: [''],
+            },
+        ],
+    };
 
     return (
         <BrowserRouter>
@@ -92,7 +64,7 @@ function DemoLoader() {
                             height: '100vh',
                         }}
                     >
-                        <SubMenu tiles={tilesState} />
+                        <SubMenu tiles={subMenuProps.tiles} />
                     </div>
                 </ThemeProvider>
             </Provider>
@@ -106,7 +78,7 @@ export const SubMenuComponent = Template.bind({});
 SubMenuComponent.args = {};
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components/Compounds/SubMenuComponent',
     component: SubMenuComponent,
     parameters: {
         layout: 'fullscreen',

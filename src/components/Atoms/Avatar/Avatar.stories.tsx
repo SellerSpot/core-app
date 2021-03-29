@@ -27,7 +27,7 @@ AvatarComponent.args = {
 } as IAvatarProps;
 
 export default {
-    title: 'Components/Atoms',
+    title: 'Components/Atoms/AvatarComponent',
     component: AvatarComponent,
     parameters: {
         layout: 'fullscreen',

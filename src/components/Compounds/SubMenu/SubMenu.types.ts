@@ -17,7 +17,7 @@ interface ITile {
     /**
      * Toggles to indicate that the child tiles are visible
      */
-    childTilesVisible: boolean;
+    childTilesVisible?: boolean;
     /**
      * Event handlers for the tile
      */

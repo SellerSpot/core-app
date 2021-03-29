@@ -19,7 +19,6 @@ const defaultProps: ISubMenuTileProps = {
 
 export default function SubMenuTile(props: ISubMenuTileProps) {
     const requiredProps = merge(defaultProps, props);
-
     const wrapperClassName = cn(styles.wrapper, {
         [styles.wrapperSelected]: requiredProps.selected,
         [styles.wrapperMini]: requiredProps.miniTile,
@@ -57,7 +56,7 @@ export default function SubMenuTile(props: ISubMenuTileProps) {
                     <Avatar
                         content={requiredProps.leading}
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
-                        varient={'circle'}
+                        varient={'circular'}
                         disabled={requiredProps.disabled}
                     />
                 </div>
