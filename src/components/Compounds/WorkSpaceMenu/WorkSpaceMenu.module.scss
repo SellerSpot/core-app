@@ -10,9 +10,8 @@
     align-items: center;
     gap: 10px;
 
+    transition: all $animation-duration-short ease;
     transition-property: width;
-    transition-duration: $animation-duration-short;
-    transition-timing-function: ease;
 }
 
 .wrapperExpanded {
