@@ -3,7 +3,7 @@ import Avatar from 'components/Atoms/Avatar/Avatar';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import WorkSpaceTile from '../../WorkSpaceTile/WorkSpaceTile';
+import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
