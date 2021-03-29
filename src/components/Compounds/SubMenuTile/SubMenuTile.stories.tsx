@@ -25,7 +25,7 @@ SubMenuTileComponent.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components/Compounds/SubMenuTileComponent',
     component: SubMenuTileComponent,
     parameters: {
         layout: 'fullscreen',

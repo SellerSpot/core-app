@@ -1,11 +1,11 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import { IWorkspaceTileProps } from './WorkspaceTile.types';
 import WorkspaceTile from './WorkspaceTile';
+import { IWorkspaceTileProps } from './WorkspaceTile.types';
 
 const Template: Story<IWorkspaceTileProps> = (args: IWorkspaceTileProps) => (
     <Provider store={store}>
@@ -24,7 +24,7 @@ WorkspaceTileComponent.args = {
 } as IWorkspaceTileProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components/Compounds/WorkspaceTileComponent',
     component: WorkspaceTileComponent,
     parameters: {
         layout: 'fullscreen',

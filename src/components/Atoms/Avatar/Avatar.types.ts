@@ -10,7 +10,7 @@ export interface IAvatarProps {
      * Shape varient for the avatar
      * @default rounded
      */
-    varient?: 'circle' | 'square' | 'rounded';
+    varient?: 'circular' | 'square' | 'rounded';
     /**
      * Theme for the component
      * @default unselected
