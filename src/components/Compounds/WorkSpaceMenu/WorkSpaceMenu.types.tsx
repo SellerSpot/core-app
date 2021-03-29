@@ -10,7 +10,7 @@ interface WorkSpaceTiles {
      */
     icon: ReactElement;
     /**
-     * Redirect route for the WorkspaceTile
+     * Redirect route for the WorkSpaceTile
      */
     redirectRoute: string;
     /**
