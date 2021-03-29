@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
+import { ICONS } from 'utilities/icons';
 import WorkSpaceMenu from './WorkSpaceMenu';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
@@ -27,7 +28,27 @@ const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
 );
 
 export const Component = Template.bind({});
-Component.args = {} as IWorkSpaceMenuProps;
+Component.args = {
+    tiles: [
+        {
+            icon: <ICONS.WORKSPACES.HOME />,
+            title: 'Home',
+            routesToWatch: ['/iframe.html'],
+        },
+        {
+            icon: <ICONS.WORKSPACES.MANAGEMENT />,
+            title: 'Management',
+        },
+        {
+            icon: <ICONS.WORKSPACES.POS />,
+            title: 'POS',
+        },
+        {
+            icon: <ICONS.WORKSPACES.CATALOGUE />,
+            title: 'Catalogue',
+        },
+    ],
+} as IWorkSpaceMenuProps;
 
 export default {
     title: 'Components/Compounds/WorkSpaceMenu',

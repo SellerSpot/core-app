@@ -20,7 +20,7 @@ WorkspaceTileComponent.args = {
     expanded: true,
     selected: true,
     workspaceTitle: 'Home',
-    workspaceIcon: <ICONS.HomeWorkspace />,
+    workspaceIcon: <ICONS.WORKSPACES.HOME />,
 } as IWorkspaceTileProps;
 
 export default {

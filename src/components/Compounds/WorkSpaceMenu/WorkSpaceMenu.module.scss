@@ -11,7 +11,6 @@
     transition-property: width;
     transition-duration: $animation-duration-short;
     transition-timing-function: ease;
-    transition-delay: $animation-duration-short;
 }
 
 .wrapperExpanded {
@@ -20,9 +19,6 @@
 
 .storeInformationWrapper {
     flex-grow: 0;
-
-    background-color: green;
-
     height: 50px;
     width: 100%;
 }
@@ -30,7 +26,11 @@
 .workspacesWrapper {
     flex-grow: 1;
 
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
 }
 
 .trademarkWrapper {
