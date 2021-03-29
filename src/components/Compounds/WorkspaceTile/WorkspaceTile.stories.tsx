@@ -15,8 +15,8 @@ const Template: Story<IWorkspaceTileProps> = (args: IWorkspaceTileProps) => (
     </Provider>
 );
 
-export const WorkspaceTileComponent = Template.bind({});
-WorkspaceTileComponent.args = {
+export const Component = Template.bind({});
+Component.args = {
     expanded: true,
     selected: true,
     workspaceTitle: 'Home',
@@ -24,8 +24,8 @@ WorkspaceTileComponent.args = {
 } as IWorkspaceTileProps;
 
 export default {
-    title: 'Components/Compounds/WorkspaceTileComponent',
-    component: WorkspaceTileComponent,
+    title: 'Components/Compounds/WorkspaceTile',
+    component: Component,
     parameters: {
         layout: 'fullscreen',
     },

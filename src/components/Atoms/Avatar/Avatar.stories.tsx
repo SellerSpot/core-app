@@ -15,8 +15,8 @@ const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
     </Provider>
 );
 
-export const AvatarComponent = Template.bind({});
-AvatarComponent.args = {
+export const Component = Template.bind({});
+Component.args = {
     content: <ICONS.WORKSPACES.HOME />,
     imgSrc: '',
     theme: 'unselected',
@@ -27,8 +27,8 @@ AvatarComponent.args = {
 } as IAvatarProps;
 
 export default {
-    title: 'Components/Atoms/AvatarComponent',
-    component: AvatarComponent,
+    title: 'Components/Atoms/Avatar',
+    component: Component,
     parameters: {
         layout: 'fullscreen',
     },
