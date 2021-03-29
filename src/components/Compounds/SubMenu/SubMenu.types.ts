@@ -1,3 +1,4 @@
+import { ROUTES } from 'config/routes';
 import { ReactElement } from 'react';
 import { IComponentEvents } from 'typings/common.types';
 
@@ -19,17 +20,17 @@ interface ITile {
      */
     childTilesVisible?: boolean;
     /**
-     * Event handlers for the tile
+     * Route to redirect the application to for this tile
      */
-    events?: IComponentEvents;
+    redirectRoute: string;
     /**
-     * Paths to watch for which means that this specific tile has been selected
+     * Routes to watch for which means that this specific tile has been selected
      */
-    pathToWatch: string[];
+    routesToWatch: string[];
     /**
      * Tile definitions for the children tiles (if present)
      */
-    childTiles?: Pick<ITile, 'title' | 'events' | 'disabled' | 'pathToWatch'>[];
+    childTiles?: Pick<ITile, 'title' | 'disabled' | 'routesToWatch' | 'redirectRoute'>[];
 }
 
 export interface ISubMenuProps {

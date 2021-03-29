@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import create, { GetState, SetState } from 'zustand';
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
 import styles from './SubMenu.module.scss';
@@ -35,20 +35,20 @@ const useTilesStore = create<TSubMenuStore>(
 export default function SubMenu(props: ISubMenuProps) {
     // getting objects from the state
     const { tiles, updateChildTilesVisible, setTilesData } = useTilesStore();
+    const location = useLocation();
+    const history = useHistory();
 
     useEffect(() => {
         // loading the tiles data into local store
         setTilesData(props.tiles);
     }, []);
 
-    // getting current app path to know which tiles are selected
-    const currentLocation = useLocation();
     return (
         <div className={styles.wrapper}>
             <div className={styles.upperTiles}>
                 {tiles.map((tile, key) => {
                     // checking if the tile is selected
-                    const isTileSelected = tile.pathToWatch.includes(currentLocation.pathname);
+                    const isTileSelected = tile.routesToWatch?.includes(location.pathname);
                     return (
                         <div key={key + tile.title} className={styles.tileGroup}>
                             <SubMenuTile
@@ -63,20 +63,22 @@ export default function SubMenu(props: ISubMenuProps) {
                                 miniTile={false}
                                 showTailIcon={tile.childTiles?.length > 0}
                                 events={{
-                                    onClick: (event) => {
+                                    onClick: () => {
                                         // checking if children exists for this tile
                                         if (tile.childTiles?.length > 0) {
                                             updateChildTilesVisible(key);
+                                        } else {
+                                            // redirecting page
+                                            history.push(tile.redirectRoute);
                                         }
-                                        tile.events?.onClick(event);
                                     },
                                 }}
                             />
                             {tile.childTilesVisible && tile.childTiles?.length > 0
                                 ? tile.childTiles.map((childTile, childKey) => {
                                       // checking if the tile is selected
-                                      const isChildTileSelected = childTile.pathToWatch.includes(
-                                          currentLocation.pathname,
+                                      const isChildTileSelected = childTile.routesToWatch?.includes(
+                                          location.pathname,
                                       );
                                       return (
                                           <SubMenuTile
@@ -85,8 +87,8 @@ export default function SubMenu(props: ISubMenuProps) {
                                               disabled={childTile.disabled}
                                               selected={isChildTileSelected}
                                               events={{
-                                                  onClick: (event) => {
-                                                      childTile.events?.onClick(event);
+                                                  onClick: () => {
+                                                      history.push(childTile.redirectRoute);
                                                   },
                                               }}
                                               miniTile={true}
