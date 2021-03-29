@@ -1,8 +1,9 @@
 .wrapper {
-    width: 250px;
+    width: 222px;
     height: 100%;
 
     padding: 10px 10px;
+    background-color: $backgroundSecondary-color;
 
     display: flex;
     flex-direction: column;
