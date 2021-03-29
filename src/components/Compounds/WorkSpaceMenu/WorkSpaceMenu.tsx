@@ -10,7 +10,6 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps) {
     const [userHovering, setUserHovering] = useState(false);
     const location = useLocation();
     const history = useHistory();
-    console.log(location.pathname);
 
     return (
         <div
