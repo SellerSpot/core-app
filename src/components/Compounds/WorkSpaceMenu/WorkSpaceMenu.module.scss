@@ -1,8 +1,7 @@
 .wrapper {
-    width: 210px;
+    width: 50px;
     height: 100%;
-
-    background-color: $primaryLight-color;
+    background-color: $backgroundPrimary-color;
 
     display: flex;
     flex-direction: column;
@@ -15,7 +14,7 @@
     transition-delay: $animation-duration-short;
 }
 
-.wrapper:hover {
+.wrapperExpanded {
     width: 210px;
 }
 
@@ -35,7 +34,20 @@
 }
 
 .trademarkWrapper {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $backgroundPrimary-color;
+
     flex-grow: 0;
+    visibility: hidden;
+}
+
+.trademarkWrapperExpanded {
+    visibility: visible;
 }
 
 .trademark {
