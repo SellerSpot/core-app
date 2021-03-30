@@ -27,8 +27,8 @@ const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
     </BrowserRouter>
 );
 
-export const SubMenuComponent = Template.bind({});
-SubMenuComponent.args = {
+export const Component = Template.bind({});
+Component.args = {
     tiles: [
         {
             title: 'Sales',
@@ -77,8 +77,8 @@ SubMenuComponent.args = {
 } as ISubMenuProps;
 
 export default {
-    title: 'Components/Compounds/SubMenuComponent',
-    component: SubMenuComponent,
+    title: 'Components/Compounds/SubMenu',
+    component: Component,
     parameters: {
         layout: 'fullscreen',
     },

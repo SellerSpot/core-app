@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { IComponentEvents } from 'typings/common.types';
 
-export interface IWorkspaceTileProps {
+export interface IWorkSpaceTileProps {
     /**
      * The workspace icon to show
      * @default HomeWorkspaceIcon

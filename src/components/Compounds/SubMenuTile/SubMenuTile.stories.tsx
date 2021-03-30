@@ -14,8 +14,8 @@ const Template: Story<ISubMenuTileProps> = (args: ISubMenuTileProps) => (
     </Provider>
 );
 
-export const SubMenuTileComponent = Template.bind({});
-SubMenuTileComponent.args = {
+export const Component = Template.bind({});
+Component.args = {
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -25,8 +25,8 @@ SubMenuTileComponent.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components/Compounds/SubMenuTileComponent',
-    component: SubMenuTileComponent,
+    title: 'Components/Compounds/SubMenuTile',
+    component: Component,
     parameters: {
         layout: 'fullscreen',
     },

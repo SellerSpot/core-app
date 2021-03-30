@@ -3,17 +3,17 @@ import Avatar from 'components/Atoms/Avatar/Avatar';
 import { merge } from 'lodash';
 import React from 'react';
 import { ICONS } from 'utilities/icons';
-import styles from './WorkspaceTile.module.scss';
-import { IWorkspaceTileProps } from './WorkspaceTile.types';
+import styles from './WorkSpaceTile.module.scss';
+import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
-const defaultProps: IWorkspaceTileProps = {
+const defaultProps: IWorkSpaceTileProps = {
     expanded: false,
     workspaceIcon: <ICONS.OTHER.DEFAULT />,
     selected: false,
     workspaceTitle: 'Home',
 };
 
-export default function WorkspaceTile(props: IWorkspaceTileProps) {
+export default function WorkSpaceTile(props: IWorkSpaceTileProps) {
     const requiredProps = merge({}, defaultProps, props);
 
     const wrapperClassName = cn(

@@ -3,7 +3,7 @@ import Avatar from 'components/Atoms/Avatar/Avatar';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import WorkspaceTile from '../WorkspaceTile/WorkspaceTile';
+import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
@@ -33,7 +33,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps) {
                     // checking if the tile is selected
                     const isTileSelected = tile.routesToWatch?.includes(location.pathname);
                     return (
-                        <WorkspaceTile
+                        <WorkSpaceTile
                             key={index}
                             selected={isTileSelected}
                             expanded={userHovering}

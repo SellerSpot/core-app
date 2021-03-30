@@ -13,12 +13,12 @@ const Template: Story = () => (
     </Provider>
 );
 
-export const TrademarkComponent = Template.bind({});
-TrademarkComponent.args = {};
+export const Component = Template.bind({});
+Component.args = {};
 
 export default {
-    title: 'Components/Atoms/TrademarkComponent',
-    component: TrademarkComponent,
+    title: 'Components/Atoms/Trademark',
+    component: Component,
     parameters: {
         layout: 'fullscreen',
     },
