@@ -8,74 +8,73 @@ import { ICONS } from 'utilities/icons';
 import SubMenu from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';
 
-// demo functional component to help demo the SubMenu component (since it needs state)
-function DemoLoader() {
-    const subMenuProps: ISubMenuProps = {
-        tiles: [
-            {
-                title: 'Sales',
-                disabled: false,
-                leading: <ICONS.SalesSubMenu />,
-                pathToWatch: ['/iframe.html'],
-                childTiles: [
-                    {
-                        title: 'New Sales',
-                        pathToWatch: [''],
-                        disabled: false,
-                    },
-                    {
-                        title: 'Sales History',
-                        pathToWatch: ['/iframe.html'],
-                        disabled: false,
-                    },
-                ],
-            },
-            {
-                title: 'Inventory',
-                leading: <ICONS.InventorySubMenu />,
-                disabled: false,
-                pathToWatch: [''],
-                childTiles: [
-                    {
-                        title: 'Products',
-                        disabled: false,
-                        pathToWatch: [''],
-                    },
-                ],
-            },
-            {
-                title: 'Bill Settings',
-                leading: <ICONS.BillSettingsSubMenu />,
-                disabled: true,
-                pathToWatch: [''],
-            },
-        ],
-    };
-
-    return (
-        <BrowserRouter>
-            <Provider store={store}>
-                <ThemeProvider>
-                    <div
-                        style={{
-                            padding: 0,
-                            margin: 0,
-                            width: '100%',
-                            height: '100vh',
-                        }}
-                    >
-                        <SubMenu tiles={subMenuProps.tiles} />
-                    </div>
-                </ThemeProvider>
-            </Provider>
-        </BrowserRouter>
-    );
-}
-
-const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => DemoLoader();
+const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
+    <BrowserRouter>
+        <Provider store={store}>
+            <ThemeProvider>
+                <div
+                    style={{
+                        padding: 0,
+                        margin: 0,
+                        width: '100%',
+                        height: '100vh',
+                    }}
+                >
+                    <SubMenu {...args} />
+                </div>
+            </ThemeProvider>
+        </Provider>
+    </BrowserRouter>
+);
 
 export const SubMenuComponent = Template.bind({});
-SubMenuComponent.args = {};
+SubMenuComponent.args = {
+    tiles: [
+        {
+            title: 'Sales',
+            disabled: false,
+            leading: <ICONS.SalesSubMenu />,
+            routesToWatch: ['/iframe.html'],
+            redirectRoute: '',
+            childTiles: [
+                {
+                    title: 'New Sales',
+                    routesToWatch: [''],
+                    redirectRoute: '',
+                    disabled: false,
+                },
+                {
+                    title: 'Sales History',
+                    routesToWatch: ['/iframe.html'],
+                    redirectRoute: '',
+                    disabled: false,
+                },
+            ],
+        },
+        {
+            title: 'Inventory',
+            leading: <ICONS.InventorySubMenu />,
+            disabled: false,
+            routesToWatch: [''],
+            redirectRoute: '',
+            childTiles: [
+                {
+                    title: 'Products',
+                    disabled: false,
+                    routesToWatch: [''],
+                    redirectRoute: '',
+                },
+            ],
+        },
+        {
+            title: 'Bill Settings',
+            leading: <ICONS.BillSettingsSubMenu />,
+            disabled: true,
+            routesToWatch: [''],
+            redirectRoute: '',
+        },
+    ],
+} as ISubMenuProps;
 
 export default {
     title: 'Components/Compounds/SubMenuComponent',
