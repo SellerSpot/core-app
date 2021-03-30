@@ -17,7 +17,7 @@ const defaultProps: ISubMenuTileProps = {
     disabled: false,
 };
 
-export default function SubMenuTile(props: ISubMenuTileProps):ReactElement {
+export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
     const requiredProps = merge({}, defaultProps, props);
     const wrapperClassName = cn(styles.wrapper, {
         [styles.wrapperSelected]: requiredProps.selected,
