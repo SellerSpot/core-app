@@ -8,13 +8,13 @@ import { IWorkspaceTileProps } from './WorkspaceTile.types';
 
 const defaultProps: IWorkspaceTileProps = {
     expanded: false,
-    workspaceIcon: <ICONS.HomeWorkspace />,
+    workspaceIcon: <ICONS.OTHER.DEFAULT />,
     selected: false,
     workspaceTitle: 'Home',
 };
 
 export default function WorkspaceTile(props: IWorkspaceTileProps) {
-    const requiredProps = merge(defaultProps, props);
+    const requiredProps = merge({}, defaultProps, props);
 
     const wrapperClassName = cn(
         styles.wrapper,

@@ -8,7 +8,7 @@ import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    leading: <ICONS.HomeWorkspace />,
+    leading: <ICONS.OTHER.DEFAULT />,
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -18,7 +18,7 @@ const defaultProps: ISubMenuTileProps = {
 };
 
 export default function SubMenuTile(props: ISubMenuTileProps) {
-    const requiredProps = merge(defaultProps, props);
+    const requiredProps = merge({}, defaultProps, props);
     const wrapperClassName = cn(styles.wrapper, {
         [styles.wrapperSelected]: requiredProps.selected,
         [styles.wrapperMini]: requiredProps.miniTile,
