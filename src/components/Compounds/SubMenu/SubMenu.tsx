@@ -61,7 +61,7 @@ export default function SubMenu(props: ISubMenuProps) {
                                 disabled={tile.disabled}
                                 selected={isTileSelected}
                                 miniTile={false}
-                                leading={tile.leading}
+                                icon={tile.icon}
                                 showTailIcon={tile.childTiles?.length > 0}
                                 events={{
                                     onClick: () => {

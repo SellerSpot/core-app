@@ -11,7 +11,7 @@ export interface ISubMenuTileProps {
      * Leading content for tile
      * @default HomeWorkspaceIcon
      */
-    leading?: ReactElement;
+    icon?: ReactElement;
     /**
      * Title for the tile
      * @default "Home"

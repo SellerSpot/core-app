@@ -8,7 +8,7 @@ import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    leading: <ICONS.OTHER.DEFAULT />,
+    icon: <ICONS.OTHER.DEFAULT />,
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -54,7 +54,7 @@ export default function SubMenuTile(props: ISubMenuTileProps) {
             {!requiredProps.miniTile ? (
                 <div className={styles.avatar}>
                     <Avatar
-                        content={requiredProps.leading}
+                        content={requiredProps.icon}
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
                         varient={'circular'}
                         disabled={requiredProps.disabled}

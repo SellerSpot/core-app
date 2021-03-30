@@ -33,7 +33,7 @@ Component.args = {
         {
             title: 'Sales',
             disabled: false,
-            leading: <ICONS.SUBMENUS.SALES />,
+            icon: <ICONS.SUBMENUS.SALES />,
             routesToWatch: ['/iframe.html'],
             redirectRoute: '',
             childTiles: [
@@ -53,7 +53,7 @@ Component.args = {
         },
         {
             title: 'Inventory',
-            leading: <ICONS.SUBMENUS.INVENTORY />,
+            icon: <ICONS.SUBMENUS.INVENTORY />,
             disabled: false,
             routesToWatch: [''],
             redirectRoute: '',
@@ -68,7 +68,7 @@ Component.args = {
         },
         {
             title: 'Bill Settings',
-            leading: <ICONS.SUBMENUS.BILLSETTINGS />,
+            icon: <ICONS.SUBMENUS.BILLSETTINGS />,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',
