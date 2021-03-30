@@ -1,0 +1,34 @@
+.wrapper {
+    width: 210px;
+    height: 30px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    height: 24px;
+    width: 24px;
+}
+
+.logoSpace {
+    height: 30px;
+
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+}
+
+.logoText {
+    width: 75px;
+}
+
+.poweredBy {
+    flex-grow: 0;
+    color: $foregroundPrimary-color;
+}
