@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
 import { merge } from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/icons';
 import styles from './WorkSpaceTile.module.scss';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
@@ -14,7 +14,7 @@ const defaultProps: IWorkSpaceTileProps = {
     workspaceTitle: 'Home',
 };
 
-export default function WorkSpaceTile(props: IWorkSpaceTileProps) {
+export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement {
     const requiredProps = merge({}, defaultProps, props);
 
     const wrapperClassName = cn(
@@ -42,7 +42,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps) {
                 content={requiredProps.workspaceIcon}
                 theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
             />
-            <h5 className={titleClassName}>{requiredProps.workspaceTitle}</h5>
+            <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
         </div>
     );
 }
