@@ -10,7 +10,7 @@ interface ITile {
     /**
      * Leading icon for the SubMenuTile
      */
-    leading: ReactElement;
+    icon: ReactElement;
     /**
      * Toggles the disabled state for the tile
      */
