@@ -12,12 +12,13 @@
     background-color: transparent;
     border-radius: $border-radius;
 
-    transition: all $animation-duration-short ease;
+    transition-timing-function: ease;
+    transition-duration: $animation-duration-short;
     transition-property: color, background-color, width;
-}
 
-.wrapper:hover {
-    background-color: $backgroundTertiary-color;
+    &:hover {
+        background-color: $backgroundSecondary-color;
+    }
 }
 
 .wrapperExpanded {

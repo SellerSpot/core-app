@@ -1,13 +1,14 @@
 import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
 import Trademark from 'components/Atoms/Trademark/Trademark';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
+// import { debounce } from 'lodash';
 
-export default function WorkSpaceMenu(props: IWorkSpaceMenuProps) {
+export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement {
     const [userHovering, setUserHovering] = useState(false);
     const location = useLocation();
     const history = useHistory();
@@ -18,7 +19,10 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps) {
             onMouseOver={() => setUserHovering(true)}
             onMouseLeave={() => setUserHovering(false)}
         >
-            <div className={styles.storeInformationWrapper}>
+            <div
+                className={styles.storeInformationWrapper}
+                title={props.storeInformation?.storeName}
+            >
                 <Avatar
                     content={props.storeInformation.avatarContent}
                     theme={'selected'}
