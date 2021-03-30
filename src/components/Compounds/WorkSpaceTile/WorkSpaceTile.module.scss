@@ -28,6 +28,14 @@
     background-color: $primaryLight-color;
 }
 
+.wrapperWorkSpaceIndicator {
+    background-color: transparent;
+}
+
+.wrapperWorkSpaceIndicator:hover {
+    background-color: transparent;
+}
+
 .title {
     color: $foregroundPrimary-color;
     display: none;
