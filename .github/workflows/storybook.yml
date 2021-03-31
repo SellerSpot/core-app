@@ -18,10 +18,13 @@ jobs:
                   node-version: 12
             - run: npm install
 
-            - name: 'Running eslint'
+            - name: Running eslint
               run: npm run lint
 
-            - name: 'Build storybook static site'
+            - name: Running StyleLint
+              run: npm stylelint "**/*.scss"
+
+            - name: Build storybook static site
               run: npm run build-storybook --if-present
 
             - name: Deploy to netlify
