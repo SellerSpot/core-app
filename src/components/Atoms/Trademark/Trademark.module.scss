@@ -1,11 +1,7 @@
 .wrapper {
     width: auto;
     height: 30px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
+    @include flex(center, center, row, 4px);
 
     .poweredBy {
         color: $foregroundPrimary-color;
@@ -16,10 +12,7 @@
 
         padding: 0px 5px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
+        @include flex(center, center, row, 4px);
 
         cursor: pointer;
 

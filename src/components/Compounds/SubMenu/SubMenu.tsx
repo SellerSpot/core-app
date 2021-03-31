@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import create, { GetState, SetState } from 'zustand';
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
@@ -32,7 +32,7 @@ const useTilesStore = create<TSubMenuStore>(
     }),
 );
 
-export default function SubMenu(props: ISubMenuProps) {
+export default function SubMenu(props: ISubMenuProps): ReactElement {
     // getting objects from the state
     const { tiles, updateChildTilesVisible, setTilesData } = useTilesStore();
     const location = useLocation();

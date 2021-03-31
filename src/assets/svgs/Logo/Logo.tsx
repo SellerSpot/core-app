@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 export interface ILogoProps {
     className: string;
 }
 
-export default function Logo(props: ILogoProps) {
+export default function Logo(props: ILogoProps): ReactElement {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

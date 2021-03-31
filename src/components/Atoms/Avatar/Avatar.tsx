@@ -1,7 +1,7 @@
 import { Avatar as MUIAvatar } from '@material-ui/core';
 import cn from 'classnames';
 import { merge } from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styles from './Avatar.module.scss';
 import { IAvatarProps } from './Avatar.types';
 
@@ -12,7 +12,7 @@ const defaultProps: IAvatarProps = {
     disabled: false,
 };
 
-export default function Avatar(props: IAvatarProps) {
+export default function Avatar(props: IAvatarProps): ReactElement {
     const requiredProps = merge({}, defaultProps, props);
 
     const className = !requiredProps.disabled

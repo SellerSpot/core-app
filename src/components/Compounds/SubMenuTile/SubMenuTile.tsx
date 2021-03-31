@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
 import { merge } from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { ICONS } from 'utilities/icons';
 import styles from './SubMenuTile.module.scss';
@@ -17,7 +17,7 @@ const defaultProps: ISubMenuTileProps = {
     disabled: false,
 };
 
-export default function SubMenuTile(props: ISubMenuTileProps) {
+export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
     const requiredProps = merge({}, defaultProps, props);
     const wrapperClassName = cn(styles.wrapper, {
         [styles.wrapperSelected]: requiredProps.selected,
