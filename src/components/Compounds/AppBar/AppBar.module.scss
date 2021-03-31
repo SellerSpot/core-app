@@ -15,6 +15,10 @@
         width: 40%;
         height: 100%;
         padding: 0 10px;
-        @include flex(center, flex-end, row, 10px);
+        @include flex(center, flex-end, row, 20px);
+
+        .icon {
+            background-color: red;
+        }
     }
 }

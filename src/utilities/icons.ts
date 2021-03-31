@@ -1,4 +1,4 @@
-import { MdHome, MdKeyboardArrowRight } from 'react-icons/md';
+import { MdFullscreen, MdHome, MdKeyboardArrowRight, MdNotifications } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { BiBox } from 'react-icons/bi';
 import { RiBillLine } from 'react-icons/ri';
@@ -23,5 +23,7 @@ export const ICONS = {
         MORE_DETAILS: CgDetailsMore,
         EXPAND_MENU: MdKeyboardArrowRight,
         FORWARD_SLASH: CgFormatSlash,
+        FULL_SCREEN: MdFullscreen,
+        NOTIFICATION: MdNotifications,
     },
 };

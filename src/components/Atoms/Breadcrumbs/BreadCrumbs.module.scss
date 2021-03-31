@@ -16,7 +16,7 @@
 
 .breadCrumb {
     @include flex(center, center);
-    padding: 5px 5px;
+    padding: 5px 4px;
     border-radius: 5px;
 }
 
@@ -35,11 +35,6 @@
         // background-color: $backgroundSecondary-color;
         text-decoration: underline;
     }
-}
-
-.avatarHolder {
-    width: 40px;
-    height: 40px;
 }
 
 .iconHolder {
