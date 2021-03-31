@@ -68,7 +68,7 @@ Component.args = {
         },
         {
             title: 'Bill Settings',
-            icon: <ICONS.SUBMENUS.BILLSETTINGS />,
+            icon: <ICONS.SUBMENUS.BILL_SETTINGS />,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',

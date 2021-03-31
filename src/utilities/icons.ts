@@ -4,7 +4,7 @@ import { BiBox } from 'react-icons/bi';
 import { RiBillLine } from 'react-icons/ri';
 import { VscChecklist, VscSettings } from 'react-icons/vsc';
 import { BsQuestionSquare } from 'react-icons/bs';
-import { CgDetailsMore } from 'react-icons/cg';
+import { CgDetailsMore, CgFormatSlash } from 'react-icons/cg';
 
 export const ICONS = {
     WORKSPACES: {
@@ -16,11 +16,12 @@ export const ICONS = {
     SUBMENUS: {
         SALES: FaCashRegister,
         INVENTORY: BiBox,
-        BILLSETTINGS: RiBillLine,
+        BILL_SETTINGS: RiBillLine,
     },
     OTHER: {
         DEFAULT: BsQuestionSquare,
-        MOREDETAILS: CgDetailsMore,
-        EXPANDMENU: MdKeyboardArrowRight,
+        MORE_DETAILS: CgDetailsMore,
+        EXPAND_MENU: MdKeyboardArrowRight,
+        FORWARD_SLASH: CgFormatSlash,
     },
 };

@@ -12,7 +12,7 @@ export default function ExpandWorkspaceMenuButton(
 ): ReactElement {
     return (
         <div className={styles.wrapper} onClick={props.onClick}>
-            <ICONS.OTHER.EXPANDMENU />
+            <ICONS.OTHER.EXPAND_MENU />
         </div>
     );
 }
