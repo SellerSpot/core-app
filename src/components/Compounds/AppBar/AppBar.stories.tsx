@@ -3,31 +3,24 @@ import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import { ICONS } from 'utilities/icons';
-import Avatar from './Avatar';
-import { IAvatarProps } from './Avatar.types';
+import AppBar from './AppBar';
+import { IAppBarProps } from './AppBar.types';
 
-const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
+const Template: Story<IAppBarProps> = (args: IAppBarProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Avatar {...args} />
+            <AppBar />
         </ThemeProvider>
     </Provider>
 );
 
 export const Component = Template.bind({});
 Component.args = {
-    content: <ICONS.WORKSPACES.HOME />,
-    imgSrc: '',
-    size: 'small',
-    theme: 'selected',
-    varient: 'rounded',
-    className: '',
-    disabled: false,
-} as IAvatarProps;
+    sample: '',
+} as IAppBarProps;
 
 export default {
-    title: 'Components/Atoms/Avatar',
+    title: 'Components/Compounds/AppBar',
     component: Component,
     parameters: {
         layout: 'fullscreen',

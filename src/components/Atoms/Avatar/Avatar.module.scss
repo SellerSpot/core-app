@@ -1,9 +1,19 @@
-.avatar {
-    width: 45px;
-    height: 45px;
-
+.wrapper {
+    width: 40px;
+    min-width: 20px;
+    height: 40px;
+    min-height: 20px;
+    background-color: red;
+    border-radius: $border-radius-cirular;
+    font-weight: 600;
     transition: all $animation-duration-short ease;
     transition-property: color, background-color;
+    @include flex(center, center);
+}
+
+.smallWrapper {
+    width: 30px;
+    height: 30px;
 }
 
 .disabled {

@@ -1,4 +1,3 @@
-import { Avatar as MUIAvatar } from '@material-ui/core';
 import cn from 'classnames';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
@@ -10,6 +9,7 @@ const defaultProps: IAvatarProps = {
     varient: 'rounded',
     theme: 'unselected',
     disabled: false,
+    size: 'default',
 };
 
 export default function Avatar(props: IAvatarProps): ReactElement {
@@ -17,25 +17,15 @@ export default function Avatar(props: IAvatarProps): ReactElement {
 
     const className = !requiredProps.disabled
         ? cn(
-              styles.avatar,
+              styles.wrapper,
               { [styles.selectedNoBg]: requiredProps.theme === 'selectedNoBg' },
               { [styles.selected]: requiredProps.theme === 'selected' },
               { [styles.unselected]: requiredProps.theme === 'unselected' },
+              { [styles.smallWrapper]: requiredProps.size === 'small' },
           )
-        : cn(styles.avatar, styles.disabled);
+        : cn(styles.wrapper, styles.disabled, {
+              [styles.smallWrapper]: requiredProps.size === 'small',
+          });
 
-    return (
-        <MUIAvatar
-            className={className}
-            alt={'image'}
-            variant={requiredProps.varient}
-            src={requiredProps.imgSrc}
-            onClick={requiredProps.events?.onClick}
-            onFocus={requiredProps.events?.onFocus}
-            onMouseOver={requiredProps.events?.oneMouseOver}
-            onMouseLeave={requiredProps.events?.onMouseLeave}
-        >
-            {requiredProps.content}
-        </MUIAvatar>
-    );
+    return <div className={className}>{requiredProps.content}</div>;
 }

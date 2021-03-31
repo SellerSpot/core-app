@@ -12,12 +12,7 @@ export const BreadCrumbs = (props: IBreadCrumbsProps): ReactElement => {
             <div className={styles.breadCrumbsContainer}>
                 {props.crumbs.map((breadCrumb, key) => {
                     return (
-                        <div
-                            className={cn(styles.breadCrumbNode, {
-                                [styles.currentBreadCrumbsNode]: key === props.crumbs.length - 1,
-                            })}
-                            key={key}
-                        >
+                        <div className={cn(styles.breadCrumbNode)} key={key}>
                             {key !== 0 && (
                                 <div className={styles.breadCrumbSeparator}>
                                     <ICONS.OTHER.FORWARD_SLASH />
@@ -38,7 +33,14 @@ export const BreadCrumbs = (props: IBreadCrumbsProps): ReactElement => {
                                     <div className={styles.iconHolder}>{<breadCrumb.icon />}</div>
                                 )} */}
                                 {breadCrumb.title !== undefined && (
-                                    <div className={styles.titleHolder}>{breadCrumb.title}</div>
+                                    <div
+                                        className={cn(styles.titleHolder, {
+                                            [styles.currentBreadCrumbsNode]:
+                                                key === props.crumbs.length - 1,
+                                        })}
+                                    >
+                                        {breadCrumb.title}
+                                    </div>
                                 )}
                             </div>
                         </div>

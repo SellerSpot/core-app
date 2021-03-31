@@ -25,7 +25,7 @@
 }
 
 .currentBreadCrumbsNode {
-    color: $primary-color;
+    font-weight: 600;
 }
 
 .breadCrumbWithLink {
@@ -35,6 +35,11 @@
         // background-color: $backgroundSecondary-color;
         text-decoration: underline;
     }
+}
+
+.avatarHolder {
+    width: 40px;
+    height: 40px;
 }
 
 .iconHolder {

@@ -38,10 +38,12 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
             onMouseOver={requiredProps.events?.oneMouseOver}
             onMouseLeave={requiredProps.events?.onMouseLeave}
         >
-            <Avatar
-                content={requiredProps.workspaceIcon}
-                theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
-            />
+            <div>
+                <Avatar
+                    content={requiredProps.workspaceIcon}
+                    theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
+                />
+            </div>
             <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
         </div>
     );
