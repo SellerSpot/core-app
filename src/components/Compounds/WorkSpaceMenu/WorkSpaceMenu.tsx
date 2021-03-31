@@ -2,7 +2,7 @@ import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
 import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButon/ExpandWorkspaceMenuButton';
 import Trademark from 'components/Atoms/Trademark/Trademark';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
@@ -12,9 +12,29 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
     const [expandMenu, setExpandMenu] = useState(false);
     const location = useLocation();
     const history = useHistory();
+    const menuRef = useRef(null);
+
+    // handler for document onClickListener
+    const onClickListener = useCallback(
+        (e: MouseEvent) => {
+            if (!menuRef.current.contains(e.target)) {
+                setExpandMenu(false);
+            }
+        },
+        [menuRef],
+    );
+
+    useEffect(() => {
+        // Attach a click listener on the document.
+        document.addEventListener('click', onClickListener);
+        return () => {
+            // Detach the click listener on the document.
+            document.removeEventListener('click', onClickListener);
+        };
+    }, []);
 
     return (
-        <div className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}>
+        <div ref={menuRef} className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}>
             <div className={cn(styles.expandIcon, { [styles.expandIconVisible]: expandMenu })}>
                 <ExpandWorkspaceMenuButton
                     onClick={() => {
@@ -29,7 +49,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                 <Avatar
                     content={props.storeInformation.avatarContent}
                     theme={'selected'}
-                    varient={'rounded'}
+                    varient={'circular'}
                 />
                 <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: expandMenu })}>
                     {props.storeInformation.storeName}
