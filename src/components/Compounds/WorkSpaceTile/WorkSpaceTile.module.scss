@@ -5,9 +5,7 @@
     user-select: none;
     cursor: pointer;
 
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    @include flex(center, flex-start);
 
     background-color: transparent;
     border-radius: $border-radius;
@@ -18,6 +16,21 @@
 
     &:hover {
         background-color: $backgroundSecondary-color;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    1% {
+        display: block;
+        opacity: 0;
+    }
+    100% {
+        display: block;
+        opacity: 1;
     }
 }
 

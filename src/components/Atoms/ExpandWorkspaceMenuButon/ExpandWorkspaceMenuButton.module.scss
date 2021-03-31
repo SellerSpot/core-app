@@ -1,0 +1,22 @@
+.wrapper {
+    background-color: $primaryLight-color;
+    color: $primary-color;
+
+    cursor: pointer;
+
+    width: 25px;
+    height: 25px;
+    border-radius: $border-radius;
+
+    @include flex(center, center);
+
+    box-shadow: 0 0 5px 0 $backgroundTertiary-color;
+
+    transition: all 0.2s ease;
+    transition-property: background-color, color;
+
+    &:hover {
+        background-color: $primary-color;
+        color: $foregroundLight-color;
+    }
+}

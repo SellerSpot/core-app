@@ -1,24 +1,27 @@
 import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
+import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButon/ExpandWorkspaceMenuButton';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { ReactElement, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
-// import { debounce } from 'lodash';
 
 export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement {
-    const [userHovering, setUserHovering] = useState(false);
+    const [expandMenu, setExpandMenu] = useState(false);
     const location = useLocation();
     const history = useHistory();
 
     return (
-        <div
-            className={cn(styles.wrapper, { [styles.wrapperExpanded]: userHovering })}
-            onMouseOver={() => setUserHovering(true)}
-            onMouseLeave={() => setUserHovering(false)}
-        >
+        <div className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}>
+            <div className={cn(styles.expandIcon, { [styles.expandIconVisible]: expandMenu })}>
+                <ExpandWorkspaceMenuButton
+                    onClick={() => {
+                        setExpandMenu(!expandMenu);
+                    }}
+                />
+            </div>
             <div
                 className={styles.storeInformationWrapper}
                 title={props.storeInformation?.storeName}
@@ -26,9 +29,9 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                 <Avatar
                     content={props.storeInformation.avatarContent}
                     theme={'selected'}
-                    varient={'circular'}
+                    varient={'rounded'}
                 />
-                <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: userHovering })}>
+                <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: expandMenu })}>
                     {props.storeInformation.storeName}
                 </h6>
             </div>
@@ -40,7 +43,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                         <WorkSpaceTile
                             key={index}
                             selected={isTileSelected}
-                            expanded={userHovering}
+                            expanded={expandMenu}
                             workspaceTitle={tile.title}
                             workspaceIcon={tile.icon}
                             events={{
@@ -55,7 +58,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
             </div>
             <div
                 className={cn(styles.trademarkWrapper, {
-                    [styles.trademarkWrapperExpanded]: userHovering,
+                    [styles.trademarkWrapperExpanded]: expandMenu,
                 })}
             >
                 <Trademark />

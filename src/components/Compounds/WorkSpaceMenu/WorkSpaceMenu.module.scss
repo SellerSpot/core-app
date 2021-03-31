@@ -4,15 +4,48 @@
     padding: 5px 0px;
     background-color: $backgroundPrimary-color;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+    position: relative;
+
+    @include flex(center, space-between, column, 10px, 0);
 
     transition-duration: $animation-duration-short;
     transition-timing-function: ease;
     transition-property: width;
+
+    &:hover {
+        .expandIcon {
+            display: block;
+            opacity: 1;
+        }
+    }
+
+    .expandIcon {
+        position: absolute;
+        top: 18px;
+        z-index: 1;
+        right: -30px;
+        display: none;
+        opacity: 0;
+
+        transform: rotate(0deg);
+        transition: transform 0.2s ease, opacity 1s ease;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            right: 0;
+            z-index: -1;
+        }
+    }
+
+    .expandIconVisible {
+        display: block !important;
+        opacity: 1;
+        transform: rotate(180deg) !important;
+    }
 }
 
 .wrapperExpanded {
@@ -25,11 +58,8 @@
 
     padding: 0px 5px;
 
-    flex-grow: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
+    @include flex(center, flex-start, 5px, 0);
+
     user-select: none;
     cursor: pointer;
 
@@ -39,15 +69,14 @@
 
     .storeName {
         max-width: 100%;
-        max-height: 30px;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: $foregroundPrimary-color;
 
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
-        color: $foregroundPrimary-color;
         transform: scaleX(0);
         transform-origin: left center;
         transition-duration: 0.1s;
@@ -66,26 +95,26 @@
 
     padding: 0px 5px;
 
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 10px;
+    @include flex(flex-start, flex-start, column, 10px, 1);
 }
 
 .trademarkWrapper {
     width: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    @include flex(flex-start, center);
 
     background-color: $backgroundPrimary-color;
 
-    visibility: hidden;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
 }
 
 .trademarkWrapperExpanded {
-    visibility: visible;
+    opacity: 1;
+    transform: scaleX(1);
+    transition-delay: 0.1s;
+    transition-property: transform;
 }

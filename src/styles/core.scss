@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
 * {
     margin: 0;
@@ -29,36 +29,43 @@ body {
 h1{
     font-size: $h1-fontsize;
     font-weight: bold;
+    color: $foregroundPrimary-color;
 }
 
 h2{
     font-size: $h2-fontsize;
     font-weight: bold;
+    color: $foregroundPrimary-color;
 }
 
 h3{
     font-size: $h3-fontsize;
     font-weight: bold;
+    color: $foregroundPrimary-color;
 }
 
 h4{
     font-size: $h4-fontsize;
     font-weight: 600;
+    color: $foregroundPrimary-color;
 }
 
 h5{
     font-size: $h5-fontsize;
     font-weight: 600;
+    color: $foregroundPrimary-color;
 }
 
 h6{
     font-size: $h6-fontsize;
     font-weight: 600;
+    color: $foregroundPrimary-color;
 }
 
 p{
     font-size: $p-fontsize;
     font-weight: 400;
+    color: $foregroundPrimary-color;
 }
 
 :root {

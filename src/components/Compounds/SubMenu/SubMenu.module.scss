@@ -5,24 +5,13 @@
     padding: 10px 10px;
     background-color: $backgroundSecondary-color;
 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
+    @include flex(flex-start, space-between, column);
 }
 
 .upperTiles {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    gap: 10px;
+    @include flex(flex-end, flex-start, column, 10px);
 }
 
 .tileGroup {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    gap: 5px;
+    @include flex(flex-end, flex-start, column, 5px);
 }
