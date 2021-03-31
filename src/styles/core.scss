@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    vertical-align: baseline;
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
     font-family: 'Roboto', Helvetica, sans-serif;
     scroll-behavior: smooth;
+    vertical-align: baseline;
 }
 
 ::-webkit-scrollbar {
-    height: 6px;
     width: 6px;
+    height: 6px;
     background-color: #f2f2f2;
 }
 
@@ -21,75 +21,75 @@
 }
 
 body {
+    overflow: hidden;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
 }
 
-h1{
+h1 {
+    color: $foregroundPrimary-color;
     font-size: $h1-fontsize;
     font-weight: bold;
-    color: $foregroundPrimary-color;
 }
 
-h2{
+h2 {
+    color: $foregroundPrimary-color;
     font-size: $h2-fontsize;
     font-weight: bold;
-    color: $foregroundPrimary-color;
 }
 
-h3{
+h3 {
+    color: $foregroundPrimary-color;
     font-size: $h3-fontsize;
     font-weight: bold;
-    color: $foregroundPrimary-color;
 }
 
-h4{
+h4 {
+    color: $foregroundPrimary-color;
     font-size: $h4-fontsize;
     font-weight: 600;
-    color: $foregroundPrimary-color;
 }
 
-h5{
+h5 {
+    color: $foregroundPrimary-color;
     font-size: $h5-fontsize;
     font-weight: 600;
-    color: $foregroundPrimary-color;
 }
 
-h6{
+h6 {
+    color: $foregroundPrimary-color;
     font-size: $h6-fontsize;
     font-weight: 600;
-    color: $foregroundPrimary-color;
 }
 
-p{
+p {
+    color: $foregroundPrimary-color;
     font-size: $p-fontsize;
     font-weight: 400;
-    color: $foregroundPrimary-color;
 }
 
 :root {
     // theming variables will be set dynamically from js (the following variables will assigned to scss variables in _colors.scss (which is used in all coloring thing internally))
-    --success-color: '#43AA8B',
-    --successLight-color: '#EDF7ED',
-    --danger-color: '#F44336',
-    --dangerLight-color: '#FDECEA',
-    --warning-color: '#FF9800',
-    --warningLight-color: '#FFF4E5',
-    --info-color: '#2196F3',
-    --default-color: '#878682',
+    --success-color: '#43AA8B';
+    --successLight-color: '#EDF7ED';
+    --danger-color: '#F44336';
+    --dangerLight-color: '#FDECEA';
+    --warning-color: '#FF9800';
+    --warningLight-color: '#FFF4E5';
+    --info-color: '#2196F3';
+    --default-color: '#878682';
 
-    --foregroundPrimary-color: '#5A5A5A',
-    --foregroundSecondary-color: '#767676',
-    --foregroundTertiary-color: '#C6C5C4',
-    
-    --backgroundPrimary-color: '#FAFAFA',
-    --backgroundSecondary-color: '#F2F2F2',
-    --backgroundTertiary-color: '#DAD9D6',
-    
-    --primary-color: '#1A73E8',
-    --primaryLight-color: '#D9E8FC',
-    --accent-color: '#EE8572',
+    --foregroundPrimary-color: '#5A5A5A';
+    --foregroundSecondary-color: '#767676';
+    --foregroundTertiary-color: '#C6C5C4';
+
+    --backgroundPrimary-color: '#FAFAFA';
+    --backgroundSecondary-color: '#F2F2F2';
+    --backgroundTertiary-color: '#DAD9D6';
+
+    --primary-color: '#1A73E8';
+    --primaryLight-color: '#D9E8FC';
+    --accent-color: '#EE8572';
 
     --h1-fontsize: 32px;
     --h2-fontsize: 24px;

@@ -2,19 +2,19 @@
     width: 200px;
     height: 40px;
 
-    user-select: none;
-    cursor: pointer;
-
-    @include flex(center, space-between);
-
     padding: 0 5px;
     padding-left: 8px;
+    background-color: transparent;
 
     border-radius: $border-radius-cirular;
-    background-color: transparent;
+    cursor: pointer;
 
     transition: all $animation-duration-short ease;
     transition-property: color, background-color, width;
+
+    user-select: none;
+
+    @include flex(center, space-between);
 }
 
 .wrapper:hover {
@@ -26,8 +26,8 @@
 }
 
 .wrapperDisabled {
-    cursor: default;
     color: $foregroundTertiary-color;
+    cursor: default;
 }
 
 .wrapperDisabled:hover {
@@ -66,14 +66,14 @@
 .trailingIcon {
     flex-grow: 0;
 
-    @include flex(center, center);
-
     margin-right: 10px;
     color: $foregroundPrimary-color;
+    transform-origin: center;
 
     transition: all $animation-duration-short ease;
     transition-property: transform, color;
-    transform-origin: center;
+
+    @include flex(center, center);
 }
 
 .trailingIconSelected {
