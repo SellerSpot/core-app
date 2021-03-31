@@ -6,7 +6,7 @@
 
     width: 25px;
     height: 25px;
-    border-radius: $border-radius;
+    border-radius: $border-radius-cirular;
 
     @include flex(center, center);
 
