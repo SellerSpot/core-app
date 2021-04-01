@@ -1,10 +1,9 @@
+import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
 import { IColors, IFontSizes } from 'config/themes';
 import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
 import '../../styles/core.scss';
-
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
 
 export interface IThemeProviderProps {
     children?: ReactElement | ReactElement[] | string | number;
