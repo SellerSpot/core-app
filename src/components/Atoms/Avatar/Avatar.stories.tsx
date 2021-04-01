@@ -19,11 +19,11 @@ export const Component = Template.bind({});
 Component.args = {
     content: <ICONS.WORKSPACES.HOME />,
     imgSrc: '',
-    theme: 'unselected',
+    size: 'small',
+    theme: 'selected',
     varient: 'rounded',
     className: '',
     disabled: false,
-    style: {},
 } as IAvatarProps;
 
 export default {

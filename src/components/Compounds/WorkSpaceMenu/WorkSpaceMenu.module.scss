@@ -1,16 +1,15 @@
 .wrapper {
+    position: relative;
     width: 50px;
     height: 100%;
     padding: 5px 0px;
     background-color: $backgroundPrimary-color;
 
-    position: relative;
+    transition-duration: $animation-duration-short;
+    transition-property: width;
+    transition-timing-function: ease;
 
     @include flex(center, space-between, column, 10px, 0);
-
-    transition-duration: $animation-duration-short;
-    transition-timing-function: ease;
-    transition-property: width;
 
     &:hover {
         .expandIcon {
@@ -21,8 +20,8 @@
 
     .expandIcon {
         position: absolute;
-        top: 18px;
         z-index: 1;
+        top: 18px;
         right: -30px;
         display: none;
         opacity: 0;
@@ -31,13 +30,13 @@
         transition: transform 0.2s ease, opacity 1s ease;
 
         &::after {
-            content: '';
             position: absolute;
-            width: 50px;
-            height: 50px;
+            z-index: -1;
             top: -20px;
             right: 0;
-            z-index: -1;
+            width: 50px;
+            height: 50px;
+            content: '';
         }
     }
 
@@ -53,29 +52,28 @@
 }
 
 .storeInformationWrapper {
-    height: 50px;
     width: 100%;
+    height: 50px;
 
     padding: 0px 5px;
-
-    @include flex(center, flex-start, row, 5px, 0);
+    cursor: pointer;
 
     user-select: none;
-    cursor: pointer;
+
+    @include flex(center, flex-start, row, 5px, 0);
 
     &:hover {
         background-color: $backgroundSecondary-color;
     }
 
     .storeName {
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: $foregroundPrimary-color;
-
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        overflow: hidden;
+        max-width: 100%;
         -webkit-box-orient: vertical;
+        color: $foregroundPrimary-color;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
         text-overflow: ellipsis;
         transform: scaleX(0);
         transform-origin: left center;

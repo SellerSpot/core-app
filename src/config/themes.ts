@@ -99,6 +99,10 @@ export const fontSizeThemes: IFontSizeThemes = {
  */
 export const muiThemes: IMuiThemes = {
     default: createMuiTheme({
+        typography: {
+            fontFamily: 'Inter',
+        },
+
         palette: {
             primary: {
                 main: colorThemes.default.primary,

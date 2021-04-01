@@ -26,4 +26,9 @@ export interface IAvatarProps {
      * Basic events to track interaction on the component
      */
     events?: IComponentEvents;
+    /**
+     * Sizes for the component
+     * @default default
+     */
+    size?: 'default' | 'small';
 }

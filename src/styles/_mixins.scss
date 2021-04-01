@@ -7,8 +7,8 @@
 ) {
     display: flex;
     flex-direction: $direction;
+    flex-grow: $flex-grow;
     align-items: $align-items;
     justify-content: $justify-content;
-    flex-grow: $flex-grow;
     gap: $gap;
 }

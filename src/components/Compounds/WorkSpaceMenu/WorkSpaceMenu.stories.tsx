@@ -50,7 +50,8 @@ Component.args = {
     ],
     storeInformation: {
         avatarContent: 'S',
-        storeName: 'Sreenithi Margin Free Store Store Store Test Store Store Store Store Store Test Store Store Store Store Store Test Store Store',
+        storeName:
+            'Sreenithi Margin Free Store Store Store Test Store Store Store Store Store Test Store Store Store Store Store Test Store Store',
     },
 } as IWorkSpaceMenuProps;
 

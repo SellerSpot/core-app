@@ -1,0 +1,24 @@
+.wrapper {
+    width: 100%;
+    height: 50px;
+    padding: 0 10px;
+    @include flex(center, space-between);
+    background-color: $backgroundSecondary-color;
+
+    .lhsGroup {
+        width: 60%;
+        height: 100%;
+        @include flex(center, flex-start, row, 25px);
+    }
+
+    .rhsGroup {
+        width: 40%;
+        height: 100%;
+        padding: 0 10px;
+        @include flex(center, flex-end, row, 20px);
+
+        .icon {
+            background-color: red;
+        }
+    }
+}
