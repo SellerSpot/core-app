@@ -1,0 +1,36 @@
+.card {
+    padding: 10px 0;
+    .cardSummary {
+        cursor: default !important;
+        @include flex(center, space-between);
+
+        .cardLHSComponents {
+            width: 60%;
+            height: 100%;
+            @include flex(flex-start, center, column, 5px);
+
+            .domainAddress {
+                color: $primary-color;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .cardRHSComponents {
+            width: 40%;
+            height: 100%;
+            @include flex(center, flex-end);
+        }
+    }
+
+    .cardDetails {
+        width: 100%;
+        height: 100%;
+        @include flex(center, flex-start);
+
+        .cardDetailsComponents {
+            @include flex(flex-start, center, column, 10px);
+        }
+    }
+}

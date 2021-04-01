@@ -111,7 +111,8 @@ export const muiThemes: IMuiThemes = {
                 main: colorThemes.default.accent,
             },
             text: {
-                primary: colorThemes.default.primary,
+                primary: colorThemes.default.foregroundPrimary,
+                secondary: colorThemes.default.foregroundSecondary,
             },
         },
     }),
