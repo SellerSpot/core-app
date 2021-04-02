@@ -11,10 +11,11 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import cn from 'classnames';
 import { successMUITheme } from 'config/themes';
 import React, { ReactElement, useState } from 'react';
+import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
 
 export default function DomainUpdateCard(): ReactElement {
-    const [cardExpanded, setCardExpanded] = useState(true);
+    const [cardExpanded, setCardExpanded] = useState(false);
     const [urlFieldState, setUrlFieldState] = useState<'default' | 'success' | 'error'>('default');
     const [urlFieldHelperText, setUrlFieldHelperText] = useState('Please enter your new domain');
 
@@ -46,9 +47,14 @@ export default function DomainUpdateCard(): ReactElement {
                 <div className={styles.cardRHSComponents}>
                     <div>
                         <Button
-                            className={cn(styles.updateCardSummaryButton, {
-                                [styles.updateCardSummaryButtonInvisible]: cardExpanded,
-                            })}
+                            className={cn(
+                                {
+                                    [animationStyles.fadeOut]: cardExpanded,
+                                },
+                                {
+                                    [animationStyles.fadeIn]: !cardExpanded,
+                                },
+                            )}
                             variant={'contained'}
                             color={'primary'}
                             onClick={() => setCardExpanded(true)}

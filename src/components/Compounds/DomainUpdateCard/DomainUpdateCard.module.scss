@@ -21,14 +21,6 @@
             width: 40%;
             height: 100%;
             @include flex(center, flex-end);
-
-            .updateCardSummaryButton {
-                opacity: 1;
-                transition: opacity 0.2s ease;
-            }
-            .updateCardSummaryButtonInvisible {
-                opacity: 0;
-            }
         }
     }
 
