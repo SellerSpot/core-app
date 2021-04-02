@@ -30,7 +30,26 @@
         @include flex(center, flex-start);
 
         .cardDetailsComponents {
-            @include flex(flex-start, center, column, 10px);
+            @include flex(flex-start, center, column, 5px);
+
+            .helperTextSuccess {
+                color: $success-color !important;
+            }
+            .cardActions {
+                @include flex(center, flex-start, row, 10px);
+                margin-bottom: 10px;
+                .updateButton {
+                    padding-right: 30px;
+                    padding-left: 30px;
+                }
+
+                .cancelButton {
+                    padding-right: 20px;
+                    padding-left: 20px;
+                    border-color: $danger-color;
+                    color: $danger-color;
+                }
+            }
         }
     }
 }

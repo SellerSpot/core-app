@@ -18,7 +18,4 @@ export const Component = Template.bind({});
 export default {
     title: 'Components/Compounds/DomainUpdateCard',
     component: Component,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

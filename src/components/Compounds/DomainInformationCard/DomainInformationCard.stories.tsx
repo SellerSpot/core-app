@@ -8,13 +8,7 @@ import DomainInformationCard from './DomainInformationCard';
 const Template: Story = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <div
-                style={{
-                    padding: '10px',
-                }}
-            >
-                <DomainInformationCard />
-            </div>
+            <DomainInformationCard />
         </ThemeProvider>
     </Provider>
 );
@@ -24,7 +18,4 @@ export const Component = Template.bind({});
 export default {
     title: 'Components/Compounds/DomainInformationCard',
     component: Component,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

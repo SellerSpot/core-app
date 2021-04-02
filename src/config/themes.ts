@@ -117,3 +117,26 @@ export const muiThemes: IMuiThemes = {
         },
     }),
 };
+
+// Custom Themes for different use cases
+/**
+ * Custom theming for success situations
+ */
+export const successMUITheme = createMuiTheme({
+    typography: {
+        fontFamily: 'Inter',
+    },
+    palette: {
+        primary: {
+            main: colorThemes.default.success,
+        },
+        secondary: {
+            main: colorThemes.default.successLight,
+        },
+        text: {
+            primary: colorThemes.default.foregroundPrimary,
+            secondary: colorThemes.default.foregroundSecondary,
+            hint: colorThemes.default.success,
+        },
+    },
+});
