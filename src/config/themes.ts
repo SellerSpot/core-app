@@ -144,21 +144,3 @@ export const successMUITheme = createMuiTheme({
         },
     },
 });
-
-/**
- * Custom theming for tooltip
- */
-export const tooltipMUITheme = createMuiTheme({
-    overrides: {
-        MuiTooltip: {
-            tooltip: {
-                padding: '10px',
-                fontSize: '12px',
-                fontFamily: 'Inter',
-                color: colorThemes.default.foregroundLight,
-                backgroundColor: colorThemes.default.dark,
-                fontWeight: 500,
-            },
-        },
-    },
-});
