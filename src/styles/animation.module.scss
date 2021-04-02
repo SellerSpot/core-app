@@ -1,9 +1,9 @@
 /* hint: refer aniamtion name from _animations.scss */
 
 .fadeOut {
-    @include animation(fade-out, 0.2s, both);
+    @include animation(fade-out, 0.4s, both);
 }
 
 .fadeIn {
-    @include animation(fade-in, 0.2s, both);
+    @include animation(fade-in, 0.4s, both);
 }
