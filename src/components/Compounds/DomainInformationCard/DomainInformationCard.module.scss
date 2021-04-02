@@ -1,0 +1,15 @@
+.card {
+    .cardContent {
+        @include flex(flex-start, center, column, 5px);
+        .link {
+            cursor: pointer;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+            .linkText {
+                color: $primary-color;
+            }
+        }
+    }
+}
