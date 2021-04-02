@@ -7,8 +7,8 @@ import {
     TextField,
     ThemeProvider,
 } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
 import cn from 'classnames';
+import Alert from 'components/Atoms/Alert/Alert';
 import { successMUITheme } from 'config/themes';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
@@ -116,8 +116,7 @@ export default function DomainUpdateCard(): ReactElement {
                             Cancel
                         </Button>
                     </div>
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
+                    <Alert type={'warning'} title={'Warning'}>
                         <b>
                             This is a destructive operation! All SEO related progress for the
                             current domain will be lost
