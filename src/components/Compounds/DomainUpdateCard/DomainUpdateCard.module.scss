@@ -21,6 +21,14 @@
             width: 40%;
             height: 100%;
             @include flex(center, flex-end);
+
+            .updateCardSummaryButton {
+                opacity: 1;
+                transition: opacity 0.2s ease;
+            }
+            .updateCardSummaryButtonInvisible {
+                opacity: 0;
+            }
         }
     }
 
@@ -38,12 +46,12 @@
             .cardActions {
                 @include flex(center, flex-start, row, 10px);
                 margin-bottom: 10px;
-                .updateButton {
+                .updateCardActionButton {
                     padding-right: 30px;
                     padding-left: 30px;
                 }
 
-                .cancelButton {
+                .cancelCardActionButton {
                     padding-right: 20px;
                     padding-left: 20px;
                     border-color: $danger-color;

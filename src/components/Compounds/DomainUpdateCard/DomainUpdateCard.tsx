@@ -44,13 +44,18 @@ export default function DomainUpdateCard(): ReactElement {
                     <h6 className={styles.domainAddress}>sreeenithi.sellerspot.in</h6>
                 </div>
                 <div className={styles.cardRHSComponents}>
-                    <Button
-                        variant={'contained'}
-                        color={'primary'}
-                        onClick={() => setCardExpanded(true)}
-                    >
-                        Update
-                    </Button>
+                    <div>
+                        <Button
+                            className={cn(styles.updateCardSummaryButton, {
+                                [styles.updateCardSummaryButtonInvisible]: cardExpanded,
+                            })}
+                            variant={'contained'}
+                            color={'primary'}
+                            onClick={() => setCardExpanded(true)}
+                        >
+                            Update
+                        </Button>
+                    </div>
                 </div>
             </AccordionSummary>
             <AccordionDetails className={styles.cardDetails}>
@@ -88,7 +93,7 @@ export default function DomainUpdateCard(): ReactElement {
                     </ThemeProvider>
                     <div className={styles.cardActions}>
                         <Button
-                            className={styles.updateButton}
+                            className={styles.updateCardActionButton}
                             size="medium"
                             color="primary"
                             variant={'contained'}
@@ -96,7 +101,7 @@ export default function DomainUpdateCard(): ReactElement {
                             Update
                         </Button>
                         <Button
-                            className={styles.cancelButton}
+                            className={styles.cancelCardActionButton}
                             size="medium"
                             variant={'outlined'}
                             color={'secondary'}
