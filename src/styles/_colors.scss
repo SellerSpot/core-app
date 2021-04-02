@@ -11,7 +11,7 @@ $default-color: var(--default-color);
 $foregroundPrimary-color: var(--foregroundPrimary-color);
 $foregroundSecondary-color: var(--foregroundSecondary-color);
 $foregroundTertiary-color: var(--foregroundTertiary-color);
-$foregroundLight-color: var(--backgroundPrimary-color);
+$foregroundLight-color: var(--foregroundLight-color);
 
 $backgroundPrimary-color: var(--backgroundPrimary-color);
 $backgroundSecondary-color: var(--backgroundSecondary-color);
@@ -20,3 +20,4 @@ $backgroundTertiary-color: var(--backgroundTertiary-color);
 $primary-color: var(--primary-color);
 $primaryLight-color: var(--primaryLight-color);
 $accent-color: var(--accent-color);
+$dark-color: var(--dark-color);

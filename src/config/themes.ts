@@ -15,6 +15,7 @@ export interface IColors {
     info: string;
     default: string;
     //foreground colors
+    foregroundLight: string;
     foregroundPrimary: string;
     foregroundSecondary: string;
     foregroundTertiary: string;
@@ -26,6 +27,7 @@ export interface IColors {
     primary: string;
     primaryLight: string;
     accent: string;
+    dark: string;
 }
 
 // interface for the fontsizes used in the app
@@ -67,6 +69,7 @@ export const colorThemes: IColorThemes = {
         warningLight: '#FFF4E5',
         info: '#2196F3',
         default: '#878682',
+        foregroundLight: '#FAFAFA',
         foregroundPrimary: '#5A5A5A',
         foregroundSecondary: '#767676',
         foregroundTertiary: '#C6C5C4',
@@ -74,6 +77,7 @@ export const colorThemes: IColorThemes = {
         backgroundSecondary: '#F2F2F2',
         backgroundTertiary: '#E0E0E0',
         primary: '#1A73E8',
+        dark: '#212121',
         primaryLight: '#D9E8FC',
         accent: '#EE8572',
     },
@@ -137,6 +141,24 @@ export const successMUITheme = createMuiTheme({
             primary: colorThemes.default.foregroundPrimary,
             secondary: colorThemes.default.foregroundSecondary,
             hint: colorThemes.default.success,
+        },
+    },
+});
+
+/**
+ * Custom theming for tooltip
+ */
+export const tooltipMUITheme = createMuiTheme({
+    overrides: {
+        MuiTooltip: {
+            tooltip: {
+                padding: '10px',
+                fontSize: '12px',
+                fontFamily: 'Inter',
+                color: colorThemes.default.foregroundLight,
+                backgroundColor: colorThemes.default.dark,
+                fontWeight: 500,
+            },
         },
     },
 });
