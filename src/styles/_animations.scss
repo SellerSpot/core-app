@@ -51,7 +51,6 @@
         visibility: visible;
     }
     100% {
-        // display: none !important;
         opacity: 0;
         visibility: hidden;
     }
@@ -69,5 +68,14 @@
     100% {
         opacity: 1;
         visibility: visible;
+    }
+}
+
+@keyframes rotate-180 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
     }
 }

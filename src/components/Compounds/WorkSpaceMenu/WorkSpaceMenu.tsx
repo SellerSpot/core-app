@@ -4,12 +4,14 @@ import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButon
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import animationStyles from '../../../styles/animation.module.scss';
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
 export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement {
     const [expandMenu, setExpandMenu] = useState(false);
+    const [hoverMenu, setHoverMenu] = useState(false);
     const location = useLocation();
     const history = useHistory();
     const menuRef = useRef(null);
@@ -34,8 +36,21 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
     }, []);
 
     return (
-        <div ref={menuRef} className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}>
-            <div className={cn(styles.expandIcon, { [styles.expandIconVisible]: expandMenu })}>
+        <div
+            ref={menuRef}
+            onMouseEnter={() => setHoverMenu(true)}
+            onMouseLeave={() => setHoverMenu(false)}
+            className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}
+        >
+            <div
+                className={cn(
+                    styles.expandIcon,
+                    { [animationStyles.fadeIn]: hoverMenu && !expandMenu },
+                    { [styles.expandIconFadeOut]: !hoverMenu && !expandMenu },
+                    { [styles.expandIconRotate]: expandMenu },
+                    { [styles.expandIconRotateReverse]: !expandMenu },
+                )}
+            >
                 <ExpandWorkspaceMenuButton
                     onClick={() => {
                         setExpandMenu(!expandMenu);

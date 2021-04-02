@@ -5,10 +5,16 @@
     min-height: 20px;
     background-color: red;
     border-radius: $border-radius-cirular;
+    cursor: pointer !important;
     font-weight: 600;
     transition: all $animation-duration-short ease;
-    transition-property: color, background-color;
+    transition-property: color, background-color, opacity;
+    user-select: none;
     @include flex(center, center);
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 .smallWrapper {
@@ -25,17 +31,14 @@
 .selected {
     background-color: $primaryLight-color !important;
     color: $primary-color !important;
-    cursor: pointer !important;
 }
 
 .unselected {
     background-color: transparent !important;
     color: $foregroundPrimary-color !important;
-    cursor: pointer !important;
 }
 
 .selectedNoBg {
     background-color: transparent !important;
     color: $primary-color !important;
-    cursor: pointer !important;
 }

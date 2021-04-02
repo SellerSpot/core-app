@@ -72,7 +72,7 @@ export const colorThemes: IColorThemes = {
         foregroundTertiary: '#C6C5C4',
         backgroundPrimary: '#FAFAFA',
         backgroundSecondary: '#F2F2F2',
-        backgroundTertiary: '#DAD9D6',
+        backgroundTertiary: '#E0E0E0',
         primary: '#1A73E8',
         primaryLight: '#D9E8FC',
         accent: '#EE8572',

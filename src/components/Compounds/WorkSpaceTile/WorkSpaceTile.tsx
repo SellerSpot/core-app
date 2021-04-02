@@ -27,6 +27,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
     const titleClassName = cn(
         styles.title,
         { [styles.titleSelected]: requiredProps.selected },
+        { [styles.titleCollapsed]: !requiredProps.expanded },
         { [styles.titleExpanded]: requiredProps.expanded },
     );
 
