@@ -1,0 +1,81 @@
+@mixin animation(
+    $name: '',
+    $duration: 0.5s,
+    $fillMode: both,
+    $timingFunction: ease,
+    $direction: normal,
+    $delay: 0s,
+    $iterationCount: 1,
+    $playstate: running
+) {
+    /*  (number) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay */
+    animation-delay: $delay;
+
+    /*  (normal | reverse | alternate | alternate-reverse) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction */
+    animation-direction: $direction;
+
+    /*  (infinite | number) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count */
+    animation-duration: $duration;
+
+    /*  (none | forwards | backwards | both) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode */
+    animation-fill-mode: $fillMode;
+
+    /*  (number) // https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration */
+    animation-iteration-count: $iterationCount;
+    /*  (name of the animation) (@keyframes) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name */
+    animation-name: $name;
+
+    /*  (running | paused) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state */
+    animation-play-state: $playstate;
+
+    /*  (ease | ease-in | ease-out | ease-in-out | linear | step-start | step-end) https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function */
+    animation-timing-function: $timingFunction;
+    --webkit-animation-name: $name;
+    --webkit-animation-duration: $duration;
+    --webkit-animation-fill-mode: $fillMode;
+    --webkit-animation-timing-function: $timingFunction;
+    --webkit-animation-direction: $direction;
+    --webkit-animation-delay: $delay;
+    --webkit-animation-iteration-count: $iterationCount;
+    --webkit-animation-play-state: $playstate;
+}
+
+// keyframes
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    90% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    10% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes rotate-180 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}

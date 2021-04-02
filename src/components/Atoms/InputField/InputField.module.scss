@@ -1,0 +1,28 @@
+.helperText {
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 100%;
+    -webkit-box-orient: vertical;
+    color: $foregroundPrimary-color;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+.helperTextSuccess {
+    color: $success-color !important;
+}
+
+.helperTextDanger {
+    color: $danger-color !important;
+}
+
+.helperTextWarning {
+    color: $warning-color !important;
+}
+
+.loadingHelperTextWrapper {
+    @include flex(center, flex-start, $gap: 8px);
+    .loadingHelperContentText {
+        color: $primary-color;
+    }
+}

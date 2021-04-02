@@ -1,17 +1,13 @@
 .wrapper {
     width: 200px;
     height: 40px;
-
     padding: 0 5px;
     padding-left: 8px;
     background-color: transparent;
-
     border-radius: $border-radius-cirular;
     cursor: pointer;
-
     transition: all $animation-duration-short ease;
     transition-property: color, background-color, width;
-
     user-select: none;
 
     @include flex(center, space-between);

@@ -1,6 +1,7 @@
 .wrapper {
     width: auto;
     height: 30px;
+    user-select: none;
     @include flex(center, center, row, 4px);
 
     .poweredBy {
@@ -9,12 +10,12 @@
 
     .logoSpace {
         height: 100%;
-
         padding: 0px 5px;
-
-        @include flex(center, center, row, 4px);
-
+        padding: 0 6px;
+        border-radius: $border-radius;
         cursor: pointer;
+        transition: background-color 0.2s ease;
+        @include flex(center, center, row, 4px);
 
         &:hover {
             background-color: $backgroundSecondary-color;

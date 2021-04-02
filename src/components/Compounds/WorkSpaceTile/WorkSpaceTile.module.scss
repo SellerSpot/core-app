@@ -52,12 +52,15 @@
 }
 
 .title {
-    display: none;
     color: $foregroundPrimary-color;
 }
 
+.titleCollapsed {
+    @include animation(fade-out, 0.1s);
+}
+
 .titleExpanded {
-    display: block;
+    @include animation(fade-in, 0.1s);
 }
 
 .titleSelected {
