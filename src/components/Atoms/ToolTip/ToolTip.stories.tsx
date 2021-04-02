@@ -1,3 +1,4 @@
+import { TooltipProps } from '@material-ui/core';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import { colorThemes } from 'config/themes';
@@ -5,12 +6,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import ToolTip from './ToolTip';
-import { IToolTipProps } from './ToolTip.types';
 
-const Template: Story<IToolTipProps> = () => (
+const Template: Story<TooltipProps> = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <ToolTip message={'Sample Tooltip'} placement={'right'}>
+            <ToolTip title={'Sample Tooltip'} placement={'right'}>
                 <div
                     style={{
                         width: '200px',

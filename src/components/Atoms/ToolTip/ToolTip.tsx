@@ -1,9 +1,8 @@
-import { Tooltip, withStyles } from '@material-ui/core';
+import { Tooltip, TooltipProps, withStyles } from '@material-ui/core';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
-import { IToolTipProps } from './ToolTip.types';
 
-export default function ToolTip(props: IToolTipProps): ReactElement {
+export default function ToolTip(props: TooltipProps): ReactElement {
     const CustomToolTip = withStyles({
         tooltip: {
             padding: '10px',
@@ -16,7 +15,7 @@ export default function ToolTip(props: IToolTipProps): ReactElement {
     })(Tooltip);
 
     return (
-        <CustomToolTip title={props.message} placement={props.placement}>
+        <CustomToolTip title={props.title} placement={props.placement}>
             {props.children}
         </CustomToolTip>
     );
