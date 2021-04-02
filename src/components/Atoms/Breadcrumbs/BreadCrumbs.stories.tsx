@@ -37,7 +37,4 @@ Component.args = {};
 export default {
     title: 'Components/Atoms/Breadcrumbs',
     component: Component,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

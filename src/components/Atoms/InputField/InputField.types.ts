@@ -23,6 +23,6 @@ export interface IInputFieldProps {
     helperMessage?: {
         enabled: boolean;
         content?: string;
-        type?: 'loading' | 'success' | 'error' | 'warning';
+        type?: 'loading' | 'success' | 'error' | 'warning' | 'none';
     };
 }

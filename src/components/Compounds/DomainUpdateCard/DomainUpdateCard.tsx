@@ -1,15 +1,7 @@
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    InputAdornment,
-    TextField,
-    ThemeProvider,
-} from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
 import cn from 'classnames';
 import Alert from 'components/Atoms/Alert/Alert';
-import { successMUITheme } from 'config/themes';
+import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
@@ -66,37 +58,32 @@ export default function DomainUpdateCard(): ReactElement {
             </AccordionSummary>
             <AccordionDetails className={styles.cardDetails}>
                 <div className={styles.cardDetailsComponents}>
-                    <ThemeProvider theme={urlFieldState === 'success' ? successMUITheme : null}>
-                        <TextField
-                            label={'New Domain'}
-                            variant={'outlined'}
-                            placeholder={'sreenithi'}
-                            color={'primary'}
-                            inputProps={{
-                                style: {
-                                    textAlign: 'right',
-                                    fontWeight: 600,
-                                },
-                            }}
-                            FormHelperTextProps={{
-                                className: cn({
-                                    [styles.helperTextSuccess]: urlFieldState === 'success',
-                                }),
-                            }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position={'end'}>
-                                        <h6>.sellerspot.in</h6>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            error={urlFieldState === 'error'}
-                            helperText={urlFieldHelperText}
-                            onChange={(event) => {
-                                urlFieldOnChangeHandler(event.target.value);
-                            }}
-                        />
-                    </ThemeProvider>
+                    <InputField
+                        label={'New Domain'}
+                        placeHolder={'sreenithi'}
+                        direction={'rtl'}
+                        state={
+                            urlFieldState === 'success'
+                                ? 'success'
+                                : urlFieldState === 'error'
+                                ? 'error'
+                                : 'default'
+                        }
+                        suffix={<h6>.sellerspot.in</h6>}
+                        helperMessage={{
+                            enabled: urlFieldState === 'error' || urlFieldState === 'success',
+                            content: urlFieldHelperText,
+                            type:
+                                urlFieldState === 'error'
+                                    ? 'error'
+                                    : urlFieldState === 'success'
+                                    ? 'success'
+                                    : 'none',
+                        }}
+                        onChange={(event) => {
+                            urlFieldOnChangeHandler(event.target.value);
+                        }}
+                    />
                     <div className={styles.cardActions}>
                         <Button
                             className={styles.updateCardActionButton}

@@ -97,41 +97,45 @@ export default function InputField(props: IInputFieldProps): ReactElement {
     }
 
     return (
-        <ThemeProvider theme={textFieldTheme}>
-            <MUITextField
-                ref={requiredProps.ref}
-                variant={'outlined'}
-                onChange={requiredProps.onChange}
-                value={requiredProps.value}
-                label={requiredProps.label}
-                type={requiredProps.type}
-                placeholder={requiredProps.placeHolder}
-                autoFocus={requiredProps.autoFocus}
-                required={requiredProps.required}
-                disabled={requiredProps.disabled}
-                FormHelperTextProps={{
-                    className: cn({
-                        [styles.helperTextSuccess]: requiredProps.state === 'success',
-                        [styles.helperTextDanger]: requiredProps.state === 'error',
-                    }),
-                }}
-                inputProps={{
-                    style: {
-                        textAlign: requiredProps.direction === 'rtl' ? 'right' : 'left',
-                        fontWeight: 600,
-                    },
-                }}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position={'start'}>{requiredProps.prefix}</InputAdornment>
-                    ),
-                    endAdornment: (
-                        <InputAdornment position={'end'}>{requiredProps.suffix}</InputAdornment>
-                    ),
-                }}
-                error={requiredProps.state === 'error'}
-                helperText={helperComponent}
-            />
-        </ThemeProvider>
+        <div className={cn({ [styles.inputFieldBottomSpace]: !props.helperMessage?.enabled })}>
+            <ThemeProvider theme={textFieldTheme}>
+                <MUITextField
+                    ref={requiredProps.ref}
+                    variant={'outlined'}
+                    onChange={requiredProps.onChange}
+                    value={requiredProps.value}
+                    label={requiredProps.label}
+                    type={requiredProps.type}
+                    placeholder={requiredProps.placeHolder}
+                    autoFocus={requiredProps.autoFocus}
+                    required={requiredProps.required}
+                    disabled={requiredProps.disabled}
+                    FormHelperTextProps={{
+                        className: cn({
+                            [styles.helperTextSuccess]: requiredProps.state === 'success',
+                            [styles.helperTextDanger]: requiredProps.state === 'error',
+                        }),
+                    }}
+                    inputProps={{
+                        style: {
+                            textAlign: requiredProps.direction === 'rtl' ? 'right' : 'left',
+                            fontWeight: 600,
+                        },
+                    }}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position={'start'}>
+                                {requiredProps.prefix}
+                            </InputAdornment>
+                        ),
+                        endAdornment: (
+                            <InputAdornment position={'end'}>{requiredProps.suffix}</InputAdornment>
+                        ),
+                    }}
+                    error={requiredProps.state === 'error'}
+                    helperText={helperComponent}
+                />
+            </ThemeProvider>
+        </div>
     );
 }
