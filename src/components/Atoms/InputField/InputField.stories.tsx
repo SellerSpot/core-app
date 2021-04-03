@@ -1,24 +1,39 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import InputField from './InputField';
 import { IInputFieldProps } from './InputField.types';
 
-const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <div
-                style={{
-                    maxWidth: '300px',
-                }}
-            >
-                <InputField {...args} />
-            </div>
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        inputRef.current?.focus();
+        wrapperRef.current.style.backgroundColor = 'black';
+    }, []);
+    return (
+        <Provider store={store}>
+            <ThemeProvider>
+                <div
+                    style={{
+                        maxWidth: '300px',
+                    }}
+                >
+                    <InputField
+                        ref={{
+                            current: {
+                                inputRef,
+                                wrapperRef,
+                            },
+                        }}
+                    />
+                </div>
+            </ThemeProvider>
+        </Provider>
+    );
+};
 
 export const Component = Template.bind({});
 Component.args = {

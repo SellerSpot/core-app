@@ -29,7 +29,4 @@ Component.args = {
 export default {
     title: 'Components/Atoms/Avatar',
     component: Component,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

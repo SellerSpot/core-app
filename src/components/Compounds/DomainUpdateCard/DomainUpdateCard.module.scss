@@ -1,6 +1,7 @@
 .card {
     padding: 10px 0;
     .cardSummary {
+        width: 100%;
         cursor: default !important;
         @include flex(center, space-between);
 
