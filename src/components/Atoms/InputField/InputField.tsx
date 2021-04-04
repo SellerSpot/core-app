@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import cn from 'classnames';
 import { colorThemes, muiThemes } from 'config/themes';
-import React, { forwardRef, ReactElement, ReactNode, RefObject } from 'react';
+import React, { forwardRef, ReactElement, ReactNode, RefObject, useEffect } from 'react';
 import styles from './InputField.module.scss';
 import { IInputFieldProps } from './InputField.types';
 
@@ -37,20 +37,20 @@ const dangerMUITheme = createMuiTheme(muiThemes.default, {
 
 // eslint-disable-next-line react/display-name
 const InputField = forwardRef(
-    (
-        props: IInputFieldProps,
-        ref: RefObject<{
-            inputRef: RefObject<HTMLInputElement>;
-            wrapperRef: RefObject<HTMLDivElement>;
-        }>,
-    ): ReactElement => {
-        const requiredProps = props;
+    (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): ReactElement => {
+        useEffect(() => {
+            if (props.autoFocus) {
+                setTimeout(function () {
+                    ref.current?.focus();
+                }, 100);
+            }
+        }, [props.autoFocus]);
 
         // choosing theme
         const textFieldTheme =
-            requiredProps.state === 'error'
+            props.state === 'error'
                 ? dangerMUITheme
-                : requiredProps.state === 'success'
+                : props.state === 'success'
                 ? successMUITheme
                 : muiThemes.default;
 
@@ -59,14 +59,14 @@ const InputField = forwardRef(
         let helperComponent: ReactNode = null;
 
         // compiling helperMessageComponent
-        if (requiredProps.helperMessage?.enabled) {
-            switch (requiredProps.helperMessage?.type) {
+        if (props.helperMessage?.enabled) {
+            switch (props.helperMessage?.type) {
                 case 'loading':
                     helperComponent = (
                         <div className={styles.loadingHelperTextWrapper}>
                             <CircularProgress color={'primary'} size={'10px'} />
                             <p className={cn(styles.helperText, styles.loadingHelperContentText)}>
-                                {requiredProps.helperMessage?.content}
+                                {props.helperMessage?.content}
                             </p>
                         </div>
                     );
@@ -78,19 +78,19 @@ const InputField = forwardRef(
                                 styles.helperText,
                                 {
                                     [styles.helperTextDanger]:
-                                        requiredProps.helperMessage?.type === 'error',
+                                        props.helperMessage?.type === 'error',
                                 },
                                 {
                                     [styles.helperTextSuccess]:
-                                        requiredProps.helperMessage?.type === 'success',
+                                        props.helperMessage?.type === 'success',
                                 },
                                 {
                                     [styles.helperTextWarning]:
-                                        requiredProps.helperMessage?.type === 'warning',
+                                        props.helperMessage?.type === 'warning',
                                 },
                             )}
                         >
-                            {requiredProps.helperMessage?.content}
+                            {props.helperMessage?.content}
                         </p>
                     );
                     break;
@@ -98,48 +98,41 @@ const InputField = forwardRef(
         }
 
         return (
-            <div
-                ref={ref.current?.wrapperRef}
-                className={cn({ [styles.inputFieldBottomSpace]: !props.helperMessage?.enabled })}
-            >
+            <div className={cn({ [styles.inputFieldBottomSpace]: !props.helperMessage?.enabled })}>
                 <ThemeProvider theme={textFieldTheme}>
                     {/* <input ref={props.ref} type="text" placeholder={'Sample Placehodler'} /> */}
                     <MUITextField
-                        inputRef={ref.current.inputRef}
+                        inputRef={ref}
                         variant={'outlined'}
-                        onChange={requiredProps.onChange}
-                        value={requiredProps.value}
-                        label={requiredProps.label}
-                        type={requiredProps.type}
-                        placeholder={requiredProps.placeHolder}
-                        autoFocus={requiredProps.autoFocus}
-                        required={requiredProps.required}
-                        disabled={requiredProps.disabled}
+                        onChange={props.onChange}
+                        value={props.value}
+                        label={props.label}
+                        type={props.type}
+                        placeholder={props.placeHolder}
+                        autoFocus={props.autoFocus}
+                        required={props.required}
+                        disabled={props.disabled}
                         FormHelperTextProps={{
                             className: cn({
-                                [styles.helperTextSuccess]: requiredProps.state === 'success',
-                                [styles.helperTextDanger]: requiredProps.state === 'error',
+                                [styles.helperTextSuccess]: props.state === 'success',
+                                [styles.helperTextDanger]: props.state === 'error',
                             }),
                         }}
                         inputProps={{
                             style: {
-                                textAlign: requiredProps.direction === 'rtl' ? 'right' : 'left',
-                                fontWeight: 600,
+                                textAlign: props.direction === 'rtl' ? 'right' : 'left',
+                                fontWeight: 500,
                             },
                         }}
                         InputProps={{
                             startAdornment: (
-                                <InputAdornment position={'start'}>
-                                    {requiredProps.prefix}
-                                </InputAdornment>
+                                <InputAdornment position={'start'}>{props.prefix}</InputAdornment>
                             ),
                             endAdornment: (
-                                <InputAdornment position={'end'}>
-                                    {requiredProps.suffix}
-                                </InputAdornment>
+                                <InputAdornment position={'end'}>{props.suffix}</InputAdornment>
                             ),
                         }}
-                        error={requiredProps.state === 'error'}
+                        error={props.state === 'error'}
                         helperText={helperComponent}
                     />
                 </ThemeProvider>

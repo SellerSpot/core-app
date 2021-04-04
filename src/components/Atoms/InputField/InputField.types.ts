@@ -17,7 +17,6 @@ export interface IInputFieldProps {
     placeHolder?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
-    // ref?: React.RefObject<HTMLInputElement>;
     autoFocus?: boolean;
     disabled?: boolean;
     helperMessage?: {
