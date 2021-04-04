@@ -2,10 +2,16 @@
     .cardContentWrapper {
         padding-bottom: 0;
         .content {
-            @include flex(flex-start, center, column, 15px);
+            @include flex(flex-start, center, column, 10px);
             .topContent {
                 width: 100%;
                 @include flex(center, space-between);
+                .domainMessage {
+                    @include flex(flex-start, space-between, column, 5px);
+                    .link {
+                        @include anchorLink;
+                    }
+                }
             }
             .bottomContent {
                 width: 100%;

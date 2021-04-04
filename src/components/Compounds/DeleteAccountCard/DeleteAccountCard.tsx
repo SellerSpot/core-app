@@ -14,7 +14,19 @@ export default function DeleteAccountCard(): ReactElement {
             content={
                 <div className={styles.content}>
                     <div className={styles.topContent}>
-                        <div>Hi there</div>
+                        <div className={styles.domainMessage}>
+                            <h5>Delete your account</h5>
+                            <h6>
+                                <a
+                                    href="https://sreenithi.dashboard.sellerspot.in"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className={styles.link}
+                                >
+                                    sreenithi.dashboard.sellerspot.in
+                                </a>
+                            </h6>
+                        </div>
                         <Button
                             size={'medium'}
                             state={'danger'}

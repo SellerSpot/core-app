@@ -12,14 +12,16 @@ export default function DomainInformationCard(): ReactElement {
             content={
                 <div className={styles.cardContent}>
                     <h5>Your SellerSpot App is hosted at</h5>
-                    <a
-                        href="https://sreenithi.dashboard.sellerspot.in"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={styles.link}
-                    >
-                        <h6 className={styles.linkText}>sreenithi.dashboard.sellerspot.in</h6>
-                    </a>
+                    <h6>
+                        <a
+                            href="https://sreenithi.dashboard.sellerspot.in"
+                            target="_blank"
+                            rel="noreferrer"
+                            className={styles.link}
+                        >
+                            sreenithi.dashboard.sellerspot.in
+                        </a>
+                    </h6>
                 </div>
             }
         />
