@@ -17,7 +17,7 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                     workspaceIcon={props.currentWorkspace.workspaceIcon}
                     workspaceTitle={props.currentWorkspace.workspaceTitle}
                     expanded
-                    varient={'workspaceIndicator'}
+                    variant={'workspaceIndicator'}
                     selected
                 />
                 <BreadCrumbs crumbs={props.breadcrumbs} />
@@ -31,7 +31,7 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                     size={'25px'}
                     color={currentTheme.colors.foregroundPrimary}
                 />
-                <Avatar content={'N'} varient={'circular'} theme={'selected'} size={'small'} />
+                <Avatar content={'N'} variant={'circular'} theme={'selected'} size={'small'} />
             </div>
         </div>
     );

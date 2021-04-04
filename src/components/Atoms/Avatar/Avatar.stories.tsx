@@ -21,7 +21,7 @@ Component.args = {
     imgSrc: '',
     size: 'small',
     theme: 'selected',
-    varient: 'rounded',
+    variant: 'rounded',
     className: '',
     disabled: false,
 } as IAvatarProps;

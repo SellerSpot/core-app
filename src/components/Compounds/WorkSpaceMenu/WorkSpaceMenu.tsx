@@ -65,7 +65,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                     <Avatar
                         content={props.storeInformation.avatarContent}
                         theme={'selected'}
-                        varient={'circular'}
+                        variant={'circular'}
                     />
                 </div>
                 <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: expandMenu })}>

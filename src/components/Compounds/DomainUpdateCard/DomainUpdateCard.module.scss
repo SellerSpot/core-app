@@ -39,17 +39,6 @@
             .cardActions {
                 @include flex(center, flex-start, row, 10px);
                 margin-bottom: 10px;
-                .updateCardActionButton {
-                    padding-right: 30px;
-                    padding-left: 30px;
-                }
-
-                .cancelCardActionButton {
-                    padding-right: 20px;
-                    padding-left: 20px;
-                    border-color: $danger-color;
-                    color: $danger-color;
-                }
             }
         }
     }

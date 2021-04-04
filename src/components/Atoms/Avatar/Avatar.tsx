@@ -6,7 +6,7 @@ import { IAvatarProps } from './Avatar.types';
 
 const defaultProps: IAvatarProps = {
     content: 'S',
-    varient: 'rounded',
+    variant: 'rounded',
     theme: 'unselected',
     disabled: false,
     size: 'default',

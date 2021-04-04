@@ -23,7 +23,7 @@ export default function Button(props: IButtonProps): ReactElement {
     return (
         <ThemeProvider theme={buttonTheme}>
             <MUIButton
-                variant={props.varient}
+                variant={props.variant}
                 color={'primary'}
                 size={props.size}
                 type={props.type}

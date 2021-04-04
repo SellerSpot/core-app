@@ -18,7 +18,7 @@ const Template: Story<IButtonProps> = (args: IButtonProps) => (
 export const Component = Template.bind({});
 Component.args = {
     label: 'Notifications',
-    varient: 'contained',
+    variant: 'contained',
     size: 'small',
     state: 'success',
     disabled: false,

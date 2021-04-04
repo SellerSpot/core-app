@@ -10,7 +10,7 @@ const defaultProps: IWorkSpaceTileProps = {
     expanded: false,
     workspaceIcon: <ICONS.OTHER.DEFAULT />,
     selected: false,
-    varient: 'tile',
+    variant: 'tile',
     workspaceTitle: 'Home',
 };
 
@@ -21,7 +21,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
         styles.wrapper,
         { [styles.wrapperExpanded]: requiredProps.expanded },
         { [styles.wrapperSelected]: requiredProps.selected },
-        { [styles.wrapperWorkSpaceIndicator]: requiredProps.varient === 'workspaceIndicator' },
+        { [styles.wrapperWorkSpaceIndicator]: requiredProps.variant === 'workspaceIndicator' },
     );
 
     const titleClassName = cn(
