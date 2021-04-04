@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, ChangeEvent } from 'react';
 
 export interface IInputFieldProps {
     value?: string;
@@ -15,7 +15,7 @@ export interface IInputFieldProps {
      */
     direction?: 'ltr' | 'rtl';
     placeHolder?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
     autoFocus?: boolean;
     disabled?: boolean;
