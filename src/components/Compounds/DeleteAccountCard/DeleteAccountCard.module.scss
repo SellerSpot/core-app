@@ -1,0 +1,15 @@
+.card {
+    .cardContentWrapper {
+        padding-bottom: 0;
+        .content {
+            @include flex(flex-start, center, column, 15px);
+            .topContent {
+                width: 100%;
+                @include flex(center, space-between);
+            }
+            .bottomContent {
+                width: 100%;
+            }
+        }
+    }
+}

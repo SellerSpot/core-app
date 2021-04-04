@@ -1,10 +1,13 @@
 /* we will be getting values from css varianbles , this would help in themeing  */
 $success-color: var(--success-color);
 $successLight-color: var(--successLight-color);
+$successDark-color: var(--successDark-color);
 $danger-color: var(--danger-color);
 $dangerLight-color: var(--dangerLight-color);
+$dangerDark-color: var(--dangerDark-color);
 $warning-color: var(--warning-color);
 $warningLight-color: var(--warningLight-color);
+$warningDark-color: var(--warningDark-color);
 $info-color: var(--info-color);
 $default-color: var(--default-color);
 
@@ -19,5 +22,6 @@ $backgroundTertiary-color: var(--backgroundTertiary-color);
 
 $primary-color: var(--primary-color);
 $primaryLight-color: var(--primaryLight-color);
+$primaryDark-color: var(--primaryDark-color);
 $accent-color: var(--accent-color);
 $dark-color: var(--dark-color);

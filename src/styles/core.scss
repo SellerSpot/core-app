@@ -70,33 +70,11 @@ p {
 
 :root {
     // theming variables will be set dynamically from js (the following variables will assigned to scss variables in _colors.scss (which is used in all coloring thing internally))
-    --success-color: '#43AA8B';
-    --successLight-color: '#EDF7ED';
-    --danger-color: '#F44336';
-    --dangerLight-color: '#FDECEA';
-    --warning-color: '#FF9800';
-    --warningLight-color: '#FFF4E5';
-    --info-color: '#2196F3';
-    --default-color: '#878682';
-
     --foregroundPrimary-color: '#5A5A5A';
-    --foregroundSecondary-color: '#767676';
-    --foregroundTertiary-color: '#C6C5C4';
 
     --backgroundPrimary-color: '#FAFAFA';
-    --backgroundSecondary-color: '#F2F2F2';
-    --backgroundTertiary-color: '#DAD9D6';
 
     --primary-color: '#1A73E8';
-    --primaryLight-color: '#D9E8FC';
     --accent-color: '#EE8572';
     --dark-color: '#212121';
-
-    --h1-fontsize: 32px;
-    --h2-fontsize: 24px;
-    --h3-fontsize: 20px;
-    --h4-fontsize: 18px;
-    --h5-fontsize: 16px;
-    --h6-fontsize: 14px;
-    --p-fontsize: 12px;
 }

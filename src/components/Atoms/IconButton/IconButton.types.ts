@@ -1,10 +1,10 @@
-import { ReactElement, MouseEvent } from 'react';
+import { ReactElement } from 'react';
 
 export interface IIconButtonProps {
     /**
      * Content to display inside the button
      */
-    children?: ReactElement;
+    icon?: ReactElement;
     type?: 'submit' | 'button' | 'reset';
     size?: 'medium' | 'small';
     /**
@@ -12,5 +12,5 @@ export interface IIconButtonProps {
      */
     state?: 'success' | 'danger' | 'warning' | 'default';
     disabled?: boolean;
-    onClick?: (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

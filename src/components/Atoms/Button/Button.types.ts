@@ -1,4 +1,4 @@
-import { ReactElement, MouseEvent } from 'react';
+import { ReactElement } from 'react';
 
 export interface IButtonProps {
     /**
@@ -20,5 +20,5 @@ export interface IButtonProps {
     startIcon?: ReactElement;
     /** Icons after the label */
     endIcon?: ReactElement;
-    onClick?: (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
