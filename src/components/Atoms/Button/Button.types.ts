@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export interface IButtonProps {
     /**
      * Content to display inside the button
@@ -14,5 +16,9 @@ export interface IButtonProps {
      */
     state?: 'success' | 'danger' | 'warning' | 'default';
     disabled?: boolean;
+    /** Icons before the label */
+    startIcon?: ReactElement;
+    /** Icons after the label */
+    endIcon?: ReactElement;
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

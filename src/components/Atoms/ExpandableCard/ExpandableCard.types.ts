@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface IExpandableCardProps {
     expanded: boolean;
@@ -8,7 +8,7 @@ export interface IExpandableCardProps {
         detailsWrapper?: string;
     };
     content: {
-        summaryContent: ReactNode;
-        detailsContent: ReactNode;
+        summaryContent: ReactElement;
+        detailsContent: ReactElement;
     };
 }

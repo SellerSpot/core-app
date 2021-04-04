@@ -7,7 +7,7 @@ import {
 import cn from 'classnames';
 import { dangerMUITheme, muiThemes, successMUITheme } from 'config/themes';
 import { isNull } from 'lodash';
-import React, { forwardRef, ReactElement, ReactNode, RefObject, useEffect, useRef } from 'react';
+import React, { forwardRef, ReactElement, RefObject, useEffect, useRef } from 'react';
 import styles from './InputField.module.scss';
 import { IInputFieldProps } from './InputField.types';
 
@@ -31,7 +31,7 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
 
     // holds the helperComponent for the textField
 
-    let helperComponent: ReactNode = null;
+    let helperComponent: ReactElement = null;
 
     // compiling helperMessageComponent
     if (props.helperMessage?.enabled) {

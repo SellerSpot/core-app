@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 export interface IAlertProps {
     type: 'warning' | 'error' | 'success' | 'info';
     title?: string;
-    children: ReactNode | string;
+    children: ReactElement | string;
 }

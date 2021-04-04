@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface IInputFieldProps {
     value?: string;
@@ -8,8 +8,8 @@ export interface IInputFieldProps {
      * Preset themes
      */
     state?: 'default' | 'success' | 'error';
-    suffix?: ReactNode;
-    prefix?: ReactNode;
+    suffix?: ReactElement;
+    prefix?: ReactElement;
     /**
      * Direction of text input
      */

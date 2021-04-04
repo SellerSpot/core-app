@@ -29,6 +29,8 @@ export default function Button(props: IButtonProps): ReactElement {
                 type={props.type}
                 disabled={props.disabled}
                 onClick={props.onClick}
+                startIcon={props.startIcon}
+                endIcon={props.endIcon}
             >
                 {props.label}
             </MUIButton>

@@ -2,7 +2,7 @@ export interface IIconButtonProps {
     /**
      * Content to display inside the button
      */
-    children?: React.ReactNode;
+    children?: React.ReactElement;
     type?: 'submit' | 'button' | 'reset';
     size?: 'medium' | 'small';
     /**
