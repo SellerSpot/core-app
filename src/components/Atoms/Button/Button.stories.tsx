@@ -17,6 +17,10 @@ const Template: Story<IButtonProps> = (args: IButtonProps) => (
 export const Component = Template.bind({});
 Component.args = {
     label: 'Click Here',
+    varient: 'outlined',
+    size: 'large',
+    state: 'danger',
+    disabled: false,
 } as IButtonProps;
 
 export default {

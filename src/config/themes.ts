@@ -136,7 +136,7 @@ export const successMUITheme = createMuiTheme(muiThemes.default, {
     },
 });
 
-// success field theme
+// danger field theme
 export const dangerMUITheme = createMuiTheme(muiThemes.default, {
     palette: {
         primary: {
@@ -144,6 +144,17 @@ export const dangerMUITheme = createMuiTheme(muiThemes.default, {
         },
         secondary: {
             main: colorThemes.default.dangerLight,
+        },
+    },
+});
+// danger field theme
+export const warningMUITheme = createMuiTheme(muiThemes.default, {
+    palette: {
+        primary: {
+            main: colorThemes.default.warning,
+        },
+        secondary: {
+            main: colorThemes.default.warningLight,
         },
     },
 });
