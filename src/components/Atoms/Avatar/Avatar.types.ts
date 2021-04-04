@@ -8,10 +8,10 @@ export interface IAvatarProps {
      */
     imgSrc?: string;
     /**
-     * Shape varient for the avatar
+     * Shape variant for the avatar
      * @default rounded
      */
-    varient?: 'circular' | 'square' | 'rounded';
+    variant?: 'circular' | 'square' | 'rounded';
     /**
      * Theme for the component
      * @default unselected

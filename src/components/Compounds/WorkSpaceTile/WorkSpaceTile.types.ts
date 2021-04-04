@@ -21,7 +21,7 @@ export interface IWorkSpaceTileProps {
      * Toggles between default tile mode and WorkSpace Indicator Mode (no background)
      * @default 'tile'
      */
-    varient?: 'tile' | 'workspaceIndicator';
+    variant?: 'tile' | 'workspaceIndicator';
     /**
      * Title for the tile
      * @default "Home"

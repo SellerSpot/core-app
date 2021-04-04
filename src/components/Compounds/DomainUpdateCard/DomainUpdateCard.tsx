@@ -1,6 +1,6 @@
-import { Button } from '@material-ui/core';
 import cn from 'classnames';
 import Alert from 'components/Atoms/Alert/Alert';
+import Button from 'components/Atoms/Button/Button';
 import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useState } from 'react';
@@ -45,22 +45,21 @@ export default function DomainUpdateCard(): ReactElement {
                             <h6 className={styles.domainAddress}>sreeenithi.sellerspot.in</h6>
                         </div>
                         <div className={styles.cardRHSComponents}>
-                            <div>
+                            <div
+                                className={cn(
+                                    {
+                                        [animationStyles.fadeOut]: cardExpanded,
+                                    },
+                                    {
+                                        [animationStyles.fadeIn]: !cardExpanded,
+                                    },
+                                )}
+                            >
                                 <Button
-                                    className={cn(
-                                        {
-                                            [animationStyles.fadeOut]: cardExpanded,
-                                        },
-                                        {
-                                            [animationStyles.fadeIn]: !cardExpanded,
-                                        },
-                                    )}
                                     variant={'contained'}
-                                    color={'primary'}
                                     onClick={() => setCardExpanded(true)}
-                                >
-                                    Update
-                                </Button>
+                                    label={'Update'}
+                                />
                             </div>
                         </div>
                     </div>
@@ -95,31 +94,24 @@ export default function DomainUpdateCard(): ReactElement {
                             }}
                         />
                         <div className={styles.cardActions}>
+                            <Button size={'medium'} variant={'contained'} label={'Update'} />
                             <Button
-                                className={styles.updateCardActionButton}
-                                size="medium"
-                                color="primary"
-                                variant={'contained'}
-                            >
-                                Update
-                            </Button>
-                            <Button
-                                className={styles.cancelCardActionButton}
-                                size="medium"
+                                size={'medium'}
                                 variant={'outlined'}
-                                color={'secondary'}
+                                state={'danger'}
+                                label={'Cancel'}
                                 onClick={() => setCardExpanded(false)}
-                            >
-                                Cancel
-                            </Button>
+                            />
                         </div>
                         <Alert type={'warning'} title={'Warning'}>
-                            <b>
-                                This is a destructive operation! All SEO related progress for the
-                                current domain will be lost
-                            </b>{' '}
-                            (You may loose user traction to your e-commerce site if the feature has
-                            been activated)
+                            <div>
+                                <b>
+                                    This is a destructive operation! All SEO related progress for
+                                    the current domain will be lost
+                                </b>
+                                (You may loose user traction to your e-commerce site if the feature
+                                has been activated)
+                            </div>
                         </Alert>
                     </div>
                 ),
