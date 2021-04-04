@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Alert from 'components/Atoms/Alert/Alert';
 import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import InputField from 'components/Atoms/InputField/InputField';
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
 
@@ -11,7 +11,6 @@ export default function DomainUpdateCard(): ReactElement {
     const [cardExpanded, setCardExpanded] = useState(false);
     const [urlFieldState, setUrlFieldState] = useState<'default' | 'success' | 'error'>('default');
     const [urlFieldHelperText, setUrlFieldHelperText] = useState('Please enter your new domain');
-    const domainFieldRef = useRef<HTMLInputElement>(null);
 
     const urlFieldOnChangeHandler = (typedString: string) => {
         if (typedString.length > 0) {
@@ -69,7 +68,6 @@ export default function DomainUpdateCard(): ReactElement {
                 detailsContent: (
                     <div className={styles.cardDetailsComponents}>
                         <InputField
-                            ref={domainFieldRef}
                             label={'New Domain'}
                             placeHolder={'sreenithi'}
                             autoFocus={cardExpanded}
