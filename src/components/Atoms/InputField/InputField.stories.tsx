@@ -6,25 +6,28 @@ import { store } from 'store/store';
 import InputField from './InputField';
 import { IInputFieldProps } from './InputField.types';
 
-const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <div
-                style={{
-                    maxWidth: '300px',
-                }}
-            >
-                <InputField {...args} />
-            </div>
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => {
+    return (
+        <Provider store={store}>
+            <ThemeProvider>
+                <div
+                    style={{
+                        maxWidth: '300px',
+                    }}
+                >
+                    <InputField {...args} />
+                </div>
+            </ThemeProvider>
+        </Provider>
+    );
+};
 
 export const Component = Template.bind({});
 Component.args = {
     label: 'Input Field',
-    autoFocus: true,
+    autoFocus: false,
     disabled: false,
+    type: 'text',
     direction: 'ltr',
     prefix: <h6>₹</h6>,
     suffix: <h6>.sellerspot.in</h6>,

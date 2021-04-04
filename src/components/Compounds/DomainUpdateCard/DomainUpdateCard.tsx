@@ -1,15 +1,8 @@
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    InputAdornment,
-    TextField,
-    ThemeProvider,
-} from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
 import cn from 'classnames';
-import { successMUITheme } from 'config/themes';
+import Alert from 'components/Atoms/Alert/Alert';
+import Button from 'components/Atoms/Button/Button';
+import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
+import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
@@ -38,95 +31,91 @@ export default function DomainUpdateCard(): ReactElement {
     };
 
     return (
-        <Accordion expanded={cardExpanded} className={styles.card}>
-            <AccordionSummary className={styles.cardSummary}>
-                <div className={styles.cardLHSComponents}>
-                    <h5>Your Current Domain</h5>
-                    <h6 className={styles.domainAddress}>sreeenithi.sellerspot.in</h6>
-                </div>
-                <div className={styles.cardRHSComponents}>
-                    <div>
-                        <Button
-                            className={cn(
-                                {
-                                    [animationStyles.fadeOut]: cardExpanded,
-                                },
-                                {
-                                    [animationStyles.fadeIn]: !cardExpanded,
-                                },
-                            )}
-                            variant={'contained'}
-                            color={'primary'}
-                            onClick={() => setCardExpanded(true)}
-                        >
-                            Update
-                        </Button>
+        <ExpandableCard
+            expanded={cardExpanded}
+            className={{
+                card: styles.card,
+                detailsWrapper: styles.cardDetails,
+            }}
+            content={{
+                summaryContent: (
+                    <div className={styles.cardSummary}>
+                        <div className={styles.cardLHSComponents}>
+                            <h5>Your Current Domain</h5>
+                            <h6 className={styles.domainAddress}>sreeenithi.sellerspot.in</h6>
+                        </div>
+                        <div className={styles.cardRHSComponents}>
+                            <div
+                                className={cn(
+                                    {
+                                        [animationStyles.fadeOut]: cardExpanded,
+                                    },
+                                    {
+                                        [animationStyles.fadeIn]: !cardExpanded,
+                                    },
+                                )}
+                            >
+                                <Button
+                                    variant={'contained'}
+                                    onClick={() => setCardExpanded(true)}
+                                    label={'Update'}
+                                />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </AccordionSummary>
-            <AccordionDetails className={styles.cardDetails}>
-                <div className={styles.cardDetailsComponents}>
-                    <ThemeProvider theme={urlFieldState === 'success' ? successMUITheme : null}>
-                        <TextField
+                ),
+                detailsContent: (
+                    <div className={styles.cardDetailsComponents}>
+                        <InputField
                             label={'New Domain'}
-                            variant={'outlined'}
-                            placeholder={'sreenithi'}
-                            color={'primary'}
-                            inputProps={{
-                                style: {
-                                    textAlign: 'right',
-                                    fontWeight: 600,
-                                },
+                            placeHolder={'sreenithi'}
+                            autoFocus={cardExpanded}
+                            direction={'rtl'}
+                            state={
+                                urlFieldState === 'success'
+                                    ? 'success'
+                                    : urlFieldState === 'error'
+                                    ? 'error'
+                                    : 'default'
+                            }
+                            suffix={<h6>.sellerspot.in</h6>}
+                            helperMessage={{
+                                enabled: urlFieldState === 'error' || urlFieldState === 'success',
+                                content: urlFieldHelperText,
+                                type:
+                                    urlFieldState === 'error'
+                                        ? 'error'
+                                        : urlFieldState === 'success'
+                                        ? 'success'
+                                        : 'none',
                             }}
-                            FormHelperTextProps={{
-                                className: cn({
-                                    [styles.helperTextSuccess]: urlFieldState === 'success',
-                                }),
-                            }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position={'end'}>
-                                        <h6>.sellerspot.in</h6>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            error={urlFieldState === 'error'}
-                            helperText={urlFieldHelperText}
                             onChange={(event) => {
                                 urlFieldOnChangeHandler(event.target.value);
                             }}
                         />
-                    </ThemeProvider>
-                    <div className={styles.cardActions}>
-                        <Button
-                            className={styles.updateCardActionButton}
-                            size="medium"
-                            color="primary"
-                            variant={'contained'}
-                        >
-                            Update
-                        </Button>
-                        <Button
-                            className={styles.cancelCardActionButton}
-                            size="medium"
-                            variant={'outlined'}
-                            color={'secondary'}
-                            onClick={() => setCardExpanded(false)}
-                        >
-                            Cancel
-                        </Button>
+                        <div className={styles.cardActions}>
+                            <Button size={'medium'} variant={'contained'} label={'Update'} />
+                            <Button
+                                size={'medium'}
+                                variant={'outlined'}
+                                state={'danger'}
+                                label={'Cancel'}
+                                onClick={() => setCardExpanded(false)}
+                            />
+                        </div>
+                        <Alert type={'warning'} title={'Warning'}>
+                            <div>
+                                <b>
+                                    This is a destructive operation! All SEO related progress for
+                                    the current domain will be lost
+                                </b>
+                                (You may loose user traction to your e-commerce site if the feature
+                                has been activated)
+                            </div>
+                        </Alert>
                     </div>
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                        <b>
-                            This is a destructive operation! All SEO related progress for the
-                            current domain will be lost
-                        </b>{' '}
-                        (You may loose user traction to your e-commerce site if the feature has been
-                        activated)
-                    </Alert>
-                </div>
-            </AccordionDetails>
-        </Accordion>
+                ),
+            }}
+        />
     );
 }

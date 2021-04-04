@@ -56,7 +56,7 @@ export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
                     <Avatar
                         content={requiredProps.icon}
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
-                        varient={'circular'}
+                        variant={'circular'}
                         disabled={requiredProps.disabled}
                     />
                 </div>

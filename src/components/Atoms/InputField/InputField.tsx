@@ -1,71 +1,47 @@
 import {
     CircularProgress,
-    createMuiTheme,
     InputAdornment,
     TextField as MUITextField,
     ThemeProvider,
 } from '@material-ui/core';
 import cn from 'classnames';
-import { colorThemes, muiThemes } from 'config/themes';
-import { merge } from 'lodash';
-import React, { ReactElement, ReactNode } from 'react';
+import { dangerMUITheme, muiThemes, successMUITheme } from 'config/themes';
+import { isNull } from 'lodash';
+import React, { forwardRef, ReactElement, RefObject, useEffect, useRef } from 'react';
 import styles from './InputField.module.scss';
 import { IInputFieldProps } from './InputField.types';
 
-// success field theme
-const successMUITheme = createMuiTheme(muiThemes.default, {
-    palette: {
-        primary: {
-            main: colorThemes.default.success,
-        },
-        secondary: {
-            main: colorThemes.default.successLight,
-        },
-    },
-});
-
-// success field theme
-const dangerMUITheme = createMuiTheme(muiThemes.default, {
-    palette: {
-        primary: {
-            main: colorThemes.default.danger,
-        },
-        secondary: {
-            main: colorThemes.default.dangerLight,
-        },
-    },
-});
-
-const defaultProps: IInputFieldProps = {
-    direction: 'ltr',
-    state: 'default',
-};
-
-export default function InputField(props: IInputFieldProps): ReactElement {
-    const requiredProps = merge({}, defaultProps, props);
+function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): ReactElement {
+    const internalRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        if (props.autoFocus && isNull(ref)) {
+            setTimeout(function () {
+                internalRef.current?.focus();
+            }, 100);
+        }
+    }, [props.autoFocus]);
 
     // choosing theme
-
     const textFieldTheme =
-        requiredProps.state === 'error'
+        props.state === 'error'
             ? dangerMUITheme
-            : requiredProps.state === 'success'
+            : props.state === 'success'
             ? successMUITheme
             : muiThemes.default;
 
     // holds the helperComponent for the textField
 
-    let helperComponent: ReactNode = null;
+    let helperComponent: ReactElement = null;
 
     // compiling helperMessageComponent
-    if (requiredProps.helperMessage?.enabled) {
-        switch (requiredProps.helperMessage?.type) {
+    if (props.helperMessage?.enabled) {
+        switch (props.helperMessage?.type) {
             case 'loading':
                 helperComponent = (
                     <div className={styles.loadingHelperTextWrapper}>
                         <CircularProgress color={'primary'} size={'10px'} />
                         <p className={cn(styles.helperText, styles.loadingHelperContentText)}>
-                            {requiredProps.helperMessage?.content}
+                            {props.helperMessage?.content}
                         </p>
                     </div>
                 );
@@ -76,20 +52,17 @@ export default function InputField(props: IInputFieldProps): ReactElement {
                         className={cn(
                             styles.helperText,
                             {
-                                [styles.helperTextDanger]:
-                                    requiredProps.helperMessage?.type === 'error',
+                                [styles.helperTextDanger]: props.helperMessage?.type === 'error',
                             },
                             {
-                                [styles.helperTextSuccess]:
-                                    requiredProps.helperMessage?.type === 'success',
+                                [styles.helperTextSuccess]: props.helperMessage?.type === 'success',
                             },
                             {
-                                [styles.helperTextWarning]:
-                                    requiredProps.helperMessage?.type === 'warning',
+                                [styles.helperTextWarning]: props.helperMessage?.type === 'warning',
                             },
                         )}
                     >
-                        {requiredProps.helperMessage?.content}
+                        {props.helperMessage?.content}
                     </p>
                 );
                 break;
@@ -97,41 +70,45 @@ export default function InputField(props: IInputFieldProps): ReactElement {
     }
 
     return (
-        <ThemeProvider theme={textFieldTheme}>
-            <MUITextField
-                ref={requiredProps.ref}
-                variant={'outlined'}
-                onChange={requiredProps.onChange}
-                value={requiredProps.value}
-                label={requiredProps.label}
-                type={requiredProps.type}
-                placeholder={requiredProps.placeHolder}
-                autoFocus={requiredProps.autoFocus}
-                required={requiredProps.required}
-                disabled={requiredProps.disabled}
-                FormHelperTextProps={{
-                    className: cn({
-                        [styles.helperTextSuccess]: requiredProps.state === 'success',
-                        [styles.helperTextDanger]: requiredProps.state === 'error',
-                    }),
-                }}
-                inputProps={{
-                    style: {
-                        textAlign: requiredProps.direction === 'rtl' ? 'right' : 'left',
-                        fontWeight: 600,
-                    },
-                }}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position={'start'}>{requiredProps.prefix}</InputAdornment>
-                    ),
-                    endAdornment: (
-                        <InputAdornment position={'end'}>{requiredProps.suffix}</InputAdornment>
-                    ),
-                }}
-                error={requiredProps.state === 'error'}
-                helperText={helperComponent}
-            />
-        </ThemeProvider>
+        <div className={cn({ [styles.inputFieldBottomSpace]: !props.helperMessage?.enabled })}>
+            <ThemeProvider theme={textFieldTheme}>
+                <MUITextField
+                    inputRef={ref ?? internalRef}
+                    variant={'outlined'}
+                    onChange={props.onChange}
+                    value={props.value}
+                    label={props.label}
+                    type={props.type}
+                    placeholder={props.placeHolder}
+                    autoFocus={props.autoFocus}
+                    required={props.required}
+                    disabled={props.disabled}
+                    FormHelperTextProps={{
+                        className: cn({
+                            [styles.helperTextSuccess]: props.state === 'success',
+                            [styles.helperTextDanger]: props.state === 'error',
+                        }),
+                    }}
+                    inputProps={{
+                        style: {
+                            textAlign: props.direction === 'rtl' ? 'right' : 'left',
+                            fontWeight: 500,
+                        },
+                    }}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position={'start'}>{props.prefix}</InputAdornment>
+                        ),
+                        endAdornment: (
+                            <InputAdornment position={'end'}>{props.suffix}</InputAdornment>
+                        ),
+                    }}
+                    error={props.state === 'error'}
+                    helperText={helperComponent}
+                />
+            </ThemeProvider>
+        </div>
     );
 }
+
+export default forwardRef(InputField);

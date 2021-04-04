@@ -1,15 +1,15 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface IInputFieldProps {
     value?: string;
     label?: string;
-    type?: 'button' | 'submit';
+    type?: 'text' | 'password' | 'number';
     /**
      * Preset themes
      */
     state?: 'default' | 'success' | 'error';
-    suffix?: ReactNode;
-    prefix?: ReactNode;
+    suffix?: ReactElement;
+    prefix?: ReactElement;
     /**
      * Direction of text input
      */
@@ -17,12 +17,11 @@ export interface IInputFieldProps {
     placeHolder?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
-    ref?: React.RefObject<HTMLInputElement>;
     autoFocus?: boolean;
     disabled?: boolean;
     helperMessage?: {
         enabled: boolean;
         content?: string;
-        type?: 'loading' | 'success' | 'error' | 'warning';
+        type?: 'loading' | 'success' | 'error' | 'warning' | 'none';
     };
 }

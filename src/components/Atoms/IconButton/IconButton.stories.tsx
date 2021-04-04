@@ -4,29 +4,22 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import Avatar from './Avatar';
-import { IAvatarProps } from './Avatar.types';
+import IconButton from './IconButton';
+import { IIconButtonProps } from './IconButton.types';
 
-const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
+const Template: Story<IIconButtonProps> = (args: IIconButtonProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Avatar {...args} />
+            <IconButton state={'warning'}>
+                <ICONS.WORKSPACES.HOME />
+            </IconButton>
         </ThemeProvider>
     </Provider>
 );
 
 export const Component = Template.bind({});
-Component.args = {
-    content: <ICONS.WORKSPACES.HOME />,
-    imgSrc: '',
-    size: 'small',
-    theme: 'selected',
-    variant: 'rounded',
-    className: '',
-    disabled: false,
-} as IAvatarProps;
 
 export default {
-    title: 'Components/Atoms/Avatar',
+    title: 'Components/Atoms/IconButton',
     component: Component,
 } as Meta;

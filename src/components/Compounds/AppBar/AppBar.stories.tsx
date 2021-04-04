@@ -36,7 +36,4 @@ Component.args = {
 export default {
     title: 'Components/Compounds/AppBar',
     component: Component,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;
