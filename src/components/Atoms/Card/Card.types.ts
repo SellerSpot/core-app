@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
 export interface ICardProps {
-    className: {
-        cardWrapper: string;
-        mediaWrapper: string;
-        contentWrapper: string;
-        actionsWrapper: string;
+    className?: {
+        cardWrapper?: string;
+        mediaWrapper?: string;
+        contentWrapper?: string;
+        actionsWrapper?: string;
     };
-    media: ReactElement;
-    content: ReactElement;
-    actions: ReactElement;
+    media?: ReactElement;
+    content?: ReactElement;
+    actions?: ReactElement;
 }

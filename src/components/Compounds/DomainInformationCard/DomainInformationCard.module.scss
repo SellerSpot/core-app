@@ -1,4 +1,7 @@
 .card {
+    .contentWrapper {
+        padding-bottom: 0;
+    }
     .cardContent {
         @include flex(flex-start, center, column, 5px);
         .link {
