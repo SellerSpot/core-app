@@ -27,6 +27,7 @@ Component.args = {
     label: 'Input Field',
     autoFocus: false,
     disabled: false,
+    type: 'text',
     direction: 'ltr',
     prefix: <h6>₹</h6>,
     suffix: <h6>.sellerspot.in</h6>,

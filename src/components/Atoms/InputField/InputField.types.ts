@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 export interface IInputFieldProps {
     value?: string;
     label?: string;
-    type?: 'button' | 'submit';
+    type?: 'text' | 'password' | 'number';
     /**
      * Preset themes
      */

@@ -123,13 +123,9 @@ export const muiThemes: IMuiThemes = {
 };
 
 // Custom Themes for different use cases
-/**
- * Custom theming for success situations
- */
-export const successMUITheme = createMuiTheme({
-    typography: {
-        fontFamily: 'Inter',
-    },
+
+// success field theme
+export const successMUITheme = createMuiTheme(muiThemes.default, {
     palette: {
         primary: {
             main: colorThemes.default.success,
@@ -137,10 +133,17 @@ export const successMUITheme = createMuiTheme({
         secondary: {
             main: colorThemes.default.successLight,
         },
-        text: {
-            primary: colorThemes.default.foregroundPrimary,
-            secondary: colorThemes.default.foregroundSecondary,
-            hint: colorThemes.default.success,
+    },
+});
+
+// success field theme
+export const dangerMUITheme = createMuiTheme(muiThemes.default, {
+    palette: {
+        primary: {
+            main: colorThemes.default.danger,
+        },
+        secondary: {
+            main: colorThemes.default.dangerLight,
         },
     },
 });

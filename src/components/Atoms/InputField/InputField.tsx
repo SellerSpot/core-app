@@ -1,40 +1,15 @@
 import {
     CircularProgress,
-    createMuiTheme,
     InputAdornment,
     TextField as MUITextField,
     ThemeProvider,
 } from '@material-ui/core';
 import cn from 'classnames';
-import { colorThemes, muiThemes } from 'config/themes';
+import { dangerMUITheme, muiThemes, successMUITheme } from 'config/themes';
 import { isNull } from 'lodash';
 import React, { forwardRef, ReactElement, ReactNode, RefObject, useEffect, useRef } from 'react';
 import styles from './InputField.module.scss';
 import { IInputFieldProps } from './InputField.types';
-
-// success field theme
-const successMUITheme = createMuiTheme(muiThemes.default, {
-    palette: {
-        primary: {
-            main: colorThemes.default.success,
-        },
-        secondary: {
-            main: colorThemes.default.successLight,
-        },
-    },
-});
-
-// success field theme
-const dangerMUITheme = createMuiTheme(muiThemes.default, {
-    palette: {
-        primary: {
-            main: colorThemes.default.danger,
-        },
-        secondary: {
-            main: colorThemes.default.dangerLight,
-        },
-    },
-});
 
 function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): ReactElement {
     const internalRef = useRef<HTMLInputElement>(null);
