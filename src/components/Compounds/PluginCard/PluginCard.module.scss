@@ -1,14 +1,23 @@
 .card {
     width: 300px;
 
-    .thumbnail {
-        width: 300px;
+    .media {
+        position: relative;
+        .thumbnail {
+            width: 300px;
+        }
+        .floatingChip {
+            position: absolute;
+            right: 5px;
+            bottom: 10px;
+        }
     }
     .contentWrapper {
         padding-bottom: 0;
         .content {
             height: 55px;
             @include flex(flex-start, flex-start, $direction: column, $gap: 5px);
+
             .pluginTitle {
                 @include flex(center, flex-start, $gap: 10px);
             }

@@ -1,11 +1,13 @@
 import { POSPluginIllustration } from 'assets/images/images';
 import Button from 'components/Atoms/Button/Button';
 import Card from 'components/Atoms/Card/Card';
+import Chip from 'components/Atoms/Chip/Chip';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/icons';
 import styles from './PluginCard.module.scss';
+import { IPluginCardProps } from './PluginCard.types';
 
-export default function PluginCard(): ReactElement {
+export default function PluginCard(props: IPluginCardProps): ReactElement {
     return (
         <Card
             className={{
@@ -13,7 +15,18 @@ export default function PluginCard(): ReactElement {
                 contentWrapper: styles.contentWrapper,
                 actionsWrapper: styles.actionWrapper,
             }}
-            media={<img className={styles.thumbnail} src={POSPluginIllustration} />}
+            media={
+                <div className={styles.media}>
+                    {props.installed ? (
+                        <Chip
+                            className={styles.floatingChip}
+                            leadingIcon={<ICONS.OTHER.SUCCESS_CHECK_CIRCLE />}
+                            label={'Installed'}
+                        />
+                    ) : null}
+                    <img className={styles.thumbnail} src={POSPluginIllustration} />
+                </div>
+            }
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
@@ -30,10 +43,12 @@ export default function PluginCard(): ReactElement {
                     <Button size={'small'} state={'accent'} label={'Explore'} variant={'text'} />
                     <Button
                         state={'default'}
-                        label={'Install'}
+                        label={props.installed ? 'Launch' : 'Install'}
                         variant={'contained'}
                         size={'small'}
-                        startIcon={<ICONS.OTHER.INSTALL />}
+                        startIcon={
+                            props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
+                        }
                     />
                 </div>
             }

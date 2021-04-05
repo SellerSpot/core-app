@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
 export interface IChipProps {
-    label: string;
+    className?: string;
+    label?: string;
     /**
      * Different states such as success or danger or warning
      */

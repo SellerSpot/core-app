@@ -1,4 +1,5 @@
 import { Chip as MUIChip, Theme, ThemeProvider } from '@material-ui/core';
+import cn from 'classnames';
 import { muiThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import styles from './Chip.module.scss';
@@ -27,7 +28,7 @@ export default function Chip(props: IChipProps): ReactElement {
     return (
         <ThemeProvider theme={chipTheme}>
             <MUIChip
-                className={styles.chip}
+                className={cn(styles.chip, props.className)}
                 icon={props.leadingIcon}
                 variant={'default'}
                 size={'small'}
