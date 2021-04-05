@@ -23,12 +23,4 @@ Component.args = {
 export default {
     title: 'Components/Atoms/Alert',
     component: Component,
-    argTypes: {
-        type: {
-            control: {
-                type: 'inline-radio',
-                options: ['success', 'error', 'warning', 'info'],
-            },
-        },
-    },
 } as Meta;

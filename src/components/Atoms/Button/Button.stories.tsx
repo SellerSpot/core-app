@@ -28,24 +28,4 @@ Component.args = {
 export default {
     title: 'Components/Atoms/Button',
     component: Component,
-    argTypes: {
-        state: {
-            control: {
-                type: 'inline-radio',
-                options: ['success', 'danger', 'warning', 'default', 'accent'],
-            },
-        },
-        variant: {
-            control: {
-                type: 'inline-radio',
-                options: ['contained', 'text', 'outlined'],
-            },
-        },
-        size: {
-            control: {
-                type: 'inline-radio',
-                options: ['small', 'medium', 'large'],
-            },
-        },
-    },
 } as Meta;
