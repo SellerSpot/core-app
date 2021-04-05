@@ -6,19 +6,29 @@ import { store } from 'store/store';
 import Alert from './Alert';
 import { IAlertProps } from './Alert.types';
 
-const Template: Story<IAlertProps> = () => (
+const Template: Story<IAlertProps> = (args: IAlertProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Alert type={'success'} title={'Operation Completed!'}>
-                Alert component has been successfully completed.
-            </Alert>
+            <Alert {...args}>Alert component has been successfully completed.</Alert>
         </ThemeProvider>
     </Provider>
 );
 
 export const Component = Template.bind({});
+Component.args = {
+    type: 'success',
+    title: 'Operation Completed',
+} as IAlertProps;
 
 export default {
     title: 'Components/Atoms/Alert',
     component: Component,
+    argTypes: {
+        type: {
+            control: {
+                type: 'inline-radio',
+                options: ['success', 'error', 'warning', 'info'],
+            },
+        },
+    },
 } as Meta;
