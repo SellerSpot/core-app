@@ -3,14 +3,12 @@ import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import { ICONS } from 'utilities/icons';
-import IconButton from './IconButton';
-import { IIconButtonProps } from './IconButton.types';
+import DeleteAccountCard from './DeleteAccountCard';
 
-const Template: Story<IIconButtonProps> = (args: IIconButtonProps) => (
+const Template: Story = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <IconButton state={'warning'} icon={<ICONS.WORKSPACES.HOME />} />
+            <DeleteAccountCard />
         </ThemeProvider>
     </Provider>
 );
@@ -18,6 +16,6 @@ const Template: Story<IIconButtonProps> = (args: IIconButtonProps) => (
 export const Component = Template.bind({});
 
 export default {
-    title: 'Components/Atoms/IconButton',
+    title: 'Components/Compounds/DeleteAccountCard',
     component: Component,
 } as Meta;

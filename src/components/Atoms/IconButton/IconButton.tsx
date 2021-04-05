@@ -1,5 +1,5 @@
 import { IconButton as MUIIconButton, Theme, ThemeProvider } from '@material-ui/core';
-import { dangerMUITheme, muiThemes, successMUITheme, warningMUITheme } from 'config/themes';
+import { muiThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { IIconButtonProps } from './IconButton.types';
 
@@ -9,13 +9,13 @@ export default function IconButton(props: IIconButtonProps): ReactElement {
     // deciding the theme to apply to the button
     switch (props.state) {
         case 'success':
-            buttonTheme = successMUITheme;
+            buttonTheme = muiThemes.success;
             break;
         case 'danger':
-            buttonTheme = dangerMUITheme;
+            buttonTheme = muiThemes.danger;
             break;
         case 'warning':
-            buttonTheme = warningMUITheme;
+            buttonTheme = muiThemes.warning;
             break;
         default:
             buttonTheme = muiThemes.default;
@@ -29,7 +29,7 @@ export default function IconButton(props: IIconButtonProps): ReactElement {
                 disabled={props.disabled}
                 onClick={props.onClick}
             >
-                {props.children}
+                {props.icon}
             </MUIIconButton>
         </ThemeProvider>
     );

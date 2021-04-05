@@ -1,5 +1,5 @@
 import { Button as MUIButton, Theme, ThemeProvider } from '@material-ui/core';
-import { dangerMUITheme, muiThemes, successMUITheme, warningMUITheme } from 'config/themes';
+import { muiThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { IButtonProps } from './Button.types';
 
@@ -9,13 +9,13 @@ export default function Button(props: IButtonProps): ReactElement {
     // deciding the theme to apply to the button
     switch (props.state) {
         case 'success':
-            buttonTheme = successMUITheme;
+            buttonTheme = muiThemes.success;
             break;
         case 'danger':
-            buttonTheme = dangerMUITheme;
+            buttonTheme = muiThemes.danger;
             break;
         case 'warning':
-            buttonTheme = warningMUITheme;
+            buttonTheme = muiThemes.warning;
             break;
         default:
             buttonTheme = muiThemes.default;

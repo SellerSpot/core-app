@@ -1,8 +1,10 @@
+import { ReactElement } from 'react';
+
 export interface IIconButtonProps {
     /**
      * Content to display inside the button
      */
-    children?: React.ReactElement;
+    icon?: ReactElement;
     type?: 'submit' | 'button' | 'reset';
     size?: 'medium' | 'small';
     /**

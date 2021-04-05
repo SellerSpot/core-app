@@ -22,3 +22,12 @@
     width: 100vw;
     height: 100vh;
 }
+
+@mixin anchorLink {
+    color: $primary-color;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
