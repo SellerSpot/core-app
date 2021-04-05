@@ -1,7 +1,8 @@
 import {
+    MdCheckCircle,
+    MdFileDownload,
     MdFullscreen,
     MdHome,
-    MdKeyboardArrowDown,
     MdKeyboardArrowRight,
     MdNotifications,
 } from 'react-icons/md';
@@ -26,10 +27,11 @@ export const ICONS = {
     },
     OTHER: {
         DEFAULT: BsQuestionSquare,
-        MORE_DETAILS: CgDetailsMore,
         EXPAND_MENU: MdKeyboardArrowRight,
         FORWARD_SLASH: CgFormatSlash,
         FULL_SCREEN: MdFullscreen,
+        SUCCESS_CHECK_CIRCLE: MdCheckCircle,
         NOTIFICATION: MdNotifications,
+        INSTALL: MdFileDownload,
     },
 };

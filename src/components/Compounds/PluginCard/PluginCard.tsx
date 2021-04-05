@@ -11,6 +11,7 @@ export default function PluginCard(): ReactElement {
             className={{
                 cardWrapper: styles.card,
                 contentWrapper: styles.contentWrapper,
+                actionsWrapper: styles.actionWrapper,
             }}
             media={<img className={styles.thumbnail} src={POSPluginIllustration} />}
             content={
@@ -19,12 +20,21 @@ export default function PluginCard(): ReactElement {
                         <ICONS.WORKSPACES.POS />
                         <h5>Point of Sale</h5>
                     </div>
-                    <div className={styles.pluginContent}>
-                        <p>An all purpose point of sale system to handle your everyday sales</p>
-                    </div>
-                    <div className={styles.pluginActions}>
-                        <Button state={'accent'} label={'Explore'} variant={'text'} />
-                    </div>
+                    <p className={styles.pluginContent}>
+                        An all purpose point of sale system to handle your everyday sales
+                    </p>
+                </div>
+            }
+            actions={
+                <div className={styles.pluginActions}>
+                    <Button size={'small'} state={'accent'} label={'Explore'} variant={'text'} />
+                    <Button
+                        state={'default'}
+                        label={'Install'}
+                        variant={'contained'}
+                        size={'small'}
+                        startIcon={<ICONS.OTHER.INSTALL />}
+                    />
                 </div>
             }
         />
