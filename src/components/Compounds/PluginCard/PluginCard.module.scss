@@ -6,11 +6,6 @@
         .thumbnail {
             width: 300px;
         }
-        .floatingChip {
-            position: absolute;
-            right: 5px;
-            bottom: 10px;
-        }
     }
     .contentWrapper {
         padding-bottom: 0;
@@ -36,6 +31,10 @@
         .pluginActions {
             width: 100%;
             @include flex(center, space-between);
+        }
+        .pluginActionsRHSSection {
+            width: 44%;
+            @include flex(center, flex-end, $gap: 10px);
         }
     }
 }

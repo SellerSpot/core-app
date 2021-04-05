@@ -1,13 +1,16 @@
 import { POSPluginIllustration } from 'assets/images/images';
 import Button from 'components/Atoms/Button/Button';
 import Card from 'components/Atoms/Card/Card';
-import Chip from 'components/Atoms/Chip/Chip';
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
 import styles from './PluginCard.module.scss';
 import { IPluginCardProps } from './PluginCard.types';
 
 export default function PluginCard(props: IPluginCardProps): ReactElement {
+    const themeState = useSelector(themeSelector);
+
     return (
         <Card
             className={{
@@ -17,13 +20,6 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
             }}
             media={
                 <div className={styles.media}>
-                    {props.installed ? (
-                        <Chip
-                            className={styles.floatingChip}
-                            leadingIcon={<ICONS.OTHER.SUCCESS_CHECK_CIRCLE />}
-                            label={'Installed'}
-                        />
-                    ) : null}
                     <img className={styles.thumbnail} src={POSPluginIllustration} />
                 </div>
             }
@@ -41,15 +37,23 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
             actions={
                 <div className={styles.pluginActions}>
                     <Button size={'small'} state={'accent'} label={'Explore'} variant={'text'} />
-                    <Button
-                        state={'default'}
-                        label={props.installed ? 'Launch' : 'Install'}
-                        variant={'contained'}
-                        size={'small'}
-                        startIcon={
-                            props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
-                        }
-                    />
+                    <div className={styles.pluginActionsRHSSection}>
+                        {props.installed ? (
+                            <ICONS.OTHER.SUCCESS_CHECK_CIRCLE
+                                size={'20px'}
+                                color={themeState.colors.success}
+                            />
+                        ) : null}
+                        <Button
+                            state={props.installed ? 'success' : 'default'}
+                            label={props.installed ? 'Launch' : 'Install'}
+                            variant={'contained'}
+                            size={'small'}
+                            startIcon={
+                                props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
+                            }
+                        />
+                    </div>
                 </div>
             }
         />
