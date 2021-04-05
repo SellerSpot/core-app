@@ -3,24 +3,26 @@ import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import Alert from './Alert';
-import { IAlertProps } from './Alert.types';
+import { ICONS } from 'utilities/icons';
+import Chip from './Chip';
+import { IChipProps } from './Chip.types';
 
-const Template: Story<IAlertProps> = (args: IAlertProps) => (
+const Template: Story<IChipProps> = (args: IChipProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Alert {...args}>Alert component has been successfully completed.</Alert>
+            <Chip {...args} />
         </ThemeProvider>
     </Provider>
 );
 
 export const Component = Template.bind({});
 Component.args = {
-    type: 'success',
-    title: 'Operation Completed',
-} as IAlertProps;
+    label: 'Installed',
+    state: 'success',
+    leadingIcon: <ICONS.OTHER.SUCCESS_CHECK_CIRCLE />,
+} as IChipProps;
 
 export default {
-    title: 'Components/Atoms/Alert',
+    title: 'Components/Atoms/Chip',
     component: Component,
 } as Meta;

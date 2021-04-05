@@ -5,7 +5,7 @@ import {
     ThemeProvider,
 } from '@material-ui/core';
 import cn from 'classnames';
-import { dangerMUITheme, muiThemes, successMUITheme } from 'config/themes';
+import { muiThemes } from 'config/themes';
 import { isNull } from 'lodash';
 import React, { forwardRef, ReactElement, RefObject, useEffect, useRef } from 'react';
 import styles from './InputField.module.scss';
@@ -24,9 +24,9 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
     // choosing theme
     const textFieldTheme =
         props.state === 'error'
-            ? dangerMUITheme
+            ? muiThemes.danger
             : props.state === 'success'
-            ? successMUITheme
+            ? muiThemes.success
             : muiThemes.default;
 
     // holds the helperComponent for the textField

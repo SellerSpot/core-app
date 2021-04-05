@@ -1,8 +1,10 @@
 import {
+    MdCheckCircle,
+    MdFileDownload,
     MdFullscreen,
     MdHome,
-    MdKeyboardArrowDown,
     MdKeyboardArrowRight,
+    MdLaunch,
     MdNotifications,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
@@ -10,7 +12,7 @@ import { BiBox } from 'react-icons/bi';
 import { RiBillLine } from 'react-icons/ri';
 import { VscChecklist, VscSettings } from 'react-icons/vsc';
 import { BsQuestionSquare } from 'react-icons/bs';
-import { CgDetailsMore, CgFormatSlash } from 'react-icons/cg';
+import { CgFormatSlash } from 'react-icons/cg';
 
 export const ICONS = {
     WORKSPACES: {
@@ -26,10 +28,12 @@ export const ICONS = {
     },
     OTHER: {
         DEFAULT: BsQuestionSquare,
-        MORE_DETAILS: CgDetailsMore,
         EXPAND_MENU: MdKeyboardArrowRight,
         FORWARD_SLASH: CgFormatSlash,
         FULL_SCREEN: MdFullscreen,
+        SUCCESS_CHECK_CIRCLE: MdCheckCircle,
+        LAUNCH: MdLaunch,
         NOTIFICATION: MdNotifications,
+        INSTALL: MdFileDownload,
     },
 };

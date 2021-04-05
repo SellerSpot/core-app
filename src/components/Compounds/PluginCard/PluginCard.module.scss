@@ -1,0 +1,40 @@
+.card {
+    width: 300px;
+
+    .media {
+        position: relative;
+        .thumbnail {
+            width: 300px;
+        }
+    }
+    .contentWrapper {
+        padding-bottom: 0;
+        .content {
+            height: 55px;
+            @include flex(flex-start, flex-start, $direction: column, $gap: 5px);
+
+            .pluginTitle {
+                @include flex(center, flex-start, $gap: 10px);
+            }
+            .pluginContent {
+                display: -webkit-box;
+                overflow: hidden;
+                max-width: 100%;
+                -webkit-box-orient: vertical;
+                color: $foregroundPrimary-color;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .actionWrapper {
+        .pluginActions {
+            width: 100%;
+            @include flex(center, space-between);
+        }
+        .pluginActionsRHSSection {
+            width: 44%;
+            @include flex(center, flex-end, $gap: 10px);
+        }
+    }
+}

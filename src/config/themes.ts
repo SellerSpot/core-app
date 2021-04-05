@@ -63,6 +63,7 @@ interface IMuiThemes {
     success: Theme;
     danger: Theme;
     warning: Theme;
+    accent: Theme;
 }
 
 /**
@@ -167,6 +168,19 @@ const warningMUITheme = <Theme>{
     },
 };
 
+const accentMUITheme = <Theme>{
+    palette: {
+        primary: {
+            light: colorThemes.default.accentLight,
+            main: colorThemes.default.accent,
+            dark: colorThemes.default.accentDark,
+        },
+        text: {
+            primary: colorThemes.default.foregroundLight,
+        },
+    },
+};
+
 /**
  * Contains the different Material UI themes used in the app
  */
@@ -175,4 +189,5 @@ export const muiThemes: IMuiThemes = {
     success: createMuiTheme(defaultMUITheme, successMUITheme),
     danger: createMuiTheme(defaultMUITheme, dangerMUITheme),
     warning: createMuiTheme(defaultMUITheme, warningMUITheme),
+    accent: createMuiTheme(defaultMUITheme, accentMUITheme),
 };

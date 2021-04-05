@@ -17,6 +17,9 @@ export default function Button(props: IButtonProps): ReactElement {
         case 'warning':
             buttonTheme = muiThemes.warning;
             break;
+        case 'accent':
+            buttonTheme = muiThemes.accent;
+            break;
         default:
             buttonTheme = muiThemes.default;
     }

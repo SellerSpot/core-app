@@ -3,24 +3,21 @@ import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import Alert from './Alert';
-import { IAlertProps } from './Alert.types';
+import PluginCard from './PluginCard';
+import { IPluginCardProps } from './PluginCard.types';
 
-const Template: Story<IAlertProps> = (args: IAlertProps) => (
+const Template: Story = (args: IPluginCardProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Alert {...args}>Alert component has been successfully completed.</Alert>
+            <PluginCard {...args} />
         </ThemeProvider>
     </Provider>
 );
-
 export const Component = Template.bind({});
 Component.args = {
-    type: 'success',
-    title: 'Operation Completed',
-} as IAlertProps;
-
+    installed: false,
+} as IPluginCardProps;
 export default {
-    title: 'Components/Atoms/Alert',
+    title: 'Components/Compounds/PluginCard',
     component: Component,
 } as Meta;
