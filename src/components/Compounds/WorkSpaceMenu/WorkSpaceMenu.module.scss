@@ -8,13 +8,13 @@
     transition-property: width;
     transition-timing-function: ease;
 
-    @include flex(center, space-between, column, 18px, 0);
+    @include flex(center, space-between, column, 22px, 0);
 
     .expandIcon {
         position: absolute;
         z-index: 1;
-        top: 45px;
-        right: -15px;
+        top: 50px;
+        right: -12px;
         transform: rotate(0deg);
         transition: transform 0.2s ease;
     }

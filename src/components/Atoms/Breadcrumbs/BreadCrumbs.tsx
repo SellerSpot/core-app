@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ICONS } from 'utilities/icons';
 import styles from './BreadCrumbs.module.scss';
-import { IBreadCrumbsProps } from './Breadcrumbs.types';
+import { IBreadCrumbsProps } from './BreadCrumbs.types';
 
 export const BreadCrumbs = (props: IBreadCrumbsProps): ReactElement => {
     const history = useHistory();

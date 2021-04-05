@@ -1,0 +1,26 @@
+.card {
+    width: 300px;
+    height: 280px;
+    .thumbnail {
+        width: 300px;
+    }
+    .contentWrapper {
+        padding-bottom: 0;
+        .content {
+            @include flex(flex-start, flex-start, $direction: column, $gap: 5px);
+            .pluginTitle {
+                @include flex(center, flex-start, $gap: 10px);
+            }
+            .pluginContent {
+                overflow: hidden;
+                max-width: 100%;
+                color: $foregroundSecondary-color;
+                -webkit-line-clamp: 3;
+                text-overflow: ellipsis;
+            }
+            .pluginActions {
+                @include flex(center, space-between);
+            }
+        }
+    }
+}
