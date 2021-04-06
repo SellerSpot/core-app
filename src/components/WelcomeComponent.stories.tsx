@@ -16,8 +16,8 @@ const Template: Story<IWelcomeComponentProps> = (args: IWelcomeComponentProps) =
             <hr />
             <br />
             <h6>
-                Feel free to navigate around to browse and play with all the components used in our
-                core app
+                Feel free to navigate around to browse and play with all the atom and compound
+                components used in our core app
             </h6>
         </ThemeProvider>
     </Provider>
