@@ -14,7 +14,9 @@ export default {
 const Template: Story<IAlertProps> = (args: IAlertProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <AlertComponent {...args}>Alert component has been successfully completed.</AlertComponent>
+            <AlertComponent {...args}>
+                Alert component has been successfully completed.
+            </AlertComponent>
         </ThemeProvider>
     </Provider>
 );
