@@ -18,7 +18,4 @@ export const CartTable = Template.bind({});
 export default {
     title: 'Components/Compounds',
     component: CartTableComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

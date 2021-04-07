@@ -39,7 +39,4 @@ export const ToolTip = Template.bind({});
 export default {
     title: 'Components/Atoms',
     component: ToolTipComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

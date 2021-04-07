@@ -18,7 +18,4 @@ export const DomainInformationCard = Template.bind({});
 export default {
     title: 'Components/Compounds',
     component: DomainInformationCardComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

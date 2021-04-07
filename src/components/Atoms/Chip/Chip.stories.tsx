@@ -25,7 +25,4 @@ Chip.args = {
 export default {
     title: 'Components/Atoms',
     component: ChipComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

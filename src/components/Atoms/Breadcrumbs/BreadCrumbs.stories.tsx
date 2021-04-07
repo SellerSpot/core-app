@@ -37,7 +37,4 @@ BreadCrumbs.args = {};
 export default {
     title: 'Components/Atoms',
     component: BreadCrumbsComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

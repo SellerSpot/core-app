@@ -28,7 +28,4 @@ AppPreloaderComponent.args = {};
 export default {
     title: 'Components/Atoms',
     component: AppPreloaderComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

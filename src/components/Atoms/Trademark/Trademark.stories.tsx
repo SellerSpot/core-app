@@ -19,7 +19,4 @@ TradeMark.args = {};
 export default {
     title: 'Components/Atoms',
     component: TrademarkComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

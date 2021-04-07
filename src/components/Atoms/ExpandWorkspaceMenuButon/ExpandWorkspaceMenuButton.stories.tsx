@@ -21,7 +21,4 @@ ExpandWorkspaceMenuButton.args = {} as IExpandWorkspaceMenuButtonProps;
 export default {
     title: 'Components/Atoms',
     component: ExpandWorkspaceMenuButtonComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

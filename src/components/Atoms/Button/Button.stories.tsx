@@ -28,7 +28,4 @@ Button.args = {
 export default {
     title: 'Components/Atoms',
     component: ButtonComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

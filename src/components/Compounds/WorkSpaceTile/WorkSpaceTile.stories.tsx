@@ -27,7 +27,4 @@ WorkSpaceTile.args = {
 export default {
     title: 'Components/Compounds',
     component: WorkSpaceTileComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

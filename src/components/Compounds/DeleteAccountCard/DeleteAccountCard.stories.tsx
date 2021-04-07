@@ -18,7 +18,4 @@ export const DeleteAccountCard = Template.bind({});
 export default {
     title: 'Components/Compounds',
     component: DeleteAccountCardComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

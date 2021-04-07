@@ -9,9 +9,6 @@ import { IAlertProps } from './Alert.types';
 export default {
     title: 'Components/Atoms',
     component: AlertComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;
 
 const Template: Story<IAlertProps> = (args: IAlertProps) => (

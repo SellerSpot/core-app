@@ -45,7 +45,4 @@ InputField.args = {
 export default {
     title: 'Components/Atoms',
     component: InputFieldComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

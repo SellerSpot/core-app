@@ -79,7 +79,4 @@ SubMenu.args = {
 export default {
     title: 'Components/Compounds',
     component: SubMenuComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

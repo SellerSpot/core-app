@@ -58,7 +58,4 @@ WorkSpaceMenu.args = {
 export default {
     title: 'Components/Compounds',
     component: WorkSpaceMenuComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

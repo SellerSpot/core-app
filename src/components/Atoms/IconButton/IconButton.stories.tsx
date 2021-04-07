@@ -20,7 +20,4 @@ export const IconButton = Template.bind({});
 export default {
     title: 'Components/Atoms',
     component: IconButtonComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

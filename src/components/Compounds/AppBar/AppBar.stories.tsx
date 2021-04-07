@@ -36,7 +36,4 @@ AppBar.args = {
 export default {
     title: 'Components/Compounds',
     component: AppBarComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

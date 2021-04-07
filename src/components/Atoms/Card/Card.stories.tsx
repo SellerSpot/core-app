@@ -22,7 +22,4 @@ Card.args = {
 export default {
     title: 'Components/Atoms',
     component: CardComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

@@ -29,7 +29,4 @@ Avatar.args = {
 export default {
     title: 'Components/Atoms',
     component: AvatarComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

@@ -18,7 +18,4 @@ export const DomainUpdateCard = Template.bind({});
 export default {
     title: 'Components/Compounds',
     component: DomainUpdateCardComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;

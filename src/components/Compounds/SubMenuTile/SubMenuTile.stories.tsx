@@ -27,7 +27,4 @@ SubMenuTile.args = {
 export default {
     title: 'Components/Compounds',
     component: SubMenuTileComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

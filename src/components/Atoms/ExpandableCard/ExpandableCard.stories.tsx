@@ -26,7 +26,4 @@ ExpandableCard.args = {
 export default {
     title: 'Components/Atoms',
     component: ExpandableCardComponent,
-    parameters: {
-        layout: 'padded',
-    },
 } as Meta;
