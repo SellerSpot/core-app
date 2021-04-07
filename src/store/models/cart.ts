@@ -14,6 +14,7 @@ const initialState: ICartState = {
             productName: 'Tomatoes',
             unitPrice: 54,
             subTotal: 0,
+            discountPercent: 0,
         },
         {
             quantity: 1,
@@ -21,6 +22,7 @@ const initialState: ICartState = {
             productName: 'Potatoes',
             unitPrice: 32,
             subTotal: 0,
+            discountPercent: 0,
         },
         {
             quantity: 1,
@@ -28,6 +30,7 @@ const initialState: ICartState = {
             productName: 'Lays Crunchy Madness',
             unitPrice: 10,
             subTotal: 0,
+            discountPercent: 0,
         },
     ],
 };
@@ -58,6 +61,28 @@ const cartSlice = createSlice({
         ) => {
             state.productsData[payload.productIndex].unitPrice = payload.unitPrice;
         },
+        modifyCartProductDiscountPercent: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                discountPercent: ICartProductsData['discountPercent'];
+                productIndex: number;
+            }>,
+        ) => {
+            state.productsData[payload.productIndex].discountPercent = payload.discountPercent;
+        },
+        modifyCartProductName: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                productName: ICartProductsData['productName'];
+                productIndex: number;
+            }>,
+        ) => {
+            state.productsData[payload.productIndex].productName = payload.productName;
+        },
     },
 });
 
@@ -65,7 +90,12 @@ const cartSlice = createSlice({
 export default cartSlice.reducer;
 
 // exporting actions
-export const { modifyCartProductQuantity, modifyCartProductUnitPrice } = cartSlice.actions;
+export const {
+    modifyCartProductQuantity,
+    modifyCartProductUnitPrice,
+    modifyCartProductDiscountPercent,
+    modifyCartProductName,
+} = cartSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const cartSelector: Selector<RootState, ICartState> = (state: RootState) => state.cart;

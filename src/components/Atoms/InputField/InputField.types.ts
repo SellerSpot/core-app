@@ -10,6 +10,8 @@ export interface IInputFieldProps {
     state?: 'default' | 'success' | 'error';
     suffix?: ReactElement;
     prefix?: ReactElement;
+    size?: 'medium' | 'small';
+    fullWidth?: boolean;
     /**
      * Direction of text input
      */

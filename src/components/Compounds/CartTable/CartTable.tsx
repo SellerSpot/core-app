@@ -17,9 +17,12 @@ import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     cartSelector,
+    modifyCartProductDiscountPercent,
+    modifyCartProductName,
     modifyCartProductQuantity,
     modifyCartProductUnitPrice,
 } from 'store/models/cart';
+import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import styles from './CartTable.module.scss';
 import { ICartProductsData } from './CartTable.types';
@@ -40,17 +43,20 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
         <>
             <TableRow className={classes.root} key={index + 'row'}>
                 <TableCell>
-                    <IconButton
+                    <div
                         className={cn(styles.expandRowIcon, {
                             [styles.rotatedExpandRowIcon]: open,
                         })}
-                        icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
-                        size={'small'}
-                        state={'grey'}
-                        onClick={() => setOpen(!open)}
-                    />
+                    >
+                        <IconButton
+                            icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
+                            size={'small'}
+                            state={'grey'}
+                            onClick={() => setOpen(!open)}
+                        />
+                    </div>
                 </TableCell>
-                <TableCell padding={'none'} align="right">
+                <TableCell padding={'none'} align="left">
                     {index + 1}
                 </TableCell>
                 {/* <TableCell align="right">{`${row.quantity} ${row.stockUnit}`}</TableCell> */}
@@ -61,34 +67,64 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open}>
                         <div className={styles.collapsedDiv}>
-                            <InputField
-                                label={'Quantity'}
-                                type={'number'}
-                                value={row.quantity.toString()}
-                                onChange={(event) =>
-                                    dispatch(
-                                        modifyCartProductQuantity({
-                                            productIndex: index,
-                                            quantity: +event.target.value,
-                                        }),
-                                    )
-                                }
-                            />
-                            <InputField
-                                type={'number'}
-                                prefix={<h6>₹</h6>}
-                                value={row.unitPrice + ''}
-                                label={`Unit Price (per ${row.stockUnit})`}
-                                onChange={(event) =>
-                                    dispatch(
-                                        modifyCartProductUnitPrice({
-                                            productIndex: index,
-                                            unitPrice: +event.target.value,
-                                        }),
-                                    )
-                                }
-                            />
-                            <InputField label={'Discount'} />
+                            <div className={styles.productName}>
+                                <InputField
+                                    label={'Product Name'}
+                                    fullWidth={true}
+                                    value={row.productName}
+                                    onChange={(event) =>
+                                        dispatch(
+                                            modifyCartProductName({
+                                                productIndex: index,
+                                                productName: event.target.value,
+                                            }),
+                                        )
+                                    }
+                                />
+                            </div>
+                            <div className={styles.propertyRow}>
+                                <InputField
+                                    label={'Quantity'}
+                                    type={'number'}
+                                    value={row.quantity.toString()}
+                                    onChange={(event) =>
+                                        dispatch(
+                                            modifyCartProductQuantity({
+                                                productIndex: index,
+                                                quantity: +event.target.value,
+                                            }),
+                                        )
+                                    }
+                                />
+                                <InputField
+                                    type={'number'}
+                                    prefix={<h6>₹</h6>}
+                                    value={row.unitPrice + ''}
+                                    label={`Unit Price (per ${row.stockUnit})`}
+                                    onChange={(event) =>
+                                        dispatch(
+                                            modifyCartProductUnitPrice({
+                                                productIndex: index,
+                                                unitPrice: +event.target.value,
+                                            }),
+                                        )
+                                    }
+                                />
+                                <InputField
+                                    label={'Discount (%)'}
+                                    suffix={<h6>%</h6>}
+                                    type={'number'}
+                                    value={row.discountPercent + ''}
+                                    onChange={(event) =>
+                                        dispatch(
+                                            modifyCartProductDiscountPercent({
+                                                productIndex: index,
+                                                discountPercent: +event.target.value,
+                                            }),
+                                        )
+                                    }
+                                />
+                            </div>
                         </div>
                     </Collapse>
                 </TableCell>
@@ -105,7 +141,7 @@ export default function CartTable(): ReactElement {
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell padding={'none'} align="right">
+                        <TableCell padding={'none'} align="left">
                             S.No
                         </TableCell>
                         {/* <TableCell align="right">Qty</TableCell> */}
@@ -119,6 +155,8 @@ export default function CartTable(): ReactElement {
                 </TableHead>
                 <TableBody>
                     {cartState.productsData.map((row, index) => {
+                        console.log(numberFormatINRCurrency(row.unitPrice));
+
                         return Row(row, index);
                     })}
                 </TableBody>

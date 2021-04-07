@@ -40,7 +40,6 @@ const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
             : getMUITheme('primary', themeState.colorTheme);
 
     // holds the helperComponent for the textField
-
     let helperComponent: ReactElement = null;
 
     // compiling helperMessageComponent
@@ -89,6 +88,8 @@ const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                     value={props.value}
                     label={props.label}
                     type={props.type}
+                    size={props.size}
+                    fullWidth={props.fullWidth}
                     placeholder={props.placeHolder}
                     autoFocus={props.autoFocus}
                     required={props.required}

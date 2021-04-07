@@ -9,7 +9,13 @@ const Template: Story = () => {
     return (
         <Provider store={store}>
             <ThemeProvider>
-                <CartTableComponent />
+                <div
+                    style={{
+                        width: '500px',
+                    }}
+                >
+                    <CartTableComponent />
+                </div>
             </ThemeProvider>
         </Provider>
     );

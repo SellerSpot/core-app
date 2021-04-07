@@ -4,4 +4,5 @@ export interface ICartProductsData {
     productName: string;
     unitPrice: number;
     subTotal: number;
+    discountPercent: number;
 }
