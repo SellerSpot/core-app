@@ -1,10 +1,5 @@
-export interface ICartTableData {
+export interface ICartProductsData {
     qty: number;
     productName: string;
     subTotal: number;
 }
-
-export type TCartTableZustandStore = {
-    cartProducts: ICartTableData[];
-    changeProductQty: (newQty: number, index: number) => void;
-};

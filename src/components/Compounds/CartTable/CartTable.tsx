@@ -14,34 +14,16 @@ import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
 import { toNumber } from 'lodash';
 import React, { ReactElement, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartSelector, modifyCartProductQuantity } from 'store/models/cart';
 import { ICONS } from 'utilities/icons';
-import create from 'zustand';
 import styles from './CartTable.module.scss';
-import { ICartTableData, TCartTableZustandStore } from './CartTable.types';
+import { ICartProductsData } from './CartTable.types';
 
-const cartStore = create<TCartTableZustandStore>((set, get) => ({
-    cartProducts: [
-        {
-            qty: 12,
-            productName: 'Tomatoes 1KG',
-            subTotal: 200,
-        },
-        {
-            qty: 2,
-            productName: 'Potatoes 1KG',
-            subTotal: 452,
-        },
-    ],
-    changeProductQty: (newQty, index) => {
-        const cartProductsCopy = get().cartProducts;
-        cartProductsCopy[index].qty = newQty;
-        set({ cartProducts: cartProductsCopy });
-    },
-}));
-
-const Row = (row: ICartTableData, index: number): ReactElement => {
+const Row = (row: ICartProductsData, index: number): ReactElement => {
     const [open, setOpen] = useState(false);
-    const changeProductQty = cartStore((state) => state.changeProductQty);
+    const dispatch = useDispatch();
+
     const useRowStyles = makeStyles({
         root: {
             '& > *': {
@@ -80,7 +62,12 @@ const Row = (row: ICartTableData, index: number): ReactElement => {
                                 type={'number'}
                                 value={row.qty.toString()}
                                 onChange={(event) =>
-                                    changeProductQty(toNumber(event.target.value), index)
+                                    dispatch(
+                                        modifyCartProductQuantity({
+                                            productIndex: index,
+                                            productQuantity: toNumber(event.target.value),
+                                        }),
+                                    )
                                 }
                             />
                             <InputField label={'Price'} />
@@ -94,8 +81,7 @@ const Row = (row: ICartTableData, index: number): ReactElement => {
 };
 
 export default function CartTable(): ReactElement {
-    const tableData = cartStore((state) => state.cartProducts);
-
+    const cartState = useSelector(cartSelector);
     return (
         <TableContainer component={Paper}>
             <Table stickyHeader aria-label="collapsible table">
@@ -115,7 +101,7 @@ export default function CartTable(): ReactElement {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {tableData.map((row, index) => {
+                    {cartState.productsData.map((row, index) => {
                         return Row(row, index);
                     })}
                 </TableBody>

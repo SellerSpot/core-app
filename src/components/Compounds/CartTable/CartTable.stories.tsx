@@ -5,13 +5,15 @@ import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import CartTableComponent from './CartTable';
 
-const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <CartTableComponent />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = () => {
+    return (
+        <Provider store={store}>
+            <ThemeProvider>
+                <CartTableComponent />
+            </ThemeProvider>
+        </Provider>
+    );
+};
 
 export const CartTable = Template.bind({});
 
