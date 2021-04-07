@@ -1,27 +1,33 @@
 import { Button as MUIButton, Theme, ThemeProvider } from '@material-ui/core';
-import { muiThemes } from 'config/themes';
+import { getMUITheme } from 'components/ThemeProvider/MUIThemes';
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
 import { IButtonProps } from './Button.types';
 
 export default function Button(props: IButtonProps): ReactElement {
+    // getting current theme state
+    const themeState = useSelector(themeSelector);
     // holds the theme for the the component
-    let buttonTheme: Theme = null;
+    let buttonTheme: Theme;
     // deciding the theme to apply to the button
     switch (props.state) {
         case 'success':
-            buttonTheme = muiThemes.success;
+            buttonTheme = getMUITheme('success', themeState.colorTheme);
             break;
         case 'danger':
-            buttonTheme = muiThemes.danger;
+            buttonTheme = getMUITheme('danger', themeState.colorTheme);
             break;
         case 'warning':
-            buttonTheme = muiThemes.warning;
+            buttonTheme = getMUITheme('warning', themeState.colorTheme);
             break;
         case 'accent':
-            buttonTheme = muiThemes.accent;
+            buttonTheme = getMUITheme('accent', themeState.colorTheme);
             break;
-        default:
-            buttonTheme = muiThemes.default;
+        case 'primary':
+            buttonTheme = getMUITheme('primary', themeState.colorTheme);
+        case 'grey':
+            buttonTheme = getMUITheme('grey', themeState.colorTheme);
     }
     return (
         <ThemeProvider theme={buttonTheme}>

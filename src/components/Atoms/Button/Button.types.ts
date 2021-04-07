@@ -14,7 +14,7 @@ export interface IButtonProps {
     /**
      * Different states such as success or danger or warning
      */
-    state?: 'success' | 'danger' | 'warning' | 'default' | 'accent';
+    state?: 'success' | 'danger' | 'warning' | 'primary' | 'accent' | 'grey';
     disabled?: boolean;
     /** Icons before the label */
     startIcon?: ReactElement;

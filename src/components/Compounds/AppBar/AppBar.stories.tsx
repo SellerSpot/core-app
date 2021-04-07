@@ -1,22 +1,22 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import AppBar from './AppBar';
+import AppBarComponent from './AppBar';
 import { IAppBarProps } from './AppBar.types';
 
 const Template: Story<IAppBarProps> = (args: IAppBarProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <AppBar {...args} />
+            <AppBarComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const AppBar = Template.bind({});
+AppBar.args = {
     breadcrumbs: [
         {
             route: '/management',
@@ -34,6 +34,9 @@ Component.args = {
 } as IAppBarProps;
 
 export default {
-    title: 'Components/Compounds/AppBar',
-    component: Component,
+    title: 'Components/Compounds',
+    component: AppBarComponent,
+    parameters: {
+        layout: 'padded',
+    },
 } as Meta;

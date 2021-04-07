@@ -1,6 +1,7 @@
 import { POSPluginIllustration } from 'assets/images/images';
 import Button from 'components/Atoms/Button/Button';
 import Card from 'components/Atoms/Card/Card';
+import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
@@ -41,11 +42,11 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                         {props.installed ? (
                             <ICONS.OTHER.SUCCESS_CHECK_CIRCLE
                                 size={'20px'}
-                                color={themeState.colors.success}
+                                color={colorThemes[themeState.colorTheme].success}
                             />
                         ) : null}
                         <Button
-                            state={props.installed ? 'success' : 'default'}
+                            state={props.installed ? 'success' : 'primary'}
                             label={props.installed ? 'Launch' : 'Install'}
                             variant={'contained'}
                             size={'small'}

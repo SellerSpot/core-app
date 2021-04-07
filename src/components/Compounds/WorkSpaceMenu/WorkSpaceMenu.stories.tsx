@@ -1,11 +1,11 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import WorkSpaceMenu from './WorkSpaceMenu';
+import WorkSpaceMenuComponent from './WorkSpaceMenu';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
 const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
@@ -20,15 +20,15 @@ const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
                         height: '100vh',
                     }}
                 >
-                    <WorkSpaceMenu {...args} />
+                    <WorkSpaceMenuComponent {...args} />
                 </div>
             </ThemeProvider>
         </Provider>
     </BrowserRouter>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const WorkSpaceMenu = Template.bind({});
+WorkSpaceMenu.args = {
     tiles: [
         {
             icon: <ICONS.WORKSPACES.HOME />,
@@ -56,8 +56,8 @@ Component.args = {
 } as IWorkSpaceMenuProps;
 
 export default {
-    title: 'Components/Compounds/WorkSpaceMenu',
-    component: Component,
+    title: 'Components/Compounds',
+    component: WorkSpaceMenuComponent,
     parameters: {
         layout: 'fullscreen',
     },

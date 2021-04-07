@@ -3,21 +3,21 @@ import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import DomainInformationCardComponent from './DomainInformationCard';
+import CartTableComponent from './CartTable';
 
 const Template: Story = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <DomainInformationCardComponent />
+            <CartTableComponent />
         </ThemeProvider>
     </Provider>
 );
 
-export const DomainInformationCard = Template.bind({});
+export const CartTable = Template.bind({});
 
 export default {
     title: 'Components/Compounds',
-    component: DomainInformationCardComponent,
+    component: CartTableComponent,
     parameters: {
         layout: 'padded',
     },

@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 export interface IIconButtonProps {
+    className?: string;
     /**
      * Content to display inside the button
      */
@@ -10,7 +11,7 @@ export interface IIconButtonProps {
     /**
      * Different states such as success or danger or warning
      */
-    state?: 'success' | 'danger' | 'warning' | 'default' | 'accent';
+    state?: 'success' | 'danger' | 'warning' | 'primary' | 'accent' | 'grey';
     disabled?: boolean;
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

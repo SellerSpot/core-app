@@ -3,6 +3,10 @@ import { IComponentEvents } from 'typings/common.types';
 
 export interface IWorkSpaceTileProps {
     /**
+     * Text to show in tooltips
+     */
+    toolTipText?: string;
+    /**
      * The workspace icon to show
      * @default HomeWorkspaceIcon
      */

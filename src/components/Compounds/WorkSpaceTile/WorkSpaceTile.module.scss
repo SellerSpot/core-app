@@ -56,7 +56,7 @@
 }
 
 .titleCollapsed {
-    @include animation(fade-out, 0.1s);
+    visibility: hidden;
 }
 
 .titleExpanded {

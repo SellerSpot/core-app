@@ -1,31 +1,32 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import WorkSpaceTile from './WorkSpaceTile';
+import WorkSpaceTileComponent from './WorkSpaceTile';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
 const Template: Story<IWorkSpaceTileProps> = (args: IWorkSpaceTileProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <WorkSpaceTile {...args} />
+            <WorkSpaceTileComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
-    expanded: true,
+export const WorkSpaceTile = Template.bind({});
+WorkSpaceTile.args = {
+    expanded: false,
     selected: true,
     workspaceTitle: 'Home',
     workspaceIcon: <ICONS.WORKSPACES.HOME />,
+    toolTipText: 'sdfsadf',
 } as IWorkSpaceTileProps;
 
 export default {
-    title: 'Components/Compounds/WorkSpaceTile',
-    component: Component,
+    title: 'Components/Compounds',
+    component: WorkSpaceTileComponent,
     parameters: {
         layout: 'fullscreen',
     },

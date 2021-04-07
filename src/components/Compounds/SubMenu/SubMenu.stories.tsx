@@ -1,11 +1,11 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import SubMenu from './SubMenu';
+import SubMenuComponent from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
@@ -20,15 +20,15 @@ const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
                         height: '100vh',
                     }}
                 >
-                    <SubMenu {...args} />
+                    <SubMenuComponent {...args} />
                 </div>
             </ThemeProvider>
         </Provider>
     </BrowserRouter>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const SubMenu = Template.bind({});
+SubMenu.args = {
     tiles: [
         {
             title: 'Sales',
@@ -77,8 +77,8 @@ Component.args = {
 } as ISubMenuProps;
 
 export default {
-    title: 'Components/Compounds/SubMenu',
-    component: Component,
+    title: 'Components/Compounds',
+    component: SubMenuComponent,
     parameters: {
         layout: 'fullscreen',
     },

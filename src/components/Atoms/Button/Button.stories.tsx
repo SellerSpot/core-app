@@ -1,22 +1,22 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import Button from './Button';
+import ButtonComponent from './Button';
 import { IButtonProps } from './Button.types';
 
 const Template: Story<IButtonProps> = (args: IButtonProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Button {...args} />
+            <ButtonComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const Button = Template.bind({});
+Button.args = {
     label: 'Notifications',
     variant: 'contained',
     size: 'small',
@@ -26,6 +26,9 @@ Component.args = {
 } as IButtonProps;
 
 export default {
-    title: 'Components/Atoms/Button',
-    component: Component,
+    title: 'Components/Atoms',
+    component: ButtonComponent,
+    parameters: {
+        layout: 'padded',
+    },
 } as Meta;

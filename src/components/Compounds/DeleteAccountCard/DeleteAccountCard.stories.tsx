@@ -1,21 +1,24 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import DeleteAccountCard from './DeleteAccountCard';
+import DeleteAccountCardComponent from './DeleteAccountCard';
 
 const Template: Story = () => (
     <Provider store={store}>
         <ThemeProvider>
-            <DeleteAccountCard />
+            <DeleteAccountCardComponent />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
+export const DeleteAccountCard = Template.bind({});
 
 export default {
-    title: 'Components/Compounds/DeleteAccountCard',
-    component: Component,
+    title: 'Components/Compounds',
+    component: DeleteAccountCardComponent,
+    parameters: {
+        layout: 'padded',
+    },
 } as Meta;

@@ -5,7 +5,7 @@ import { ICONS } from 'utilities/icons';
 import styles from './BreadCrumbs.module.scss';
 import { IBreadCrumbsProps } from './BreadCrumbs.types';
 
-export const BreadCrumbs = (props: IBreadCrumbsProps): ReactElement => {
+export default function BreadCrumbs(props: IBreadCrumbsProps): ReactElement {
     const history = useHistory();
     return (
         <div className={styles.breadCrumbsWrapper}>
@@ -49,4 +49,4 @@ export const BreadCrumbs = (props: IBreadCrumbsProps): ReactElement => {
             </div>
         </div>
     );
-};
+}

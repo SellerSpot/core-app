@@ -1,21 +1,21 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import SubMenuTile from './SubMenuTile';
+import SubMenuTileComponent from './SubMenuTile';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const Template: Story<ISubMenuTileProps> = (args: ISubMenuTileProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <SubMenuTile {...args} />
+            <SubMenuTileComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const SubMenuTile = Template.bind({});
+SubMenuTile.args = {
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -25,8 +25,8 @@ Component.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components/Compounds/SubMenuTile',
-    component: Component,
+    title: 'Components/Compounds',
+    component: SubMenuTileComponent,
     parameters: {
         layout: 'fullscreen',
     },

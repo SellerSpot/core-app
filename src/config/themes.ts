@@ -16,7 +16,9 @@ export interface IColors {
     warningLight: string;
     warningDark: string;
     info: string;
-    default: string;
+    greyLight: string;
+    grey: string;
+    greyDark: string;
     //foreground colors
     foregroundLight: string;
     foregroundPrimary: string;
@@ -49,28 +51,19 @@ export interface IFontSizes {
 
 // Contains the different color themes used in the app
 interface IColorThemes {
-    default: IColors;
+    light: IColors;
 }
 
 // Interface for the different font size themes used in the app
 interface IFontSizeThemes {
-    default: IFontSizes;
-}
-
-// Interface for the different Material UI themes used in the app
-interface IMuiThemes {
-    default: Theme;
-    success: Theme;
-    danger: Theme;
-    warning: Theme;
-    accent: Theme;
+    small: IFontSizes;
 }
 
 /**
  * Contains the different color themes used in the app
  */
 export const colorThemes: IColorThemes = {
-    default: {
+    light: {
         success: '#43AA8B',
         successLight: '#EDF7ED',
         successDark: '#2F7560',
@@ -81,7 +74,9 @@ export const colorThemes: IColorThemes = {
         warningLight: '#FFF4E5',
         warningDark: '#B86E00',
         info: '#2196F3',
-        default: '#878682',
+        greyLight: '#AFAEAC',
+        grey: '#878682',
+        greyDark: '#5E5D5A',
         foregroundLight: '#FAFAFA',
         foregroundPrimary: '#5A5A5A',
         foregroundSecondary: '#767676',
@@ -99,11 +94,13 @@ export const colorThemes: IColorThemes = {
     },
 };
 
+export type TColorThemes = keyof typeof colorThemes;
+
 /**
  * Contains the different font size themes used in the app
  */
 export const fontSizeThemes: IFontSizeThemes = {
-    default: {
+    small: {
         h1: '32px',
         h2: '24px',
         h3: '20px',
@@ -114,80 +111,4 @@ export const fontSizeThemes: IFontSizeThemes = {
     },
 };
 
-// MUI themes used in app
-const defaultMUITheme = <Theme>{
-    typography: {
-        fontFamily: 'Inter',
-    },
-
-    palette: {
-        primary: {
-            light: colorThemes.default.primaryLight,
-            main: colorThemes.default.primary,
-            dark: colorThemes.default.primaryDark,
-        },
-        secondary: {
-            light: colorThemes.default.accentLight,
-            main: colorThemes.default.accent,
-            dark: colorThemes.default.accentDark,
-        },
-        text: {
-            primary: colorThemes.default.foregroundPrimary,
-            secondary: colorThemes.default.foregroundSecondary,
-        },
-    },
-};
-
-const successMUITheme = <Theme>{
-    palette: {
-        primary: {
-            light: colorThemes.default.successLight,
-            main: colorThemes.default.success,
-            dark: colorThemes.default.successDark,
-        },
-    },
-};
-
-const dangerMUITheme = <Theme>{
-    palette: {
-        primary: {
-            light: colorThemes.default.dangerLight,
-            main: colorThemes.default.danger,
-            dark: colorThemes.default.dangerDark,
-        },
-    },
-};
-
-const warningMUITheme = <Theme>{
-    palette: {
-        primary: {
-            light: colorThemes.default.warningLight,
-            main: colorThemes.default.warning,
-            dark: colorThemes.default.warningDark,
-        },
-    },
-};
-
-const accentMUITheme = <Theme>{
-    palette: {
-        primary: {
-            light: colorThemes.default.accentLight,
-            main: colorThemes.default.accent,
-            dark: colorThemes.default.accentDark,
-        },
-        text: {
-            primary: colorThemes.default.foregroundLight,
-        },
-    },
-};
-
-/**
- * Contains the different Material UI themes used in the app
- */
-export const muiThemes: IMuiThemes = {
-    default: createMuiTheme(defaultMUITheme),
-    success: createMuiTheme(defaultMUITheme, successMUITheme),
-    danger: createMuiTheme(defaultMUITheme, dangerMUITheme),
-    warning: createMuiTheme(defaultMUITheme, warningMUITheme),
-    accent: createMuiTheme(defaultMUITheme, accentMUITheme),
-};
+export type TFontSizeThemes = keyof typeof fontSizeThemes;

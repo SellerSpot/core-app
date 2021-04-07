@@ -1,0 +1,12 @@
+.expandRowIcon {
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
+}
+.rotatedExpandRowIcon {
+    transform: rotate(180deg);
+}
+
+.collapsedDiv {
+    @include flex(center, flex-start, $gap: 10px);
+    margin-top: 5px;
+}

@@ -1,29 +1,35 @@
 import { Chip as MUIChip, Theme, ThemeProvider } from '@material-ui/core';
 import cn from 'classnames';
-import { muiThemes } from 'config/themes';
+import { getMUITheme } from 'components/ThemeProvider/MUIThemes';
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
 import styles from './Chip.module.scss';
 import { IChipProps } from './Chip.types';
 
 export default function Chip(props: IChipProps): ReactElement {
+    // getting current theme state
+    const themeState = useSelector(themeSelector);
     // holds the theme for the the component
-    let chipTheme: Theme = null;
+    let chipTheme: Theme;
     // deciding the theme to apply to the chip
     switch (props.state) {
         case 'success':
-            chipTheme = muiThemes.success;
+            chipTheme = getMUITheme('success', themeState.colorTheme);
             break;
         case 'danger':
-            chipTheme = muiThemes.danger;
+            chipTheme = getMUITheme('danger', themeState.colorTheme);
             break;
         case 'warning':
-            chipTheme = muiThemes.warning;
+            chipTheme = getMUITheme('warning', themeState.colorTheme);
             break;
         case 'accent':
-            chipTheme = muiThemes.accent;
+            chipTheme = getMUITheme('accent', themeState.colorTheme);
             break;
-        default:
-            chipTheme = muiThemes.default;
+        case 'primary':
+            chipTheme = getMUITheme('primary', themeState.colorTheme);
+        case 'grey':
+            chipTheme = getMUITheme('grey', themeState.colorTheme);
     }
     return (
         <ThemeProvider theme={chipTheme}>

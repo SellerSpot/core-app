@@ -1,22 +1,22 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import Avatar from './Avatar';
+import AvatarComponent from './Avatar';
 import { IAvatarProps } from './Avatar.types';
 
 const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Avatar {...args} />
+            <AvatarComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const Avatar = Template.bind({});
+Avatar.args = {
     content: <ICONS.WORKSPACES.HOME />,
     imgSrc: '',
     size: 'small',
@@ -27,6 +27,9 @@ Component.args = {
 } as IAvatarProps;
 
 export default {
-    title: 'Components/Atoms/Avatar',
-    component: Component,
+    title: 'Components/Atoms',
+    component: AvatarComponent,
+    parameters: {
+        layout: 'padded',
+    },
 } as Meta;
