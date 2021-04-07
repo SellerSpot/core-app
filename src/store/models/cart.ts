@@ -9,14 +9,25 @@ interface ICartState {
 const initialState: ICartState = {
     productsData: [
         {
-            qty: 12,
-            productName: 'Tomatoes 1KG',
-            subTotal: 200,
+            quantity: 2,
+            stockUnit: 'kg',
+            productName: 'Tomatoes',
+            unitPrice: 54,
+            subTotal: 0,
         },
         {
-            qty: 2,
-            productName: 'Potatoes 1KG',
-            subTotal: 452,
+            quantity: 1,
+            stockUnit: 'kg',
+            productName: 'Potatoes',
+            unitPrice: 32,
+            subTotal: 0,
+        },
+        {
+            quantity: 1,
+            stockUnit: 'pc',
+            productName: 'Lays Crunchy Madness',
+            unitPrice: 10,
+            subTotal: 0,
         },
     ],
 };
@@ -30,22 +41,22 @@ const cartSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
-                productQuantity: ICartProductsData['qty'];
+                quantity: ICartProductsData['quantity'];
                 productIndex: number;
             }>,
         ) => {
-            state.productsData[payload.productIndex].qty = payload.productQuantity;
+            state.productsData[payload.productIndex].quantity = payload.quantity;
         },
-        modifyCartProductPrice: (
+        modifyCartProductUnitPrice: (
             state,
             {
                 payload,
             }: PayloadAction<{
-                productQuantity: ICartProductsData['qty'];
+                unitPrice: ICartProductsData['unitPrice'];
                 productIndex: number;
             }>,
         ) => {
-            state.productsData[payload.productIndex].qty = payload.productQuantity;
+            state.productsData[payload.productIndex].unitPrice = payload.unitPrice;
         },
     },
 });
@@ -54,7 +65,7 @@ const cartSlice = createSlice({
 export default cartSlice.reducer;
 
 // exporting actions
-export const { modifyCartProductQuantity, modifyCartProductPrice } = cartSlice.actions;
+export const { modifyCartProductQuantity, modifyCartProductUnitPrice } = cartSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const cartSelector: Selector<RootState, ICartState> = (state: RootState) => state.cart;

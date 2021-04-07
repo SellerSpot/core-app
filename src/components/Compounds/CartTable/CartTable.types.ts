@@ -1,5 +1,7 @@
 export interface ICartProductsData {
-    qty: number;
+    quantity: number;
+    stockUnit: string;
     productName: string;
+    unitPrice: number;
     subTotal: number;
 }
