@@ -12,7 +12,7 @@ import {
 import cn from 'classnames';
 import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     cartSelector,
@@ -21,6 +21,7 @@ import {
     modifyCartProductQuantity,
     modifyCartProductUnitPrice,
 } from 'store/models/cart';
+import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import styles from './CartTable.module.scss';
@@ -28,7 +29,14 @@ import { ICartProductsData } from './CartTable.types';
 
 const Row = (row: ICartProductsData, index: number): ReactElement => {
     const [open, setOpen] = useState(false);
+    const [rowObjectCopy, setRowObjectCopy] = useState<ICartProductsData>(null);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('Row copy created');
+
+        setRowObjectCopy(row);
+    }, []);
 
     const useRowStyles = makeStyles({
         root: {
@@ -60,10 +68,10 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 </TableCell>
                 {/* <TableCell align="right">{`${row.quantity} ${row.stockUnit}`}</TableCell> */}
                 <TableCell align="left">{`${row.quantity} ${row.stockUnit} ${row.productName}`}</TableCell>
-                <TableCell align="right">{row.subTotal}</TableCell>
+                <TableCell align="right">{numberFormatINRCurrency(row.subTotal)}</TableCell>
             </TableRow>
             <TableRow key={index + 'collapsed'}>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+                <TableCell style={{ paddingBottom: '10px', paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open}>
                         <div className={styles.collapsedDiv}>
                             <div className={styles.productName}>
@@ -71,20 +79,31 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     label={'Product Name'}
                                     fullWidth={true}
                                     value={row.productName}
-                                    onChange={(event) =>
+                                    onChange={(event) => {
                                         dispatch(
                                             modifyCartProductName({
                                                 productIndex: index,
                                                 productName: event.target.value,
                                             }),
-                                        )
-                                    }
+                                        );
+                                    }}
+                                    onBlur={(event) => {
+                                        if (event.target.value.length === 0) {
+                                            dispatch(
+                                                modifyCartProductName({
+                                                    productIndex: index,
+                                                    productName: rowObjectCopy.productName,
+                                                }),
+                                            );
+                                        }
+                                    }}
                                 />
                             </div>
                             <div className={styles.propertyRow}>
                                 <InputField
                                     label={'Quantity'}
                                     type={'number'}
+                                    suffix={<h6>{row.stockUnit}</h6>}
                                     value={row.quantity.toString()}
                                     onChange={(event) =>
                                         dispatch(
@@ -100,6 +119,13 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     prefix={<h6>₹</h6>}
                                     value={row.unitPrice + ''}
                                     label={`Unit Price (per ${row.stockUnit})`}
+                                    helperMessage={{
+                                        enabled: true,
+                                        content: `${numberFormatINRCurrency(
+                                            rowObjectCopy?.unitPrice,
+                                        )}`,
+                                        type: 'success',
+                                    }}
                                     onChange={(event) =>
                                         dispatch(
                                             modifyCartProductUnitPrice({
@@ -122,6 +148,16 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                             }),
                                         )
                                     }
+                                    helperMessage={{
+                                        enabled: row.discountPercent > 0,
+                                        content: `${numberFormatINRCurrency(
+                                            computeDiscountUsingPercentage({
+                                                unitPrice: row.unitPrice,
+                                                discountPercent: row.discountPercent,
+                                            }),
+                                        )}`,
+                                        type: 'warning',
+                                    }}
                                 />
                             </div>
                         </div>
@@ -154,8 +190,6 @@ export default function CartTable(): ReactElement {
                 </TableHead>
                 <TableBody>
                     {cartState.productsData.map((row, index) => {
-                        console.log(numberFormatINRCurrency(row.unitPrice));
-
                         return Row(row, index);
                     })}
                 </TableBody>
