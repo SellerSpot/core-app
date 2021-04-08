@@ -12,7 +12,6 @@ import {
 import cn from 'classnames';
 import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
-import { toNumber } from 'lodash';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {

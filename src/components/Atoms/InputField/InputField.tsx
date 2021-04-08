@@ -85,6 +85,7 @@ const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                     inputRef={ref ?? internalRef}
                     variant={'outlined'}
                     onChange={props.onChange}
+                    onBlur={props.onBlur}
                     value={props.value}
                     label={props.label}
                     type={props.type}

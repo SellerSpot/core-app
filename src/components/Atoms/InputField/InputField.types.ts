@@ -18,6 +18,7 @@ export interface IInputFieldProps {
     direction?: 'ltr' | 'rtl';
     placeHolder?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     required?: boolean;
     autoFocus?: boolean;
     disabled?: boolean;
