@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import cn from 'classnames';
 import { getMUITheme } from 'components/ThemeProvider/MUIThemes';
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import React, { forwardRef, ReactElement, RefObject, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
@@ -86,6 +86,14 @@ const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                     variant={'outlined'}
                     onChange={props.onChange}
                     onBlur={props.onBlur}
+                    onFocus={(event) => {
+                        if (props.selectTextOnClick) {
+                            event.target.select();
+                        }
+                        if (!isUndefined(props.onFocus)) {
+                            props.onFocus(event);
+                        }
+                    }}
                     value={props.value}
                     label={props.label}
                     type={props.type}
@@ -106,6 +114,9 @@ const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                             textAlign: props.direction === 'rtl' ? 'right' : 'left',
                             fontWeight: 500,
                         },
+                        max: props.maxNumericValue,
+                        min: props.minNumericValue,
+                        maxLength: props.maxLength,
                     }}
                     InputProps={{
                         startAdornment: (

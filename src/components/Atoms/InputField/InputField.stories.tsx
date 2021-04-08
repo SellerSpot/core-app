@@ -35,6 +35,7 @@ InputField.args = {
     state: 'default',
     required: false,
     value: 'Prefilled Value',
+    selectTextOnClick: true,
     helperMessage: {
         enabled: true,
         content: 'Loading data...',

@@ -6,6 +6,16 @@
     transform: rotate(180deg);
 }
 
+.productNameText {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    -webkit-box-orient: vertical !important;
+    font-weight: 500;
+    -webkit-line-clamp: 2 !important;
+    text-overflow: ellipsis !important;
+}
+
 .collapsedDiv {
     margin-top: 5px;
     @include flex(center, flex-start, column, 0px);

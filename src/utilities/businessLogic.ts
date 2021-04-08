@@ -43,6 +43,11 @@ export const computeTaxValue = (values: {
     return taxValue;
 };
 
+/**
+ * used to compute the subtotal for a product
+ * @param values
+ * @returns number (sub-total for the product)
+ */
 export const computeProductSubTotal = (values: {
     unitPrice: number;
     quantity: number;

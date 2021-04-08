@@ -13,6 +13,7 @@ import cn from 'classnames';
 import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
+import ToolTip from 'components/Atoms/ToolTip/ToolTip';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -45,12 +46,19 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
             '& > *': {
                 borderBottom: 'unset',
             },
+            cursor: 'pointer',
         },
     });
     const classes = useRowStyles();
     return (
         <>
-            <TableRow className={classes.root} key={index + 'row'}>
+            <TableRow
+                className={classes.root}
+                key={index + 'row'}
+                onClick={() => {
+                    setOpenProductDetail(!openProductDetail);
+                }}
+            >
                 <TableCell>
                     <div
                         className={cn(styles.expandRowIcon, {
@@ -68,8 +76,12 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 <TableCell padding={'none'} align="left">
                     {index + 1}
                 </TableCell>
-                {/* <TableCell align="right">{`${row.quantity} ${row.stockUnit}`}</TableCell> */}
-                <TableCell align="left">{`${row.quantity} ${row.stockUnit} ${row.productName}`}</TableCell>
+                <ToolTip title={row.productName.length > 50 ? row.productName : ''}>
+                    <TableCell align="left">
+                        {<h6 className={styles.productNameText}>{`${row.productName}`}</h6>}
+                    </TableCell>
+                </ToolTip>
+                <TableCell align="right">{`${row.quantity} ${row.stockUnit}`}</TableCell>
                 <TableCell align="right">
                     {numberFormatINRCurrency(
                         computeProductSubTotal({
@@ -82,14 +94,16 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 </TableCell>
             </TableRow>
             <TableRow key={index + 'collapsed'}>
-                <TableCell style={{ paddingBottom: '10px', paddingTop: 0 }} colSpan={5}>
+                <TableCell style={{ paddingBottom: '2px', paddingTop: 0 }} colSpan={5}>
                     <Collapse in={openProductDetail}>
                         <div className={styles.collapsedDiv}>
                             <div className={styles.productName}>
                                 <InputField
                                     label={'Product Name'}
                                     fullWidth={true}
+                                    state={'primary'}
                                     value={row.productName}
+                                    selectTextOnClick={true}
                                     onChange={(event) => {
                                         dispatch(
                                             modifyCartProductName({
@@ -114,6 +128,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                 <InputField
                                     label={'Quantity'}
                                     type={'number'}
+                                    selectTextOnClick={true}
                                     suffix={<h6>{row.stockUnit}</h6>}
                                     value={row.quantity.toString()}
                                     onChange={(event) =>
@@ -129,9 +144,10 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     type={'number'}
                                     prefix={<h6>₹</h6>}
                                     value={row.unitPrice + ''}
+                                    selectTextOnClick={true}
                                     label={`Unit Price (per ${row.stockUnit})`}
                                     helperMessage={{
-                                        enabled: true,
+                                        enabled: rowObjectCopy?.unitPrice !== row.unitPrice,
                                         content: `Original: ${numberFormatINRCurrency(
                                             rowObjectCopy?.unitPrice,
                                         )}`,
@@ -150,15 +166,24 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     label={'Discount (%)'}
                                     suffix={<h6>%</h6>}
                                     type={'number'}
+                                    selectTextOnClick={true}
+                                    // maxNumericValue={100}
+                                    // minNumericValue={0}
                                     value={row.discountPercent + ''}
-                                    onChange={(event) =>
+                                    onChange={(event) => {
+                                        let valueToDispatch = +event.target.value;
+                                        if (valueToDispatch > 100) {
+                                            valueToDispatch = 100;
+                                        } else if (valueToDispatch < 0) {
+                                            valueToDispatch = 0;
+                                        }
                                         dispatch(
                                             modifyCartProductDiscountPercent({
                                                 productIndex: index,
-                                                discountPercent: +event.target.value,
+                                                discountPercent: valueToDispatch,
                                             }),
-                                        )
-                                    }
+                                        );
+                                    }}
                                     helperMessage={{
                                         enabled: row.discountPercent > 0,
                                         content: `- ${numberFormatINRCurrency(
@@ -190,9 +215,11 @@ export default function CartTable(): ReactElement {
                         <TableCell padding={'none'} align="left">
                             S.No
                         </TableCell>
-                        {/* <TableCell align="right">Qty</TableCell> */}
                         <TableCell width="60%" align="left">
                             Product
+                        </TableCell>
+                        <TableCell width="20%" align="right">
+                            Qty
                         </TableCell>
                         <TableCell width="30%" align="right">
                             Sub-Total&nbsp;(₹)
