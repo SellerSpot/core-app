@@ -1,3 +1,8 @@
+export interface ITaxBracket {
+    bracketName: string;
+    bracketRate: number;
+}
+
 export interface ICartProductsData {
     quantity: number;
     stockUnit: string;
@@ -5,8 +10,5 @@ export interface ICartProductsData {
     unitPrice: number;
     subTotal: number;
     discountPercent: number;
-    taxBrackets: {
-        bracketName: string;
-        bracketRate: number;
-    }[];
+    taxBrackets: ITaxBracket[];
 }

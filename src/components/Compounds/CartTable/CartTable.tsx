@@ -22,7 +22,7 @@ import {
     modifyCartProductQuantity,
     modifyCartProductUnitPrice,
 } from 'store/models/cart';
-import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
+import { computeDiscountUsingPercentage, computeProductSubTotal } from 'utilities/businessLogic';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 import styles from './CartTable.module.scss';
@@ -70,7 +70,16 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 </TableCell>
                 {/* <TableCell align="right">{`${row.quantity} ${row.stockUnit}`}</TableCell> */}
                 <TableCell align="left">{`${row.quantity} ${row.stockUnit} ${row.productName}`}</TableCell>
-                <TableCell align="right">{numberFormatINRCurrency(row.subTotal)}</TableCell>
+                <TableCell align="right">
+                    {numberFormatINRCurrency(
+                        computeProductSubTotal({
+                            discountPercent: row.discountPercent,
+                            quantity: row.quantity,
+                            taxBrackets: row.taxBrackets,
+                            unitPrice: row.unitPrice,
+                        }),
+                    )}
+                </TableCell>
             </TableRow>
             <TableRow key={index + 'collapsed'}>
                 <TableCell style={{ paddingBottom: '10px', paddingTop: 0 }} colSpan={5}>
@@ -123,7 +132,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     label={`Unit Price (per ${row.stockUnit})`}
                                     helperMessage={{
                                         enabled: true,
-                                        content: `${numberFormatINRCurrency(
+                                        content: `Original: ${numberFormatINRCurrency(
                                             rowObjectCopy?.unitPrice,
                                         )}`,
                                         type: 'success',
@@ -152,43 +161,13 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                     }
                                     helperMessage={{
                                         enabled: row.discountPercent > 0,
-                                        content: `${numberFormatINRCurrency(
+                                        content: `- ${numberFormatINRCurrency(
                                             computeDiscountUsingPercentage({
                                                 unitPrice: row.unitPrice,
                                                 discountPercent: row.discountPercent,
                                             }),
                                         )}`,
-                                        type: 'warning',
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.taxBracketCard}>
-                                <ExpandableCard
-                                    expanded={openTaxDetail}
-                                    content={{
-                                        summaryContent: (
-                                            <div className={styles.summaryContent}>
-                                                <h5>Tax Information</h5>
-                                                <div
-                                                    className={cn(
-                                                        styles.expandTaxInformationCardIcon,
-                                                        {
-                                                            [styles.rotatedExpandTaxInformationCardIcon]: openTaxDetail,
-                                                        },
-                                                    )}
-                                                >
-                                                    <IconButton
-                                                        icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
-                                                        size={'small'}
-                                                        state={'grey'}
-                                                        onClick={() =>
-                                                            setOpenTaxDetail(!openTaxDetail)
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        ),
-                                        detailsContent: <h6>Detailed Tax Information</h6>,
+                                        type: 'success',
                                     }}
                                 />
                             </div>

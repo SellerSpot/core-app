@@ -16,22 +16,4 @@
         width: 100%;
         @include flex(center, space-between, $gap: 10px);
     }
-    .taxBracketCard {
-        width: 100%;
-
-        .summaryContent {
-            width: 100%;
-            @include flex(center, space-between);
-            cursor: default !important;
-
-            .expandTaxInformationCardIcon {
-                transform: rotate(0deg);
-                transition: transform 0.5s ease;
-            }
-
-            .rotatedExpandTaxInformationCardIcon {
-                transform: rotate(180deg);
-            }
-        }
-    }
 }
