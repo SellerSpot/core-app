@@ -51,7 +51,7 @@ export const getMUITheme = (theme: keyof IMuiThemes, colorTheme: TColorThemes): 
                     },
                 },
                 text: {
-                    primary: colors.foregroundPrimary,
+                    primary: colors.foregroundLight,
                     secondary: colors.foregroundSecondary,
                 },
             };
