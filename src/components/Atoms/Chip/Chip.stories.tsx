@@ -1,28 +1,28 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import Chip from './Chip';
+import ChipComponent from './Chip';
 import { IChipProps } from './Chip.types';
 
 const Template: Story<IChipProps> = (args: IChipProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <Chip {...args} />
+            <ChipComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const Chip = Template.bind({});
+Chip.args = {
     label: 'Installed',
     state: 'success',
     leadingIcon: <ICONS.OTHER.SUCCESS_CHECK_CIRCLE />,
 } as IChipProps;
 
 export default {
-    title: 'Components/Atoms/Chip',
-    component: Component,
+    title: 'Components/Atoms',
+    component: ChipComponent,
 } as Meta;

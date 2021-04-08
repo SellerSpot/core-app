@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import InputField from './InputField';
+import InputFieldComponent from './InputField';
 import { IInputFieldProps } from './InputField.types';
 
 const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => {
@@ -15,26 +15,27 @@ const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => {
                         maxWidth: '300px',
                     }}
                 >
-                    <InputField {...args} />
+                    <InputFieldComponent {...args} />
                 </div>
             </ThemeProvider>
         </Provider>
     );
 };
 
-export const Component = Template.bind({});
-Component.args = {
+export const InputField = Template.bind({});
+InputField.args = {
     label: 'Input Field',
     autoFocus: false,
     disabled: false,
     type: 'text',
     direction: 'ltr',
-    prefix: <h6>₹</h6>,
+    // prefix: <h6>₹</h6>,
     suffix: <h6>.sellerspot.in</h6>,
     placeHolder: 'Placeholder text',
     state: 'default',
     required: false,
     value: 'Prefilled Value',
+    selectTextOnClick: true,
     helperMessage: {
         enabled: true,
         content: 'Loading data...',
@@ -43,6 +44,6 @@ Component.args = {
 } as IInputFieldProps;
 
 export default {
-    title: 'Components/Atoms/InputField',
-    component: Component,
+    title: 'Components/Atoms',
+    component: InputFieldComponent,
 } as Meta;

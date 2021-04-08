@@ -1,0 +1,29 @@
+.expandRowIcon {
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
+}
+.rotatedExpandRowIcon {
+    transform: rotate(180deg);
+}
+
+.productNameText {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    -webkit-box-orient: vertical !important;
+    font-weight: 500;
+    -webkit-line-clamp: 2 !important;
+    text-overflow: ellipsis !important;
+}
+
+.collapsedDiv {
+    margin-top: 5px;
+    @include flex(center, flex-start, column, 0px);
+    .productName {
+        width: 100%;
+    }
+    .propertyRow {
+        width: 100%;
+        @include flex(center, space-between, $gap: 10px);
+    }
+}

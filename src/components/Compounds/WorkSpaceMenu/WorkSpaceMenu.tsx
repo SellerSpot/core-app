@@ -61,7 +61,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                 className={styles.storeInformationWrapper}
                 title={props.storeInformation?.storeName}
             >
-                <div className={styles.avatarHolder}>
+                <div>
                     <Avatar
                         content={props.storeInformation.avatarContent}
                         theme={'selected'}
@@ -82,6 +82,7 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
                             selected={isTileSelected}
                             expanded={expandMenu}
                             workspaceTitle={tile.title}
+                            toolTipText={tile.title}
                             workspaceIcon={tile.icon}
                             events={{
                                 onClick: () => {

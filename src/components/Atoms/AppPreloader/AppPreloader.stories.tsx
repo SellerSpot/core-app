@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import AppPreloader from './AppPreloader';
@@ -28,7 +28,4 @@ AppPreloaderComponent.args = {};
 export default {
     title: 'Components/Atoms',
     component: AppPreloaderComponent,
-    parameters: {
-        layout: 'fullscreen',
-    },
 } as Meta;

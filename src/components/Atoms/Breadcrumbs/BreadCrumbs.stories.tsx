@@ -1,16 +1,16 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store/store';
-import { BreadCrumbs } from './BreadCrumbs';
+import BreadCrumbsComponent from './BreadCrumbs';
 
 const Template: Story = () => (
     <BrowserRouter>
         <Provider store={store}>
             <ThemeProvider>
-                <BreadCrumbs
+                <BreadCrumbsComponent
                     crumbs={[
                         {
                             title: 'Point Of Sale',
@@ -31,10 +31,10 @@ const Template: Story = () => (
     </BrowserRouter>
 );
 
-export const Component = Template.bind({});
-Component.args = {};
+export const BreadCrumbs = Template.bind({});
+BreadCrumbs.args = {};
 
 export default {
-    title: 'Components/Atoms/Breadcrumbs',
-    component: Component,
+    title: 'Components/Atoms',
+    component: BreadCrumbsComponent,
 } as Meta;

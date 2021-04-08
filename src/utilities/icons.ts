@@ -3,6 +3,7 @@ import {
     MdFileDownload,
     MdFullscreen,
     MdHome,
+    MdKeyboardArrowDown,
     MdKeyboardArrowRight,
     MdLaunch,
     MdNotifications,
@@ -29,6 +30,7 @@ export const ICONS = {
     OTHER: {
         DEFAULT: BsQuestionSquare,
         EXPAND_MENU: MdKeyboardArrowRight,
+        EXPAND_MENU_DOWN: MdKeyboardArrowDown,
         FORWARD_SLASH: CgFormatSlash,
         FULL_SCREEN: MdFullscreen,
         SUCCESS_CHECK_CIRCLE: MdCheckCircle,

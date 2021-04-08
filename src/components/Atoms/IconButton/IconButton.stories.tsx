@@ -1,23 +1,23 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
-import IconButton from './IconButton';
+import IconButtonComponent from './IconButton';
 import { IIconButtonProps } from './IconButton.types';
 
 const Template: Story<IIconButtonProps> = (args: IIconButtonProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <IconButton state={'warning'} icon={<ICONS.WORKSPACES.HOME />} />
+            <IconButtonComponent state={'warning'} icon={<ICONS.WORKSPACES.HOME />} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
+export const IconButton = Template.bind({});
 
 export default {
-    title: 'Components/Atoms/IconButton',
-    component: Component,
+    title: 'Components/Atoms',
+    component: IconButtonComponent,
 } as Meta;

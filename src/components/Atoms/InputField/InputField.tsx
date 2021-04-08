@@ -5,16 +5,26 @@ import {
     ThemeProvider,
 } from '@material-ui/core';
 import cn from 'classnames';
-import { muiThemes } from 'config/themes';
-import { isNull } from 'lodash';
+import { getMUITheme } from 'components/ThemeProvider/MUIThemes';
+import { isNull, isUndefined } from 'lodash';
 import React, { forwardRef, ReactElement, RefObject, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
 import styles from './InputField.module.scss';
 import { IInputFieldProps } from './InputField.types';
 
-function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): ReactElement {
+const InputField = (props: IInputFieldProps, ref: RefObject<HTMLInputElement>): ReactElement => {
+    // getting current theme state
+    const themeState = useSelector(themeSelector);
+    // internal ref object to manage autoFocus prop enforcing in case
+    // and external ref is not provided
     const internalRef = useRef<HTMLInputElement>(null);
+    // runs when autoFocus value changes to force focus to field
     useEffect(() => {
+        // also only runs when an external ref has not been provided
         if (props.autoFocus && isNull(ref)) {
+            // wait till other animations have been completed
+            // so as to not create jank effects
             setTimeout(function () {
                 internalRef.current?.focus();
             }, 100);
@@ -24,13 +34,12 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
     // choosing theme
     const textFieldTheme =
         props.state === 'error'
-            ? muiThemes.danger
+            ? getMUITheme('danger', themeState.colorTheme)
             : props.state === 'success'
-            ? muiThemes.success
-            : muiThemes.default;
+            ? getMUITheme('success', themeState.colorTheme)
+            : getMUITheme('primary', themeState.colorTheme);
 
     // holds the helperComponent for the textField
-
     let helperComponent: ReactElement = null;
 
     // compiling helperMessageComponent
@@ -76,9 +85,20 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                     inputRef={ref ?? internalRef}
                     variant={'outlined'}
                     onChange={props.onChange}
+                    onBlur={props.onBlur}
+                    onFocus={(event) => {
+                        if (props.selectTextOnClick) {
+                            event.target.select();
+                        }
+                        if (!isUndefined(props.onFocus)) {
+                            props.onFocus(event);
+                        }
+                    }}
                     value={props.value}
                     label={props.label}
                     type={props.type}
+                    size={props.size}
+                    fullWidth={props.fullWidth}
                     placeholder={props.placeHolder}
                     autoFocus={props.autoFocus}
                     required={props.required}
@@ -94,6 +114,9 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
                             textAlign: props.direction === 'rtl' ? 'right' : 'left',
                             fontWeight: 500,
                         },
+                        max: props.maxNumericValue,
+                        min: props.minNumericValue,
+                        maxLength: props.maxLength,
                     }}
                     InputProps={{
                         startAdornment: (
@@ -109,6 +132,6 @@ function InputField(props: IInputFieldProps, ref: RefObject<HTMLInputElement>): 
             </ThemeProvider>
         </div>
     );
-}
+};
 
-export default forwardRef(InputField);
+export default forwardRef(InputField) as typeof InputField;

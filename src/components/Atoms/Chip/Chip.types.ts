@@ -6,7 +6,7 @@ export interface IChipProps {
     /**
      * Different states such as success or danger or warning
      */
-    state?: 'success' | 'danger' | 'warning' | 'default' | 'accent';
+    state?: 'success' | 'danger' | 'warning' | 'primary' | 'accent' | 'grey';
     /**
      * Leading icon for the chip
      */

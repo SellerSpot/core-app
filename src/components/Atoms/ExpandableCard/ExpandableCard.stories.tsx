@@ -1,21 +1,21 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeSetter/ThemeProvider';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
-import ExpandableCard from './ExpandableCard';
+import ExpandableCardComponent from './ExpandableCard';
 import { IExpandableCardProps } from './ExpandableCard.types';
 
 const Template: Story<IExpandableCardProps> = (args: IExpandableCardProps) => (
     <Provider store={store}>
         <ThemeProvider>
-            <ExpandableCard {...args} />
+            <ExpandableCardComponent {...args} />
         </ThemeProvider>
     </Provider>
 );
 
-export const Component = Template.bind({});
-Component.args = {
+export const ExpandableCard = Template.bind({});
+ExpandableCard.args = {
     expanded: true,
     content: {
         summaryContent: <div>Summary Content</div>,
@@ -24,6 +24,6 @@ Component.args = {
 } as IExpandableCardProps;
 
 export default {
-    title: 'Components/Atoms/ExpandableCard',
-    component: Component,
+    title: 'Components/Atoms',
+    component: ExpandableCardComponent,
 } as Meta;
