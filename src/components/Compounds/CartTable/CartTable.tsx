@@ -10,6 +10,7 @@ import {
     TableRow,
 } from '@material-ui/core';
 import cn from 'classnames';
+import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -28,7 +29,8 @@ import styles from './CartTable.module.scss';
 import { ICartProductsData } from './CartTable.types';
 
 const Row = (row: ICartProductsData, index: number): ReactElement => {
-    const [open, setOpen] = useState(false);
+    const [openProductDetail, setOpenProductDetail] = useState(false);
+    const [openTaxDetail, setOpenTaxDetail] = useState(false);
     const [rowObjectCopy, setRowObjectCopy] = useState<ICartProductsData>(null);
     const dispatch = useDispatch();
 
@@ -52,14 +54,14 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 <TableCell>
                     <div
                         className={cn(styles.expandRowIcon, {
-                            [styles.rotatedExpandRowIcon]: open,
+                            [styles.rotatedExpandRowIcon]: openProductDetail,
                         })}
                     >
                         <IconButton
                             icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
                             size={'small'}
                             state={'grey'}
-                            onClick={() => setOpen(!open)}
+                            onClick={() => setOpenProductDetail(!openProductDetail)}
                         />
                     </div>
                 </TableCell>
@@ -72,7 +74,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
             </TableRow>
             <TableRow key={index + 'collapsed'}>
                 <TableCell style={{ paddingBottom: '10px', paddingTop: 0 }} colSpan={5}>
-                    <Collapse in={open}>
+                    <Collapse in={openProductDetail}>
                         <div className={styles.collapsedDiv}>
                             <div className={styles.productName}>
                                 <InputField
@@ -157,6 +159,36 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                             }),
                                         )}`,
                                         type: 'warning',
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.taxBracketCard}>
+                                <ExpandableCard
+                                    expanded={openTaxDetail}
+                                    content={{
+                                        summaryContent: (
+                                            <div className={styles.summaryContent}>
+                                                <h5>Tax Information</h5>
+                                                <div
+                                                    className={cn(
+                                                        styles.expandTaxInformationCardIcon,
+                                                        {
+                                                            [styles.rotatedExpandTaxInformationCardIcon]: openTaxDetail,
+                                                        },
+                                                    )}
+                                                >
+                                                    <IconButton
+                                                        icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
+                                                        size={'small'}
+                                                        state={'grey'}
+                                                        onClick={() =>
+                                                            setOpenTaxDetail(!openTaxDetail)
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                        ),
+                                        detailsContent: <h6>Detailed Tax Information</h6>,
                                     }}
                                 />
                             </div>

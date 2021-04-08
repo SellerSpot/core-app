@@ -5,4 +5,8 @@ export interface ICartProductsData {
     unitPrice: number;
     subTotal: number;
     discountPercent: number;
+    taxBrackets: {
+        bracketName: string;
+        bracketRate: number;
+    }[];
 }

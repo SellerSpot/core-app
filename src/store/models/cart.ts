@@ -15,6 +15,12 @@ const initialState: ICartState = {
             unitPrice: 54,
             subTotal: 0,
             discountPercent: 0,
+            taxBrackets: [
+                {
+                    bracketName: 'CGST',
+                    bracketRate: 9,
+                },
+            ],
         },
         {
             quantity: 1,
@@ -23,6 +29,12 @@ const initialState: ICartState = {
             unitPrice: 32,
             subTotal: 0,
             discountPercent: 0,
+            taxBrackets: [
+                {
+                    bracketName: 'CGST',
+                    bracketRate: 9,
+                },
+            ],
         },
         {
             quantity: 1,
@@ -31,6 +43,12 @@ const initialState: ICartState = {
             unitPrice: 10,
             subTotal: 0,
             discountPercent: 0,
+            taxBrackets: [
+                {
+                    bracketName: 'CGST',
+                    bracketRate: 9,
+                },
+            ],
         },
     ],
 };
