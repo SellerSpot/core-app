@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import Avatar from 'components/Atoms/Avatar/Avatar';
-import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButon/ExpandWorkspaceMenuButton';
+import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButton/ExpandWorkspaceMenuButton';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
