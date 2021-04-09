@@ -1,0 +1,13 @@
+.cardWrapper {
+    height: 80px;
+    @include flex(center, center);
+    .contentWrapper {
+        width: 100%;
+        .content {
+            @include flex(center, space-between);
+            .contentLHS {
+                @include flex(flex-start, space-between, column, 4px);
+            }
+        }
+    }
+}
