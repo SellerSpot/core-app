@@ -1,0 +1,34 @@
+.cardWrapper {
+    height: 65px;
+    @include flex(center, center);
+    .contentWrapper {
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+        .content {
+            width: 100%;
+            height: 100%;
+            @include flex(center, space-between);
+            .contentLHS {
+                @include flex(center, flex-start, $gap: 10px);
+                .title {
+                    display: -webkit-box;
+                    overflow: hidden;
+                    max-width: 100%;
+                    -webkit-box-orient: vertical;
+                    color: $foregroundPrimary-color;
+                    -webkit-line-clamp: 3;
+                    text-overflow: ellipsis;
+                }
+                .image {
+                    width: 50px;
+                    padding-top: 2px;
+                }
+            }
+            .contentRHS {
+                width: 20%;
+                text-align: right;
+            }
+        }
+    }
+}
