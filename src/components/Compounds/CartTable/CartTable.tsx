@@ -76,7 +76,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 <TableCell padding={'none'} align="left">
                     {index + 1}
                 </TableCell>
-                <ToolTip title={row.productName.length > 50 ? row.productName : ''}>
+                <ToolTip title={row.productName.length > 30 ? row.productName : ''}>
                     <TableCell align="left">
                         {<h6 className={styles.productNameText}>{`${row.productName}`}</h6>}
                     </TableCell>
@@ -211,11 +211,11 @@ export default function CartTable(): ReactElement {
             <Table stickyHeader aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
-                        <TableCell />
-                        <TableCell padding={'none'} align="left">
+                        <TableCell width="5%" />
+                        <TableCell width="5%" padding={'none'} align="left">
                             S.No
                         </TableCell>
-                        <TableCell width="60%" align="left">
+                        <TableCell width="40%" align="left">
                             Product
                         </TableCell>
                         <TableCell width="20%" align="right">
