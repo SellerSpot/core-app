@@ -21,23 +21,27 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
             }}
             media={
                 <div className={styles.media}>
-                    <img className={styles.thumbnail} src={POSPluginIllustration} />
+                    <img className={styles.thumbnail} src={props.imageUrl} />
                 </div>
             }
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
-                        <ICONS.WORKSPACES.POS />
-                        <h5>Point of Sale</h5>
+                        {props.pluginIcon}
+                        <h5>{props.pluginName}</h5>
                     </div>
-                    <p className={styles.pluginContent}>
-                        An all purpose point of sale system to handle your everyday sales
-                    </p>
+                    <p className={styles.pluginContent}>{props.pluginDescription}</p>
                 </div>
             }
             actions={
                 <div className={styles.pluginActions}>
-                    <Button size={'small'} state={'accent'} label={'Explore'} variant={'text'} />
+                    <Button
+                        onClick={props.pluginSecondaryCallback}
+                        size={'small'}
+                        state={'accent'}
+                        label={'Explore'}
+                        variant={'text'}
+                    />
                     <div className={styles.pluginActionsRHSSection}>
                         {props.installed ? (
                             <ICONS.OTHER.SUCCESS_CHECK_CIRCLE
@@ -53,6 +57,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             startIcon={
                                 props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
                             }
+                            onClick={props.pluginPrimaryCallback}
                         />
                     </div>
                 </div>
