@@ -14,4 +14,4 @@ The same panel acts as the management console as well as the client application.
 
 # Storybook
 
-The component storybook for this repo application can be found at https://sellerspotstorybook.netlify.app
+The component storybook for this repo application can be found at https://master--606fdd0cba72520021b0c2c1.chromatic.com

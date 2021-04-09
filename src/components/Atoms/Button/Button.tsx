@@ -26,15 +26,19 @@ export default function Button(props: IButtonProps): ReactElement {
             break;
         case 'primary':
             buttonTheme = getMUITheme('primary', themeState.colorTheme);
+            break;
         case 'grey':
             buttonTheme = getMUITheme('grey', themeState.colorTheme);
+            break;
     }
+
     return (
         <ThemeProvider theme={buttonTheme}>
             <MUIButton
                 variant={props.variant}
                 color={'primary'}
                 size={props.size}
+                fullWidth={props.fullWidth}
                 type={props.type}
                 disabled={props.disabled}
                 onClick={props.onClick}

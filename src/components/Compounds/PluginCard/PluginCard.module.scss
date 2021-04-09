@@ -1,13 +1,14 @@
 .card {
     width: 300px;
-
     .media {
         position: relative;
+        min-height: 145px;
         .thumbnail {
             width: 300px;
         }
     }
     .contentWrapper {
+        padding-top: 10px;
         padding-bottom: 0;
         .content {
             height: 55px;
@@ -28,6 +29,7 @@
         }
     }
     .actionWrapper {
+        padding-bottom: 10px;
         .pluginActions {
             width: 100%;
             @include flex(center, space-between);

@@ -1,4 +1,4 @@
-name: Storybook Deploy Netlify
+name: Storybook Deploy Chromatic
 
 on:
     push:
@@ -11,6 +11,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
 
             - name: Use Node.js 12
               uses: actions/setup-node@v2
@@ -24,14 +26,9 @@ jobs:
             - name: Running StyleLint
               run: npx stylelint "**/*.scss"
 
-            - name: Build storybook static site
-              run: npm run build-storybook --if-present
-
-            - name: Deploy to netlify
-              uses: netlify/actions/cli@master
-              env:
-                  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
-                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_STORYBOOK_SITE_ID }}
+            - name: Publish to Chromatic
+              uses: chromaui/action@v1
               with:
-                  args: deploy --dir=storybook-static --prod
-                  secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+                  autoAcceptChanges: true

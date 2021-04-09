@@ -4,8 +4,9 @@ export interface IButtonProps {
     /**
      * Content to display inside the button
      */
-    label?: string;
+    label?: string | ReactElement;
     type?: 'submit' | 'button' | 'reset';
+    fullWidth?: boolean;
     /**
      * Different styles of buttons
      */
