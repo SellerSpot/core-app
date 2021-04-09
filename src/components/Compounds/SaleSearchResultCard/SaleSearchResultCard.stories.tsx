@@ -9,7 +9,13 @@ import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
 const Template: Story = (args: ISaleSearchResultCard) => (
     <Provider store={store}>
         <ThemeProvider>
-            <SaleSearchResultCardComponent {...args} />
+            <div
+                style={{
+                    width: '400px',
+                }}
+            >
+                <SaleSearchResultCardComponent {...args} />
+            </div>
         </ThemeProvider>
     </Provider>
 );
