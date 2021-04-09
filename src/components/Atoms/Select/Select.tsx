@@ -5,7 +5,7 @@ import { ISelectProps } from './Select.types';
 export default function Select(props: ISelectProps): ReactElement {
     return (
         <MUITextField
-            variant="outlined"
+            variant="standard"
             select
             size={props.size}
             value={props.value}
