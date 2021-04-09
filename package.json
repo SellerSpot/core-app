@@ -16,7 +16,8 @@
         "lint-staged": "lint-staged",
         "postinstall": "npm run husky:install",
         "husky:install": "husky install",
-        "husky:pre-commit": "npm run lint-staged"
+        "husky:pre-commit": "npm run lint-staged",
+        "chromatic": "npx chromatic --project-token=39a5a1567c83 --exit-zero-on-changes --auto-accept-changes"
     },
     "keywords": [],
     "author": "",
@@ -47,6 +48,7 @@
         "@types/webpack-dev-server": "^3.11.1",
         "@typescript-eslint/eslint-plugin": "^4.10.0",
         "@typescript-eslint/parser": "^4.10.0",
+        "chromatic": "^5.7.1",
         "css-loader": "^5.0.1",
         "eslint": "^7.15.0",
         "eslint-config-prettier": "^7.0.0",

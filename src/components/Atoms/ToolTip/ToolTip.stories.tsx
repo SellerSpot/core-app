@@ -9,22 +9,21 @@ import { store } from 'store/store';
 import ToolTipComponent from './ToolTip';
 
 const Template: Story<TooltipProps> = () => {
-    const themeState = useSelector(themeSelector);
     return (
         <Provider store={store}>
             <ThemeProvider>
                 <ToolTipComponent title={'Sample Tooltip'} placement={'right'}>
                     <div
                         style={{
-                            width: '200px',
+                            width: '100px',
                             height: '50px',
                             padding: '10px',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '5px',
-                            backgroundColor: colorThemes[themeState.colorTheme].primaryLight,
-                            color: colorThemes[themeState.colorTheme].primary,
+                            backgroundColor: 'lightblue',
+                            color: 'white',
                         }}
                     >
                         Hover for demo
