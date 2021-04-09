@@ -17,4 +17,5 @@ export interface ISelectProps {
     value: string | number;
     onChange?: (event: React.ChangeEvent<{ value: unknown }>) => void;
     size: 'small' | 'medium';
+    label?: string;
 }

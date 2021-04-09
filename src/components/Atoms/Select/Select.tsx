@@ -9,6 +9,7 @@ export default function Select(props: ISelectProps): ReactElement {
             select
             size={props.size}
             value={props.value}
+            label={props.label}
             onChange={props.onChange}
         >
             {props.options.map((option, index) => {

@@ -31,6 +31,7 @@ Select.args = {
             value: '3',
         },
     ],
+    label: 'Select',
     value: '3',
     onChange: (event) => alert(event.target.value),
 } as ISelectProps;
