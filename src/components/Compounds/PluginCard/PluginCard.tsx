@@ -27,8 +27,8 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
-                        {props.pluginIcon}
-                        <h5>{props.pluginName}</h5>
+                        <div className={styles.logo}>{props.pluginIcon}</div>
+                        <h5 className={styles.titleText}>{props.pluginName}</h5>
                     </div>
                     <p className={styles.pluginContent}>{props.pluginDescription}</p>
                 </div>

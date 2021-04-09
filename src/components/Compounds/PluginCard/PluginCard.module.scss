@@ -15,7 +15,18 @@
             @include flex(flex-start, flex-start, $direction: column, $gap: 5px);
 
             .pluginTitle {
-                @include flex(center, flex-start, $gap: 10px);
+                @include flex(center, flex-start, $gap: 8px);
+                .logo {
+                    width: 16px;
+                }
+                .titleText {
+                    display: -webkit-box;
+                    overflow: hidden;
+                    max-width: 100%;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    text-overflow: ellipsis;
+                }
             }
             .pluginContent {
                 display: -webkit-box;
