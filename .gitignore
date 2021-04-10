@@ -112,3 +112,6 @@ dist
 
 # storybook build
 storybook-static
+
+# personal project related files
+myFolder
