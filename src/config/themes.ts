@@ -1,53 +1,5 @@
 import { createMuiTheme, Theme } from '@material-ui/core';
-
-// // Infering types from Route object with autocomplete support.
-// const inferColorTypes = <T extends { [key: string]: IThemeColors }>(arg: T): T => arg;
-
-// interface for the different colors used in the app
-export interface IColors {
-    // basic colors
-    success: string;
-    successLight: string;
-    successDark: string;
-    danger: string;
-    dangerLight: string;
-    dangerDark: string;
-    warning: string;
-    warningLight: string;
-    warningDark: string;
-    info: string;
-    greyLight: string;
-    grey: string;
-    greyDark: string;
-    //foreground colors
-    foregroundLight: string;
-    foregroundPrimary: string;
-    foregroundSecondary: string;
-    foregroundTertiary: string;
-    // background colors
-    backgroundPrimary: string;
-    backgroundSecondary: string;
-    backgroundTertiary: string;
-    // primary colors
-    primary: string;
-    primaryLight: string;
-    primaryDark: string;
-    accent: string;
-    accentLight: string;
-    accentDark: string;
-    dark: string;
-}
-
-// interface for the fontsizes used in the app
-export interface IFontSizes {
-    h1: string;
-    h2: string;
-    h3: string;
-    h4: string;
-    h5: string;
-    h6: string;
-    p: string;
-}
+import { IColors, IFontSizes } from '@sellerspot/universal-components';
 
 // Contains the different color themes used in the app
 interface IColorThemes {
@@ -74,18 +26,20 @@ export const colorThemes: IColorThemes = {
         warningLight: '#FFF4E5',
         warningDark: '#B86E00',
         info: '#2196F3',
-        greyLight: '#AFAEAC',
-        grey: '#878682',
-        greyDark: '#5E5D5A',
+        infoLight: '#77BEF8',
+        infoDark: '#0A6FC2',
+        autoLight: '#AFAEAC',
+        auto: '#878682',
+        autoDark: '#5E5D5A',
         foregroundLight: '#FAFAFA',
         foregroundPrimary: '#5A5A5A',
         foregroundSecondary: '#767676',
         foregroundTertiary: '#C6C5C4',
+        backgroundDark: '#212121',
         backgroundPrimary: '#FAFAFA',
         backgroundSecondary: '#F2F2F2',
         backgroundTertiary: '#E0E0E0',
         primary: '#1A73E8',
-        dark: '#212121',
         primaryLight: '#D9E8FC',
         primaryDark: '#1152A7',
         accent: '#EE8572',
