@@ -34,10 +34,11 @@ const webpackConfiguration = (env: {
                       extensions: ['.ts', '.tsx', '.js', '.css', '.module.css'],
                   }),
               ],
-              fallback: {
-                  path: require.resolve('path-browserify'),
-                  fs: require.resolve('fs'),
-              },
+              // in webpack 5, node internals are moved to externals
+              //   fallback: {
+              //       path: require.resolve('path-browserify'),
+              //       fs: require.resolve('fs'),
+              //   },
           };
     return {
         entry: './src',

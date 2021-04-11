@@ -28,5 +28,5 @@
             "utilities/*": ["utilities/*"]
         }
     },
-    "include": ["src"]
+    "include": ["src", "webpack.config.ts"]
 }

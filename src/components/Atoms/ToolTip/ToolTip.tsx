@@ -16,7 +16,7 @@ export default function ToolTip(props: TooltipProps): ReactElement {
                     padding: '10px',
                     fontSize: '12px',
                     color: colorThemes[themeState.colorTheme].foregroundLight,
-                    backgroundColor: colorThemes[themeState.colorTheme].dark,
+                    backgroundColor: colorThemes[themeState.colorTheme].backgroundDark,
                     fontWeight: 500,
                 },
             },
