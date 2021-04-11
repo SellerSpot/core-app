@@ -6,22 +6,22 @@ import { Switch, Route } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './app.module.scss';
 import AppPreloader from 'components/Atoms/AppPreloader/AppPreloader';
+import { themeSelector } from 'store/models/theme';
+import { useSelector } from 'react-redux';
+import { colorThemes, fontSizeThemes } from 'config/themes';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
 
 export const App = (): ReactElement => {
-    const [isLoading, setIsLoading] = useState(true);
-
-    // useEffect(() => {
-    //     (async () => {
-    //         setIsLoading(false);
-    //     }).call(null);
-    // }, []);
+    const [appLoading, setAppLoading] = useState(true);
+    const themeState = useSelector(themeSelector);
+    const colors = colorThemes[themeState.colorTheme];
+    const fontSizes = fontSizeThemes[themeState.fontSizeTheme];
 
     return (
         <div className={styles.appWrapper}>
-            {isLoading ? (
+            {appLoading ? (
                 <AppPreloader />
             ) : (
                 <div className={cn(styles.appContainer)}>
