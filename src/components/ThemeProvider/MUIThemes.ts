@@ -120,9 +120,9 @@ export const getMUITheme = (theme: keyof IMuiThemes, colorTheme: TColorThemes): 
             customThemeProperties = {
                 palette: {
                     primary: {
-                        light: colors.greyLight,
-                        main: colors.grey,
-                        dark: colors.greyDark,
+                        light: colors.autoLight,
+                        main: colors.auto,
+                        dark: colors.autoDark,
                     },
                 },
                 text: {
