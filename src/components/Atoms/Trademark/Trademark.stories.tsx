@@ -5,13 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import TrademarkComponent from './Trademark';
 
-const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <TrademarkComponent />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = () => <TrademarkComponent />;
 
 export const TradeMark = Template.bind({});
 TradeMark.args = {};

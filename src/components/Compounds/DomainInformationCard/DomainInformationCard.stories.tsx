@@ -5,13 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import DomainInformationCardComponent from './DomainInformationCard';
 
-const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <DomainInformationCardComponent />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = () => <DomainInformationCardComponent />;
 
 export const DomainInformationCard = Template.bind({});
 

@@ -8,26 +8,22 @@ import BreadCrumbsComponent from './BreadCrumbs';
 
 const Template: Story = () => (
     <BrowserRouter>
-        <Provider store={store}>
-            <ThemeProvider>
-                <BreadCrumbsComponent
-                    crumbs={[
-                        {
-                            title: 'Point Of Sale',
-                            route: '/pos',
-                        },
-                        {
-                            title: 'Sales',
-                            route: '/pos/sales',
-                        },
-                        {
-                            title: 'New Sale',
-                            route: '/pos/sales/newsale',
-                        },
-                    ]}
-                />
-            </ThemeProvider>
-        </Provider>
+        <BreadCrumbsComponent
+            crumbs={[
+                {
+                    title: 'Point Of Sale',
+                    route: '/pos',
+                },
+                {
+                    title: 'Sales',
+                    route: '/pos/sales',
+                },
+                {
+                    title: 'New Sale',
+                    route: '/pos/sales/newsale',
+                },
+            ]}
+        />
     </BrowserRouter>
 );
 

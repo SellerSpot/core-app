@@ -6,13 +6,7 @@ import { store } from 'store/store';
 import CardComponent from './Card';
 import { ICardProps } from './Card.types';
 
-const Template: Story<ICardProps> = (args: ICardProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <CardComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<ICardProps> = (args: ICardProps) => <CardComponent {...args} />;
 
 export const Card = Template.bind({});
 Card.args = {

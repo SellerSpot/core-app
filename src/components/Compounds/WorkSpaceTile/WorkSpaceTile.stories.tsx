@@ -8,11 +8,7 @@ import WorkSpaceTileComponent from './WorkSpaceTile';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
 const Template: Story<IWorkSpaceTileProps> = (args: IWorkSpaceTileProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <WorkSpaceTileComponent {...args} />
-        </ThemeProvider>
-    </Provider>
+    <WorkSpaceTileComponent {...args} />
 );
 
 export const WorkSpaceTile = Template.bind({});

@@ -22,11 +22,7 @@ const currenciesData: ICurrency[] = [
 ];
 
 const Template: Story = (args: ICurrencySettingsCardProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <CurrencySettingsCardComponent {...args} />
-        </ThemeProvider>
-    </Provider>
+    <CurrencySettingsCardComponent {...args} />
 );
 
 export const CurrencySettingsCard = Template.bind({});

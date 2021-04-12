@@ -8,17 +8,13 @@ import { IInputFieldProps } from './InputField.types';
 
 const Template: Story<IInputFieldProps> = (args: IInputFieldProps) => {
     return (
-        <Provider store={store}>
-            <ThemeProvider>
-                <div
-                    style={{
-                        maxWidth: '300px',
-                    }}
-                >
-                    <InputFieldComponent {...args} />
-                </div>
-            </ThemeProvider>
-        </Provider>
+        <div
+            style={{
+                maxWidth: '300px',
+            }}
+        >
+            <InputFieldComponent {...args} />
+        </div>
     );
 };
 

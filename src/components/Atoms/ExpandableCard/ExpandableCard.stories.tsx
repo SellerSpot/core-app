@@ -7,11 +7,7 @@ import ExpandableCardComponent from './ExpandableCard';
 import { IExpandableCardProps } from './ExpandableCard.types';
 
 const Template: Story<IExpandableCardProps> = (args: IExpandableCardProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <ExpandableCardComponent {...args} />
-        </ThemeProvider>
-    </Provider>
+    <ExpandableCardComponent {...args} />
 );
 
 export const ExpandableCard = Template.bind({});

@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import ButtonComponent from './Button';
 import { IButtonProps } from './Button.types';
 
-const Template: Story<IButtonProps> = (args: IButtonProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <ButtonComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IButtonProps> = (args: IButtonProps) => <ButtonComponent {...args} />;
 
 export const Button = Template.bind({});
 Button.args = {

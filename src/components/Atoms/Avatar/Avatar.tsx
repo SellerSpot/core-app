@@ -22,6 +22,9 @@ export default function Avatar(props: IAvatarProps): ReactElement {
               { [styles.selected]: requiredProps.theme === 'selected' },
               { [styles.unselected]: requiredProps.theme === 'unselected' },
               { [styles.smallWrapper]: requiredProps.size === 'small' },
+              { [styles.circular]: requiredProps.variant === 'circular' },
+              { [styles.rounded]: requiredProps.variant === 'rounded' },
+              { [styles.square]: requiredProps.variant === 'square' },
           )
         : cn(styles.wrapper, styles.disabled, {
               [styles.smallWrapper]: requiredProps.size === 'small',
