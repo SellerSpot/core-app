@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import AvatarComponent from './Avatar';
 import { IAvatarProps } from './Avatar.types';
 
-const Template: Story<IAvatarProps> = (args: IAvatarProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <AvatarComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IAvatarProps> = (args: IAvatarProps) => <AvatarComponent {...args} />;
 
 export const Avatar = Template.bind({});
 Avatar.args = {

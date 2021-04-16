@@ -10,20 +10,16 @@ import { ISubMenuProps } from './SubMenu.types';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
     <BrowserRouter>
-        <Provider store={store}>
-            <ThemeProvider>
-                <div
-                    style={{
-                        padding: 0,
-                        margin: 0,
-                        width: '100%',
-                        height: '100vh',
-                    }}
-                >
-                    <SubMenuComponent {...args} />
-                </div>
-            </ThemeProvider>
-        </Provider>
+        <div
+            style={{
+                padding: 0,
+                margin: 0,
+                width: '100%',
+                height: '100vh',
+            }}
+        >
+            <SubMenuComponent {...args} />
+        </div>
     </BrowserRouter>
 );
 

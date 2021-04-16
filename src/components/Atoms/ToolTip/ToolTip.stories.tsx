@@ -10,27 +10,23 @@ import ToolTipComponent from './ToolTip';
 
 const Template: Story<TooltipProps> = () => {
     return (
-        <Provider store={store}>
-            <ThemeProvider>
-                <ToolTipComponent title={'Sample Tooltip'} placement={'right'}>
-                    <div
-                        style={{
-                            width: '100px',
-                            height: '50px',
-                            padding: '10px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: '5px',
-                            backgroundColor: 'lightblue',
-                            color: 'white',
-                        }}
-                    >
-                        Hover for demo
-                    </div>
-                </ToolTipComponent>
-            </ThemeProvider>
-        </Provider>
+        <ToolTipComponent title={'Sample Tooltip'} placement={'right'}>
+            <div
+                style={{
+                    width: '100px',
+                    height: '50px',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '5px',
+                    backgroundColor: 'lightblue',
+                    color: 'white',
+                }}
+            >
+                Hover for demo
+            </div>
+        </ToolTipComponent>
     );
 };
 

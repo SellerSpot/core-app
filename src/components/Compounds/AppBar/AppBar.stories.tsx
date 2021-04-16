@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import AppBarComponent from './AppBar';
 import { IAppBarProps } from './AppBar.types';
 
-const Template: Story<IAppBarProps> = (args: IAppBarProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <AppBarComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IAppBarProps> = (args: IAppBarProps) => <AppBarComponent {...args} />;
 
 export const AppBar = Template.bind({});
 AppBar.args = {

@@ -10,20 +10,16 @@ import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 
 const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
     <BrowserRouter>
-        <Provider store={store}>
-            <ThemeProvider>
-                <div
-                    style={{
-                        padding: 0,
-                        margin: 0,
-                        width: '100%',
-                        height: '100vh',
-                    }}
-                >
-                    <WorkSpaceMenuComponent {...args} />
-                </div>
-            </ThemeProvider>
-        </Provider>
+        <div
+            style={{
+                padding: 0,
+                margin: 0,
+                width: '100%',
+                height: '100vh',
+            }}
+        >
+            <WorkSpaceMenuComponent {...args} />
+        </div>
     </BrowserRouter>
 );
 

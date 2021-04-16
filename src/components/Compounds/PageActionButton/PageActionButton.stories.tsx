@@ -8,17 +8,13 @@ import PageActionButtonComponent from './PageActionButton';
 import { IPageActionButton } from './PageActionButton.types';
 
 const Template: Story = (args: IPageActionButton) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <div
-                style={{
-                    width: '400px',
-                }}
-            >
-                <PageActionButtonComponent {...args} />
-            </div>
-        </ThemeProvider>
-    </Provider>
+    <div
+        style={{
+            width: '400px',
+        }}
+    >
+        <PageActionButtonComponent {...args} />
+    </div>
 );
 
 export const PageActionButton = Template.bind({});

@@ -7,11 +7,7 @@ import SubMenuTileComponent from './SubMenuTile';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const Template: Story<ISubMenuTileProps> = (args: ISubMenuTileProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <SubMenuTileComponent {...args} />
-        </ThemeProvider>
-    </Provider>
+    <SubMenuTileComponent {...args} />
 );
 
 export const SubMenuTile = Template.bind({});

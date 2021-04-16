@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import PluginCardComponent from './PluginCard';
 import { IPluginCardProps } from './PluginCard.types';
 
-const Template: Story = (args: IPluginCardProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <PluginCardComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = (args: IPluginCardProps) => <PluginCardComponent {...args} />;
 export const PluginCard = Template.bind({});
 PluginCard.args = {
     installed: false,

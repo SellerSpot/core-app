@@ -7,13 +7,7 @@ import ExpandWorkspaceMenuButtonComponent, {
     IExpandWorkspaceMenuButtonProps,
 } from './ExpandWorkspaceMenuButton';
 
-const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <ExpandWorkspaceMenuButtonComponent />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = () => <ExpandWorkspaceMenuButtonComponent />;
 
 export const ExpandWorkspaceMenuButton = Template.bind({});
 ExpandWorkspaceMenuButton.args = {} as IExpandWorkspaceMenuButtonProps;

@@ -7,17 +7,13 @@ import CartTableComponent from './CartTable';
 
 const Template: Story = () => {
     return (
-        <Provider store={store}>
-            <ThemeProvider>
-                <div
-                    style={{
-                        width: '500px',
-                    }}
-                >
-                    <CartTableComponent />
-                </div>
-            </ThemeProvider>
-        </Provider>
+        <div
+            style={{
+                width: '500px',
+            }}
+        >
+            <CartTableComponent />
+        </div>
     );
 };
 

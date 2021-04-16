@@ -9,18 +9,16 @@ interface IWelcomeComponentProps {
 }
 
 const Template: Story<IWelcomeComponentProps> = (args: IWelcomeComponentProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <h1>{args.message}</h1>
-            <br />
-            <hr />
-            <br />
-            <h6>
-                Feel free to navigate around to browse and play with all the atom and compound
-                components used in our core app
-            </h6>
-        </ThemeProvider>
-    </Provider>
+    <div>
+        <h1>{args.message}</h1>
+        <br />
+        <hr />
+        <br />
+        <h6>
+            Feel free to navigate around to browse and play with all the atom and compound
+            components used in our core app
+        </h6>
+    </div>
 );
 
 export const WelcomeComponent = Template.bind({});

@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import ChipComponent from './Chip';
 import { IChipProps } from './Chip.types';
 
-const Template: Story<IChipProps> = (args: IChipProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <ChipComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<IChipProps> = (args: IChipProps) => <ChipComponent {...args} />;
 
 export const Chip = Template.bind({});
 Chip.args = {

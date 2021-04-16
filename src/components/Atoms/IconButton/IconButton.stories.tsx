@@ -8,11 +8,7 @@ import IconButtonComponent from './IconButton';
 import { IIconButtonProps } from './IconButton.types';
 
 const Template: Story<IIconButtonProps> = (args: IIconButtonProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <IconButtonComponent state={'warning'} icon={<ICONS.WORKSPACES.HOME />} />
-        </ThemeProvider>
-    </Provider>
+    <IconButtonComponent state={'warning'} icon={<ICONS.WORKSPACES.HOME />} />
 );
 
 export const IconButton = Template.bind({});

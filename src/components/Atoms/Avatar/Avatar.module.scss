@@ -4,7 +4,7 @@
     height: 40px;
     min-height: 20px;
     background-color: red;
-    border-radius: $border-radius-cirular;
+    border-radius: $border-radius;
     cursor: pointer !important;
     font-weight: 600;
     transition: all $animation-duration-short ease;
@@ -41,4 +41,16 @@
 .selectedNoBg {
     background-color: transparent !important;
     color: $primary-color !important;
+}
+
+.circular {
+    border-radius: $border-radius-cirular;
+}
+
+.square {
+    border-radius: 0;
+}
+
+.rounded {
+    border-radius: $border-radius;
 }

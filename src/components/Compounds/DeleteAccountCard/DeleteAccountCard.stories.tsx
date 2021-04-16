@@ -5,13 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import DeleteAccountCardComponent from './DeleteAccountCard';
 
-const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <DeleteAccountCardComponent />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story = () => <DeleteAccountCardComponent />;
 
 export const DeleteAccountCard = Template.bind({});
 

@@ -7,13 +7,7 @@ import { ICONS } from 'utilities/icons';
 import SelectComponent from './Select';
 import { ISelectProps } from './Select.types';
 
-const Template: Story<ISelectProps> = (args: ISelectProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <SelectComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<ISelectProps> = (args: ISelectProps) => <SelectComponent {...args} />;
 
 export const Select = Template.bind({});
 Select.args = {

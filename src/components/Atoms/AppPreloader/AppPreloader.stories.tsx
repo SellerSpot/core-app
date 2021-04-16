@@ -6,20 +6,16 @@ import { store } from 'store/store';
 import AppPreloader from './AppPreloader';
 
 const Template: Story = () => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <div
-                style={{
-                    padding: 0,
-                    margin: 0,
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <AppPreloader />
-            </div>
-        </ThemeProvider>
-    </Provider>
+    <div
+        style={{
+            padding: 0,
+            margin: 0,
+            width: '100%',
+            height: '100vh',
+        }}
+    >
+        <AppPreloader />
+    </div>
 );
 
 export const AppPreloaderComponent = Template.bind({});

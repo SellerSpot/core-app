@@ -6,13 +6,7 @@ import { store } from 'store/store';
 import TableComponent from './Table';
 import { ITableProps } from './Table.types';
 
-const Template: Story<ITableProps> = (args: ITableProps) => (
-    <Provider store={store}>
-        <ThemeProvider>
-            <TableComponent {...args} />
-        </ThemeProvider>
-    </Provider>
-);
+const Template: Story<ITableProps> = (args: ITableProps) => <TableComponent {...args} />;
 
 export const Table = Template.bind({});
 Table.args = {
