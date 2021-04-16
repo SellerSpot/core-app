@@ -10,6 +10,7 @@
         "build:analyze": "webpack --mode production --env NODE_ENV=production --env production --env analyze",
         "lint": "eslint src --max-warnings 0",
         "lint:fix": "eslint src --fix --max-warnings 0",
+        "update:packages": "npm install --save @sellerspot/database-models",
         "storybook": "start-storybook -p 9006",
         "build:storybook": "build-storybook",
         "prettier": "prettier --write src",

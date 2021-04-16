@@ -1,0 +1,46 @@
+name: Version bump org packages
+
+on:
+    workflow_dispatch: # for triggering manually
+    repository_dispatch: # for triggering via webhook
+        types: [dispatch-version-bump]
+
+jobs:
+    publish:
+        name: Publish
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  persist-credentials: false
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 12
+                  registry-url: https://registry.npmjs.org/
+
+            - name: Create Git Directory If Not Exists
+              continue-on-error: true
+              run: mkdir ~/.git
+
+            - name: Setting up Git Identity
+              continue-on-error: true
+              run: |
+                  git config --global user.email "grthayalan18@gmail.com"
+                  git config --global user.name "ThayalanGR"
+
+            - name: Version Bump
+              run: |
+                  npm install
+                  npm run update:packages
+
+            - name: Clear Git working directory
+              continue-on-error: true
+              run: git add . && git commit -m "Version Bump" --no-verify
+
+            - name: Push Changes to Master
+              run: |
+                  git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+                  git push origin master -f
