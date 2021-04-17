@@ -1,5 +1,5 @@
 import { POSPluginIllustration } from 'assets/images/images';
-import Button from 'components/Atoms/Button/Button';
+import { Button } from '@sellerspot/universal-components';
 import Card from 'components/Atoms/Card/Card';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
@@ -38,7 +38,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                     <Button
                         onClick={props.pluginSecondaryCallback}
                         size={'small'}
-                        state={'accent'}
+                        theme={'accent'}
                         label={'Explore'}
                         variant={'text'}
                     />
@@ -50,7 +50,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             />
                         ) : null}
                         <Button
-                            state={props.installed ? 'success' : 'primary'}
+                            theme={props.installed ? 'success' : 'primary'}
                             label={props.installed ? 'Launch' : 'Install'}
                             variant={'contained'}
                             size={'small'}

@@ -1,7 +1,10 @@
 import { Alert } from '@sellerspot/universal-components';
-import Button from 'components/Atoms/Button/Button';
+import { Button } from '@sellerspot/universal-components';
 import Card from 'components/Atoms/Card/Card';
+import { colorThemes, fontSizeThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
 import styles from './DeleteAccountCard.module.scss';
 
 export default function DeleteAccountCard(): ReactElement {
@@ -29,7 +32,7 @@ export default function DeleteAccountCard(): ReactElement {
                         </div>
                         <Button
                             size={'medium'}
-                            state={'danger'}
+                            theme={'danger'}
                             variant={'contained'}
                             label={'Delete'}
                         />

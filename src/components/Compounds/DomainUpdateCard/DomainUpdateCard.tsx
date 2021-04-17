@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { Alert } from '@sellerspot/universal-components';
-import Button from 'components/Atoms/Button/Button';
+import { Button } from '@sellerspot/universal-components';
 import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useState } from 'react';
@@ -98,7 +98,7 @@ export default function DomainUpdateCard(): ReactElement {
                             <Button
                                 size={'medium'}
                                 variant={'outlined'}
-                                state={'danger'}
+                                theme={'danger'}
                                 label={'Cancel'}
                                 onClick={() => setCardExpanded(false)}
                             />

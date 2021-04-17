@@ -1,4 +1,4 @@
-import Button from 'components/Atoms/Button/Button';
+import { Button } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import styles from './PageActionButton.module.scss';
 import { IPageActionButton } from './PageActionButton.types';
@@ -7,7 +7,7 @@ export default function PageActionButton(props: IPageActionButton): ReactElement
     return (
         <Button
             fullWidth={true}
-            state={'primary'}
+            theme="primary"
             variant={'contained'}
             size={'large'}
             onClick={props.onClick}
