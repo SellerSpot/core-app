@@ -1,4 +1,4 @@
-import Card from 'components/Atoms/Card/Card';
+import { Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import styles from './DomainInformationCard.module.scss';
 

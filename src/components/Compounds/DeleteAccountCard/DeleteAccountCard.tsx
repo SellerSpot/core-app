@@ -1,6 +1,6 @@
 import { Alert } from '@sellerspot/universal-components';
 import { Button } from '@sellerspot/universal-components';
-import Card from 'components/Atoms/Card/Card';
+import { Card } from '@sellerspot/universal-components';
 import { colorThemes, fontSizeThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';

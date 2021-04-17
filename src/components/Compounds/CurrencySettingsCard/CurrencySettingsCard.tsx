@@ -1,4 +1,4 @@
-import Card from 'components/Atoms/Card/Card';
+import { Card } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
 import { ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
 import styles from './CurrencySettingsCard.module.scss';
