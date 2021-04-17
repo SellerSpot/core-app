@@ -1,5 +1,5 @@
 import { Avatar } from '@sellerspot/universal-components';
-import BreadCrumbs from 'components/Atoms/BreadCrumbs/BreadCrumbs';
+import { BreadCrumbs } from '@sellerspot/universal-components';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
