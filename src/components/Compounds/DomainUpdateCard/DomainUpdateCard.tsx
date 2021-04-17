@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { Alert } from '@sellerspot/universal-components';
 import { Button } from '@sellerspot/universal-components';
 import { ExpandableCard } from '@sellerspot/universal-components';
-import InputField from 'components/Atoms/InputField/InputField';
+import { InputField } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
@@ -71,7 +71,7 @@ export default function DomainUpdateCard(): ReactElement {
                             placeHolder={'sreenithi'}
                             autoFocus={cardExpanded}
                             direction={'rtl'}
-                            state={
+                            theme={
                                 urlFieldState === 'success'
                                     ? 'success'
                                     : urlFieldState === 'error'

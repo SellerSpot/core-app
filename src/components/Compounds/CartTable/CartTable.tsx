@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import cn from 'classnames';
 import { IconButton } from '@sellerspot/universal-components';
-import InputField from 'components/Atoms/InputField/InputField';
+import { InputField } from '@sellerspot/universal-components';
 import ToolTip from 'components/Atoms/ToolTip/ToolTip';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,7 +100,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                                 <InputField
                                     label={'Product Name'}
                                     fullWidth={true}
-                                    state={'primary'}
+                                    theme={'primary'}
                                     value={row.productName}
                                     selectTextOnClick={true}
                                     onChange={(event) => {
