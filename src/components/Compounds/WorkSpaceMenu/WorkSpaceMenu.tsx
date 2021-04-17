@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import Avatar from 'components/Atoms/Avatar/Avatar';
+import { Avatar } from '@sellerspot/universal-components';
 import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButton/ExpandWorkspaceMenuButton';
 import Trademark from 'components/Atoms/Trademark/Trademark';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';

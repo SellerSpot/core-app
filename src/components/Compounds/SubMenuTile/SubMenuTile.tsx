@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import Avatar from 'components/Atoms/Avatar/Avatar';
+import { Avatar } from '@sellerspot/universal-components';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';

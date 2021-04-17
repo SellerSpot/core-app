@@ -1,4 +1,4 @@
-import Avatar from 'components/Atoms/Avatar/Avatar';
+import { Avatar } from '@sellerspot/universal-components';
 import BreadCrumbs from 'components/Atoms/BreadCrumbs/BreadCrumbs';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
