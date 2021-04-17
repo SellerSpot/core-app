@@ -9,6 +9,7 @@ import AppPreloader from 'components/Atoms/AppPreloader/AppPreloader';
 import { themeSelector } from 'store/models/theme';
 import { useSelector } from 'react-redux';
 import { colorThemes, fontSizeThemes } from 'config/themes';
+import Button from 'components/Atoms/Button/Button';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
@@ -18,11 +19,12 @@ export const App = (): ReactElement => {
     const themeState = useSelector(themeSelector);
     const colors = colorThemes[themeState.colorTheme];
     const fontSizes = fontSizeThemes[themeState.fontSizeTheme];
+    const [showSlider, setShowSlider] = useState(false);
 
     return (
         <div className={styles.appWrapper}>
             {appLoading ? (
-                <AppPreloader />
+                <h6>Loading</h6>
             ) : (
                 <div className={cn(styles.appContainer)}>
                     <Switch>
