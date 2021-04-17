@@ -10,7 +10,6 @@ import {
     TableRow,
 } from '@material-ui/core';
 import cn from 'classnames';
-import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import IconButton from 'components/Atoms/IconButton/IconButton';
 import InputField from 'components/Atoms/InputField/InputField';
 import ToolTip from 'components/Atoms/ToolTip/ToolTip';

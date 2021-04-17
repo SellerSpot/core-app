@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { Alert } from '@sellerspot/universal-components';
 import { Button } from '@sellerspot/universal-components';
-import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
+import { ExpandableCard } from '@sellerspot/universal-components';
 import InputField from 'components/Atoms/InputField/InputField';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
