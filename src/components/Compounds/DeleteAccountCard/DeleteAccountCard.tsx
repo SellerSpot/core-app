@@ -1,4 +1,4 @@
-import Alert from 'components/Atoms/Alert/Alert';
+import { Alert } from '@sellerspot/universal-components';
 import Button from 'components/Atoms/Button/Button';
 import Card from 'components/Atoms/Card/Card';
 import React, { ReactElement } from 'react';

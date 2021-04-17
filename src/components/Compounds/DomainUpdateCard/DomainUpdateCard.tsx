@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import Alert from 'components/Atoms/Alert/Alert';
+import { Alert } from '@sellerspot/universal-components';
 import Button from 'components/Atoms/Button/Button';
 import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
 import InputField from 'components/Atoms/InputField/InputField';
