@@ -12,7 +12,7 @@ import {
 import cn from 'classnames';
 import { IconButton } from '@sellerspot/universal-components';
 import { InputField } from '@sellerspot/universal-components';
-import ToolTip from 'components/Atoms/ToolTip/ToolTip';
+import { ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -75,7 +75,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                 <TableCell padding={'none'} align="left">
                     {index + 1}
                 </TableCell>
-                <ToolTip title={row.productName.length > 30 ? row.productName : ''}>
+                <ToolTip content={row.productName.length > 30 ? row.productName : ''}>
                     <TableCell align="left">
                         {<h6 className={styles.productNameText}>{`${row.productName}`}</h6>}
                     </TableCell>

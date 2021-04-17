@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { Avatar } from '@sellerspot/universal-components';
-import ToolTip from 'components/Atoms/ToolTip/ToolTip';
+import { ToolTip } from '@sellerspot/universal-components';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/icons';
@@ -34,7 +34,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
     );
 
     return (
-        <ToolTip title={requiredProps.toolTipText} enterDelay={500} placement={'right'}>
+        <ToolTip content={requiredProps.toolTipText} enterDelay={500} placement={'right'}>
             <div
                 className={wrapperClassName}
                 onClick={requiredProps.events?.onClick}
