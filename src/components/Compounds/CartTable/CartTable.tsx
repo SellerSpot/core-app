@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@material-ui/core';
 import cn from 'classnames';
-import IconButton from 'components/Atoms/IconButton/IconButton';
+import { IconButton } from '@sellerspot/universal-components';
 import InputField from 'components/Atoms/InputField/InputField';
 import ToolTip from 'components/Atoms/ToolTip/ToolTip';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -67,7 +67,7 @@ const Row = (row: ICartProductsData, index: number): ReactElement => {
                         <IconButton
                             icon={<ICONS.OTHER.EXPAND_MENU_DOWN />}
                             size={'small'}
-                            state={'grey'}
+                            theme={'grey'}
                             onClick={() => setOpenProductDetail(!openProductDetail)}
                         />
                     </div>
