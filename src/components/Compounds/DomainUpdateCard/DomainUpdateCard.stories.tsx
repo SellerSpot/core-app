@@ -10,6 +10,6 @@ const Template: Story = () => <DomainUpdateCardComponent />;
 export const DomainUpdateCard = Template.bind({});
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: DomainUpdateCardComponent,
 } as Meta;

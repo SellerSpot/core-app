@@ -15,7 +15,7 @@ export default function CurrencySettingsCard(props: ICurrencySettingsCardProps):
             content={
                 <div className={styles.content}>
                     <div className={styles.contentLHS}>
-                        <h6>Store Currency</h6>
+                        <h5>Store Currency</h5>
                         <p>Please select the currency to use across your store</p>
                     </div>
                     <Select

@@ -21,6 +21,6 @@ WorkSpaceTile.args = {
 } as IWorkSpaceTileProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: WorkSpaceTileComponent,
 } as Meta;

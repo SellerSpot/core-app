@@ -12,3 +12,8 @@ export interface ICartProductsData {
     discountPercent: number;
     taxBrackets: ITaxBracket[];
 }
+
+export type TCartTableLocalStore = {
+    productName: string;
+    setProductName: (data: string) => void;
+};

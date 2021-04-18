@@ -48,7 +48,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
                     />
                 </div>
-                <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
+                <h5 className={titleClassName}>{requiredProps.workspaceTitle}</h5>
             </div>
         </ToolTip>
     );

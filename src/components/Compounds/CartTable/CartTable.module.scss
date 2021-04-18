@@ -26,4 +26,9 @@
         width: 100%;
         @include flex(center, space-between, $gap: 10px);
     }
+    .collapsedDivActions {
+        width: 100%;
+        @include flex(center, flex-end, $gap: 10px);
+        margin-bottom: 10px;
+    }
 }

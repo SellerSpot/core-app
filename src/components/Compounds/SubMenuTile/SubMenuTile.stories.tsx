@@ -21,6 +21,6 @@ SubMenuTile.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: SubMenuTileComponent,
 } as Meta;

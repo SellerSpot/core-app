@@ -34,6 +34,6 @@ CurrencySettingsCard.args = {
 } as ICurrencySettingsCardProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: CurrencySettingsCardComponent,
 } as Meta;

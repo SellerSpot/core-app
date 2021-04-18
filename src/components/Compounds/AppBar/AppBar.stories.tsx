@@ -28,6 +28,6 @@ AppBar.args = {
 } as IAppBarProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: AppBarComponent,
 } as Meta;

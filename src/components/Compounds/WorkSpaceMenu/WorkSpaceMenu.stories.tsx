@@ -52,6 +52,6 @@ WorkSpaceMenu.args = {
 } as IWorkSpaceMenuProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: WorkSpaceMenuComponent,
 } as Meta;
