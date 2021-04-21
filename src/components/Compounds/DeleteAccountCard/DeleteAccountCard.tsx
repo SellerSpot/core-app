@@ -29,13 +29,13 @@ export default function DeleteAccountCard(): ReactElement {
                         </div>
                         <Button
                             size={'medium'}
-                            theme={'danger'}
-                            variant={'contained'}
+                            theme="danger"
+                            variant="contained"
                             label={'Delete'}
                         />
                     </div>
                     <div className={styles.bottomContent}>
-                        <Alert title={'Danger'} type={'error'}>
+                        <Alert title="danger" type={'error'}>
                             This is a desctructive operation! All data generated in this account
                             will be deleted permanently
                         </Alert>

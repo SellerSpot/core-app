@@ -15,6 +15,7 @@ import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 
 import styles from './CartTable.module.scss';
+import { CartTableService } from './CartTable.service';
 import { ICartTableProduct } from './CartTable.types';
 import { CollapsedContent } from './Components/CollapsedContent';
 
@@ -51,7 +52,7 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
             content: (
                 <IconButton
                     icon={<ICONS.MdClear />}
-                    theme={'danger'}
+                    theme="danger"
                     size={'small'}
                     onClick={() => {
                         store.dispatch(
@@ -67,34 +68,6 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
         },
     ];
 };
-
-const tableHeaders: ITableCell[] = [
-    {
-        content: 'S.No',
-        width: '5%',
-        align: 'left',
-    },
-    {
-        content: 'Product',
-        width: '55%',
-        align: 'left',
-    },
-    {
-        content: 'Qty',
-        width: '5%',
-        align: 'right',
-    },
-    {
-        content: 'Sub-Total',
-        width: '25%',
-        align: 'right',
-    },
-    {
-        content: '',
-        width: '5%',
-        align: 'right',
-    },
-];
 
 const getTableBody = (products: ICartTableProduct[]): ITableRow[] => {
     return products.map((product, productIndex) => {
@@ -117,9 +90,9 @@ export default function CartTable(): ReactElement {
     const { productsData } = useSelector(cartSelector);
     return (
         <Table
-            hasExpandableRows={true}
-            headers={tableHeaders}
-            stickyHeader={true}
+            hasExpandableRows
+            headers={CartTableService.tableHeaders}
+            stickyHeader
             body={getTableBody(productsData)}
         />
     );

@@ -56,10 +56,10 @@ export default function DomainUpdateCard(): ReactElement {
                                 )}
                             >
                                 <Button
-                                    variant={'contained'}
+                                    variant="contained"
                                     onClick={() => setCardExpanded(true)}
                                     label={'Update'}
-                                    theme={'primary'}
+                                    theme="primary"
                                 />
                             </div>
                         </div>
@@ -97,14 +97,14 @@ export default function DomainUpdateCard(): ReactElement {
                         <div className={styles.cardActions}>
                             <Button
                                 size={'medium'}
-                                variant={'contained'}
+                                variant="contained"
                                 label={'Update'}
-                                theme={'primary'}
+                                theme="primary"
                             />
                             <Button
                                 size={'medium'}
-                                variant={'outlined'}
-                                theme={'danger'}
+                                variant="outlined"
+                                theme="danger"
                                 label={'Cancel'}
                                 onClick={() => setCardExpanded(false)}
                             />

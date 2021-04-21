@@ -6,9 +6,9 @@ import { IPageActionButton } from './PageActionButton.types';
 export default function PageActionButton(props: IPageActionButton): ReactElement {
     return (
         <Button
-            fullWidth={true}
+            fullWidth
             theme="primary"
-            variant={'contained'}
+            variant="contained"
             size={'large'}
             onClick={props.onClick}
             label={

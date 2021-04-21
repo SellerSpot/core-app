@@ -51,7 +51,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                         <Button
                             theme={props.installed ? 'success' : 'primary'}
                             label={props.installed ? 'Launch' : 'Install'}
-                            variant={'contained'}
+                            variant="contained"
                             size={'small'}
                             startIcon={
                                 props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />

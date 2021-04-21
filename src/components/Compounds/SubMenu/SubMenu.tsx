@@ -92,7 +92,7 @@ export default function SubMenu(props: ISubMenuProps): ReactElement {
                                                       history.push(childTile.redirectRoute);
                                                   },
                                               }}
-                                              miniTile={true}
+                                              miniTile
                                           />
                                       );
                                   })

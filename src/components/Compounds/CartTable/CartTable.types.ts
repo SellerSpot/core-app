@@ -17,7 +17,7 @@ export interface ICartTableProduct {
 }
 
 // interface for the different fields in the Cart Table forms
-export interface ICartTableForm {
+export interface ICartTableFormValue {
     productName: string;
     quantity: number;
     unitPrice: number;
