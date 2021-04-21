@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { colorThemes, fontSizeThemes, TColorThemes, TFontSizeThemes } from 'config/themes';
+import { createSlice, Selector } from '@reduxjs/toolkit';
+import { TColorThemes, TFontSizeThemes } from 'config/themes';
 import { RootState } from '../store';
 
 interface IThemeState {

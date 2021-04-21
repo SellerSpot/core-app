@@ -10,7 +10,7 @@ import styles from './app.module.scss';
 initializeGlobalServices(); // application common initilizers goes here
 
 export const App = (): ReactElement => {
-    const [appLoading, setAppLoading] = useState(true);
+    const [appLoading] = useState(true);
 
     return (
         <div className={styles.appWrapper}>
@@ -26,7 +26,7 @@ export const App = (): ReactElement => {
                     </Switch>
                 </div>
             )}
-            {/* global components */}
+            {/* globally available components */}
         </div>
     );
 };

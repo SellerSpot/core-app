@@ -1,11 +1,15 @@
 import { Button, InputField } from '@sellerspot/universal-components';
+import { setIn } from 'final-form';
 import React, { ReactElement } from 'react';
 import { AnyObject, Field, Form, FormSpy } from 'react-final-form';
 import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
+
 import { updateCartProduct } from 'store/models/cart';
 import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
+
 import styles from '../CartTable.module.scss';
 import {
     ICartFormFormik,
@@ -13,12 +17,10 @@ import {
     ICollapsedContentProps,
     IFormItemsProps,
 } from '../CartTable.types';
-import * as yup from 'yup';
-import { setIn } from 'final-form';
 
 const FormItems = (props: IFormItemsProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
-    const { productName, quantity, discountPercent, unitPrice, stockUnit, taxBrackets } = product;
+    const { productName, quantity, discountPercent, unitPrice, stockUnit } = product;
 
     // used to check if the editable values have been changed
     const hasEditableValuesChanged = (values: ICartFormFormik): boolean => {

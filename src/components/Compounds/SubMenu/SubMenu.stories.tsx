@@ -1,9 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
 import SubMenuComponent from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';

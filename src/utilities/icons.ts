@@ -14,7 +14,7 @@ import {
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { BiBox } from 'react-icons/bi';
-import { RiBillLine, RiDeleteBin6Line } from 'react-icons/ri';
+import { RiBillLine } from 'react-icons/ri';
 import { VscChecklist, VscSettings } from 'react-icons/vsc';
 import { BsQuestionSquare } from 'react-icons/bs';
 import { CgFormatSlash } from 'react-icons/cg';

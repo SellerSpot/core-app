@@ -1,4 +1,3 @@
-import { POSPluginIllustration } from 'assets/images/images';
 import { Button } from '@sellerspot/universal-components';
 import { Card } from '@sellerspot/universal-components';
 import { colorThemes } from 'config/themes';
