@@ -76,7 +76,7 @@ export default function DomainUpdateCard(): ReactElement {
                                 urlFieldState === 'success'
                                     ? 'success'
                                     : urlFieldState === 'error'
-                                    ? 'error'
+                                    ? 'danger'
                                     : 'primary'
                             }
                             suffix={<h6>.sellerspot.in</h6>}
