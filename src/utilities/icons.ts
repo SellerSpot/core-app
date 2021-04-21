@@ -1,5 +1,8 @@
 import {
+    MdCheck,
     MdCheckCircle,
+    MdClear,
+    MdDelete,
     MdFileDownload,
     MdFullscreen,
     MdHome,
@@ -7,35 +10,33 @@ import {
     MdKeyboardArrowRight,
     MdLaunch,
     MdNotifications,
+    MdRemove,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { BiBox } from 'react-icons/bi';
-import { RiBillLine } from 'react-icons/ri';
+import { RiBillLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { VscChecklist, VscSettings } from 'react-icons/vsc';
 import { BsQuestionSquare } from 'react-icons/bs';
 import { CgFormatSlash } from 'react-icons/cg';
 
 export const ICONS = {
-    WORKSPACES: {
-        HOME: MdHome,
-        MANAGEMENT: VscSettings,
-        POS: FaCashRegister,
-        CATALOGUE: VscChecklist,
-    },
-    SUBMENUS: {
-        SALES: FaCashRegister,
-        INVENTORY: BiBox,
-        BILL_SETTINGS: RiBillLine,
-    },
-    OTHER: {
-        DEFAULT: BsQuestionSquare,
-        EXPAND_MENU: MdKeyboardArrowRight,
-        EXPAND_MENU_DOWN: MdKeyboardArrowDown,
-        FORWARD_SLASH: CgFormatSlash,
-        FULL_SCREEN: MdFullscreen,
-        SUCCESS_CHECK_CIRCLE: MdCheckCircle,
-        LAUNCH: MdLaunch,
-        NOTIFICATION: MdNotifications,
-        INSTALL: MdFileDownload,
-    },
+    MdHome,
+    VscSettings,
+    FaCashRegister,
+    VscChecklist,
+    BiBox,
+    RiBillLine,
+    BsQuestionSquare,
+    MdKeyboardArrowRight,
+    MdKeyboardArrowDown,
+    CgFormatSlash,
+    MdFullscreen,
+    MdCheckCircle,
+    MdLaunch,
+    MdNotifications,
+    MdFileDownload,
+    MdCheck,
+    MdDelete,
+    MdRemove,
+    MdClear,
 };

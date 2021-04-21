@@ -24,11 +24,11 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                 <BreadCrumbs crumbs={props.breadcrumbs} />
             </div>
             <div className={styles.rhsGroup}>
-                <ICONS.OTHER.FULL_SCREEN
+                <ICONS.MdFullscreen
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
-                <ICONS.OTHER.NOTIFICATION
+                <ICONS.MdNotifications
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />

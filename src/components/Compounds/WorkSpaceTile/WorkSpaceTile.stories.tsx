@@ -16,7 +16,7 @@ WorkSpaceTile.args = {
     expanded: false,
     selected: true,
     workspaceTitle: 'Home',
-    workspaceIcon: <ICONS.WORKSPACES.HOME />,
+    workspaceIcon: <ICONS.MdHome />,
     toolTipText: 'sdfsadf',
 } as IWorkSpaceTileProps;
 

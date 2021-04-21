@@ -11,10 +11,8 @@ const initialState: ICartState = {
         {
             quantity: 2,
             stockUnit: 'kg',
-            productName:
-                'Tomatoes a osdkf hj a s d o f s d o p fih sa pas odifh opdsif opsadifj sdopij',
+            productName: 'Tomatoes',
             unitPrice: 54,
-            subTotal: 0,
             discountPercent: 0,
             taxBrackets: [
                 {
@@ -28,7 +26,6 @@ const initialState: ICartState = {
             stockUnit: 'kg',
             productName: 'Potatoes',
             unitPrice: 32,
-            subTotal: 0,
             discountPercent: 0,
             taxBrackets: [
                 {
@@ -42,7 +39,6 @@ const initialState: ICartState = {
             stockUnit: 'pc',
             productName: 'Lays Crunchy Madness',
             unitPrice: 10,
-            subTotal: 0,
             discountPercent: 0,
             taxBrackets: [
                 {
@@ -58,49 +54,26 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        modifyCartProductQuantity: (
+        updateCartProduct: (
             state,
             {
                 payload,
             }: PayloadAction<{
-                quantity: ICartProductsData['quantity'];
+                productData: ICartProductsData;
                 productIndex: number;
             }>,
         ) => {
-            state.productsData[payload.productIndex].quantity = payload.quantity;
+            state.productsData[payload.productIndex] = payload.productData;
         },
-        modifyCartProductUnitPrice: (
+        removeProductFromCart: (
             state,
             {
                 payload,
             }: PayloadAction<{
-                unitPrice: ICartProductsData['unitPrice'];
                 productIndex: number;
             }>,
         ) => {
-            state.productsData[payload.productIndex].unitPrice = payload.unitPrice;
-        },
-        modifyCartProductDiscountPercent: (
-            state,
-            {
-                payload,
-            }: PayloadAction<{
-                discountPercent: ICartProductsData['discountPercent'];
-                productIndex: number;
-            }>,
-        ) => {
-            state.productsData[payload.productIndex].discountPercent = payload.discountPercent;
-        },
-        modifyCartProductName: (
-            state,
-            {
-                payload,
-            }: PayloadAction<{
-                productName: ICartProductsData['productName'];
-                productIndex: number;
-            }>,
-        ) => {
-            state.productsData[payload.productIndex].productName = payload.productName;
+            state.productsData.splice(payload.productIndex, 1);
         },
     },
 });
@@ -109,12 +82,7 @@ const cartSlice = createSlice({
 export default cartSlice.reducer;
 
 // exporting actions
-export const {
-    modifyCartProductQuantity,
-    modifyCartProductUnitPrice,
-    modifyCartProductDiscountPercent,
-    modifyCartProductName,
-} = cartSlice.actions;
+export const { updateCartProduct, removeProductFromCart } = cartSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const cartSelector: Selector<RootState, ICartState> = (state: RootState) => state.cart;

@@ -13,7 +13,7 @@ PluginCard.args = {
     installed: false,
     imageUrl: 'https://i.ibb.co/yBQQ8rx/pos-Plugin-Illustration.png',
     pluginName: 'Point of Sale',
-    pluginIcon: <ICONS.WORKSPACES.POS />,
+    pluginIcon: <ICONS.FaCashRegister />,
     pluginDescription: 'An all purpose point of sale system to handle your everyday sales',
 } as IPluginCardProps;
 export default {

@@ -10,7 +10,7 @@ import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 const defaultProps: IWorkSpaceTileProps = {
     toolTipText: '',
     expanded: false,
-    workspaceIcon: <ICONS.OTHER.DEFAULT />,
+    workspaceIcon: <ICONS.BsQuestionSquare />,
     selected: false,
     variant: 'tile',
     workspaceTitle: 'Home',

@@ -22,7 +22,7 @@ AppBar.args = {
         },
     ],
     currentWorkspace: {
-        workspaceIcon: <ICONS.WORKSPACES.MANAGEMENT />,
+        workspaceIcon: <ICONS.VscSettings />,
         workspaceTitle: 'Management',
     },
 } as IAppBarProps;

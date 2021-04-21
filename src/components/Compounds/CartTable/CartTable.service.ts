@@ -1,5 +1,4 @@
 import create from 'zustand';
-import { TCartTableLocalStore } from './CartTable.types';
 
 export class CartTableService {
     // handles changing the name of the product

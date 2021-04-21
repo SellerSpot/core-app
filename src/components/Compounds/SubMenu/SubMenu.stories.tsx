@@ -29,7 +29,7 @@ SubMenu.args = {
         {
             title: 'Sales',
             disabled: false,
-            icon: <ICONS.SUBMENUS.SALES />,
+            icon: <ICONS.FaCashRegister />,
             routesToWatch: ['/iframe.html'],
             redirectRoute: '',
             childTiles: [
@@ -49,7 +49,7 @@ SubMenu.args = {
         },
         {
             title: 'Inventory',
-            icon: <ICONS.SUBMENUS.INVENTORY />,
+            icon: <ICONS.BiBox />,
             disabled: false,
             routesToWatch: [''],
             redirectRoute: '',
@@ -64,7 +64,7 @@ SubMenu.args = {
         },
         {
             title: 'Bill Settings',
-            icon: <ICONS.SUBMENUS.BILL_SETTINGS />,
+            icon: <ICONS.RiBillLine />,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',

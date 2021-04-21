@@ -8,7 +8,7 @@ import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    icon: <ICONS.OTHER.DEFAULT />,
+    icon: <ICONS.BsQuestionSquare />,
     miniTile: false,
     title: 'Home',
     selected: false,

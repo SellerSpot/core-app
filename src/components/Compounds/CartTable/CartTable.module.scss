@@ -17,18 +17,18 @@
 }
 
 .collapsedDiv {
-    margin-top: 5px;
-    @include flex(center, flex-start, column, 0px);
+    margin: 5px 0;
+    @include flex(center, flex-start, column, 5px);
     .productName {
         width: 100%;
     }
     .propertyRow {
         width: 100%;
+        margin-top: 5px;
         @include flex(center, space-between, $gap: 10px);
     }
     .collapsedDivActions {
         width: 100%;
         @include flex(center, flex-end, $gap: 10px);
-        margin-bottom: 10px;
     }
 }

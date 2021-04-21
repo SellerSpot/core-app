@@ -44,7 +44,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                     />
                     <div className={styles.pluginActionsRHSSection}>
                         {props.installed ? (
-                            <ICONS.OTHER.SUCCESS_CHECK_CIRCLE
+                            <ICONS.MdCheckCircle
                                 size={'20px'}
                                 color={colorThemes[themeState.colorTheme].success}
                             />
@@ -55,7 +55,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             variant={'contained'}
                             size={'small'}
                             startIcon={
-                                props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
+                                props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />
                             }
                             onClick={props.pluginPrimaryCallback}
                         />

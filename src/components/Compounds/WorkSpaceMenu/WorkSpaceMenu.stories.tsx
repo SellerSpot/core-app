@@ -27,20 +27,20 @@ export const WorkSpaceMenu = Template.bind({});
 WorkSpaceMenu.args = {
     tiles: [
         {
-            icon: <ICONS.WORKSPACES.HOME />,
+            icon: <ICONS.MdHome />,
             title: 'Home',
             routesToWatch: ['/iframe.html'],
         },
         {
-            icon: <ICONS.WORKSPACES.MANAGEMENT />,
+            icon: <ICONS.VscSettings />,
             title: 'Management',
         },
         {
-            icon: <ICONS.WORKSPACES.POS />,
+            icon: <ICONS.FaCashRegister />,
             title: 'POS',
         },
         {
-            icon: <ICONS.WORKSPACES.CATALOGUE />,
+            icon: <ICONS.VscChecklist />,
             title: 'Catalogue',
         },
     ],
