@@ -15,10 +15,10 @@ import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
 
 import styles from './CartTable.module.scss';
-import { ICartProductsData } from './CartTable.types';
+import { ICartTableProduct } from './CartTable.types';
 import { CollapsedContent } from './Components/CollapsedContent';
 
-const getTableCells = (product: ICartProductsData, productIndex: number): ITableCell[] => {
+const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
     return [
         {
@@ -96,16 +96,18 @@ const tableHeaders: ITableCell[] = [
     },
 ];
 
-const getTableBody = (products: ICartProductsData[]): ITableRow[] => {
+const getTableBody = (products: ICartTableProduct[]): ITableRow[] => {
     return products.map((product, productIndex) => {
         return {
             cells: getTableCells(product, productIndex),
-            collapsedContent: (toggleRowExpansion) => {
-                return CollapsedContent({
-                    product,
-                    productIndex,
-                    toggleRowExpansion,
-                });
+            collapsedContent: function collapsedContent(toggleRowExpansion) {
+                return (
+                    <CollapsedContent
+                        product={product}
+                        productIndex={productIndex}
+                        toggleRowExpansion={toggleRowExpansion}
+                    />
+                );
             },
         };
     });

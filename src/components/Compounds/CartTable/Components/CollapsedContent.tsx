@@ -12,18 +12,18 @@ import { ICONS } from 'utilities/icons';
 
 import styles from '../CartTable.module.scss';
 import {
-    ICartFormFormik,
-    ICartProductsData,
-    ICollapsedContentProps,
-    IFormItemsProps,
+    ICartTableForm,
+    ICartTableProduct,
+    ICartTableCollapsedProps,
+    ICartTableCollapsedFormProps,
 } from '../CartTable.types';
 
-const FormItems = (props: IFormItemsProps) => {
+const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
     const { productName, quantity, discountPercent, unitPrice, stockUnit } = product;
 
     // used to check if the editable values have been changed
-    const hasEditableValuesChanged = (values: ICartFormFormik): boolean => {
+    const hasEditableValuesChanged = (values: ICartTableForm): boolean => {
         if (
             values.discountPercent !== discountPercent ||
             values.productName !== productName ||
@@ -157,7 +157,7 @@ const FormItems = (props: IFormItemsProps) => {
                 />
                 <FormSpy subscription={{ values: true }}>
                     {(values) => {
-                        const formValues = values.values as ICartFormFormik;
+                        const formValues = values.values as ICartTableForm;
                         return (
                             <Button
                                 theme={'primary'}
@@ -175,7 +175,7 @@ const FormItems = (props: IFormItemsProps) => {
     );
 };
 
-const cartFormValidationSchema: yup.SchemaOf<ICartFormFormik> = yup.object().shape({
+const cartFormValidationSchema: yup.SchemaOf<ICartTableForm> = yup.object().shape({
     productName: yup.string().required('Product name is required'),
     quantity: yup.number().required('Quantity is required'),
     unitPrice: yup.number().required('Unit Price is required'),
@@ -183,7 +183,7 @@ const cartFormValidationSchema: yup.SchemaOf<ICartFormFormik> = yup.object().sha
 });
 
 // callback to validate the form
-const validateForm = async (values: ICartFormFormik) => {
+const validateForm = async (values: ICartTableForm) => {
     try {
         await cartFormValidationSchema.validate(values, { abortEarly: false });
     } catch (err) {
@@ -197,11 +197,11 @@ const validateForm = async (values: ICartFormFormik) => {
     }
 };
 
-export const CollapsedContent = (props: ICollapsedContentProps): ReactElement => {
+export const CollapsedContent = (props: ICartTableCollapsedProps): ReactElement => {
     const { product, productIndex, toggleRowExpansion } = props;
     const { productName, quantity, discountPercent, unitPrice, stockUnit, taxBrackets } = product;
     const dispatch = useDispatch();
-    const cartFormFormikInitialValues: ICartFormFormik = {
+    const cartFormFormikInitialValues: ICartTableForm = {
         productName,
         discountPercent,
         quantity,
@@ -209,10 +209,10 @@ export const CollapsedContent = (props: ICollapsedContentProps): ReactElement =>
     };
 
     // handles form submission
-    const handleFormSubmission = (values: ICartFormFormik) => {
+    const handleFormSubmission = (values: ICartTableForm) => {
         const { discountPercent, productName, quantity, unitPrice } = values;
         // compiling product information
-        const productData: ICartProductsData = {
+        const productData: ICartTableProduct = {
             stockUnit,
             taxBrackets,
             discountPercent,
@@ -239,7 +239,7 @@ export const CollapsedContent = (props: ICollapsedContentProps): ReactElement =>
                     values: false,
                 }}
                 render={({ handleSubmit }) => (
-                    <FormItems
+                    <CartTableCollapsedForm
                         product={product}
                         productIndex={productIndex}
                         toggleRowExpansion={toggleRowExpansion}

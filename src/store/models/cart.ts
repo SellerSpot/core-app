@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { ICartProductsData } from 'components/Compounds/CartTable/CartTable.types';
+import { ICartTableProduct } from 'components/Compounds/CartTable/CartTable.types';
 import { RootState } from '../store';
 
 interface ICartState {
-    productsData: ICartProductsData[];
+    productsData: ICartTableProduct[];
 }
 
 const initialState: ICartState = {
@@ -59,7 +59,7 @@ const cartSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
-                productData: ICartProductsData;
+                productData: ICartTableProduct;
                 productIndex: number;
             }>,
         ) => {
