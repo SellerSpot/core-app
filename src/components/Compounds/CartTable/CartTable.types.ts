@@ -1,7 +1,7 @@
 import { AnyObject } from 'final-form';
 
 // interface for tax bracket structure in products
-interface ITaxBracket {
+export interface ITaxBracket {
     bracketName: string;
     bracketRate: number;
 }
