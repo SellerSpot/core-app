@@ -1,8 +1,5 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
 import { numberFormatINRCurrency } from 'utilities/general';
 import PageActionButtonComponent from './PageActionButton';
 import { IPageActionButton } from './PageActionButton.types';
@@ -24,6 +21,6 @@ PageActionButton.args = {
 } as IPageActionButton;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: PageActionButtonComponent,
 } as Meta;

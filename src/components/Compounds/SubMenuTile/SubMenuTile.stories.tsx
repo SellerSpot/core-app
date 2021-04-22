@@ -1,8 +1,5 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
 import SubMenuTileComponent from './SubMenuTile';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
@@ -21,6 +18,6 @@ SubMenuTile.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: SubMenuTileComponent,
 } as Meta;

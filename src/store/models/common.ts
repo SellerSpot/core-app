@@ -14,7 +14,7 @@ const commonSlice = createSlice({
     initialState,
     reducers: {
         updateCommonState: (state, { payload }: PayloadAction<InitialState>) => {
-            (<(keyof InitialState)[]>Object.keys(payload)).map((key, index) => {
+            (<(keyof InitialState)[]>Object.keys(payload)).map((key) => {
                 state[key] = payload[key];
             });
         },

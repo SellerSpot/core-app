@@ -1,4 +1,4 @@
-import Card from 'components/Atoms/Card/Card';
+import { Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
 import styles from './SaleSearchResultCard.module.scss';
@@ -12,7 +12,7 @@ export default function SaleSearchResultCard(props: ISaleSearchResultCard): Reac
                 cardWrapper: styles.cardWrapper,
                 contentWrapper: styles.contentWrapper,
             }}
-            onClickCard={props.onClick}
+            onClick={props.onClick}
             content={
                 <div className={styles.content}>
                     <div className={styles.contentLHS}>

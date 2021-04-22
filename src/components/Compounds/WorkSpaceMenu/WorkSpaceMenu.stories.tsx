@@ -1,9 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from 'store/store';
 import { ICONS } from 'utilities/icons';
 import WorkSpaceMenuComponent from './WorkSpaceMenu';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
@@ -27,20 +24,20 @@ export const WorkSpaceMenu = Template.bind({});
 WorkSpaceMenu.args = {
     tiles: [
         {
-            icon: <ICONS.WORKSPACES.HOME />,
+            icon: <ICONS.MdHome />,
             title: 'Home',
             routesToWatch: ['/iframe.html'],
         },
         {
-            icon: <ICONS.WORKSPACES.MANAGEMENT />,
+            icon: <ICONS.VscSettings />,
             title: 'Management',
         },
         {
-            icon: <ICONS.WORKSPACES.POS />,
+            icon: <ICONS.FaCashRegister />,
             title: 'POS',
         },
         {
-            icon: <ICONS.WORKSPACES.CATALOGUE />,
+            icon: <ICONS.VscChecklist />,
             title: 'Catalogue',
         },
     ],
@@ -52,6 +49,6 @@ WorkSpaceMenu.args = {
 } as IWorkSpaceMenuProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: WorkSpaceMenuComponent,
 } as Meta;

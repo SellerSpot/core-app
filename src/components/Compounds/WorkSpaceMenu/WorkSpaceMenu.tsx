@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import Avatar from 'components/Atoms/Avatar/Avatar';
-import ExpandWorkspaceMenuButton from 'components/Atoms/ExpandWorkspaceMenuButton/ExpandWorkspaceMenuButton';
-import Trademark from 'components/Atoms/Trademark/Trademark';
+import { Avatar } from '@sellerspot/universal-components';
+import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
+import { Trademark } from '@sellerspot/universal-components';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import animationStyles from '../../../styles/animation.module.scss';

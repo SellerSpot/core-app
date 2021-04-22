@@ -1,6 +1,6 @@
-import Alert from 'components/Atoms/Alert/Alert';
-import Button from 'components/Atoms/Button/Button';
-import Card from 'components/Atoms/Card/Card';
+import { Alert } from '@sellerspot/universal-components';
+import { Button } from '@sellerspot/universal-components';
+import { Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import styles from './DeleteAccountCard.module.scss';
 
@@ -29,13 +29,13 @@ export default function DeleteAccountCard(): ReactElement {
                         </div>
                         <Button
                             size={'medium'}
-                            state={'danger'}
-                            variant={'contained'}
+                            theme="danger"
+                            variant="contained"
                             label={'Delete'}
                         />
                     </div>
                     <div className={styles.bottomContent}>
-                        <Alert title={'Danger'} type={'error'}>
+                        <Alert title="danger" type={'error'}>
                             This is a desctructive operation! All data generated in this account
                             will be deleted permanently
                         </Alert>

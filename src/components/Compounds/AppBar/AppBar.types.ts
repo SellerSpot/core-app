@@ -1,4 +1,4 @@
-import { IBreadCrumbsProps } from 'components/Atoms/BreadCrumbs/BreadCrumbs.types';
+import { IBreadCrumbsProps } from '@sellerspot/universal-components';
 import { IWorkSpaceTileProps } from '../WorkSpaceTile/WorkSpaceTile.types';
 
 export interface IAppBarProps {

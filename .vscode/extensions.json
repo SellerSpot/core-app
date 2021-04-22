@@ -1,30 +1,19 @@
 {
     "recommendations": [
-        // styles and orders css
         "stylelint.vscode-stylelint",
-        // auto closes tags
         "formulahendry.auto-close-tag",
-        // auto renames tags
         "formulahendry.auto-rename-tag",
-        // colors bracket pairs
         "coenraads.bracket-pair-colorizer-2",
-        // highlights color codes
         "naumovs.color-highlight",
-        // vscode css modules intellisense
         "clinyong.vscode-css-modules",
-        // highlights errors in editor
         "usernamehw.errorlens",
-        // react code snippets
         "dsznajder.es7-react-js-snippets",
-        // ts linter
         "dbaeumer.vscode-eslint",
-        // sass watcher for sass imports
         "glenn2223.live-sass",
-        // code formatter
         "esbenp.prettier-vscode",
-        // non-ts file path finder
         "jakob101.relativepath",
-        // scss intellisense
         "mrmlnc.vscode-scss",
+        "alfnielsen.vsc-organize-imports",
+        "robertz.code-snapshot"
     ]
 }

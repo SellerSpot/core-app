@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import Alert from 'components/Atoms/Alert/Alert';
-import Button from 'components/Atoms/Button/Button';
-import ExpandableCard from 'components/Atoms/ExpandableCard/ExpandableCard';
-import InputField from 'components/Atoms/InputField/InputField';
+import { Alert } from '@sellerspot/universal-components';
+import { Button } from '@sellerspot/universal-components';
+import { ExpandableCard } from '@sellerspot/universal-components';
+import { InputField } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
@@ -56,9 +56,10 @@ export default function DomainUpdateCard(): ReactElement {
                                 )}
                             >
                                 <Button
-                                    variant={'contained'}
+                                    variant="contained"
                                     onClick={() => setCardExpanded(true)}
                                     label={'Update'}
+                                    theme="primary"
                                 />
                             </div>
                         </div>
@@ -71,11 +72,11 @@ export default function DomainUpdateCard(): ReactElement {
                             placeHolder={'sreenithi'}
                             autoFocus={cardExpanded}
                             direction={'rtl'}
-                            state={
+                            theme={
                                 urlFieldState === 'success'
                                     ? 'success'
                                     : urlFieldState === 'error'
-                                    ? 'error'
+                                    ? 'danger'
                                     : 'primary'
                             }
                             suffix={<h6>.sellerspot.in</h6>}
@@ -94,11 +95,16 @@ export default function DomainUpdateCard(): ReactElement {
                             }}
                         />
                         <div className={styles.cardActions}>
-                            <Button size={'medium'} variant={'contained'} label={'Update'} />
                             <Button
                                 size={'medium'}
-                                variant={'outlined'}
-                                state={'danger'}
+                                variant="contained"
+                                label={'Update'}
+                                theme="primary"
+                            />
+                            <Button
+                                size={'medium'}
+                                variant="outlined"
+                                theme="danger"
                                 label={'Cancel'}
                                 onClick={() => setCardExpanded(false)}
                             />

@@ -1,6 +1,5 @@
-import { POSPluginIllustration } from 'assets/images/images';
-import Button from 'components/Atoms/Button/Button';
-import Card from 'components/Atoms/Card/Card';
+import { Button } from '@sellerspot/universal-components';
+import { Card } from '@sellerspot/universal-components';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
@@ -38,24 +37,24 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                     <Button
                         onClick={props.pluginSecondaryCallback}
                         size={'small'}
-                        state={'accent'}
+                        theme={'accent'}
                         label={'Explore'}
                         variant={'text'}
                     />
                     <div className={styles.pluginActionsRHSSection}>
                         {props.installed ? (
-                            <ICONS.OTHER.SUCCESS_CHECK_CIRCLE
+                            <ICONS.MdCheckCircle
                                 size={'20px'}
                                 color={colorThemes[themeState.colorTheme].success}
                             />
                         ) : null}
                         <Button
-                            state={props.installed ? 'success' : 'primary'}
+                            theme={props.installed ? 'success' : 'primary'}
                             label={props.installed ? 'Launch' : 'Install'}
-                            variant={'contained'}
+                            variant="contained"
                             size={'small'}
                             startIcon={
-                                props.installed ? <ICONS.OTHER.LAUNCH /> : <ICONS.OTHER.INSTALL />
+                                props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />
                             }
                             onClick={props.pluginPrimaryCallback}
                         />

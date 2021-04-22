@@ -1,5 +1,5 @@
-import Avatar from 'components/Atoms/Avatar/Avatar';
-import BreadCrumbs from 'components/Atoms/BreadCrumbs/BreadCrumbs';
+import { Avatar } from '@sellerspot/universal-components';
+import { BreadCrumbs } from '@sellerspot/universal-components';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,11 +24,11 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                 <BreadCrumbs crumbs={props.breadcrumbs} />
             </div>
             <div className={styles.rhsGroup}>
-                <ICONS.OTHER.FULL_SCREEN
+                <ICONS.MdFullscreen
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
-                <ICONS.OTHER.NOTIFICATION
+                <ICONS.MdNotifications
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
