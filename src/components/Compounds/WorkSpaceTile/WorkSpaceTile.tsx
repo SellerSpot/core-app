@@ -1,9 +1,11 @@
-import cn from 'classnames';
 import { Avatar } from '@sellerspot/universal-components';
 import { ToolTip } from '@sellerspot/universal-components';
+import cn from 'classnames';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
+
 import { ICONS } from 'utilities/icons';
+
 import styles from './WorkSpaceTile.module.scss';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 

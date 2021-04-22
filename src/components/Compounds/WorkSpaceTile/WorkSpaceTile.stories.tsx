@@ -1,6 +1,8 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
+
 import { ICONS } from 'utilities/icons';
+
 import WorkSpaceTileComponent from './WorkSpaceTile';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 

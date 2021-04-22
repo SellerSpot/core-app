@@ -1,10 +1,11 @@
-import { Avatar } from '@sellerspot/universal-components';
-import { BreadCrumbs } from '@sellerspot/universal-components';
-import { colorThemes } from 'config/themes';
+import { Avatar, BreadCrumbs } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
+
+import { colorThemes } from 'config/themes';
 import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
+
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './AppBar.module.scss';
 import { IAppBarProps } from './AppBar.types';

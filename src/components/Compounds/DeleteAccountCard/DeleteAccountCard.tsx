@@ -1,7 +1,6 @@
-import { Alert } from '@sellerspot/universal-components';
-import { Button } from '@sellerspot/universal-components';
-import { Card } from '@sellerspot/universal-components';
+import { Alert, Button, Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+
 import styles from './DeleteAccountCard.module.scss';
 
 export default function DeleteAccountCard(): ReactElement {

@@ -1,10 +1,11 @@
-import { Button } from '@sellerspot/universal-components';
-import { Card } from '@sellerspot/universal-components';
-import { colorThemes } from 'config/themes';
+import { Button, Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
+
+import { colorThemes } from 'config/themes';
 import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
+
 import styles from './PluginCard.module.scss';
 import { IPluginCardProps } from './PluginCard.types';
 

@@ -1,9 +1,7 @@
+import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
 import cn from 'classnames';
-import { Alert } from '@sellerspot/universal-components';
-import { Button } from '@sellerspot/universal-components';
-import { ExpandableCard } from '@sellerspot/universal-components';
-import { InputField } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
+
 import animationStyles from '../../../styles/animation.module.scss';
 import styles from './DomainUpdateCard.module.scss';
 

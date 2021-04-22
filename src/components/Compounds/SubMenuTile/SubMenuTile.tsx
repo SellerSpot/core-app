@@ -1,9 +1,11 @@
-import cn from 'classnames';
 import { Avatar } from '@sellerspot/universal-components';
+import cn from 'classnames';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+
 import { ICONS } from 'utilities/icons';
+
 import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
