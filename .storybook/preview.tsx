@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react';
-import { Provider, useSelector } from 'react-redux';
-import { store } from '../src/store/store';
-import { colorThemes, fontSizeThemes } from '../src/config/themes';
-import { themeSelector } from '../src/store/models/theme';
 import { ThemeProvider } from '@sellerspot/universal-components';
+import React, { ReactElement } from 'react';
+import { Provider } from 'react-redux';
+
+import { colorThemes, fontSizeThemes } from '../src/config/themes';
+import { store } from '../src/store/store';
+
 import '@hookstate/devtools';
 
 export const parameters = {

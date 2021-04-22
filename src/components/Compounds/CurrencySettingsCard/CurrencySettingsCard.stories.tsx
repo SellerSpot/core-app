@@ -1,5 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
+
 import CurrencySettingsCardComponent from './CurrencySettingsCard';
 import { ICurrency, ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
 

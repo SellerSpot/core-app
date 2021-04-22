@@ -1,9 +1,10 @@
-import cn from 'classnames';
 import { Avatar } from '@sellerspot/universal-components';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import { Trademark } from '@sellerspot/universal-components';
+import cn from 'classnames';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+
 import animationStyles from '../../../styles/animation.module.scss';
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';

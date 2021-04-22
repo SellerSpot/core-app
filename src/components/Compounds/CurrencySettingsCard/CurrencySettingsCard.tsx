@@ -1,8 +1,8 @@
-import { Card } from '@sellerspot/universal-components';
+import { Card, Select } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
-import { ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
+
 import styles from './CurrencySettingsCard.module.scss';
-import { Select } from '@sellerspot/universal-components';
+import { ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
 
 export default function CurrencySettingsCard(props: ICurrencySettingsCardProps): ReactElement {
     const [selectedCurrency, setSelectedCurrency] = useState(0);

@@ -1,5 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
+
 import SaleSearchResultCardComponent from './SaleSearchResultCard';
 import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
 
