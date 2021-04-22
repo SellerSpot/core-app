@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import { colorThemes, fontSizeThemes } from '../src/config/themes';
 import { store } from '../src/store/store';
 
-import '@hookstate/devtools';
-
 export const parameters = {
     actions: { argTypesRegex: '^on[A-Z].*' },
 };
