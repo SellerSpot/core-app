@@ -1,6 +1,7 @@
 import {
     IconButton,
     ITableCell,
+    ITableProps,
     ITableRow,
     Table,
     ToolTip,
@@ -21,6 +22,23 @@ import { CollapsedContent } from './Components/CollapsedContent';
 
 const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
+    const deleteProductOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        // to stop the row from also being clicked
+        event.stopPropagation();
+        store.dispatch(
+            removeProductFromCart({
+                productIndex,
+            }),
+        );
+    };
+    const productSubTotal = numberFormatINRCurrency(
+        computeProductSubTotal({
+            discountPercent,
+            quantity,
+            taxBrackets,
+            unitPrice,
+        }),
+    );
     return [
         {
             content: productIndex + 1,
@@ -38,30 +56,21 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
             align: 'right',
         },
         {
-            content: numberFormatINRCurrency(
-                computeProductSubTotal({
-                    discountPercent,
-                    quantity,
-                    taxBrackets,
-                    unitPrice,
-                }),
-            ),
+            content: productSubTotal,
             align: 'right',
         },
         {
             content: (
-                <IconButton
-                    icon={<ICONS.MdClear />}
-                    theme="danger"
-                    size={'small'}
-                    onClick={() => {
-                        store.dispatch(
-                            removeProductFromCart({
-                                productIndex,
-                            }),
-                        );
-                    }}
-                />
+                <ToolTip content={'Remove Product'}>
+                    <div>
+                        <IconButton
+                            icon={<ICONS.MdClear />}
+                            theme="danger"
+                            size="small"
+                            onClick={deleteProductOnClick}
+                        />
+                    </div>
+                </ToolTip>
             ),
             padding: 'none',
             align: 'left',
@@ -69,31 +78,42 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
     ];
 };
 
-const getTableBody = (products: ICartTableProduct[]): ITableRow[] => {
+const getTableBody = (
+    products: ICartTableProduct[],
+    toggleRowExpansion: (rowIndex: number) => void,
+): ITableRow[] => {
     return products.map((product, productIndex) => {
+        const handleRowOnClick = () => {
+            toggleRowExpansion(productIndex);
+        };
+
         return {
             cells: getTableCells(product, productIndex),
-            collapsedContent: function collapsedContent(toggleRowExpansion) {
-                return (
-                    <CollapsedContent
-                        product={product}
-                        productIndex={productIndex}
-                        toggleRowExpansion={toggleRowExpansion}
-                    />
-                );
-            },
+            onClick: handleRowOnClick,
+            collapsedContent: (
+                <CollapsedContent
+                    product={product}
+                    productIndex={productIndex}
+                    toggleRowExpansion={toggleRowExpansion}
+                />
+            ),
         };
     });
 };
 
 export default function CartTable(): ReactElement {
     const { productsData } = useSelector(cartSelector);
+
+    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
+        return getTableBody(productsData, toggleRowExpansion);
+    };
+
     return (
         <Table
             hasExpandableRows
             headers={CartTableService.tableHeaders}
             stickyHeader
-            body={getTableBody(productsData)}
+            body={tableBody}
         />
     );
 }

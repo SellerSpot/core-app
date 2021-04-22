@@ -26,12 +26,7 @@ export default function DeleteAccountCard(): ReactElement {
                                 </a>
                             </h6>
                         </div>
-                        <Button
-                            size={'medium'}
-                            theme="danger"
-                            variant="contained"
-                            label={'Delete'}
-                        />
+                        <Button size="medium" theme="danger" variant="contained" label={'Delete'} />
                     </div>
                     <div className={styles.bottomContent}>
                         <Alert title="danger" type={'error'}>

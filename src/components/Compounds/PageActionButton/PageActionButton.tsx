@@ -10,7 +10,7 @@ export default function PageActionButton(props: IPageActionButton): ReactElement
             fullWidth
             theme="primary"
             variant="contained"
-            size={'large'}
+            size="large"
             onClick={props.onClick}
             label={
                 <div className={styles.button}>

@@ -11,7 +11,7 @@ const initialState: ICartState = {
         {
             quantity: 2,
             stockUnit: 'kg',
-            productName: '',
+            productName: 'Tomatoes',
             unitPrice: 54,
             discountPercent: 0,
             taxBrackets: [

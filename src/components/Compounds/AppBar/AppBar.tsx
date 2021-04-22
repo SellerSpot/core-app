@@ -19,21 +19,21 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                     workspaceIcon={props.currentWorkspace.workspaceIcon}
                     workspaceTitle={props.currentWorkspace.workspaceTitle}
                     expanded
-                    variant={'workspaceIndicator'}
+                    variant="workspaceIndicator"
                     selected
                 />
                 <BreadCrumbs crumbs={props.breadcrumbs} />
             </div>
             <div className={styles.rhsGroup}>
                 <ICONS.MdFullscreen
-                    size={'25px'}
+                    size="25px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <ICONS.MdNotifications
-                    size={'25px'}
+                    size="25px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
-                <Avatar content={'N'} variant={'circular'} theme={'selected'} size={'small'} />
+                <Avatar content={'N'} variant="circular" theme="selected" size="small" />
             </div>
         </div>
     );

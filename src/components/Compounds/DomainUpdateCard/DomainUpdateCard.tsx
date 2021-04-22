@@ -69,7 +69,7 @@ export default function DomainUpdateCard(): ReactElement {
                             label={'New Domain'}
                             placeHolder={'sreenithi'}
                             autoFocus={cardExpanded}
-                            direction={'rtl'}
+                            direction="rtl"
                             theme={
                                 urlFieldState === 'success'
                                     ? 'success'
@@ -94,13 +94,13 @@ export default function DomainUpdateCard(): ReactElement {
                         />
                         <div className={styles.cardActions}>
                             <Button
-                                size={'medium'}
+                                size="medium"
                                 variant="contained"
                                 label={'Update'}
                                 theme="primary"
                             />
                             <Button
-                                size={'medium'}
+                                size="medium"
                                 variant="outlined"
                                 theme="danger"
                                 label={'Cancel'}

@@ -1,6 +1,6 @@
 import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { Field, Form, FormRenderProps, FormSpy } from 'react-final-form';
+import { Field, Form, FormSpy } from 'react-final-form';
 
 import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
 import { numberFormatINRCurrency } from 'utilities/general';
@@ -177,16 +177,6 @@ export const CollapsedContent = (props: ICartTableCollapsedProps): ReactElement 
         });
     };
 
-    // render content for the Form
-    const getFormRender = ({ handleSubmit }: FormRenderProps) => (
-        <CartTableCollapsedForm
-            product={product}
-            productIndex={productIndex}
-            toggleRowExpansion={toggleRowExpansion}
-            handleSubmit={handleSubmit}
-        />
-    );
-
     return (
         <div className={styles.collapsedDiv}>
             <Form
@@ -196,8 +186,16 @@ export const CollapsedContent = (props: ICartTableCollapsedProps): ReactElement 
                 subscription={{
                     values: false,
                 }}
-                render={getFormRender}
-            />
+            >
+                {({ handleSubmit }) => (
+                    <CartTableCollapsedForm
+                        product={product}
+                        productIndex={productIndex}
+                        toggleRowExpansion={toggleRowExpansion}
+                        handleSubmit={handleSubmit}
+                    />
+                )}
+            </Form>
         </div>
     );
 };

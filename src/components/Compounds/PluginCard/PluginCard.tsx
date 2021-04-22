@@ -37,15 +37,15 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                 <div className={styles.pluginActions}>
                     <Button
                         onClick={props.pluginSecondaryCallback}
-                        size={'small'}
-                        theme={'accent'}
+                        size="small"
+                        theme="accent"
                         label={'Explore'}
-                        variant={'text'}
+                        variant="text"
                     />
                     <div className={styles.pluginActionsRHSSection}>
                         {props.installed ? (
                             <ICONS.MdCheckCircle
-                                size={'20px'}
+                                size="20px"
                                 color={colorThemes[themeState.colorTheme].success}
                             />
                         ) : null}
@@ -53,7 +53,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             theme={props.installed ? 'success' : 'primary'}
                             label={props.installed ? 'Launch' : 'Install'}
                             variant="contained"
-                            size={'small'}
+                            size="small"
                             startIcon={
                                 props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />
                             }
