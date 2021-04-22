@@ -11,6 +11,7 @@ import {
     MdLaunch,
     MdNotifications,
     MdRemove,
+    MdModeEdit,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { BiBox } from 'react-icons/bi';
@@ -39,4 +40,5 @@ export const ICONS = {
     MdDelete,
     MdRemove,
     MdClear,
+    MdModeEdit,
 };

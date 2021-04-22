@@ -1,0 +1,13 @@
+.textContent {
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+}
+
+.rowActions {
+    width: 100%;
+    @include flex(center, flex-end, $gap: 12px);
+}

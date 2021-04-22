@@ -1,19 +1,19 @@
 import { ITableCell } from '@sellerspot/universal-components';
 
-export class StandardDataViewTable {
+export class StandardDataViewTableService {
     static tableHeaders: ITableCell[] = [
         {
             content: 'Name',
             align: 'left',
-            width: '40%',
+            width: '30%',
         },
         {
             content: 'Description',
             align: 'left',
-            width: '40%',
+            width: '50%',
         },
         {
-            content: 'No.of Products',
+            content: 'Products',
             align: 'right',
             width: '10%',
         },
