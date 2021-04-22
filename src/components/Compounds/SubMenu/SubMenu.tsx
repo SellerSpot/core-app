@@ -2,6 +2,7 @@ import { isUndefined } from 'lodash';
 import React, { ReactElement, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import create, { GetState, SetState } from 'zustand';
+
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
 import styles from './SubMenu.module.scss';
 import { ISubMenuProps } from './SubMenu.types';
@@ -92,7 +93,7 @@ export default function SubMenu(props: ISubMenuProps): ReactElement {
                                                       history.push(childTile.redirectRoute);
                                                   },
                                               }}
-                                              miniTile={true}
+                                              miniTile
                                           />
                                       );
                                   })

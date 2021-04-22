@@ -1,10 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
-import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
+import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
 import { themeSelector } from 'store/models/theme';
-import '../../styles/core.scss';
+
 import { getMUITheme } from './MUIThemes';
+
+import '../../styles/core.scss';
 
 export interface IThemeProviderProps {
     children?: ReactElement | ReactElement[] | string | number;

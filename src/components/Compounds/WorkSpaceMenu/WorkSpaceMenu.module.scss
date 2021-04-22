@@ -69,6 +69,7 @@
 
 .trademarkWrapper {
     width: 100%;
+    height: 42px;
     @include flex(flex-start, center);
     background-color: $backgroundPrimary-color;
     @include animation(fade-out, 0.1s);

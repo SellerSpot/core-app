@@ -1,10 +1,9 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from 'store/store';
+
 import { ICONS } from 'utilities/icons';
+
 import SubMenuComponent from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';
 
@@ -29,7 +28,7 @@ SubMenu.args = {
         {
             title: 'Sales',
             disabled: false,
-            icon: <ICONS.SUBMENUS.SALES />,
+            icon: <ICONS.FaCashRegister />,
             routesToWatch: ['/iframe.html'],
             redirectRoute: '',
             childTiles: [
@@ -49,7 +48,7 @@ SubMenu.args = {
         },
         {
             title: 'Inventory',
-            icon: <ICONS.SUBMENUS.INVENTORY />,
+            icon: <ICONS.BiBox />,
             disabled: false,
             routesToWatch: [''],
             redirectRoute: '',
@@ -64,7 +63,7 @@ SubMenu.args = {
         },
         {
             title: 'Bill Settings',
-            icon: <ICONS.SUBMENUS.BILL_SETTINGS />,
+            icon: <ICONS.RiBillLine />,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',
@@ -73,6 +72,6 @@ SubMenu.args = {
 } as ISubMenuProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: SubMenuComponent,
 } as Meta;

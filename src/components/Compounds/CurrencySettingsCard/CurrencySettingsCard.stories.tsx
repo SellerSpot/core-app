@@ -1,8 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
+
 import CurrencySettingsCardComponent from './CurrencySettingsCard';
 import { ICurrency, ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
 
@@ -34,6 +32,6 @@ CurrencySettingsCard.args = {
 } as ICurrencySettingsCardProps;
 
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: CurrencySettingsCardComponent,
 } as Meta;

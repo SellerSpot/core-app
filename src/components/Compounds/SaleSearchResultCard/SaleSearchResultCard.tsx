@@ -1,9 +1,11 @@
-import Card from 'components/Atoms/Card/Card';
-import React, { ReactElement } from 'react';
-import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
-import styles from './SaleSearchResultCard.module.scss';
-import { numberFormatINRCurrency } from 'utilities/general';
+import { Card } from '@sellerspot/universal-components';
 import { isUndefined } from 'lodash';
+import React, { ReactElement } from 'react';
+
+import { numberFormatINRCurrency } from 'utilities/general';
+
+import styles from './SaleSearchResultCard.module.scss';
+import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
 
 export default function SaleSearchResultCard(props: ISaleSearchResultCard): ReactElement {
     return (
@@ -12,7 +14,7 @@ export default function SaleSearchResultCard(props: ISaleSearchResultCard): Reac
                 cardWrapper: styles.cardWrapper,
                 contentWrapper: styles.contentWrapper,
             }}
-            onClickCard={props.onClick}
+            onClick={props.onClick}
             content={
                 <div className={styles.content}>
                     <div className={styles.contentLHS}>

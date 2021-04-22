@@ -1,16 +1,18 @@
+import { Avatar } from '@sellerspot/universal-components';
+import { ToolTip } from '@sellerspot/universal-components';
 import cn from 'classnames';
-import Avatar from 'components/Atoms/Avatar/Avatar';
-import ToolTip from 'components/Atoms/ToolTip/ToolTip';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
+
 import { ICONS } from 'utilities/icons';
+
 import styles from './WorkSpaceTile.module.scss';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
 const defaultProps: IWorkSpaceTileProps = {
     toolTipText: '',
     expanded: false,
-    workspaceIcon: <ICONS.OTHER.DEFAULT />,
+    workspaceIcon: <ICONS.BsQuestionSquare />,
     selected: false,
     variant: 'tile',
     workspaceTitle: 'Home',
@@ -34,7 +36,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
     );
 
     return (
-        <ToolTip title={requiredProps.toolTipText} enterDelay={500} placement={'right'}>
+        <ToolTip content={requiredProps.toolTipText} enterDelay={500} placement={'right'}>
             <div
                 className={wrapperClassName}
                 onClick={requiredProps.events?.onClick}
@@ -48,7 +50,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
                     />
                 </div>
-                <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
+                <h5 className={titleClassName}>{requiredProps.workspaceTitle}</h5>
             </div>
         </ToolTip>
     );

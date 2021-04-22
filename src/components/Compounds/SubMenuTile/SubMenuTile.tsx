@@ -1,14 +1,16 @@
+import { Avatar } from '@sellerspot/universal-components';
 import cn from 'classnames';
-import Avatar from 'components/Atoms/Avatar/Avatar';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+
 import { ICONS } from 'utilities/icons';
+
 import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    icon: <ICONS.OTHER.DEFAULT />,
+    icon: <ICONS.BsQuestionSquare />,
     miniTile: false,
     title: 'Home',
     selected: false,

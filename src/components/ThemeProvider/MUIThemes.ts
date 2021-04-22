@@ -1,7 +1,5 @@
 import { createMuiTheme, Theme } from '@material-ui/core';
-import { colorThemes, IColors, TColorThemes } from 'config/themes';
-import { useSelector } from 'react-redux';
-import { themeSelector } from 'store/models/theme';
+import { colorThemes, TColorThemes } from 'config/themes';
 
 // Interface for the different Material UI themes used in the app
 interface IMuiThemes {

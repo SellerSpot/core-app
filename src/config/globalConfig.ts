@@ -5,5 +5,6 @@ export const initializeGlobalServices = async (): Promise<void> => {
 };
 
 export const updateGlobalServices = async (token: string): Promise<void> => {
+    console.log(token);
     apiService.initiateService();
 };

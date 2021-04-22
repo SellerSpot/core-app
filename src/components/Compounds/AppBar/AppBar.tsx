@@ -1,10 +1,11 @@
-import Avatar from 'components/Atoms/Avatar/Avatar';
-import BreadCrumbs from 'components/Atoms/BreadCrumbs/BreadCrumbs';
-import { colorThemes } from 'config/themes';
+import { Avatar, BreadCrumbs } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
+
+import { colorThemes } from 'config/themes';
 import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
+
 import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './AppBar.module.scss';
 import { IAppBarProps } from './AppBar.types';
@@ -24,11 +25,11 @@ export default function AppBar(props: IAppBarProps): ReactElement {
                 <BreadCrumbs crumbs={props.breadcrumbs} />
             </div>
             <div className={styles.rhsGroup}>
-                <ICONS.OTHER.FULL_SCREEN
+                <ICONS.MdFullscreen
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
-                <ICONS.OTHER.NOTIFICATION
+                <ICONS.MdNotifications
                     size={'25px'}
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />

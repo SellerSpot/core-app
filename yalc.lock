@@ -1,0 +1,8 @@
+{
+  "version": "v1",
+  "packages": {
+    "@sellerspot/universal-components": {
+      "signature": "acf6eae6fea6f897888a1493360efe96"
+    }
+  }
+}

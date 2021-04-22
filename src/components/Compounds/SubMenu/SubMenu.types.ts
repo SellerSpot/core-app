@@ -1,6 +1,4 @@
-import { ROUTES } from 'config/routes';
 import { ReactElement } from 'react';
-import { IComponentEvents } from 'typings/common.types';
 
 interface ITile {
     /**

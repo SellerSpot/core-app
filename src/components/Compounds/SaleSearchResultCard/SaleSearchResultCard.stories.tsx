@@ -1,8 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
+
 import SaleSearchResultCardComponent from './SaleSearchResultCard';
 import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
 
@@ -23,6 +21,6 @@ SaleSearchResultCard.args = {
     productImage: 'https://i.ibb.co/MZMJMCn/Rectangle-18.png',
 } as ISaleSearchResultCard;
 export default {
-    title: 'Components/Compounds',
+    title: 'Components',
     component: SaleSearchResultCardComponent,
 } as Meta;
