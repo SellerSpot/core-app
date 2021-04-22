@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ICONS } from 'utilities/icons';
 
-import SubMenuComponent from './SubMenu';
+import { SubMenu as SubMenuComponent } from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
