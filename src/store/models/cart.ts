@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
 import { ICartTableProduct } from 'components/Compounds/CartTable/CartTable.types';
+import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface ICartState {

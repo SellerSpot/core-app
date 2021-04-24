@@ -1,7 +1,7 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { CONFIG } from '../config/config';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as reducers from './models';
+import { CONFIG } from '../config/config';
 
 export const store = configureStore({
     reducer: combineReducers({ ...reducers }),

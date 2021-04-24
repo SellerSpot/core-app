@@ -1,10 +1,8 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-
 import { ICONS } from 'utilities/icons';
-
-import AppBarComponent from './AppBar';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { IAppBarProps } from './AppBar.types';
+import AppBarComponent from './AppBar';
 
 const Template: Story<IAppBarProps> = (args: IAppBarProps) => <AppBarComponent {...args} />;
 

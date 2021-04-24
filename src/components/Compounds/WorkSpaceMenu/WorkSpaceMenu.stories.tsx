@@ -1,11 +1,9 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-
 import { ICONS } from 'utilities/icons';
-
-import WorkSpaceMenuComponent from './WorkSpaceMenu';
+import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
+import WorkSpaceMenuComponent from './WorkSpaceMenu';
 
 const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
     <BrowserRouter>

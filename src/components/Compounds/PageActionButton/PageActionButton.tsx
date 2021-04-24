@@ -1,8 +1,7 @@
-import { Button } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-
-import styles from './PageActionButton.module.scss';
+import { Button } from '@sellerspot/universal-components';
 import { IPageActionButton } from './PageActionButton.types';
+import styles from './PageActionButton.module.scss';
 
 export default function PageActionButton(props: IPageActionButton): ReactElement {
     return (

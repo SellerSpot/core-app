@@ -1,6 +1,6 @@
-import { Button } from '@sellerspot/universal-components';
-import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
+import { Button } from '@sellerspot/universal-components';
 import { PageHeader as PageHeaderComponent, IPageHeaderProps } from './PageHeader';
 
 const Template: Story<IPageHeaderProps> = (args: IPageHeaderProps) => (

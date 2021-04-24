@@ -1,3 +1,5 @@
+import { VscChecklist, VscSettings } from 'react-icons/vsc';
+import { RiBillLine } from 'react-icons/ri';
 import {
     MdCheck,
     MdCheckCircle,
@@ -14,11 +16,9 @@ import {
     MdModeEdit,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
-import { BiBox } from 'react-icons/bi';
-import { RiBillLine } from 'react-icons/ri';
-import { VscChecklist, VscSettings } from 'react-icons/vsc';
-import { BsQuestionSquare } from 'react-icons/bs';
 import { CgFormatSlash } from 'react-icons/cg';
+import { BsQuestionSquare } from 'react-icons/bs';
+import { BiBox } from 'react-icons/bi';
 
 export const ICONS = {
     MdHome,

@@ -1,10 +1,8 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-
 import { ICONS } from 'utilities/icons';
-
-import WorkSpaceTileComponent from './WorkSpaceTile';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
+import WorkSpaceTileComponent from './WorkSpaceTile';
 
 const Template: Story<IWorkSpaceTileProps> = (args: IWorkSpaceTileProps) => (
     <WorkSpaceTileComponent {...args} />

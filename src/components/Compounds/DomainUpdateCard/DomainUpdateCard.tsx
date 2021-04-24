@@ -1,9 +1,8 @@
-import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
-import cn from 'classnames';
 import React, { ReactElement, useState } from 'react';
-
-import animationStyles from '../../../styles/animation.module.scss';
+import cn from 'classnames';
+import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
 import styles from './DomainUpdateCard.module.scss';
+import animationStyles from '../../../styles/animation.module.scss';
 
 export default function DomainUpdateCard(): ReactElement {
     const [cardExpanded, setCardExpanded] = useState(false);

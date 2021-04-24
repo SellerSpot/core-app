@@ -1,10 +1,8 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-
 import { numberFormatINRCurrency } from 'utilities/general';
-
-import PageActionButtonComponent from './PageActionButton';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { IPageActionButton } from './PageActionButton.types';
+import PageActionButtonComponent from './PageActionButton';
 
 const Template: Story = (args: IPageActionButton) => (
     <div

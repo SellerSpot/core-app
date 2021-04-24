@@ -1,10 +1,8 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-
 import { ICONS } from 'utilities/icons';
-
-import PluginCardComponent from './PluginCard';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { IPluginCardProps } from './PluginCard.types';
+import PluginCardComponent from './PluginCard';
 
 const Template: Story = (args: IPluginCardProps) => <PluginCardComponent {...args} />;
 export const PluginCard = Template.bind({});

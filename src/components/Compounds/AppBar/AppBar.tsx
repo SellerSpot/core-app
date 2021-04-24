@@ -1,14 +1,12 @@
-import { Avatar, BreadCrumbs } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-
-import { colorThemes } from 'config/themes';
-import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
-
-import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
-import styles from './AppBar.module.scss';
+import { themeSelector } from 'store/models/theme';
+import { useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
+import { colorThemes } from 'config/themes';
+import { Avatar, BreadCrumbs } from '@sellerspot/universal-components';
 import { IAppBarProps } from './AppBar.types';
+import styles from './AppBar.module.scss';
+import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
 
 export default function AppBar(props: IAppBarProps): ReactElement {
     const themeState = useSelector(themeSelector);

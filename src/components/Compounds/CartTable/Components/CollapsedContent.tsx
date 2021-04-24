@@ -1,18 +1,16 @@
-import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { Field, Form, FormSpy } from 'react-final-form';
-
-import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
-import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/icons';
-
-import styles from '../CartTable.module.scss';
-import { CartTableService } from '../CartTable.service';
+import { numberFormatINRCurrency } from 'utilities/general';
+import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
+import { Field, Form, FormSpy } from 'react-final-form';
+import React, { ReactElement } from 'react';
+import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import {
     ICartTableCollapsedFormProps,
     ICartTableCollapsedProps,
     ICartTableFormValue,
 } from '../CartTable.types';
+import { CartTableService } from '../CartTable.service';
+import styles from '../CartTable.module.scss';
 
 const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;

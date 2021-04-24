@@ -1,13 +1,11 @@
-import { Button, Card } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-
-import { colorThemes } from 'config/themes';
-import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons';
-
-import styles from './PluginCard.module.scss';
+import { themeSelector } from 'store/models/theme';
+import { useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
+import { colorThemes } from 'config/themes';
+import { Button, Card } from '@sellerspot/universal-components';
 import { IPluginCardProps } from './PluginCard.types';
+import styles from './PluginCard.module.scss';
 
 export default function PluginCard(props: IPluginCardProps): ReactElement {
     const themeState = useSelector(themeSelector);

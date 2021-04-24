@@ -1,5 +1,5 @@
-import { createMuiTheme, Theme } from '@material-ui/core';
 import { colorThemes, TColorThemes } from 'config/themes';
+import { createMuiTheme, Theme } from '@material-ui/core';
 
 // Interface for the different Material UI themes used in the app
 interface IMuiThemes {

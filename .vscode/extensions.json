@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "stylelint.vscode-stylelint",
-        "formulahendry.auto-close-tag",
         "formulahendry.auto-rename-tag",
         "coenraads.bracket-pair-colorizer-2",
         "naumovs.color-highlight",
@@ -13,7 +12,6 @@
         "esbenp.prettier-vscode",
         "jakob101.relativepath",
         "mrmlnc.vscode-scss",
-        "alfnielsen.vsc-organize-imports",
         "robertz.code-snapshot"
     ]
 }

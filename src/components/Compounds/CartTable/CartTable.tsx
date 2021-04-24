@@ -1,3 +1,10 @@
+import { ICONS } from 'utilities/icons';
+import { numberFormatINRCurrency } from 'utilities/general';
+import { computeProductSubTotal } from 'utilities/businessLogic';
+import { store } from 'store/store';
+import { cartSelector, removeProductFromCart } from 'store/models/cart';
+import { useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
 import {
     IconButton,
     ITableCell,
@@ -6,19 +13,10 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-
-import { cartSelector, removeProductFromCart } from 'store/models/cart';
-import { store } from 'store/store';
-import { computeProductSubTotal } from 'utilities/businessLogic';
-import { numberFormatINRCurrency } from 'utilities/general';
-import { ICONS } from 'utilities/icons';
-
-import styles from './CartTable.module.scss';
-import { CartTableService } from './CartTable.service';
-import { ICartTableProduct } from './CartTable.types';
 import { CollapsedContent } from './Components/CollapsedContent';
+import { ICartTableProduct } from './CartTable.types';
+import { CartTableService } from './CartTable.service';
+import styles from './CartTable.module.scss';
 
 const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;

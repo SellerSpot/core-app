@@ -1,3 +1,5 @@
+import { ICONS } from 'utilities/icons';
+import React, { ReactElement } from 'react';
 import {
     IconButton,
     ITableCell,
@@ -6,12 +8,11 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { ICONS } from 'utilities/icons';
-import { StandardDataViewTableService } from './StandardDataViewTable.service';
 import { IStandardDataViewTableProps } from './StandardDataViewTable.types';
-export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
+import { StandardDataViewTableService } from './StandardDataViewTable.service';
 import styles from './StandardDataViewTable.module.scss';
+
+export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 
 // assembles the cell data for the table
 const getCells = (props: {

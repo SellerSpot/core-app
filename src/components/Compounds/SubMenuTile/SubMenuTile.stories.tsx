@@ -1,8 +1,7 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-
-import SubMenuTileComponent from './SubMenuTile';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { ISubMenuTileProps } from './SubMenuTile.types';
+import SubMenuTileComponent from './SubMenuTile';
 
 const Template: Story<ISubMenuTileProps> = (args: ISubMenuTileProps) => (
     <SubMenuTileComponent {...args} />

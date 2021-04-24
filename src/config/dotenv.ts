@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
 import path from 'path';
+import dotenv from 'dotenv';
 
 export const getEnvironmentVariables = (isProduction = false): { [key: string]: string } => {
     const environmentVariables: { [key: string]: string } = {};

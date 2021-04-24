@@ -33,6 +33,25 @@
                 "extensions": [".jsx", ".tsx"]
             }
         ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "internal",
+                    "external",
+                    "index",
+                    "sibling",
+                    "parent",
+                    "object"
+                ],
+                "newlines-between": "never",
+                "alphabetize": {
+                    "order": "desc",
+                    "caseInsensitive": false
+                }
+            }
+        ],
         "react/prop-types": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "off"

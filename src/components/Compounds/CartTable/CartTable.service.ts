@@ -1,10 +1,8 @@
-import { ITableCell } from '@sellerspot/universal-components';
-import { AnyObject, setIn } from 'final-form';
 import * as yup from 'yup';
-
-import { updateCartProduct } from 'store/models/cart';
 import { store } from 'store/store';
-
+import { updateCartProduct } from 'store/models/cart';
+import { AnyObject, setIn } from 'final-form';
+import { ITableCell } from '@sellerspot/universal-components';
 import { ICartTableFormValue, ICartTableProduct } from './CartTable.types';
 
 export class CartTableService {
