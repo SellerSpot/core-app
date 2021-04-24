@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactElement } from 'react';
 import { IPageHeaderProps } from './PageHeader.types';
 import styles from './PageHeader.module.scss';
+
 export { IPageHeaderProps } from './PageHeader.types';
 
 export const PageHeader = (props: IPageHeaderProps): ReactElement => {

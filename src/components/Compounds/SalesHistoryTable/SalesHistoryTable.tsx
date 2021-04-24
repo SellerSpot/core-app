@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { ITableProps } from '@sellerspot/universal-components/dist/components/Table/Table.types';
+import { ITableProps } from '@sellerspot/universal-components';
 import { ITableRow, Table } from '@sellerspot/universal-components';
 import { ISalesHistoryTableProps } from './SalesHistoryTable.types';
 import { SalesHistoryService } from './SalesHistoryTable.service';
