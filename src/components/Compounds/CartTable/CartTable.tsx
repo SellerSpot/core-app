@@ -111,6 +111,7 @@ export default function CartTable(): ReactElement {
             hasExpandableRows
             headers={CartTableService.tableHeaders}
             stickyHeader
+            unmountOnCollapse
             body={tableBody}
         />
     );

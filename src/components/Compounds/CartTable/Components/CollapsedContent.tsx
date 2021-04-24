@@ -19,7 +19,12 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     return (
         <form onSubmit={handleSubmit} className={styles.collapsedDiv} noValidate>
             <div className={styles.productName}>
-                <Field name={'productName'}>
+                <Field
+                    name={'productName'}
+                    validate={(value) =>
+                        CartTableService.validateCollapsedField(value, 'productName')
+                    }
+                >
                     {({ input, meta }) => {
                         const { onChange, value } = input;
                         const { error } = meta;
@@ -32,7 +37,6 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                             <InputField
                                 label={'Product Name'}
                                 fullWidth
-                                required
                                 theme="primary"
                                 placeHolder={productName}
                                 value={value}
@@ -45,7 +49,10 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                 </Field>
             </div>
             <div className={styles.propertyRow}>
-                <Field name={'quantity'}>
+                <Field
+                    name={'quantity'}
+                    validate={(value) => CartTableService.validateCollapsedField(value, 'quantity')}
+                >
                     {({ input, meta }) => {
                         const { onChange, value } = input;
                         const { error } = meta;
@@ -59,7 +66,6 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 label={'Quantity'}
                                 type="number"
                                 minNumericValue={0}
-                                required
                                 selectTextOnClick
                                 placeHolder={`${quantity}`}
                                 theme="primary"
@@ -71,7 +77,12 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                         );
                     }}
                 </Field>
-                <Field name={'unitPrice'}>
+                <Field
+                    name={'unitPrice'}
+                    validate={(value) =>
+                        CartTableService.validateCollapsedField(value, 'unitPrice')
+                    }
+                >
                     {({ input, meta }) => {
                         const { onChange, value } = input;
                         const { error } = meta;
@@ -86,7 +97,6 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 prefix={<h6>₹</h6>}
                                 value={value}
                                 minNumericValue={0}
-                                required
                                 placeHolder={`${unitPrice}`}
                                 theme="primary"
                                 selectTextOnClick
@@ -97,7 +107,12 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                         );
                     }}
                 </Field>
-                <Field name={'discountPercent'}>
+                <Field
+                    name={'discountPercent'}
+                    validate={(value) =>
+                        CartTableService.validateCollapsedField(value, 'discountPercent')
+                    }
+                >
                     {({ input, meta }) => {
                         const { onChange, value } = input;
                         const { error } = meta;
@@ -118,7 +133,6 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 label={'Discount (%)'}
                                 suffix={<h6>%</h6>}
                                 type="number"
-                                required
                                 placeHolder={`${discountPercent}`}
                                 maxNumericValue={100}
                                 minNumericValue={0}
@@ -180,10 +194,7 @@ export const CollapsedContent = (props: ICartTableCollapsedProps): ReactElement 
             <Form
                 initialValues={CartTableService.collapsedFormGetInitialValues(product)}
                 onSubmit={handleFormSubmission}
-                validate={CartTableService.validateCollapsedForm}
-                subscription={{
-                    values: false,
-                }}
+                subscription={{}}
             >
                 {({ handleSubmit }) => (
                     <CartTableCollapsedForm
