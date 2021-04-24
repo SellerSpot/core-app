@@ -2,8 +2,7 @@ import { ICONS } from 'utilities/icons';
 import React, { ReactElement } from 'react';
 import { merge } from 'lodash';
 import cn from 'classnames';
-import { Avatar } from '@sellerspot/universal-components';
-import { ToolTip } from '@sellerspot/universal-components';
+import { Avatar, ToolTip } from '@sellerspot/universal-components';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 import styles from './WorkSpaceTile.module.scss';
 

@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { ITableProps } from '@sellerspot/universal-components';
-import { ITableRow, Table } from '@sellerspot/universal-components';
+import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
 import { ISalesHistoryTableProps } from './SalesHistoryTable.types';
 import { SalesHistoryService } from './SalesHistoryTable.service';
 // import styles from './SalesHistoryTable.module.scss';
