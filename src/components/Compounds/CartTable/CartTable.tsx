@@ -13,7 +13,7 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { CollapsedContent } from './Components/CollapsedContent';
+import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 import { ICartTableProduct } from './CartTable.types';
 import { CartTableService } from './CartTable.service';
 import styles from './CartTable.module.scss';
@@ -89,7 +89,7 @@ const getTableBody = (
             cells: getTableCells(product, productIndex),
             onClick: handleRowOnClick,
             collapsedContent: (
-                <CollapsedContent
+                <CartTableCollapsedContent
                     product={product}
                     productIndex={productIndex}
                     toggleRowExpansion={toggleRowExpansion}
@@ -111,7 +111,6 @@ export default function CartTable(): ReactElement {
             hasExpandableRows
             headers={CartTableService.tableHeaders}
             stickyHeader
-            unmountOnCollapse
             body={tableBody}
         />
     );

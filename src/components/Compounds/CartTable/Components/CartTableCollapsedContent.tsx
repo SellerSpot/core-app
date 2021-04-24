@@ -176,7 +176,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     );
 };
 
-export const CollapsedContent = (props: ICartTableCollapsedProps): ReactElement => {
+export const CartTableCollapsedContent = (props: ICartTableCollapsedProps): ReactElement => {
     const { product, productIndex, toggleRowExpansion } = props;
 
     // pushing form data into global store

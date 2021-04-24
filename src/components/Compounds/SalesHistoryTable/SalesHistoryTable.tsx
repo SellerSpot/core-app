@@ -26,7 +26,7 @@ const getTableBody = (): ITableRow[] => {
                     content: 'Status',
                 },
             ],
-            collapsedContent: <div>Hi there</div>,
+            CartTableCollapsedContent: <div>Hi there</div>,
         },
     ];
 };
