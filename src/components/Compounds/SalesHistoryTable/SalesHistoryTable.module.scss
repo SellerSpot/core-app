@@ -1,0 +1,20 @@
+.collapsedContent {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+    gap: 5px;
+    grid-template-columns: 1fr 150px;
+    grid-template-rows: 1fr;
+
+    .productsView {
+        flex-grow: 1;
+        background-color: green;
+    }
+
+    .controls {
+        width: 150px;
+        flex-grow: 0;
+        @include flex(flex-start, flex-end, column, 10px);
+    }
+}

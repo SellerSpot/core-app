@@ -7,7 +7,13 @@ import {
 } from './SalesHistoryTable';
 
 const Template: Story<ISalesHistoryTableProps> = (args: ISalesHistoryTableProps) => (
-    <SalesHistoryComponent {...args} />
+    <div
+        style={{
+            width: '90%',
+        }}
+    >
+        <SalesHistoryComponent {...args} />
+    </div>
 );
 
 export const SalesHistoryTable = Template.bind({});

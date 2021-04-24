@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
 import { ISalesHistoryTableProps } from './SalesHistoryTable.types';
 import { SalesHistoryService } from './SalesHistoryTable.service';
+import { SalesHistoryProducts } from './Components/SalesHistoryProducts';
 // import styles from './SalesHistoryTable.module.scss';
 
 export { ISalesHistoryTableProps } from './SalesHistoryTable.types';
@@ -20,7 +21,7 @@ const getTableBody = (props: {
         return {
             cells: SalesHistoryService.getCells(omit(sale, 'products')),
             onClick: handleRowOnClick,
-            collapsedContent: <div>Hi there</div>,
+            collapsedContent: <SalesHistoryProducts products={pick(sale, 'products')} />,
         };
     });
 };
