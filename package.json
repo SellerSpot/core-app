@@ -17,7 +17,7 @@
         "lint-staged": "lint-staged",
         "postinstall": "npm run husky:install",
         "husky:install": "husky install",
-        "husky:pre-commit": "npm run lint-staged && npm run stylelint:fix",
+        "husky:pre-commit": "npm run lint-staged",
         "stylelint:fix": "npx stylelint \"**/*.scss\" --fix",
         "yalc:link": "yalc link @sellerspot/universal-components",
         "yalc:remove": "yalc remove --all"
@@ -28,6 +28,7 @@
     "lint-staged": {
         "*.{ts,tsx,less}": [
             "prettier --write",
+            "stylelint --fix",
             "git add"
         ],
         "*.{ts,tsx}": "eslint --fix --max-warnings 0"
