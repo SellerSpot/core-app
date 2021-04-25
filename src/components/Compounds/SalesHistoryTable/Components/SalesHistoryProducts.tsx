@@ -3,6 +3,7 @@ import { Button, ITableProps, ITableRow, Table } from '@sellerspot/universal-com
 import { ISalesHistoryTableProps } from '../SalesHistoryTable.types';
 import { SalesHistoryService } from '../SalesHistoryTable.service';
 import styles from '../SalesHistoryTable.module.scss';
+import { SaleSummary } from './SaleSummary';
 
 const Controls = (): ReactElement => {
     return (
@@ -58,6 +59,8 @@ const ProductsTable = (props: {
         <Table
             variant="simple"
             size="small"
+            maxHeight={200}
+            stickyHeader={true}
             headers={SalesHistoryService.productsTableHeaders}
             body={tableBody}
         />
@@ -72,8 +75,15 @@ export const SalesHistoryProducts = (props: {
     return (
         <div className={styles.collapsedContent}>
             <div className={styles.productsView}>
-                <h4>Products</h4>
-                <ProductsTable products={products} />
+                <div>
+                    <h4>Products</h4>
+                </div>
+                <div className={styles.productsTable}>
+                    <ProductsTable products={products} />
+                </div>
+                <div className={styles.saleSummaryWrapper}>
+                    <SaleSummary />
+                </div>
             </div>
             <div className={styles.controls}>
                 <Controls />

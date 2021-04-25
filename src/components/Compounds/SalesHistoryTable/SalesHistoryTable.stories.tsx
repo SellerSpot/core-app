@@ -9,7 +9,8 @@ import {
 const Template: Story<ISalesHistoryTableProps> = (args: ISalesHistoryTableProps) => (
     <div
         style={{
-            width: '90%',
+            height: '100vh',
+            width: '100%',
         }}
     >
         <SalesHistoryComponent {...args} />
@@ -19,6 +20,29 @@ const Template: Story<ISalesHistoryTableProps> = (args: ISalesHistoryTableProps)
 export const SalesHistoryTable = Template.bind({});
 SalesHistoryTable.args = {
     saleHistory: [
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
         {
             saleTime: '2 minutes ago',
             cashier: 'Rohit',
@@ -82,6 +106,15 @@ SalesHistoryTable.args = {
                     taxAmount: numberFormatINRCurrency(60),
                     unitPrice: numberFormatINRCurrency(90),
                 },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
                 {
                     productName: 'Sample Product',
                     quantity: 1,
@@ -96,6 +129,15 @@ SalesHistoryTable.args = {
                     taxAmount: numberFormatINRCurrency(60),
                     unitPrice: numberFormatINRCurrency(90),
                 },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
                 {
                     productName: 'Sample Product',
                     quantity: 1,
@@ -110,6 +152,15 @@ SalesHistoryTable.args = {
                     taxAmount: numberFormatINRCurrency(60),
                     unitPrice: numberFormatINRCurrency(90),
                 },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
                 {
                     productName: 'Sample Product',
                     quantity: 1,
@@ -124,6 +175,176 @@ SalesHistoryTable.args = {
                     taxAmount: numberFormatINRCurrency(60),
                     unitPrice: numberFormatINRCurrency(90),
                 },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+                {
+                    productName: 'Sample Product',
+                    quantity: 1,
+                    subTotal: numberFormatINRCurrency(150),
+                    taxAmount: numberFormatINRCurrency(60),
+                    unitPrice: numberFormatINRCurrency(90),
+                },
+            ],
+        },
+        {
+            saleTime: '2 minutes ago',
+            cashier: 'Rohit',
+            customer: 'Immi',
+            saleTotal: numberFormatINRCurrency(2000),
+            status: 'completed',
+            products: [
                 {
                     productName: 'Sample Product',
                     quantity: 1,
@@ -144,6 +365,9 @@ SalesHistoryTable.args = {
 } as ISalesHistoryTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Components/Fullscreen',
     component: SalesHistoryComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { omit } from 'lodash';
 import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
 import { ISalesHistoryTableProps } from './SalesHistoryTable.types';
@@ -21,15 +21,23 @@ const getTableBody = (props: {
         return {
             cells: SalesHistoryService.getCells(omit(sale, 'products')),
             onClick: handleRowOnClick,
-            collapsedContent: SalesHistoryProducts({
-                products: sale['products'],
-            }),
+            collapsedContent: <SalesHistoryProducts products={sale['products']} />,
         };
     });
 };
 
 export const SalesHistoryTable = (props: ISalesHistoryTableProps): ReactElement => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(true);
+    const [height, setHeight] = useState(250);
     const { saleHistory } = props;
+
+    useEffect(() => {
+        const height = containerRef?.current?.clientHeight ?? 250;
+        setHeight(height);
+        setLoading(false);
+    }, []);
+
     const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
         return getTableBody({
             saleHistory,
@@ -38,11 +46,25 @@ export const SalesHistoryTable = (props: ISalesHistoryTableProps): ReactElement 
     };
 
     return (
-        <Table
-            hasExpandableRows
-            unmountOnCollapse
-            headers={SalesHistoryService.headers}
-            body={tableBody}
-        />
+        <div
+            style={{
+                width: '100%',
+                height: '100%',
+            }}
+            ref={containerRef}
+        >
+            {loading ? (
+                <h4>Loading Table</h4>
+            ) : (
+                <Table
+                    maxHeight={height}
+                    hasExpandableRows
+                    unmountOnCollapse
+                    stickyHeader
+                    headers={SalesHistoryService.headers}
+                    body={tableBody}
+                />
+            )}
+        </div>
     );
 };
