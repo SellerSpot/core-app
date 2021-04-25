@@ -1,13 +1,13 @@
-import create, { GetState, SetState } from 'zustand';
-import { useHistory } from 'react-router-dom';
-import React, { ReactElement, useEffect } from 'react';
-import { isUndefined } from 'lodash';
 import cn from 'classnames';
-import { ISubMenuProps, TSubMenuStore } from './SubMenu.types';
-import styles from './SubMenu.module.scss';
+import { isUndefined } from 'lodash';
+import React, { ReactElement, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import create, { GetState, SetState } from 'zustand';
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
+import styles from './SubMenu.module.scss';
+import { ISubMenuProps, TSubMenuStore } from './SubMenu.types';
 
-// store to hold data regarding visibility of tiles
+// store to hold data regardi ng visibility of tiles
 const useTilesStore = create<TSubMenuStore>(
     (set: SetState<TSubMenuStore>, get: GetState<TSubMenuStore>) => ({
         tiles: [],

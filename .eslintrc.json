@@ -1,13 +1,6 @@
 {
     "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "@typescript-eslint",
-        "react",
-        "react-hooks",
-        "eslint-plugin-import",
-        "prettier",
-        "unused-imports"
-    ],
+    "plugins": ["@typescript-eslint", "react", "react-hooks", "eslint-plugin-import", "prettier"],
     "env": {
         "browser": true
     },
@@ -31,25 +24,6 @@
             "warn",
             {
                 "extensions": [".jsx", ".tsx"]
-            }
-        ],
-        "import/order": [
-            "error",
-            {
-                "groups": [
-                    "builtin",
-                    "internal",
-                    "external",
-                    "index",
-                    "sibling",
-                    "parent",
-                    "object"
-                ],
-                "newlines-between": "never",
-                "alphabetize": {
-                    "order": "desc",
-                    "caseInsensitive": false
-                }
             }
         ],
         "react/prop-types": "off",

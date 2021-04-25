@@ -9,11 +9,11 @@ export class SalesHistoryService {
         },
         {
             content: 'Customer',
-            width: '29%',
+            width: '25%',
         },
         {
             content: 'Cashier',
-            width: '29%',
+            width: '25%',
         },
         {
             content: 'Sale Total',
@@ -22,7 +22,7 @@ export class SalesHistoryService {
         },
         {
             content: 'Status',
-            width: '12%',
+            width: '10%',
         },
     ];
 
@@ -46,6 +46,64 @@ export class SalesHistoryService {
             },
             {
                 content: status,
+            },
+        ];
+    };
+
+    static productsTableHeaders: ITableCell[] = [
+        {
+            content: 'S.No',
+            align: 'right',
+        },
+        {
+            content: 'Product',
+        },
+        {
+            content: 'Quantity',
+            align: 'right',
+        },
+        {
+            content: 'Unit Price',
+            align: 'right',
+        },
+        {
+            content: 'Tax',
+            align: 'right',
+        },
+        {
+            content: 'Sub-Total',
+            align: 'right',
+        },
+    ];
+
+    static getProductTableCells = (
+        product: ISalesHistoryTableProps['saleHistory'][0]['products'][0],
+        productIndex: number,
+    ): ITableCell[] => {
+        const { productName, quantity, subTotal, taxAmount, unitPrice } = product;
+        return [
+            {
+                content: productIndex + 1,
+                align: 'right',
+            },
+            {
+                content: productName,
+            },
+            {
+                content: quantity,
+                align: 'right',
+            },
+            {
+                content: unitPrice,
+                align: 'right',
+            },
+            {
+                content: taxAmount,
+                align: 'right',
+            },
+            {
+                content: subTotal,
+                align: 'right',
             },
         ];
     };
