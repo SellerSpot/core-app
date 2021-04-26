@@ -10,6 +10,9 @@ interface ISale {
     saleTime: string;
     customer: string;
     cashier: string;
+    totalTax: string;
+    subTotal: string;
+    balance: string;
     saleTotal: string;
     status: string;
     products: IProduct[];

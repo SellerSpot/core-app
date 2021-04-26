@@ -67,22 +67,23 @@ const ProductsTable = (props: {
     );
 };
 
-export const SalesHistoryProducts = (props: {
-    products: ISalesHistoryTableProps['saleHistory'][0]['products'];
+export const SalesHistoryDetails = (props: {
+    sale: ISalesHistoryTableProps['saleHistory'][0];
 }): ReactElement => {
-    const { products } = props;
+    const { sale } = props;
+    const { products } = sale;
 
     return (
         <div className={styles.collapsedContent}>
             <div className={styles.productsView}>
                 <div>
-                    <h4>Products</h4>
+                    <h4>Sale Details</h4>
                 </div>
                 <div className={styles.productsTable}>
                     <ProductsTable products={products} />
                 </div>
                 <div className={styles.saleSummaryWrapper}>
-                    <SaleSummary />
+                    <SaleSummary sale={sale} />
                 </div>
             </div>
             <div className={styles.controls}>
