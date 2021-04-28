@@ -86,7 +86,7 @@
         "@material-ui/core": "^4.11.3",
         "@material-ui/lab": "4.0.0-alpha.57",
         "@reduxjs/toolkit": "^1.5.1",
-        "@sellerspot/universal-components": "^1.16.11",
+        "@sellerspot/universal-components": "^1.16.12",
         "axios": "^0.21.1",
         "classnames": "^2.3.1",
         "dotenv": "^8.2.0",
