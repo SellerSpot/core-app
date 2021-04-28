@@ -25,6 +25,9 @@ jobs:
                   node-version: '${{ steps.nvm.outputs.NVMRC }}'
                   registry-url: https://registry.npmjs.org/
 
+            - name: Install Dependencies
+              run: npm install
+
             - name: Running eslint
               run: npm run lint
 
