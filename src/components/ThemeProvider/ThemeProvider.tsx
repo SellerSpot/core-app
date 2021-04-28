@@ -1,12 +1,9 @@
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
-import React, { ReactElement, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
-import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
 import { themeSelector } from 'store/models/theme';
-
+import { useSelector } from 'react-redux';
+import React, { ReactElement, useEffect } from 'react';
+import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
+import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
 import { getMUITheme } from './MUIThemes';
-
 import '../../styles/core.scss';
 
 export interface IThemeProviderProps {

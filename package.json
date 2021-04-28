@@ -18,6 +18,7 @@
         "postinstall": "npm run husky:install",
         "husky:install": "husky install",
         "husky:pre-commit": "npm run lint-staged",
+        "stylelint:fix": "npx stylelint \"**/*.scss\" --fix",
         "yalc:link": "yalc link @sellerspot/universal-components",
         "yalc:remove": "yalc remove --all"
     },
@@ -27,6 +28,7 @@
     "lint-staged": {
         "*.{ts,tsx,less}": [
             "prettier --write",
+            "stylelint --fix",
             "git add"
         ],
         "*.{ts,tsx}": "eslint --fix --max-warnings 0"
@@ -57,7 +59,6 @@
         "eslint-plugin-prettier": "^3.3.0",
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "eslint-plugin-unused-imports": "^1.1.1",
         "file-loader": "^6.2.0",
         "fork-ts-checker-webpack-plugin": "^6.0.7",
         "html-webpack-plugin": "^4.5.2",

@@ -1,13 +1,11 @@
-import { Avatar } from '@sellerspot/universal-components';
-import cn from 'classnames';
-import { merge } from 'lodash';
-import React, { ReactElement } from 'react';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-
 import { ICONS } from 'utilities/icons';
-
-import styles from './SubMenuTile.module.scss';
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import React, { ReactElement } from 'react';
+import { merge } from 'lodash';
+import cn from 'classnames';
+import { Avatar } from '@sellerspot/universal-components';
 import { ISubMenuTileProps } from './SubMenuTile.types';
+import styles from './SubMenuTile.module.scss';
 
 const defaultProps: ISubMenuTileProps = {
     icon: <ICONS.BsQuestionSquare />,

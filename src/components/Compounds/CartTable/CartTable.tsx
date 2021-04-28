@@ -1,26 +1,42 @@
+import { ICONS } from 'utilities/icons';
+import { numberFormatINRCurrency } from 'utilities/general';
+import { computeProductSubTotal } from 'utilities/businessLogic';
+import { store } from 'store/store';
+import { cartSelector, removeProductFromCart } from 'store/models/cart';
+import { useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
 import {
     IconButton,
     ITableCell,
+    ITableProps,
     ITableRow,
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-
-import { cartSelector, removeProductFromCart } from 'store/models/cart';
-import { store } from 'store/store';
-import { computeProductSubTotal } from 'utilities/businessLogic';
-import { numberFormatINRCurrency } from 'utilities/general';
-import { ICONS } from 'utilities/icons';
-
-import styles from './CartTable.module.scss';
-import { CartTableService } from './CartTable.service';
+import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 import { ICartTableProduct } from './CartTable.types';
-import { CollapsedContent } from './Components/CollapsedContent';
+import { CartTableService } from './CartTable.service';
+import styles from './CartTable.module.scss';
 
 const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
+    const deleteProductOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        // to stop the row from also being clicked
+        event.stopPropagation();
+        store.dispatch(
+            removeProductFromCart({
+                productIndex,
+            }),
+        );
+    };
+    const productSubTotal = numberFormatINRCurrency(
+        computeProductSubTotal({
+            discountPercent,
+            quantity,
+            taxBrackets,
+            unitPrice,
+        }),
+    );
     return [
         {
             content: productIndex + 1,
@@ -38,30 +54,21 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
             align: 'right',
         },
         {
-            content: numberFormatINRCurrency(
-                computeProductSubTotal({
-                    discountPercent,
-                    quantity,
-                    taxBrackets,
-                    unitPrice,
-                }),
-            ),
+            content: productSubTotal,
             align: 'right',
         },
         {
             content: (
-                <IconButton
-                    icon={<ICONS.MdClear />}
-                    theme="danger"
-                    size={'small'}
-                    onClick={() => {
-                        store.dispatch(
-                            removeProductFromCart({
-                                productIndex,
-                            }),
-                        );
-                    }}
-                />
+                <ToolTip content={'Remove Product'}>
+                    <div>
+                        <IconButton
+                            icon={<ICONS.MdClear />}
+                            theme="danger"
+                            size="small"
+                            onClick={deleteProductOnClick}
+                        />
+                    </div>
+                </ToolTip>
             ),
             padding: 'none',
             align: 'left',
@@ -69,31 +76,42 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
     ];
 };
 
-const getTableBody = (products: ICartTableProduct[]): ITableRow[] => {
+const getTableBody = (
+    products: ICartTableProduct[],
+    toggleRowExpansion: (rowIndex: number) => void,
+): ITableRow[] => {
     return products.map((product, productIndex) => {
+        const handleRowOnClick = () => {
+            toggleRowExpansion(productIndex);
+        };
+
         return {
             cells: getTableCells(product, productIndex),
-            collapsedContent: function collapsedContent(toggleRowExpansion) {
-                return (
-                    <CollapsedContent
-                        product={product}
-                        productIndex={productIndex}
-                        toggleRowExpansion={toggleRowExpansion}
-                    />
-                );
-            },
+            onClick: handleRowOnClick,
+            collapsedContent: (
+                <CartTableCollapsedContent
+                    product={product}
+                    productIndex={productIndex}
+                    toggleRowExpansion={toggleRowExpansion}
+                />
+            ),
         };
     });
 };
 
 export default function CartTable(): ReactElement {
     const { productsData } = useSelector(cartSelector);
+
+    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
+        return getTableBody(productsData, toggleRowExpansion);
+    };
+
     return (
         <Table
             hasExpandableRows
             headers={CartTableService.tableHeaders}
             stickyHeader
-            body={getTableBody(productsData)}
+            body={tableBody}
         />
     );
 }

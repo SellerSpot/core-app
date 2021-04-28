@@ -1,5 +1,5 @@
-import { createSlice, Selector } from '@reduxjs/toolkit';
 import { TColorThemes, TFontSizeThemes } from 'config/themes';
+import { createSlice, Selector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface IThemeState {

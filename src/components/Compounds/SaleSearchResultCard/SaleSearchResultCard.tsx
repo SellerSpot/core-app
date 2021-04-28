@@ -1,11 +1,9 @@
-import { Card } from '@sellerspot/universal-components';
-import { isUndefined } from 'lodash';
-import React, { ReactElement } from 'react';
-
 import { numberFormatINRCurrency } from 'utilities/general';
-
-import styles from './SaleSearchResultCard.module.scss';
+import React, { ReactElement } from 'react';
+import { isUndefined } from 'lodash';
+import { Card } from '@sellerspot/universal-components';
 import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
+import styles from './SaleSearchResultCard.module.scss';
 
 export default function SaleSearchResultCard(props: ISaleSearchResultCard): ReactElement {
     return (

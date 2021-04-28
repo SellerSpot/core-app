@@ -1,11 +1,9 @@
-import cn from 'classnames';
-import React, { ReactElement, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
-import { initializeGlobalServices } from 'config/globalConfig';
-import { ROUTES } from 'config/routes';
+import React, { ReactElement, useState } from 'react';
 import { Dashboard } from 'layouts/Dashboard/Dashboard';
-
+import { ROUTES } from 'config/routes';
+import { initializeGlobalServices } from 'config/globalConfig';
+import cn from 'classnames';
 import styles from './app.module.scss';
 
 // global actions

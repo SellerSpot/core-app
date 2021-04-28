@@ -1,9 +1,8 @@
-import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
-import cn from 'classnames';
 import React, { ReactElement, useState } from 'react';
-
-import animationStyles from '../../../styles/animation.module.scss';
+import cn from 'classnames';
+import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
 import styles from './DomainUpdateCard.module.scss';
+import animationStyles from '../../../styles/animation.module.scss';
 
 export default function DomainUpdateCard(): ReactElement {
     const [cardExpanded, setCardExpanded] = useState(false);
@@ -69,7 +68,7 @@ export default function DomainUpdateCard(): ReactElement {
                             label={'New Domain'}
                             placeHolder={'sreenithi'}
                             autoFocus={cardExpanded}
-                            direction={'rtl'}
+                            direction="rtl"
                             theme={
                                 urlFieldState === 'success'
                                     ? 'success'
@@ -94,13 +93,13 @@ export default function DomainUpdateCard(): ReactElement {
                         />
                         <div className={styles.cardActions}>
                             <Button
-                                size={'medium'}
+                                size="medium"
                                 variant="contained"
                                 label={'Update'}
                                 theme="primary"
                             />
                             <Button
-                                size={'medium'}
+                                size="medium"
                                 variant="outlined"
                                 theme="danger"
                                 label={'Cancel'}

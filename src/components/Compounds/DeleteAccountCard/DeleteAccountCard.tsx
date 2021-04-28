@@ -1,6 +1,5 @@
-import { Alert, Button, Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-
+import { Alert, Button, Card } from '@sellerspot/universal-components';
 import styles from './DeleteAccountCard.module.scss';
 
 export default function DeleteAccountCard(): ReactElement {
@@ -26,12 +25,7 @@ export default function DeleteAccountCard(): ReactElement {
                                 </a>
                             </h6>
                         </div>
-                        <Button
-                            size={'medium'}
-                            theme="danger"
-                            variant="contained"
-                            label={'Delete'}
-                        />
+                        <Button size="medium" theme="danger" variant="contained" label={'Delete'} />
                     </div>
                     <div className={styles.bottomContent}>
                         <Alert title="danger" type={'error'}>

@@ -1,11 +1,9 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-
 import { ICONS } from 'utilities/icons';
-
-import SubMenuComponent from './SubMenu';
+import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { ISubMenuProps } from './SubMenu.types';
+import { SubMenu as SubMenuComponent } from './SubMenu';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
     <BrowserRouter>

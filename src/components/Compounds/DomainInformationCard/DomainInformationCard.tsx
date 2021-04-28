@@ -1,6 +1,5 @@
-import { Card } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-
+import { Card } from '@sellerspot/universal-components';
 import styles from './DomainInformationCard.module.scss';
 
 export default function DomainInformationCard(): ReactElement {

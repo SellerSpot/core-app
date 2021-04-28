@@ -1,8 +1,7 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-
-import SaleSearchResultCardComponent from './SaleSearchResultCard';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { ISaleSearchResultCard } from './SaleSearchResultCard.types';
+import SaleSearchResultCardComponent from './SaleSearchResultCard';
 
 const Template: Story = (args: ISaleSearchResultCard) => (
     <div

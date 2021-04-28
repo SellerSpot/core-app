@@ -1,13 +1,10 @@
-import React, { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-
-import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
-import { App } from 'layouts/App/App';
 import { store } from 'store/store';
-
-import './styles/core.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import { App } from 'layouts/App/App';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import './styles/core.scss';
 
 ReactDOM.render(

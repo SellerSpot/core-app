@@ -15,3 +15,19 @@
 .tileGroup {
     @include flex(flex-end, flex-start, column, 5px);
 }
+
+.childTiles {
+    height: 0;
+    transform: scale(0);
+    transform-origin: top;
+}
+
+.childTileShow {
+    height: 100%;
+    transform: scale(1);
+    transition: height 0.2s ease, transform 0.2s 0.2s ease;
+}
+
+.childTileHide {
+    transition: height 0.2s 0.2s ease, transform 0.2s ease;
+}

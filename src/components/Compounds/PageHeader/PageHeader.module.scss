@@ -1,0 +1,10 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+
+    @include flex(center, space-between);
+
+    .headerActions {
+        @include flex(center, flex-end, $gap: 10px);
+    }
+}

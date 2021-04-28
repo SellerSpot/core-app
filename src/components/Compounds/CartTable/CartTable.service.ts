@@ -1,10 +1,7 @@
-import { ITableCell } from '@sellerspot/universal-components';
-import { AnyObject, setIn } from 'final-form';
 import * as yup from 'yup';
-
-import { updateCartProduct } from 'store/models/cart';
 import { store } from 'store/store';
-
+import { updateCartProduct } from 'store/models/cart';
+import { ITableCell } from '@sellerspot/universal-components';
 import { ICartTableFormValue, ICartTableProduct } from './CartTable.types';
 
 export class CartTableService {
@@ -76,21 +73,20 @@ export class CartTableService {
     });
 
     // handles collapsed form validation
-    public static validateCollapsedForm = async (
+    public static validateCollapsedField = (
         values: ICartTableFormValue,
-    ): Promise<AnyObject> => {
+        fieldPath: keyof ICartTableProduct,
+    ): string => {
+        // getting the right schema to use for validation
+        const requiredSchema = yup.reach(CartTableService.collapsedFormValidationSchema, fieldPath);
         try {
-            await CartTableService.collapsedFormValidationSchema.validate(values, {
+            requiredSchema.validateSync(values, {
                 abortEarly: false,
             });
-        } catch (err) {
-            const errors = err.inner.reduce(
-                (formError: AnyObject, innerError: { path: string; message: string }) => {
-                    return setIn(formError, innerError.path, innerError.message);
-                },
-                {},
-            );
-            return errors;
+        } catch (error) {
+            if (error instanceof yup.ValidationError) {
+                return error.message;
+            }
         }
     };
 

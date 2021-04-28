@@ -1,8 +1,7 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-
-import CurrencySettingsCardComponent from './CurrencySettingsCard';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { ICurrency, ICurrencySettingsCardProps } from './CurrencySettingsCard.types';
+import CurrencySettingsCardComponent from './CurrencySettingsCard';
 
 const currenciesData: ICurrency[] = [
     {

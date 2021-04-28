@@ -9,13 +9,18 @@ $warning-color: var(--warning-color);
 $warningLight-color: var(--warningLight-color);
 $warningDark-color: var(--warningDark-color);
 $info-color: var(--info-color);
-$default-color: var(--default-color);
+$infoLight-color: var(--infoDark-color);
+$infoDark-color: var(--infoLight-color);
+$auto-color: var(--auto-color);
+$autoLight-color: var(--autoLight-color);
+$autoDark-color: var(--autoDark-color);
 
 $foregroundPrimary-color: var(--foregroundPrimary-color);
 $foregroundSecondary-color: var(--foregroundSecondary-color);
 $foregroundTertiary-color: var(--foregroundTertiary-color);
 $foregroundLight-color: var(--foregroundLight-color);
 
+$backgroundDark-color: var(--backgroundDark-color);
 $backgroundPrimary-color: var(--backgroundPrimary-color);
 $backgroundSecondary-color: var(--backgroundSecondary-color);
 $backgroundTertiary-color: var(--backgroundTertiary-color);
@@ -24,4 +29,5 @@ $primary-color: var(--primary-color);
 $primaryLight-color: var(--primaryLight-color);
 $primaryDark-color: var(--primaryDark-color);
 $accent-color: var(--accent-color);
-$dark-color: var(--dark-color);
+$accentLight-color: var(--accentLight-color);
+$accentDark-color: var(--accentDark-color);

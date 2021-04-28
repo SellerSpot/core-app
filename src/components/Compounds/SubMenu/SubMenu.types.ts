@@ -37,3 +37,9 @@ export interface ISubMenuProps {
      */
     tiles: ITile[];
 }
+
+export type TSubMenuStore = {
+    tiles: ISubMenuProps['tiles'];
+    setTilesData: (tilesData: ISubMenuProps['tiles']) => void;
+    updateChildTilesVisible: (index: number) => void;
+};
