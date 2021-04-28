@@ -32,7 +32,10 @@
             "stylelint --fix",
             "git add"
         ],
-        "*.{ts,tsx}": "eslint --fix --max-warnings 0"
+        "!(*webpack.config).{ts,tsx}": [
+            "eslint --fix --max-warnings 0",
+            "git add"
+        ]
     },
     "devDependencies": {
         "@storybook/addon-actions": "^6.2.8",
