@@ -15,10 +15,14 @@ jobs:
               with:
                   persist-credentials: false
 
-            - name: Setup Node
+            - name: Read .nvmrc
+              run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+              id: nvm
+
+            - name: Use Node.js (.nvmrc)
               uses: actions/setup-node@v1
               with:
-                  node-version: 12
+                  node-version: '${{ steps.nvm.outputs.NVMRC }}'
                   registry-url: https://registry.npmjs.org/
 
             - name: Create Git Directory If Not Exists

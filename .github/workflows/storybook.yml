@@ -15,17 +15,21 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Use Node.js 12
-              uses: actions/setup-node@v2
+            - name: Read .nvmrc
+              run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+              id: nvm
+
+            - name: Use Node.js (.nvmrc)
+              uses: actions/setup-node@v1
               with:
-                  node-version: 12
-            - run: npm install
+                  node-version: '${{ steps.nvm.outputs.NVMRC }}'
+                  registry-url: https://registry.npmjs.org/
 
             - name: Running eslint
               run: npm run lint
 
             - name: Running StyleLint
-              run: npx stylelint "**/*.scss"
+              run: npm run stylelint
 
             - name: Publish to Chromatic
               uses: chromaui/action@v1

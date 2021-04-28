@@ -18,6 +18,7 @@
         "postinstall": "npm run husky:install",
         "husky:install": "husky install",
         "husky:pre-commit": "npm run lint-staged",
+        "stylelint": "npx stylelint \"**/*.scss\"",
         "stylelint:fix": "npx stylelint \"**/*.scss\" --fix",
         "yalc:link": "yalc link @sellerspot/universal-components",
         "yalc:remove": "yalc remove --all"
