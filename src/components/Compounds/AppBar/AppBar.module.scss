@@ -29,3 +29,6 @@
         }
     }
 }
+.avatarTile {
+    @include flex(center, flex-start, $gap: 10px);
+}
