@@ -13,13 +13,15 @@ export default function AppBar(props: IAppBarProps): ReactElement {
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <WorkSpaceTile
-                    workspaceIcon={props.currentWorkspace.workspaceIcon}
-                    workspaceTitle={props.currentWorkspace.workspaceTitle}
-                    expanded
-                    variant="workspaceIndicator"
-                    selected
-                />
+                <div className={styles.workspaceTile}>
+                    <WorkSpaceTile
+                        workspaceIcon={props.currentWorkspace.workspaceIcon}
+                        workspaceTitle={props.currentWorkspace.workspaceTitle}
+                        expanded
+                        variant="workspaceIndicator"
+                        selected
+                    />
+                </div>
                 <BreadCrumbs crumbs={props.breadcrumbs} />
             </div>
             <div className={styles.rhsGroup}>
