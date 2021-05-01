@@ -1,12 +1,10 @@
-import { Button, InputField } from '@sellerspot/universal-components';
-import styles from '../ModifyCategories.module.scss';
+import { Button } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
-import SortableTree, { changeNodeAtPath, TreeItem } from 'react-sortable-tree';
+import { TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
-import { ModifyCategoriesService } from '../ModifyCategories.service';
-
-type TSetSortableTreeDataState = React.Dispatch<React.SetStateAction<TreeItem[]>>;
-type TTitleInputFieldEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+import styles from '../ModifyCategories.module.scss';
+import { TSetSortableTreeDataState } from '../ModifyCategories.types';
+import { SortableTreeComponent } from './SortableTreeComponent';
 
 const AddTopLevelCategory = (props: { setSortableTreeDataState: TSetSortableTreeDataState }) => {
     const { setSortableTreeDataState } = props;
@@ -15,6 +13,9 @@ const AddTopLevelCategory = (props: { setSortableTreeDataState: TSetSortableTree
         setSortableTreeDataState((state) =>
             state.concat({
                 title: 'New Category',
+                id: Math.random().toString(36).substr(2, 5),
+                // setting created new flag
+                createdNew: true,
             }),
         );
     };
@@ -30,59 +31,6 @@ const AddTopLevelCategory = (props: { setSortableTreeDataState: TSetSortableTree
                 onClick={onClickHandler}
             />
         </div>
-    );
-};
-
-const SortableTreeComponent = (props: {
-    sortableTreeDataState: TreeItem[];
-    searchQuery: string;
-    setSortableTreeDataState: TSetSortableTreeDataState;
-}) => {
-    const { sortableTreeDataState, searchQuery, setSortableTreeDataState } = props;
-    const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
-
-    return (
-        <SortableTree
-            rowHeight={70}
-            treeData={sortableTreeDataState}
-            searchQuery={searchQuery}
-            onChange={setSortableTreeDataState}
-            generateNodeProps={(data) => {
-                const { node, path } = data;
-                const nodeTitle = node.title + '';
-
-                const titleOnChangeHandler = (event: TTitleInputFieldEvent) => {
-                    const title = event.target.value;
-                    const newTreeData = changeNodeAtPath({
-                        treeData: sortableTreeDataState,
-                        getNodeKey,
-                        path,
-                        newNode: { ...node, title },
-                    });
-                    setSortableTreeDataState(newTreeData);
-                };
-
-                return {
-                    title: (
-                        <div className={styles.categoryNameField}>
-                            <InputField
-                                size="small"
-                                disableHelperTextPlaceholderPadding
-                                theme="primary"
-                                value={nodeTitle}
-                                onChange={titleOnChangeHandler}
-                            />
-                        </div>
-                    ),
-                    buttons: ModifyCategoriesService.getSortableTreeButtons({
-                        getNodeKey,
-                        path: path as number[],
-                        treeData: sortableTreeDataState,
-                        setSortableTreeDataState,
-                    }),
-                };
-            }}
-        />
     );
 };
 

@@ -1,32 +1,17 @@
 import { IconButton, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { addNodeUnderParent, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
-import styles from './ModifyCategories.module.scss';
+import styles from './ChooseCategory.module.scss';
 import { ICONS } from 'utilities/icons';
 
-export class ModifyCategoriesService {
+export class ChooseCategoryService {
     static getSortableTreeButtons = (props: {
         treeData: TreeItem[];
-        path: string[];
+        path: number[] | string[];
         getNodeKey: ({ treeIndex }: { treeIndex: number }) => number;
-        nodeId: string;
         setSortableTreeDataState: React.Dispatch<React.SetStateAction<TreeItem[]>>;
-        setEditableNodeId: React.Dispatch<React.SetStateAction<string>>;
-        isEditable: boolean;
     }): ReactElement[] => {
-        const {
-            treeData,
-            path,
-            getNodeKey,
-            setSortableTreeDataState,
-            setEditableNodeId,
-            nodeId,
-            isEditable,
-        } = props;
-
-        const editCategoryOnClickHandler = () => {
-            setEditableNodeId(isEditable ? '' : nodeId);
-        };
+        const { treeData, path, getNodeKey, setSortableTreeDataState } = props;
 
         const addCategoryOnClickHandler = () => {
             const newTreeData = addNodeUnderParent({
@@ -36,9 +21,6 @@ export class ModifyCategoriesService {
                 getNodeKey,
                 newNode: {
                     title: `New Category`,
-                    id: Math.random().toString(36).substr(2, 5),
-                    // setting created new flag
-                    createdNew: true,
                 },
                 addAsFirstChild: true,
             }).treeData;
@@ -56,16 +38,6 @@ export class ModifyCategoriesService {
 
         return [
             <div key={'controls'} className={styles.controls}>
-                <ToolTip content={isEditable ? 'Cancel Editing' : 'Edit Category'}>
-                    <div>
-                        <IconButton
-                            theme={isEditable ? 'danger' : 'primary'}
-                            size="small"
-                            icon={isEditable ? <ICONS.MdClear /> : <ICONS.MdModeEdit />}
-                            onClick={editCategoryOnClickHandler}
-                        />
-                    </div>
-                </ToolTip>
                 <ToolTip content={'Add Category'}>
                     <div>
                         <IconButton
