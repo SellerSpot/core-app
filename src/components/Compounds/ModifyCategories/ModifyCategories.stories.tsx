@@ -13,35 +13,35 @@ export const ModifyCategories = Template.bind({});
 ModifyCategories.args = {
     categoriesData: [
         {
-            name: 'Shirts',
-            subCategories: [
+            title: 'Shirts',
+            children: [
                 {
-                    name: 'T-Shirts',
+                    title: 'T-Shirts',
                 },
                 {
-                    name: 'Formals',
+                    title: 'Formals',
                 },
                 {
-                    name: 'Casuals',
+                    title: 'Casuals',
                 },
             ],
         },
         {
-            name: 'Shoes',
-            subCategories: [
+            title: 'Shoes',
+            children: [
                 {
-                    name: 'Casuals',
-                    subCategories: [
+                    title: 'Casuals',
+                    children: [
                         {
-                            name: 'Lace',
+                            title: 'Lace',
                         },
                         {
-                            name: 'Velcro',
+                            title: 'Velcro',
                         },
                     ],
                 },
                 {
-                    name: 'Office',
+                    title: 'Office',
                 },
             ],
         },

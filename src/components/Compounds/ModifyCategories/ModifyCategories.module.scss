@@ -8,15 +8,27 @@
         width: 100%;
     }
 
-    .categoriesView {
+    .categoriesViewWrapper {
         width: 100%;
-        height: 600px;
+        height: 100%;
 
-        .categoryNameField {
-            width: 170px;
-        }
-        .controls {
-            @include flex(center, flex-start, $gap: 5px);
+        .categoriesView {
+            width: 100%;
+            height: 600px;
+
+            .addTopLevelCategoryWrapper {
+                width: 100%;
+
+                margin-left: 15px;
+                float: left;
+            }
+
+            .categoryNameField {
+                width: 170px;
+            }
+            .controls {
+                @include flex(center, flex-start, $gap: 5px);
+            }
         }
     }
 }

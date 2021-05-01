@@ -1,6 +1,6 @@
 interface ICategory {
-    name: string;
-    subCategories: ICategory[];
+    title: string;
+    children: ICategory[];
 }
 
 export interface IModifyCategoriesProps {

@@ -78,3 +78,19 @@ p {
     --accent-color: '#EE8572';
     --dark-color: '#212121';
 }
+
+// react-sortable-tree custom styling
+.rst__rowWrapper {
+    padding: 10px 10px 0 0;
+}
+
+.rst__moveHandle {
+    background: $backgroundPrimary-color url('../assets/svgs/DragHandle/dragHandle.svg') no-repeat
+        center;
+    border-radius: 3px;
+}
+
+.rst__rowContents {
+    background-color: $backgroundPrimary-color;
+    border-radius: 3px;
+}

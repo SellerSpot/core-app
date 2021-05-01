@@ -1,47 +1,56 @@
-import { Button, IconButton, InputField, ToolTip } from '@sellerspot/universal-components';
+import { IconButton, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { TreeItem } from 'react-sortable-tree';
+import { addNodeUnderParent, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import styles from './ModifyCategories.module.scss';
-import { IModifyCategoriesProps } from './ModifyCategories';
 import { ICONS } from 'utilities/icons';
 
 export class ModifyCategoriesService {
-    static convertToTreeData = (
-        categoriesData: IModifyCategoriesProps['categoriesData'],
-    ): TreeItem[] => {
-        return categoriesData.map((category) => {
-            const { name, subCategories } = category;
-            return {
-                title: (
-                    <div className={styles.categoryNameField}>
-                        <InputField
-                            size="small"
-                            disableHelperTextPlaceholderPadding
-                            theme="primary"
-                            value={name}
-                        />
-                    </div>
-                ),
-                children: !!subCategories
-                    ? ModifyCategoriesService.convertToTreeData(subCategories)
-                    : null,
-            };
-        });
-    };
-
-    static getSortableTreeButtons = (): ReactElement[] => {
+    static getSortableTreeButtons = (props: {
+        treeData: TreeItem[];
+        path: number[] | string[];
+        getNodeKey: ({ treeIndex }: { treeIndex: number }) => number;
+        setSortableTreeDataState: React.Dispatch<React.SetStateAction<TreeItem[]>>;
+    }): ReactElement[] => {
+        const { treeData, path, getNodeKey, setSortableTreeDataState } = props;
         return [
             <div key={'controls'} className={styles.controls}>
-                <Button
-                    label={'Add Category'}
-                    theme={'primary'}
-                    size="small"
-                    startIcon={<ICONS.MdAdd />}
-                    variant="text"
-                />
+                <ToolTip content={'Add Category'}>
+                    <div>
+                        <IconButton
+                            theme={'primary'}
+                            size="small"
+                            icon={<ICONS.MdAdd />}
+                            onClick={() => {
+                                const newTreeData = addNodeUnderParent({
+                                    treeData: treeData,
+                                    parentKey: path[path.length - 1],
+                                    expandParent: true,
+                                    getNodeKey,
+                                    newNode: {
+                                        title: `New Category`,
+                                    },
+                                    addAsFirstChild: true,
+                                }).treeData;
+                                setSortableTreeDataState(newTreeData);
+                            }}
+                        />
+                    </div>
+                </ToolTip>
                 <ToolTip content={'Delete Category'}>
                     <div>
-                        <IconButton icon={<ICONS.MdDelete />} theme="danger" size="small" />
+                        <IconButton
+                            icon={<ICONS.MdDelete />}
+                            theme="danger"
+                            size="small"
+                            onClick={() => {
+                                const newTreeData = removeNodeAtPath({
+                                    treeData,
+                                    path,
+                                    getNodeKey,
+                                });
+                                setSortableTreeDataState(newTreeData);
+                            }}
+                        />
                     </div>
                 </ToolTip>
             </div>,
