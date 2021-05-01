@@ -1,8 +1,9 @@
 import { IconButton, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { addNodeUnderParent, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
-import styles from './ModifyCategories.module.scss';
 import { ICONS } from 'utilities/icons';
+import * as yup from 'yup';
+import styles from './ModifyCategories.module.scss';
 
 export class ModifyCategoriesService {
     static getSortableTreeButtons = (props: {
@@ -89,4 +90,24 @@ export class ModifyCategoriesService {
             </div>,
         ];
     };
+
+    static validateCategoryName = (title: string): string => {
+        const validationSchema = yup.string().required('Category Name is required');
+        try {
+            validationSchema.validateSync(title);
+        } catch (error) {
+            if (error instanceof yup.ValidationError) {
+                return error.message;
+            }
+        }
+        return null;
+    };
+
+    // static showDeleteCategoryConfirmation = () => {
+    //     showDialog({
+    //         content: <h6>{'This action will delete the category from listing'}</h6>,
+    //         fullWidth: true,
+    //         disableBackdropClick: true,
+    //     });
+    // };
 }

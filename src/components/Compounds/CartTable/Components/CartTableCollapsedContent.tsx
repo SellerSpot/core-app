@@ -41,7 +41,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 placeHolder={productName}
                                 value={value}
                                 helperMessage={helperMessage}
-                                selectTextOnClick
+                                selectTextOnFocus
                                 onChange={onChange}
                             />
                         );
@@ -66,7 +66,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 label={'Quantity'}
                                 type="number"
                                 minNumericValue={0}
-                                selectTextOnClick
+                                selectTextOnFocus
                                 placeHolder={`${quantity}`}
                                 theme="primary"
                                 suffix={<h6>{stockUnit}</h6>}
@@ -99,7 +99,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 minNumericValue={0}
                                 placeHolder={`${unitPrice}`}
                                 theme="primary"
-                                selectTextOnClick
+                                selectTextOnFocus
                                 label={`Unit Price (per ${stockUnit})`}
                                 helperMessage={helperMessage}
                                 onChange={onChange}
@@ -136,7 +136,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 placeHolder={`${discountPercent}`}
                                 maxNumericValue={100}
                                 minNumericValue={0}
-                                selectTextOnClick
+                                selectTextOnFocus
                                 theme="primary"
                                 value={value}
                                 onChange={onChange}

@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@sellerspot/universal-components';
+import { Dialog, Notify, ThemeProvider } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
@@ -22,6 +22,8 @@ const StoryComponent = (Story: () => ReactElement): ReactElement => {
     return (
         <ThemeProvider colors={colors} fontSizes={fontSizes}>
             {Story()}
+            <Notify />
+            <Dialog />
         </ThemeProvider>
     );
 };

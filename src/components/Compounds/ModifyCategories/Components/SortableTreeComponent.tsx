@@ -1,4 +1,4 @@
-import { IconButton, InputField } from '@sellerspot/universal-components';
+import { IconButton, InputField, showNotify } from '@sellerspot/universal-components';
 import React, { ReactElement, useState } from 'react';
 import SortableTree, { changeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
@@ -32,18 +32,29 @@ const EditCategoryTitle = (props: {
     };
 
     const pushTitleToTreeState = () => {
-        const newTreeData = changeNodeAtPath({
-            treeData: sortableTreeDataState,
-            getNodeKey,
-            path,
-            newNode: {
-                ...node,
-                title: nodeTitleState,
-                createdNew: false,
-            },
-        });
-        setSortableTreeDataState(newTreeData);
-        setEditableNodeId('');
+        const validationResult = ModifyCategoriesService.validateCategoryName(nodeTitleState);
+
+        if (!validationResult) {
+            const newTreeData = changeNodeAtPath({
+                treeData: sortableTreeDataState,
+                getNodeKey,
+                path,
+                newNode: {
+                    ...node,
+                    title: nodeTitleState,
+                    createdNew: false,
+                },
+            });
+            setSortableTreeDataState(newTreeData);
+            setEditableNodeId('');
+        } else {
+            showNotify(validationResult, {
+                closeOnClickAway: true,
+                theme: 'error',
+                placement: 'bottomLeft',
+                autoHideDuration: -1,
+            });
+        }
     };
 
     const SuffixButton = () => {
@@ -63,7 +74,7 @@ const EditCategoryTitle = (props: {
                 size="small"
                 disableHelperTextPlaceholderPadding
                 theme="primary"
-                selectTextOnClick
+                selectTextOnFocus
                 autoFocus
                 value={nodeTitleState}
                 onChange={titleOnChangeHandler}
@@ -89,7 +100,7 @@ export const SortableTreeComponent = (props: {
 
     return (
         <SortableTree
-            rowHeight={70}
+            rowHeight={80}
             treeData={sortableTreeDataState}
             searchQuery={searchQuery}
             onChange={setSortableTreeDataState}

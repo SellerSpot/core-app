@@ -25,6 +25,7 @@
 
             .categoryNameField {
                 width: 200px;
+                padding-bottom: 4px;
             }
             .controls {
                 @include flex(center, flex-start, $gap: 5px);
