@@ -16,6 +16,7 @@ import {
     MdModeEdit,
     MdPersonPin,
     MdSettings,
+    MdSearch,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { CgFormatSlash } from 'react-icons/cg';
@@ -45,4 +46,5 @@ export const ICONS = {
     MdModeEdit,
     MdPersonPin,
     MdSettings,
+    MdSearch,
 };
