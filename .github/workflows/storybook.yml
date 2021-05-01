@@ -10,10 +10,10 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
+            - name: Checkout code
               uses: actions/checkout@v2
               with:
-                  persist-credentials: false
+                  fetch-depth: 0
 
             - name: Read .nvmrc
               run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
