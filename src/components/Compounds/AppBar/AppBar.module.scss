@@ -9,6 +9,13 @@
         width: 60%;
         height: 100%;
         @include flex(center, flex-start, row, 25px);
+
+        .workspaceTile {
+            transition: opacity 0.2s ease;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 
     .rhsGroup {
@@ -21,4 +28,7 @@
             background-color: red;
         }
     }
+}
+.avatarTile {
+    @include flex(center, flex-start, $gap: 10px);
 }

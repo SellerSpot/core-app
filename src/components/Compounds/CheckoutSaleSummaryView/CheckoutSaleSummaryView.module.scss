@@ -1,0 +1,23 @@
+.cardWrapper {
+    width: 400px;
+    height: 100%;
+    .cardContentWrapper {
+        padding-bottom: 8px;
+        .cardContent {
+            @include flex(flex-start, flex-start, column, 10px);
+
+            .contentRow {
+                width: 100%;
+                @include flex(center, space-between);
+
+                .balanceText {
+                    color: $danger-color;
+                }
+
+                .paidField {
+                    width: 35%;
+                }
+            }
+        }
+    }
+}
