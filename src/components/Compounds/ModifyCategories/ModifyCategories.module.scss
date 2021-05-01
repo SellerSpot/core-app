@@ -15,5 +15,8 @@
         .categoryNameField {
             width: 170px;
         }
+        .controls {
+            @include flex(center, flex-start, $gap: 5px);
+        }
     }
 }

@@ -31,6 +31,16 @@ const CategoriesView = (props: { sortableTreeData: TreeItem[] }) => {
                 rowHeight={80}
                 treeData={sortableTreeDataState}
                 onChange={setsortableTreeDataState}
+                generateNodeProps={(data) => {
+                    const { node, path } = data;
+                    const nodeTitleElement = node.title as ReactElement;
+                    const nodeTitle = nodeTitleElement.props['children']['props']['value'];
+                    console.log(nodeTitle, path);
+
+                    return {
+                        buttons: ModifyCategoriesService.getSortableTreeButtons(),
+                    };
+                }}
             />
         </div>
     );
