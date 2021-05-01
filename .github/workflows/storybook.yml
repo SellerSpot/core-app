@@ -10,10 +10,10 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
+            - name: Checkout
               uses: actions/checkout@v2
               with:
-                  fetch-depth: 0
+                  persist-credentials: false
 
             - name: Read .nvmrc
               run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
@@ -40,3 +40,4 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
                   autoAcceptChanges: true
+                  allowConsoleErrors: true

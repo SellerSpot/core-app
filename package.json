@@ -27,14 +27,12 @@
     "author": "",
     "license": "ISC",
     "lint-staged": {
-        "*.{ts,tsx,less}": [
+        "*.{ts,tsx,scss}": [
             "prettier --write",
-            "stylelint --fix",
-            "git add"
+            "stylelint --fix"
         ],
         "!(*webpack.config).{ts,tsx}": [
-            "eslint --fix --max-warnings 0",
-            "git add"
+            "eslint --fix --max-warnings 0"
         ]
     },
     "devDependencies": {

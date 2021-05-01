@@ -1,10 +1,9 @@
 import path from 'path';
-import { Configuration } from 'webpack';
+import { Configuration, DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { getEnvironmentVariables } from './src/config/dotenv';
-import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const webpackConfiguration = (env: {
@@ -109,7 +108,7 @@ const webpackConfiguration = (env: {
             ],
         },
         plugins: [
-            new webpack.DefinePlugin(envVariables), // setting environment variables
+            new DefinePlugin(envVariables), // setting environment variables
             new HtmlWebpackPlugin({
                 inject: true,
                 template: path.join(__dirname, '/public/index.html'),
@@ -120,9 +119,7 @@ const webpackConfiguration = (env: {
                     files: './src',
                 },
             }),
-            isAnalyze
-                ? new BundleAnalyzerPlugin({ analyzerMode: 'static' })
-                : new webpack.DefinePlugin({}),
+            isAnalyze ? new BundleAnalyzerPlugin({ analyzerMode: 'static' }) : new DefinePlugin({}),
         ],
         devServer: {
             port: devPort,
