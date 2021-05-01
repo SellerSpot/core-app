@@ -12,6 +12,30 @@ export class ModifyCategoriesService {
         setSortableTreeDataState: React.Dispatch<React.SetStateAction<TreeItem[]>>;
     }): ReactElement[] => {
         const { treeData, path, getNodeKey, setSortableTreeDataState } = props;
+
+        const addCategoryOnClickHandler = () => {
+            const newTreeData = addNodeUnderParent({
+                treeData: treeData,
+                parentKey: path[path.length - 1],
+                expandParent: true,
+                getNodeKey,
+                newNode: {
+                    title: `New Category`,
+                },
+                addAsFirstChild: true,
+            }).treeData;
+            setSortableTreeDataState(newTreeData);
+        };
+
+        const deleteCategoryOnClickHandler = () => {
+            const newTreeData = removeNodeAtPath({
+                treeData,
+                path,
+                getNodeKey,
+            });
+            setSortableTreeDataState(newTreeData);
+        };
+
         return [
             <div key={'controls'} className={styles.controls}>
                 <ToolTip content={'Add Category'}>
@@ -20,19 +44,7 @@ export class ModifyCategoriesService {
                             theme={'primary'}
                             size="small"
                             icon={<ICONS.MdAdd />}
-                            onClick={() => {
-                                const newTreeData = addNodeUnderParent({
-                                    treeData: treeData,
-                                    parentKey: path[path.length - 1],
-                                    expandParent: true,
-                                    getNodeKey,
-                                    newNode: {
-                                        title: `New Category`,
-                                    },
-                                    addAsFirstChild: true,
-                                }).treeData;
-                                setSortableTreeDataState(newTreeData);
-                            }}
+                            onClick={addCategoryOnClickHandler}
                         />
                     </div>
                 </ToolTip>
@@ -42,14 +54,7 @@ export class ModifyCategoriesService {
                             icon={<ICONS.MdDelete />}
                             theme="danger"
                             size="small"
-                            onClick={() => {
-                                const newTreeData = removeNodeAtPath({
-                                    treeData,
-                                    path,
-                                    getNodeKey,
-                                });
-                                setSortableTreeDataState(newTreeData);
-                            }}
+                            onClick={deleteCategoryOnClickHandler}
                         />
                     </div>
                 </ToolTip>
