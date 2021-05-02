@@ -1,4 +1,5 @@
 import { IconButton, ToolTip } from '@sellerspot/universal-components';
+import { IColors } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { addNodeUnderParent, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
@@ -57,7 +58,7 @@ export class ModifyCategoriesService {
 
         return [
             <div key={'controls'} className={styles.controls}>
-                <ToolTip content={isEditable ? 'Cancel Editing' : 'Edit Category'}>
+                <ToolTip content={isEditable ? 'Cancel Editing' : 'Edit Category'} enterDelay={400}>
                     <div>
                         <IconButton
                             theme={isEditable ? 'danger' : 'primary'}
@@ -67,7 +68,7 @@ export class ModifyCategoriesService {
                         />
                     </div>
                 </ToolTip>
-                <ToolTip content={'Add Category'}>
+                <ToolTip content={'Add Category'} enterDelay={400}>
                     <div>
                         <IconButton
                             theme={'primary'}
@@ -77,7 +78,7 @@ export class ModifyCategoriesService {
                         />
                     </div>
                 </ToolTip>
-                <ToolTip content={'Delete Category'}>
+                <ToolTip content={'Delete Category'} enterDelay={400}>
                     <div>
                         <IconButton
                             icon={<ICONS.MdDelete />}
@@ -103,11 +104,32 @@ export class ModifyCategoriesService {
         return null;
     };
 
-    // static showDeleteCategoryConfirmation = () => {
-    //     showDialog({
-    //         content: <h6>{'This action will delete the category from listing'}</h6>,
-    //         fullWidth: true,
-    //         disableBackdropClick: true,
-    //     });
-    // };
+    static getTreeNodeStyle = (props: {
+        isSelected: boolean;
+        isParentNodeForSelectedNode: boolean;
+        colors: IColors;
+    }): React.CSSProperties => {
+        const { colors, isParentNodeForSelectedNode, isSelected } = props;
+
+        let defaultNodeStyle: React.CSSProperties = {
+            borderWidth: '2px',
+            borderRadius: '5px',
+            borderStyle: 'solid',
+            borderColor: 'transparent',
+            transition: 'border-color 0.3s ease',
+        };
+        if (isSelected) {
+            defaultNodeStyle = {
+                ...defaultNodeStyle,
+                borderColor: `${colors.primary}`,
+            };
+        } else if (isParentNodeForSelectedNode) {
+            defaultNodeStyle = {
+                ...defaultNodeStyle,
+                borderStyle: 'dashed',
+                borderColor: `${colors.primary}`,
+            };
+        }
+        return defaultNodeStyle;
+    };
 }

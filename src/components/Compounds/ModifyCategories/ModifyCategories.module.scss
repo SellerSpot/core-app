@@ -33,3 +33,11 @@
         }
     }
 }
+
+.categoryNameErrorWrapper {
+    padding: 5px 10px;
+    background-color: $dangerLight-color;
+    h6 {
+        color: $dangerDark-color;
+    }
+}

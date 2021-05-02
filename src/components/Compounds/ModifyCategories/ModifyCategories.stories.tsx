@@ -13,43 +13,43 @@ export const ModifyCategories = Template.bind({});
 ModifyCategories.args = {
     categoriesData: [
         {
-            id: Math.random().toString(36).substr(2, 5),
+            id: 'incididunt',
             title: 'Shirts',
             children: [
                 {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: 'ex',
                     title: 'T-Shirt',
                 },
                 {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: 'in',
                     title: 'Formals',
                 },
                 {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: 'nullafa',
                     title: 'Casuals',
                 },
             ],
         },
         {
-            id: Math.random().toString(36).substr(2, 5),
+            id: 'cupidatat',
             title: 'Shoes',
             children: [
                 {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: 'nostrud',
                     title: 'Casuals',
                     children: [
                         {
-                            id: Math.random().toString(36).substr(2, 5),
+                            id: 'nulla',
                             title: 'Lace',
                         },
                         {
-                            id: Math.random().toString(36).substr(2, 5),
+                            id: 'irure',
                             title: 'Velcro',
                         },
                     ],
                 },
                 {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: 'ex',
                     title: 'Office',
                 },
             ],
