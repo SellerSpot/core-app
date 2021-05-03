@@ -1,12 +1,12 @@
 import { InputField } from '@sellerspot/universal-components';
-import React, { ReactElement, useState } from 'react';
+import { debounce } from 'lodash';
+import React, { ReactElement } from 'react';
 import { TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
+import create from 'zustand';
 import { CategoriesView } from './Components/CategoriesView/CategoriesView';
 import styles from './ModifyCategories.module.scss';
 import { IModifyCategoriesProps, TUseModifyCategoriesStore } from './ModifyCategories.types';
-import { debounce } from 'lodash';
-import create from 'zustand';
 
 export { IModifyCategoriesProps } from './ModifyCategories.types';
 
@@ -33,8 +33,8 @@ export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) 
     },
 }));
 
-const SearchField = (props: { setSearchQuery: React.Dispatch<React.SetStateAction<string>> }) => {
-    const { setSearchQuery } = props;
+const SearchField = () => {
+    const setSearchQuery = useModifyCategoriesStore((state) => state.setSearchQuery);
     return (
         <div className={styles.searchField}>
             <InputField
@@ -54,14 +54,14 @@ const SearchField = (props: { setSearchQuery: React.Dispatch<React.SetStateActio
 
 export const ModifyCategories = (props: IModifyCategoriesProps): ReactElement => {
     const { categoriesData } = props;
-    const [searchQuery, setSearchQuery] = useState('');
+    const setTreeData = useModifyCategoriesStore((state) => state.setTreeData);
+    // setting tree data
+    setTreeData(categoriesData as TreeItem[]);
+
     return (
         <div className={styles.modifyCategories}>
-            <SearchField setSearchQuery={setSearchQuery} />
-            <CategoriesView
-                sortableTreeData={categoriesData as TreeItem[]}
-                searchQuery={searchQuery}
-            />
+            <SearchField />
+            <CategoriesView />
         </div>
     );
 };

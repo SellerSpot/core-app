@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import SortableTree, { isDescendant } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
-import styles from '../ModifyCategories.module.scss';
+import styles from '../../../../ModifyCategories.module.scss';
 import { EditCategoryTitle } from './Components/EditCategoryTitle';
 import { ModifyCategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
 
@@ -65,7 +65,7 @@ export const SortableTreeComponent = (): ReactElement => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const nodeOnClickHandler = (event: any) => {
                     if (event?.target?.className === 'rst__rowContents') {
-                        if (selectedNode?.id === node.id) {
+                        if (selectedNode?.id === nodeId) {
                             setSelectedNode(null);
                         } else {
                             setSelectedNode(node);
@@ -85,9 +85,13 @@ export const SortableTreeComponent = (): ReactElement => {
                     ) : (
                         <h5 onClick={switchToEditMode}>{nodeTitle}</h5>
                     ),
-                    buttons: <ModifyCategoriesNodeButtons nodeInstance={nodeInstance} />,
+                    buttons: [
+                        <div key={'controls'}>
+                            <ModifyCategoriesNodeButtons nodeInstance={nodeInstance} />
+                        </div>,
+                    ],
                     onClick: nodeOnClickHandler,
-                    style: nodeInstance.nodeData,
+                    style: nodeInstance.nodeStyle,
                 };
             }}
         />

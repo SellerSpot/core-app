@@ -12,7 +12,7 @@ import { changeNodeAtPath } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import { ModifyCategoriesService } from '../../../../../services/ModifyCategories.service';
 
-import styles from '../ModifyCategories.module.scss';
+import styles from '../../../../../ModifyCategories.module.scss';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 

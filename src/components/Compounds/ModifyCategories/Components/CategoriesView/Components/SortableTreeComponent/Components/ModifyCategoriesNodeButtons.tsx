@@ -171,7 +171,7 @@ export const ModifyCategoriesNodeButtons = (props: {
     const { isToBeDeleted } = nodeInstance;
 
     return (
-        <div key={'controls'} className={styles.controls}>
+        <div className={styles.controls}>
             {!isToBeDeleted ? <EditAndCancelEditButton nodeInstance={nodeInstance} /> : null}
             {!isToBeDeleted ? <AddCategoryButton nodeInstance={nodeInstance} /> : null}
             {!isToBeDeleted ? <DeleteCategoryButton nodeInstance={nodeInstance} /> : null}

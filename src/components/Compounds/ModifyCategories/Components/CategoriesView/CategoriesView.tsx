@@ -1,30 +1,39 @@
 import { Button, Skeleton } from '@sellerspot/universal-components';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { TreeItem } from 'react-sortable-tree';
+import { insertNode } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
-import styles from '../ModifyCategories.module.scss';
-import { TSetSortableTreeDataState } from '../../ModifyCategories.types';
+import { useModifyCategoriesStore } from '../../ModifyCategories';
+import styles from '../../ModifyCategories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
 
-const AddTopLevelCategory = (props: { setSortableTreeDataState: TSetSortableTreeDataState }) => {
-    const { setSortableTreeDataState } = props;
+const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
+
+const AddTopLevelCategory = () => {
+    // fetching values from store
+    const setTreeData = useModifyCategoriesStore((state) => state.setTreeData);
+    const treeData = useModifyCategoriesStore((state) => state.treeData);
 
     const onClickHandler = () => {
-        setSortableTreeDataState((state) =>
-            state.concat({
+        const newTreeData = insertNode({
+            depth: 0,
+            newNode: {
                 title: 'New Category',
                 id: Math.random().toString(36).substr(2, 5),
                 // setting created new flag
                 createdNew: true,
-            }),
-        );
+            },
+            treeData,
+            getNodeKey,
+            minimumTreeIndex: 0,
+        }).treeData;
+        setTreeData(newTreeData);
     };
 
     return (
         <div className={styles.addTopLevelCategoryWrapper}>
             <Button
-                label={'Add Top-Level Category'}
+                label={'ADD CATEGORY'}
                 theme="primary"
                 startIcon={<ICONS.MdAdd />}
                 variant="contained"
@@ -54,14 +63,8 @@ const LoadingSkeleton = () => {
     );
 };
 
-export const CategoriesView = (props: {
-    sortableTreeData: TreeItem[];
-    searchQuery: string;
-}): ReactElement => {
-    const { sortableTreeData, searchQuery } = props;
-
+export const CategoriesView = (): ReactElement => {
     const categoriesViewWrapperRef = useRef<HTMLDivElement>(null);
-    const [sortableTreeDataState, setSortableTreeDataState] = useState(sortableTreeData);
     const [categoriesViewHeight, setcategoriesViewHeight] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     // setting computed height for the tree component
@@ -76,14 +79,10 @@ export const CategoriesView = (props: {
 
     return (
         <div ref={categoriesViewWrapperRef} className={styles.categoriesViewWrapper}>
-            <AddTopLevelCategory setSortableTreeDataState={setSortableTreeDataState} />
+            <AddTopLevelCategory />
             <Loader isLoading={isLoading} skeleton={<LoadingSkeleton />}>
                 <div className={styles.categoriesView} style={categoriesViewStyle}>
-                    <SortableTreeComponent
-                        searchQuery={searchQuery}
-                        setSortableTreeDataState={setSortableTreeDataState}
-                        sortableTreeDataState={sortableTreeDataState}
-                    />
+                    <SortableTreeComponent />
                 </div>
             </Loader>
         </div>
