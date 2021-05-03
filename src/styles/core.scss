@@ -107,6 +107,12 @@ p {
     padding: 10px 10px 10px 0;
 }
 
+.rst__rowSearchMatch {
+    outline-color: $primary-color;
+    outline-offset: 2px;
+    outline-style: dashed;
+}
+
 .rst__moveHandle {
     background: $backgroundPrimary-color url('../assets/svgs/DragHandle/dragHandle.svg') no-repeat
         center;

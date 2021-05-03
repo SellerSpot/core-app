@@ -1,6 +1,6 @@
-import { InputField } from '@sellerspot/universal-components';
+import { IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import { debounce } from 'lodash';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import create from 'zustand';
@@ -35,18 +35,40 @@ export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) 
 
 const SearchField = () => {
     const setSearchQuery = useModifyCategoriesStore((state) => state.setSearchQuery);
+    const [localFieldValue, setLocalFieldValue] = useState('');
+    const pushSearchToTree = debounce((value: string) => {
+        setSearchQuery(value);
+    }, 700);
+    const handleOnChange: IInputFieldProps['onChange'] = (event) => {
+        const value = event.target.value;
+        setLocalFieldValue(value);
+        pushSearchToTree(value);
+    };
+    const clearSearchField = () => {
+        setLocalFieldValue('');
+        pushSearchToTree('');
+    };
+    const suffixComponent =
+        localFieldValue?.length > 0 ? (
+            <IconButton
+                icon={<ICONS.MdClear />}
+                theme="danger"
+                size="small"
+                onClick={clearSearchField}
+            />
+        ) : null;
     return (
         <div className={styles.searchField}>
             <InputField
                 fullWidth
                 theme="primary"
                 autoFocus
+                value={localFieldValue}
                 placeHolder={'Search for category'}
                 disableHelperTextPlaceholderPadding
                 prefix={<ICONS.MdSearch />}
-                onChange={debounce((event) => {
-                    setSearchQuery(event.target.value);
-                }, 300)}
+                suffix={suffixComponent}
+                onChange={handleOnChange}
             />
         </div>
     );

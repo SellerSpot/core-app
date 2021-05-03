@@ -1,9 +1,10 @@
+import { showNotify } from '@sellerspot/universal-components';
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
-import SortableTree, { isDescendant } from 'react-sortable-tree';
+import SortableTree, { isDescendant, TreeItem } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
 import styles from '../../../../ModifyCategories.module.scss';
 import { EditCategoryTitle } from './Components/EditCategoryTitle';
@@ -20,6 +21,11 @@ const DeleteConfirmTitle = (props: { nodeTitle: string }) => {
             </h6>
         </div>
     );
+};
+
+const customSearchMethod = (props: { node: TreeItem; searchQuery: string }) => {
+    const { node, searchQuery } = props;
+    return searchQuery && node.title.toString().toLowerCase().startsWith(searchQuery.toLowerCase());
 };
 
 export const SortableTreeComponent = (): ReactElement => {
@@ -41,6 +47,7 @@ export const SortableTreeComponent = (): ReactElement => {
             rowHeight={80}
             treeData={treeData}
             searchQuery={searchQuery}
+            searchMethod={customSearchMethod}
             onChange={setTreeData}
             generateNodeProps={(data) => {
                 const { node } = data;
@@ -69,6 +76,12 @@ export const SortableTreeComponent = (): ReactElement => {
                             setSelectedNode(null);
                         } else {
                             setSelectedNode(node);
+                            showNotify(`Selected ${nodeTitle} category`, {
+                                autoHideDuration: 3000,
+                                showNotifyAction: true,
+                                placement: 'bottomLeft',
+                                theme: 'success',
+                            });
                         }
                     }
                 };
