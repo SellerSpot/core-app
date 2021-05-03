@@ -17,7 +17,7 @@ ModifyCategories.args = {
             title: 'Shirts',
             children: [
                 {
-                    id: 'ex',
+                    id: 'exd',
                     title: 'T-Shirt',
                 },
                 {
@@ -58,6 +58,9 @@ ModifyCategories.args = {
 } as IModifyCategoriesProps;
 
 export default {
-    title: 'Components',
+    title: 'Components/Fullscreen',
     component: ModifyCategoriesComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;

@@ -1,20 +1,64 @@
-import { IconButton, ToolTip } from '@sellerspot/universal-components';
+import { Button, IconButton, showNotify, ToolTip } from '@sellerspot/universal-components';
 import { IColors } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { addNodeUnderParent, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import * as yup from 'yup';
 import styles from './ModifyCategories.module.scss';
+import { TGetNodeKey } from './ModifyCategories.types';
+
+const DeleteCategoryButton = (props: {
+    node: TreeItem;
+    setToBeDeletedNode: React.Dispatch<React.SetStateAction<TreeItem>>;
+}) => {
+    const { node, setToBeDeletedNode } = props;
+
+    return (
+        <ToolTip content={'Delete Category'} enterDelay={400}>
+            <div>
+                <IconButton
+                    icon={<ICONS.MdDelete />}
+                    theme="danger"
+                    size="small"
+                    onClick={() => setToBeDeletedNode(node)}
+                />
+            </div>
+        </ToolTip>
+    );
+};
+
+const EditAndCancelEditButton = (props: {
+    isEditable: boolean;
+    editCategoryOnClickHandler: () => void;
+}) => {
+    const { isEditable, editCategoryOnClickHandler } = props;
+    return (
+        <ToolTip content={isEditable ? 'Cancel Editing' : 'Edit Category'} enterDelay={400}>
+            <div>
+                <IconButton
+                    theme={isEditable ? 'danger' : 'primary'}
+                    size="small"
+                    icon={isEditable ? <ICONS.MdClear /> : <ICONS.MdModeEdit />}
+                    onClick={editCategoryOnClickHandler}
+                />
+            </div>
+        </ToolTip>
+    );
+};
 
 export class ModifyCategoriesService {
     static getSortableTreeButtons = (props: {
         treeData: TreeItem[];
         path: string[];
-        getNodeKey: ({ treeIndex }: { treeIndex: number }) => number;
+        nodeTitle: string;
+        getNodeKey: TGetNodeKey;
         nodeId: string;
+        node: TreeItem;
         setSortableTreeDataState: React.Dispatch<React.SetStateAction<TreeItem[]>>;
         setEditableNodeId: React.Dispatch<React.SetStateAction<string>>;
+        isToBeDeleted: boolean;
         isEditable: boolean;
+        setToBeDeletedNode: React.Dispatch<React.SetStateAction<TreeItem>>;
     }): ReactElement[] => {
         const {
             treeData,
@@ -24,6 +68,10 @@ export class ModifyCategoriesService {
             setEditableNodeId,
             nodeId,
             isEditable,
+            nodeTitle,
+            node,
+            isToBeDeleted,
+            setToBeDeletedNode,
         } = props;
 
         const editCategoryOnClickHandler = () => {
@@ -54,40 +102,55 @@ export class ModifyCategoriesService {
                 getNodeKey,
             });
             setSortableTreeDataState(newTreeData);
+            showNotify(`Deleted ${nodeTitle} category`, {
+                placement: 'bottomLeft',
+                theme: 'info',
+                autoHideDuration: 3000,
+                showNotifyAction: true,
+            });
         };
 
         return [
             <div key={'controls'} className={styles.controls}>
-                <ToolTip content={isEditable ? 'Cancel Editing' : 'Edit Category'} enterDelay={400}>
-                    <div>
-                        <IconButton
-                            theme={isEditable ? 'danger' : 'primary'}
-                            size="small"
-                            icon={isEditable ? <ICONS.MdClear /> : <ICONS.MdModeEdit />}
-                            onClick={editCategoryOnClickHandler}
-                        />
-                    </div>
-                </ToolTip>
-                <ToolTip content={'Add Category'} enterDelay={400}>
-                    <div>
-                        <IconButton
-                            theme={'primary'}
-                            size="small"
-                            icon={<ICONS.MdAdd />}
-                            onClick={addCategoryOnClickHandler}
-                        />
-                    </div>
-                </ToolTip>
-                <ToolTip content={'Delete Category'} enterDelay={400}>
-                    <div>
-                        <IconButton
-                            icon={<ICONS.MdDelete />}
-                            theme="danger"
-                            size="small"
-                            onClick={deleteCategoryOnClickHandler}
-                        />
-                    </div>
-                </ToolTip>
+                {!isToBeDeleted ? (
+                    <EditAndCancelEditButton
+                        editCategoryOnClickHandler={editCategoryOnClickHandler}
+                        isEditable={isEditable}
+                    />
+                ) : null}
+                {!isToBeDeleted ? (
+                    <ToolTip content={'Add Category'} enterDelay={400}>
+                        <div>
+                            <IconButton
+                                theme={'primary'}
+                                size="small"
+                                icon={<ICONS.MdAdd />}
+                                onClick={addCategoryOnClickHandler}
+                            />
+                        </div>
+                    </ToolTip>
+                ) : null}
+                {!isToBeDeleted ? (
+                    <DeleteCategoryButton node={node} setToBeDeletedNode={setToBeDeletedNode} />
+                ) : null}
+                {isToBeDeleted ? (
+                    <Button
+                        label={'CANCEL'}
+                        size="small"
+                        theme="success"
+                        variant="outlined"
+                        onClick={() => setToBeDeletedNode(null)}
+                    />
+                ) : null}
+                {isToBeDeleted ? (
+                    <Button
+                        label={'DELETE'}
+                        size="small"
+                        theme="danger"
+                        variant="outlined"
+                        onClick={() => deleteCategoryOnClickHandler()}
+                    />
+                ) : null}
             </div>,
         ];
     };
@@ -116,18 +179,18 @@ export class ModifyCategoriesService {
             borderRadius: '5px',
             borderStyle: 'solid',
             borderColor: 'transparent',
-            transition: 'border-color 0.3s ease',
+            transition: 'border-color 0.2s ease',
         };
         if (isSelected) {
             defaultNodeStyle = {
                 ...defaultNodeStyle,
-                borderColor: `${colors.primary}`,
+                borderColor: `${colors.success}`,
             };
         } else if (isParentNodeForSelectedNode) {
             defaultNodeStyle = {
                 ...defaultNodeStyle,
                 borderStyle: 'dashed',
-                borderColor: `${colors.primary}`,
+                borderColor: `${colors.success}`,
             };
         }
         return defaultNodeStyle;
