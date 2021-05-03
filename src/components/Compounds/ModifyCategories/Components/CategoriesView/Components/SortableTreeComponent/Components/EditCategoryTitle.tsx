@@ -1,15 +1,20 @@
-import { IconButton, InputField, Popper } from '@sellerspot/universal-components';
-import React, { ReactElement, useRef, useState } from 'react';
-import { changeNodeAtPath, TreeItem } from 'react-sortable-tree';
-import { ICONS } from 'utilities/icons';
-import { ModifyCategoriesService } from '../ModifyCategories.service';
-import styles from '../ModifyCategories.module.scss';
-import {
-    TGetNodeKey,
-    TSetSortableTreeDataState,
-    TTitleInputFieldEvent,
-} from '../ModifyCategories.types';
 import { ClickAwayListener } from '@material-ui/core';
+import { IconButton, InputField, Popper } from '@sellerspot/universal-components';
+import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
+import {
+    IInputFieldOnChangeEvent,
+    TOpenPopperHandler,
+    TTitleInputFieldEvent,
+} from 'components/Compounds/ModifyCategories/ModifyCategories.types';
+import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
+import React, { ReactElement, useRef, useState } from 'react';
+import { changeNodeAtPath } from 'react-sortable-tree';
+import { ICONS } from 'utilities/icons';
+import { ModifyCategoriesService } from '../../../../../services/ModifyCategories.service';
+
+import styles from '../ModifyCategories.module.scss';
+
+const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
 const getPopperContent = (props: { errorMessage: string }) => {
     const { errorMessage } = props;
@@ -21,32 +26,24 @@ const getPopperContent = (props: { errorMessage: string }) => {
 };
 
 export const EditCategoryTitle = (props: {
-    nodeTitle: string;
-    setSortableTreeDataState: TSetSortableTreeDataState;
-    sortableTreeDataState: TreeItem[];
-    path: string[];
-    node: TreeItem;
-    getNodeKey: TGetNodeKey;
-    setEditableNodeId: React.Dispatch<React.SetStateAction<string>>;
+    nodeInstance: ModifyCategoriesNodeDataStore;
 }): ReactElement => {
-    const {
-        nodeTitle,
-        setSortableTreeDataState,
-        sortableTreeDataState,
-        path,
-        node,
-        getNodeKey,
-        setEditableNodeId,
-    } = props;
+    const { nodeInstance } = props;
 
-    // common types
-    type TOpenPopperHandler = (props: { anchorEl: HTMLElement }) => void;
-    type IInputFieldOnChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+    // fetching data from node class instance
+    const {
+        nodeData: { node, path },
+    } = nodeInstance;
+    const { title } = node;
+
+    // fetching values from store
+    const modifyCategoriesStore = useModifyCategoriesStore();
+    const { treeData, setTreeData, setEditableNodeId } = modifyCategoriesStore;
 
     // used to hold reference to invoke when the field is submitted
     const inputElementRef = useRef<HTMLElement>(null);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [nodeTitleState, setNodeTitleState] = useState(nodeTitle);
+    const [nodeTitleState, setNodeTitleState] = useState(`${title}`);
 
     const titleOnChangeHandler = (event: TTitleInputFieldEvent) => {
         const title = event.target.value;
@@ -59,7 +56,7 @@ export const EditCategoryTitle = (props: {
 
         if (!validationResult) {
             const newTreeData = changeNodeAtPath({
-                treeData: sortableTreeDataState,
+                treeData,
                 getNodeKey,
                 path,
                 newNode: {
@@ -68,7 +65,7 @@ export const EditCategoryTitle = (props: {
                     createdNew: false,
                 },
             });
-            setSortableTreeDataState(newTreeData);
+            setTreeData(newTreeData);
             setEditableNodeId('');
         } else {
             setErrorMessage(validationResult);

@@ -4,8 +4,8 @@ import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import styles from '../ModifyCategories.module.scss';
-import { TSetSortableTreeDataState } from '../ModifyCategories.types';
-import { SortableTreeComponent } from './SortableTreeComponent';
+import { TSetSortableTreeDataState } from '../../ModifyCategories.types';
+import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
 
 const AddTopLevelCategory = (props: { setSortableTreeDataState: TSetSortableTreeDataState }) => {
     const { setSortableTreeDataState } = props;
