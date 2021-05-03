@@ -52,7 +52,11 @@ export const EditCategoryTitle = (props: {
 
     const pushTitleToTreeState = (props: { openPopperHandler?: TOpenPopperHandler }) => {
         const { openPopperHandler } = props;
-        const validationResult = ModifyCategoriesService.validateCategoryName(nodeTitleState);
+        const validationResult = ModifyCategoriesService.validateCategoryName({
+            title: nodeTitleState,
+            treeData,
+            path: path as string[],
+        });
 
         if (!validationResult) {
             const newTreeData = changeNodeAtPath({

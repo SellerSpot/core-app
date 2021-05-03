@@ -1,10 +1,11 @@
 import { showNotify } from '@sellerspot/universal-components';
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
+import { ModifyCategoriesService } from 'components/Compounds/ModifyCategories/services/ModifyCategories.service';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
-import SortableTree, { isDescendant, TreeItem } from 'react-sortable-tree';
+import SortableTree, { isDescendant, ReactSortableTreeProps } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
 import styles from '../../../../ModifyCategories.module.scss';
 import { EditCategoryTitle } from './Components/EditCategoryTitle';
@@ -23,11 +24,6 @@ const DeleteConfirmTitle = (props: { nodeTitle: string }) => {
     );
 };
 
-const customSearchMethod = (props: { node: TreeItem; searchQuery: string }) => {
-    const { node, searchQuery } = props;
-    return searchQuery && node.title.toString().toLowerCase().startsWith(searchQuery.toLowerCase());
-};
-
 export const SortableTreeComponent = (): ReactElement => {
     const themeState = useSelector(themeSelector);
     const modifyCategoriesStore = useModifyCategoriesStore();
@@ -42,12 +38,23 @@ export const SortableTreeComponent = (): ReactElement => {
         setEditableNodeId,
     } = modifyCategoriesStore;
 
+    // const canDragNodes = !!toBeDeletedNode || !!editableNodeId;
+
+    const canDropCallback: ReactSortableTreeProps['canDrop'] = (props) => {
+        return ModifyCategoriesService.canDropCategory({
+            dropProps: props,
+            treeData,
+        });
+    };
+
     return (
         <SortableTree
             rowHeight={80}
             treeData={treeData}
             searchQuery={searchQuery}
-            searchMethod={customSearchMethod}
+            canDrop={canDropCallback}
+            // canDrag={canDragNodes}
+            searchMethod={ModifyCategoriesService.generalSearchMethod}
             onChange={setTreeData}
             generateNodeProps={(data) => {
                 const { node } = data;
