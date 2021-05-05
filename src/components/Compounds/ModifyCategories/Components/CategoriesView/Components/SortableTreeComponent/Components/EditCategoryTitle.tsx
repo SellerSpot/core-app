@@ -1,4 +1,3 @@
-import { ClickAwayListener } from '@material-ui/core';
 import { IconButton, InputField, Popper } from '@sellerspot/universal-components';
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import {
@@ -10,9 +9,8 @@ import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCatego
 import React, { ReactElement, useRef, useState } from 'react';
 import { changeNodeAtPath } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
-import { ModifyCategoriesService } from '../../../../../services/ModifyCategories.service';
-
 import styles from '../../../../../ModifyCategories.module.scss';
+import { ModifyCategoriesService } from '../../../../../services/ModifyCategories.service';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
@@ -107,25 +105,23 @@ export const EditCategoryTitle = (props: {
                 };
 
                 return (
-                    <ClickAwayListener onClickAway={() => setEditableNodeId('')}>
-                        <div
-                            ref={inputElementRef as React.LegacyRef<HTMLDivElement>}
-                            className={styles.categoryNameField}
-                        >
-                            <InputField
-                                size="small"
-                                disableHelperTextPlaceholderPadding
-                                theme="primary"
-                                fullWidth
-                                selectTextOnFocus
-                                autoFocus
-                                value={nodeTitleState}
-                                onChange={handleOnChange}
-                                onKeyDown={handleOnKeyDown}
-                                suffix={<SuffixButton openPopperHandler={openPopperHandler} />}
-                            />
-                        </div>
-                    </ClickAwayListener>
+                    <div
+                        ref={inputElementRef as React.LegacyRef<HTMLDivElement>}
+                        className={styles.categoryNameField}
+                    >
+                        <InputField
+                            size="small"
+                            disableHelperTextPlaceholderPadding
+                            theme="primary"
+                            fullWidth
+                            selectTextOnFocus
+                            autoFocus
+                            value={nodeTitleState}
+                            onChange={handleOnChange}
+                            onKeyDown={handleOnKeyDown}
+                            suffix={<SuffixButton openPopperHandler={openPopperHandler} />}
+                        />
+                    </div>
                 );
             }}
         </Popper>

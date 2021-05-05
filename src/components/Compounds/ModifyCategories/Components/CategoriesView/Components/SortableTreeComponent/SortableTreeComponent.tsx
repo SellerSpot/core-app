@@ -38,8 +38,6 @@ export const SortableTreeComponent = (): ReactElement => {
         setEditableNodeId,
     } = modifyCategoriesStore;
 
-    // const canDragNodes = !!toBeDeletedNode || !!editableNodeId;
-
     const canDropCallback: ReactSortableTreeProps['canDrop'] = (props) => {
         return ModifyCategoriesService.canDropCategory({
             dropProps: props,
@@ -53,7 +51,6 @@ export const SortableTreeComponent = (): ReactElement => {
             treeData={treeData}
             searchQuery={searchQuery}
             canDrop={canDropCallback}
-            // canDrag={canDragNodes}
             searchMethod={ModifyCategoriesService.generalSearchMethod}
             onChange={setTreeData}
             generateNodeProps={(data) => {

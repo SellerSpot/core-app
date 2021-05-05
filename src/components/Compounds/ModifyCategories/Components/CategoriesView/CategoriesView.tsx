@@ -5,6 +5,7 @@ import { insertNode } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import { useModifyCategoriesStore } from '../../ModifyCategories';
 import styles from '../../ModifyCategories.module.scss';
+import { EditCategorySlider } from './Components/EditCategorySlider.tsx/EditCategorySlider';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
@@ -85,6 +86,7 @@ export const CategoriesView = (): ReactElement => {
                     <SortableTreeComponent />
                 </div>
             </Loader>
+            <EditCategorySlider />
         </div>
     );
 };

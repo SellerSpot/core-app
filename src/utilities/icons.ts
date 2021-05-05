@@ -18,6 +18,7 @@ import {
     MdSettings,
     MdSearch,
     MdAdd,
+    MdKeyboardArrowLeft,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
 import { CgFormatSlash } from 'react-icons/cg';
@@ -49,4 +50,5 @@ export const ICONS = {
     MdSettings,
     MdSearch,
     MdAdd,
+    MdKeyboardArrowLeft,
 };
