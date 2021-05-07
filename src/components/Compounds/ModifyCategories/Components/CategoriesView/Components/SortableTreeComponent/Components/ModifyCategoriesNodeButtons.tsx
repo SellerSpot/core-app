@@ -19,18 +19,25 @@ const EditAndCancelEditButton = (props: { nodeInstance: ModifyCategoriesNodeData
     // fetching data from node class instance
     const {
         isEditable,
-        nodeData: {
-            node: { id },
-        },
+        nodeData: { node, path },
     } = nodeInstance;
     // fetching data from store
-    const setEditableNodeId = useModifyCategoriesStore((state) => state.setEditableNodeId);
+    const setEditableNodeDetails = useModifyCategoriesStore(
+        (state) => state.setEditableNodeDetails,
+    );
     const toolTipContent = isEditable ? 'Cancel Editing' : 'Edit Category';
     const theme: IIconButtonProps['theme'] = isEditable ? 'danger' : 'primary';
     const icon: IIconButtonProps['icon'] = isEditable ? <ICONS.MdClear /> : <ICONS.MdModeEdit />;
 
     const onClickHandler = () => {
-        setEditableNodeId(isEditable ? null : id);
+        setEditableNodeDetails(
+            isEditable
+                ? null
+                : {
+                      node,
+                      path: path as string[],
+                  },
+        );
     };
 
     return (

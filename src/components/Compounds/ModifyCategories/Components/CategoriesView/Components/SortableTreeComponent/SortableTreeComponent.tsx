@@ -7,22 +7,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import SortableTree, { isDescendant, ReactSortableTreeProps } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
-import styles from '../../../../ModifyCategories.module.scss';
-import { EditCategoryTitle } from './Components/EditCategoryTitle';
 import { ModifyCategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
-
-const DeleteConfirmTitle = (props: { nodeTitle: string }) => {
-    const { nodeTitle } = props;
-    return (
-        <div className={styles.deleteConfirmTitleWrapper}>
-            <h5>Are you sure...</h5>
-            <h6>
-                you want to <span className={styles.deleteText}>{'delete '}</span>
-                <span className={styles.deleteCategoryText}>{nodeTitle}</span> category?
-            </h6>
-        </div>
-    );
-};
 
 export const SortableTreeComponent = (): ReactElement => {
     const themeState = useSelector(themeSelector);
@@ -30,12 +15,11 @@ export const SortableTreeComponent = (): ReactElement => {
     const {
         treeData,
         searchQuery,
-        editableNodeId,
+        editableNodeDetails,
         toBeDeletedNode,
         selectedNode,
         setTreeData,
         setSelectedNode,
-        setEditableNodeId,
     } = modifyCategoriesStore;
 
     const canDropCallback: ReactSortableTreeProps['canDrop'] = (props) => {
@@ -57,7 +41,8 @@ export const SortableTreeComponent = (): ReactElement => {
                 const { node } = data;
                 const nodeId = node.id;
                 const nodeTitle = `${node.title}`;
-                const isEditable = editableNodeId === nodeId || node.createdNew;
+                const editableNode = editableNodeDetails?.node;
+                const isEditable = editableNode?.id === nodeId || node.createdNew;
                 const isSelected = selectedNode?.id === nodeId;
                 const isParentNode = !!selectedNode ? isDescendant(node, selectedNode) : false;
                 const isToBeDeleted = nodeId === toBeDeletedNode?.id;
@@ -90,18 +75,8 @@ export const SortableTreeComponent = (): ReactElement => {
                     }
                 };
 
-                const switchToEditMode = () => {
-                    setEditableNodeId(nodeId);
-                };
-
                 return {
-                    title: isEditable ? (
-                        <EditCategoryTitle nodeInstance={nodeInstance} />
-                    ) : isToBeDeleted ? (
-                        <DeleteConfirmTitle nodeTitle={nodeTitle} />
-                    ) : (
-                        <h5 onClick={switchToEditMode}>{nodeTitle}</h5>
-                    ),
+                    title: <h5>{nodeTitle}</h5>,
                     buttons: [
                         <div key={'controls'}>
                             <ModifyCategoriesNodeButtons nodeInstance={nodeInstance} />

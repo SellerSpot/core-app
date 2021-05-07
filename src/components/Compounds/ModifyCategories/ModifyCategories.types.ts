@@ -15,17 +15,22 @@ export interface IModifyCategoriesProps {
     categoriesData: ICategory[];
 }
 
+type TEditableNodeDetails = {
+    node: TreeItem;
+    path: string[];
+};
+
 export type TUseModifyCategoriesStore = {
     // data
     treeData: TreeItem[];
     searchQuery: string;
-    editableNodeId: string;
+    editableNodeDetails: TEditableNodeDetails;
     selectedNode: TreeItem;
     toBeDeletedNode: TreeItem;
     // functions
     setTreeData: (treeData: TreeItem[]) => void;
     setSearchQuery: (searchQuery: string) => void;
-    setEditableNodeId: (editableNodeId: string) => void;
+    setEditableNodeDetails: (editableNodeDetails: TEditableNodeDetails) => void;
     setSelectedNode: (selectedNode: TreeItem) => void;
     setToBeDeletedNode: (toBeDeletedNode: TreeItem) => void;
 };

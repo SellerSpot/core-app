@@ -5,6 +5,7 @@ import { TreeItem } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import create from 'zustand';
 import { CategoriesView } from './Components/CategoriesView/CategoriesView';
+import { EditCategorySlider } from './Components/CategoriesView/Components/EditCategorySlider.tsx/EditCategorySlider';
 import styles from './ModifyCategories.module.scss';
 import { IModifyCategoriesProps, TUseModifyCategoriesStore } from './ModifyCategories.types';
 
@@ -13,7 +14,7 @@ export { IModifyCategoriesProps } from './ModifyCategories.types';
 export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) => ({
     treeData: [],
     searchQuery: null,
-    editableNodeId: null,
+    editableNodeDetails: null,
     selectedNode: null,
     toBeDeletedNode: null,
     setTreeData: (treeData) => {
@@ -22,8 +23,8 @@ export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) 
     setSearchQuery: (searchQuery) => {
         set({ searchQuery });
     },
-    setEditableNodeId: (editableNodeId) => {
-        set({ editableNodeId });
+    setEditableNodeDetails: (editableNodeDetails) => {
+        set({ editableNodeDetails });
     },
     setSelectedNode: (selectedNode) => {
         set({ selectedNode });
@@ -84,6 +85,7 @@ export const ModifyCategories = (props: IModifyCategoriesProps): ReactElement =>
         <div className={styles.modifyCategories}>
             <SearchField />
             <CategoriesView />
+            <EditCategorySlider />
         </div>
     );
 };
