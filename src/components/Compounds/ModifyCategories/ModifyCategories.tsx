@@ -17,6 +17,7 @@ export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) 
     editableNodeDetails: null,
     selectedNode: null,
     toBeDeletedNode: null,
+    toBeAddedNodeDetails: null,
     setTreeData: (treeData) => {
         set({ treeData });
     },
@@ -31,6 +32,9 @@ export const useModifyCategoriesStore = create<TUseModifyCategoriesStore>((set) 
     },
     setToBeDeletedNode: (toBeDeletedNode) => {
         set({ toBeDeletedNode });
+    },
+    setToBeAddedNodeDetails: (toBeAddedNodeDetails) => {
+        set({ toBeAddedNodeDetails });
     },
 }));
 

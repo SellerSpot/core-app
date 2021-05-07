@@ -1,9 +1,26 @@
 import { TreeItem } from 'react-sortable-tree';
+import { introduceDelay } from 'utilities/general';
 import * as yup from 'yup';
 import { IEditCategoryForm } from '../Components/CategoriesView/Components/EditCategorySlider.tsx/EditCategory.types';
 import { ModifyCategoriesService } from './ModifyCategories.service';
 
 export class EditCategorySliderService {
+    // posts category to the server and returns the new category id
+    static createNewCategory = async (props: { category: TreeItem }): Promise<string> => {
+        const { category } = props;
+        console.log(category);
+        await introduceDelay(3000);
+        return Math.random().toString(36).substr(2, 5);
+    };
+
+    // posts edited category to the server and returns boolean
+    static updateCategory = async (props: { category: TreeItem }): Promise<boolean> => {
+        const { category } = props;
+        console.log(category);
+        await introduceDelay(3000);
+        return true;
+    };
+
     static validateField = (props: {
         value: string;
         fieldName: keyof IEditCategoryForm;

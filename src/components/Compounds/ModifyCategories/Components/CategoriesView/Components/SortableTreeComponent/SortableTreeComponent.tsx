@@ -60,7 +60,13 @@ export const SortableTreeComponent = (): ReactElement => {
                 // 'any' because no typing is provided for the onClick event in react-sortable-tree
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const nodeOnClickHandler = (event: any) => {
-                    if (event?.target?.className === 'rst__rowContents') {
+                    const eventClass = event?.target?.className;
+                    const isNodeClicked =
+                        eventClass === 'rst__rowContents' ||
+                        eventClass === 'nodeTitle' ||
+                        eventClass === 'rst__rowLabel';
+
+                    if (isNodeClicked) {
                         if (selectedNode?.id === nodeId) {
                             setSelectedNode(null);
                         } else {
@@ -76,7 +82,7 @@ export const SortableTreeComponent = (): ReactElement => {
                 };
 
                 return {
-                    title: <h5>{nodeTitle}</h5>,
+                    title: <h5 className="nodeTitle">{nodeTitle}</h5>,
                     buttons: [
                         <div key={'controls'}>
                             <ModifyCategoriesNodeButtons nodeInstance={nodeInstance} />

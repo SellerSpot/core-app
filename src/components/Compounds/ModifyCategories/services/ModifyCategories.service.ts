@@ -63,8 +63,16 @@ export class ModifyCategoriesService {
         // checking if new element is root
         // if it is, then shortcut the validation process
         if (!nextParent) {
-            // iterating to check if any of the matching nodes are also at root level
-            if (sameTitleNodes.matches.find((matchedNode) => matchedNode.path.length === 1)) {
+            // iterating to check if any of the matching nodes are als\o at root level
+            if (
+                sameTitleNodes.matches.find((matchedNode) => {
+                    return (
+                        matchedNode.path.length === 1 &&
+                        !isEqual(matchedNode.path, nextPath) &&
+                        matchedNode.node.title == currentNode.title
+                    );
+                })
+            ) {
                 // setting flag to indicate duplicate
                 invalidNodeFlag = true;
             }
@@ -88,6 +96,7 @@ export class ModifyCategoriesService {
                     // checking if the matched node parent and current node parent are the same
                     if (matchedNodeParent.id === nextParent.id) {
                         invalidNodeFlag = true;
+                        // stopping the iteration loop
                         return;
                     }
                 }
@@ -116,13 +125,20 @@ export class ModifyCategoriesService {
         // if it is, then shortcut the validation process
         if (pathOfCurrentNode.length === 1) {
             // iterating to check if any of the matching nodes are also at root level
-            if (sameTitleNodes.matches.find((matchedNode) => matchedNode.path.length === 1)) {
+            if (
+                sameTitleNodes.matches.find(
+                    (matchedNode) =>
+                        matchedNode.path.length === 1 &&
+                        !isEqual(matchedNode.path, pathOfCurrentNode),
+                )
+            ) {
                 invalidNodeFlag = true;
             }
         } else {
             sameTitleNodes.matches.map((matchedNode) => {
                 // if the same node is matched
                 if (isEqual(matchedNode.path, pathOfCurrentNode)) {
+                    // stopping the iteration loop
                     return;
                 }
                 // if the nodes are in the same depth
@@ -132,6 +148,7 @@ export class ModifyCategoriesService {
                     // checking if the parent of both matched and current node as the same
                     if (matchedNodeParentIndex === currentNodeParentIndex) {
                         invalidNodeFlag = true;
+                        // stopping the iteration loop
                         return;
                     }
                 }

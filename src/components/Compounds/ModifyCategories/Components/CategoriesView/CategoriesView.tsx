@@ -1,33 +1,24 @@
 import { Button, Skeleton } from '@sellerspot/universal-components';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { insertNode } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import { useModifyCategoriesStore } from '../../ModifyCategories';
 import styles from '../../ModifyCategories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
 
-const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
-
 const AddTopLevelCategory = () => {
     // fetching values from store
-    const setTreeData = useModifyCategoriesStore((state) => state.setTreeData);
-    const treeData = useModifyCategoriesStore((state) => state.treeData);
+    const setToBeAddedNodeDetails = useModifyCategoriesStore(
+        (state) => state.setToBeAddedNodeDetails,
+    );
 
     const onClickHandler = () => {
-        const newTreeData = insertNode({
-            depth: 0,
-            newNode: {
+        setToBeAddedNodeDetails({
+            node: {
                 title: 'New Category',
-                id: Math.random().toString(36).substr(2, 5),
-                // setting created new flag
-                createdNew: true,
             },
-            treeData,
-            getNodeKey,
-            minimumTreeIndex: 0,
-        }).treeData;
-        setTreeData(newTreeData);
+            path: ['-1'],
+        });
     };
 
     return (

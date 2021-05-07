@@ -32,7 +32,7 @@ export class ModifyCategoriesNodeDataStore {
             borderWidth: '2px',
             borderRadius: '5px',
             borderStyle: 'solid',
-            cursor: 'pointer',
+            cursor: 'default',
             borderColor: 'transparent',
             transition: 'border-color 0.2s ease',
         };

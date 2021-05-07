@@ -27,12 +27,14 @@ export type TUseModifyCategoriesStore = {
     editableNodeDetails: TEditableNodeDetails;
     selectedNode: TreeItem;
     toBeDeletedNode: TreeItem;
+    toBeAddedNodeDetails: TEditableNodeDetails;
     // functions
     setTreeData: (treeData: TreeItem[]) => void;
     setSearchQuery: (searchQuery: string) => void;
     setEditableNodeDetails: (editableNodeDetails: TEditableNodeDetails) => void;
     setSelectedNode: (selectedNode: TreeItem) => void;
     setToBeDeletedNode: (toBeDeletedNode: TreeItem) => void;
+    setToBeAddedNodeDetails: (toBeAddedNodeDetails: TEditableNodeDetails) => void;
 };
 
 export type TOpenPopperHandler = (props: { anchorEl: HTMLElement }) => void;

@@ -8,7 +8,7 @@ import {
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
-import { addNodeUnderParent, removeNodeAtPath } from 'react-sortable-tree';
+import { removeNodeAtPath } from 'react-sortable-tree';
 import { ICONS } from 'utilities/icons';
 import styles from '../../../../../ModifyCategories.module.scss';
 
@@ -56,24 +56,19 @@ const AddCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore 
         nodeData: { path },
     } = nodeInstance;
     // fetching data from store
-    const treeData = useModifyCategoriesStore((state) => state.treeData);
-    const setTreeData = useModifyCategoriesStore((state) => state.setTreeData);
+    const setToBeAddedNodeDetails = useModifyCategoriesStore(
+        (state) => state.setToBeAddedNodeDetails,
+    );
 
     const onClickHandler = () => {
-        const newTreeData = addNodeUnderParent({
-            treeData,
-            parentKey: path[path.length - 1],
-            expandParent: true,
-            getNodeKey,
-            newNode: {
-                title: `New Category`,
-                id: Math.random().toString(36).substr(2, 5),
-                // setting created new flag
-                createdNew: true,
+        // virtual since the node is not yet present in the actual tree
+        const virtualPathForNewNode = [...(path as string[]), '-1'];
+        setToBeAddedNodeDetails({
+            node: {
+                title: 'New Category',
             },
-            addAsFirstChild: true,
-        }).treeData;
-        setTreeData(newTreeData);
+            path: virtualPathForNewNode,
+        });
     };
 
     return (
