@@ -14,7 +14,7 @@ import styles from '../../../../../ModifyCategories.module.scss';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
-const EditAndCancelEditButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
+const EditCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
     const { nodeInstance } = props;
     // fetching data from node class instance
     const {
@@ -25,9 +25,9 @@ const EditAndCancelEditButton = (props: { nodeInstance: ModifyCategoriesNodeData
     const setEditableNodeDetails = useModifyCategoriesStore(
         (state) => state.setEditableNodeDetails,
     );
-    const toolTipContent = isEditable ? 'Cancel Editing' : 'Edit Category';
-    const theme: IIconButtonProps['theme'] = isEditable ? 'danger' : 'primary';
-    const icon: IIconButtonProps['icon'] = isEditable ? <ICONS.MdClear /> : <ICONS.MdModeEdit />;
+    const toolTipContent = 'Edit Category';
+    const theme: IIconButtonProps['theme'] = 'primary';
+    const icon: IIconButtonProps['icon'] = <ICONS.MdModeEdit />;
 
     const onClickHandler = () => {
         setEditableNodeDetails(
@@ -174,7 +174,7 @@ export const ModifyCategoriesNodeButtons = (props: {
 
     return (
         <div className={styles.controls}>
-            {!isToBeDeleted ? <EditAndCancelEditButton nodeInstance={nodeInstance} /> : null}
+            {!isToBeDeleted ? <EditCategoryButton nodeInstance={nodeInstance} /> : null}
             {!isToBeDeleted ? <AddCategoryButton nodeInstance={nodeInstance} /> : null}
             {!isToBeDeleted ? <DeleteCategoryButton nodeInstance={nodeInstance} /> : null}
             {isToBeDeleted ? <CancelDeleteConfirmation /> : null}
