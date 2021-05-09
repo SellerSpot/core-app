@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+// react-sortable-custom-styles
+@import './reactSortableStyles.scss';
 
 * {
     box-sizing: border-box;
@@ -77,4 +79,34 @@ p {
     --primary-color: '#1A73E8';
     --accent-color: '#EE8572';
     --dark-color: '#212121';
+}
+
+// react-sortable-tree custom styling
+.rst__tree {
+    background-color: $backgroundPrimary-color;
+    &::before {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        display: block;
+        width: 100%;
+        height: 2%;
+        background-image: linear-gradient($backgroundPrimary-color, transparent);
+        content: '';
+    }
+    &::after {
+        position: absolute;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        height: 2%;
+        background-image: linear-gradient(transparent, $backgroundPrimary-color);
+        content: '';
+    }
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
 }

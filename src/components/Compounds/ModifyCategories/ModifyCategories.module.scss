@@ -1,0 +1,55 @@
+.modifyCategories {
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    background-color: $backgroundPrimary-color;
+    @include flex(center, flex-start, column, 10px);
+
+    .searchField {
+        width: 100%;
+    }
+
+    .loaderSkeleton {
+        width: 320px;
+        margin: 20px;
+        @include flex(center, space-between);
+
+        .skeletonNode {
+            @include flex(center, flex-start, $gap: 4px);
+        }
+    }
+
+    .categoriesViewWrapper {
+        width: 100%;
+        height: 100%;
+
+        .categoriesView {
+            width: 100%;
+            // height: 600px;
+            margin-top: 5px;
+
+            .addTopLevelCategoryWrapper {
+                width: 100%;
+
+                margin-left: 15px;
+                float: left;
+            }
+
+            .categoryNameField {
+                width: 200px;
+                padding-bottom: 4px;
+            }
+            .controls {
+                @include flex(center, flex-start, $gap: 5px);
+            }
+        }
+    }
+}
+
+.categoryNameErrorWrapper {
+    padding: 5px 10px;
+    background-color: $dangerLight-color;
+    h6 {
+        color: $dangerDark-color;
+    }
+}
