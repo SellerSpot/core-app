@@ -27,7 +27,7 @@ export class ModifyCategoriesNodeDataStore {
         this.isSelected = isSelected;
     }
 
-    get nodeStyle(): CSSProperties {
+    getNodeStyle = (): CSSProperties => {
         let defaultNodeStyle: React.CSSProperties = {
             borderWidth: '2px',
             borderRadius: '5px',
@@ -49,5 +49,5 @@ export class ModifyCategoriesNodeDataStore {
             };
         }
         return defaultNodeStyle;
-    }
+    };
 }
