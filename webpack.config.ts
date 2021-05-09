@@ -128,6 +128,8 @@ const webpackConfiguration = (env: {
             contentBase: 'public',
             publicPath: '/',
             historyApiFallback: true,
+            host: 'dev.sellerspot.in',
+            allowedHosts: ['dev1.sellerspot.in'],
         },
         devtool: !isProduction ? 'source-map' : false,
     };
