@@ -24,7 +24,7 @@
         "yalc:remove": "yalc remove --all"
     },
     "keywords": [],
-    "author": "",
+    "author": "Sellerspot",
     "license": "ISC",
     "devDependencies": {
         "@storybook/addon-actions": "^6.2.8",
