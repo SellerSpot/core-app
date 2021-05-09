@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import { Configuration, DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -131,6 +132,10 @@ const webpackConfiguration = (env: {
             historyApiFallback: true,
             host: 'app.dev.sellerspot.in',
             allowedHosts: ['app.dev1.sellerspot.in'],
+            https: {
+                key: fs.readFileSync('./security/_wildcard.sellerspot.in+5-key.pem'),
+                cert: fs.readFileSync('./security/_wildcard.sellerspot.in+5.pem'),
+            },
         },
         devtool: !isProduction ? 'eval' : false,
     };
