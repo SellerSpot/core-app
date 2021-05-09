@@ -1,10 +1,12 @@
-import { store } from 'store/store';
+import React, { StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import React, { StrictMode } from 'react';
+
+import { store } from 'store/store';
 import { App } from 'layouts/App/App';
 import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
+
 import './styles/core.scss';
 
 ReactDOM.render(

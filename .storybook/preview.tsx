@@ -1,9 +1,11 @@
-import { ThemeProvider } from '@sellerspot/universal-components';
+import { Dialog, Notify, ThemeProvider } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
-
+import { CommonProvider } from '../src/components/CommonProvider/CommonProvider';
 import { colorThemes, fontSizeThemes } from '../src/config/themes';
 import { store } from '../src/store/store';
+import 'react-sortable-tree/style.css';
+import '../src/styles/core.scss';
 
 export const parameters = {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -19,7 +21,7 @@ const StoryComponent = (Story: () => ReactElement): ReactElement => {
     const fontSizes = fontSizeThemes[fontSizeTheme];
     return (
         <ThemeProvider colors={colors} fontSizes={fontSizes}>
-            {Story()}
+            <CommonProvider>{Story()}</CommonProvider>
         </ThemeProvider>
     );
 };

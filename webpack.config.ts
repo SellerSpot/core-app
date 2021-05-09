@@ -12,9 +12,9 @@ const webpackConfiguration = (env: {
     analyze?: boolean;
     story?: boolean;
 }): Configuration => {
-    const isProduction = env.production ? true : false;
-    const isAnalyze = env.analyze ? true : false;
-    const isStory = env.story ? true : false;
+    const isProduction = !!env.production;
+    const isAnalyze = !!env.analyze;
+    const isStory = !!env.story;
     const envVariables = getEnvironmentVariables(isProduction);
     const devPort = Number(JSON.parse(envVariables['process.env.PORT']));
     const resolve = isStory
@@ -124,14 +124,15 @@ const webpackConfiguration = (env: {
         devServer: {
             port: devPort,
             open: true,
-            hot: false,
+            hot: true,
+            injectHot: true,
             contentBase: 'public',
             publicPath: '/',
             historyApiFallback: true,
-            host: 'dev.sellerspot.in',
-            allowedHosts: ['dev1.sellerspot.in'],
+            host: 'app.dev.sellerspot.in',
+            allowedHosts: ['app.dev1.sellerspot.in'],
         },
-        devtool: !isProduction ? 'source-map' : false,
+        devtool: !isProduction ? 'eval' : false,
     };
 };
 

@@ -15,7 +15,7 @@ export const App = (): ReactElement => {
     return (
         <div className={styles.appWrapper}>
             {appLoading ? (
-                <h6>Loading</h6>
+                <h6>processing...</h6>
             ) : (
                 <div className={cn(styles.appContainer)}>
                     <Switch>
