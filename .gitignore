@@ -117,5 +117,9 @@ storybook-static
 # personal project related files
 myFolder
 
+# yalc ingoration
 .yalc
 .yalc.lock
+
+# pem files
+*.pem

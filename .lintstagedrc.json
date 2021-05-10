@@ -1,0 +1,4 @@
+{
+    "src/**/*.{ts,tsx,scss}": ["prettier --write", "stylelint --fix"],
+    "src/**/*.{ts,tsx}": ["eslint --fix --max-warnings 0"]
+}

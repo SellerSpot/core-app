@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import { Configuration, DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -12,9 +13,9 @@ const webpackConfiguration = (env: {
     analyze?: boolean;
     story?: boolean;
 }): Configuration => {
-    const isProduction = env.production ? true : false;
-    const isAnalyze = env.analyze ? true : false;
-    const isStory = env.story ? true : false;
+    const isProduction = !!env.production;
+    const isAnalyze = !!env.analyze;
+    const isStory = !!env.story;
     const envVariables = getEnvironmentVariables(isProduction);
     const devPort = Number(JSON.parse(envVariables['process.env.PORT']));
     const resolve = isStory
@@ -124,12 +125,19 @@ const webpackConfiguration = (env: {
         devServer: {
             port: devPort,
             open: true,
-            hot: false,
+            hot: true,
+            injectHot: true,
             contentBase: 'public',
             publicPath: '/',
             historyApiFallback: true,
+            host: 'app.dev.sellerspot.in',
+            allowedHosts: ['app.dev1.sellerspot.in'],
+            https: {
+                key: fs.readFileSync('./security/_wildcard.sellerspot.in+5-key.pem'),
+                cert: fs.readFileSync('./security/_wildcard.sellerspot.in+5.pem'),
+            },
         },
-        devtool: !isProduction ? 'source-map' : false,
+        devtool: !isProduction ? 'eval' : false,
     };
 };
 

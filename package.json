@@ -24,17 +24,8 @@
         "yalc:remove": "yalc remove --all"
     },
     "keywords": [],
-    "author": "",
+    "author": "Sellerspot",
     "license": "ISC",
-    "lint-staged": {
-        "*.{ts,tsx,scss}": [
-            "prettier --write",
-            "stylelint --fix"
-        ],
-        "!(*webpack.config).{ts,tsx}": [
-            "eslint --fix --max-warnings 0"
-        ]
-    },
     "devDependencies": {
         "@storybook/addon-actions": "^6.2.8",
         "@storybook/addon-essentials": "^6.2.8",
