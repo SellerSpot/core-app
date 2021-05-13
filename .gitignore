@@ -119,7 +119,7 @@ myFolder
 
 # yalc ingoration
 .yalc
-.yalc.lock
+yalc.lock
 
 # pem files
 *.pem
