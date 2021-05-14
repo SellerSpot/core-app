@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
 import { getMUITheme } from './MUIThemes';
-import '../../styles/core.scss';
+import '../../../../styles/core.scss';
 
 export interface IThemeProviderProps {
     children?: ReactElement | ReactElement[] | string | number;

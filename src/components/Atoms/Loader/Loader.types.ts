@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
 export interface ILoaderProps {
-    children: ReactElement;
     isLoading: boolean;
-    skeleton: ReactElement;
+    loaderType: 'spinner' | 'shimmer';
+    skeleton?: ReactElement;
+    children?: ReactElement | ReactElement[] | string | number;
 }

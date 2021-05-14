@@ -2,33 +2,34 @@ import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface InitialState {
-    isLeftNavBarExpanded: boolean;
+    template: boolean;
 }
 
 const initialState: InitialState = {
-    isLeftNavBarExpanded: true,
+    template: true,
 };
 
-const commonSlice = createSlice({
-    name: 'common',
+const templateSlice = createSlice({
+    name: 'template',
     initialState,
     reducers: {
-        updateCommonState: (state, { payload }: PayloadAction<InitialState>) => {
+        updateTemplateState: (state, { payload }: PayloadAction<InitialState>) => {
             (<(keyof InitialState)[]>Object.keys(payload)).map((key) => {
                 state[key] = payload[key];
             });
         },
-        resetCommonState: (state) => {
+        resetTemplateState: (state) => {
             Object.assign(state, initialState);
         },
     },
 });
 
 // exporting reducer
-export default commonSlice.reducer;
+export default templateSlice.reducer;
 
 // exporting actions
-export const { updateCommonState, resetCommonState } = commonSlice.actions;
+export const { updateTemplateState, resetTemplateState } = templateSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
-export const commonSelector: Selector<RootState, InitialState> = (state: RootState) => state.common;
+export const templateSelector: Selector<RootState, InitialState> = (state: RootState) =>
+    state.template;

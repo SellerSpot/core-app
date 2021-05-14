@@ -71,7 +71,7 @@ export const CategoriesView = (): ReactElement => {
     return (
         <div ref={categoriesViewWrapperRef} className={styles.categoriesViewWrapper}>
             <AddTopLevelCategory />
-            <Loader isLoading={isLoading} skeleton={<LoadingSkeleton />}>
+            <Loader isLoading={isLoading} loaderType={'shimmer'} skeleton={<LoadingSkeleton />}>
                 <div className={styles.categoriesView} style={categoriesViewStyle}>
                     <SortableTreeComponent />
                 </div>
