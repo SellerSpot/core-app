@@ -6,8 +6,8 @@ declare global {
             APP_NAME: string;
             APP_VERSION: string;
             PORT: string;
-            ONLINE_SERVER_API_URL: string;
-            ONLINE_SERVER_SOCKET_URL: string;
+            SERVER_URL: string;
+            LANDING_APP_URL: string;
             BASE_DOMAIN_NAME: string;
         }
     }

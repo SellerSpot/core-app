@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export type TPrimitiveType = string | number;
 
 // Infering types from Route object with autocomplete support.
@@ -12,3 +14,5 @@ export interface IComponentEvents {
     oneMouseOver?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseLeave?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
+
+export type TReactChildren = ReactElement | ReactElement[] | string | number;

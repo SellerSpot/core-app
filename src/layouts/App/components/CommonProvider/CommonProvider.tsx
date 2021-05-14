@@ -1,7 +1,12 @@
 import { Notify } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { TReactChildren } from 'typings/common.types';
 
-export const CommonProvider = (props: { children?: ReactElement }): ReactElement => {
+interface ICommonProviderProps {
+    children?: TReactChildren;
+}
+
+export const CommonProvider = (props: ICommonProviderProps): ReactElement => {
     const { children } = props;
     return (
         <>

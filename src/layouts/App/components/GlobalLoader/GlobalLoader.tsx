@@ -2,9 +2,10 @@ import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
+import { TReactChildren } from 'typings/common.types';
 
 interface IGlobalLoaderProps {
-    children?: ReactElement | ReactElement[] | string | number;
+    children?: TReactChildren;
 }
 
 export const GlobalLoader = (props: IGlobalLoaderProps): ReactElement => {
