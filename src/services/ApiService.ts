@@ -22,13 +22,14 @@ export class ApiService {
 
     public initiateService = async (props: IApiServiceProps): Promise<void> => {
         const { SERVER_URL } = CONFIG;
-        this.axios = Axios.create({
-            baseURL: SERVER_URL,
-            headers: {
-                AUTHORIZATION: `Bearer ${props.token}`,
-            },
-            withCredentials: true,
-        });
+        if (props)
+            this.axios = Axios.create({
+                baseURL: SERVER_URL,
+                headers: {
+                    // AUTHORIZATION: `Bearer ${props.token}`,
+                },
+                withCredentials: true,
+            });
     };
 
     public async request(requestPayload: IRequestPayload): Promise<IResponse> {
