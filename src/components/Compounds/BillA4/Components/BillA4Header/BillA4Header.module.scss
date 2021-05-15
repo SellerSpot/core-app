@@ -1,0 +1,65 @@
+.billHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    h6 {
+        color: black;
+    }
+
+    .storeDetailsWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .storeLogo {
+            width: 60px;
+            height: auto;
+            filter: grayscale(100%);
+        }
+
+        .storeDetails {
+            max-width: 250px;
+            margin-left: 20px;
+        }
+
+        .storeName {
+            margin-bottom: 2px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .storeAddress {
+            font-size: 13px;
+            line-height: 22px;
+
+            h6 {
+                color: black;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .billInvoiceDetailsWrapper {
+        width: 220px;
+
+        .billInvoiceDetails {
+            display: grid;
+            width: 100%;
+            height: auto;
+            padding: 5px 0;
+            font-size: 13px;
+            grid-template-columns: repeat(2, 1fr);
+
+            .billInvoiceDetailsTitleHolder {
+                text-align: left;
+            }
+
+            .billInvoiceDetailsValueHolder {
+                text-align: right;
+            }
+        }
+    }
+}

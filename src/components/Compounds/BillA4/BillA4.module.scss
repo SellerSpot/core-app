@@ -1,66 +1,8 @@
 .billWrapper {
-    width: 100%;
-    height: auto;
+    width: 210mm;
     padding: 25px;
-    border: 1px solid grey;
     background: white;
-}
-
-.billHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.storeDetailsWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.storeLogo {
-    width: 60px;
-    height: auto;
-    filter: grayscale(100%);
-}
-
-.storeDetails {
-    max-width: 250px;
-    margin-left: 20px;
-}
-
-.storeName {
-    margin-bottom: 2px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.storeAddress {
-    font-size: 13px;
-    line-height: 22px;
-}
-
-.billInvoiceDetailsWrapper {
-    width: 220px;
-}
-
-.billInvoiceDetails {
-    display: grid;
-    width: 100%;
-    height: auto;
-    padding: 5px 0;
-    font-size: 13px;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.billInvoiceDetailsTitleHolder {
-    text-align: left;
-}
-
-.billInvoiceDetailsValueHolder {
-    text-align: right;
+    box-shadow: 0 0 10px 0 gray;
 }
 
 .dashedBorder {
@@ -75,32 +17,13 @@
     font-weight: bold;
 }
 
-.customerDetailsWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-.customerDetail {
-    width: 150px;
-    height: auto;
-}
-
-.customerDetailsTitle {
-    padding: 6px 0;
-    font-size: 12px;
-}
-
-.customerDetailsValue {
-    font-size: 11px;
-    line-height: 18px;
-}
-
 .billTableWrapper {
     margin: 8px 0;
+
+    h6 {
+        color: black;
+        font-weight: 500;
+    }
 }
 
 .billTableNode {
@@ -113,7 +36,7 @@
 .billTableNodeHead {
     border-bottom: 1px solid rgba(0, 0, 0, 0.8);
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .billTableNodeContent {
@@ -122,89 +45,41 @@
     font-weight: normal;
 }
 
-.purchaseInvoiceTable {
-    grid-template-columns: 30px 180px repeat(6, 1fr);
-}
-
-.taxSplitupTable {
-    grid-template-columns: 1fr 200px repeat(2, 1fr);
-}
-
-/* adverts and thank message - subtotal section */
-
 .advertisementAndGrandTotalWrapper {
     display: grid;
     margin: 20px 0;
     gap: 20px;
     grid-template-columns: 1fr 250px;
-}
 
-.advertisementHolder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: 600;
+    h6 {
+        color: black;
+        font-weight: 600;
+    }
 }
 
 .grandTotalWrapper {
     display: block;
-}
 
-.grandTotalHolder {
-    display: grid;
-    padding: 3px 0;
-    font-size: 11px;
-    grid-template-columns: 1fr 1fr;
-}
+    .grandTotalHolder {
+        display: grid;
+        padding: 3px 0;
+        font-size: 11px;
+        grid-template-columns: 1fr 1fr;
+    }
 
-.grandTotalTitle {
-    font-weight: bold;
-    text-align: left;
-}
+    .grandTotalTitle {
+        font-weight: bold;
+        text-align: left;
+    }
 
-.grandTotalValue {
-    font-weight: normal;
-    text-align: right;
-}
+    .grandTotalValue {
+        font-weight: normal;
+        text-align: right;
+    }
 
-.grandTotalLarge {
-    font-size: 14px;
-}
-
-/* terms and conditions / signature area */
-.termsAndSignatureWrapper {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 200px;
-}
-
-.termsAreaHolder {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    font-size: 11px;
-    line-height: 20px;
-}
-
-.termsAreaTitle {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.signatureAreaHolder {
-    display: flex;
-    height: 100px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px 0;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 5px;
+    .grandTotalLarge {
+        font-size: 14px;
+    }
 }
 
 /* print essentials */

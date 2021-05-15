@@ -1,53 +1,28 @@
 import React, { ReactElement } from 'react';
 import styles from './BillA4.module.scss';
-import dummyLogo from './logo.png';
+
 import { IBillA4Props } from './BillA4.types';
-import { useReactToPrint } from 'react-to-print';
-import { Button } from '@sellerspot/universal-components';
+import { BillA4Header } from './Components/BillA4Header/BillA4Header';
+import { BillA4PurchaseInvoice } from './Components/BillA4PurchaseInvoice/BillA4PurchaseInvoice';
+import { BillA4Summary } from './Components/BillA4Summary/BillA4Summary';
+import { BillA4TaxSplitup } from './Components/BillA4TaxSplitup/BillA4TaxSplitup';
+import { BillA4TermsAndSignature } from './Components/BillA4TermsAndSignature/BillA4TermsAndSignature';
 export { IBillA4Props } from './BillA4.types';
+
+const PageBreak = () => <div className={styles.PageBreak} />;
 
 export const BillA4 = (props: IBillA4Props): ReactElement => {
     const { billReference } = props;
-    const handlePrint = useReactToPrint({
-        content: () => billReference.current,
-    });
     return (
-        <>
-            <Button label={'Print'} onClick={handlePrint} />
-            <div ref={billReference} className={styles.billWrapper}>
-                <div className={styles.billHeader}>
-                    <div className={styles.storeDetailsWrapper}>
-                        <img className={styles.storeLogo} src={dummyLogo} alt={'Logo'} />
-                        <div className={styles.storeDetails}>
-                            <div className={styles.storeName}>Store Name</div>
-                            <div className={styles.storeAddress}>
-                                <div>12 A, New Raja Colony, Bheemanagar, Balajinagar, Trichy 1</div>
-                                <div>0431 2411562 / +91 8903307270</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.billInvoiceDetailsWrapper}>
-                        <div className={styles.billInvoiceDetails}>
-                            <div className={styles.billInvoiceDetailsTitleHolder}>GST No:</div>
-                            <div className={styles.billInvoiceDetailsValueHolder}>
-                                22AAAAA0000A1Z5
-                            </div>
-                        </div>
-                        <div className={styles.billInvoiceDetails}>
-                            <div className={styles.billInvoiceDetailsTitleHolder}>
-                                Invoice Date:
-                            </div>
-                            <div className={styles.billInvoiceDetailsValueHolder}>10/11/2020</div>
-                        </div>
-                        <div className={styles.billInvoiceDetails}>
-                            <div className={styles.billInvoiceDetailsTitleHolder}>
-                                Invoice Number:
-                            </div>
-                            <div className={styles.billInvoiceDetailsValueHolder}>IND123</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
+        <div ref={billReference} className={styles.billWrapper}>
+            <BillA4Header />
+            <BillA4PurchaseInvoice />
+            <PageBreak />
+            <BillA4Summary />
+            <PageBreak />
+            <BillA4TaxSplitup />
+            <PageBreak />
+            <BillA4TermsAndSignature />
+        </div>
     );
 };

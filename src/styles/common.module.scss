@@ -1,12 +1,3 @@
-.disableButton {
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-.displayNone {
-    display: none;
-}
-
 .textAlignRight {
     text-align: right;
 }
@@ -17,10 +8,4 @@
 
 .textAlignLeft {
     text-align: left;
-}
-
-.flexCenter {
-    @include flex(center, center);
-    width: 100%;
-    height: 100%;
 }
