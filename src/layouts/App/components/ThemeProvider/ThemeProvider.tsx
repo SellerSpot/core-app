@@ -1,10 +1,9 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core';
+import { ThemeProvider as UniversalThemeProvider } from '@sellerspot/universal-components';
 
 import { themeSelector } from 'store/models/theme';
 import { colorThemes, fontSizeThemes, IColors, IFontSizes } from 'config/themes';
-import { getMUITheme } from './MUIThemes';
 import { TReactChildren } from 'typings/common.types';
 
 import '../../../../styles/core.scss';
@@ -44,8 +43,8 @@ export default function ThemeProvider(props: IThemeProviderProps): ReactElement 
 
     // draw
     return (
-        <MUIThemeProvider theme={getMUITheme('primary', themeStore.colorTheme)}>
+        <UniversalThemeProvider colors={currentColorTheme} fontSizes={currentFontSizeTheme}>
             {children}
-        </MUIThemeProvider>
+        </UniversalThemeProvider>
     );
 }

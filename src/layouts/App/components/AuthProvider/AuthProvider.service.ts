@@ -14,7 +14,7 @@ export default class AuthProviderService {
             return data.user;
         } else {
             showNotify('Please signin to continue...');
-            introduceDelay(1500);
+            await introduceDelay(2000);
             return false;
         }
     }

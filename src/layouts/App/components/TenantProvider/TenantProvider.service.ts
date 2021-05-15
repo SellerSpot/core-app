@@ -12,7 +12,7 @@ export default class TenantProviderService {
             return data.store;
         } else {
             showNotify('Invalid Store, please identify your store.');
-            await introduceDelay();
+            await introduceDelay(2000);
             return false;
         }
     }

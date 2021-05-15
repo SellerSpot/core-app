@@ -2,7 +2,7 @@ import { Route, Switch } from 'react-router-dom';
 import React, { ReactElement } from 'react';
 import { Dashboard } from 'layouts/Dashboard/Dashboard';
 import { ROUTES } from 'config/routes';
-import { initializeGlobalServices } from 'config/globalConfig';
+import { initializeGlobalConfig } from 'config/globalConfig';
 import styles from './app.module.scss';
 import { CommonProvider } from './components/CommonProvider/CommonProvider';
 import ThemeProvider from './components/ThemeProvider/ThemeProvider';
@@ -10,7 +10,7 @@ import TenantProvider from './components/TenantProvider/TenantProvider';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 
 // global actions
-initializeGlobalServices(); // application common initilizers goes here
+initializeGlobalConfig(); // application common initilizers goes here
 
 export const App = (): ReactElement => {
     return (
