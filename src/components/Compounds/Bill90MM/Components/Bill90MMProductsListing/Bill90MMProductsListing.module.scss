@@ -1,0 +1,76 @@
+.productsListingWrapper {
+    width: 100%;
+    padding-top: 10px;
+    //background-color: blue;
+
+    .productsListingTableHeader {
+        width: 100%;
+        height: 20px;
+        //background-color: green;
+        @include flex(center, space-between);
+
+        p {
+            color: black;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    }
+
+    .productsListingTableBodyWrapper {
+        width: 100%;
+        padding-top: 10px;
+
+        .productsListingTableBodyRow {
+            width: 100%;
+            margin-bottom: 5px;
+
+            .multiQuantityDetail {
+                width: 100%;
+                color: black;
+            }
+
+            .discountDetail {
+                width: 100%;
+                @include flex(center, space-between);
+                p {
+                    color: black;
+                }
+            }
+
+            .primaryDetails {
+                @include flex(center, space-between);
+
+                .productName {
+                    display: -webkit-box;
+                    overflow: hidden;
+                    max-width: 100%;
+                    max-width: 70%;
+                    -webkit-box-orient: vertical;
+                    color: black;
+                    font-size: 13px;
+                    font-weight: 600;
+                    -webkit-line-clamp: 2;
+                    text-overflow: clip;
+                }
+
+                .productPrice {
+                    display: -webkit-box;
+                    overflow: hidden;
+                    max-width: 30%;
+                    -webkit-box-orient: vertical;
+                    color: black;
+                    font-size: 13px;
+                    font-weight: 600;
+                    -webkit-line-clamp: 1;
+                    text-overflow: clip;
+                }
+            }
+        }
+
+        .rowDivider {
+            border-color: transparent;
+            border-top: 1px dashed black;
+            margin-bottom: 5px;
+        }
+    }
+}

@@ -1,4 +1,13 @@
 /**
+ * used to compute the x percent of y
+ * @param values x: percent; y: percentOf
+ * @returns number
+ */
+export const xPercentofY = (values: { x: number; y: number }): number => {
+    return (values.x / 100) * values.y;
+};
+
+/**
  *
  * @param delay in seconds
  * @default
@@ -18,3 +27,11 @@ export const numberFormatINRCurrency = (value: number): string =>
         currency: 'INR',
         maximumFractionDigits: 2,
     }).format(value);
+
+/**
+ * Contains all the common symbols used in the app
+ */
+export const COMMON_SYMBOLS = {
+    RUPEE_SYMBOL: '₹',
+    PERCENTAGE_SYMBOL: '%',
+};

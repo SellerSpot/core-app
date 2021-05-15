@@ -1,6 +1,5 @@
 import { ICONS } from 'utilities/icons';
 import { numberFormatINRCurrency } from 'utilities/general';
-import { computeProductSubTotal } from 'utilities/businessLogic';
 import { store } from 'store/store';
 import { cartSelector, removeProductFromCart } from 'store/models/cart';
 import { useSelector } from 'react-redux';
@@ -17,6 +16,7 @@ import { CartTableCollapsedContent } from './Components/CartTableCollapsedConten
 import { ICartTableProduct } from './CartTable.types';
 import { CartTableService } from './CartTable.service';
 import styles from './CartTable.module.scss';
+import { saleService } from 'services/services';
 
 const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
@@ -30,7 +30,7 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
         );
     };
     const productSubTotal = numberFormatINRCurrency(
-        computeProductSubTotal({
+        saleService.computeProductSubTotal({
             discountPercent,
             quantity,
             taxBrackets,

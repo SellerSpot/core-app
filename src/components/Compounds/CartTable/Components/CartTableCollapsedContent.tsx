@@ -1,6 +1,5 @@
 import { ICONS } from 'utilities/icons';
 import { numberFormatINRCurrency } from 'utilities/general';
-import { computeDiscountUsingPercentage } from 'utilities/businessLogic';
 import { Field, Form, FormSpy } from 'react-final-form';
 import React, { ReactElement } from 'react';
 import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
@@ -11,6 +10,7 @@ import {
 } from '../CartTable.types';
 import { CartTableService } from '../CartTable.service';
 import styles from '../CartTable.module.scss';
+import { saleService } from 'services/services';
 
 const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
@@ -121,7 +121,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                             content:
                                 error ??
                                 `- ${numberFormatINRCurrency(
-                                    computeDiscountUsingPercentage({
+                                    saleService.computeDiscountUsingPercentage({
                                         unitPrice,
                                         discountPercent: value,
                                     }),

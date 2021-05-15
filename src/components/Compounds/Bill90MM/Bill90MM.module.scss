@@ -1,0 +1,13 @@
+.billWrapper {
+    width: 90mm;
+    min-width: 90mm;
+    max-width: 90mm;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    background-color: white;
+    .mainDivider {
+        height: 1px;
+        border: 0;
+        background-color: black;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ILoaderProps } from './Loader.types';
 import styles from './Loader.module.scss';
+import { ILoaderProps } from './Loader.types';
 
 export const Loader = (props: ILoaderProps): ReactElement => {
     const { children, isLoading, skeleton } = props;

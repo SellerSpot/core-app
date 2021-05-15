@@ -18,6 +18,7 @@ import {
     MdSettings,
     MdSearch,
     MdAdd,
+    MdPrint,
     MdKeyboardArrowLeft,
 } from 'react-icons/md';
 import { FaCashRegister } from 'react-icons/fa';
@@ -42,6 +43,7 @@ export const ICONS = {
     MdNotifications,
     MdFileDownload,
     MdCheck,
+    MdPrint,
     MdDelete,
     MdRemove,
     MdClear,
