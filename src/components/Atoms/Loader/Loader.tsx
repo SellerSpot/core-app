@@ -5,12 +5,12 @@ import styles from './Loader.module.scss';
 
 export const Loader = (props: ILoaderProps): ReactElement => {
     // props
-    const { children, isLoading, skeleton, loaderType } = props;
+    const { children, isLoading, skeleton, loaderType, message } = props;
 
     // draw
     const shimmer = skeleton ?? (
         <Skeleton animation={'wave'} height={'100%'} width={'100%'} variant={'rect'} />
     );
-    const loader = loaderType === 'spinner' ? <AppPreloader /> : shimmer;
+    const loader = loaderType === 'spinner' ? <AppPreloader message={message} /> : shimmer;
     return <>{isLoading ? loader : <div className={styles.childrenContent}>{children}</div>}</>;
 };

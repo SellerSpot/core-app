@@ -5,4 +5,5 @@ export interface ILoaderProps {
     loaderType: 'spinner' | 'shimmer';
     skeleton?: ReactElement;
     children?: ReactElement | ReactElement[] | string | number;
+    message?: string;
 }

@@ -8,6 +8,7 @@ declare global {
             PORT: string;
             SERVER_URL: string;
             LANDING_APP_URL: string;
+            ACCOUNTS_APP_URL: string;
             BASE_DOMAIN_NAME: string;
         }
     }
