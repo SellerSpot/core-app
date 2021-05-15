@@ -18,6 +18,6 @@ export default class TenantProviderService {
     }
 
     static redirectToAccountsAppIdentifyStoreRoute(): void {
-        redirectTo(CONFIG.ACCOUNTS_APP_IDENTIFY_STORE);
+        redirectTo(CONFIG.ACCOUNTS_APP_IDENTIFY_STORE_ROUTE);
     }
 }

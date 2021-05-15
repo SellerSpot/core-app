@@ -137,7 +137,7 @@ const webpackConfiguration = (env: {
                 cert: fs.readFileSync('./security/_wildcard.sellerspot.in+5.pem'),
             },
         },
-        devtool: !isProduction ? 'eval' : false,
+        devtool: !isProduction ? 'eval-source-map' : false,
     };
 };
 

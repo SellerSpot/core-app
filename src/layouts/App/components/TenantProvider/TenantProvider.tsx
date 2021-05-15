@@ -24,7 +24,7 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
     const [hasValidTenantDetails, setHasValidTenantDetails] = useState(false);
 
     // handlers
-    const fetchTenant = async () => {
+    const fetchTenantDetails = async () => {
         // fetch tenant details from server
         const currentTenantDetails = await TenantProviderService.getTenantDetails();
         if (currentTenantDetails) {
@@ -41,7 +41,7 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
             setHasValidTenantDetails(true);
         } else {
             setHasValidTenantDetails(false);
-            fetchTenant();
+            fetchTenantDetails();
         }
     }, [tenantDetails]);
 

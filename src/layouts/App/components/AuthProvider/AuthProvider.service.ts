@@ -9,11 +9,11 @@ import TenantProviderService from '../TenantProvider/TenantProvider.service';
 export default class AuthProviderService {
     static async getUserDetails(): Promise<IUserDetails | false> {
         const { status, data } = await authRequest.getUserDetails();
-        if (status) {
+        if (status && data?.user) {
             // return store details
-            return <IUserDetails>(<unknown>data.store); // neeed to tweak in univ-types and auth-server for exact response
+            return data.user;
         } else {
-            showNotify('Invalid Store, please identify your store.');
+            showNotify('Please signin to continue...');
             introduceDelay(1500);
             return false;
         }
@@ -23,12 +23,10 @@ export default class AuthProviderService {
         const {
             app: { tenantDetails },
         } = store.getState();
-        const { domainName, isCustomDomain } = tenantDetails?.domainDetails ?? {};
+        const { domainName } = tenantDetails?.domainDetails ?? {};
 
         if (domainName) {
-            const signInRoute = isCustomDomain
-                ? domainName
-                : `${CONFIG.ACCOUNTS_APP_SIGN_IN}${domainName}.${CONFIG.BASE_DOMAIN_NAME}`;
+            const signInRoute = `${CONFIG.ACCOUNTS_APP_SIGN_IN_ROUTE}${domainName}`;
 
             redirectTo(signInRoute);
         } else {

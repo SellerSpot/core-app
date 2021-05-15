@@ -1,6 +1,6 @@
 import { Loader } from 'components/Atoms/Loader/Loader';
-import React, { ReactElement, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { appSelector, updateUserDetails } from 'store/models/app';
 import { TReactChildren } from 'typings/common.types';
 import AuthProviderService from './AuthProvider.service';
@@ -13,16 +13,21 @@ const AuthProvider = (props: IAuthProviderProps): ReactElement => {
     // props
     const { children } = props;
 
+    // helpers
+    const dispatch = useDispatch();
+
     // selectors
     const { userDetails } = useSelector(appSelector);
+
+    // state
+    const [hasValidUserDetails, setHasValidUserDetails] = useState(false);
 
     // handlers
     const fetchUserDetails = async () => {
         // fetch tenant details from server
         const userDetails = await AuthProviderService.getUserDetails();
-        debugger;
         if (userDetails) {
-            updateUserDetails(userDetails);
+            dispatch(updateUserDetails(userDetails));
         } else {
             // redirect to accounts app identifystore route
             AuthProviderService.redirectToAccountsAppSignInRoute();
@@ -31,12 +36,20 @@ const AuthProvider = (props: IAuthProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        // fetch and validate tenant details
-        fetchUserDetails();
-    }, []);
+        if (userDetails) {
+            setHasValidUserDetails(true);
+        } else {
+            setHasValidUserDetails(false);
+            fetchUserDetails();
+        }
+    }, [userDetails]);
 
     return (
-        <Loader isLoading={!!!userDetails} loaderType="spinner">
+        <Loader
+            message={'Authenticating user...'}
+            isLoading={!hasValidUserDetails}
+            loaderType="spinner"
+        >
             {children}
         </Loader>
     );

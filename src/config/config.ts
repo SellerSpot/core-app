@@ -6,6 +6,6 @@ export const CONFIG = {
 
     // accounts app routes
     ACCOUNTS_APP_URL: process.env.ACCOUNTS_APP_URL,
-    ACCOUNTS_APP_IDENTIFY_STORE: `${process.env.ACCOUNTS_APP_URL}/identifystore`,
-    ACCOUNTS_APP_SIGN_IN: `${process.env.ACCOUNTS_APP_URL}/signin?domain=`,
+    ACCOUNTS_APP_IDENTIFY_STORE_ROUTE: `${process.env.ACCOUNTS_APP_URL}/identifystore`,
+    ACCOUNTS_APP_SIGN_IN_ROUTE: `${process.env.ACCOUNTS_APP_URL}/signin?store=`,
 };

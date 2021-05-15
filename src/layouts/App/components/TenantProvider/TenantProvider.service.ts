@@ -7,7 +7,7 @@ import { introduceDelay, redirectTo } from 'utilities/general';
 export default class TenantProviderService {
     static async getTenantDetails(): Promise<IStoreDetails | false> {
         const { status, data } = await authRequest.getTenantDetails();
-        if (status) {
+        if (status && data?.store) {
             // return store details
             return data.store;
         } else {
@@ -18,6 +18,6 @@ export default class TenantProviderService {
     }
 
     static redirectToAccountsAppIdentifyStoreRoute(): void {
-        redirectTo(CONFIG.ACCOUNTS_APP_IDENTIFY_STORE);
+        redirectTo(CONFIG.ACCOUNTS_APP_IDENTIFY_STORE_ROUTE);
     }
 }

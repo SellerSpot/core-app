@@ -7,6 +7,7 @@ import styles from './app.module.scss';
 import { CommonProvider } from './components/CommonProvider/CommonProvider';
 import ThemeProvider from './components/ThemeProvider/ThemeProvider';
 import TenantProvider from './components/TenantProvider/TenantProvider';
+import AuthProvider from './components/AuthProvider/AuthProvider';
 
 // global actions
 initializeGlobalServices(); // application common initilizers goes here
@@ -17,13 +18,13 @@ export const App = (): ReactElement => {
             <ThemeProvider>
                 <CommonProvider>
                     <TenantProvider>
-                        {/* <AuthProvider> */}
-                        <Switch>
-                            <Route path={ROUTES.DASHBOARD}>
-                                <Dashboard />
-                            </Route>
-                        </Switch>
-                        {/* </AuthProvider> */}
+                        <AuthProvider>
+                            <Switch>
+                                <Route path={ROUTES.DASHBOARD}>
+                                    <Dashboard />
+                                </Route>
+                            </Switch>
+                        </AuthProvider>
                     </TenantProvider>
                 </CommonProvider>
             </ThemeProvider>
