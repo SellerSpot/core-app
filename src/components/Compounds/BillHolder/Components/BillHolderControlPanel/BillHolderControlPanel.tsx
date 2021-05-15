@@ -28,7 +28,7 @@ export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): Rea
                     value={sliderValue}
                     onChange={computeBillScaleFromPercentage}
                 />
-                <h4>{`${sliderValue}%`}</h4>
+                <h5>{`${sliderValue}%`}</h5>
             </div>
             <ToolTip content={'Print Bill'}>
                 <ICONS.MdPrint className={styles.printIcon} size={'25px'} onClick={handlePrint} />
