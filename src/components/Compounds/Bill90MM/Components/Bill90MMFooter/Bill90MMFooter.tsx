@@ -17,6 +17,7 @@ export const Bill90MMFooter = (props: { billData: IBill90MMProps['billData'] }):
     }).format(new Date());
     return (
         <>
+            <div className={mainStyles.PageBreak} />
             <div className={styles.footerMessageWrapper}>
                 <p>{footerMessage}</p>
             </div>

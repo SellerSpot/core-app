@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { IBill90MMProps } from '../../Bill90MM.types';
 import styles from './Bill90MMSummary.module.scss';
+import mainStyles from '../../Bill90MM.module.scss';
 
 export const Bill90MMSummary = (props: { billData: IBill90MMProps['billData'] }): ReactElement => {
     const { billData } = props;
@@ -13,6 +14,7 @@ export const Bill90MMSummary = (props: { billData: IBill90MMProps['billData'] })
     } = billData;
     return (
         <>
+            <div className={mainStyles.PageBreak} />
             <div className={styles.saleSummary}>
                 <div className={styles.summaryRow}>
                     <p className={styles.summaryRowTitle}>DISCOUNT (sale)</p>

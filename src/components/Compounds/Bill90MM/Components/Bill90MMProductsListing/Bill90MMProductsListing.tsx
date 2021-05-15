@@ -45,6 +45,7 @@ export const Bill90MMProductsListing = (props: {
             <div className={styles.productsListingTableBodyWrapper}>
                 {products.map((product, productIndex) => (
                     <Fragment key={productIndex}>
+                        <div className={mainStyles.PageBreak} />
                         <ListingRow product={product} />
                     </Fragment>
                 ))}
