@@ -104,7 +104,7 @@ const Template: Story = () => {
     };
     return (
         <div style={wrapperDivStyles}>
-            <BillHolderComponent billProps={args} />
+            <BillHolderComponent billProps={args} billType={'90MM'} />
         </div>
     );
 };
@@ -112,7 +112,7 @@ const Template: Story = () => {
 export const BillHolder = Template.bind({});
 
 export default {
-    title: 'Components/Fullscreen',
+    title: 'Design System/Compounds/Bill Holder',
     parameters: {
         layout: 'fullscreen',
     },

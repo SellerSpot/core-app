@@ -70,6 +70,6 @@ SubMenu.args = {
 } as ISubMenuProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Sub Menu',
     component: SubMenuComponent,
 } as Meta;

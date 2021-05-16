@@ -6,7 +6,7 @@ import { colorThemes } from 'config/themes';
 import { Avatar, BreadCrumbs, Menu, IMenuProps } from '@sellerspot/universal-components';
 import { IAppBarProps } from './AppBar.types';
 import styles from './AppBar.module.scss';
-import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
+import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 
 export default function AppBar(props: IAppBarProps): ReactElement {
     const themeState = useSelector(themeSelector);

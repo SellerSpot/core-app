@@ -1,5 +1,7 @@
 .billWrapper {
     width: 210mm;
+    min-width: 210mm;
+    max-width: 210mm;
     padding: 25px;
     background: white;
     box-shadow: 0 0 10px 0 gray;

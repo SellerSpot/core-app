@@ -7,6 +7,6 @@ const Template: Story = () => <DeleteAccountCardComponent />;
 export const DeleteAccountCard = Template.bind({});
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Delete Account Card',
     component: DeleteAccountCardComponent,
 } as Meta;

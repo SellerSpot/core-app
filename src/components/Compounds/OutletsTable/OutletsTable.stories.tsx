@@ -37,6 +37,6 @@ OutletsTable.args = {
 } as IOutletsTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Outlets Table',
     component: OutletsTableComponent,
 } as Meta;

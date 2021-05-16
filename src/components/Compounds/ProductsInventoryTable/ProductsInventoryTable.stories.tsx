@@ -35,6 +35,6 @@ ProductsInventoryTable.args = {
 } as IProductsInventoryTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Products Inventory Table',
     component: ProductsInventoryTableComponent,
 } as Meta;

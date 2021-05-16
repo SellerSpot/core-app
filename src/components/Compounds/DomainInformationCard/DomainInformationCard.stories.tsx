@@ -7,6 +7,6 @@ const Template: Story = () => <DomainInformationCardComponent />;
 export const DomainInformationCard = Template.bind({});
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Domain Information Card',
     component: DomainInformationCardComponent,
 } as Meta;

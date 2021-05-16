@@ -15,7 +15,7 @@ const defaultProps: IWorkSpaceTileProps = {
     workspaceTitle: 'Home',
 };
 
-export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement {
+export const WorkSpaceTile = (props: IWorkSpaceTileProps): ReactElement => {
     const requiredProps = merge({}, defaultProps, props);
 
     const wrapperClassName = cn(
@@ -51,4 +51,4 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
             </div>
         </ToolTip>
     );
-}
+};

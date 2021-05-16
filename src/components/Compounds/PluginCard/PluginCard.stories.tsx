@@ -14,6 +14,6 @@ PluginCard.args = {
     pluginDescription: 'An all purpose point of sale system to handle your everyday sales',
 } as IPluginCardProps;
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Plugin Card',
     component: PluginCardComponent,
 } as Meta;
