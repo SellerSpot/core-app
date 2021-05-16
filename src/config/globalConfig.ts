@@ -1,10 +1,15 @@
-import { apiService } from 'services/services';
+import { configureNotify } from '@sellerspot/universal-components';
 
-export const initializeGlobalServices = async (): Promise<void> => {
-    apiService.initiateService();
+export const initializeGlobalConfig = async (): Promise<void> => {
+    // global configuatrion goes here
+    configureNotifyComponent();
 };
 
-export const updateGlobalServices = async (token: string): Promise<void> => {
-    console.log(token);
-    apiService.initiateService();
+const configureNotifyComponent = () => {
+    configureNotify({
+        placement: 'bottomLeft',
+        theme: 'default',
+        autoHideDuration: 3000,
+        showNotifyAction: true,
+    });
 };

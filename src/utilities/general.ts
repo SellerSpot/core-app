@@ -28,10 +28,17 @@ export const numberFormatINRCurrency = (value: number): string =>
         maximumFractionDigits: 2,
     }).format(value);
 
-/**
- * Contains all the common symbols used in the app
- */
 export const COMMON_SYMBOLS = {
     RUPEE_SYMBOL: '₹',
     PERCENTAGE_SYMBOL: '%',
+};
+
+/**
+ * Redirects to the passed url
+ *
+ * @param {string} url url to open
+ * @param {'_self' | '_blank'} whether to open in the same tab or in new tab
+ */
+export const redirectTo = (url: string, target: '_self' | '_blank' = '_self'): void => {
+    window.open(url, target);
 };

@@ -1,8 +1,11 @@
 export const CONFIG = {
     ENV: process.env.ENV, // development | production
-    ONLINE_SERVER_API_URL: process.env.ONLINE_SERVER_API_URL,
-    ONLINE_SERVER_SOCKET_URL: process.env.ONLINE_SERVER_SOCKET_URL,
+    SERVER_URL: process.env.SERVER_URL,
+    LANDING_APP_URL: process.env.LANDING_APP_URL,
     BASE_DOMAIN_NAME: process.env.BASE_DOMAIN_NAME,
-    // REDUX STATES
-    REUDX_AUTH_STATE: 'authState',
+
+    // accounts app routes
+    ACCOUNTS_APP_URL: process.env.ACCOUNTS_APP_URL,
+    ACCOUNTS_APP_IDENTIFY_STORE_ROUTE: `${process.env.ACCOUNTS_APP_URL}/identifystore`,
+    ACCOUNTS_APP_SIGN_IN_ROUTE: `${process.env.ACCOUNTS_APP_URL}/signin?store=`,
 };
