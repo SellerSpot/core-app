@@ -1,7 +1,6 @@
 .wrapper {
     width: 222px;
     height: 100%;
-
     padding: 10px 10px;
     background-color: $backgroundSecondary-color;
 
@@ -9,7 +8,7 @@
 }
 
 .upperTiles {
-    @include flex(flex-end, flex-start, column, 10px);
+    @include flex(flex-end, flex-start, column, 5px);
 }
 
 .tileGroup {
@@ -34,6 +33,5 @@
 .childTileHide {
     margin-top: 0;
     opacity: 0;
-    transition: opacity 0.2s ease, height 0.2s ease 0.2s, transform 0.2s ease 0.2s,
-        margin-top 0.2s ease 0.2s;
+    transition: opacity 0.1s ease, height 0.2s ease, transform 0.2s ease, margin-top 0.2s ease;
 }

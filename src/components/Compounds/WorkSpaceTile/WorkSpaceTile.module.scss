@@ -61,16 +61,20 @@
     text-overflow: ellipsis;
     text-overflow: ellipsis;
     @include animation(fade-out, 0.1s);
-}
 
-.titleCollapsed {
-    @include animation(fade-out, 0.1s);
-}
+    &.titleCollapsed {
+        @include animation(fade-out, 0.1s);
+    }
 
-.titleExpanded {
-    @include animation(fade-in, 0.3s, $delay: 0.1s);
-}
+    &.titleExpanded {
+        @include animation(fade-in, 0.3s, $delay: 0.1s);
+    }
 
-.titleSelected {
-    color: $primary-color;
+    &.titleSelected {
+        color: $primary-color;
+    }
+
+    &.titleLarge {
+        font-size: $h4-fontsize;
+    }
 }

@@ -2,18 +2,17 @@
     position: relative;
     width: 50px;
     height: 100%;
-    padding: 5px 0px;
     background-color: $backgroundPrimary-color;
     transition-duration: $animation-duration-short;
     transition-property: width;
     transition-timing-function: ease;
 
-    @include flex(center, space-between, column, 22px, 0);
+    @include flex(center, space-between, column, 6px, 0);
 
     .expandIcon {
         position: absolute;
         z-index: 1;
-        top: 50px;
+        top: 35px;
         right: -12px;
         transform: rotate(0deg);
         transition: transform 0.2s ease;
@@ -64,7 +63,7 @@
 .workspacesWrapper {
     width: 100%;
     padding: 0px 5px;
-    @include flex(flex-start, flex-start, column, 10px, 1);
+    @include flex(flex-start, flex-start, column, 5px, 1);
 }
 
 .trademarkWrapper {

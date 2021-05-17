@@ -35,4 +35,5 @@ export interface IWorkSpaceTileProps {
      * Events to be captured on the listTile
      */
     events?: IComponentEvents;
+    size?: 'large' | 'small';
 }

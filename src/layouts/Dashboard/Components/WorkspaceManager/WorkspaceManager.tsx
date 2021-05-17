@@ -1,5 +1,6 @@
 import { WorkSpaceMenu } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu';
 import { IWorkSpaceMenuProps } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu.types';
+import { ROUTES } from 'config/routes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
@@ -9,26 +10,26 @@ const tiles: IWorkSpaceMenuProps['tiles'] = [
     {
         icon: <ICONS.MdHome />,
         title: 'Home',
-        redirectRoute: '/',
-        routesToWatch: ['/'],
+        redirectRoute: ROUTES.HOME,
+        routesToWatch: [ROUTES.HOME],
     },
     {
         icon: <ICONS.VscSettings />,
         title: 'Management',
-        redirectRoute: '/management',
-        routesToWatch: ['/management'],
+        redirectRoute: ROUTES.MANAGEMENT.DEFAULT,
+        routesToWatch: [ROUTES.MANAGEMENT.DEFAULT],
     },
     {
         icon: <ICONS.FaCashRegister />,
         title: 'Point Of Sale',
-        redirectRoute: '/pos',
-        routesToWatch: ['/pos'],
+        redirectRoute: ROUTES.POS.DEFAULT,
+        routesToWatch: [ROUTES.POS.DEFAULT],
     },
     {
         icon: <ICONS.FaRegListAlt />,
-        title: 'Catalog',
-        redirectRoute: '/catalog',
-        routesToWatch: ['/catalog'],
+        title: 'Catalogue',
+        redirectRoute: ROUTES.CATALOGUE.DEFAULT,
+        routesToWatch: [ROUTES.CATALOGUE.DEFAULT],
     },
 ];
 

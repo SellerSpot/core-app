@@ -37,16 +37,21 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <div className={styles.workspaceTile}>
-                    <WorkSpaceTile
-                        workspaceIcon={props.currentWorkspace.workspaceIcon}
-                        workspaceTitle={props.currentWorkspace.workspaceTitle}
-                        expanded
-                        variant="workspaceIndicator"
-                        selected
-                    />
+                <div className={styles.workspaceTileWrapper}>
+                    <div className={styles.workspaceTile}>
+                        <WorkSpaceTile
+                            size={'large'}
+                            workspaceIcon={props.currentWorkspace.workspaceIcon}
+                            workspaceTitle={props.currentWorkspace.workspaceTitle}
+                            expanded
+                            variant="workspaceIndicator"
+                            selected
+                        />
+                    </div>
                 </div>
-                <BreadCrumbs crumbs={props.breadcrumbs} />
+                <div className={styles.breadcrumbsWrapper}>
+                    <BreadCrumbs crumbs={props.breadcrumbs} />
+                </div>
             </div>
             <div className={styles.rhsGroup}>
                 <ICONS.MdFullscreen
