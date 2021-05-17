@@ -1,21 +1,14 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import styles from './PageWithMenu.module.scss';
 
-export const PageWithMenuLHS = (props: { children?: ReactElement }): ReactElement => {
-    const { children } = props;
-    return <div className={styles.pageWithMenuLHS}>{children}</div>;
-};
-
-export const PageWithMenuRHS = (props: { children?: ReactElement }): ReactElement => {
+export const MenuWithPage = (props: { children?: [ReactElement, ReactElement] }): ReactElement => {
     const { children } = props;
     return (
-        <div className={styles.pageWithMenuRHS}>
-            <div className={styles.contentWrapper}>{children}</div>
+        <div className={styles.pageWithMenuWrapper}>
+            <div className={styles.menuHolder}>{children[0]}</div>
+            <div className={styles.pageHolder}>
+                <div className={styles.contentWrapper}>{children[1]}</div>
+            </div>
         </div>
     );
-};
-
-export const PageWithMenu = (props: { children?: ReactNode }): ReactElement => {
-    const { children } = props;
-    return <div className={styles.pageWithMenuWrapper}>{children}</div>;
 };

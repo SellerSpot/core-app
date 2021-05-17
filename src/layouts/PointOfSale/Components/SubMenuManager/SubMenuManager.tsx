@@ -8,33 +8,41 @@ export const SubMenuManager = (): ReactElement => {
         {
             icon: <ICONS.FaCashRegister />,
             title: 'Sales',
-            routesToWatch: ['/sales'],
+            routesToWatch: ['/'],
             childTiles: [
                 {
                     title: 'New Sale',
-                    routesToWatch: ['/sales/newsale'],
+                    routesToWatch: ['/'],
                 },
                 {
                     title: 'Sales History',
-                    routesToWatch: ['/sales/saleshistory'],
+                    routesToWatch: ['/'],
+                },
+                {
+                    title: 'Sales History',
+                    routesToWatch: ['/'],
+                },
+                {
+                    title: 'Sales History',
+                    routesToWatch: ['/'],
                 },
             ],
         },
         {
             icon: <ICONS.BiBox />,
             title: 'Inventory',
-            routesToWatch: ['/inventory'],
+            routesToWatch: ['/'],
             childTiles: [
                 {
                     title: 'Products',
-                    routesToWatch: ['/products'],
+                    routesToWatch: ['/'],
                 },
             ],
         },
         {
             icon: <ICONS.BiReceipt />,
             title: 'Bill Settings',
-            routesToWatch: ['/sales'],
+            routesToWatch: ['/'],
         },
     ];
 
