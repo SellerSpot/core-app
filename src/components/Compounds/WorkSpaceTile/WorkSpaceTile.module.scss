@@ -52,15 +52,23 @@
 }
 
 .title {
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 100%;
+    -webkit-box-orient: vertical;
     color: $foregroundPrimary-color;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    @include animation(fade-out, 0.1s);
 }
 
 .titleCollapsed {
-    visibility: hidden;
+    @include animation(fade-out, 0.1s);
 }
 
 .titleExpanded {
-    @include animation(fade-in, 0.1s);
+    @include animation(fade-in, 0.3s, $delay: 0.1s);
 }
 
 .titleSelected {

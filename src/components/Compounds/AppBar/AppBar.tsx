@@ -8,7 +8,9 @@ import { IAppBarProps } from './AppBar.types';
 import styles from './AppBar.module.scss';
 import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 
-export default function AppBar(props: IAppBarProps): ReactElement {
+export { IAppBarProps } from './AppBar.types';
+
+export const AppBar = (props: IAppBarProps): ReactElement => {
     const themeState = useSelector(themeSelector);
 
     const getAvatarMenuItems = (): IMenuProps['items'] => {
@@ -48,11 +50,11 @@ export default function AppBar(props: IAppBarProps): ReactElement {
             </div>
             <div className={styles.rhsGroup}>
                 <ICONS.MdFullscreen
-                    size="25px"
+                    size="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <ICONS.MdNotifications
-                    size="25px"
+                    size="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Menu items={getAvatarMenuItems()}>
@@ -71,4 +73,4 @@ export default function AppBar(props: IAppBarProps): ReactElement {
             </div>
         </div>
     );
-}
+};

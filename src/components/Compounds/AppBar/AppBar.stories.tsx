@@ -2,7 +2,7 @@ import { ICONS } from 'utilities/icons';
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { IAppBarProps } from './AppBar.types';
-import AppBarComponent from './AppBar';
+import { AppBar as AppBarComponent } from './AppBar';
 
 const Template: Story<IAppBarProps> = (args: IAppBarProps) => <AppBarComponent {...args} />;
 

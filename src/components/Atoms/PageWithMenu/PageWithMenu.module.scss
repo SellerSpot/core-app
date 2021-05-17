@@ -1,0 +1,21 @@
+.pageWithMenuWrapper {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    background-color: $backgroundSecondary-color;
+    grid-template-columns: auto 1fr;
+
+    .pageWithMenuLHS {
+        height: 100%;
+    }
+
+    .pageWithMenuRHS {
+        height: 100%;
+
+        .contentWrapper {
+            width: 1138px;
+            height: 100%;
+            margin: 0 auto;
+        }
+    }
+}

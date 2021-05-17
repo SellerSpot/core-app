@@ -21,17 +21,19 @@ import {
     MdPrint,
     MdKeyboardArrowLeft,
 } from 'react-icons/md';
-import { FaCashRegister } from 'react-icons/fa';
+import { FaCashRegister, FaRegListAlt } from 'react-icons/fa';
 import { CgFormatSlash } from 'react-icons/cg';
 import { BsQuestionSquare } from 'react-icons/bs';
-import { BiBox } from 'react-icons/bi';
+import { BiBox, BiReceipt } from 'react-icons/bi';
 
 export const ICONS = {
     MdHome,
     VscSettings,
+    FaRegListAlt,
     FaCashRegister,
     VscChecklist,
     BiBox,
+    BiReceipt,
     RiBillLine,
     BsQuestionSquare,
     MdKeyboardArrowRight,
