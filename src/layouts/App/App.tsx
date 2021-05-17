@@ -21,13 +21,27 @@ export const App = (): ReactElement => {
             <ThemeProvider>
                 <CommonProvider>
                     <TenantProvider>
-                        <AuthProvider>
-                            <Switch>
-                                <Route path={ROUTES.DASHBOARD}>
+                        <Switch>
+                            <Route path={ROUTES.DASHBOARD}>
+                                <AuthProvider>
                                     <Dashboard />
-                                </Route>
-                            </Switch>
-                        </AuthProvider>
+                                </AuthProvider>
+                            </Route>
+                            <Route path={ROUTES.FAIL_SAFE}>
+                                <div>
+                                    Fail safe page
+                                    {/* if network issue or other uncaughtable reason like (software service time, this with timer will be show) */}
+                                </div>
+                            </Route>
+                            <Route>
+                                <div>
+                                    Not found page
+                                    {/* notify user - that he tried to access the page that is not available - 
+                                            redirect to the page that he came from, or if he directly hits not found page, redirect to dashboard
+                                    */}
+                                </div>
+                            </Route>
+                        </Switch>
                     </TenantProvider>
                 </CommonProvider>
             </ThemeProvider>
