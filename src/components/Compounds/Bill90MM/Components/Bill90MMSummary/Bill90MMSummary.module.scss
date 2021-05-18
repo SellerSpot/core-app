@@ -1,0 +1,26 @@
+.saleSummary {
+    width: 100%;
+    padding-bottom: 2px;
+    @include flex(center, flex-start, column, 5px);
+
+    .summaryRow {
+        width: 100%;
+        @include flex(center, space-between, $gap: 5px);
+
+        .summaryRowTitle {
+            width: 100%;
+            width: 65%;
+            color: black;
+            font-size: 11px;
+            font-weight: 500;
+            @include flex(center, flex-end);
+        }
+
+        .summaryRowValue {
+            color: black;
+            font-size: 13px;
+            font-weight: 600;
+            @include flex(center, flex-end);
+        }
+    }
+}

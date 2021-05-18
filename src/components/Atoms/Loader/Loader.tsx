@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { AppPreloader, Skeleton } from '@sellerspot/universal-components';
-import { ILoaderProps } from './Loader.types';
 import styles from './Loader.module.scss';
+import { ILoaderProps } from './Loader.types';
 
 export const Loader = (props: ILoaderProps): ReactElement => {
     // props

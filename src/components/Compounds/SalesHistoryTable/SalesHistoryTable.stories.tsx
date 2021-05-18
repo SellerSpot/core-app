@@ -137,6 +137,6 @@ SalesHistoryTable.args = {
 } as ISalesHistoryTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Sales History Table',
     component: SalesHistoryComponent,
 } as Meta;

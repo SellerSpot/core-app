@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { appSelector } from 'store/models/app';
+import { WorkSpaceManager } from './Components/WorkspaceManager/WorkspaceManager';
 import styles from './dashboard.module.scss';
 
 export const Dashboard = (): ReactElement => {
@@ -11,7 +12,9 @@ export const Dashboard = (): ReactElement => {
     } = useSelector(appSelector);
     return (
         <div className={styles.dashboardWrapper}>
-            <div className={styles.leftNavWrapper}>wk bar</div>
+            <div className={styles.leftNavWrapper}>
+                <WorkSpaceManager />
+            </div>
             <div className={styles.bodyWrapper}>
                 <div className={styles.topNavWrapper}>
                     status: {isActive ? 'online' : 'offline'}&nbsp; lastOnlineAt:

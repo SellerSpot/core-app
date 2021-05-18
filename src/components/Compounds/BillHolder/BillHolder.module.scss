@@ -1,0 +1,17 @@
+.totalWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .billHolderWrapper {
+        overflow: scroll;
+        width: 100%;
+        height: 100%;
+        background-color: $backgroundSecondary-color;
+
+        .billWrapper {
+            margin: auto;
+            margin-top: 10%;
+        }
+    }
+}

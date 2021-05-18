@@ -6,9 +6,7 @@
     grid-template-columns: auto 1fr;
 
     .leftNavWrapper {
-        width: 80px;
         height: 100%;
-        background: white;
     }
 
     .bodyWrapper {
@@ -16,20 +14,16 @@
         overflow: hidden;
         width: 100%;
         height: 100%;
-        background: lightblue;
 
         grid-template-rows: auto 1fr;
 
         .topNavWrapper {
             width: 100%;
-            height: 50px;
-            background: lightcoral;
         }
 
         .pageBodyWrapper {
             width: 100%;
             height: 100%;
-            background: lightgreen;
         }
     }
 }

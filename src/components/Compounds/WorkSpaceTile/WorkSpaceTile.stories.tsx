@@ -2,7 +2,7 @@ import { ICONS } from 'utilities/icons';
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
-import WorkSpaceTileComponent from './WorkSpaceTile';
+import { WorkSpaceTile as WorkSpaceTileComponent } from './WorkSpaceTile';
 
 const Template: Story<IWorkSpaceTileProps> = (args: IWorkSpaceTileProps) => (
     <WorkSpaceTileComponent {...args} />
@@ -18,6 +18,6 @@ WorkSpaceTile.args = {
 } as IWorkSpaceTileProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Work Space Tile',
     component: WorkSpaceTileComponent,
 } as Meta;

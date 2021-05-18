@@ -6,10 +6,10 @@ import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import { Trademark } from '@sellerspot/universal-components';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
 import styles from './WorkSpaceMenu.module.scss';
-import WorkSpaceTile from '../WorkSpaceTile/WorkSpaceTile';
+import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import animationStyles from '../../../styles/animation.module.scss';
 
-export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement {
+export const WorkSpaceMenu = (props: IWorkSpaceMenuProps): ReactElement => {
     const [expandMenu, setExpandMenu] = useState(false);
     const [hoverMenu, setHoverMenu] = useState(false);
     const location = useLocation();
@@ -103,4 +103,4 @@ export default function WorkSpaceMenu(props: IWorkSpaceMenuProps): ReactElement 
             </div>
         </div>
     );
-}
+};

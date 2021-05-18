@@ -18,6 +18,6 @@ CheckoutSaleSummaryView.args = {
 } as ICheckoutSaleSummaryViewProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Checkout Sale Summary View',
     component: CheckoutSaleSummaryViewComponent,
 } as Meta;

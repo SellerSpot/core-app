@@ -1,0 +1,44 @@
+.billWrapper {
+    width: 90mm;
+    min-width: 90mm;
+    max-width: 90mm;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    background-color: white;
+    box-shadow: 0 0 10px 0 gray;
+
+    .mainDivider {
+        height: 1px;
+        border: 0;
+        background-color: black;
+    }
+}
+
+/* print essentials */
+@media all {
+    .PageBreak {
+        display: none;
+    }
+}
+
+@media print {
+    .PageBreak {
+        display: block;
+        page-break-before: auto;
+    }
+}
+
+@page {
+    margin: 40px;
+    size: auto;
+}
+
+@media print {
+    .billWrapper {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        -webkit-print-color-adjust: exact;
+        transform: scale(1) !important;
+    }
+}

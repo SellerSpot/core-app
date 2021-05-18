@@ -1,7 +1,6 @@
 .wrapper {
     width: 222px;
     height: 100%;
-
     padding: 10px 10px;
     background-color: $backgroundSecondary-color;
 
@@ -9,25 +8,30 @@
 }
 
 .upperTiles {
-    @include flex(flex-end, flex-start, column, 10px);
+    @include flex(flex-end, flex-start, column, 5px);
 }
 
 .tileGroup {
-    @include flex(flex-end, flex-start, column, 5px);
+    @include flex(flex-end, flex-start, column);
 }
 
 .childTiles {
     height: 0;
+    opacity: 0;
     transform: scale(0);
     transform-origin: center;
 }
 
 .childTileShow {
     height: 40px;
+    margin-top: 5px;
+    opacity: 1;
     transform: scale(1);
-    transition: height 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, height 0.2s ease, transform 0.2s ease;
 }
 
 .childTileHide {
-    transition: height 0.2s ease, transform 0.2s ease;
+    margin-top: 0;
+    opacity: 0;
+    transition: opacity 0.1s ease, height 0.2s ease, transform 0.2s ease, margin-top 0.2s ease;
 }

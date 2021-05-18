@@ -13,9 +13,10 @@ const defaultProps: IWorkSpaceTileProps = {
     selected: false,
     variant: 'tile',
     workspaceTitle: 'Home',
+    size: 'small',
 };
 
-export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement {
+export const WorkSpaceTile = (props: IWorkSpaceTileProps): ReactElement => {
     const requiredProps = merge({}, defaultProps, props);
 
     const wrapperClassName = cn(
@@ -30,6 +31,7 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
         { [styles.titleSelected]: requiredProps.selected },
         { [styles.titleCollapsed]: !requiredProps.expanded },
         { [styles.titleExpanded]: requiredProps.expanded },
+        { [styles.titleLarge]: requiredProps.size === 'large' },
     );
 
     return (
@@ -47,8 +49,8 @@ export default function WorkSpaceTile(props: IWorkSpaceTileProps): ReactElement 
                         theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
                     />
                 </div>
-                <h5 className={titleClassName}>{requiredProps.workspaceTitle}</h5>
+                <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
             </div>
         </ToolTip>
     );
-}
+};

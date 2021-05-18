@@ -1,0 +1,29 @@
+.controlsPanel {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 280px;
+    padding: 10px 30px;
+    padding-right: 20px;
+    background-color: $backgroundPrimary-color;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 gray;
+
+    @include flex(center, space-between, $gap: 10px);
+
+    .zoomControls {
+        width: 250px;
+        @include flex(center, flex-start, $gap: 10px);
+    }
+
+    .printIcon {
+        width: 30px;
+        color: $auto-color;
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $autoDark-color;
+        }
+    }
+}

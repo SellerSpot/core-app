@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
-import WorkSpaceMenuComponent from './WorkSpaceMenu';
+import { WorkSpaceMenu as WorkSpaceMenuComponent } from './WorkSpaceMenu';
 
 const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
     <BrowserRouter>
@@ -49,6 +49,6 @@ WorkSpaceMenu.args = {
 } as IWorkSpaceMenuProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Work Space Menu',
     component: WorkSpaceMenuComponent,
 } as Meta;

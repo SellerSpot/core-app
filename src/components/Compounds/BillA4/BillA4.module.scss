@@ -1,0 +1,113 @@
+.billWrapper {
+    width: 210mm;
+    min-width: 210mm;
+    max-width: 210mm;
+    padding: 25px;
+    background: white;
+    box-shadow: 0 0 10px 0 gray;
+}
+
+.dashedBorder {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dotted black;
+}
+
+.billSubTitle {
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.billTableWrapper {
+    margin: 8px 0;
+
+    h6 {
+        color: black;
+        font-weight: 500;
+    }
+}
+
+.billTableNode {
+    display: grid;
+    align-items: center;
+    padding: 10px 0;
+    gap: 8px;
+}
+
+.billTableNodeHead {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.billTableNodeContent {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.advertisementAndGrandTotalWrapper {
+    display: grid;
+    margin: 20px 0;
+    gap: 20px;
+    grid-template-columns: 1fr 250px;
+
+    h6 {
+        color: black;
+        font-weight: 600;
+    }
+}
+
+.grandTotalWrapper {
+    display: block;
+
+    .grandTotalHolder {
+        display: grid;
+        padding: 3px 0;
+        font-size: 11px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .grandTotalTitle {
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .grandTotalValue {
+        font-weight: normal;
+        text-align: right;
+    }
+
+    .grandTotalLarge {
+        font-size: 14px;
+    }
+}
+
+/* print essentials */
+@media all {
+    .PageBreak {
+        display: none;
+    }
+}
+
+@media print {
+    .PageBreak {
+        display: block;
+        page-break-before: auto;
+    }
+}
+
+@page {
+    margin: 40px;
+    size: auto;
+}
+
+@media print {
+    .billWrapper {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        -webkit-print-color-adjust: exact;
+    }
+}

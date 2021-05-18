@@ -61,7 +61,7 @@ export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
                     />
                 </div>
             ) : null}
-            <h5 className={titleClassName}>{requiredProps.title}</h5>
+            <h6 className={titleClassName}>{requiredProps.title}</h6>
             {!requiredProps.miniTile && requiredProps.showTailIcon ? (
                 <div className={trailingIconClassName}>
                     <MdKeyboardArrowRight />

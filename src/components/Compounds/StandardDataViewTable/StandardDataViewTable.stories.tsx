@@ -36,6 +36,6 @@ StandardDataViewTable.args = {
 } as IStandardDataViewTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Standard Data View Table',
     component: StandardDataViewTableComponent,
 } as Meta;

@@ -22,7 +22,7 @@ export const App = (): ReactElement => {
                 <CommonProvider>
                     <TenantProvider>
                         <Switch>
-                            <Route path={ROUTES.DASHBOARD}>
+                            <Route path={ROUTES.HOME}>
                                 <AuthProvider>
                                     <Dashboard />
                                 </AuthProvider>

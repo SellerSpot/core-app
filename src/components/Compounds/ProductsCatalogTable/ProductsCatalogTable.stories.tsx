@@ -27,6 +27,6 @@ ProductsCatalogTable.args = {
 } as IProductsCatalogTableProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Products Catalog Table',
     component: ProductsCatalogTableComponent,
 } as Meta;

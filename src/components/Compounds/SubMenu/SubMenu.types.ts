@@ -12,7 +12,7 @@ interface ITile {
     /**
      * Toggles the disabled state for the tile
      */
-    disabled: boolean;
+    disabled?: boolean;
     /**
      * Toggles to indicate that the child tiles are visible
      */
@@ -20,7 +20,7 @@ interface ITile {
     /**
      * Route to redirect the application to for this tile
      */
-    redirectRoute: string;
+    redirectRoute?: string;
     /**
      * Routes to watch for which means that this specific tile has been selected
      */

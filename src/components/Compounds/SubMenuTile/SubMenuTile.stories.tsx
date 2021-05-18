@@ -18,6 +18,6 @@ SubMenuTile.args = {
 } as ISubMenuTileProps;
 
 export default {
-    title: 'Components',
+    title: 'Design System/Compounds/Sub Menu Tile',
     component: SubMenuTileComponent,
 } as Meta;
