@@ -11,6 +11,7 @@ import { CommonProvider } from './components/CommonProvider/CommonProvider';
 import ThemeProvider from './components/ThemeProvider/ThemeProvider';
 import TenantProvider from './components/TenantProvider/TenantProvider';
 import AuthProvider from './components/AuthProvider/AuthProvider';
+import { NotFound } from 'pages/NotFound/NotFound';
 
 // global actions
 initializeGlobalConfig();
@@ -29,17 +30,12 @@ export const App = (): ReactElement => {
                             </Route>
                             <Route path={ROUTES.FAIL_SAFE}>
                                 <div>
-                                    Fail safe page
                                     {/* if network issue or other uncaughtable reason like (software service time, this with timer will be show) */}
+                                    Fail safe page
                                 </div>
                             </Route>
                             <Route>
-                                <div>
-                                    Not found page
-                                    {/* notify user - that he tried to access the page that is not available - 
-                                            redirect to the page that he came from, or if he directly hits not found page, redirect to dashboard
-                                    */}
-                                </div>
+                                <NotFound />
                             </Route>
                         </Switch>
                     </TenantProvider>

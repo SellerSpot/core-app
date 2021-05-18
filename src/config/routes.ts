@@ -1,5 +1,4 @@
 export const ROUTES = {
-    // base routes
     HOME: '/',
     FAIL_SAFE: '/failsafe',
     MANAGEMENT: {

@@ -1,4 +1,4 @@
-import { MenuWithPage } from 'components/Atoms/PageWithMenu/PageWithMenu';
+import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { NewSale } from 'pages/PointOfSale/NewSale/NewSale';
 import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router';
@@ -7,7 +7,7 @@ import styles from './PointOfSale.module.scss';
 
 export const PointOfSale = (): ReactElement => {
     return (
-        <MenuWithPage>
+        <PageWithMenu>
             <div className={styles.menuWrapper}>
                 <SubMenuManager />
             </div>
@@ -18,6 +18,6 @@ export const PointOfSale = (): ReactElement => {
                     </Route>
                 </Switch>
             </div>
-        </MenuWithPage>
+        </PageWithMenu>
     );
 };

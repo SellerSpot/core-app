@@ -1,15 +1,15 @@
+import { ROUTES } from 'config/routes';
+import { Home } from 'layouts/Home/Home';
 import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
+import { Catalogue } from 'layouts/Catalogue/Catalogue';
+import { Management } from 'layouts/Management/Management';
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
-import { appSelector } from 'store/models/app';
+import { AppBarManager } from './Components/AppBar/AppBar';
 import { WorkSpaceManager } from './Components/WorkspaceManager/WorkspaceManager';
 import styles from './dashboard.module.scss';
 
 export const Dashboard = (): ReactElement => {
-    const {
-        activeStatus: { isActive, lastOfflineAt, lastOnlineAt },
-    } = useSelector(appSelector);
     return (
         <div className={styles.dashboardWrapper}>
             <div className={styles.leftNavWrapper}>
@@ -17,14 +17,22 @@ export const Dashboard = (): ReactElement => {
             </div>
             <div className={styles.bodyWrapper}>
                 <div className={styles.topNavWrapper}>
-                    status: {isActive ? 'online' : 'offline'}&nbsp; lastOnlineAt:
-                    {lastOnlineAt.toLocaleTimeString()}&nbsp; lastOfflineAt:
-                    {lastOfflineAt.toLocaleTimeString()}
+                    <AppBarManager />
                 </div>
                 <div className={styles.pageBodyWrapper}>
                     <Switch>
-                        <Route>
+                        <Route path={ROUTES.MANAGEMENT.DEFAULT}>
+                            <Management />
+                        </Route>
+                        <Route path={ROUTES.CATALOGUE.DEFAULT}>
+                            <Catalogue />
+                        </Route>
+                        <Route path={ROUTES.POS.DEFAULT}>
                             <PointOfSale />
+                        </Route>
+                        {/* / route should be placed atlast */}
+                        <Route path={ROUTES.HOME}>
+                            <Home />
                         </Route>
                     </Switch>
                 </div>

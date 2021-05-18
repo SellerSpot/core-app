@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styles from './PageWithMenu.module.scss';
 
-export const MenuWithPage = (props: { children?: [ReactElement, ReactElement] }): ReactElement => {
+export const PageWithMenu = (props: { children?: [ReactElement, ReactElement] }): ReactElement => {
     const { children } = props;
     return (
         <div className={styles.pageWithMenuWrapper}>
