@@ -1,4 +1,4 @@
-import { VscChecklist, VscSettings } from 'react-icons/vsc';
+import { VscChecklist, VscHome, VscSettings } from 'react-icons/vsc';
 import { RiBillLine } from 'react-icons/ri';
 import {
     MdCheck,
@@ -7,7 +7,6 @@ import {
     MdDelete,
     MdFileDownload,
     MdFullscreen,
-    MdHome,
     MdKeyboardArrowDown,
     MdKeyboardArrowRight,
     MdLaunch,
@@ -27,7 +26,7 @@ import { BsQuestionSquare } from 'react-icons/bs';
 import { BiBox, BiReceipt } from 'react-icons/bi';
 
 export const ICONS = {
-    MdHome,
+    VscHome,
     VscSettings,
     FaRegListAlt,
     FaCashRegister,

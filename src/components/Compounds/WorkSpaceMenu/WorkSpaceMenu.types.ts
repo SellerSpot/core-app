@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-interface WorkSpaceTiles {
+export interface WorkSpaceTiles {
     /**
      * Title for the WorkSpaceTile
      */
@@ -19,10 +19,9 @@ interface WorkSpaceTiles {
     routesToWatch: string[];
 }
 
-export interface IWorkSpaceMenuProps {
-    tiles: WorkSpaceTiles[];
-    storeInformation: {
-        avatarContent: string;
-        storeName: string;
-    };
-}
+export type IUseWorkSpaceMenuStore = {
+    hoverMenu: boolean;
+    expandMenu: boolean;
+    setHoverMenu: (value: boolean) => void;
+    setExpandMenu: (value: boolean) => void;
+};

@@ -8,25 +8,25 @@ import { ICONS } from 'utilities/icons';
 
 const tiles: IWorkSpaceMenuProps['tiles'] = [
     {
-        icon: <ICONS.MdHome />,
+        icon: <ICONS.MdHome size={'24px'} />,
         title: 'Home',
         redirectRoute: ROUTES.HOME,
         routesToWatch: [ROUTES.HOME],
     },
     {
-        icon: <ICONS.VscSettings />,
+        icon: <ICONS.VscSettings size={'24px'} />,
         title: 'Management',
         redirectRoute: ROUTES.MANAGEMENT.DEFAULT,
         routesToWatch: [ROUTES.MANAGEMENT.DEFAULT],
     },
     {
-        icon: <ICONS.FaCashRegister />,
+        icon: <ICONS.FaCashRegister size={'24px'} />,
         title: 'Point Of Sale',
         redirectRoute: ROUTES.POS.DEFAULT,
         routesToWatch: [ROUTES.POS.DEFAULT],
     },
     {
-        icon: <ICONS.FaRegListAlt />,
+        icon: <ICONS.FaRegListAlt size={'24px'} />,
         title: 'Catalogue',
         redirectRoute: ROUTES.CATALOGUE.DEFAULT,
         routesToWatch: [ROUTES.CATALOGUE.DEFAULT],
