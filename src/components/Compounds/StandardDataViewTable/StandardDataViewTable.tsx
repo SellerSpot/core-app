@@ -75,15 +75,13 @@ const getTableBody = (props: {
     toggleRowExpansion: (rowIndex: number) => void;
 }): ITableRow[] => {
     const { tableItems } = props;
-    return tableItems.map(
-        (tableItem): ITableRow => {
-            return {
-                cells: getCells({
-                    tableItem,
-                }),
-            };
-        },
-    );
+    return tableItems.map((tableItem): ITableRow => {
+        return {
+            cells: getCells({
+                tableItem,
+            }),
+        };
+    });
 };
 
 export const StandardDataViewTable = (props: IStandardDataViewTableProps): ReactElement => {

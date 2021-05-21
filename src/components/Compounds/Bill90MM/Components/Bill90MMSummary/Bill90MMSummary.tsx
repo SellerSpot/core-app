@@ -5,13 +5,8 @@ import mainStyles from '../../Bill90MM.module.scss';
 
 export const Bill90MMSummary = (props: { billData: IBill90MMProps['billData'] }): ReactElement => {
     const { billData } = props;
-    const {
-        saleDiscount,
-        saleSubTotal,
-        saleTotal,
-        saleTotalTax,
-        saleTotalTaxPercentage,
-    } = billData;
+    const { saleDiscount, saleSubTotal, saleTotal, saleTotalTax, saleTotalTaxPercentage } =
+        billData;
     return (
         <>
             <div className={mainStyles.PageBreak} />

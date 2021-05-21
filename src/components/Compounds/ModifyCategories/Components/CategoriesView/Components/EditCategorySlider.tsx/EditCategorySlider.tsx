@@ -19,11 +19,8 @@ const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
 const EditCategoryHeader = (props: { isAddMode: boolean; submitting: boolean }) => {
     const { isAddMode, submitting } = props;
-    const {
-        setEditableNodeDetails,
-        setToBeAddedNodeDetails,
-        setSelectedNode,
-    } = useModifyCategoriesStore();
+    const { setEditableNodeDetails, setToBeAddedNodeDetails, setSelectedNode } =
+        useModifyCategoriesStore();
 
     const handleSliderOnClose = () => {
         // resetting selected node since we lose track of the selected node parents
@@ -178,11 +175,12 @@ export const EditCategorySlider = (): ReactElement => {
                                             const { error, visited } = meta;
 
                                             const showError = !!error && visited;
-                                            const helperMessage: IInputFieldProps['helperMessage'] = {
-                                                enabled: showError,
-                                                content: error,
-                                                type: 'error',
-                                            };
+                                            const helperMessage: IInputFieldProps['helperMessage'] =
+                                                {
+                                                    enabled: showError,
+                                                    content: error,
+                                                    type: 'error',
+                                                };
                                             const fieldTheme: IInputFieldProps['theme'] = showError
                                                 ? 'danger'
                                                 : 'primary';
@@ -219,11 +217,12 @@ export const EditCategorySlider = (): ReactElement => {
                                             const { value, onChange } = input;
                                             const { error, dirty } = meta;
                                             const showError = !!error && dirty;
-                                            const helperMessage: IInputFieldProps['helperMessage'] = {
-                                                enabled: showError,
-                                                content: error,
-                                                type: 'error',
-                                            };
+                                            const helperMessage: IInputFieldProps['helperMessage'] =
+                                                {
+                                                    enabled: showError,
+                                                    content: error,
+                                                    type: 'error',
+                                                };
                                             const fieldTheme: IInputFieldProps['theme'] = showError
                                                 ? 'danger'
                                                 : 'primary';

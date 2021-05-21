@@ -22,6 +22,10 @@
         background-color: $primaryLight-color;
     }
 
+    &.wrapperWorkSpaceIndicator {
+        background-color: transparent;
+    }
+
     .title {
         display: -webkit-box;
         overflow: hidden;

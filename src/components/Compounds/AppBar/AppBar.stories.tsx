@@ -28,4 +28,7 @@ AppBar.args = {
 export default {
     title: 'Design System/Compounds/App Bar',
     component: AppBarComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;
