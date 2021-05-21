@@ -1,6 +1,7 @@
+import Icon from '@iconify/react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { ManagementWorkSpaceIcon } from 'assets/customIcons/customIcons';
 import React from 'react';
+import { ICONS } from 'utilities/icons/icons';
 import { WorkSpaceTile as WorkSpaceTileComponent } from './WorkSpaceTile';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
@@ -13,7 +14,7 @@ WorkSpaceTile.args = {
     expanded: false,
     selected: true,
     workspaceTitle: 'Home',
-    workspaceIcon: <ManagementWorkSpaceIcon />,
+    workspaceIcon: <Icon icon={ICONS.settingsIcon} />,
     toolTipText: 'sdfsadf',
 } as IWorkSpaceTileProps;
 

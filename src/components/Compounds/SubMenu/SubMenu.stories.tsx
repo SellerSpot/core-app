@@ -1,9 +1,10 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { ISubMenuProps } from './SubMenu.types';
 import { SubMenu as SubMenuComponent } from './SubMenu';
+import Icon from '@iconify/react';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
     <BrowserRouter>
@@ -26,7 +27,7 @@ SubMenu.args = {
         {
             title: 'Sales',
             disabled: false,
-            icon: <ICONS.FaCashRegister />,
+            icon: <Icon icon={ICONS.cashRegister} />,
             routesToWatch: ['/iframe.html'],
             redirectRoute: '',
             childTiles: [
@@ -46,7 +47,7 @@ SubMenu.args = {
         },
         {
             title: 'Inventory',
-            icon: <ICONS.BiBox />,
+            icon: <Icon icon={ICONS.bxBox} />,
             disabled: false,
             routesToWatch: [''],
             redirectRoute: '',
@@ -61,7 +62,7 @@ SubMenu.args = {
         },
         {
             title: 'Bill Settings',
-            icon: <ICONS.RiBillLine />,
+            icon: <Icon icon={ICONS.billLine} />,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',

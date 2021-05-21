@@ -1,13 +1,14 @@
+import Icon from '@iconify/react';
 import { SubMenu } from 'components/Compounds/SubMenu/SubMenu';
 import { ISubMenuProps } from 'components/Compounds/SubMenu/SubMenu.types';
 import { ROUTES } from 'config/routes';
 import React, { ReactElement } from 'react';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 
 export const SubMenuManager = (): ReactElement => {
     const tiles: ISubMenuProps['tiles'] = [
         {
-            icon: <ICONS.FaCashRegister />,
+            icon: <Icon icon={ICONS.cashRegister} />,
             title: 'Sales',
             routesToWatch: [ROUTES.POS.SALES.NEW_SALE, ROUTES.POS.SALES.SALES_HISTORY],
             childTiles: [
@@ -22,7 +23,7 @@ export const SubMenuManager = (): ReactElement => {
             ],
         },
         {
-            icon: <ICONS.BiBox />,
+            icon: <Icon icon={ICONS.bxBox} />,
             title: 'Inventory',
             routesToWatch: [ROUTES.POS.INVENTORY.PRODUCTS],
             childTiles: [
@@ -33,7 +34,7 @@ export const SubMenuManager = (): ReactElement => {
             ],
         },
         {
-            icon: <ICONS.BiReceipt />,
+            icon: <Icon icon={ICONS.bxReceipt} />,
             title: 'Bill Settings',
             routesToWatch: [ROUTES.POS.BILLSETTINGS],
         },

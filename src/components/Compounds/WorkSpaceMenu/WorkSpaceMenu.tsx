@@ -1,7 +1,7 @@
+import Icon, { IconifyIcon } from '@iconify/react';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
-import { IconType } from 'react-icons';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
@@ -42,8 +42,8 @@ const ExpandMenuIcon = () => {
     );
 };
 
-export const getWorkSpaceMenuTileIcon = (Icon: IconType): ReactElement => {
-    return <Icon size={'24px'} />;
+export const getWorkSpaceMenuTileIcon = (iconInstance: IconifyIcon['icon']): ReactElement => {
+    return <Icon icon={iconInstance} height={'24px'} />;
 };
 
 const WorkSpaceTiles = () => {

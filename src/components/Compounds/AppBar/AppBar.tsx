@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { themeSelector } from 'store/models/theme';
 import { useSelector } from 'react-redux';
 import React, { ReactElement } from 'react';
@@ -7,6 +7,7 @@ import { Avatar, BreadCrumbs, Menu, IMenuProps } from '@sellerspot/universal-com
 import { IAppBarProps } from './AppBar.types';
 import styles from './AppBar.module.scss';
 import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
+import Icon from '@iconify/react';
 
 export { IAppBarProps } from './AppBar.types';
 
@@ -18,7 +19,7 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
             {
                 content: (
                     <div className={styles.avatarTile}>
-                        <ICONS.MdPersonPin />
+                        <Icon icon={ICONS.baselinePersonPin} />
                         Profile
                     </div>
                 ),
@@ -26,7 +27,7 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
             {
                 content: (
                     <div className={styles.avatarTile}>
-                        <ICONS.MdSettings />
+                        <Icon icon={ICONS.baselineSettings} />
                         Settings
                     </div>
                 ),
@@ -54,12 +55,14 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
                 </div>
             </div>
             <div className={styles.rhsGroup}>
-                <ICONS.MdFullscreen
-                    size="20px"
+                <Icon
+                    icon={ICONS.outlineFullscreen}
+                    height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
-                <ICONS.MdNotifications
-                    size="20px"
+                <Icon
+                    icon={ICONS.outlineNotifications}
+                    height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Menu items={getAvatarMenuItems()}>
