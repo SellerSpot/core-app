@@ -77,6 +77,7 @@
         "yalc": "^1.0.0-pre.53"
     },
     "dependencies": {
+        "@iconify/icons-codicon": "^1.1.15",
         "@iconify/icons-ic": "^1.1.4",
         "@iconify/icons-mdi": "^1.1.15",
         "@iconify/react": "^1.1.4",
