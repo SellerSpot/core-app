@@ -6,7 +6,7 @@ import { ICONS } from 'utilities/icons';
 
 const workSpaces: TObject<IAppBarProps['currentWorkspace']> = {
     home: {
-        workspaceIcon: <ICONS.MdHome size={'20px'} />,
+        workspaceIcon: <ICONS.VscHome size={'20px'} />,
         workspaceTitle: 'Home',
     },
 };

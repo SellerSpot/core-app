@@ -5,6 +5,9 @@ import React, { ReactElement } from 'react';
 import { colorThemes } from 'config/themes';
 import { Button, Card } from '@sellerspot/universal-components';
 import { IPluginCardProps } from './PluginCard.types';
+import { Icon } from '@iconify/react';
+import homeVariant from '@iconify/icons-mdi/home-variant';
+
 import styles from './PluginCard.module.scss';
 
 export default function PluginCard(props: IPluginCardProps): ReactElement {
@@ -53,7 +56,7 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             variant="contained"
                             size="small"
                             startIcon={
-                                props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />
+                                props.installed ? <ICONS.MdLaunch /> : <Icon icon={homeVariant} />
                             }
                             onClick={props.pluginPrimaryCallback}
                         />

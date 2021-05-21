@@ -7,7 +7,7 @@ import { ICONS } from 'utilities/icons';
 export const SubMenuManager = (): ReactElement => {
     const tiles: ISubMenuProps['tiles'] = [
         {
-            icon: <ICONS.MdHome />,
+            icon: <ICONS.VscHome />,
             title: 'Default',
             routesToWatch: [ROUTES.CATALOGUE.DEFAULT],
         },
