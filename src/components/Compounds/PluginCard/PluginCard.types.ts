@@ -1,10 +1,10 @@
-import { ReactElement } from 'react';
+import { IconifyIcon } from '@iconify/react';
 
 export interface IPluginCardProps {
     installed: boolean;
     imageUrl: string;
     pluginName: string;
-    pluginIcon: ReactElement;
+    pluginIcon: IconifyIcon['icon'];
     pluginDescription: string;
     /**
      * Callback for the install or launch action

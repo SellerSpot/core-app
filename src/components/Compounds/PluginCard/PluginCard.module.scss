@@ -1,29 +1,17 @@
 .card {
     width: 300px;
-    .media {
-        position: relative;
-        min-height: 145px;
-        .thumbnail {
-            width: 300px;
-        }
-    }
-    &:hover {
-        box-shadow: 2px 3px 5px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
-            0px 1px 3px 0px rgb(0 0 0 / 12%);
+    .mediaWrapper {
+        height: 160px;
     }
 
     .contentWrapper {
         padding-top: 10px;
         padding-bottom: 0;
         .content {
-            height: 55px;
             @include flex(flex-start, flex-start, $direction: column, $gap: 5px);
 
             .pluginTitle {
                 @include flex(center, flex-start, $gap: 8px);
-                .logo {
-                    width: 16px;
-                }
                 .titleText {
                     display: -webkit-box;
                     overflow: hidden;
