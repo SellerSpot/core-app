@@ -3,6 +3,7 @@ import * as ic from './ic';
 import * as codicon from './codicon';
 import * as ri from './ri';
 import * as bx from './bx';
+import * as carbon from './carbon';
 
 export const ICONS = {
     ...mdi,
@@ -10,4 +11,5 @@ export const ICONS = {
     ...codicon,
     ...ri,
     ...bx,
+    ...carbon,
 };

@@ -13,7 +13,7 @@
             width: 222px;
             height: 100%;
 
-            // background-color: $backgroundSecondary-color;
+            background-color: $backgroundSecondary-color;
             @include flex(center, flex-start);
 
             &.workspaceTileWrapper .workspaceTile {

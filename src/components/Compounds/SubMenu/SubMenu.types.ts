@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { IconifyIcon } from '@iconify/react';
 
 interface ITile {
     /**
@@ -8,7 +8,7 @@ interface ITile {
     /**
      * Leading icon for the SubMenuTile
      */
-    icon: ReactElement;
+    icon: IconifyIcon['icon'];
     /**
      * Toggles the disabled state for the tile
      */
