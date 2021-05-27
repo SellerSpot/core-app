@@ -74,15 +74,8 @@ const Tile = (props: {
 }) => {
     const { tile, tileIndex, updateChildTilesVisible } = props;
     const history = useHistory();
-    const {
-        disabled,
-        icon,
-        redirectRoute,
-        routesToWatch,
-        title,
-        childTiles,
-        childTilesVisible,
-    } = tile;
+    const { disabled, icon, redirectRoute, routesToWatch, title, childTiles, childTilesVisible } =
+        tile;
     // checking if the tile is selected
     const isTileSelected = routesToWatch?.includes(location.pathname);
     const tileOnClickHander = () => {

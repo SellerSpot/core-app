@@ -1,6 +1,7 @@
+import Icon from '@iconify/react';
 import { IconButton, ITableCell, ToolTip } from '@sellerspot/universal-components';
 import React from 'react';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { ITaxGroupsTableProps } from './TaxGroupsTable';
 import styles from './TaxGroupsTable.module.scss';
 
@@ -50,7 +51,7 @@ export class TaxGroupsTableService {
                 <ToolTip content={'Edit'}>
                     <div>
                         <IconButton
-                            icon={<ICONS.MdModeEdit />}
+                            icon={<Icon icon={ICONS.baselineEdit} />}
                             size={'small'}
                             theme={'primary'}
                             onClick={editItemCallback}
@@ -60,7 +61,7 @@ export class TaxGroupsTableService {
                 <ToolTip content={'Delete'}>
                     <div>
                         <IconButton
-                            icon={<ICONS.MdDelete />}
+                            icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                             size={'small'}
                             theme={'danger'}
                             onClick={deleteItemCallback}

@@ -1,8 +1,9 @@
-import { ICONS } from 'utilities/icons';
-import React from 'react';
+import Icon from '@iconify/react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
+import React from 'react';
+import { ICONS } from 'utilities/icons/icons';
 import { WorkSpaceTile as WorkSpaceTileComponent } from './WorkSpaceTile';
+import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 
 const Template: Story<IWorkSpaceTileProps> = (args: IWorkSpaceTileProps) => (
     <WorkSpaceTileComponent {...args} />
@@ -13,7 +14,7 @@ WorkSpaceTile.args = {
     expanded: false,
     selected: true,
     workspaceTitle: 'Home',
-    workspaceIcon: <ICONS.MdHome />,
+    workspaceIcon: <Icon icon={ICONS.settingsIcon} />,
     toolTipText: 'sdfsadf',
 } as IWorkSpaceTileProps;
 

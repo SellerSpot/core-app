@@ -1,3 +1,4 @@
+import Icon from '@iconify/react';
 import {
     Button,
     IconButton,
@@ -9,7 +10,7 @@ import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
 import { removeNodeAtPath } from 'react-sortable-tree';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import styles from '../../../../../ModifyCategories.module.scss';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
@@ -27,7 +28,7 @@ const EditCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore
     );
     const toolTipContent = 'Edit Category';
     const theme: IIconButtonProps['theme'] = 'primary';
-    const icon: IIconButtonProps['icon'] = <ICONS.MdModeEdit />;
+    const icon: IIconButtonProps['icon'] = <Icon icon={ICONS.baselineEdit} />;
 
     const onClickHandler = () => {
         setEditableNodeDetails(
@@ -77,7 +78,7 @@ const AddCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore 
                 <IconButton
                     theme={'primary'}
                     size="small"
-                    icon={<ICONS.MdAdd />}
+                    icon={<Icon icon={ICONS.outlineAdd} />}
                     onClick={onClickHandler}
                 />
             </div>
@@ -101,7 +102,7 @@ const DeleteCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataSto
         <ToolTip content={'Delete Category'} enterDelay={400}>
             <div>
                 <IconButton
-                    icon={<ICONS.MdDelete />}
+                    icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                     theme="danger"
                     size="small"
                     onClick={onClickHandler}

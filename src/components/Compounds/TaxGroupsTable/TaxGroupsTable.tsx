@@ -12,18 +12,16 @@ const getTableBody = (props: {
     toggleRowExpansion: (rowIndex: number) => void;
 }): ITableRow[] => {
     const { tableItems, toggleRowExpansion } = props;
-    return tableItems.map(
-        (tableItem, tableItemIndex): ITableRow => {
-            const { brackets } = tableItem;
-            return {
-                cells: TaxGroupsTableService.tableCells({
-                    tableItem,
-                }),
-                onClick: () => toggleRowExpansion(tableItemIndex),
-                collapsedContent: <TaxBracketsGrouped brackets={brackets} />,
-            };
-        },
-    );
+    return tableItems.map((tableItem, tableItemIndex): ITableRow => {
+        const { brackets } = tableItem;
+        return {
+            cells: TaxGroupsTableService.tableCells({
+                tableItem,
+            }),
+            onClick: () => toggleRowExpansion(tableItemIndex),
+            collapsedContent: <TaxBracketsGrouped brackets={brackets} />,
+        };
+    });
 };
 
 export const TaxGroupsTable = (props: ITaxGroupsTableProps): ReactElement => {

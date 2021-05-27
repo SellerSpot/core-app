@@ -1,16 +1,18 @@
-import { ICONS } from 'utilities/icons';
-import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { IPluginCardProps } from './PluginCard.types';
+import React from 'react';
+import { ICONS } from 'utilities/icons/icons';
 import PluginCardComponent from './PluginCard';
+import { IPluginCardProps } from './PluginCard.types';
 
-const Template: Story = (args: IPluginCardProps) => <PluginCardComponent {...args} />;
+const Template: Story = (args: IPluginCardProps) => {
+    return <PluginCardComponent {...args} />;
+};
 export const PluginCard = Template.bind({});
 PluginCard.args = {
     installed: false,
-    imageUrl: 'https://i.ibb.co/yBQQ8rx/pos-Plugin-Illustration.png',
+    imageUrl: 'https://picsum.photos/id/237/200/300',
     pluginName: 'Point of Sale',
-    pluginIcon: <ICONS.FaCashRegister />,
+    pluginIcon: ICONS.cashRegister,
     pluginDescription: 'An all purpose point of sale system to handle your everyday sales',
 } as IPluginCardProps;
 export default {

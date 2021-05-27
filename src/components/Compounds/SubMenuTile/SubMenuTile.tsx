@@ -1,14 +1,14 @@
-import { ICONS } from 'utilities/icons';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import React, { ReactElement } from 'react';
-import { merge } from 'lodash';
+import Icon from '@iconify/react';
 import cn from 'classnames';
-import { Avatar } from '@sellerspot/universal-components';
-import { ISubMenuTileProps } from './SubMenuTile.types';
+import { merge } from 'lodash';
+import React, { ReactElement } from 'react';
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import { ICONS } from 'utilities/icons/icons';
 import styles from './SubMenuTile.module.scss';
+import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    icon: <ICONS.BsQuestionSquare />,
+    icon: <Icon icon={ICONS.helpCircleOutline} />,
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -51,7 +51,7 @@ export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
             onMouseOver={requiredProps.events?.oneMouseOver}
             onMouseLeave={requiredProps.events?.onMouseLeave}
         >
-            {!requiredProps.miniTile ? (
+            {/* {!requiredProps.miniTile ? (
                 <div className={styles.avatar}>
                     <Avatar
                         content={requiredProps.icon}
@@ -59,6 +59,11 @@ export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
                         variant={'circular'}
                         disabled={requiredProps.disabled}
                     />
+                </div>
+            ) : null} */}
+            {!requiredProps.miniTile ? (
+                <div className={styles.avatar}>
+                    <Icon icon={requiredProps.icon} height="20px" />
                 </div>
             ) : null}
             <h6 className={titleClassName}>{requiredProps.title}</h6>

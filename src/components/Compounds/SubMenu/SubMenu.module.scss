@@ -8,7 +8,7 @@
 }
 
 .upperTiles {
-    @include flex(flex-end, flex-start, column, 5px);
+    @include flex(flex-end, flex-start, column, 20px);
 }
 
 .tileGroup {

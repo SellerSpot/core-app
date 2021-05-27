@@ -1,61 +1,73 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { themeSelector } from 'store/models/theme';
 import { useSelector } from 'react-redux';
 import React, { ReactElement } from 'react';
 import { colorThemes } from 'config/themes';
 import { Button, Card } from '@sellerspot/universal-components';
 import { IPluginCardProps } from './PluginCard.types';
+import { Icon } from '@iconify/react';
+
 import styles from './PluginCard.module.scss';
 
 export default function PluginCard(props: IPluginCardProps): ReactElement {
     const themeState = useSelector(themeSelector);
-
+    const {
+        imageUrl,
+        installed,
+        pluginDescription,
+        pluginIcon,
+        pluginName,
+        pluginPrimaryCallback,
+        pluginSecondaryCallback,
+    } = props;
     return (
         <Card
             className={{
                 cardWrapper: styles.card,
+                mediaWrapper: styles.mediaWrapper,
                 contentWrapper: styles.contentWrapper,
                 actionsWrapper: styles.actionWrapper,
             }}
-            media={
-                <div className={styles.media}>
-                    <img className={styles.thumbnail} src={props.imageUrl} />
-                </div>
-            }
+            image={imageUrl}
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
-                        <div className={styles.logo}>{props.pluginIcon}</div>
-                        <h5 className={styles.titleText}>{props.pluginName}</h5>
+                        <Icon icon={pluginIcon} height={'22px'} />
+                        <h4 className={styles.titleText}>{pluginName}</h4>
                     </div>
-                    <p className={styles.pluginContent}>{props.pluginDescription}</p>
+                    <p className={styles.pluginContent}>{pluginDescription}</p>
                 </div>
             }
             actions={
                 <div className={styles.pluginActions}>
                     <Button
-                        onClick={props.pluginSecondaryCallback}
+                        onClick={pluginSecondaryCallback}
                         size="small"
                         theme="accent"
                         label={'Explore'}
                         variant="text"
                     />
                     <div className={styles.pluginActionsRHSSection}>
-                        {props.installed ? (
-                            <ICONS.MdCheckCircle
-                                size="20px"
+                        {installed ? (
+                            <Icon
+                                icon={ICONS.checkCircleOutline}
+                                height="20px"
                                 color={colorThemes[themeState.colorTheme].success}
                             />
                         ) : null}
                         <Button
-                            theme={props.installed ? 'success' : 'primary'}
-                            label={props.installed ? 'Launch' : 'Install'}
+                            theme={installed ? 'success' : 'primary'}
+                            label={installed ? 'LAUNCH' : 'INSTALL'}
                             variant="contained"
                             size="small"
                             startIcon={
-                                props.installed ? <ICONS.MdLaunch /> : <ICONS.MdFileDownload />
+                                installed ? (
+                                    <Icon icon={ICONS.outlineLaunch} />
+                                ) : (
+                                    <Icon icon={ICONS.outlineFileDownload} />
+                                )
                             }
-                            onClick={props.pluginPrimaryCallback}
+                            onClick={pluginPrimaryCallback}
                         />
                     </div>
                 </div>

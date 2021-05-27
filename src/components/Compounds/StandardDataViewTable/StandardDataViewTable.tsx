@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import React, { ReactElement } from 'react';
 import {
     IconButton,
@@ -11,6 +11,7 @@ import {
 import { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 import { StandardDataViewTableService } from './StandardDataViewTable.service';
 import styles from './StandardDataViewTable.module.scss';
+import Icon from '@iconify/react';
 
 export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 
@@ -25,7 +26,7 @@ const getCells = (props: {
             <ToolTip content={'Edit'}>
                 <div>
                     <IconButton
-                        icon={<ICONS.MdModeEdit />}
+                        icon={<Icon icon={ICONS.baselineEdit} />}
                         size={'small'}
                         theme={'primary'}
                         onClick={editItemCallback}
@@ -35,7 +36,7 @@ const getCells = (props: {
             <ToolTip content={'Delete'}>
                 <div>
                     <IconButton
-                        icon={<ICONS.MdDelete />}
+                        icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                         size={'small'}
                         theme={'danger'}
                         onClick={deleteItemCallback}
@@ -74,15 +75,13 @@ const getTableBody = (props: {
     toggleRowExpansion: (rowIndex: number) => void;
 }): ITableRow[] => {
     const { tableItems } = props;
-    return tableItems.map(
-        (tableItem): ITableRow => {
-            return {
-                cells: getCells({
-                    tableItem,
-                }),
-            };
-        },
-    );
+    return tableItems.map((tableItem): ITableRow => {
+        return {
+            cells: getCells({
+                tableItem,
+            }),
+        };
+    });
 };
 
 export const StandardDataViewTable = (props: IStandardDataViewTableProps): ReactElement => {

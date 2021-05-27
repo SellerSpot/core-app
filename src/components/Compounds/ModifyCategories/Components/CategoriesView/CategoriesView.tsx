@@ -1,7 +1,8 @@
+import Icon from '@iconify/react';
 import { Button, Skeleton } from '@sellerspot/universal-components';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { useModifyCategoriesStore } from '../../ModifyCategories';
 import styles from '../../ModifyCategories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
@@ -26,7 +27,7 @@ const AddTopLevelCategory = () => {
             <Button
                 label={'ADD CATEGORY'}
                 theme="primary"
-                startIcon={<ICONS.MdAdd />}
+                startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
                 onClick={onClickHandler}
             />

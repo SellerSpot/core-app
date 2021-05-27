@@ -31,7 +31,10 @@
 }
 
 .avatar {
+    width: 20px;
+    height: 100%;
     flex-grow: 0;
+    color: $foregroundPrimary-color;
 }
 
 .wrapperSelected {

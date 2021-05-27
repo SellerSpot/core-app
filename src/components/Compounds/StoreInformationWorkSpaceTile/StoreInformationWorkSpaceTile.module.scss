@@ -1,0 +1,42 @@
+.wrapper {
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    transition: width 0.2s ease;
+    @include flex(center, flex-start, $gap: 5px);
+
+    &.wrapperExpanded {
+        width: 200px;
+    }
+
+    .avatarHolder {
+        width: 40px;
+        height: 100%;
+        border-radius: 5px;
+
+        h2 {
+            color: $primary-color;
+        }
+    }
+
+    .storeNameHolder {
+        display: -webkit-box;
+        overflow: hidden;
+        width: 165px;
+        min-width: 165px;
+        max-width: 100%;
+        -webkit-box-orient: vertical;
+        color: $foregroundPrimary-color;
+        -webkit-line-clamp: 2;
+        line-height: 1;
+
+        &.storeNameHolderCollapsed {
+            @include animation(fade-out, 0.2s);
+        }
+
+        &.storeNameHolderExpanded {
+            @include animation(fade-in, 0.2s, $delay: 0.2s);
+        }
+    }
+}

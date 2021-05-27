@@ -1,80 +1,56 @@
 .wrapper {
     width: 40px;
     height: 40px;
-
-    background-color: transparent;
     border-radius: $border-radius;
     cursor: pointer;
-    transition-duration: $animation-duration-short;
+    transition-duration: 0.2s;
     transition-property: color, background-color, width;
-
     transition-timing-function: ease;
-
     user-select: none;
 
-    @include flex(center, flex-start);
+    @include flex(center, flex-start, $gap: 8px);
 
     &:hover {
         background-color: $backgroundSecondary-color;
     }
-}
 
-@keyframes fadeIn {
-    0% {
-        display: none;
-        opacity: 0;
+    &.wrapperExpanded {
+        width: 200px;
     }
-    1% {
-        display: block;
-        opacity: 0;
+
+    &.wrapperSelected {
+        background-color: $primaryLight-color;
     }
-    100% {
-        display: block;
-        opacity: 1;
+
+    &.wrapperWorkSpaceIndicator {
+        background-color: transparent;
     }
-}
 
-.wrapperExpanded {
-    width: 200px;
-}
-
-.wrapperSelected {
-    background-color: $primaryLight-color;
-}
-
-.wrapperWorkSpaceIndicator {
-    width: auto;
-    background-color: transparent;
-}
-
-.wrapperWorkSpaceIndicator:hover {
-    background-color: transparent;
-}
-
-.title {
-    display: -webkit-box;
-    overflow: hidden;
-    max-width: 100%;
-    -webkit-box-orient: vertical;
-    color: $foregroundPrimary-color;
-    -webkit-line-clamp: 1;
-    text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    @include animation(fade-out, 0.1s);
-
-    &.titleCollapsed {
+    .title {
+        display: -webkit-box;
+        overflow: hidden;
+        max-width: 100%;
+        -webkit-box-orient: vertical;
+        color: $foregroundPrimary-color;
+        -webkit-line-clamp: 1;
+        text-overflow: ellipsis;
+        text-overflow: ellipsis;
         @include animation(fade-out, 0.1s);
-    }
 
-    &.titleExpanded {
-        @include animation(fade-in, 0.3s, $delay: 0.1s);
-    }
+        &.titleCollapsed {
+            @include animation(fade-out, 0.1s);
+        }
 
-    &.titleSelected {
-        color: $primary-color;
-    }
+        &.titleExpanded {
+            @include animation(fade-in, 0.3s, $delay: 0.2s);
+        }
 
-    &.titleLarge {
-        font-size: $h4-fontsize;
+        &.titleSelected {
+            color: $primary-color;
+        }
+
+        &.titleLarge {
+            font-size: $h4-fontsize;
+        }
     }
 }

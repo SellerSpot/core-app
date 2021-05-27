@@ -1,106 +1,110 @@
-import { useHistory, useLocation } from 'react-router';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
-import cn from 'classnames';
-import { Avatar } from '@sellerspot/universal-components';
+import Icon, { IconifyIcon } from '@iconify/react';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
-import { Trademark } from '@sellerspot/universal-components';
-import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
-import styles from './WorkSpaceMenu.module.scss';
-import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
+import cn from 'classnames';
+import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
+import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
+import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
+import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
+import styles from './WorkSpaceMenu.module.scss';
+import { WorkSpaceMenuService } from './WorkSpaceMenu.service';
+import { IUseWorkSpaceMenuStore } from './WorkSpaceMenu.types';
 
-export const WorkSpaceMenu = (props: IWorkSpaceMenuProps): ReactElement => {
-    const [expandMenu, setExpandMenu] = useState(false);
-    const [hoverMenu, setHoverMenu] = useState(false);
-    const location = useLocation();
-    const history = useHistory();
-    const menuRef = useRef(null);
+const useWorkSpaceMenuStore = create<IUseWorkSpaceMenuStore>((set) => ({
+    expandMenu: false,
+    hoverMenu: false,
+    setExpandMenu: (value) => {
+        set({ expandMenu: value });
+    },
+    setHoverMenu: (value) => {
+        set({ hoverMenu: value });
+    },
+}));
+
+const ExpandMenuIcon = () => {
+    const { expandMenu, hoverMenu, setExpandMenu } = useWorkSpaceMenuStore();
+    const className = cn(
+        styles.expandIcon,
+        { [animationStyles.fadeIn]: hoverMenu && !expandMenu },
+        { [styles.expandIconFadeOut]: !hoverMenu && !expandMenu },
+        { [styles.expandIconRotate]: expandMenu },
+        { [styles.expandIconRotateReverse]: !expandMenu },
+    );
+
+    return (
+        <div className={className}>
+            <ExpandWorkspaceMenuButton
+                onClick={() => {
+                    setExpandMenu(!expandMenu);
+                }}
+            />
+        </div>
+    );
+};
+
+export const getWorkSpaceMenuTileIcon = (iconInstance: IconifyIcon['icon']): ReactElement => {
+    return <Icon icon={iconInstance} height={'24px'} />;
+};
+
+const WorkSpaceTiles = () => {
+    const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
+    const tiles = WorkSpaceMenuService.getWorkSpaceTiles();
+    return (
+        <div className={styles.workSpaceTilesWrapper}>
+            {tiles.map((tile, tileIndex) => {
+                const { icon, title } = tile;
+                return (
+                    <Fragment key={tileIndex}>
+                        <WorkSpaceTile
+                            workspaceIcon={icon}
+                            toolTipText={title}
+                            workspaceTitle={title}
+                            expanded={expandMenu}
+                        />
+                    </Fragment>
+                );
+            })}
+        </div>
+    );
+};
+
+export const WorkSpaceMenu = (): ReactElement => {
+    const { setExpandMenu, setHoverMenu, expandMenu } = useWorkSpaceMenuStore();
+    const workSpaceMenuRef = useRef(null);
+
+    const wrapperClassName = cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu });
+    const handleOnMouseEnter = () => setHoverMenu(true);
+    const handleOnMouseLeave = () => setHoverMenu(false);
 
     // handler for document onClickListener
     const onClickListener = useCallback(
         (e: MouseEvent) => {
-            if (!menuRef.current.contains(e.target)) {
+            if (!workSpaceMenuRef.current.contains(e.target)) {
                 setExpandMenu(false);
             }
         },
-        [menuRef],
+        [workSpaceMenuRef],
     );
 
+    // attaching click listener to close the menu when clicked outside
     useEffect(() => {
-        // Attach a click listener on the document.
         document.addEventListener('click', onClickListener);
-        return () => {
-            // Detach the click listener on the document.
-            document.removeEventListener('click', onClickListener);
-        };
+        return () => document.removeEventListener('click', onClickListener);
     }, []);
 
     return (
         <div
-            ref={menuRef}
-            onMouseEnter={() => setHoverMenu(true)}
-            onMouseLeave={() => setHoverMenu(false)}
-            className={cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu })}
+            ref={workSpaceMenuRef}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+            className={wrapperClassName}
         >
-            <div
-                className={cn(
-                    styles.expandIcon,
-                    { [animationStyles.fadeIn]: hoverMenu && !expandMenu },
-                    { [styles.expandIconFadeOut]: !hoverMenu && !expandMenu },
-                    { [styles.expandIconRotate]: expandMenu },
-                    { [styles.expandIconRotateReverse]: !expandMenu },
-                )}
-            >
-                <ExpandWorkspaceMenuButton
-                    onClick={() => {
-                        setExpandMenu(!expandMenu);
-                    }}
-                />
-            </div>
-            <div
-                className={styles.storeInformationWrapper}
-                title={props.storeInformation?.storeName}
-            >
-                <div>
-                    <Avatar
-                        content={props.storeInformation.avatarContent}
-                        theme="selected"
-                        variant="circular"
-                    />
-                </div>
-                <h6 className={cn(styles.storeName, { [styles.storeNameExpanded]: expandMenu })}>
-                    {props.storeInformation.storeName}
-                </h6>
-            </div>
-            <div className={styles.workspacesWrapper}>
-                {props.tiles.map((tile, index) => {
-                    // checking if the tile is selected
-                    const isTileSelected = tile.routesToWatch?.includes(location.pathname);
-                    return (
-                        <WorkSpaceTile
-                            key={index}
-                            selected={isTileSelected}
-                            expanded={expandMenu}
-                            workspaceTitle={tile.title}
-                            toolTipText={tile.title}
-                            workspaceIcon={tile.icon}
-                            events={{
-                                onClick: () => {
-                                    // redirecting page
-                                    history.push(tile.redirectRoute);
-                                },
-                            }}
-                        />
-                    );
-                })}
-            </div>
-            <div
-                className={cn(styles.trademarkWrapper, {
-                    [styles.trademarkWrapperExpanded]: expandMenu,
-                })}
-            >
-                <Trademark />
-            </div>
+            <ExpandMenuIcon />
+            <StoreInformationWorkSpaceTile
+                expanded={expandMenu}
+                storeName={'Sreenithi Margin Free Store'}
+            />
+            <WorkSpaceTiles />
         </div>
     );
 };

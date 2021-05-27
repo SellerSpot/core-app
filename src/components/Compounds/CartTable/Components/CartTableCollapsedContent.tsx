@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { Field, Form, FormSpy } from 'react-final-form';
 import React, { ReactElement } from 'react';
@@ -11,6 +11,7 @@ import {
 import { CartTableService } from '../CartTable.service';
 import styles from '../CartTable.module.scss';
 import { saleService } from 'services/services';
+import Icon from '@iconify/react';
 
 const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
@@ -166,7 +167,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 })}
                                 variant="contained"
                                 label={'UPDATE'}
-                                startIcon={<ICONS.MdCheck />}
+                                startIcon={<Icon icon={ICONS.check} />}
                             />
                         );
                     }}

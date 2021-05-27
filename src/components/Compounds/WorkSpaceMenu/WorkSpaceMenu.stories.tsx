@@ -1,11 +1,9 @@
-import { ICONS } from 'utilities/icons';
-import { BrowserRouter } from 'react-router-dom';
-import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { IWorkSpaceMenuProps } from './WorkSpaceMenu.types';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { WorkSpaceMenu as WorkSpaceMenuComponent } from './WorkSpaceMenu';
 
-const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
+const Template: Story = () => (
     <BrowserRouter>
         <div
             style={{
@@ -15,40 +13,17 @@ const Template: Story<IWorkSpaceMenuProps> = (args: IWorkSpaceMenuProps) => (
                 height: '100vh',
             }}
         >
-            <WorkSpaceMenuComponent {...args} />
+            <WorkSpaceMenuComponent />
         </div>
     </BrowserRouter>
 );
 
 export const WorkSpaceMenu = Template.bind({});
-WorkSpaceMenu.args = {
-    tiles: [
-        {
-            icon: <ICONS.MdHome />,
-            title: 'Home',
-            routesToWatch: ['/iframe.html'],
-        },
-        {
-            icon: <ICONS.VscSettings />,
-            title: 'Management',
-        },
-        {
-            icon: <ICONS.FaCashRegister />,
-            title: 'POS',
-        },
-        {
-            icon: <ICONS.VscChecklist />,
-            title: 'Catalogue',
-        },
-    ],
-    storeInformation: {
-        avatarContent: 'S',
-        storeName:
-            'Sreenithi Margin Free Store Store Store Test Store Store Store Store Store Test Store Store Store Store Store Test Store Store',
-    },
-} as IWorkSpaceMenuProps;
 
 export default {
     title: 'Design System/Compounds/Work Space Menu',
+    parameters: {
+        layout: 'fullscreen',
+    },
     component: WorkSpaceMenuComponent,
 } as Meta;

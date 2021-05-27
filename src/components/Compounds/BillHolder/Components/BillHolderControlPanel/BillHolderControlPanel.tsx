@@ -1,6 +1,7 @@
+import Icon from '@iconify/react';
 import { Slider, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import styles from './BillHolderControlPanel.module.scss';
 
 interface IBillHolderControlPanelProps {
@@ -31,7 +32,9 @@ export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): Rea
                 <h5>{`${sliderValue}%`}</h5>
             </div>
             <ToolTip content={'Print Bill'}>
-                <ICONS.MdPrint className={styles.printIcon} size={'25px'} onClick={handlePrint} />
+                <div className={styles.printIcon} onClick={handlePrint}>
+                    <Icon icon={ICONS.baselineLocalPrintshop} height={'25px'} />
+                </div>
             </ToolTip>
         </div>
     );

@@ -1,15 +1,16 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import React, { ReactElement } from 'react';
 import { merge } from 'lodash';
 import cn from 'classnames';
 import { Avatar, ToolTip } from '@sellerspot/universal-components';
 import { IWorkSpaceTileProps } from './WorkSpaceTile.types';
 import styles from './WorkSpaceTile.module.scss';
+import Icon from '@iconify/react';
 
 const defaultProps: IWorkSpaceTileProps = {
     toolTipText: '',
     expanded: false,
-    workspaceIcon: <ICONS.BsQuestionSquare />,
+    workspaceIcon: <Icon icon={ICONS.helpCircleOutline} />,
     selected: false,
     variant: 'tile',
     workspaceTitle: 'Home',
@@ -43,12 +44,11 @@ export const WorkSpaceTile = (props: IWorkSpaceTileProps): ReactElement => {
                 onMouseOver={requiredProps.events?.oneMouseOver}
                 onMouseLeave={requiredProps.events?.onMouseLeave}
             >
-                <div>
-                    <Avatar
-                        content={requiredProps.workspaceIcon}
-                        theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
-                    />
-                </div>
+                <Avatar
+                    content={requiredProps.workspaceIcon}
+                    theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
+                />
+
                 <h6 className={titleClassName}>{requiredProps.workspaceTitle}</h6>
             </div>
         </ToolTip>

@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { store } from 'store/store';
 import { cartSelector, removeProductFromCart } from 'store/models/cart';
@@ -17,6 +17,7 @@ import { ICartTableProduct } from './CartTable.types';
 import { CartTableService } from './CartTable.service';
 import styles from './CartTable.module.scss';
 import { saleService } from 'services/services';
+import Icon from '@iconify/react';
 
 const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
     const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
@@ -62,7 +63,7 @@ const getTableCells = (product: ICartTableProduct, productIndex: number): ITable
                 <ToolTip content={'Remove Product'}>
                     <div>
                         <IconButton
-                            icon={<ICONS.MdClear />}
+                            icon={<Icon icon={ICONS.outlineClear} />}
                             theme="danger"
                             size="small"
                             onClick={deleteProductOnClick}

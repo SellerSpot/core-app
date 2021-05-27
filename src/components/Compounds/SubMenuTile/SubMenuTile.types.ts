@@ -1,5 +1,5 @@
+import { IconifyIcon } from '@iconify/react';
 import { IComponentEvents } from 'typings/common.types';
-import { ReactElement } from 'react';
 
 export interface ISubMenuTileProps {
     /**
@@ -11,7 +11,7 @@ export interface ISubMenuTileProps {
      * Leading content for tile
      * @default HomeWorkspaceIcon
      */
-    icon?: ReactElement;
+    icon?: IconifyIcon['icon'];
     /**
      * Title for the tile
      * @default "Home"

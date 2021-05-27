@@ -1,8 +1,9 @@
+import Icon from '@iconify/react';
 import { IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import { debounce } from 'lodash';
 import React, { ReactElement, useState } from 'react';
 import { TreeItem } from 'react-sortable-tree';
-import { ICONS } from 'utilities/icons';
+import { ICONS } from 'utilities/icons/icons';
 import create from 'zustand';
 import { CategoriesView } from './Components/CategoriesView/CategoriesView';
 import { EditCategorySlider } from './Components/CategoriesView/Components/EditCategorySlider.tsx/EditCategorySlider';
@@ -56,7 +57,7 @@ const SearchField = () => {
     const suffixComponent =
         localFieldValue?.length > 0 ? (
             <IconButton
-                icon={<ICONS.MdClear />}
+                icon={<Icon icon={ICONS.outlineClear} />}
                 theme="danger"
                 size="small"
                 onClick={clearSearchField}
@@ -71,7 +72,7 @@ const SearchField = () => {
                 value={localFieldValue}
                 placeHolder={'Search for category'}
                 disableHelperTextPlaceholderPadding
-                prefix={<ICONS.MdSearch />}
+                prefix={<Icon icon={ICONS.outlineSearch} />}
                 suffix={suffixComponent}
                 onChange={handleOnChange}
             />
