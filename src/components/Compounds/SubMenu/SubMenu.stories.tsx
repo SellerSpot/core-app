@@ -1,10 +1,9 @@
-import { ICONS } from 'utilities/icons/icons';
-import { BrowserRouter } from 'react-router-dom';
-import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { ISubMenuProps } from './SubMenu.types';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { ICONS } from 'utilities/icons/icons';
 import { SubMenu as SubMenuComponent } from './SubMenu';
-import Icon from '@iconify/react';
+import { ISubMenuProps } from './SubMenu.types';
 
 const Template: Story<ISubMenuProps> = (args: ISubMenuProps) => (
     <BrowserRouter>
@@ -27,7 +26,7 @@ SubMenu.args = {
         {
             title: 'Sales',
             disabled: false,
-            icon: <Icon icon={ICONS.cashRegister} />,
+            icon: ICONS.cashRegister,
             routesToWatch: ['/iframe.html'],
             redirectRoute: '',
             childTiles: [
@@ -47,7 +46,7 @@ SubMenu.args = {
         },
         {
             title: 'Inventory',
-            icon: <Icon icon={ICONS.bxBox} />,
+            icon: ICONS.bxBox,
             disabled: false,
             routesToWatch: [''],
             redirectRoute: '',
@@ -62,7 +61,7 @@ SubMenu.args = {
         },
         {
             title: 'Bill Settings',
-            icon: <Icon icon={ICONS.billLine} />,
+            icon: ICONS.billLine,
             disabled: true,
             routesToWatch: [''],
             redirectRoute: '',
@@ -73,4 +72,7 @@ SubMenu.args = {
 export default {
     title: 'Design System/Compounds/Sub Menu',
     component: SubMenuComponent,
+    parameters: {
+        layout: 'fullscreen',
+    },
 } as Meta;

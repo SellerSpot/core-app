@@ -8,7 +8,7 @@ import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 
 const defaultProps: ISubMenuTileProps = {
-    icon: <Icon icon={ICONS.helpCircleOutline} />,
+    icon: ICONS.helpCircleOutline,
     miniTile: false,
     title: 'Home',
     selected: false,
@@ -18,56 +18,52 @@ const defaultProps: ISubMenuTileProps = {
 };
 
 export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
-    const requiredProps = merge({}, defaultProps, props);
+    const { childTilesVisible, disabled, events, icon, miniTile, selected, showTailIcon, title } =
+        merge({}, defaultProps, props);
     const wrapperClassName = cn(styles.wrapper, {
-        [styles.wrapperSelected]: requiredProps.selected,
-        [styles.wrapperMini]: requiredProps.miniTile,
-        [styles.wrapperDisabled]: requiredProps.disabled,
+        [styles.wrapperSelected]: selected,
+        [styles.wrapperMini]: miniTile,
+        [styles.wrapperDisabled]: disabled,
+    });
+
+    const avatarIconClassName = cn(styles.avatarIcon, {
+        [styles.avatarIconSelected]: selected,
+        [styles.avatarIconDisabled]: disabled,
     });
 
     const titleClassName = cn(
         styles.title,
-        { [styles.titleSelected]: requiredProps.selected && !requiredProps.disabled },
-        { [styles.titleMini]: requiredProps.miniTile },
-        { [styles.titleDisabled]: requiredProps.disabled },
+        { [styles.titleSelected]: selected && !disabled },
+        { [styles.titleMini]: miniTile },
+        { [styles.titleDisabled]: disabled },
     );
 
     const trailingIconClassName = cn(
         styles.trailingIcon,
         {
-            [styles.trailingIconSelected]: requiredProps.selected && !requiredProps.disabled,
+            [styles.trailingIconSelected]: selected && !disabled,
         },
-        { [styles.trailingIconChildTilesVisible]: requiredProps.childTilesVisible },
+        { [styles.trailingIconChildTilesVisible]: childTilesVisible },
         {
-            [styles.trailingIconDisabled]: requiredProps.disabled,
+            [styles.trailingIconDisabled]: disabled,
         },
     );
 
     return (
         <div
             className={wrapperClassName}
-            onClick={requiredProps.events?.onClick}
-            onFocus={requiredProps.events?.onFocus}
-            onMouseOver={requiredProps.events?.oneMouseOver}
-            onMouseLeave={requiredProps.events?.onMouseLeave}
+            onClick={events?.onClick}
+            onFocus={events?.onFocus}
+            onMouseOver={events?.oneMouseOver}
+            onMouseLeave={events?.onMouseLeave}
         >
-            {/* {!requiredProps.miniTile ? (
+            {!miniTile && (
                 <div className={styles.avatar}>
-                    <Avatar
-                        content={requiredProps.icon}
-                        theme={requiredProps.selected ? 'selectedNoBg' : 'unselected'}
-                        variant={'circular'}
-                        disabled={requiredProps.disabled}
-                    />
+                    <Icon className={avatarIconClassName} icon={icon} height={'20px'} />
                 </div>
-            ) : null} */}
-            {!requiredProps.miniTile ? (
-                <div className={styles.avatar}>
-                    <Icon icon={requiredProps.icon} height="20px" />
-                </div>
-            ) : null}
-            <h6 className={titleClassName}>{requiredProps.title}</h6>
-            {!requiredProps.miniTile && requiredProps.showTailIcon ? (
+            )}
+            <h6 className={titleClassName}>{title}</h6>
+            {!miniTile && showTailIcon ? (
                 <div className={trailingIconClassName}>
                     <MdKeyboardArrowRight />
                 </div>

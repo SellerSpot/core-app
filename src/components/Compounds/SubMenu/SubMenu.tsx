@@ -7,7 +7,7 @@ import SubMenuTile from '../SubMenuTile/SubMenuTile';
 import styles from './SubMenu.module.scss';
 import { ISubMenuProps, TSubMenuStore } from './SubMenu.types';
 
-// store to hold data regardi ng visibility of tiles
+// store to hold data regarding visibility of tiles
 const useTilesStore = create<TSubMenuStore>(
     (set: SetState<TSubMenuStore>, get: GetState<TSubMenuStore>) => ({
         tiles: [],
