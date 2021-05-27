@@ -11,38 +11,51 @@
     user-select: none;
 
     @include flex(center, space-between);
-}
 
-.wrapper:hover {
-    background-color: $backgroundTertiary-color;
-}
+    &:hover {
+        background-color: $backgroundTertiary-color;
+    }
 
-.wrapperMini {
-    width: 160px;
-}
+    &.wrapperMini {
+        width: 160px;
+    }
 
-.wrapperDisabled {
-    color: $foregroundTertiary-color;
-    cursor: default;
-}
+    &.wrapperDisabled {
+        color: $foregroundTertiary-color;
+        cursor: default;
 
-.wrapperDisabled:hover {
-    background-color: transparent;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    &.wrapperSelected {
+        background-color: $primaryLight-color;
+
+        &:hover {
+            background-color: $primaryLight-color;
+        }
+    }
 }
 
 .avatar {
-    width: 20px;
+    width: 35px;
     height: 100%;
     flex-grow: 0;
-    color: $foregroundPrimary-color;
-}
 
-.wrapperSelected {
-    background-color: $primaryLight-color;
-}
+    @include flex(center, center);
 
-.wrapperSelected:hover {
-    background-color: $primaryLight-color;
+    .avatarIcon {
+        color: $foregroundPrimary-color;
+
+        &.avatarIconSelected {
+            color: $primary-color;
+        }
+
+        &.avatarIconDisabled {
+            color: $foregroundTertiary-color;
+        }
+    }
 }
 
 .title {

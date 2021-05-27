@@ -5,33 +5,34 @@
     background-color: $backgroundSecondary-color;
 
     @include flex(flex-start, space-between, column);
-}
 
-.upperTiles {
-    @include flex(flex-end, flex-start, column, 20px);
-}
+    .upperTiles {
+        @include flex(flex-end, flex-start, column, 20px);
 
-.tileGroup {
-    @include flex(flex-end, flex-start, column);
-}
+        .tileGroup {
+            @include flex(flex-end, flex-start, column);
 
-.childTiles {
-    height: 0;
-    opacity: 0;
-    transform: scale(0);
-    transform-origin: center;
-}
+            .childTiles {
+                height: 0;
+                opacity: 0;
+                transform: scale(0);
+                transform-origin: center;
+            }
 
-.childTileShow {
-    height: 40px;
-    margin-top: 5px;
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 0.2s ease, height 0.2s ease, transform 0.2s ease;
-}
+            .childTileShow {
+                height: 40px;
+                margin-top: 5px;
+                opacity: 1;
+                transform: scale(1);
+                transition: opacity 0.2s ease, height 0.2s ease, transform 0.2s ease;
+            }
 
-.childTileHide {
-    margin-top: 0;
-    opacity: 0;
-    transition: opacity 0.1s ease, height 0.2s ease, transform 0.2s ease, margin-top 0.2s ease;
+            .childTileHide {
+                margin-top: 0;
+                opacity: 0;
+                transition: opacity 0.1s ease, height 0.2s ease, transform 0.2s ease,
+                    margin-top 0.2s ease;
+            }
+        }
+    }
 }
