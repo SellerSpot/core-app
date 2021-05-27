@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
 import { TReactChildren } from 'typings/common.types';
+import 'react-sortable-tree/style.css';
 import '../../../../styles/core.scss';
 
 export interface IThemeProviderProps {
