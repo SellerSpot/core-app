@@ -1,3 +1,7 @@
-import AuthRequest from './AuthRequest';
+import * as authRequest from './AuthRequest';
+import * as catalogue from './Catalogue';
 
-export const authRequest = new AuthRequest();
+export const requests = {
+    ...authRequest,
+    catalogue: { ...catalogue },
+};

@@ -1,14 +1,14 @@
 import { showNotify } from '@sellerspot/universal-components';
 import { IUserDetails } from '@sellerspot/universal-types';
 import { CONFIG } from 'config/config';
-import { authRequest } from 'requests/requests';
+import { requests } from 'requests/requests';
 import { store } from 'store/store';
 import { introduceDelay, redirectTo } from 'utilities/general';
 import TenantProviderService from '../TenantProvider/TenantProvider.service';
 
 export default class AuthProviderService {
     static async getUserDetails(): Promise<IUserDetails | false> {
-        const { status, data } = await authRequest.getUserDetails();
+        const { status, data } = await requests.authRequest.getUserDetails();
         if (status && data?.user) {
             // return store details
             return data.user;
