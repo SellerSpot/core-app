@@ -13,7 +13,7 @@ export const ROUTES = {
         INVENTORY: {
             PRODUCTS: '/pos/inventory/products',
         },
-        BILLSETTINGS: '/pos/billsettings',
+        BILL_SETTINGS: '/pos/billsettings',
     },
     CATALOGUE: {
         DEFAULT: '/catalogue',

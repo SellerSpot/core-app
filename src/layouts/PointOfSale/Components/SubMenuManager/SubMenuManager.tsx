@@ -36,7 +36,7 @@ export const SubMenuManager = (): ReactElement => {
         {
             icon: <Icon icon={ICONS.bxReceipt} />,
             title: 'Bill Settings',
-            routesToWatch: [ROUTES.POS.BILLSETTINGS],
+            routesToWatch: [ROUTES.POS.BILL_SETTINGS],
         },
     ];
 
