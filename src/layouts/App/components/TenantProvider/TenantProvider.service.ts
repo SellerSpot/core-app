@@ -1,12 +1,12 @@
 import { showNotify } from '@sellerspot/universal-components';
 import { IStoreDetails } from '@sellerspot/universal-types';
 import { CONFIG } from 'config/config';
-import { authRequest } from 'requests/requests';
+import { requests } from 'requests/requests';
 import { introduceDelay, redirectTo } from 'utilities/general';
 
 export default class TenantProviderService {
     static async getTenantDetails(): Promise<IStoreDetails | false> {
-        const { status, data } = await authRequest.getTenantDetails();
+        const { status, data } = await requests.authRequest.getTenantDetails();
         if (status && data?.store) {
             // return store details
             return data.store;

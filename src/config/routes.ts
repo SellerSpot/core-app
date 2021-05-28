@@ -17,6 +17,12 @@ export const ROUTES = {
     },
     CATALOGUE: {
         DEFAULT: '/catalogue',
+        PRODUCTS: '/catalogue/products',
+        BRANDS: '/catalogue/brands',
+        CATEGORIES: '/catalogue/categories',
+        STOCKUNITS: '/catalogue/stockunits',
+        TAXBRACKETS: '/catalogue/taxbrackets',
+        SETTINGS: '/catalogue/taxbrackets',
     },
     ECOM: {
         DEFAULT: '/ecom',

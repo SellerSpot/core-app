@@ -10,4 +10,5 @@ interface ITableItem {
 
 export interface IStandardDataViewTableProps {
     tableItems: ITableItem[];
+    isLoading?: boolean;
 }

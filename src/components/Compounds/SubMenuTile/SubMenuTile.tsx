@@ -59,7 +59,7 @@ export default function SubMenuTile(props: ISubMenuTileProps): ReactElement {
         >
             {!miniTile && (
                 <div className={styles.avatar}>
-                    <Icon className={avatarIconClassName} icon={icon} height={'20px'} />
+                    <Icon className={avatarIconClassName} icon={icon} height={'22px'} />
                 </div>
             )}
             <h6 className={titleClassName}>{title}</h6>

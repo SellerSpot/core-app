@@ -7,7 +7,7 @@ import {
 
 import BaseRequest from './BaseRequest';
 
-export default class AuthRequest extends BaseRequest {
+class AuthRequest extends BaseRequest {
     constructor() {
         super(ROUTES.SERVICE.AUTH);
     }
@@ -32,3 +32,5 @@ export default class AuthRequest extends BaseRequest {
         });
     }
 }
+
+export const authRequest = new AuthRequest();

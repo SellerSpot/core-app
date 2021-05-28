@@ -1,5 +1,6 @@
 import { SubMenu } from 'components/Compounds/SubMenu/SubMenu';
 import { ISubMenuProps } from 'components/Compounds/SubMenu/SubMenu.types';
+import { ROUTES } from 'config/routes';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/icons/icons';
 
@@ -8,32 +9,38 @@ export const SubMenuManager = (): ReactElement => {
         {
             icon: ICONS.productIcon,
             title: 'Products',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.PRODUCTS,
         },
         {
             icon: ICONS.alphaBCircleOutline,
             title: 'Brands',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.BRANDS,
         },
         {
             icon: ICONS.bxCategoryAlt,
             title: 'Categories',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.CATEGORIES,
         },
         {
             icon: ICONS.alphaUBoxOutline,
             title: 'Stock Units',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.STOCKUNITS,
         },
         {
             icon: ICONS.percentOutline,
             title: 'Tax Brackets',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.TAXBRACKETS,
         },
         {
             icon: ICONS.cog,
             title: 'Settings',
-            routesToWatch: [''],
+            selected: false,
+            redirectRoute: ROUTES.CATALOGUE.SETTINGS,
         },
     ];
 

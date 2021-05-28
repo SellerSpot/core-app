@@ -14,9 +14,9 @@ export interface WorkSpaceTiles {
      */
     redirectRoute: string;
     /**
-     * Routes which indicate that the current tile should be selected
+     * If the current tile should be selected or not
      */
-    routesToWatch: string[];
+    selected: boolean;
 }
 
 export type IUseWorkSpaceMenuStore = {
