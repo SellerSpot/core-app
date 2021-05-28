@@ -37,9 +37,8 @@ const ChildTile = (props: {
     return (
         <>
             {childTiles?.map((childTile, childTileIndex) => {
-                const { disabled, redirectRoute, routesToWatch, title } = childTile;
-                // checking if the tile is selected
-                const isChildTileSelected = routesToWatch?.includes(location.pathname);
+                const { disabled, redirectRoute, selected, title } = childTile;
+
                 const childTileOnClickHander = () => {
                     history.push(redirectRoute);
                 };
@@ -54,7 +53,7 @@ const ChildTile = (props: {
                         <SubMenuTile
                             title={title}
                             disabled={disabled}
-                            selected={isChildTileSelected}
+                            selected={selected}
                             events={{
                                 onClick: childTileOnClickHander,
                             }}
@@ -74,10 +73,8 @@ const Tile = (props: {
 }) => {
     const { tile, tileIndex, updateChildTilesVisible } = props;
     const history = useHistory();
-    const { disabled, icon, redirectRoute, routesToWatch, title, childTiles, childTilesVisible } =
-        tile;
-    // checking if the tile is selected
-    const isTileSelected = routesToWatch?.includes(location.pathname);
+    const { disabled, icon, redirectRoute, selected, title, childTiles, childTilesVisible } = tile;
+
     const tileOnClickHander = () => {
         // checking if children exists for this tile
         if (childTiles?.length > 0) {
@@ -92,7 +89,7 @@ const Tile = (props: {
                 childTilesVisible={childTilesVisible ?? false}
                 title={title}
                 disabled={disabled}
-                selected={isTileSelected}
+                selected={selected}
                 miniTile={false}
                 icon={icon}
                 showTailIcon={childTiles?.length > 0}

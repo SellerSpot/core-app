@@ -7,16 +7,14 @@ import { ModifyCategoriesService } from './ModifyCategories.service';
 export class EditCategorySliderService {
     // posts category to the server and returns the new category id
     static createNewCategory = async (props: { category: TreeItem }): Promise<string> => {
-        const { category } = props;
-        console.log(category);
+        const {} = props;
         await introduceDelay(3000);
         return Math.random().toString(36).substr(2, 5);
     };
 
     // posts edited category to the server and returns boolean
     static updateCategory = async (props: { category: TreeItem }): Promise<boolean> => {
-        const { category } = props;
-        console.log(category);
+        const {} = props;
         await introduceDelay(3000);
         return true;
     };

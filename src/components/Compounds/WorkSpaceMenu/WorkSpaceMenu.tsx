@@ -2,6 +2,7 @@ import Icon, { IconifyIcon } from '@iconify/react';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
@@ -49,10 +50,15 @@ export const getWorkSpaceMenuTileIcon = (iconInstance: IconifyIcon['icon']): Rea
 const WorkSpaceTiles = () => {
     const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
     const tiles = WorkSpaceMenuService.getWorkSpaceTiles();
+    const history = useHistory();
+
     return (
         <div className={styles.workSpaceTilesWrapper}>
             {tiles.map((tile, tileIndex) => {
-                const { icon, title } = tile;
+                const { icon, title, redirectRoute } = tile;
+                const handleTileClick = () => {
+                    history.push(redirectRoute);
+                };
                 return (
                     <Fragment key={tileIndex}>
                         <WorkSpaceTile
@@ -60,6 +66,9 @@ const WorkSpaceTiles = () => {
                             toolTipText={title}
                             workspaceTitle={title}
                             expanded={expandMenu}
+                            events={{
+                                onClick: handleTileClick,
+                            }}
                         />
                     </Fragment>
                 );

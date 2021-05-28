@@ -1,5 +1,4 @@
-import { ICONS } from 'utilities/icons/icons';
-import React, { ReactElement } from 'react';
+import Icon from '@iconify/react';
 import {
     IconButton,
     ITableCell,
@@ -8,10 +7,11 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { IStandardDataViewTableProps } from './StandardDataViewTable.types';
-import { StandardDataViewTableService } from './StandardDataViewTable.service';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import { ICONS } from 'utilities/icons/icons';
 import styles from './StandardDataViewTable.module.scss';
-import Icon from '@iconify/react';
+import { StandardDataViewTableService } from './StandardDataViewTable.service';
+import { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 
 export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 
@@ -49,7 +49,7 @@ const getCells = (props: {
         {
             content: <span className={styles.textContent}>{name}</span>,
             align: 'left',
-            width: '30%',
+            width: '26%',
         },
         {
             content: <span className={styles.textContent}>{description}</span>,
@@ -85,16 +85,37 @@ const getTableBody = (props: {
 };
 
 export const StandardDataViewTable = (props: IStandardDataViewTableProps): ReactElement => {
-    const { tableItems } = props;
+    const { tableItems, isLoading } = props;
+    const [containerHeight, setContainerHeight] = useState(500);
+    const tableContainerRef = useRef<HTMLDivElement>(null);
 
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
+    useEffect(() => {
+        if (!!tableContainerRef) {
+            setContainerHeight(tableContainerRef.current.clientHeight);
+        }
+    }, [tableContainerRef]);
+
+    const tableDataBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
         return getTableBody({
             tableItems,
             toggleRowExpansion,
         });
     };
 
+    const tableSkeletonBody: ITableProps['body'] = () => {
+        return StandardDataViewTableService.getTableSkeletonBody(containerHeight);
+    };
+
+    const tableBody = isLoading ? tableSkeletonBody : tableDataBody;
+
     return (
-        <Table stickyHeader headers={StandardDataViewTableService.tableHeaders} body={tableBody} />
+        <div ref={tableContainerRef} className={styles.tableWrapper}>
+            <Table
+                height={containerHeight}
+                stickyHeader
+                headers={StandardDataViewTableService.tableHeaders}
+                body={tableBody}
+            />
+        </div>
     );
 };

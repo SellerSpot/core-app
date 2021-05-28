@@ -22,13 +22,13 @@ interface ITile {
      */
     redirectRoute?: string;
     /**
-     * Routes to watch for which means that this specific tile has been selected
+     * If the current tile is to be selected
      */
-    routesToWatch: string[];
+    selected: boolean;
     /**
      * Tile definitions for the children tiles (if present)
      */
-    childTiles?: Pick<ITile, 'title' | 'disabled' | 'routesToWatch' | 'redirectRoute'>[];
+    childTiles?: Pick<ITile, 'title' | 'disabled' | 'selected' | 'redirectRoute'>[];
 }
 
 export interface ISubMenuProps {

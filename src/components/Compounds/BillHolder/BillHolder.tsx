@@ -65,7 +65,6 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
 
     // used to get the height of bill
     useEffect(() => {
-        console.log(billReference.current.clientHeight);
         setBillMeasurements({
             billHeight: billReference.current?.clientHeight,
             billWidth: billReference.current?.clientWidth,
