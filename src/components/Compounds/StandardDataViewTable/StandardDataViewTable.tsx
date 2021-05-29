@@ -18,8 +18,9 @@ export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 // assembles the cell data for the table
 const getCells = (props: {
     tableItem: IStandardDataViewTableProps['tableItems'][0];
+    tableItemIndex: number;
 }): ITableCell[] => {
-    const { tableItem } = props;
+    const { tableItem, tableItemIndex } = props;
     const { deleteItemCallback, description, editItemCallback, name, noOfProducts } = tableItem;
     const rowActions = (
         <div className={styles.rowActions}>
@@ -45,26 +46,27 @@ const getCells = (props: {
             </ToolTip>
         </div>
     );
+    const sNoText = `${tableItemIndex + 1}.`;
     return [
+        {
+            content: <span className={styles.textContent}>{sNoText}</span>,
+            align: 'right',
+        },
         {
             content: <span className={styles.textContent}>{name}</span>,
             align: 'left',
-            width: '26%',
         },
         {
             content: <span className={styles.textContent}>{description}</span>,
             align: 'left',
-            width: '50%',
         },
         {
             content: noOfProducts,
             align: 'right',
-            width: '10%',
         },
         {
             content: rowActions,
             align: 'left',
-            width: '10%',
         },
     ];
 };
@@ -75,10 +77,11 @@ const getTableBody = (props: {
     toggleRowExpansion: (rowIndex: number) => void;
 }): ITableRow[] => {
     const { tableItems } = props;
-    return tableItems.map((tableItem): ITableRow => {
+    return tableItems.map((tableItem, tableItemIndex): ITableRow => {
         return {
             cells: getCells({
                 tableItem,
+                tableItemIndex,
             }),
         };
     });

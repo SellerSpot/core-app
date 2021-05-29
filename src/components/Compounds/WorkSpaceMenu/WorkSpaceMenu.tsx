@@ -1,16 +1,16 @@
-import Icon, { IconifyIcon } from '@iconify/react';
+import Icon from '@iconify/react';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { routeSelector } from 'store/models/route';
+import { workSpaceSelector } from 'store/models/workspaces';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
 import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
-import { WorkSpaceMenuService } from './WorkSpaceMenu.service';
 import { IUseWorkSpaceMenuStore } from './WorkSpaceMenu.types';
 
 const useWorkSpaceMenuStore = create<IUseWorkSpaceMenuStore>((set) => ({
@@ -45,14 +45,10 @@ const ExpandMenuIcon = () => {
     );
 };
 
-export const getWorkSpaceMenuTileIcon = (iconInstance: IconifyIcon['icon']): ReactElement => {
-    return <Icon icon={iconInstance} height={'24px'} />;
-};
-
 const WorkSpaceTiles = () => {
     const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
     const { routeKeys } = useSelector(routeSelector);
-    const tiles = WorkSpaceMenuService.getWorkSpaceTiles();
+    const tiles = useSelector(workSpaceSelector)['workspaces'];
     const history = useHistory();
 
     return (
@@ -65,7 +61,7 @@ const WorkSpaceTiles = () => {
                 return (
                     <Fragment key={tileIndex}>
                         <WorkSpaceTile
-                            workspaceIcon={icon}
+                            workspaceIcon={<Icon icon={icon} height={'24px'} />}
                             toolTipText={title}
                             workspaceTitle={title}
                             expanded={expandMenu}
@@ -85,9 +81,9 @@ export const WorkSpaceMenu = (): ReactElement => {
     const { setExpandMenu, setHoverMenu, expandMenu } = useWorkSpaceMenuStore();
     const workSpaceMenuRef = useRef(null);
 
-    const wrapperClassName = cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu });
     const handleOnMouseEnter = () => setHoverMenu(true);
     const handleOnMouseLeave = () => setHoverMenu(false);
+    const wrapperClassName = cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu });
 
     // handler for document onClickListener
     const onClickListener = useCallback(
