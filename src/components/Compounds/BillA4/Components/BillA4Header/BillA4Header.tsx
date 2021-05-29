@@ -2,12 +2,13 @@ import React, { ReactElement } from 'react';
 import styles from './BillA4Header.module.scss';
 import dummyLogo from '../../logo.png';
 import { BillA4HeaderInvoice } from './Components/BillA4HeaderInvoice';
+import { Image } from '@sellerspot/universal-components';
 
 export const BillA4Header = (): ReactElement => {
     return (
         <div className={styles.billHeader}>
             <div className={styles.storeDetailsWrapper}>
-                <img className={styles.storeLogo} src={dummyLogo} alt={'Logo'} />
+                <Image className={styles.storeLogo} src={dummyLogo} />
                 <div className={styles.storeDetails}>
                     <div className={styles.storeName}>Store Name</div>
                     <div className={styles.storeAddress}>
