@@ -4,9 +4,9 @@
     padding: 0 5px;
     padding-left: 8px;
     background-color: transparent;
-    border-radius: $border-radius-cirular;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all $animation-duration-short ease;
+    transition: all 0.2s ease;
     transition-property: color, background-color, width;
     user-select: none;
 
@@ -83,7 +83,7 @@
     color: $foregroundPrimary-color;
     transform-origin: center;
 
-    transition: all $animation-duration-short ease;
+    transition: all 0.2s ease;
     transition-property: transform, color;
 
     @include flex(center, center);

@@ -1,16 +1,12 @@
 import Icon from '@iconify/react';
 import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
-import cn from 'classnames';
 import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons/icons';
-import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
 import styles from './AppBar.module.scss';
-import { IAppBarProps } from './AppBar.types';
-
-export { IAppBarProps } from './AppBar.types';
+import { AppBarHeader } from './Components/AppBarHeader/AppBarHeader';
 
 const getAvatarMenuItems = (): IMenuProps['items'] => {
     return [
@@ -33,48 +29,34 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
     ];
 };
 
-export const AppBar = (props: IAppBarProps): ReactElement => {
-    const { currentPlugin, noSubMenu } = props;
+export const AppBar = (): ReactElement => {
     const themeState = useSelector(themeSelector);
-
-    const PluginMenuTileClassName = cn(styles.pluginMenuTileWrapper, {
-        [styles.pluginMenuTileWrapperNoSubMenu]: noSubMenu,
-    });
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <div className={PluginMenuTileClassName}>
-                    <div className={styles.pluginMenuTile}>
-                        <PluginMenuTile
-                            size={'small'}
-                            pluginIcon={<Icon icon={currentPlugin.icon} height={'24px'} />}
-                            pluginTitle={currentPlugin.title}
-                            expanded
-                            variant="PluginIndicator"
-                            selected
-                        />
-                    </div>
+                <div className={styles.appBarHeaderWrapper}>
+                    <AppBarHeader />
                 </div>
             </div>
             <div className={styles.rhsGroup}>
                 <Icon
-                    icon={ICONS.outlineFullscreen}
+                    icon={ICONS.bxFullScreen}
                     height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Icon
-                    icon={ICONS.outlineNotifications}
+                    icon={ICONS.notifications}
                     height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Menu items={getAvatarMenuItems()}>
                     {({ openMenuHandler }) => (
                         <Avatar
-                            content={'N'}
+                            content={'R'}
                             variant="circular"
                             theme="selected"
-                            size="small"
+                            size="medium"
                             events={{
                                 onClick: (event) => openMenuHandler(event.currentTarget),
                             }}

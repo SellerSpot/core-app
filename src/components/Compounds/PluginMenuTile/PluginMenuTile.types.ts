@@ -18,11 +18,6 @@ export interface IPluginMenuTileProps {
      */
     selected?: boolean;
     /**
-     * Toggles between default tile mode and Plugin Indicator Mode (no background)
-     * @default 'tile'
-     */
-    variant?: 'tile' | 'PluginIndicator';
-    /**
      * Title for the tile
      * @default "Home"
      */
@@ -31,5 +26,4 @@ export interface IPluginMenuTileProps {
      * Events to be captured on the listTile
      */
     events?: IComponentEvents;
-    size?: 'large' | 'small';
 }

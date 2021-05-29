@@ -19,6 +19,6 @@ PluginMenuTile.args = {
 } as IPluginMenuTileProps;
 
 export default {
-    title: 'Design System/Compounds/Work Space Tile',
+    title: 'Design System/Compounds/Plugin Menu Tile',
     component: PluginMenuTileComponent,
 } as Meta;

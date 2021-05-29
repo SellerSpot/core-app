@@ -16,6 +16,6 @@ StoreInformationPluginMenuTile.args = {
 } as IStoreInformationPluginMenuTileProps;
 
 export default {
-    title: 'Design System/Compounds/Store Information Work Space Tile',
+    title: 'Design System/Compounds/Store Information Plugin Menu Tile',
     component: StoreInformationPluginMenuTileComponent,
 } as Meta;

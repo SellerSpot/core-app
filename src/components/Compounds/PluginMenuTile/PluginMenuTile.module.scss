@@ -1,7 +1,8 @@
 .wrapper {
     width: 40px;
     height: 40px;
-    border-radius: $border-radius;
+    border-radius: 5px;
+    color: $foregroundPrimary-color;
     cursor: pointer;
     transition-duration: 0.2s;
     transition-property: color, background-color, width;
@@ -22,35 +23,37 @@
         background-color: $primaryLight-color;
     }
 
-    &.wrapperPluginIndicator {
-        background-color: transparent;
+    .avatarWrapper {
+        min-width: 40px;
+        height: 40px;
     }
 
-    .title {
-        display: -webkit-box;
-        overflow: hidden;
-        max-width: 100%;
-        -webkit-box-orient: vertical;
-        color: $foregroundPrimary-color;
-        -webkit-line-clamp: 1;
-        text-overflow: ellipsis;
-        text-overflow: ellipsis;
-        @include animation(fade-out, 0.1s);
+    .titleWrapper {
+        height: 40px;
+        @include flex(center, center);
 
-        &.titleCollapsed {
+        .title {
+            display: -webkit-box;
+            overflow: hidden;
+            max-width: 100%;
+            -webkit-box-orient: vertical;
+            color: $foregroundPrimary-color;
+            -webkit-line-clamp: 1;
+            text-overflow: ellipsis;
+
             @include animation(fade-out, 0.1s);
-        }
 
-        &.titleExpanded {
-            @include animation(fade-in, 0.3s, $delay: 0.2s);
-        }
+            &.titleCollapsed {
+                @include animation(fade-out, 0.1s);
+            }
 
-        &.titleSelected {
-            color: $primary-color;
-        }
+            &.titleExpanded {
+                @include animation(fade-in, 0.3s, $delay: 0.2s);
+            }
 
-        &.titleLarge {
-            font-size: $h4-fontsize;
+            &.titleSelected {
+                color: $primary-color;
+            }
         }
     }
 }
