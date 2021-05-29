@@ -9,19 +9,19 @@
         height: 100%;
         @include flex(center, flex-start, $gap: 10px);
 
-        .workspaceTileWrapper {
+        .pluginMenuTileWrapper {
             width: 222px;
             height: 100%;
 
             background-color: $backgroundSecondary-color;
 
-            &.workspaceTileWrapperNoSubMenu {
+            &.pluginMenuTileWrapperNoSubMenu {
                 background-color: $backgroundTertiary-color;
             }
 
             @include flex(center, flex-start);
 
-            &.workspaceTileWrapper .workspaceTile {
+            &.pluginMenuTileWrapper .pluginMenuTile {
                 margin-top: 2px;
                 margin-left: 18px;
                 transition: opacity 0.2s ease;

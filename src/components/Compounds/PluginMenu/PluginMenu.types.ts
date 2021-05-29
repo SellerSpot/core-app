@@ -1,17 +1,17 @@
 import { IconifyIcon } from '@iconify/react';
 import { TRouteKeys } from 'config/routes';
 
-export interface IWorkSpace {
+export interface IPlugin {
     /**
-     * Title for the WorkSpaceTile
+     * Title for the PluginTile
      */
     title: string;
     /**
-     * Icon for the WorkSpaceTile
+     * Icon for the PluginTile
      */
     icon: IconifyIcon['icon'];
     /**
-     * Redirect route for the WorkSpaceTile
+     * Redirect route for the PluginTile
      */
     redirectRoute: string;
     /**
@@ -20,9 +20,9 @@ export interface IWorkSpace {
     routeKey: TRouteKeys;
 }
 
-export type TWorkSpaces = { [k in TRouteKeys]: IWorkSpace };
+export type TPlugins = { [k in TRouteKeys]: IPlugin };
 
-export type IUseWorkSpaceMenuStore = {
+export type IUsePluginMenuStore = {
     hoverMenu: boolean;
     expandMenu: boolean;
     setHoverMenu: (value: boolean) => void;

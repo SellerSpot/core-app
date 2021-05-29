@@ -9,9 +9,9 @@
 
 // export const AppBar = Template.bind({});
 // AppBar.args = {
-//     currentWorkspace: {
-//         workspaceIcon: <Icon icon={ICONS.settingsIcon} />,
-//         workspaceTitle: 'Management',
+//     currentPlugin: {
+//         PluginIcon: <Icon icon={ICONS.settingsIcon} />,
+//         PluginTitle: 'Management',
 //     },
 // } as IAppBarProps;
 

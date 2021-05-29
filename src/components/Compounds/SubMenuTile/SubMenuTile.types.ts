@@ -9,7 +9,7 @@ export interface ISubMenuTileProps {
     selected?: boolean;
     /**
      * Leading content for tile
-     * @default HomeWorkspaceIcon
+     * @default HomePluginIcon
      */
     icon?: IconifyIcon['icon'];
     /**

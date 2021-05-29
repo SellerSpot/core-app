@@ -1,9 +1,9 @@
 import { ROUTES } from 'config/routes';
 import { ICONS } from 'utilities/utilities';
-import { TWorkSpaces } from './WorkSpaceMenu.types';
+import { TPlugins } from './PluginMenu.types';
 
-export class WorkSpaceMenuService {
-    static getWorkSpaces = (): Partial<TWorkSpaces> => {
+export class PluginMenuService {
+    static getPlugins = (): Partial<TPlugins> => {
         return {
             HOME: {
                 icon: ICONS.homeVariant,

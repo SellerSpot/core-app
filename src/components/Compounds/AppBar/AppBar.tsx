@@ -6,7 +6,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { themeSelector } from 'store/models/theme';
 import { ICONS } from 'utilities/icons/icons';
-import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
+import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
 import styles from './AppBar.module.scss';
 import { IAppBarProps } from './AppBar.types';
 
@@ -34,24 +34,24 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
 };
 
 export const AppBar = (props: IAppBarProps): ReactElement => {
-    const { currentWorkspace, noSubMenu } = props;
+    const { currentPlugin, noSubMenu } = props;
     const themeState = useSelector(themeSelector);
 
-    const workSpaceTileClassName = cn(styles.workspaceTileWrapper, {
-        [styles.workspaceTileWrapperNoSubMenu]: noSubMenu,
+    const PluginMenuTileClassName = cn(styles.pluginMenuTileWrapper, {
+        [styles.pluginMenuTileWrapperNoSubMenu]: noSubMenu,
     });
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <div className={workSpaceTileClassName}>
-                    <div className={styles.workspaceTile}>
-                        <WorkSpaceTile
+                <div className={PluginMenuTileClassName}>
+                    <div className={styles.pluginMenuTile}>
+                        <PluginMenuTile
                             size={'small'}
-                            workspaceIcon={<Icon icon={currentWorkspace.icon} height={'24px'} />}
-                            workspaceTitle={currentWorkspace.title}
+                            pluginIcon={<Icon icon={currentPlugin.icon} height={'24px'} />}
+                            pluginTitle={currentPlugin.title}
                             expanded
-                            variant="workspaceIndicator"
+                            variant="PluginIndicator"
                             selected
                         />
                     </div>

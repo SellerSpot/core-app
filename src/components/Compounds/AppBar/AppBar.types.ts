@@ -1,6 +1,6 @@
-import { IWorkSpace } from '../WorkSpaceMenu/WorkSpaceMenu.types';
+import { IPlugin } from '../PluginMenu/PluginMenu.types';
 
 export interface IAppBarProps {
     noSubMenu: boolean;
-    currentWorkspace: IWorkSpace;
+    currentPlugin: IPlugin;
 }

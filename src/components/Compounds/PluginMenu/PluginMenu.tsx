@@ -1,5 +1,5 @@
 import Icon from '@iconify/react';
-import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
+import { ExpandPluginMenuButton } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,13 +7,13 @@ import { useHistory } from 'react-router';
 import { routeSelector } from 'store/models/route';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
-import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
-import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
-import styles from './WorkSpaceMenu.module.scss';
-import { WorkSpaceMenuService } from './WorkSpaceMenu.service';
-import { IUseWorkSpaceMenuStore } from './WorkSpaceMenu.types';
+import { StoreInformationPluginMenuTile } from '../StoreInformationPluginMenuTile/StoreInformationPluginMenuTile';
+import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
+import styles from './PluginMenu.module.scss';
+import { PluginMenuService } from './PluginMenu.service';
+import { IUsePluginMenuStore } from './PluginMenu.types';
 
-const useWorkSpaceMenuStore = create<IUseWorkSpaceMenuStore>((set) => ({
+const usePluginMenuStore = create<IUsePluginMenuStore>((set) => ({
     expandMenu: false,
     hoverMenu: false,
     setExpandMenu: (value) => {
@@ -25,7 +25,7 @@ const useWorkSpaceMenuStore = create<IUseWorkSpaceMenuStore>((set) => ({
 }));
 
 const ExpandMenuIcon = () => {
-    const { expandMenu, hoverMenu, setExpandMenu } = useWorkSpaceMenuStore();
+    const { expandMenu, hoverMenu, setExpandMenu } = usePluginMenuStore();
     const className = cn(
         styles.expandIcon,
         { [animationStyles.fadeIn]: hoverMenu && !expandMenu },
@@ -36,7 +36,7 @@ const ExpandMenuIcon = () => {
 
     return (
         <div className={className}>
-            <ExpandWorkspaceMenuButton
+            <ExpandPluginMenuButton
                 onClick={() => {
                     setExpandMenu(!expandMenu);
                 }}
@@ -45,14 +45,14 @@ const ExpandMenuIcon = () => {
     );
 };
 
-const WorkSpaceTiles = () => {
-    const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
+const PluginMenuTiles = () => {
+    const expandMenu = usePluginMenuStore((state) => state.expandMenu);
     const { routeKeys } = useSelector(routeSelector);
-    const tiles = WorkSpaceMenuService.getWorkSpaces();
+    const tiles = PluginMenuService.getPlugins();
     const history = useHistory();
 
     return (
-        <div className={styles.workSpaceTilesWrapper}>
+        <div className={styles.pluginMenuTilesWrapper}>
             {Object.values(tiles).map((tile, tileIndex) => {
                 const { icon, title, redirectRoute, routeKey } = tile;
                 const handleTileClick = () => {
@@ -60,10 +60,10 @@ const WorkSpaceTiles = () => {
                 };
                 return (
                     <Fragment key={tileIndex}>
-                        <WorkSpaceTile
-                            workspaceIcon={<Icon icon={icon} height={'24px'} />}
+                        <PluginMenuTile
+                            pluginIcon={<Icon icon={icon} height={'24px'} />}
                             toolTipText={title}
-                            workspaceTitle={title}
+                            pluginTitle={title}
                             expanded={expandMenu}
                             selected={routeKeys.includes(routeKey)}
                             events={{
@@ -77,9 +77,9 @@ const WorkSpaceTiles = () => {
     );
 };
 
-export const WorkSpaceMenu = (): ReactElement => {
-    const { setExpandMenu, setHoverMenu, expandMenu } = useWorkSpaceMenuStore();
-    const workSpaceMenuRef = useRef(null);
+export const PluginMenu = (): ReactElement => {
+    const { setExpandMenu, setHoverMenu, expandMenu } = usePluginMenuStore();
+    const PluginMenuRef = useRef(null);
 
     const handleOnMouseEnter = () => setHoverMenu(true);
     const handleOnMouseLeave = () => setHoverMenu(false);
@@ -88,11 +88,11 @@ export const WorkSpaceMenu = (): ReactElement => {
     // handler for document onClickListener
     const onClickListener = useCallback(
         (e: MouseEvent) => {
-            if (!workSpaceMenuRef.current.contains(e.target)) {
+            if (!PluginMenuRef.current.contains(e.target)) {
                 setExpandMenu(false);
             }
         },
-        [workSpaceMenuRef],
+        [PluginMenuRef],
     );
 
     // attaching click listener to close the menu when clicked outside
@@ -103,17 +103,17 @@ export const WorkSpaceMenu = (): ReactElement => {
 
     return (
         <div
-            ref={workSpaceMenuRef}
+            ref={PluginMenuRef}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
             className={wrapperClassName}
         >
             <ExpandMenuIcon />
-            <StoreInformationWorkSpaceTile
+            <StoreInformationPluginMenuTile
                 expanded={expandMenu}
                 storeName={'Sreenithi Margin Free Store'}
             />
-            <WorkSpaceTiles />
+            <PluginMenuTiles />
         </div>
     );
 };
