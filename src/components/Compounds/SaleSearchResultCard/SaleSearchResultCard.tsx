@@ -1,3 +1,4 @@
+import { Image } from '@sellerspot/universal-components';
 import { isUndefined } from 'lodash';
 import React, { ReactElement } from 'react';
 import { numberFormatINRCurrency } from 'utilities/general';
@@ -8,7 +9,7 @@ export default function SaleSearchResultCard(props: ISaleSearchResultCard): Reac
     return (
         <div className={styles.cardWrapper} onClick={props.onClick}>
             <div className={styles.productMeta}>
-                {isUndefined(props.productImage) ? null : <img src={props.productImage} />}
+                {!isUndefined(props.productImage) && <Image src={props.productImage} />}
                 <h5 className={styles.title}>{props.productName}</h5>
             </div>
             <div className={styles.productPrice}>
