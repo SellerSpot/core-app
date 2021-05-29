@@ -1,5 +1,5 @@
 import Icon from '@iconify/react';
-import { ExpandPluginMenuButton } from '@sellerspot/universal-components';
+import { ExpandPluginMenuButton, Trademark } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
@@ -77,6 +77,19 @@ const PluginMenuTiles = () => {
     );
 };
 
+const SellerSpotFooterBanner = () => {
+    const expandMenu = usePluginMenuStore((state) => state.expandMenu);
+    const bannerWrapperClassName = cn(styles.bannerWrapper, {
+        [styles.bannerWrapperExpanded]: expandMenu,
+        [styles.bannerWrapperCollapsed]: !expandMenu,
+    });
+    return (
+        <div className={bannerWrapperClassName}>
+            <Trademark />
+        </div>
+    );
+};
+
 export const PluginMenu = (): ReactElement => {
     const { setExpandMenu, setHoverMenu, expandMenu } = usePluginMenuStore();
     const PluginMenuRef = useRef(null);
@@ -114,6 +127,7 @@ export const PluginMenu = (): ReactElement => {
                 storeName={'Sreenithi Margin Free Store'}
             />
             <PluginMenuTiles />
+            <SellerSpotFooterBanner />
         </div>
     );
 };
