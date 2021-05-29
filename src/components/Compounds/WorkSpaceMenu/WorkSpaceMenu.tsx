@@ -5,12 +5,12 @@ import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'r
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { routeSelector } from 'store/models/route';
-import { workSpaceSelector } from 'store/models/workspaces';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
 import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import styles from './WorkSpaceMenu.module.scss';
+import { WorkSpaceMenuService } from './WorkSpaceMenu.service';
 import { IUseWorkSpaceMenuStore } from './WorkSpaceMenu.types';
 
 const useWorkSpaceMenuStore = create<IUseWorkSpaceMenuStore>((set) => ({
@@ -48,12 +48,12 @@ const ExpandMenuIcon = () => {
 const WorkSpaceTiles = () => {
     const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
     const { routeKeys } = useSelector(routeSelector);
-    const tiles = useSelector(workSpaceSelector)['workspaces'];
+    const tiles = WorkSpaceMenuService.getWorkSpaces();
     const history = useHistory();
 
     return (
         <div className={styles.workSpaceTilesWrapper}>
-            {tiles.map((tile, tileIndex) => {
+            {Object.values(tiles).map((tile, tileIndex) => {
                 const { icon, title, redirectRoute, routeKey } = tile;
                 const handleTileClick = () => {
                     history.push(redirectRoute);

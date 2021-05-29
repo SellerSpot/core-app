@@ -1,14 +1,14 @@
-import { ICONS } from 'utilities/icons/icons';
-import { themeSelector } from 'store/models/theme';
-import { useSelector } from 'react-redux';
-import React, { ReactElement } from 'react';
-import { colorThemes } from 'config/themes';
-import { Avatar, BreadCrumbs, Menu, IMenuProps } from '@sellerspot/universal-components';
-import { IAppBarProps } from './AppBar.types';
-import styles from './AppBar.module.scss';
-import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import Icon from '@iconify/react';
+import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
 import cn from 'classnames';
+import { colorThemes } from 'config/themes';
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
+import { ICONS } from 'utilities/icons/icons';
+import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
+import styles from './AppBar.module.scss';
+import { IAppBarProps } from './AppBar.types';
 
 export { IAppBarProps } from './AppBar.types';
 
@@ -34,14 +34,12 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
 };
 
 export const AppBar = (props: IAppBarProps): ReactElement => {
-    const { breadcrumbs, currentWorkspace, noSubMenu } = props;
+    const { currentWorkspace, noSubMenu } = props;
     const themeState = useSelector(themeSelector);
 
     const workSpaceTileClassName = cn(styles.workspaceTileWrapper, {
         [styles.workspaceTileWrapperNoSubMenu]: noSubMenu,
     });
-
-    console.log(workSpaceTileClassName);
 
     return (
         <div className={styles.wrapper}>
@@ -57,9 +55,6 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
                             selected
                         />
                     </div>
-                </div>
-                <div className={styles.breadcrumbsWrapper}>
-                    <BreadCrumbs crumbs={breadcrumbs} />
                 </div>
             </div>
             <div className={styles.rhsGroup}>

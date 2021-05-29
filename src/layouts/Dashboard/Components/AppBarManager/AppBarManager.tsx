@@ -1,27 +1,20 @@
-import { AppBar, IAppBarProps } from 'components/Compounds/AppBar/AppBar';
+import { AppBar } from 'components/Compounds/AppBar/AppBar';
+import { WorkSpaceMenuService } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu.service';
 import { TRouteKeys } from 'config/routes';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { routeSelector } from 'store/models/route';
-import { workSpaceSelector } from 'store/models/workspaces';
 
 // contains the workspaces that have no subMenu
 const noSubMenuWorkSpaces: TRouteKeys[] = ['HOME'];
 
 export const AppBarManager = (): ReactElement => {
     const route = useSelector(routeSelector);
-    const workspaces = useSelector(workSpaceSelector)['workspaces'];
+    const workspaces = Object.values(WorkSpaceMenuService.getWorkSpaces());
 
     // getting the workspace data for the current workspace
     const workSpaceData = workspaces.find((workspace) => workspace.routeKey === route.routeKeys[0]);
-    const [breadCrumbs] = useState<IAppBarProps['breadcrumbs']>([]);
-    const noSubMenuMode = noSubMenuWorkSpaces.includes(workSpaceData['routeKey']);
+    const isNoSubMenu = noSubMenuWorkSpaces.includes(workSpaceData['routeKey']);
 
-    return (
-        <AppBar
-            breadcrumbs={breadCrumbs}
-            noSubMenu={noSubMenuMode}
-            currentWorkspace={workSpaceData}
-        />
-    );
+    return <AppBar noSubMenu={isNoSubMenu} currentWorkspace={workSpaceData} />;
 };
