@@ -9,33 +9,33 @@ export const SubMenuManager = (): ReactElement => {
         {
             icon: <Icon icon={ICONS.cashRegister} />,
             title: 'Sales',
-            selected: false,
+            routeKey: 'POS__SALES',
             childTiles: [
                 {
                     title: 'New Sale',
-                    selected: false,
+                    routeKey: 'POS__SALES__NEW_SALE',
                 },
                 {
                     title: 'Sales History',
-                    selected: false,
+                    routeKey: 'POS__SALES__SALES_HISTORY',
                 },
             ],
         },
         {
             icon: <Icon icon={ICONS.bxBox} />,
             title: 'Inventory',
-            selected: false,
+            routeKey: 'POS__INVENTORY',
             childTiles: [
                 {
                     title: 'Products',
-                    selected: false,
+                    routeKey: 'POS__INVENTORY__PRODUCTS',
                 },
             ],
         },
         {
             icon: <Icon icon={ICONS.bxReceipt} />,
             title: 'Bill Settings',
-            selected: false,
+            routeKey: 'POS__BILL_SETTINGS',
         },
     ];
 

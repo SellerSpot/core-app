@@ -1,7 +1,7 @@
 import { ITaxBracket } from 'components/Compounds/CartTable/CartTable.types';
 import { xPercentofY } from 'utilities/general';
 
-export class SaleService {
+export default class SaleService {
     /**
      * used to compute the discount for a product (percentage method)
      * @param values unitprice & discount

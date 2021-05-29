@@ -1,4 +1,5 @@
 import { IconifyIcon } from '@iconify/react';
+import { TRouteKeys } from 'config/routes';
 
 interface ITile {
     /**
@@ -22,13 +23,13 @@ interface ITile {
      */
     redirectRoute?: string;
     /**
-     * If the current tile is to be selected
+     * to uniquely identify each route
      */
-    selected: boolean;
+    routeKey: TRouteKeys;
     /**
      * Tile definitions for the children tiles (if present)
      */
-    childTiles?: Pick<ITile, 'title' | 'disabled' | 'selected' | 'redirectRoute'>[];
+    childTiles?: Pick<ITile, 'title' | 'disabled' | 'redirectRoute' | 'routeKey'>[];
 }
 
 export interface ISubMenuProps {

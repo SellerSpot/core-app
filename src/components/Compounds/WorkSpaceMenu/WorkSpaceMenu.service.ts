@@ -8,26 +8,26 @@ export class WorkSpaceMenuService {
             {
                 icon: getWorkSpaceMenuTileIcon(ICONS.homeVariant),
                 title: 'Home',
-                selected: false,
+                routeKey: 'HOME',
                 redirectRoute: ROUTES.HOME,
             },
             {
                 icon: getWorkSpaceMenuTileIcon(ICONS.settingsIcon),
                 title: 'Management',
-                selected: false,
-                redirectRoute: ROUTES.MANAGEMENT.DEFAULT,
+                routeKey: 'MANAGEMENT',
+                redirectRoute: ROUTES.MANAGEMENT,
             },
             {
                 icon: getWorkSpaceMenuTileIcon(ICONS.cashRegister),
                 title: 'Point of Sale',
-                selected: false,
-                redirectRoute: ROUTES.POS.DEFAULT,
+                routeKey: 'POS',
+                redirectRoute: ROUTES.POS,
             },
             {
                 icon: getWorkSpaceMenuTileIcon(ICONS.outlineListAlt),
                 title: 'Catalogue',
-                selected: false,
-                redirectRoute: ROUTES.CATALOGUE.DEFAULT,
+                routeKey: 'CATALOGUE',
+                redirectRoute: ROUTES.CATALOGUE,
             },
         ];
     };

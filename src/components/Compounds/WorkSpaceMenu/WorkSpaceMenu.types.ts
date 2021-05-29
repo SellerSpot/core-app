@@ -1,3 +1,4 @@
+import { TRouteKeys } from 'config/routes';
 import { ReactElement } from 'react';
 
 export interface WorkSpaceTiles {
@@ -14,9 +15,9 @@ export interface WorkSpaceTiles {
      */
     redirectRoute: string;
     /**
-     * If the current tile should be selected or not
+     * Route key to uniquely identify each route
      */
-    selected: boolean;
+    routeKey: TRouteKeys;
 }
 
 export type IUseWorkSpaceMenuStore = {

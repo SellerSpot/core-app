@@ -1,7 +1,9 @@
 import cn from 'classnames';
 import { isUndefined } from 'lodash';
 import React, { ReactElement, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { routeSelector } from 'store/models/route';
 import create, { GetState, SetState } from 'zustand';
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
 import styles from './SubMenu.module.scss';
@@ -34,11 +36,12 @@ const ChildTile = (props: {
 }) => {
     const { childTiles, childTilesVisible } = props;
     const history = useHistory();
+    const { routeKeys } = useSelector(routeSelector);
     return (
         <>
             {childTiles?.map((childTile, childTileIndex) => {
-                const { disabled, redirectRoute, selected, title } = childTile;
-
+                const { disabled, redirectRoute, routeKey, title } = childTile;
+                debugger;
                 const childTileOnClickHander = () => {
                     history.push(redirectRoute);
                 };
@@ -53,7 +56,7 @@ const ChildTile = (props: {
                         <SubMenuTile
                             title={title}
                             disabled={disabled}
-                            selected={selected}
+                            selected={routeKeys.includes(routeKey)}
                             events={{
                                 onClick: childTileOnClickHander,
                             }}
@@ -72,8 +75,9 @@ const Tile = (props: {
     updateChildTilesVisible: (index: number) => void;
 }) => {
     const { tile, tileIndex, updateChildTilesVisible } = props;
+    const { routeKeys } = useSelector(routeSelector);
     const history = useHistory();
-    const { disabled, icon, redirectRoute, selected, title, childTiles, childTilesVisible } = tile;
+    const { disabled, icon, redirectRoute, routeKey, title, childTiles, childTilesVisible } = tile;
 
     const tileOnClickHander = () => {
         // checking if children exists for this tile
@@ -89,7 +93,7 @@ const Tile = (props: {
                 childTilesVisible={childTilesVisible ?? false}
                 title={title}
                 disabled={disabled}
-                selected={selected}
+                selected={routeKeys.includes(routeKey)}
                 miniTile={false}
                 icon={icon}
                 showTailIcon={childTiles?.length > 0}

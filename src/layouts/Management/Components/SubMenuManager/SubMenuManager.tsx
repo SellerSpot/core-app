@@ -8,8 +8,8 @@ export const SubMenuManager = (): ReactElement => {
     const tiles: ISubMenuProps['tiles'] = [
         {
             icon: <Icon icon={ICONS.homeVariant} />,
-            title: 'Home',
-            selected: false,
+            title: 'Management',
+            routeKey: 'MANAGEMENT',
         },
     ];
 

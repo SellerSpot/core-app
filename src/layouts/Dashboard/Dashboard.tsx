@@ -1,13 +1,14 @@
-import { ROUTES } from 'config/routes';
+import React, { ReactElement } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import { Home } from 'layouts/Home/Home';
 import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
 import { Catalogue } from 'layouts/Catalogue/Catalogue';
 import { Management } from 'layouts/Management/Management';
-import React, { ReactElement } from 'react';
-import { Route, Switch } from 'react-router';
 import { AppBarManager } from './Components/AppBar/AppBar';
 import styles from './dashboard.module.scss';
 import { WorkSpaceMenu } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu';
+import { ROUTES } from 'config/routes';
 
 export const Dashboard = (): ReactElement => {
     return (
@@ -21,13 +22,13 @@ export const Dashboard = (): ReactElement => {
                 </div>
                 <div className={styles.pageBodyWrapper}>
                     <Switch>
-                        <Route path={ROUTES.MANAGEMENT.DEFAULT}>
+                        <Route path={ROUTES.MANAGEMENT}>
                             <Management />
                         </Route>
-                        <Route path={ROUTES.CATALOGUE.DEFAULT}>
+                        <Route path={ROUTES.CATALOGUE}>
                             <Catalogue />
                         </Route>
-                        <Route path={ROUTES.POS.DEFAULT}>
+                        <Route path={ROUTES.POS}>
                             <PointOfSale />
                         </Route>
                         {/* / route should be placed atlast */}

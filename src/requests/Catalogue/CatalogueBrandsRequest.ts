@@ -3,7 +3,7 @@ import BaseRequest from 'requests/BaseRequest';
 import { ICatalogueBrands_GetAllBrands } from 'requests/typings/Catalogue/CatalogueBrands.types';
 import { introduceDelay } from 'utilities/general';
 
-export class CatalogueBrandsRequest extends BaseRequest {
+export default class CatalogueBrandsRequest extends BaseRequest {
     constructor() {
         super(ROUTES.SERVICE.CATALOGUE);
     }

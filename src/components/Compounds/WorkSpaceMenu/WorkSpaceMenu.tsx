@@ -2,7 +2,9 @@ import Icon, { IconifyIcon } from '@iconify/react';
 import { ExpandWorkspaceMenuButton } from '@sellerspot/universal-components';
 import cn from 'classnames';
 import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { routeSelector } from 'store/models/route';
 import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationWorkSpaceTile } from '../StoreInformationWorkSpaceTile/StoreInformationWorkSpaceTile';
@@ -49,13 +51,14 @@ export const getWorkSpaceMenuTileIcon = (iconInstance: IconifyIcon['icon']): Rea
 
 const WorkSpaceTiles = () => {
     const expandMenu = useWorkSpaceMenuStore((state) => state.expandMenu);
+    const { routeKeys } = useSelector(routeSelector);
     const tiles = WorkSpaceMenuService.getWorkSpaceTiles();
     const history = useHistory();
 
     return (
         <div className={styles.workSpaceTilesWrapper}>
             {tiles.map((tile, tileIndex) => {
-                const { icon, title, redirectRoute } = tile;
+                const { icon, title, redirectRoute, routeKey } = tile;
                 const handleTileClick = () => {
                     history.push(redirectRoute);
                 };
@@ -66,6 +69,7 @@ const WorkSpaceTiles = () => {
                             toolTipText={title}
                             workspaceTitle={title}
                             expanded={expandMenu}
+                            selected={routeKeys.includes(routeKey)}
                             events={{
                                 onClick: handleTileClick,
                             }}

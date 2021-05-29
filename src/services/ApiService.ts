@@ -13,7 +13,7 @@ export interface IRequestPayload {
     payload?: unknown;
 }
 
-export class ApiService {
+export default class ApiService {
     private axios: AxiosInstance;
 
     constructor(props: IApiServiceProps) {

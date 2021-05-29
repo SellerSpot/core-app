@@ -1,3 +1,3 @@
-import { CatalogueBrandsRequest } from './CatalogueBrandsRequest';
+import CatalogueBrandsRequest from './CatalogueBrandsRequest';
 
 export const brandRequest = new CatalogueBrandsRequest();

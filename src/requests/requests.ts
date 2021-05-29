@@ -1,7 +1,9 @@
-import * as authRequest from './AuthRequest';
+import AuthRequest from './AuthRequest';
 import * as catalogue from './Catalogue';
 
+const authRequest = new AuthRequest();
+
 export const requests = {
-    ...authRequest,
-    catalogue: { ...catalogue },
+    authRequest,
+    catalogue,
 };
