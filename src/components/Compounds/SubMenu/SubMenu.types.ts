@@ -15,10 +15,6 @@ interface ITile {
      */
     disabled?: boolean;
     /**
-     * Toggles to indicate that the child tiles are visible
-     */
-    childTilesVisible?: boolean;
-    /**
      * Route to redirect the application to for this tile
      */
     redirectRoute?: string;
@@ -38,9 +34,3 @@ export interface ISubMenuProps {
      */
     tiles: ITile[];
 }
-
-export type TSubMenuStore = {
-    tiles: ISubMenuProps['tiles'];
-    setTilesData: (tilesData: ISubMenuProps['tiles']) => void;
-    updateChildTilesVisible: (index: number) => void;
-};
