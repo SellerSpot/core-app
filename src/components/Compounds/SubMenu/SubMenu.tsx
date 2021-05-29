@@ -86,6 +86,10 @@ const Tile = (props: {
             history.push(redirectRoute);
         }
     };
+
+    const childTilesWrapperClassName = cn(styles.childTilesWrapper, {
+        [styles.childTilesWrapperShow]: childTilesVisible,
+    });
     return (
         <div className={styles.tileGroup}>
             <SubMenuTile
@@ -100,7 +104,9 @@ const Tile = (props: {
                     onClick: tileOnClickHander,
                 }}
             />
-            <ChildTile childTiles={childTiles} childTilesVisible={childTilesVisible} />
+            <div className={childTilesWrapperClassName}>
+                <ChildTile childTiles={childTiles} childTilesVisible={childTilesVisible} />
+            </div>
         </div>
     );
 };
