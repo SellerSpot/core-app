@@ -4,6 +4,11 @@ import { zipObject } from 'lodash';
 
 const MANAGEMENT = {
     MANAGEMENT: '/management',
+    MANAGEMENT__INSTALLED_PLUGINS: '/management/installedplugins',
+    MANAGEMENT__PLUGIN_STORE: '/management/pluginstore',
+    MANAGEMENT__DOMAIN_SETTINGS: '/management/domainsettings',
+    MANAGEMENT__BILLING: '/management/billing',
+    MANAGEMENT__SETTINGS: '/management/settings',
 };
 
 // later move it to separate files

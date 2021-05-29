@@ -1,7 +1,8 @@
 import { IBreadCrumbsProps } from '@sellerspot/universal-components';
-import { IWorkSpaceTileProps } from '../WorkSpaceTile/WorkSpaceTile.types';
+import { IWorkSpaceState } from 'store/models/workspaces';
 
 export interface IAppBarProps {
     breadcrumbs: IBreadCrumbsProps['crumbs'];
-    currentWorkspace: Pick<IWorkSpaceTileProps, 'workspaceIcon' | 'workspaceTitle'>;
+    noSubMenu: boolean;
+    currentWorkspace: IWorkSpaceState['workspaces'][0];
 }

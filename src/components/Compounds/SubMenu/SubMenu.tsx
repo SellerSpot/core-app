@@ -41,7 +41,6 @@ const ChildTile = (props: {
         <>
             {childTiles?.map((childTile, childTileIndex) => {
                 const { disabled, redirectRoute, routeKey, title } = childTile;
-                debugger;
                 const childTileOnClickHander = () => {
                     history.push(redirectRoute);
                 };

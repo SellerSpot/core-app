@@ -8,42 +8,50 @@ import { IAppBarProps } from './AppBar.types';
 import styles from './AppBar.module.scss';
 import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import Icon from '@iconify/react';
+import cn from 'classnames';
 
 export { IAppBarProps } from './AppBar.types';
 
+const getAvatarMenuItems = (): IMenuProps['items'] => {
+    return [
+        {
+            content: (
+                <div className={styles.avatarTile}>
+                    <Icon icon={ICONS.baselinePersonPin} />
+                    Profile
+                </div>
+            ),
+        },
+        {
+            content: (
+                <div className={styles.avatarTile}>
+                    <Icon icon={ICONS.baselineSettings} />
+                    Settings
+                </div>
+            ),
+        },
+    ];
+};
+
 export const AppBar = (props: IAppBarProps): ReactElement => {
+    const { breadcrumbs, currentWorkspace, noSubMenu } = props;
     const themeState = useSelector(themeSelector);
 
-    const getAvatarMenuItems = (): IMenuProps['items'] => {
-        return [
-            {
-                content: (
-                    <div className={styles.avatarTile}>
-                        <Icon icon={ICONS.baselinePersonPin} />
-                        Profile
-                    </div>
-                ),
-            },
-            {
-                content: (
-                    <div className={styles.avatarTile}>
-                        <Icon icon={ICONS.baselineSettings} />
-                        Settings
-                    </div>
-                ),
-            },
-        ];
-    };
+    const workSpaceTileClassName = cn(styles.workspaceTileWrapper, {
+        [styles.workspaceTileWrapperNoSubMenu]: noSubMenu,
+    });
+
+    console.log(workSpaceTileClassName);
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <div className={styles.workspaceTileWrapper}>
+                <div className={workSpaceTileClassName}>
                     <div className={styles.workspaceTile}>
                         <WorkSpaceTile
-                            size={'large'}
-                            workspaceIcon={props.currentWorkspace.workspaceIcon}
-                            workspaceTitle={props.currentWorkspace.workspaceTitle}
+                            size={'small'}
+                            workspaceIcon={<Icon icon={currentWorkspace.icon} height={'24px'} />}
+                            workspaceTitle={currentWorkspace.title}
                             expanded
                             variant="workspaceIndicator"
                             selected
@@ -51,7 +59,7 @@ export const AppBar = (props: IAppBarProps): ReactElement => {
                     </div>
                 </div>
                 <div className={styles.breadcrumbsWrapper}>
-                    <BreadCrumbs crumbs={props.breadcrumbs} />
+                    <BreadCrumbs crumbs={breadcrumbs} />
                 </div>
             </div>
             <div className={styles.rhsGroup}>

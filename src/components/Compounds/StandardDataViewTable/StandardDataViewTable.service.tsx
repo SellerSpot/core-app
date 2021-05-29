@@ -4,6 +4,11 @@ import React from 'react';
 export class StandardDataViewTableService {
     static tableHeaders: ITableCell[] = [
         {
+            content: <h5>S.No</h5>,
+            align: 'right',
+            width: '5%',
+        },
+        {
             content: <h5>Name</h5>,
             align: 'left',
             width: '30%',
@@ -33,6 +38,9 @@ export class StandardDataViewTableService {
             .map(() => {
                 return {
                     cells: [
+                        {
+                            content: <Skeleton height="26px" width="100%" variant="rect" />,
+                        },
                         {
                             content: <Skeleton height="26px" width="100%" variant="rect" />,
                         },

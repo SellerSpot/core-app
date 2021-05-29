@@ -5,7 +5,7 @@ import { Home } from 'layouts/Home/Home';
 import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
 import { Catalogue } from 'layouts/Catalogue/Catalogue';
 import { Management } from 'layouts/Management/Management';
-import { AppBarManager } from './Components/AppBar/AppBar';
+import { AppBarManager } from './Components/AppBarManager/AppBarManager';
 import styles from './dashboard.module.scss';
 import { WorkSpaceMenu } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu';
 import { ROUTES } from 'config/routes';
@@ -31,7 +31,7 @@ export const Dashboard = (): ReactElement => {
                         <Route path={ROUTES.POS}>
                             <PointOfSale />
                         </Route>
-                        {/* / route should be placed atlast */}
+                        {/* '/' route should be placed atlast */}
                         <Route path={ROUTES.HOME}>
                             <Home />
                         </Route>
