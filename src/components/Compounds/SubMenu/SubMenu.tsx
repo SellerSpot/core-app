@@ -77,12 +77,11 @@ const Tile = (props: { tile: ISubMenuProps['tiles'][0] }) => {
         childTiles,
         routeKeys,
     });
-    const d = new Date();
-    console.log(routeKeys, shouldChildTilesBeVisible, title, d.getMilliseconds());
+    // console.log(routeKeys, shouldChildTilesBeVisible, title);
 
     // state
     const [childTilesVisible, setChildTilesVisible] = useState(shouldChildTilesBeVisible);
-    debugger;
+
     // handlers
     const tileOnClickHander = () => {
         // checking if children exists for this tile
