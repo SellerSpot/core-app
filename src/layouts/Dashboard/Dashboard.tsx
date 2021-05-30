@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Home } from 'layouts/Home/Home';
 import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
 import { Catalogue } from 'layouts/Catalogue/Catalogue';
@@ -31,8 +31,11 @@ export const Dashboard = (): ReactElement => {
                             <PointOfSale />
                         </Route>
                         {/* '/' route should be placed atlast */}
-                        <Route path={ROUTES.HOME}>
+                        <Route exact path={ROUTES.HOME}>
                             <Home />
+                        </Route>
+                        <Route>
+                            <Redirect to={ROUTES.NOT_FOUND} />
                         </Route>
                     </Switch>
                 </div>

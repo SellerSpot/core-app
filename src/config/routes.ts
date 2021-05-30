@@ -39,6 +39,7 @@ const ECOM = {
 export const ROUTES = {
     HOME: '/',
     FAIL_SAFE: '/failsafe',
+    NOT_FOUND: '/notfound',
     ...MANAGEMENT,
     ...POS,
     ...CATALOGUE,
