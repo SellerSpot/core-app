@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { WorkSpaceMenu as WorkSpaceMenuComponent } from './WorkSpaceMenu';
+import { PluginMenu as PluginMenuComponent } from './PluginMenu';
 
 const Template: Story = () => (
     <BrowserRouter>
@@ -13,17 +13,17 @@ const Template: Story = () => (
                 height: '100vh',
             }}
         >
-            <WorkSpaceMenuComponent />
+            <PluginMenuComponent />
         </div>
     </BrowserRouter>
 );
 
-export const WorkSpaceMenu = Template.bind({});
+export const PluginMenu = Template.bind({});
 
 export default {
-    title: 'Design System/Compounds/Work Space Menu',
+    title: 'Design System/Compounds/Plugin Menu',
     parameters: {
         layout: 'fullscreen',
     },
-    component: WorkSpaceMenuComponent,
+    component: PluginMenuComponent,
 } as Meta;

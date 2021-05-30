@@ -1,10 +1,10 @@
 import { Avatar } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import styles from './StoreInformationWorkSpaceTile.module.scss';
-import { IStoreInformationWorkSpaceTileProps } from './StoreInformationWorkSpaceTile.types';
+import styles from './StoreInformationPluginMenuTile.module.scss';
+import { IStoreInformationPluginMenuTileProps } from './StoreInformationPluginMenuTile.types';
 import cn from 'classnames';
 
-export { IStoreInformationWorkSpaceTileProps } from './StoreInformationWorkSpaceTile.types';
+export { IStoreInformationPluginMenuTileProps } from './StoreInformationPluginMenuTile.types';
 
 const DefaultAvatar = (props: { storeName: string }) => {
     const { storeName } = props;
@@ -12,8 +12,8 @@ const DefaultAvatar = (props: { storeName: string }) => {
     return <Avatar content={<h2>{avatarContent}</h2>} variant="rounded" theme="selected" />;
 };
 
-export const StoreInformationWorkSpaceTile = (
-    props: IStoreInformationWorkSpaceTileProps,
+export const StoreInformationPluginMenuTile = (
+    props: IStoreInformationPluginMenuTileProps,
 ): ReactElement => {
     const { storeName, storeLogo, expanded } = props;
 

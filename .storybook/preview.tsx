@@ -21,7 +21,7 @@ const StoryComponent = (Story: () => ReactElement): ReactElement => {
     const fontSizes = fontSizeThemes[fontSizeTheme];
     return (
         <ThemeProvider colors={colors} fontSizes={fontSizes}>
-            <CommonProvider>{Story()}</CommonProvider>
+            {Story()}
         </ThemeProvider>
     );
 };

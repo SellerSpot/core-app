@@ -1,16 +1,12 @@
-import { ICONS } from 'utilities/icons/icons';
-import { themeSelector } from 'store/models/theme';
-import { useSelector } from 'react-redux';
-import React, { ReactElement } from 'react';
-import { colorThemes } from 'config/themes';
-import { Avatar, BreadCrumbs, Menu, IMenuProps } from '@sellerspot/universal-components';
-import { IAppBarProps } from './AppBar.types';
-import styles from './AppBar.module.scss';
-import { WorkSpaceTile } from '../WorkSpaceTile/WorkSpaceTile';
 import Icon from '@iconify/react';
-import cn from 'classnames';
-
-export { IAppBarProps } from './AppBar.types';
+import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
+import { colorThemes } from 'config/themes';
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { themeSelector } from 'store/models/theme';
+import { ICONS } from 'utilities/icons/icons';
+import styles from './AppBar.module.scss';
+import { AppBarHeader } from './Components/AppBarHeader/AppBarHeader';
 
 const getAvatarMenuItems = (): IMenuProps['items'] => {
     return [
@@ -33,53 +29,34 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
     ];
 };
 
-export const AppBar = (props: IAppBarProps): ReactElement => {
-    const { breadcrumbs, currentWorkspace, noSubMenu } = props;
+export const AppBar = (): ReactElement => {
     const themeState = useSelector(themeSelector);
-
-    const workSpaceTileClassName = cn(styles.workspaceTileWrapper, {
-        [styles.workspaceTileWrapperNoSubMenu]: noSubMenu,
-    });
-
-    console.log(workSpaceTileClassName);
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
-                <div className={workSpaceTileClassName}>
-                    <div className={styles.workspaceTile}>
-                        <WorkSpaceTile
-                            size={'small'}
-                            workspaceIcon={<Icon icon={currentWorkspace.icon} height={'24px'} />}
-                            workspaceTitle={currentWorkspace.title}
-                            expanded
-                            variant="workspaceIndicator"
-                            selected
-                        />
-                    </div>
-                </div>
-                <div className={styles.breadcrumbsWrapper}>
-                    <BreadCrumbs crumbs={breadcrumbs} />
+                <div className={styles.appBarHeaderWrapper}>
+                    <AppBarHeader />
                 </div>
             </div>
             <div className={styles.rhsGroup}>
                 <Icon
-                    icon={ICONS.outlineFullscreen}
+                    icon={ICONS.bxFullScreen}
                     height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Icon
-                    icon={ICONS.outlineNotifications}
+                    icon={ICONS.notifications}
                     height="20px"
                     color={colorThemes[themeState.colorTheme].foregroundPrimary}
                 />
                 <Menu items={getAvatarMenuItems()}>
                     {({ openMenuHandler }) => (
                         <Avatar
-                            content={'N'}
+                            content={'R'}
                             variant="circular"
                             theme="selected"
-                            size="small"
+                            size="medium"
                             events={{
                                 onClick: (event) => openMenuHandler(event.currentTarget),
                             }}

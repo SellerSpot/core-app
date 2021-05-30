@@ -1,24 +1,23 @@
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { Home } from 'layouts/Home/Home';
 import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
 import { Catalogue } from 'layouts/Catalogue/Catalogue';
 import { Management } from 'layouts/Management/Management';
-import { AppBarManager } from './Components/AppBarManager/AppBarManager';
 import styles from './dashboard.module.scss';
-import { WorkSpaceMenu } from 'components/Compounds/WorkSpaceMenu/WorkSpaceMenu';
+import { PluginMenu } from 'components/Compounds/PluginMenu/PluginMenu';
 import { ROUTES } from 'config/routes';
+import { AppBar } from 'components/Compounds/AppBar/AppBar';
 
 export const Dashboard = (): ReactElement => {
     return (
         <div className={styles.dashboardWrapper}>
             <div className={styles.leftNavWrapper}>
-                <WorkSpaceMenu />
+                <PluginMenu />
             </div>
             <div className={styles.bodyWrapper}>
                 <div className={styles.topNavWrapper}>
-                    <AppBarManager />
+                    <AppBar />
                 </div>
                 <div className={styles.pageBodyWrapper}>
                     <Switch>

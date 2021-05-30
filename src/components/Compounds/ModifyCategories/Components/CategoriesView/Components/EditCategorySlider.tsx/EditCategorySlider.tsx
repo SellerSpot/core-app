@@ -4,8 +4,6 @@ import {
     InputField,
     showNotify,
     SliderModal,
-    SliderModalBody,
-    SliderModalHeader,
 } from '@sellerspot/universal-components';
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import React, { ReactElement } from 'react';
@@ -145,112 +143,106 @@ export const EditCategorySlider = (): ReactElement => {
     const formOnSubmit = isAddMode ? handleFormSubmitAddMode : handleFormSubmitEditMode;
 
     return (
-        <SliderModal show={showSlider} width={'90%'}>
-            <Form
-                subscription={{ submitting: true }}
-                onSubmit={formOnSubmit}
-                initialValues={categoryFormInitialValues}
-            >
-                {({ handleSubmit, submitting }) => {
-                    return (
-                        <form onSubmit={handleSubmit} noValidate>
-                            <SliderModalHeader>
-                                <EditCategoryHeader isAddMode={isAddMode} submitting={submitting} />
-                            </SliderModalHeader>
-                            <SliderModalBody>
-                                <div className={styles.bodyWrapper}>
-                                    <Field
-                                        name={'categoryName' as keyof IEditCategoryForm}
-                                        validate={(value) =>
-                                            EditCategorySliderService.validateField({
-                                                fieldName: 'categoryName',
-                                                path: currentNodePath,
-                                                treeData,
-                                                value,
-                                            })
-                                        }
-                                    >
-                                        {({ input, meta }) => {
-                                            const { value, onChange } = input;
-                                            const { error, visited } = meta;
+        <Form
+            subscription={{ submitting: true }}
+            onSubmit={formOnSubmit}
+            initialValues={categoryFormInitialValues}
+        >
+            {({ handleSubmit, submitting }) => {
+                return (
+                    <form onSubmit={handleSubmit} noValidate>
+                        <SliderModal show={showSlider} type="absolute" width={'40%'}>
+                            <EditCategoryHeader isAddMode={isAddMode} submitting={submitting} />
+                            <div className={styles.bodyWrapper}>
+                                <Field
+                                    name={'categoryName' as keyof IEditCategoryForm}
+                                    validate={(value) =>
+                                        EditCategorySliderService.validateField({
+                                            fieldName: 'categoryName',
+                                            path: currentNodePath,
+                                            treeData,
+                                            value,
+                                        })
+                                    }
+                                >
+                                    {({ input, meta }) => {
+                                        const { value, onChange } = input;
+                                        const { error, visited } = meta;
 
-                                            const showError = !!error && visited;
-                                            const helperMessage: IInputFieldProps['helperMessage'] =
-                                                {
-                                                    enabled: showError,
-                                                    content: error,
-                                                    type: 'error',
-                                                };
-                                            const fieldTheme: IInputFieldProps['theme'] = showError
-                                                ? 'danger'
-                                                : 'primary';
-                                            return (
-                                                <InputField
-                                                    {...input}
-                                                    name={undefined}
-                                                    type="text"
-                                                    fullWidth
-                                                    value={value}
-                                                    required
-                                                    autoFocus={showSlider}
-                                                    theme={fieldTheme}
-                                                    label={'Category Name'}
-                                                    helperMessage={helperMessage}
-                                                    selectTextOnFocus
-                                                    onChange={onChange}
-                                                />
-                                            );
-                                        }}
-                                    </Field>
-                                    <Field
-                                        name={'categoryDescription' as keyof IEditCategoryForm}
-                                        validate={(value) =>
-                                            EditCategorySliderService.validateField({
-                                                fieldName: 'categoryDescription',
-                                                path: currentNodePath,
-                                                treeData,
-                                                value,
-                                            })
-                                        }
-                                    >
-                                        {({ input, meta }) => {
-                                            const { value, onChange } = input;
-                                            const { error, dirty } = meta;
-                                            const showError = !!error && dirty;
-                                            const helperMessage: IInputFieldProps['helperMessage'] =
-                                                {
-                                                    enabled: showError,
-                                                    content: error,
-                                                    type: 'error',
-                                                };
-                                            const fieldTheme: IInputFieldProps['theme'] = showError
-                                                ? 'danger'
-                                                : 'primary';
-                                            return (
-                                                <InputField
-                                                    {...input}
-                                                    name={undefined}
-                                                    type="text"
-                                                    fullWidth
-                                                    value={value}
-                                                    theme={fieldTheme}
-                                                    multiline
-                                                    rows={4}
-                                                    maxRows={5}
-                                                    label={'Category Description'}
-                                                    helperMessage={helperMessage}
-                                                    selectTextOnFocus
-                                                    onChange={onChange}
-                                                />
-                                            );
-                                        }}
-                                    </Field>
-                                </div>
-                            </SliderModalBody>
-                        </form>
-                    );
-                }}
-            </Form>
-        </SliderModal>
+                                        const showError = !!error && visited;
+                                        const helperMessage: IInputFieldProps['helperMessage'] = {
+                                            enabled: showError,
+                                            content: error,
+                                            type: 'error',
+                                        };
+                                        const fieldTheme: IInputFieldProps['theme'] = showError
+                                            ? 'danger'
+                                            : 'primary';
+                                        return (
+                                            <InputField
+                                                {...input}
+                                                name={undefined}
+                                                type="text"
+                                                fullWidth
+                                                value={value}
+                                                required
+                                                autoFocus={showSlider}
+                                                theme={fieldTheme}
+                                                label={'Category Name'}
+                                                helperMessage={helperMessage}
+                                                selectTextOnFocus
+                                                onChange={onChange}
+                                            />
+                                        );
+                                    }}
+                                </Field>
+                                <Field
+                                    name={'categoryDescription' as keyof IEditCategoryForm}
+                                    validate={(value) =>
+                                        EditCategorySliderService.validateField({
+                                            fieldName: 'categoryDescription',
+                                            path: currentNodePath,
+                                            treeData,
+                                            value,
+                                        })
+                                    }
+                                >
+                                    {({ input, meta }) => {
+                                        const { value, onChange } = input;
+                                        const { error, dirty } = meta;
+                                        const showError = !!error && dirty;
+                                        const helperMessage: IInputFieldProps['helperMessage'] = {
+                                            enabled: showError,
+                                            content: error,
+                                            type: 'error',
+                                        };
+                                        const fieldTheme: IInputFieldProps['theme'] = showError
+                                            ? 'danger'
+                                            : 'primary';
+                                        return (
+                                            <InputField
+                                                {...input}
+                                                name={undefined}
+                                                type="text"
+                                                fullWidth
+                                                value={value}
+                                                theme={fieldTheme}
+                                                multiline
+                                                rows={4}
+                                                maxRows={5}
+                                                label={'Category Description'}
+                                                helperMessage={helperMessage}
+                                                selectTextOnFocus
+                                                onChange={onChange}
+                                            />
+                                        );
+                                    }}
+                                </Field>
+                            </div>
+                        </SliderModal>
+                    </form>
+                );
+            }}
+        </Form>
     );
 };
