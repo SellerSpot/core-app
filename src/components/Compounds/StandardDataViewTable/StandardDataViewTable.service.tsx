@@ -16,12 +16,12 @@ export class StandardDataViewTableService {
         {
             content: <h5>Description</h5>,
             align: 'left',
-            width: '50%',
+            width: '45%',
         },
         {
             content: <h5>Actions</h5>,
             align: 'right',
-            width: '20%',
+            width: '25%',
         },
     ];
 

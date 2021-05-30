@@ -80,7 +80,6 @@ const Tile = (props: { tile: ISubMenuProps['tiles'][0] }) => {
             childTiles,
             routeKeys,
         });
-        debugger;
         setChildTilesVisible(shouldChildTilesBeVisible);
     }, [location, childTiles, routeKeys]);
 

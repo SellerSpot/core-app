@@ -21,14 +21,12 @@ StandardDataViewTable.args = {
         {
             name: 'Brand Name',
             description: 'Brand Description',
-            noOfProducts: 12,
             deleteItemCallback: () => console.log('Item Deleted'),
             editItemCallback: () => console.log('Item Edit'),
         },
         {
             name: 'Brand Name 2',
             description: 'Brand Description 2',
-            noOfProducts: 12,
             deleteItemCallback: () => console.log('Item Deleted'),
             editItemCallback: () => console.log('Item Edit'),
         },
