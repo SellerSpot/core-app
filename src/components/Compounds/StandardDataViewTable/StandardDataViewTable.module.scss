@@ -12,7 +12,19 @@
     text-overflow: ellipsis;
 }
 
+.link {
+    color: $primaryDark-color;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .rowActions {
     width: 100%;
-    @include flex(center, flex-end, $gap: 12px);
+    @include flex(center, space-between);
+
+    .minActions {
+        @include flex(center, flex-end, $gap: 12px);
+    }
 }

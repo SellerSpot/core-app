@@ -1,24 +1,46 @@
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import {
-    IStandardDataViewTableProps,
-    StandardDataViewTable,
-} from 'components/Compounds/StandardDataViewTable/StandardDataViewTable';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { requests } from 'requests/requests';
-import { ICatalogueBrands_GetAllBrands } from 'requests/typings/Catalogue/CatalogueBrands.types';
+import { StandardDataViewTable } from 'components/Compounds/StandardDataViewTable/StandardDataViewTable';
+import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
+import create from 'zustand';
 import styles from './CatalogueBrandsPage.module.scss';
+import { CatalogueBrandsPageService } from './CatalogueBrandsPage.service';
+import { ICatalogueBrandsPageState } from './CatalogueBrandsPage.types';
+import { AddEditBrandSliderModal } from './Components/AddEditBrandSliderModal/AddEditBrandSliderModal';
+
+const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((set) => ({
+    brandsData: [],
+    isLoadingBrandsTable: true,
+    showAddEditBrandSlider: false,
+    setBrandsData: (data) => {
+        set({ brandsData: data });
+    },
+    setIsLoadingBrandsTable: (data) => {
+        set({ isLoadingBrandsTable: data });
+    },
+    invokeAddBrandSlider: () => {
+        set({ showAddEditBrandSlider: true });
+    },
+}));
 
 const PageHeaderComponent = () => {
+    const { invokeAddBrandSlider } = useCatalogueBrandsPageState();
+
+    // handlers
     const getActions = () => {
+        // handlers
+        const handleClick = () => {
+            invokeAddBrandSlider();
+        };
         return [
             <Button
                 key="addBrandButton"
                 label="ADD BRAND"
                 theme="primary"
                 variant="contained"
+                onClick={handleClick}
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
             />,
         ];
@@ -28,41 +50,36 @@ const PageHeaderComponent = () => {
 };
 
 export const CatalogueBrandsPage = (): ReactElement => {
-    const [isLoadingBrandsTable, setIsLoadingBrandsTable] = useState(true);
-    const [allBrands, setAllBrands] = useState<ICatalogueBrands_GetAllBrands['data']>([]);
+    // state
+    const {
+        isLoadingBrandsTable,
+        setBrandsData,
+        showAddEditBrandSlider,
+        brandsData,
+        setIsLoadingBrandsTable,
+    } = useCatalogueBrandsPageState();
 
-    const getAllBrandsData = async () => {
-        const allBrandsData = await requests.catalogue.brandRequest.getAllBrands();
-        setAllBrands(allBrandsData);
-        setIsLoadingBrandsTable(false);
-    };
-
+    // effects
     useEffect(() => {
-        getAllBrandsData();
+        (async () => {
+            const allBrandsData = await CatalogueBrandsPageService.getAllBrandsData();
+            setBrandsData(allBrandsData);
+            setIsLoadingBrandsTable(false);
+        }).call(null);
     }, []);
 
-    const getTableItems = (): IStandardDataViewTableProps['tableItems'] => {
-        return allBrands.map((brand) => {
-            const { description, name, noOfProducts } = brand;
-            return {
-                name,
-                description,
-                noOfProducts,
-                deleteItemCallback: null,
-                editItemCallback: null,
-            };
-        });
-    };
-
     return (
-        <div className={styles.wrapper}>
-            <PageHeaderComponent />
-            <div className={styles.tableWrapper}>
-                <StandardDataViewTable
-                    tableItems={getTableItems()}
-                    isLoading={isLoadingBrandsTable}
-                />
+        <>
+            <div className={styles.wrapper}>
+                <PageHeaderComponent />
+                <div className={styles.tableWrapper}>
+                    <StandardDataViewTable
+                        tableItems={CatalogueBrandsPageService.getTableItems(brandsData)}
+                        isLoading={isLoadingBrandsTable}
+                    />
+                </div>
             </div>
-        </div>
+            <AddEditBrandSliderModal show={showAddEditBrandSlider} />
+        </>
     );
 };

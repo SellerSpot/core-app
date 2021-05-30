@@ -21,29 +21,32 @@ const getCells = (props: {
     tableItemIndex: number;
 }): ITableCell[] => {
     const { tableItem, tableItemIndex } = props;
-    const { deleteItemCallback, description, editItemCallback, name, noOfProducts } = tableItem;
+    const { deleteItemCallback, description, editItemCallback, name } = tableItem;
     const rowActions = (
         <div className={styles.rowActions}>
-            <ToolTip content={'Edit'}>
-                <div>
-                    <IconButton
-                        icon={<Icon icon={ICONS.baselineEdit} />}
-                        size={'small'}
-                        theme={'primary'}
-                        onClick={editItemCallback}
-                    />
-                </div>
-            </ToolTip>
-            <ToolTip content={'Delete'}>
-                <div>
-                    <IconButton
-                        icon={<Icon icon={ICONS.outlineDeleteOutline} />}
-                        size={'small'}
-                        theme={'danger'}
-                        onClick={deleteItemCallback}
-                    />
-                </div>
-            </ToolTip>
+            <span className={styles.link}>View Products</span>
+            <div className={styles.minActions}>
+                <ToolTip content={'Edit'}>
+                    <div>
+                        <IconButton
+                            icon={<Icon icon={ICONS.baselineEdit} />}
+                            size={'small'}
+                            theme={'primary'}
+                            onClick={editItemCallback}
+                        />
+                    </div>
+                </ToolTip>
+                <ToolTip content={'Delete'}>
+                    <div>
+                        <IconButton
+                            icon={<Icon icon={ICONS.outlineDeleteOutline} />}
+                            size={'small'}
+                            theme={'danger'}
+                            onClick={deleteItemCallback}
+                        />
+                    </div>
+                </ToolTip>
+            </div>
         </div>
     );
     const sNoText = `${tableItemIndex + 1}.`;
@@ -61,12 +64,8 @@ const getCells = (props: {
             align: 'left',
         },
         {
-            content: noOfProducts,
-            align: 'right',
-        },
-        {
             content: rowActions,
-            align: 'left',
+            align: 'right',
         },
     ];
 };
