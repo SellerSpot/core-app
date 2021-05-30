@@ -1,4 +1,4 @@
-import { IColors } from 'config/themes';
+import { IColors } from '@sellerspot/universal-components';
 import { ExtendedNodeData, TreeItem } from 'react-sortable-tree';
 
 interface ICategory {

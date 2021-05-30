@@ -1,15 +1,15 @@
-import { TColorThemes, TFontSizeThemes } from 'config/themes';
 import { createSlice, Selector } from '@reduxjs/toolkit';
+import { IColorThemes, IFontSizeThemes } from '@sellerspot/universal-components';
 import { RootState } from '../store';
 
 interface IThemeState {
-    colorTheme: TColorThemes;
-    fontSizeTheme: TFontSizeThemes;
+    colorTheme: keyof IColorThemes;
+    fontSizeTheme: keyof IFontSizeThemes;
 }
 
 const initialState: IThemeState = {
-    colorTheme: 'light',
-    fontSizeTheme: 'small',
+    colorTheme: 'default',
+    fontSizeTheme: 'default',
 };
 
 const themeSlice = createSlice({
