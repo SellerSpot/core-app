@@ -1,6 +1,10 @@
 .appWrapper {
     width: 100vw;
     height: 100vh;
+
+    // default base background color
+    background-color: $backgroundTertiary-color;
+
     overflow-x: hidden;
     overflow-y: hidden;
 }

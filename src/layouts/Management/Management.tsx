@@ -11,36 +11,28 @@ export const Management = (): ReactElement => {
             <div className={styles.menuWrapper}>
                 <SubMenuManager />
             </div>
-            <Switch>
-                <Route path={ROUTES.MANAGEMENT__INSTALLED_PLUGINS}>
-                    <div className={styles.pageWrapper}>
+            <div className={styles.pageWrapper}>
+                <Switch>
+                    <Route exact path={ROUTES.MANAGEMENT__INSTALLED_PLUGINS}>
                         <h6>Installed Plugins</h6>
-                    </div>
-                </Route>
-                <Route path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
-                    <div className={styles.pageWrapper}>
+                    </Route>
+                    <Route exact path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
                         <h6>Plugin Store</h6>
-                    </div>
-                </Route>
-                <Route path={ROUTES.MANAGEMENT__DOMAIN_SETTINGS}>
-                    <div className={styles.pageWrapper}>
+                    </Route>
+                    <Route exact path={ROUTES.MANAGEMENT__DOMAIN_SETTINGS}>
                         <h6>Domain Settings</h6>
-                    </div>
-                </Route>
-                <Route path={ROUTES.MANAGEMENT__BILLING}>
-                    <div className={styles.pageWrapper}>
+                    </Route>
+                    <Route exact path={ROUTES.MANAGEMENT__BILLING}>
                         <h6>Billing</h6>
-                    </div>
-                </Route>
-                <Route path={ROUTES.MANAGEMENT__SETTINGS}>
-                    <div className={styles.pageWrapper}>
+                    </Route>
+                    <Route exact path={ROUTES.MANAGEMENT__SETTINGS}>
                         <h6>Settings</h6>
-                    </div>
-                </Route>
-                <Route>
-                    <Redirect to={ROUTES.MANAGEMENT__INSTALLED_PLUGINS} />
-                </Route>
-            </Switch>
+                    </Route>
+                    <Route>
+                        <Redirect to={ROUTES.MANAGEMENT__INSTALLED_PLUGINS} />
+                    </Route>
+                </Switch>
+            </div>
         </PageWithMenu>
     );
 };

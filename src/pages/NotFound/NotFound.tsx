@@ -1,29 +1,33 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, showNotify } from '@sellerspot/universal-components';
+import { showNotify } from '@sellerspot/universal-components';
 
 import { ROUTES } from 'config/routes';
 
-import styles from './NotFound.module.scss';
+export interface INotFoundProps {
+    redirectTo?: string;
+}
 
-export const NotFound = (): ReactElement => {
+export const NotFound = (props: INotFoundProps): ReactElement => {
+    // props
+    const { redirectTo } = props;
+
+    // helpers
     const history = useHistory();
 
     // handlers
-    const pushToHome = () => history.push(ROUTES.HOME);
+    const pushToHome = () => {
+        const routeToRedirect = redirectTo ?? ROUTES.HOME;
+        history.push(routeToRedirect);
+    };
 
     // effects
     useEffect(() => {
-        showNotify('Oops! URL you are looking for is  invalid!', {
-            autoHideDuration: 1500,
-            onClose: pushToHome, // 2nd case
+        showNotify('Oops! URL you are looking for is invalid!', {
+            autoHideDuration: 2500,
         });
+        pushToHome();
     }, []);
 
-    return (
-        <div className={styles.notFoundWrapper}>
-            <div>Oops! URL you are looking for is invalid!</div>
-            <Button label={'Go to Home'} onClick={pushToHome}></Button>
-        </div>
-    );
+    return <></>;
 };

@@ -2,7 +2,6 @@
     width: 100%;
     height: 66px;
     @include flex(center, space-between);
-    background-color: $backgroundTertiary-color;
 
     .lhsGroup {
         width: 60%;

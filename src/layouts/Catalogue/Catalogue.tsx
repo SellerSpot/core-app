@@ -14,35 +14,23 @@ export const Catalogue = (): ReactElement => {
             </div>
             <div className={styles.pageWrapper}>
                 <Switch>
-                    <Route path={ROUTES.CATALOGUE__PRODUCTS}>
-                        <div className={styles.pageWrapper}>
-                            <h6>Products</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__PRODUCTS}>
+                        <h6>Products</h6>
                     </Route>
-                    <Route path={ROUTES.CATALOGUE__BRANDS}>
-                        <div className={styles.pageWrapper}>
-                            <h6>Brands</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__BRANDS}>
+                        <h6>Brands</h6>
                     </Route>
-                    <Route path={ROUTES.CATALOGUE__CATEGORIES}>
-                        <div className={styles.pageWrapper}>
-                            <h6>Categories</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__CATEGORIES}>
+                        <h6>Categories</h6>
                     </Route>
-                    <Route path={ROUTES.CATALOGUE__STOCKUNITS}>
-                        <div className={styles.pageWrapper}>
-                            <h6>StockUnits</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__STOCKUNITS}>
+                        <h6>StockUnits</h6>
                     </Route>
-                    <Route path={ROUTES.CATALOGUE__TAXBRACKETS}>
-                        <div className={styles.pageWrapper}>
-                            <h6>Tax Brackets</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__TAXBRACKETS}>
+                        <h6>Tax Brackets</h6>
                     </Route>
-                    <Route path={ROUTES.CATALOGUE__SETTINGS}>
-                        <div className={styles.pageWrapper}>
-                            <h6>Settings</h6>
-                        </div>
+                    <Route exact path={ROUTES.CATALOGUE__SETTINGS}>
+                        <h6>Settings</h6>
                     </Route>
                     <Route>
                         <Redirect to={ROUTES.CATALOGUE__PRODUCTS} />

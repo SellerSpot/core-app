@@ -12,6 +12,7 @@ import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
 import styles from './PluginMenu.module.scss';
 import { PluginMenuService } from './PluginMenu.service';
 import { IUsePluginMenuStore } from './PluginMenu.types';
+import { CONFIG } from 'config/config';
 
 const usePluginMenuStore = create<IUsePluginMenuStore>((set) => ({
     expandMenu: false,
@@ -84,7 +85,7 @@ const SellerSpotFooterBanner = () => {
     });
     return (
         <div className={bannerWrapperClassName}>
-            <Trademark />
+            <Trademark url={CONFIG.LANDING_APP_URL} />
         </div>
     );
 };

@@ -12,6 +12,7 @@ import TenantProvider from './components/TenantProvider/TenantProvider';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { NotFound } from 'pages/NotFound/NotFound';
 import { ROUTES } from 'config/routes';
+import { FailSafe } from 'pages/FailSafe/FailSafe';
 
 // global actions
 initializeGlobalConfig();
@@ -23,19 +24,17 @@ export const App = (): ReactElement => {
                 <CommonProvider>
                     <TenantProvider>
                         <Switch>
+                            <Route path={ROUTES.FAIL_SAFE}>
+                                <FailSafe />
+                            </Route>
+                            <Route path={ROUTES.NOT_FOUND}>
+                                <NotFound />
+                            </Route>
+                            {/* / route, hence place at last */}
                             <Route path={ROUTES.HOME}>
                                 <AuthProvider>
                                     <Dashboard />
                                 </AuthProvider>
-                            </Route>
-                            <Route path={ROUTES.FAIL_SAFE}>
-                                <div>
-                                    {/* if network issue or other uncaughtable reason like (software service time, this with timer will be show) */}
-                                    Fail safe page
-                                </div>
-                            </Route>
-                            <Route>
-                                <NotFound />
                             </Route>
                         </Switch>
                     </TenantProvider>
