@@ -84,8 +84,6 @@
         "@iconify/icons-mdi": "^1.1.15",
         "@iconify/icons-ri": "^1.1.0",
         "@iconify/react": "^1.1.4",
-        "@material-ui/core": "^4.11.3",
-        "@material-ui/lab": "4.0.0-alpha.57",
         "@reduxjs/toolkit": "^1.5.1",
         "@sellerspot/universal-components": "^1.16.17",
         "@sellerspot/universal-types": "^1.8.8",
