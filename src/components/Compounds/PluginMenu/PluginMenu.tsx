@@ -62,7 +62,6 @@ const PluginMenuTiles = () => {
                     <Fragment key={tileIndex}>
                         <PluginMenuTile
                             pluginIcon={<Icon icon={icon} height={'24px'} />}
-                            toolTipText={title}
                             pluginTitle={title}
                             expanded={expandMenu}
                             selected={routeKeys.includes(routeKey)}
