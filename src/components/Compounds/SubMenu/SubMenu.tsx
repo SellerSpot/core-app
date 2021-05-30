@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { TRouteKeys } from 'config/routes';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { routeSelector } from 'store/models/route';
 import SubMenuTile from '../SubMenuTile/SubMenuTile';
 import styles from './SubMenu.module.scss';
@@ -53,11 +53,9 @@ const checkIfChildTilesShouldBeVisible = (props: {
     const { childTiles, routeKeys } = props;
     let shouldBeVisible = false;
     if (!!childTiles) {
-        Object.values(childTiles).map((childTile) => {
-            if (routeKeys.includes(childTile.routeKey)) {
-                shouldBeVisible = true;
-            }
-        });
+        shouldBeVisible = Object.values(childTiles).some((childTile) =>
+            routeKeys.includes(childTile.routeKey),
+        );
     }
 
     return shouldBeVisible;
@@ -71,16 +69,20 @@ const Tile = (props: { tile: ISubMenuProps['tiles'][0] }) => {
     // hooks
     const { routeKeys } = useSelector(routeSelector);
     const history = useHistory();
-
-    // compute
-    const shouldChildTilesBeVisible = checkIfChildTilesShouldBeVisible({
-        childTiles,
-        routeKeys,
-    });
-    // console.log(routeKeys, shouldChildTilesBeVisible, title);
+    const location = useLocation();
 
     // state
-    const [childTilesVisible, setChildTilesVisible] = useState(shouldChildTilesBeVisible);
+    const [childTilesVisible, setChildTilesVisible] = useState(false);
+
+    useEffect(() => {
+        // compute
+        const shouldChildTilesBeVisible = checkIfChildTilesShouldBeVisible({
+            childTiles,
+            routeKeys,
+        });
+        debugger;
+        setChildTilesVisible(shouldChildTilesBeVisible);
+    }, [location, childTiles, routeKeys]);
 
     // handlers
     const tileOnClickHander = () => {
@@ -121,14 +123,12 @@ const Tile = (props: { tile: ISubMenuProps['tiles'][0] }) => {
 export const SubMenu = (props: ISubMenuProps): ReactElement => {
     // props
     const { tiles } = props;
-    // state
-    const [tilesState] = useState(tiles);
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.upperTiles}>
-                {tilesState.map((tile, tileIndex) => {
-                    return <Tile key={tileIndex} tile={tile} />;
+                {tiles.map((tile) => {
+                    return <Tile key={tile.routeKey} tile={tile} />;
                 })}
             </div>
         </div>
