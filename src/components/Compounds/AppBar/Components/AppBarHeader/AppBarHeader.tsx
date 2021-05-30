@@ -12,11 +12,15 @@ const noSubMenuPlugins: TRouteKeys[] = ['HOME'];
 
 export const AppBarHeader = (): ReactElement => {
     const { routeKeys } = useSelector(routeSelector);
-    const plugins = Object.values(PluginMenuService.getPlugins());
+    const plugins = PluginMenuService.getPlugins();
+    const activePluginKey = routeKeys?.[0];
 
     // getting the Plugin data for the current Plugin
-    const pluginData = plugins.find((plugin) => plugin.routeKey === routeKeys?.[0]);
-    const isNotHavingSubMenu = noSubMenuPlugins.includes(pluginData['routeKey']);
+    const pluginData = plugins[activePluginKey] ?? '';
+
+    if (!pluginData) return null; // fix to not found plugin / route
+
+    const isNotHavingSubMenu = noSubMenuPlugins.includes(pluginData.routeKey);
 
     const wrapperClassName = cn(styles.wrapper, { [styles.noSubMenuVarient]: isNotHavingSubMenu });
 
