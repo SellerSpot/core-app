@@ -10,18 +10,25 @@ import { CatalogueBrandsPageService } from './CatalogueBrandsPage.service';
 import { ICatalogueBrandsPageState } from './CatalogueBrandsPage.types';
 import { AddEditBrandSliderModal } from './Components/AddEditBrandSliderModal/AddEditBrandSliderModal';
 
-const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((set) => ({
+export const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((set) => ({
     brandsData: [],
+    brandIndexToEdit: null,
     isLoadingBrandsTable: true,
     showAddEditBrandSlider: false,
-    setBrandsData: (data) => {
-        set({ brandsData: data });
+    setBrandsData: ({ brandsData }) => {
+        set({ brandsData });
     },
-    setIsLoadingBrandsTable: (data) => {
-        set({ isLoadingBrandsTable: data });
+    setIsLoadingBrandsTable: ({ isLoadingBrandsTable }) => {
+        set({ isLoadingBrandsTable });
     },
     invokeAddBrandSlider: () => {
-        set({ showAddEditBrandSlider: true });
+        set({ showAddEditBrandSlider: true, brandIndexToEdit: null });
+    },
+    invokeEditBrandSlider: ({ brandIndexToEdit }) => {
+        set({ showAddEditBrandSlider: true, brandIndexToEdit });
+    },
+    closeBrandSlider: () => {
+        set({ showAddEditBrandSlider: false, brandIndexToEdit: null });
     },
 }));
 
@@ -54,19 +61,22 @@ export const CatalogueBrandsPage = (): ReactElement => {
     const {
         isLoadingBrandsTable,
         setBrandsData,
-        showAddEditBrandSlider,
         brandsData,
         setIsLoadingBrandsTable,
+        invokeEditBrandSlider,
     } = useCatalogueBrandsPageState();
 
     // effects
     useEffect(() => {
         (async () => {
-            const allBrandsData = await CatalogueBrandsPageService.getAllBrandsData();
-            setBrandsData(allBrandsData);
-            setIsLoadingBrandsTable(false);
+            const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
+            setBrandsData({ brandsData });
+            setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
         }).call(null);
     }, []);
+
+    // compute
+    const tableItems = CatalogueBrandsPageService.getTableItems(brandsData, invokeEditBrandSlider);
 
     return (
         <>
@@ -74,12 +84,12 @@ export const CatalogueBrandsPage = (): ReactElement => {
                 <PageHeaderComponent />
                 <div className={styles.tableWrapper}>
                     <StandardDataViewTable
-                        tableItems={CatalogueBrandsPageService.getTableItems(brandsData)}
+                        tableItems={tableItems}
                         isLoading={isLoadingBrandsTable}
                     />
                 </div>
             </div>
-            <AddEditBrandSliderModal show={showAddEditBrandSlider} />
+            <AddEditBrandSliderModal />
         </>
     );
 };
