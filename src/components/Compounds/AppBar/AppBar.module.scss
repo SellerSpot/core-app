@@ -18,10 +18,32 @@
         width: 40%;
         height: 100%;
         padding-right: 25px;
-        @include flex(center, flex-end, row, 30px);
+        @include flex(center, flex-end, row, 25px);
 
         .icon {
-            background-color: red;
+            background-color: transparent;
+            color: $foregroundPrimary-color;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: $backgroundSubTertiary-color;
+            }
+        }
+
+        .avatar {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: $primary-color;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+
+            .avatarText {
+                color: $primary-color;
+                font-size: 18px;
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 import Icon from '@iconify/react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { PluginMenuTile as PluginMenuTileComponent } from './PluginMenuTile';
 import { IPluginMenuTileProps } from './PluginMenuTile.types';
 

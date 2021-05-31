@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import PluginCardComponent from './PluginCard';
 import { IPluginCardProps } from './PluginCard.types';
 

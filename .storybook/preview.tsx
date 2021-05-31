@@ -1,10 +1,8 @@
-import { ThemeProvider } from '@sellerspot/universal-components';
+import { colorThemes, fontSizeThemes, ThemeProvider } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
-import { CommonProvider } from '../src/layouts/App/components/CommonProvider/CommonProvider';
-import { colorThemes, fontSizeThemes } from '../src/config/themes';
-import { store } from '../src/store/store';
 import 'react-sortable-tree/style.css';
+import { store } from '../src/store/store';
 import '../src/styles/core.scss';
 
 export const parameters = {

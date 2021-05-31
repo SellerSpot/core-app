@@ -1,4 +1,4 @@
-import { IColors } from 'config/themes';
+import { IColors } from '@sellerspot/universal-components';
 import React, { CSSProperties } from 'react';
 import { ExtendedNodeData } from 'react-sortable-tree';
 import { IModifyCategoriesNodeDataStoreProps } from '../ModifyCategories.types';

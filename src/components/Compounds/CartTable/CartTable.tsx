@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { store } from 'store/store';
 import { cartSelector, removeProductFromCart } from 'store/models/cart';

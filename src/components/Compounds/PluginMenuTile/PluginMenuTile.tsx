@@ -11,7 +11,6 @@ export const PluginMenuTile = (props: IPluginMenuTileProps): ReactElement => {
         pluginIcon,
         pluginTitle = 'Plugin',
         selected = false,
-        toolTipText = '',
     } = props;
 
     const wrapperClassName = cn(
@@ -30,7 +29,7 @@ export const PluginMenuTile = (props: IPluginMenuTileProps): ReactElement => {
     const avatarTheme = selected ? 'selectedNoBg' : 'unselected';
 
     return (
-        <ToolTip content={toolTipText} enterDelay={500} placement={'right'}>
+        <ToolTip content={pluginTitle}>
             <div
                 className={wrapperClassName}
                 onClick={events?.onClick}

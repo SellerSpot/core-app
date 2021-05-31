@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { Home } from 'layouts/Home/Home';
-import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
-import { Catalogue } from 'layouts/Catalogue/Catalogue';
-import { Management } from 'layouts/Management/Management';
-import styles from './dashboard.module.scss';
+import { AppBar } from 'components/Compounds/AppBar/AppBar';
 import { PluginMenu } from 'components/Compounds/PluginMenu/PluginMenu';
 import { ROUTES } from 'config/routes';
-import { AppBar } from 'components/Compounds/AppBar/AppBar';
+import { Catalogue } from 'layouts/Catalogue/Catalogue';
+import { Home } from 'layouts/Home/Home';
+import { Management } from 'layouts/Management/Management';
+import { PointOfSale } from 'layouts/PointOfSale/PointOfSale';
+import React, { ReactElement } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import styles from './dashboard.module.scss';
 
 export const Dashboard = (): ReactElement => {
     return (

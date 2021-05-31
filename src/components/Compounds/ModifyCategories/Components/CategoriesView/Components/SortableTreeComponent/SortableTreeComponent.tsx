@@ -1,8 +1,7 @@
-import { showNotify } from '@sellerspot/universal-components';
+import { colorThemes, showNotify } from '@sellerspot/universal-components';
 import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import { ModifyCategoriesService } from 'components/Compounds/ModifyCategories/services/ModifyCategories.service';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
-import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import SortableTree, {

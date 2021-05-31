@@ -11,22 +11,17 @@ export class StandardDataViewTableService {
         {
             content: <h5>Name</h5>,
             align: 'left',
-            width: '30%',
+            width: '25%',
         },
         {
             content: <h5>Description</h5>,
             align: 'left',
-            width: '50%',
-        },
-        {
-            content: <h5>Products</h5>,
-            align: 'right',
-            width: '10%',
+            width: '45%',
         },
         {
             content: <h5>Actions</h5>,
-            align: 'left',
-            width: '10%',
+            align: 'right',
+            width: '25%',
         },
     ];
 
@@ -38,9 +33,6 @@ export class StandardDataViewTableService {
             .map(() => {
                 return {
                     cells: [
-                        {
-                            content: <Skeleton height="26px" width="100%" variant="rect" />,
-                        },
                         {
                             content: <Skeleton height="26px" width="100%" variant="rect" />,
                         },

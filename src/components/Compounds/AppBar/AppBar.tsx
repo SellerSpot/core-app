@@ -1,10 +1,7 @@
 import Icon from '@iconify/react';
 import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
-import { colorThemes } from 'config/themes';
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-import { themeSelector } from 'store/models/theme';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from './AppBar.module.scss';
 import { AppBarHeader } from './Components/AppBarHeader/AppBarHeader';
 
@@ -13,16 +10,8 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
         {
             content: (
                 <div className={styles.avatarTile}>
-                    <Icon icon={ICONS.baselinePersonPin} />
-                    Profile
-                </div>
-            ),
-        },
-        {
-            content: (
-                <div className={styles.avatarTile}>
-                    <Icon icon={ICONS.baselineSettings} />
-                    Settings
+                    <Icon icon={ICONS.bxExit} height="20px" />
+                    <h6>Logout</h6>
                 </div>
             ),
         },
@@ -30,8 +19,6 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
 };
 
 export const AppBar = (): ReactElement => {
-    const themeState = useSelector(themeSelector);
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.lhsGroup}>
@@ -40,20 +27,23 @@ export const AppBar = (): ReactElement => {
                 </div>
             </div>
             <div className={styles.rhsGroup}>
-                <Icon
-                    icon={ICONS.bxFullScreen}
-                    height="20px"
-                    color={colorThemes[themeState.colorTheme].foregroundPrimary}
+                <Avatar
+                    className={styles.icon}
+                    content={<Icon icon={ICONS.bxFullScreen} height="20px" />}
+                    size="medium"
+                    variant="circular"
                 />
-                <Icon
-                    icon={ICONS.notifications}
-                    height="20px"
-                    color={colorThemes[themeState.colorTheme].foregroundPrimary}
+                <Avatar
+                    className={styles.icon}
+                    content={<Icon icon={ICONS.notifications} height="20px" />}
+                    size="medium"
+                    variant="circular"
                 />
                 <Menu items={getAvatarMenuItems()}>
                     {({ openMenuHandler }) => (
                         <Avatar
-                            content={'R'}
+                            className={styles.avatar}
+                            content={<span className={styles.avatarText}>R</span>}
                             variant="circular"
                             theme="selected"
                             size="medium"

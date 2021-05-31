@@ -2,10 +2,6 @@ import { IComponentEvents } from 'typings/common.types';
 import { ReactElement } from 'react';
 
 export interface IPluginMenuTileProps {
-    /**
-     * Text to show in tooltips
-     */
-    toolTipText?: string;
     pluginIcon?: ReactElement;
     /**
      * Toggles the tile to expanded state

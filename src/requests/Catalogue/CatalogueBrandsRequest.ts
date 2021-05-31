@@ -1,6 +1,5 @@
-import { ROUTES } from '@sellerspot/universal-types';
+import { IGetAllBrandsResponse, ROUTES } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { ICatalogueBrands_GetAllBrands } from 'requests/typings/Catalogue/CatalogueBrands.types';
 import { introduceDelay } from 'utilities/general';
 
 export default class CatalogueBrandsRequest extends BaseRequest {
@@ -8,23 +7,23 @@ export default class CatalogueBrandsRequest extends BaseRequest {
         super(ROUTES.SERVICE.CATALOGUE);
     }
 
-    getAllBrands = async (): Promise<ICatalogueBrands_GetAllBrands['data']> => {
+    getAllBrands = async (): Promise<IGetAllBrandsResponse['data']> => {
         await introduceDelay(3000);
         return [
             {
+                id: 'asdfasdfasdf',
                 name: 'Pepsi',
                 description: 'Sample Description',
-                noOfProducts: 12,
             },
             {
+                id: 'asdfasdfasdf',
                 name: 'Miranda',
                 description: 'Sample Description',
-                noOfProducts: 123,
             },
             {
+                id: 'asdfasdf',
                 name: 'Boltono',
                 description: 'Sample Description',
-                noOfProducts: 121,
             },
         ];
     };
