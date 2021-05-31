@@ -9,18 +9,18 @@ import {
 } from '@sellerspot/universal-components';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { ICONS } from 'utilities/utilities';
-import styles from './StandardDataViewTable.module.scss';
-import { StandardDataViewTableService } from './StandardDataViewTable.service';
-import { IStandardDataViewTableProps } from './StandardDataViewTable.types';
+import styles from './BrandsTable.module.scss';
+import { StandardDataViewTableService } from './BrandsTable.service';
+import { IBrandsTableProps } from './BrandsTable.types';
 
-export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
+export { IBrandsTableProps } from './BrandsTable.types';
 
 // assembles the cell data for the table
 const getCells = (props: {
-    tableItem: IStandardDataViewTableProps['tableItems'][0];
+    tableItem: IBrandsTableProps['tableItems'][0];
     tableItemIndex: number;
-    deleteItemCallback: IStandardDataViewTableProps['deleteItemCallback'];
-    editItemCallback: IStandardDataViewTableProps['editItemCallback'];
+    deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
+    editItemCallback: IBrandsTableProps['editItemCallback'];
 }): ITableCell[] => {
     const { tableItem, tableItemIndex, deleteItemCallback, editItemCallback } = props;
     const { description, name } = tableItem;
@@ -83,10 +83,10 @@ const getCells = (props: {
 
 // assembles the body content for the table
 const getTableBody = (props: {
-    tableItems: IStandardDataViewTableProps['tableItems'];
+    tableItems: IBrandsTableProps['tableItems'];
     toggleRowExpansion: (rowIndex: number) => void;
-    deleteItemCallback: IStandardDataViewTableProps['deleteItemCallback'];
-    editItemCallback: IStandardDataViewTableProps['editItemCallback'];
+    deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
+    editItemCallback: IBrandsTableProps['editItemCallback'];
 }): ITableRow[] => {
     const { tableItems, deleteItemCallback, editItemCallback } = props;
     return tableItems.map((tableItem, tableItemIndex): ITableRow => {
@@ -101,7 +101,7 @@ const getTableBody = (props: {
     });
 };
 
-export const StandardDataViewTable = (props: IStandardDataViewTableProps): ReactElement => {
+export const BrandsTable = (props: IBrandsTableProps): ReactElement => {
     const { tableItems, isLoading, deleteItemCallback, editItemCallback } = props;
     const [containerHeight, setContainerHeight] = useState(500);
     const tableContainerRef = useRef<HTMLDivElement>(null);

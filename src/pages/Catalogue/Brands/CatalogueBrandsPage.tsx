@@ -1,10 +1,6 @@
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import {
-    IStandardDataViewTableProps,
-    StandardDataViewTable,
-} from 'components/Compounds/StandardDataViewTable/StandardDataViewTable';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
 import create from 'zustand';
@@ -12,6 +8,7 @@ import styles from './CatalogueBrandsPage.module.scss';
 import { CatalogueBrandsPageService } from './CatalogueBrandsPage.service';
 import { ICatalogueBrandsPageState } from './CatalogueBrandsPage.types';
 import { AddEditBrandSliderModal } from './Components/AddEditBrandSliderModal/AddEditBrandSliderModal';
+import { BrandsTable, IBrandsTableProps } from './Components/BrandsTable/BrandsTable';
 
 export const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((set) => ({
     brandsData: [],
@@ -69,40 +66,31 @@ export const CatalogueBrandsPage = (): ReactElement => {
         invokeEditBrandSlider,
     } = useCatalogueBrandsPageState();
 
-    // effects
-    useEffect(() => {
-        getAllBrands();
-    }, []);
-
-    // compute
-    const tableItems = CatalogueBrandsPageService.getTableItems(brandsData);
-
     // handlers
     const getAllBrands = async () => {
         const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
         setBrandsData({ brandsData });
         setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
     };
-    const editItemCallbackHandler: IStandardDataViewTableProps['editItemCallback'] = (
-        _,
-        rowIndex,
-    ) => {
+    const editItemCallbackHandler: IBrandsTableProps['editItemCallback'] = (_, rowIndex) => {
         invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
     };
-    const deleteItemCallbackHandler: IStandardDataViewTableProps['deleteItemCallback'] = (
-        _,
-        rowIndex,
-    ) => {
+    const deleteItemCallbackHandler: IBrandsTableProps['deleteItemCallback'] = (_, rowIndex) => {
         invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
     };
+
+    // effects
+    useEffect(() => {
+        getAllBrands();
+    }, []);
 
     return (
         <>
             <div className={styles.wrapper}>
                 <PageHeaderComponent />
                 <div className={styles.tableWrapper}>
-                    <StandardDataViewTable
-                        tableItems={tableItems}
+                    <BrandsTable
+                        tableItems={brandsData}
                         isLoading={isLoadingBrandsTable}
                         editItemCallback={editItemCallbackHandler}
                         deleteItemCallback={deleteItemCallbackHandler}
