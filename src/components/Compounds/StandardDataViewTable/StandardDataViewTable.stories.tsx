@@ -21,16 +21,14 @@ StandardDataViewTable.args = {
         {
             name: 'Brand Name',
             description: 'Brand Description',
-            deleteItemCallback: () => console.log('Item Deleted'),
-            editItemCallback: () => console.log('Item Edit'),
         },
         {
             name: 'Brand Name 2',
             description: 'Brand Description 2',
-            deleteItemCallback: () => console.log('Item Deleted'),
-            editItemCallback: () => console.log('Item Edit'),
         },
     ],
+    deleteItemCallback: () => console.log('Item Deleted'),
+    editItemCallback: () => console.log('Item Edit'),
 } as IStandardDataViewTableProps;
 
 export default {

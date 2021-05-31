@@ -1,7 +1,10 @@
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import { StandardDataViewTable } from 'components/Compounds/StandardDataViewTable/StandardDataViewTable';
+import {
+    IStandardDataViewTableProps,
+    StandardDataViewTable,
+} from 'components/Compounds/StandardDataViewTable/StandardDataViewTable';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
 import create from 'zustand';
@@ -66,20 +69,32 @@ export const CatalogueBrandsPage = (): ReactElement => {
         invokeEditBrandSlider,
     } = useCatalogueBrandsPageState();
 
-    // handlers
-    const getAllBrands = async () => {
-        const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
-        setBrandsData({ brandsData });
-        setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
-    };
-
     // effects
     useEffect(() => {
         getAllBrands();
     }, []);
 
     // compute
-    const tableItems = CatalogueBrandsPageService.getTableItems(brandsData, invokeEditBrandSlider);
+    const tableItems = CatalogueBrandsPageService.getTableItems(brandsData);
+
+    // handlers
+    const getAllBrands = async () => {
+        const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
+        setBrandsData({ brandsData });
+        setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
+    };
+    const editItemCallbackHandler: IStandardDataViewTableProps['editItemCallback'] = (
+        _,
+        rowIndex,
+    ) => {
+        invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
+    };
+    const deleteItemCallbackHandler: IStandardDataViewTableProps['deleteItemCallback'] = (
+        _,
+        rowIndex,
+    ) => {
+        invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
+    };
 
     return (
         <>
@@ -89,6 +104,8 @@ export const CatalogueBrandsPage = (): ReactElement => {
                     <StandardDataViewTable
                         tableItems={tableItems}
                         isLoading={isLoadingBrandsTable}
+                        editItemCallback={editItemCallbackHandler}
+                        deleteItemCallback={deleteItemCallbackHandler}
                     />
                 </div>
             </div>

@@ -19,9 +19,20 @@ export { IStandardDataViewTableProps } from './StandardDataViewTable.types';
 const getCells = (props: {
     tableItem: IStandardDataViewTableProps['tableItems'][0];
     tableItemIndex: number;
+    deleteItemCallback: IStandardDataViewTableProps['deleteItemCallback'];
+    editItemCallback: IStandardDataViewTableProps['editItemCallback'];
 }): ITableCell[] => {
-    const { tableItem, tableItemIndex } = props;
-    const { deleteItemCallback, description, editItemCallback, name } = tableItem;
+    const { tableItem, tableItemIndex, deleteItemCallback, editItemCallback } = props;
+    const { description, name } = tableItem;
+
+    const editItemClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        editItemCallback(event, tableItemIndex);
+    };
+
+    const deleteItemClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        deleteItemCallback(event, tableItemIndex);
+    };
+
     const rowActions = (
         <div className={styles.rowActions}>
             <span className={styles.link}>View Products</span>
@@ -32,7 +43,7 @@ const getCells = (props: {
                             icon={<Icon icon={ICONS.baselineEdit} />}
                             size={'small'}
                             theme={'primary'}
-                            onClick={editItemCallback}
+                            onClick={editItemClickHandler}
                         />
                     </div>
                 </ToolTip>
@@ -42,7 +53,7 @@ const getCells = (props: {
                             icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                             size={'small'}
                             theme={'danger'}
-                            onClick={deleteItemCallback}
+                            onClick={deleteItemClickHandler}
                         />
                     </div>
                 </ToolTip>
@@ -74,20 +85,24 @@ const getCells = (props: {
 const getTableBody = (props: {
     tableItems: IStandardDataViewTableProps['tableItems'];
     toggleRowExpansion: (rowIndex: number) => void;
+    deleteItemCallback: IStandardDataViewTableProps['deleteItemCallback'];
+    editItemCallback: IStandardDataViewTableProps['editItemCallback'];
 }): ITableRow[] => {
-    const { tableItems } = props;
+    const { tableItems, deleteItemCallback, editItemCallback } = props;
     return tableItems.map((tableItem, tableItemIndex): ITableRow => {
         return {
             cells: getCells({
                 tableItem,
                 tableItemIndex,
+                deleteItemCallback,
+                editItemCallback,
             }),
         };
     });
 };
 
 export const StandardDataViewTable = (props: IStandardDataViewTableProps): ReactElement => {
-    const { tableItems, isLoading } = props;
+    const { tableItems, isLoading, deleteItemCallback, editItemCallback } = props;
     const [containerHeight, setContainerHeight] = useState(500);
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -101,6 +116,8 @@ export const StandardDataViewTable = (props: IStandardDataViewTableProps): React
         return getTableBody({
             tableItems,
             toggleRowExpansion,
+            deleteItemCallback,
+            editItemCallback,
         });
     };
 
