@@ -66,13 +66,16 @@ export const CatalogueBrandsPage = (): ReactElement => {
         invokeEditBrandSlider,
     } = useCatalogueBrandsPageState();
 
+    // handlers
+    const getAllBrands = async () => {
+        const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
+        setBrandsData({ brandsData });
+        setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
+    };
+
     // effects
     useEffect(() => {
-        (async () => {
-            const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
-            setBrandsData({ brandsData });
-            setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
-        }).call(null);
+        getAllBrands();
     }, []);
 
     // compute
