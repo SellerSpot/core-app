@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { SubMenu as SubMenuComponent } from './SubMenu';
 import { ISubMenuProps } from './SubMenu.types';
 

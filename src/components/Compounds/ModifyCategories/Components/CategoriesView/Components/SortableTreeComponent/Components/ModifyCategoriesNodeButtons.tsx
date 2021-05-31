@@ -10,7 +10,7 @@ import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
 import { removeNodeAtPath } from 'react-sortable-tree';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from '../../../../../ModifyCategories.module.scss';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;

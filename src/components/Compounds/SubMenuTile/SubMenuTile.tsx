@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { merge } from 'lodash';
 import React, { ReactElement } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from './SubMenuTile.module.scss';
 import { ISubMenuTileProps } from './SubMenuTile.types';
 

@@ -8,7 +8,7 @@ import {
     ToolTip,
 } from '@sellerspot/universal-components';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from './StandardDataViewTable.module.scss';
 import { StandardDataViewTableService } from './StandardDataViewTable.service';
 import { IStandardDataViewTableProps } from './StandardDataViewTable.types';

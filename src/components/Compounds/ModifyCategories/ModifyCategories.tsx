@@ -3,7 +3,7 @@ import { IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-
 import { debounce } from 'lodash';
 import React, { ReactElement, useState } from 'react';
 import { TreeItem } from 'react-sortable-tree';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import create from 'zustand';
 import { CategoriesView } from './Components/CategoriesView/CategoriesView';
 import { EditCategorySlider } from './Components/CategoriesView/Components/EditCategorySlider.tsx/EditCategorySlider';

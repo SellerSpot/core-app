@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { Field, Form, FormSpy } from 'react-final-form';
 import React, { ReactElement } from 'react';

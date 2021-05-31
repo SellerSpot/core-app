@@ -1,7 +1,7 @@
 import Icon from '@iconify/react';
 import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from './AppBar.module.scss';
 import { AppBarHeader } from './Components/AppBarHeader/AppBarHeader';
 

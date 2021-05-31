@@ -1,7 +1,7 @@
 import Icon from '@iconify/react';
 import { Slider, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import styles from './BillHolderControlPanel.module.scss';
 
 interface IBillHolderControlPanelProps {

@@ -2,7 +2,7 @@ import Icon from '@iconify/react';
 import { Button, Skeleton } from '@sellerspot/universal-components';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { useModifyCategoriesStore } from '../../ModifyCategories';
 import styles from '../../ModifyCategories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';

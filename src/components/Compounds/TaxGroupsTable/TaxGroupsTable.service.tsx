@@ -1,7 +1,7 @@
 import Icon from '@iconify/react';
 import { IconButton, ITableCell, ToolTip } from '@sellerspot/universal-components';
 import React from 'react';
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { ITaxGroupsTableProps } from './TaxGroupsTable';
 import styles from './TaxGroupsTable.module.scss';
 

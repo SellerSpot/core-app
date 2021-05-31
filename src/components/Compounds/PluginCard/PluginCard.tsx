@@ -1,4 +1,4 @@
-import { ICONS } from 'utilities/icons/icons';
+import { ICONS } from 'utilities/utilities';
 import { themeSelector } from 'store/models/theme';
 import { useSelector } from 'react-redux';
 import React, { ReactElement } from 'react';
