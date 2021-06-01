@@ -1,30 +1,59 @@
-import { IGetAllBrandsResponse, ROUTES } from '@sellerspot/universal-types';
+import {
+    ICreateBrandRequest,
+    ICreateBrandResponse,
+    IGetAllBrandResponse,
+    ROUTES,
+} from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { introduceDelay } from 'utilities/general';
+import { generateRandomString, introduceDelay } from 'utilities/general';
+
+type IBrandData = IGetAllBrandResponse['data'][0];
+
+interface ICatalogServer {
+    brands: IBrandData[];
+    getAllBrand: () => IGetAllBrandResponse;
+    createBrand: (brandData: ICreateBrandRequest) => ICreateBrandResponse;
+}
+
+const catalogueServer: ICatalogServer = {
+    brands: <IBrandData[]>[],
+    getAllBrand: () => {
+        return {
+            status: true,
+            data: catalogueServer.brands,
+        };
+    },
+    createBrand: (brandData: ICreateBrandRequest): ICreateBrandResponse => {
+        const { name } = brandData;
+        const newBrandData: IBrandData = {
+            id: generateRandomString(),
+            name,
+        };
+        debugger;
+        catalogueServer.brands.push(newBrandData);
+        return {
+            status: true,
+            data: newBrandData,
+        };
+    },
+};
 
 export default class CatalogueBrandsRequest extends BaseRequest {
     constructor() {
         super(ROUTES.SERVICE.CATALOGUE);
     }
 
-    getAllBrands = async (): Promise<IGetAllBrandsResponse['data']> => {
-        await introduceDelay(3000);
-        return [
-            {
-                id: 'asdfasdfasdf',
-                name: 'Pepsi',
-                description: 'Sample Description',
-            },
-            {
-                id: 'asdfasdfasdf',
-                name: 'Miranda',
-                description: 'Sample Description',
-            },
-            {
-                id: 'asdfasdf',
-                name: 'Boltono',
-                description: 'Sample Description',
-            },
-        ];
+    getAllBrand = async (): Promise<IGetAllBrandResponse> => {
+        await introduceDelay(1000);
+
+        const response = catalogueServer.getAllBrand();
+        return response;
+    };
+
+    createBrand = async (data: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
+        await introduceDelay(1000);
+
+        const response = catalogueServer.createBrand(data);
+        return response;
     };
 }

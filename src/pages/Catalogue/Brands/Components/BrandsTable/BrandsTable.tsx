@@ -23,7 +23,7 @@ const getCells = (props: {
     editItemCallback: IBrandsTableProps['editItemCallback'];
 }): ITableCell[] => {
     const { tableItem, tableItemIndex, deleteItemCallback, editItemCallback } = props;
-    const { description, name } = tableItem;
+    const { name, id } = tableItem;
 
     const editItemClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         editItemCallback(event, tableItemIndex);
@@ -65,18 +65,17 @@ const getCells = (props: {
         {
             content: <span className={styles.textContent}>{sNoText}</span>,
             align: 'right',
+            key: `${id}sNoText`,
         },
         {
             content: <span className={styles.textContent}>{name}</span>,
             align: 'left',
-        },
-        {
-            content: <span className={styles.textContent}>{description}</span>,
-            align: 'left',
+            key: `${id}name`,
         },
         {
             content: rowActions,
             align: 'right',
+            key: `${id}actions`,
         },
     ];
 };
@@ -90,6 +89,7 @@ const getTableBody = (props: {
 }): ITableRow[] => {
     const { tableItems, deleteItemCallback, editItemCallback } = props;
     return tableItems.map((tableItem, tableItemIndex): ITableRow => {
+        const { id } = tableItem;
         return {
             cells: getCells({
                 tableItem,
@@ -97,6 +97,7 @@ const getTableBody = (props: {
                 deleteItemCallback,
                 editItemCallback,
             }),
+            key: id,
         };
     });
 };

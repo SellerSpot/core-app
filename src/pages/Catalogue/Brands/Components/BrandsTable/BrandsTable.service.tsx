@@ -7,21 +7,19 @@ export class StandardDataViewTableService {
             content: <h5>S.No</h5>,
             align: 'right',
             width: '5%',
+            key: 'headerSNo',
         },
         {
             content: <h5>Name</h5>,
             align: 'left',
-            width: '25%',
-        },
-        {
-            content: <h5>Description</h5>,
-            align: 'left',
-            width: '45%',
+            width: '65%',
+            key: 'headerName',
         },
         {
             content: <h5>Actions</h5>,
             align: 'right',
-            width: '25%',
+            width: '30%',
+            key: 'headerActions',
         },
     ];
 
@@ -30,20 +28,21 @@ export class StandardDataViewTableService {
         const numberOfSkeletons = Math.round(containerHeight / heightOfRow);
         return Array(numberOfSkeletons)
             .fill(0)
-            .map(() => {
+            .map((_, key) => {
                 return {
+                    key: `${key}`,
                     cells: [
                         {
                             content: <Skeleton height="26px" width="100%" variant="rect" />,
+                            key: `${key}sno`,
                         },
                         {
                             content: <Skeleton height="26px" width="100%" variant="rect" />,
+                            key: `${key}name`,
                         },
                         {
                             content: <Skeleton height="26px" width="100%" variant="rect" />,
-                        },
-                        {
-                            content: <Skeleton height="26px" width="100%" variant="rect" />,
+                            key: `${key}actions`,
                         },
                     ],
                 };

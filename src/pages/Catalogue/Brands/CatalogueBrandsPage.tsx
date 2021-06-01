@@ -18,6 +18,15 @@ export const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((se
     setBrandsData: ({ brandsData }) => {
         set({ brandsData });
     },
+    addBrand: ({ brandData }) => {
+        // const brandsData = cloneDeep(get().brandsData);
+        // brandsData.push(cloneDeep(brandData));
+        // debugger;
+        set((state) => {
+            state.brandsData.push(brandData);
+            return state;
+        });
+    },
     setIsLoadingBrandsTable: ({ isLoadingBrandsTable }) => {
         set({ isLoadingBrandsTable });
     },
@@ -68,7 +77,8 @@ export const CatalogueBrandsPage = (): ReactElement => {
 
     // handlers
     const getAllBrands = async () => {
-        const brandsData = await CatalogueBrandsPageService.getAllBrandsData();
+        const brandsData = await CatalogueBrandsPageService.getAllBrand();
+        debugger;
         setBrandsData({ brandsData });
         setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
     };
@@ -78,6 +88,11 @@ export const CatalogueBrandsPage = (): ReactElement => {
     const deleteItemCallbackHandler: IBrandsTableProps['deleteItemCallback'] = (_, rowIndex) => {
         invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
     };
+
+    useEffect(() => {
+        debugger;
+        console.log(brandsData);
+    }, [brandsData]);
 
     // effects
     useEffect(() => {

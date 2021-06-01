@@ -8,6 +8,13 @@ export const xPercentofY = (values: { x: number; y: number }): number => {
 };
 
 /**
+ * Generate a string anywhere between zero and 12 characters long
+ * You can expect a duplicate after around 70M strings generated
+ * @returns string
+ */
+export const generateRandomString = (): string => Math.random().toString(36).slice(2);
+
+/**
  *
  * @param delay in seconds
  * @default
