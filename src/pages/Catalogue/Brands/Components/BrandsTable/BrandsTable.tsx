@@ -7,6 +7,7 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
+import { IBrandData } from '@sellerspot/universal-types';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './BrandsTable.module.scss';
@@ -17,7 +18,7 @@ export { IBrandsTableProps } from './BrandsTable.types';
 
 // assembles the cell data for the table
 const getCells = (props: {
-    tableItem: IBrandsTableProps['tableItems'][0];
+    tableItem: IBrandData;
     tableItemIndex: number;
     deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
     editItemCallback: IBrandsTableProps['editItemCallback'];
@@ -82,7 +83,7 @@ const getCells = (props: {
 
 // assembles the body content for the table
 const getTableBody = (props: {
-    tableItems: IBrandsTableProps['tableItems'];
+    tableItems: IBrandData[];
     toggleRowExpansion: (rowIndex: number) => void;
     deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
     editItemCallback: IBrandsTableProps['editItemCallback'];

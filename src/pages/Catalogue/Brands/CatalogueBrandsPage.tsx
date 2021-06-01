@@ -1,54 +1,26 @@
+import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
-import create from 'zustand';
 import styles from './CatalogueBrandsPage.module.scss';
 import { CatalogueBrandsPageService } from './CatalogueBrandsPage.service';
 import { ICatalogueBrandsPageState } from './CatalogueBrandsPage.types';
 import { AddEditBrandSliderModal } from './Components/AddEditBrandSliderModal/AddEditBrandSliderModal';
 import { BrandsTable, IBrandsTableProps } from './Components/BrandsTable/BrandsTable';
 
-export const useCatalogueBrandsPageState = create<ICatalogueBrandsPageState>((set) => ({
-    brandsData: [],
-    brandIndexToEdit: null,
-    isLoadingBrandsTable: true,
-    showAddEditBrandSlider: false,
-    setBrandsData: ({ brandsData }) => {
-        set({ brandsData });
-    },
-    addBrand: ({ brandData }) => {
-        // const brandsData = cloneDeep(get().brandsData);
-        // brandsData.push(cloneDeep(brandData));
-        // debugger;
-        set((state) => {
-            state.brandsData.push(brandData);
-            return state;
-        });
-    },
-    setIsLoadingBrandsTable: ({ isLoadingBrandsTable }) => {
-        set({ isLoadingBrandsTable });
-    },
-    invokeAddBrandSlider: () => {
-        set({ showAddEditBrandSlider: true, brandIndexToEdit: null });
-    },
-    invokeEditBrandSlider: ({ brandIndexToEdit }) => {
-        set({ showAddEditBrandSlider: true, brandIndexToEdit });
-    },
-    closeBrandSlider: () => {
-        set({ showAddEditBrandSlider: false, brandIndexToEdit: null });
-    },
-}));
-
-const PageHeaderComponent = () => {
-    const { invokeAddBrandSlider } = useCatalogueBrandsPageState();
+const PageHeaderComponent = (props: { pageState: State<ICatalogueBrandsPageState> }) => {
+    const { pageState } = props;
 
     // handlers
     const getActions = () => {
         // handlers
         const handleClick = () => {
-            invokeAddBrandSlider();
+            pageState.merge({
+                showAddEditBrandSlider: true,
+                brandIndexToEdit: null,
+            });
         };
         return [
             <Button
@@ -67,32 +39,24 @@ const PageHeaderComponent = () => {
 
 export const CatalogueBrandsPage = (): ReactElement => {
     // state
-    const {
-        isLoadingBrandsTable,
-        setBrandsData,
-        brandsData,
-        setIsLoadingBrandsTable,
-        invokeEditBrandSlider,
-    } = useCatalogueBrandsPageState();
+    const pageState = useState<ICatalogueBrandsPageState>(
+        CatalogueBrandsPageService.pageStateInitialData,
+    );
 
     // handlers
     const getAllBrands = async () => {
         const brandsData = await CatalogueBrandsPageService.getAllBrand();
-        debugger;
-        setBrandsData({ brandsData });
-        setIsLoadingBrandsTable({ isLoadingBrandsTable: false });
+        pageState.merge({
+            brandsData,
+            isLoadingBrandsTable: false,
+        });
     };
     const editItemCallbackHandler: IBrandsTableProps['editItemCallback'] = (_, rowIndex) => {
-        invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
+        pageState.brandIndexToEdit.set(rowIndex);
     };
     const deleteItemCallbackHandler: IBrandsTableProps['deleteItemCallback'] = (_, rowIndex) => {
-        invokeEditBrandSlider({ brandIndexToEdit: rowIndex });
+        pageState.brandIndexToEdit.set(rowIndex);
     };
-
-    useEffect(() => {
-        debugger;
-        console.log(brandsData);
-    }, [brandsData]);
 
     // effects
     useEffect(() => {
@@ -102,17 +66,17 @@ export const CatalogueBrandsPage = (): ReactElement => {
     return (
         <>
             <div className={styles.wrapper}>
-                <PageHeaderComponent />
+                <PageHeaderComponent pageState={pageState} />
                 <div className={styles.tableWrapper}>
                     <BrandsTable
-                        tableItems={brandsData}
-                        isLoading={isLoadingBrandsTable}
+                        tableItems={pageState.brandsData.get()}
+                        isLoading={pageState.isLoadingBrandsTable.get()}
                         editItemCallback={editItemCallbackHandler}
                         deleteItemCallback={deleteItemCallbackHandler}
                     />
                 </div>
             </div>
-            <AddEditBrandSliderModal />
+            <AddEditBrandSliderModal pageState={pageState} />
         </>
     );
 };

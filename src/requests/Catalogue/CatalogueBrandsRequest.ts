@@ -30,7 +30,7 @@ const catalogueServer: ICatalogServer = {
             name,
         };
         debugger;
-        catalogueServer.brands.push(newBrandData);
+        catalogueServer.brands.unshift(newBrandData);
         return {
             status: true,
             data: newBrandData,

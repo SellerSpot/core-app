@@ -1,3 +1,4 @@
+import { State } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
     Button,
@@ -5,14 +6,13 @@ import {
     InputField,
     SliderModal,
 } from '@sellerspot/universal-components';
-import { clone, isNull } from 'lodash';
+import { isNull } from 'lodash';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Field, Form, FormProps } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
-import { useCatalogueBrandsPageState } from '../../CatalogueBrandsPage';
+import { ICatalogueBrandsPageState } from '../../CatalogueBrandsPage.types';
 import styles from './AddEditBrandSliderModal.module.scss';
 import { AddEditBrandSliderModalService } from './AddEditBrandSliderModal.service';
-// import { AddEditBrandSliderModalService } from './AddEditBrandSliderModal.service';
 import {
     IAddEditBrandSliderModalForm,
     IAddEditBrandSliderModalHeaderProps,
@@ -54,10 +54,13 @@ const SliderModalHeader = (props: IAddEditBrandSliderModalHeaderProps) => {
     );
 };
 
-export const AddEditBrandSliderModal = (): ReactElement => {
+export const AddEditBrandSliderModal = (props: {
+    pageState: State<ICatalogueBrandsPageState>;
+}): ReactElement => {
+    // props
+    const { pageState } = props;
+
     // state
-    const { showAddEditBrandSlider, brandIndexToEdit, brandsData, closeBrandSlider, addBrand } =
-        useCatalogueBrandsPageState();
     const [formInitialState, setFormInitialState] = useState<IAddEditBrandSliderModalForm>({
         name: '',
     });
@@ -66,36 +69,37 @@ export const AddEditBrandSliderModal = (): ReactElement => {
     const handleFormSubmit: FormProps['onSubmit'] = async (
         values: IAddEditBrandSliderModalForm,
     ) => {
-        if (isNull(brandIndexToEdit)) {
+        if (isNull(pageState.brandIndexToEdit.get())) {
             const newBrandData = await AddEditBrandSliderModalService.createBrand(values);
-            // // debugger;
-            addBrand({ brandData: clone(newBrandData) });
+            const brandsData = pageState.brandsData.get();
+            brandsData.unshift(newBrandData);
+            pageState.brandsData.set(brandsData);
         } else {
         }
     };
     const handleSliderCloseActionButtonClick = () => {
-        closeBrandSlider();
+        pageState.merge({
+            showAddEditBrandSlider: false,
+            brandIndexToEdit: null,
+        });
     };
 
     // compute
-    const headerMode: IAddEditBrandSliderModalHeaderProps['headerMode'] = isNull(brandIndexToEdit)
+    const headerMode: IAddEditBrandSliderModalHeaderProps['headerMode'] = isNull(
+        pageState.brandIndexToEdit.get(),
+    )
         ? 'add'
         : 'edit';
 
     // effects
     useEffect(() => {
-        if (!isNull(brandIndexToEdit)) {
-            const brandDataToEdit = brandsData[brandIndexToEdit];
+        if (!isNull(pageState.brandIndexToEdit.get())) {
+            const brandDataToEdit = pageState.brandsData.get()[pageState.brandIndexToEdit.get()];
             setFormInitialState({
                 name: brandDataToEdit['name'],
             });
         }
-    }, [showAddEditBrandSlider, brandIndexToEdit]);
-
-    // useEffect(() => {
-    //     debugger;
-    //     console.log(brandsData);
-    // }, [brandsData]);
+    }, [pageState.showAddEditBrandSlider, pageState.brandIndexToEdit]);
 
     return (
         <Form
@@ -111,7 +115,7 @@ export const AddEditBrandSliderModal = (): ReactElement => {
                                 showActionButton: 'backButton',
                                 onActionButtonClick: handleSliderCloseActionButtonClick,
                             }}
-                            show={showAddEditBrandSlider}
+                            show={pageState.showAddEditBrandSlider.get()}
                             width={'30%'}
                         >
                             <SliderModalHeader headerMode={headerMode} submitting={submitting} />
@@ -139,7 +143,7 @@ export const AddEditBrandSliderModal = (): ReactElement => {
                                                 tabIndex={1}
                                                 value={value}
                                                 required
-                                                autoFocus={showAddEditBrandSlider}
+                                                autoFocus={pageState.showAddEditBrandSlider.get()}
                                                 theme={fieldTheme}
                                                 label={'Brand Name'}
                                                 helperMessage={helperMessage}
