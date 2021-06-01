@@ -12,7 +12,7 @@ export default class BaseRequest {
         return `${this.service}${route}`;
     }
 
-    public request(requestPayload: IRequestPayload): ReturnType<typeof apiService.request> {
+    protected request(requestPayload: IRequestPayload): ReturnType<typeof apiService.request> {
         return apiService.request({ ...requestPayload, url: this.getUrl(requestPayload.url) });
     }
 }
