@@ -1,5 +1,6 @@
 import Icon from '@iconify/react';
 import { Avatar, IMenuProps, Menu } from '@sellerspot/universal-components';
+import AuthProviderService from 'layouts/App/components/AuthProvider/AuthProvider.service';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './AppBar.module.scss';
@@ -14,6 +15,9 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
                     <h6>Logout</h6>
                 </div>
             ),
+            onClick: () => {
+                AuthProviderService.logoutUser();
+            },
         },
     ];
 };
