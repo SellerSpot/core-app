@@ -42,7 +42,9 @@ export default class AuthProviderService {
         };
         const { status, error = templateError } = await requests.authRequest.logoutUser();
         if (status) {
-            store.dispatch(resetUserDetails());
+            showNotify('Signed out successfully');
+            await introduceDelay(1500);
+            store.dispatch(resetUserDetails()); //- redirect with caution, only redirect if user has stable connection , otherwise show fallback page
         } else {
             if (error.code && error.message) {
                 showNotify(error.message);

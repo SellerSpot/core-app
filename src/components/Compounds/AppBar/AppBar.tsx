@@ -12,7 +12,7 @@ const getAvatarMenuItems = (): IMenuProps['items'] => {
             content: (
                 <div className={styles.avatarTile}>
                     <Icon icon={ICONS.bxExit} height="20px" />
-                    <h6>Logout</h6>
+                    <h6>Sign out</h6>
                 </div>
             ),
             onClick: () => {
