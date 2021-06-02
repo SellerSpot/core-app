@@ -71,9 +71,10 @@ export const AddEditBrandSliderModal = (props: {
     ) => {
         if (isNull(pageState.brandIndexToEdit.get())) {
             const newBrandData = await AddEditBrandSliderModalService.createBrand(values);
-            const brandsData = pageState.brandsData.get();
-            brandsData.unshift(newBrandData);
-            pageState.brandsData.set(brandsData);
+            pageState.brandsData.set((state) => {
+                const newState = [newBrandData, ...state];
+                return newState;
+            });
         } else {
         }
     };

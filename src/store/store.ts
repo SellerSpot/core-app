@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import '@hookstate/devtools';
 import * as reducers from './models';
 import { CONFIG } from '../config/config';
 

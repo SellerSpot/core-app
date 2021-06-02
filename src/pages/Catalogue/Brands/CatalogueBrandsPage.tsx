@@ -1,4 +1,4 @@
-import { State, useState } from '@hookstate/core';
+import { DevTools, State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
@@ -42,6 +42,7 @@ export const CatalogueBrandsPage = (): ReactElement => {
     const pageState = useState<ICatalogueBrandsPageState>(
         CatalogueBrandsPageService.pageStateInitialData,
     );
+    DevTools(pageState).label('Brand Page state');
 
     // handlers
     const getAllBrands = async () => {

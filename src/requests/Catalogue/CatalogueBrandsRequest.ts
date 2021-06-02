@@ -29,8 +29,7 @@ const catalogueServer: ICatalogServer = {
             id: generateRandomString(),
             name,
         };
-        debugger;
-        catalogueServer.brands.unshift(newBrandData);
+        catalogueServer.brands = [newBrandData, ...catalogueServer.brands];
         return {
             status: true,
             data: newBrandData,
