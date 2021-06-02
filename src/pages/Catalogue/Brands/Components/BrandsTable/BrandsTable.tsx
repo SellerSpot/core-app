@@ -7,6 +7,7 @@ import {
     Table,
     ToolTip,
 } from '@sellerspot/universal-components';
+import { IBrandData } from '@sellerspot/universal-types';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './BrandsTable.module.scss';
@@ -17,13 +18,13 @@ export { IBrandsTableProps } from './BrandsTable.types';
 
 // assembles the cell data for the table
 const getCells = (props: {
-    tableItem: IBrandsTableProps['tableItems'][0];
+    tableItem: IBrandData;
     tableItemIndex: number;
     deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
     editItemCallback: IBrandsTableProps['editItemCallback'];
 }): ITableCell[] => {
     const { tableItem, tableItemIndex, deleteItemCallback, editItemCallback } = props;
-    const { description, name } = tableItem;
+    const { name, id } = tableItem;
 
     const editItemClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         editItemCallback(event, tableItemIndex);
@@ -65,31 +66,31 @@ const getCells = (props: {
         {
             content: <span className={styles.textContent}>{sNoText}</span>,
             align: 'right',
+            key: `${id}sNoText`,
         },
         {
             content: <span className={styles.textContent}>{name}</span>,
             align: 'left',
-        },
-        {
-            content: <span className={styles.textContent}>{description}</span>,
-            align: 'left',
+            key: `${id}name`,
         },
         {
             content: rowActions,
             align: 'right',
+            key: `${id}actions`,
         },
     ];
 };
 
 // assembles the body content for the table
 const getTableBody = (props: {
-    tableItems: IBrandsTableProps['tableItems'];
+    tableItems: IBrandData[];
     toggleRowExpansion: (rowIndex: number) => void;
     deleteItemCallback: IBrandsTableProps['deleteItemCallback'];
     editItemCallback: IBrandsTableProps['editItemCallback'];
 }): ITableRow[] => {
     const { tableItems, deleteItemCallback, editItemCallback } = props;
     return tableItems.map((tableItem, tableItemIndex): ITableRow => {
+        const { id } = tableItem;
         return {
             cells: getCells({
                 tableItem,
@@ -97,6 +98,7 @@ const getTableBody = (props: {
                 deleteItemCallback,
                 editItemCallback,
             }),
+            key: id,
         };
     });
 };

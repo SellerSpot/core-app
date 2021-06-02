@@ -1,10 +1,10 @@
-import { IGetAllBrandsResponse } from '@sellerspot/universal-types';
+import { IBrandData } from '@sellerspot/universal-types';
 
 export interface IAddEditBrandSliderModalHeaderProps {
     headerMode: 'add' | 'edit';
+    submitting: boolean;
 }
 
 export interface IAddEditBrandSliderModalForm {
-    name: IGetAllBrandsResponse['data'][0]['name'];
-    description: IGetAllBrandsResponse['data'][0]['description'];
+    name: IBrandData['name'];
 }
