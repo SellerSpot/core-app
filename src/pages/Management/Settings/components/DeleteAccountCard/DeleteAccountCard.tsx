@@ -1,10 +1,23 @@
-import React, { ReactElement } from 'react';
-import { Alert, Button, Card } from '@sellerspot/universal-components';
+import React, { ReactElement, useState } from 'react';
+import {
+    Alert,
+    Button,
+    Card,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from '@sellerspot/universal-components';
 import styles from './DeleteAccountCard.module.scss';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
 
 export default function DeleteAccountCard(): ReactElement {
+    // state
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
     // hooks
     const {
         tenantDetails: { domainDetails },
@@ -12,9 +25,23 @@ export default function DeleteAccountCard(): ReactElement {
     const { domainName, url: domainUrl } = domainDetails;
 
     // handlers
-    const deleteClickHandler = () => {
-        // show confirm dialog and trigger delete
-        // add loader
+    const onDeleteClickHandler = () => {
+        if (!isDeleting) setShowConfirmDialog(true);
+    };
+
+    const onConfirmDeleteHandler = () => {
+        setShowConfirmDialog(false);
+        setIsDeleting(true);
+    };
+
+    const getDeleteButtonLabel = () => {
+        if (showConfirmDialog) {
+            return 'waiting for confirmation';
+        } else if (isDeleting) {
+            return 'Deleteing your account';
+        } else {
+            return 'Delete account';
+        }
     };
 
     return (
@@ -44,8 +71,10 @@ export default function DeleteAccountCard(): ReactElement {
                                 size="medium"
                                 theme="danger"
                                 variant="contained"
-                                label={'Delete account'}
-                                onClick={deleteClickHandler}
+                                label={getDeleteButtonLabel()}
+                                onClick={onDeleteClickHandler}
+                                isLoading={isDeleting || showConfirmDialog}
+                                disabled={isDeleting || showConfirmDialog}
                             />
                         </div>
                         <div className={styles.bottomContent}>
@@ -57,6 +86,31 @@ export default function DeleteAccountCard(): ReactElement {
                     </div>
                 }
             />
+            <Dialog open={showConfirmDialog}>
+                <DialogTitle>Delete account</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <Alert type={'error'}>
+                            This is a desctructive operation! All data generated in this account
+                            will be deleted permanently
+                        </Alert>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        variant="outlined"
+                        theme="primary"
+                        onClick={() => setShowConfirmDialog(false)}
+                        label={'Cancel'}
+                    />
+                    <Button
+                        variant="contained"
+                        theme="danger"
+                        onClick={() => onConfirmDeleteHandler()}
+                        label={'Confirm to delete'}
+                    />
+                </DialogActions>
+            </Dialog>
         </>
     );
 }
