@@ -49,3 +49,7 @@ export const COMMON_SYMBOLS = {
 export const redirectTo = (url: string, target: '_self' | '_blank' = '_self'): void => {
     window.open(url, target);
 };
+
+export const rawClone = (data: unknown): unknown => {
+    return JSON.parse(JSON.stringify(data));
+};

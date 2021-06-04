@@ -8,7 +8,7 @@ interface ICategory {
      * Used to help identified newly created nodes
      */
     createdNew?: boolean;
-    children: ICategory[];
+    children?: ICategory[];
 }
 
 export interface IModifyCategoriesProps {
@@ -20,22 +20,14 @@ type TEditableNodeDetails = {
     path: string[];
 };
 
-export type TUseModifyCategoriesStore = {
-    // data
+export interface IUseModifyCategoriesStore {
     treeData: TreeItem[];
     searchQuery: string;
     editableNodeDetails: TEditableNodeDetails;
     selectedNode: TreeItem;
     toBeDeletedNode: TreeItem;
     toBeAddedNodeDetails: TEditableNodeDetails;
-    // functions
-    setTreeData: (treeData: TreeItem[]) => void;
-    setSearchQuery: (searchQuery: string) => void;
-    setEditableNodeDetails: (editableNodeDetails: TEditableNodeDetails) => void;
-    setSelectedNode: (selectedNode: TreeItem) => void;
-    setToBeDeletedNode: (toBeDeletedNode: TreeItem) => void;
-    setToBeAddedNodeDetails: (toBeAddedNodeDetails: TEditableNodeDetails) => void;
-};
+}
 
 export type TOpenPopperHandler = (props: { anchorEl: HTMLElement }) => void;
 export type IInputFieldOnChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;

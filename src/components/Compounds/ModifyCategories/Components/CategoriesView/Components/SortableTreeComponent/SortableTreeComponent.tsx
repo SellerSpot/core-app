@@ -1,5 +1,5 @@
+import { State } from '@hookstate/core';
 import { colorThemes, showNotify } from '@sellerspot/universal-components';
-import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import { ModifyCategoriesService } from 'components/Compounds/ModifyCategories/services/ModifyCategories.service';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
@@ -8,30 +8,33 @@ import SortableTree, {
     ExtendedNodeData,
     isDescendant,
     ReactSortableTreeProps,
+    TreeItem,
 } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
+import { rawClone } from 'utilities/general';
+import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
 import { ModifyCategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
 
-export const SortableTreeComponent = (): ReactElement => {
-    const themeState = useSelector(themeSelector);
-    const modifyCategoriesStore = useModifyCategoriesStore();
-    const {
-        treeData,
-        searchQuery,
-        editableNodeDetails,
-        toBeDeletedNode,
-        selectedNode,
-        setTreeData,
-        setSelectedNode,
-    } = modifyCategoriesStore;
+export const SortableTreeComponent = (props: {
+    componentState: State<IUseModifyCategoriesStore>;
+}): ReactElement => {
+    // props
+    const { componentState } = props;
 
+    // state
+    const state = componentState;
+    const { treeData, searchQuery, editableNodeDetails, toBeDeletedNode, selectedNode } = state;
+    const themeState = useSelector(themeSelector);
+
+    // handler
     const canDropCallback: ReactSortableTreeProps['canDrop'] = (props) => {
         return ModifyCategoriesService.canDropCategory({
             dropProps: props,
-            treeData,
+            treeData: treeData.get(),
         });
     };
 
+    // compute
     const generateNodePropsHandler = (data: ExtendedNodeData) => {
         const { node } = data;
         const nodeId = node.id;
@@ -42,6 +45,7 @@ export const SortableTreeComponent = (): ReactElement => {
         const isParentNode = !!selectedNode ? isDescendant(node, selectedNode) : false;
         const isToBeDeleted = nodeId === toBeDeletedNode?.id;
 
+        // data store
         // creating data store instance
         const nodeInstance = new ModifyCategoriesNodeDataStore({
             data,
@@ -63,9 +67,9 @@ export const SortableTreeComponent = (): ReactElement => {
 
             if (isNodeClicked) {
                 if (selectedNode?.id === nodeId) {
-                    setSelectedNode(null);
+                    selectedNode.set(null);
                 } else {
-                    setSelectedNode(node);
+                    selectedNode.set(node);
                     showNotify(`Selected ${nodeTitle} category`, {
                         autoHideDuration: 3000,
                         showNotifyAction: true,
@@ -75,27 +79,33 @@ export const SortableTreeComponent = (): ReactElement => {
                 }
             }
         };
-
         return {
             title: <h5 className="nodeTitle">{nodeTitle}</h5>,
             buttons: [
                 <div key={'controls'}>
-                    <ModifyCategoriesNodeButtons nodeInstance={nodeInstance} />
+                    <ModifyCategoriesNodeButtons
+                        nodeInstance={nodeInstance}
+                        componentState={state}
+                    />
                 </div>,
             ],
             onClick: nodeOnClickHandler,
             style: nodeInstance.getNodeStyle(),
         };
     };
+    const handleSortableTreeOnChange = (treeDataChanged: TreeItem[]) => {
+        treeData.set(treeDataChanged);
+    };
 
+    // draw
     return (
         <SortableTree
             rowHeight={80}
-            treeData={treeData}
+            treeData={rawClone(treeData.value)}
             searchQuery={searchQuery}
             canDrop={canDropCallback}
             searchMethod={ModifyCategoriesService.generalSearchMethod}
-            onChange={setTreeData}
+            onChange={handleSortableTreeOnChange}
             generateNodeProps={generateNodePropsHandler}
         />
     );

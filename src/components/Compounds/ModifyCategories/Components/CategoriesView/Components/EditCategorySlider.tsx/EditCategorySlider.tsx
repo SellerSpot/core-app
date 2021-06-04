@@ -5,30 +5,41 @@ import {
     showNotify,
     SliderModal,
 } from '@sellerspot/universal-components';
-import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
 import React, { ReactElement } from 'react';
+import { useState, State } from '@hookstate/core';
 import { Field, Form, FormProps } from 'react-final-form';
 import { addNodeUnderParent, changeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { IEditCategoryForm } from './EditCategory.types';
 import styles from './EditCategorySlider.module.scss';
 import { EditCategorySliderService } from '../../../../services/EditCategorySlider.service';
+import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
+import { rawClone } from 'utilities/general';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
-const EditCategoryHeader = (props: { isAddMode: boolean; submitting: boolean }) => {
+const EditCategoryHeader = (props: {
+    isAddMode: boolean;
+    submitting: boolean;
+    componentState: State<IUseModifyCategoriesStore>;
+}) => {
+    // props
+    const { componentState } = props;
+    const state = useState(componentState);
     const { isAddMode, submitting } = props;
-    const { setEditableNodeDetails, setToBeAddedNodeDetails, setSelectedNode } =
-        useModifyCategoriesStore();
+    const { editableNodeDetails, toBeAddedNodeDetails, selectedNode } = state;
 
+    // handler
     const handleSliderOnClose = () => {
         // resetting selected node since we lose track of the selected node parents
-        setSelectedNode(null);
+        selectedNode.set(null);
         if (isAddMode) {
-            setToBeAddedNodeDetails(null);
+            toBeAddedNodeDetails.set(null);
         } else {
-            setEditableNodeDetails(null);
+            editableNodeDetails.set(null);
         }
     };
+
+    // compute
     const sliderHeader = isAddMode ? 'Create Category' : 'Edit Category';
     let submitButtonLabel;
     if (isAddMode) {
@@ -44,7 +55,8 @@ const EditCategoryHeader = (props: { isAddMode: boolean; submitting: boolean }) 
             submitButtonLabel = 'Save Changes';
         }
     }
-    const submitButtonDisabled = submitting;
+
+    // draw
     return (
         <div className={styles.headerWrapper}>
             <h3>{sliderHeader}</h3>
@@ -59,7 +71,7 @@ const EditCategoryHeader = (props: { isAddMode: boolean; submitting: boolean }) 
                     label={submitButtonLabel}
                     variant="contained"
                     theme="primary"
-                    disabled={submitButtonDisabled}
+                    disabled={submitting}
                     type="submit"
                 />
             </div>
@@ -67,28 +79,30 @@ const EditCategoryHeader = (props: { isAddMode: boolean; submitting: boolean }) 
     );
 };
 
-export const EditCategorySlider = (): ReactElement => {
-    const {
-        editableNodeDetails,
-        setEditableNodeDetails,
-        treeData,
-        setTreeData,
-        toBeAddedNodeDetails,
-        setToBeAddedNodeDetails,
-        setSelectedNode,
-    } = useModifyCategoriesStore();
+export const EditCategorySlider = (props: {
+    componentState: State<IUseModifyCategoriesStore>;
+}): ReactElement => {
+    // props
+    const { componentState } = props;
 
-    const showSlider = !!editableNodeDetails || !!toBeAddedNodeDetails;
-    const isAddMode = !!toBeAddedNodeDetails;
+    // state
+    const { editableNodeDetails, treeData, toBeAddedNodeDetails, selectedNode } = componentState;
+    const showSlider = !!editableNodeDetails.get() || !!toBeAddedNodeDetails.get();
+    const isAddMode = !!toBeAddedNodeDetails.get();
 
-    const currentNode = isAddMode ? toBeAddedNodeDetails?.node : editableNodeDetails?.node;
-    const currentNodePath = isAddMode ? toBeAddedNodeDetails?.path : editableNodeDetails?.path;
-
+    // compute
+    const currentNode = isAddMode
+        ? toBeAddedNodeDetails.get()?.node
+        : editableNodeDetails.get()?.node;
+    const currentNodePath = isAddMode
+        ? toBeAddedNodeDetails.get()?.path
+        : editableNodeDetails.get()?.path;
     const categoryFormInitialValues: IEditCategoryForm = {
         categoryName: `${currentNode?.title}`,
         categoryDescription: `${currentNode?.subtitle ?? ''}`,
     };
 
+    // handlers
     const handleFormSubmitAddMode: FormProps['onSubmit'] = async (values: IEditCategoryForm) => {
         const { categoryDescription, categoryName } = values;
         // pushed category to server
@@ -96,7 +110,7 @@ export const EditCategorySlider = (): ReactElement => {
             category: { title: categoryName, subtitle: categoryDescription },
         });
         const newTreeData = addNodeUnderParent({
-            treeData,
+            treeData: rawClone(treeData.get()),
             parentKey: currentNodePath[currentNodePath.length - 2],
             expandParent: true,
             getNodeKey,
@@ -107,15 +121,14 @@ export const EditCategorySlider = (): ReactElement => {
             },
             addAsFirstChild: true,
         }).treeData;
-        setTreeData(newTreeData);
+        treeData.set(newTreeData);
         // closing the slider
-        setToBeAddedNodeDetails(null);
+        toBeAddedNodeDetails.set(null);
     };
-
     const handleFormSubmitEditMode: FormProps['onSubmit'] = async (values: IEditCategoryForm) => {
         const { categoryDescription, categoryName } = values;
         const newNode: TreeItem = {
-            ...currentNode,
+            ...rawClone(currentNode),
             title: categoryName,
             subtitle: categoryDescription,
         };
@@ -125,9 +138,9 @@ export const EditCategorySlider = (): ReactElement => {
             getNodeKey,
             newNode,
             path: currentNodePath,
-            treeData,
+            treeData: rawClone(treeData.get()),
         });
-        setTreeData(newTreeData);
+        treeData.set(newTreeData);
         showNotify('Category updated successfully', {
             showNotifyAction: true,
             placement: 'bottomLeft',
@@ -135,13 +148,13 @@ export const EditCategorySlider = (): ReactElement => {
             autoHideDuration: 3000,
         });
         // resetting selected node since we lose track of the selected node parents
-        setSelectedNode(null);
+        selectedNode.set(null);
         // closing the slider
-        setEditableNodeDetails(null);
+        editableNodeDetails.set(null);
     };
-
     const formOnSubmit = isAddMode ? handleFormSubmitAddMode : handleFormSubmitEditMode;
 
+    // draw
     return (
         <Form
             subscription={{ submitting: true }}
@@ -151,8 +164,12 @@ export const EditCategorySlider = (): ReactElement => {
             {({ handleSubmit, submitting }) => {
                 return (
                     <form onSubmit={handleSubmit} noValidate>
-                        <SliderModal show={showSlider} type="absolute" width={'40%'}>
-                            <EditCategoryHeader isAddMode={isAddMode} submitting={submitting} />
+                        <SliderModal show={showSlider} type="fixed" width={'40%'}>
+                            <EditCategoryHeader
+                                isAddMode={isAddMode}
+                                submitting={submitting}
+                                componentState={componentState}
+                            />
                             <div className={styles.bodyWrapper}>
                                 <Field
                                     name={'categoryName' as keyof IEditCategoryForm}
@@ -160,7 +177,7 @@ export const EditCategorySlider = (): ReactElement => {
                                         EditCategorySliderService.validateField({
                                             fieldName: 'categoryName',
                                             path: currentNodePath,
-                                            treeData,
+                                            treeData: treeData.get(),
                                             value,
                                         })
                                     }
@@ -202,7 +219,7 @@ export const EditCategorySlider = (): ReactElement => {
                                         EditCategorySliderService.validateField({
                                             fieldName: 'categoryDescription',
                                             path: currentNodePath,
-                                            treeData,
+                                            treeData: treeData.get(),
                                             value,
                                         })
                                     }
