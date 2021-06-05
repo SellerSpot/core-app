@@ -39,7 +39,7 @@ const ProductsTable = (props: {
 
     const tableProps: ITableProps<ISalesHistoryTableProps['saleHistory'][0]['products'][0]> = {
         data: products,
-        size: 'small',
+        size: 'medium',
         shape: [
             {
                 columnName: 'S.No',

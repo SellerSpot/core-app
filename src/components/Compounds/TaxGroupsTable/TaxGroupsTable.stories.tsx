@@ -14,9 +14,9 @@ const Template: Story<ITaxGroupsTableProps> = (args: ITaxGroupsTableProps) => (
 
 export const TaxGroupsTable = Template.bind({});
 TaxGroupsTable.args = {
-    tableItems: [
+    taxGroups: [
         {
-            name: 'Brand Name',
+            name: 'GST',
             noOfTaxes: 2,
             taxGroupRate: '14%',
             noOfProducts: 12,
@@ -26,11 +26,9 @@ TaxGroupsTable.args = {
                     rate: '9%',
                 },
             ],
-            deleteItemCallback: () => console.log('Item Deleted'),
-            editItemCallback: () => console.log('Item Edit'),
         },
         {
-            name: 'Brand Name 2',
+            name: 'CGST',
             noOfTaxes: 2,
             taxGroupRate: '14%',
             noOfProducts: 12,
@@ -40,8 +38,6 @@ TaxGroupsTable.args = {
                     rate: '9%',
                 },
             ],
-            deleteItemCallback: () => console.log('Item Deleted'),
-            editItemCallback: () => console.log('Item Edit'),
         },
     ],
 } as ITaxGroupsTableProps;

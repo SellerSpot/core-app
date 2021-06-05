@@ -9,7 +9,16 @@
 
 .rowActions {
     width: 100%;
-    @include flex(center, flex-end, $gap: 12px);
+    height: 100%;
+    @include flex(center, flex-end, $gap: 14px);
+
+    .rowActionsEditIcon {
+        color: $primary-color;
+    }
+
+    .rowActionsDeleteIcon {
+        color: $danger-color;
+    }
 }
 
 .taxBracketGrouped {
