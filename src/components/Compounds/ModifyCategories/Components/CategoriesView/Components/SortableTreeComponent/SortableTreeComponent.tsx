@@ -101,7 +101,7 @@ export const SortableTreeComponent = (props: {
     return (
         <SortableTree
             rowHeight={80}
-            treeData={rawClone(treeData.value)}
+            treeData={rawClone<TreeItem[]>(treeData.value)}
             searchQuery={searchQuery}
             canDrop={canDropCallback}
             searchMethod={ModifyCategoriesService.generalSearchMethod}

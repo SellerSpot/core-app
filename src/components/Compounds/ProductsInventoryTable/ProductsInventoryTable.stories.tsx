@@ -22,14 +22,6 @@ ProductsInventoryTable.args = {
                 'This is demo of a super long description of the product which we are goona use to describe the product to anyone who uses this software',
             availableStock: '20 pcs',
             sellingPrice: numberFormatINRCurrency(234),
-            outlets: [
-                {
-                    outlet: 'Main Outlet',
-                    supplyPrice: numberFormatINRCurrency(240),
-                    sellingPrice: numberFormatINRCurrency(340),
-                    stockAvailable: '2pcs',
-                },
-            ],
         },
     ],
 } as IProductsInventoryTableProps;

@@ -50,6 +50,6 @@ export const redirectTo = (url: string, target: '_self' | '_blank' = '_self'): v
     window.open(url, target);
 };
 
-export const rawClone = (data: unknown): unknown => {
+export const rawClone = <T = unknown>(data: unknown): T => {
     return JSON.parse(JSON.stringify(data));
 };
