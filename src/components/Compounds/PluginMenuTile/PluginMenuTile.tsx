@@ -29,7 +29,7 @@ export const PluginMenuTile = (props: IPluginMenuTileProps): ReactElement => {
     const avatarTheme = selected ? 'selectedNoBg' : 'unselected';
 
     return (
-        <ToolTip content={pluginTitle}>
+        <ToolTip content={pluginTitle} placement="right">
             <div
                 className={wrapperClassName}
                 onClick={events?.onClick}

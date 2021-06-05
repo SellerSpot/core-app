@@ -8,7 +8,6 @@ import styles from './CatalogueBrandsPage.module.scss';
 import { CatalogueBrandsPageService } from './CatalogueBrandsPage.service';
 import { ICatalogueBrandsPageState } from './CatalogueBrandsPage.types';
 import { AddEditBrandSliderModal } from './Components/AddEditBrandSliderModal/AddEditBrandSliderModal';
-import { BrandsTable, IBrandsTableProps } from './Components/BrandsTable/BrandsTable';
 
 const PageHeaderComponent = (props: { pageState: State<ICatalogueBrandsPageState> }) => {
     const { pageState } = props;
@@ -25,7 +24,7 @@ const PageHeaderComponent = (props: { pageState: State<ICatalogueBrandsPageState
         return [
             <Button
                 key="addBrandButton"
-                label="ADD BRAND"
+                label="NEW BRAND"
                 theme="primary"
                 variant="contained"
                 onClick={handleClick}
@@ -42,7 +41,7 @@ export const CatalogueBrandsPage = (): ReactElement => {
     const pageState = useState<ICatalogueBrandsPageState>(
         CatalogueBrandsPageService.pageStateInitialData,
     );
-    DevTools(pageState).label('Brand Page state');
+    DevTools(pageState).label('Catalogue Brand Page state');
 
     // handlers
     const getAllBrands = async () => {
@@ -52,12 +51,12 @@ export const CatalogueBrandsPage = (): ReactElement => {
             isLoadingBrandsTable: false,
         });
     };
-    const editItemCallbackHandler: IBrandsTableProps['editItemCallback'] = (_, rowIndex) => {
-        pageState.brandIndexToEdit.set(rowIndex);
-    };
-    const deleteItemCallbackHandler: IBrandsTableProps['deleteItemCallback'] = (_, rowIndex) => {
-        pageState.brandIndexToEdit.set(rowIndex);
-    };
+    // const editItemCallbackHandler: IBrandsTableProps['editItemCallback'] = () => {
+    //     pageState.brandIndexToEdit.set(rowIndex);
+    // };
+    // const deleteItemCallbackHandler: IBrandsTableProps['deleteItemCallback'] = (_, rowIndex) => {
+    //     pageState.brandIndexToEdit.set(rowIndex);
+    // };
 
     // effects
     useEffect(() => {
@@ -69,12 +68,12 @@ export const CatalogueBrandsPage = (): ReactElement => {
             <div className={styles.wrapper}>
                 <PageHeaderComponent pageState={pageState} />
                 <div className={styles.tableWrapper}>
-                    <BrandsTable
+                    {/* <BrandsTable
                         tableItems={pageState.brandsData.get()}
                         isLoading={pageState.isLoadingBrandsTable.get()}
                         editItemCallback={editItemCallbackHandler}
                         deleteItemCallback={deleteItemCallbackHandler}
-                    />
+                    /> */}
                 </div>
             </div>
             <AddEditBrandSliderModal pageState={pageState} />

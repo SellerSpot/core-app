@@ -1,118 +1,96 @@
-import { ICONS } from 'utilities/utilities';
-import { numberFormatINRCurrency } from 'utilities/general';
-import { store } from 'store/store';
-import { cartSelector, removeProductFromCart } from 'store/models/cart';
-import { useSelector } from 'react-redux';
-import React, { ReactElement } from 'react';
+import Icon from '@iconify/react';
 import {
     IconButton,
-    ITableCell,
+    ITableCollapsedCustomRenderer,
     ITableProps,
-    ITableRow,
     Table,
-    ToolTip,
+    TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
-import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
-import { ICartTableProduct } from './CartTable.types';
-import { CartTableService } from './CartTable.service';
-import styles from './CartTable.module.scss';
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
 import { saleService } from 'services/services';
-import Icon from '@iconify/react';
-
-const getTableCells = (product: ICartTableProduct, productIndex: number): ITableCell[] => {
-    const { productName, quantity, discountPercent, taxBrackets, unitPrice } = product;
-    const deleteProductOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        // to stop the row from also being clicked
-        event.stopPropagation();
-        store.dispatch(
-            removeProductFromCart({
-                productIndex,
-            }),
-        );
-    };
-    const productSubTotal = numberFormatINRCurrency(
-        saleService.computeProductSubTotal({
-            discountPercent,
-            quantity,
-            taxBrackets,
-            unitPrice,
-        }),
-    );
-    return [
-        {
-            content: productIndex + 1,
-            align: 'right',
-        },
-        {
-            content: (
-                <ToolTip content={productName.length > 30 ? productName : ''}>
-                    {<h6 className={styles.productNameText}>{productName}</h6>}
-                </ToolTip>
-            ),
-        },
-        {
-            content: quantity,
-            align: 'right',
-        },
-        {
-            content: productSubTotal,
-            align: 'right',
-        },
-        {
-            content: (
-                <ToolTip content={'Remove Product'}>
-                    <div>
-                        <IconButton
-                            icon={<Icon icon={ICONS.outlineClear} />}
-                            theme="danger"
-                            size="small"
-                            onClick={deleteProductOnClick}
-                        />
-                    </div>
-                </ToolTip>
-            ),
-            padding: 'none',
-            align: 'left',
-        },
-    ];
-};
-
-const getTableBody = (
-    products: ICartTableProduct[],
-    toggleRowExpansion: (rowIndex: number) => void,
-): ITableRow[] => {
-    return products.map((product, productIndex) => {
-        const handleRowOnClick = () => {
-            toggleRowExpansion(productIndex);
-        };
-
-        return {
-            cells: getTableCells(product, productIndex),
-            onClick: handleRowOnClick,
-            collapsedContent: (
-                <CartTableCollapsedContent
-                    product={product}
-                    productIndex={productIndex}
-                    toggleRowExpansion={toggleRowExpansion}
-                />
-            ),
-        };
-    });
-};
+import { cartSelector } from 'store/models/cart';
+import { numberFormatINRCurrency } from 'utilities/general';
+import { ICONS } from 'utilities/utilities';
+import { ICartTableProduct } from './CartTable.types';
+import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 
 export default function CartTable(): ReactElement {
+    // state
     const { productsData } = useSelector(cartSelector);
 
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
-        return getTableBody(productsData, toggleRowExpansion);
+    // compute
+    const SNoField: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+        const { rowIndex } = props;
+        return rowIndex + 1;
+    };
+    const CustomRenderComponent: ITableCollapsedCustomRenderer<ICartTableProduct> = (props) => {
+        const { rowData, rowIndex, toggleRowExpansion } = props;
+        return (
+            <CartTableCollapsedContent
+                product={rowData}
+                productIndex={rowIndex}
+                toggleRowExpansion={toggleRowExpansion}
+            />
+        );
+    };
+    const Action: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+        const {} = props;
+        return (
+            <IconButton
+                icon={<Icon icon={ICONS.outlineDeleteOutline} />}
+                theme="danger"
+                size="small"
+            />
+        );
+    };
+    const tableProps: ITableProps<ICartTableProduct> = {
+        data: productsData,
+        shape: [
+            {
+                columnName: 'S.No',
+                width: '5%',
+                align: 'left',
+                customRenderer: SNoField,
+            },
+            {
+                dataKey: 'productName',
+                columnName: 'Product',
+                width: '55%',
+                align: 'left',
+            },
+            {
+                dataKey: 'quantity',
+                columnName: 'Qty',
+                width: '5%',
+                align: 'right',
+            },
+            {
+                columnName: 'Sub-Total',
+                width: '25%',
+                align: 'right',
+                customRenderer: (props) => {
+                    const { rowData } = props;
+                    const { discountPercent, quantity, taxBrackets, unitPrice } = rowData;
+                    return numberFormatINRCurrency(
+                        saleService.computeProductSubTotal({
+                            discountPercent,
+                            quantity,
+                            taxBrackets,
+                            unitPrice,
+                        }),
+                    );
+                },
+            },
+            {
+                columnName: '',
+                width: '5%',
+                align: 'right',
+                customRenderer: Action,
+            },
+        ],
+        collapsedContentRenderer: CustomRenderComponent,
     };
 
-    return (
-        <Table
-            hasExpandableRows
-            headers={CartTableService.tableHeaders}
-            stickyHeader
-            body={tableBody}
-        />
-    );
+    return <Table {...tableProps} />;
 }

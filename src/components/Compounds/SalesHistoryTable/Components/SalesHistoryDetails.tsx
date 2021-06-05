@@ -1,8 +1,7 @@
+import { Button, ITableProps, Table } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { Button, ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
-import { ISalesHistoryTableProps } from '../SalesHistoryTable.types';
-import { SalesHistoryService } from '../SalesHistoryTable.service';
 import styles from '../SalesHistoryTable.module.scss';
+import { ISalesHistoryTableProps } from '../SalesHistoryTable.types';
 import { SaleSummary } from './SaleSummary';
 
 const Controls = (): ReactElement => {
@@ -33,50 +32,68 @@ const Controls = (): ReactElement => {
     );
 };
 
-const getTableBody = (
-    toggleRowExpansion: (rowIndex: number) => void,
-    products: ISalesHistoryTableProps['saleHistory'][0]['products'],
-): ITableRow[] => {
-    return products.map((product, productIndex) => {
-        const rowOnClickHandler = () => {
-            toggleRowExpansion(productIndex);
-        };
-        return {
-            cells: SalesHistoryService.getProductTableCells(product, productIndex),
-            onClick: rowOnClickHandler,
-        };
-    });
-};
-
 const ProductsTable = (props: {
     products: ISalesHistoryTableProps['saleHistory'][0]['products'];
 }) => {
     const { products } = props;
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
-        return getTableBody(toggleRowExpansion, products);
+
+    const tableProps: ITableProps<ISalesHistoryTableProps['saleHistory'][0]['products'][0]> = {
+        data: products,
+        size: 'medium',
+        shape: [
+            {
+                columnName: 'S.No',
+                width: '5%',
+                align: 'center',
+                customRenderer: (props) => {
+                    const { rowIndex } = props;
+                    return rowIndex + 1;
+                },
+            },
+            {
+                width: '30%',
+                dataKey: 'productName',
+                columnName: 'Product',
+            },
+            {
+                dataKey: 'quantity',
+                columnName: 'Quantity',
+                align: 'right',
+            },
+            {
+                dataKey: 'unitPrice',
+                columnName: 'Unit Price',
+                align: 'right',
+            },
+            {
+                dataKey: 'taxAmount',
+                columnName: 'Tax',
+                align: 'right',
+            },
+            {
+                dataKey: 'subTotal',
+                columnName: 'Sub-Total',
+                align: 'right',
+            },
+        ],
     };
-    return (
-        <Table
-            variant="simple"
-            size="small"
-            maxHeight={200}
-            stickyHeader={true}
-            headers={SalesHistoryService.productsTableHeaders}
-            body={tableBody}
-        />
-    );
+
+    // draw
+    return <Table {...tableProps} />;
 };
 
 export const SalesHistoryDetails = (props: {
     sale: ISalesHistoryTableProps['saleHistory'][0];
 }): ReactElement => {
+    // props
     const { sale } = props;
     const { products } = sale;
 
+    // draw
     return (
         <div className={styles.collapsedContent}>
             <div className={styles.productsView}>
-                <div>
+                <div className={styles.productsViewHeading}>
                     <h4>Sale Details</h4>
                 </div>
                 <div className={styles.productsTable}>

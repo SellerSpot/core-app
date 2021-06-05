@@ -25,6 +25,4 @@ export type TPlugins = { [k in TRouteKeys]: IPlugin };
 export type IUsePluginMenuStore = {
     hoverMenu: boolean;
     expandMenu: boolean;
-    setHoverMenu: (value: boolean) => void;
-    setExpandMenu: (value: boolean) => void;
 };

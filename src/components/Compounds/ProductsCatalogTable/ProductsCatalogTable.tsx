@@ -1,40 +1,50 @@
-import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
+import {
+    ITableProps,
+    Switch,
+    Table,
+    TTableCellCustomRenderer,
+} from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ProductsCatalogDetails } from './Components/ProductsCatalogDetails';
-import { ProductsCatalogService } from './ProductsCatalog.service';
-import { IProductsCatalogTableProps } from './ProductsCatalogTable.types';
+import { IProduct, IProductsCatalogTableProps } from './ProductsCatalogTable.types';
 export { IProductsCatalogTableProps } from './ProductsCatalogTable.types';
 
-const getTableBody = (props: {
-    toggleRowExpansion: (rowIndex: number) => void;
-    products: IProductsCatalogTableProps['products'];
-}): ITableRow[] => {
-    const { products, toggleRowExpansion } = props;
-    return products.map((product, productIndex) => {
-        return {
-            cells: ProductsCatalogService.tableCells(product),
-            onClick: () => toggleRowExpansion(productIndex),
-            collapsedContent: <ProductsCatalogDetails product={product} />,
-        };
-    });
-};
-
 export const ProductsCatalogTable = (props: IProductsCatalogTableProps): ReactElement => {
+    // props
     const { products } = props;
 
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
-        return getTableBody({
-            products,
-            toggleRowExpansion,
-        });
+    // compute
+    const ActiveComponent: TTableCellCustomRenderer<IProduct> = (props) => {
+        const { rowData } = props;
+        const { active } = rowData;
+        return <Switch checked={active} theme="primary" />;
+    };
+    const tableProps: ITableProps<IProduct> = {
+        data: products,
+        shape: [
+            {
+                dataKey: 'productName',
+                columnName: 'Product',
+                width: '40%',
+            },
+            {
+                dataKey: 'category',
+                columnName: 'Category',
+            },
+            {
+                dataKey: 'availableStock',
+                columnName: 'Stock Available',
+            },
+            {
+                dataKey: 'sellingPrice',
+                columnName: 'Selling Price',
+            },
+            {
+                dataKey: 'active',
+                columnName: 'Active',
+                customRenderer: ActiveComponent,
+            },
+        ],
     };
 
-    return (
-        <Table
-            headers={ProductsCatalogService.tableHeaders}
-            height={500}
-            hasExpandableRows
-            body={tableBody}
-        />
-    );
+    return <Table {...tableProps} />;
 };

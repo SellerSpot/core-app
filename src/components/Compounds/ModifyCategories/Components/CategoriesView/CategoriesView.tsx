@@ -1,20 +1,23 @@
 import Icon from '@iconify/react';
 import { Button, Skeleton } from '@sellerspot/universal-components';
 import { Loader } from 'components/Atoms/Loader/Loader';
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
+import { State, useState } from '@hookstate/core';
 import { ICONS } from 'utilities/utilities';
-import { useModifyCategoriesStore } from '../../ModifyCategories';
 import styles from '../../ModifyCategories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
+import { IUseModifyCategoriesStore } from '../../ModifyCategories.types';
 
-const AddTopLevelCategory = () => {
-    // fetching values from store
-    const setToBeAddedNodeDetails = useModifyCategoriesStore(
-        (state) => state.setToBeAddedNodeDetails,
-    );
+const AddTopLevelCategory = (props: { componentState: State<IUseModifyCategoriesStore> }) => {
+    // props
+    const { componentState } = props;
 
+    // state
+    const { toBeAddedNodeDetails } = useState(componentState);
+
+    // handlers
     const onClickHandler = () => {
-        setToBeAddedNodeDetails({
+        toBeAddedNodeDetails.set({
             node: {
                 title: 'New Category',
             },
@@ -22,6 +25,7 @@ const AddTopLevelCategory = () => {
         });
     };
 
+    // draw
     return (
         <div className={styles.addTopLevelCategoryWrapper}>
             <Button
@@ -36,6 +40,7 @@ const AddTopLevelCategory = () => {
 };
 
 const LoadingSkeleton = () => {
+    // draw
     return (
         <>
             {Array(4)
@@ -55,26 +60,43 @@ const LoadingSkeleton = () => {
     );
 };
 
-export const CategoriesView = (): ReactElement => {
+export const CategoriesView = (props: {
+    componentState: State<IUseModifyCategoriesStore>;
+}): ReactElement => {
+    // props
+    const { componentState } = props;
+
+    // state
+    const state = componentState;
+    const categoriesViewHeight = useState(null);
+    const isLoading = useState(true);
+
+    // hooks
     const categoriesViewWrapperRef = useRef<HTMLDivElement>(null);
-    const [categoriesViewHeight, setcategoriesViewHeight] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+
+    // compute
     // setting computed height for the tree component
     const categoriesViewStyle: React.CSSProperties = {
-        height: `${categoriesViewHeight}px`,
+        height: `${categoriesViewHeight.get()}px`,
     };
 
+    // effects
     useEffect(() => {
-        setcategoriesViewHeight(categoriesViewWrapperRef.current?.clientHeight);
-        setIsLoading(false);
+        categoriesViewHeight.set(categoriesViewWrapperRef.current?.clientHeight);
+        isLoading.set(false);
     }, [categoriesViewWrapperRef]);
 
+    // draw
     return (
         <div ref={categoriesViewWrapperRef} className={styles.categoriesViewWrapper}>
-            <AddTopLevelCategory />
-            <Loader isLoading={isLoading} loaderType={'shimmer'} skeleton={<LoadingSkeleton />}>
+            <AddTopLevelCategory componentState={componentState} />
+            <Loader
+                isLoading={isLoading.get()}
+                loaderType={'shimmer'}
+                skeleton={<LoadingSkeleton />}
+            >
                 <div className={styles.categoriesView} style={categoriesViewStyle}>
-                    <SortableTreeComponent />
+                    <SortableTreeComponent componentState={state} />
                 </div>
             </Loader>
         </div>

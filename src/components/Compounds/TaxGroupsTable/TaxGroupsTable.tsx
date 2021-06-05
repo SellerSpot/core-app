@@ -1,45 +1,87 @@
-import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
+import Icon from '@iconify/react';
+import {
+    ITableCollapsedCustomRenderer,
+    ITableProps,
+    Table,
+    ToolTip,
+    TTableCellCustomRenderer,
+} from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { TaxBracketsGrouped } from './Components/TaxBracketsGrouped';
-import { TaxGroupsTableService } from './TaxGroupsTable.service';
-import { ITaxGroupsTableProps } from './TaxGroupsTable.types';
+import { ICONS } from 'utilities/utilities';
+import { TaxBracketGroupDetails } from './Components/TaxBracketGroupDetails';
+import styles from './TaxGroupsTable.module.scss';
+import { ITaxGroup, ITaxGroupsTableProps } from './TaxGroupsTable.types';
 
 export { ITaxGroupsTableProps } from './TaxGroupsTable.types';
 
-// assembles the body content for the table
-const getTableBody = (props: {
-    tableItems: ITaxGroupsTableProps['tableItems'];
-    toggleRowExpansion: (rowIndex: number) => void;
-}): ITableRow[] => {
-    const { tableItems, toggleRowExpansion } = props;
-    return tableItems.map((tableItem, tableItemIndex): ITableRow => {
-        const { brackets } = tableItem;
-        return {
-            cells: TaxGroupsTableService.tableCells({
-                tableItem,
-            }),
-            onClick: () => toggleRowExpansion(tableItemIndex),
-            collapsedContent: <TaxBracketsGrouped brackets={brackets} />,
-        };
-    });
-};
-
 export const TaxGroupsTable = (props: ITaxGroupsTableProps): ReactElement => {
-    const { tableItems } = props;
+    // props
+    const { taxGroups } = props;
 
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
-        return getTableBody({
-            tableItems,
-            toggleRowExpansion,
-        });
+    // compute
+    const CollapsedContent: ITableCollapsedCustomRenderer<ITaxGroup> = (props) => {
+        // props
+        const { rowData } = props;
+        return TaxBracketGroupDetails({ brackets: rowData['brackets'] });
+    };
+    const Actions: TTableCellCustomRenderer<ITaxGroup> = (props) => {
+        // props
+        const {} = props;
+        return (
+            <div className={styles.rowActions}>
+                <ToolTip content={'Edit'}>
+                    <div>
+                        <Icon
+                            className={styles.rowActionsEditIcon}
+                            height={'18px'}
+                            icon={ICONS.baselineEdit}
+                        />
+                    </div>
+                </ToolTip>
+                <ToolTip content={'Delete'}>
+                    <div>
+                        <Icon
+                            className={styles.rowActionsDeleteIcon}
+                            height={'18px'}
+                            icon={ICONS.outlineDeleteOutline}
+                        />
+                    </div>
+                </ToolTip>
+            </div>
+        );
+    };
+    const tableProps: ITableProps<ITaxGroup> = {
+        data: taxGroups,
+        shape: [
+            {
+                dataKey: 'name',
+                columnName: 'Name',
+                align: 'left',
+                width: '40%',
+            },
+            {
+                dataKey: 'noOfTaxes',
+                columnName: 'No.Of Taxes',
+                align: 'right',
+            },
+            {
+                dataKey: 'taxGroupRate',
+                columnName: 'Tax Group Rate',
+                align: 'right',
+            },
+            {
+                dataKey: 'noOfProducts',
+                columnName: 'Number of Products',
+                align: 'right',
+            },
+            {
+                columnName: 'Actions',
+                align: 'center',
+                customRenderer: Actions,
+            },
+        ],
+        collapsedContentRenderer: CollapsedContent,
     };
 
-    return (
-        <Table
-            stickyHeader
-            hasExpandableRows
-            headers={TaxGroupsTableService.tableHeaders}
-            body={tableBody}
-        />
-    );
+    return <Table {...tableProps} />;
 };

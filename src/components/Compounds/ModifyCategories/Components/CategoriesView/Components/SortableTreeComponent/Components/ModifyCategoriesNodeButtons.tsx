@@ -1,3 +1,4 @@
+import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
     Button,
@@ -6,7 +7,7 @@ import {
     showNotify,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { useModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories';
+import { IUseModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories.types';
 import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
 import { removeNodeAtPath } from 'react-sortable-tree';
@@ -15,23 +16,23 @@ import styles from '../../../../../ModifyCategories.module.scss';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
-const EditCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
-    const { nodeInstance } = props;
+const EditCategoryButton = (props: {
+    nodeInstance: ModifyCategoriesNodeDataStore;
+    componentState: State<IUseModifyCategoriesStore>;
+}) => {
+    const { nodeInstance, componentState } = props;
+    const { editableNodeDetails } = useState(componentState);
     // fetching data from node class instance
     const {
         isEditable,
         nodeData: { node, path },
     } = nodeInstance;
-    // fetching data from store
-    const setEditableNodeDetails = useModifyCategoriesStore(
-        (state) => state.setEditableNodeDetails,
-    );
     const toolTipContent = 'Edit Category';
     const theme: IIconButtonProps['theme'] = 'primary';
     const icon: IIconButtonProps['icon'] = <Icon icon={ICONS.baselineEdit} />;
 
     const onClickHandler = () => {
-        setEditableNodeDetails(
+        editableNodeDetails.set(
             isEditable
                 ? null
                 : {
@@ -50,21 +51,21 @@ const EditCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore
     );
 };
 
-const AddCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
-    const { nodeInstance } = props;
+const AddCategoryButton = (props: {
+    nodeInstance: ModifyCategoriesNodeDataStore;
+    componentState: State<IUseModifyCategoriesStore>;
+}) => {
+    const { nodeInstance, componentState } = props;
+    const { toBeAddedNodeDetails } = useState(componentState);
     // fetching data from node class instance
     const {
         nodeData: { path },
     } = nodeInstance;
-    // fetching data from store
-    const setToBeAddedNodeDetails = useModifyCategoriesStore(
-        (state) => state.setToBeAddedNodeDetails,
-    );
 
     const onClickHandler = () => {
         // virtual since the node is not yet present in the actual tree
         const virtualPathForNewNode = [...(path as string[]), '-1'];
-        setToBeAddedNodeDetails({
+        toBeAddedNodeDetails.set({
             node: {
                 title: 'New Category',
             },
@@ -86,16 +87,18 @@ const AddCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore 
     );
 };
 
-const DeleteCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
-    const { nodeInstance } = props;
+const DeleteCategoryButton = (props: {
+    nodeInstance: ModifyCategoriesNodeDataStore;
+    componentState: State<IUseModifyCategoriesStore>;
+}) => {
+    const { nodeInstance, componentState } = props;
+    const { toBeDeletedNode } = useState(componentState);
     // fetching data from node class instance
     const {
         nodeData: { node },
     } = nodeInstance;
-    // fetching data from store
-    const setToBeDeletedNode = useModifyCategoriesStore((state) => state.setToBeDeletedNode);
     const onClickHandler = () => {
-        setToBeDeletedNode(node);
+        toBeDeletedNode.set(node);
     };
 
     return (
@@ -112,10 +115,11 @@ const DeleteCategoryButton = (props: { nodeInstance: ModifyCategoriesNodeDataSto
     );
 };
 
-const CancelDeleteConfirmation = () => {
-    const setToBeDeletedNode = useModifyCategoriesStore((state) => state.setToBeDeletedNode);
+const CancelDeleteConfirmation = (props: { componentState: State<IUseModifyCategoriesStore> }) => {
+    const { componentState } = props;
+    const { toBeDeletedNode } = useState(componentState);
     const onClickHandler = () => {
-        setToBeDeletedNode(null);
+        toBeDeletedNode.set(null);
     };
     return (
         <Button
@@ -128,8 +132,12 @@ const CancelDeleteConfirmation = () => {
     );
 };
 
-const ProceedDeleteConfirmation = (props: { nodeInstance: ModifyCategoriesNodeDataStore }) => {
-    const { nodeInstance } = props;
+const ProceedDeleteConfirmation = (props: {
+    nodeInstance: ModifyCategoriesNodeDataStore;
+    componentState: State<IUseModifyCategoriesStore>;
+}) => {
+    const { nodeInstance, componentState } = props;
+    const { treeData } = useState(componentState);
     // fetching data from node class instance
     const {
         nodeData: {
@@ -137,16 +145,13 @@ const ProceedDeleteConfirmation = (props: { nodeInstance: ModifyCategoriesNodeDa
             node: { title },
         },
     } = nodeInstance;
-    // fetching data from store
-    const setTreeData = useModifyCategoriesStore((state) => state.setTreeData);
-    const treeData = useModifyCategoriesStore((state) => state.treeData);
     const onClickHandler = () => {
         const newTreeData = removeNodeAtPath({
-            treeData,
+            treeData: treeData.get(),
             path,
             getNodeKey,
         });
-        setTreeData(newTreeData);
+        treeData.set(newTreeData);
         showNotify(`Deleted ${title} category`, {
             placement: 'bottomLeft',
             theme: 'info',
@@ -167,19 +172,29 @@ const ProceedDeleteConfirmation = (props: { nodeInstance: ModifyCategoriesNodeDa
 
 export const ModifyCategoriesNodeButtons = (props: {
     nodeInstance: ModifyCategoriesNodeDataStore;
+    componentState: State<IUseModifyCategoriesStore>;
 }): ReactElement => {
-    const { nodeInstance } = props;
+    const { nodeInstance, componentState } = props;
+    const state = useState(componentState);
 
     // fetching data from node class instance
     const { isToBeDeleted } = nodeInstance;
 
     return (
         <div className={styles.controls}>
-            {!isToBeDeleted ? <EditCategoryButton nodeInstance={nodeInstance} /> : null}
-            {!isToBeDeleted ? <AddCategoryButton nodeInstance={nodeInstance} /> : null}
-            {!isToBeDeleted ? <DeleteCategoryButton nodeInstance={nodeInstance} /> : null}
-            {isToBeDeleted ? <CancelDeleteConfirmation /> : null}
-            {isToBeDeleted ? <ProceedDeleteConfirmation nodeInstance={nodeInstance} /> : null}
+            {!isToBeDeleted ? (
+                <EditCategoryButton nodeInstance={nodeInstance} componentState={state} />
+            ) : null}
+            {!isToBeDeleted ? (
+                <AddCategoryButton nodeInstance={nodeInstance} componentState={state} />
+            ) : null}
+            {!isToBeDeleted ? (
+                <DeleteCategoryButton nodeInstance={nodeInstance} componentState={state} />
+            ) : null}
+            {isToBeDeleted ? <CancelDeleteConfirmation componentState={state} /> : null}
+            {isToBeDeleted ? (
+                <ProceedDeleteConfirmation nodeInstance={nodeInstance} componentState={state} />
+            ) : null}
         </div>
     );
 };
