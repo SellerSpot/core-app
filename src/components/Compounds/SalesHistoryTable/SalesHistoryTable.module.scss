@@ -14,6 +14,10 @@
         grid-template-rows: 20px auto auto;
         overflow-x: hidden;
 
+        .productsViewHeading {
+            margin-left: 15px;
+        }
+
         .productsTable {
             width: 100%;
             margin-top: 10px;
@@ -33,8 +37,9 @@
 
                 .divider {
                     width: 100%;
-                    border: 1px solid $backgroundTertiary-color;
-                    color: $backgroundTertiary-color;
+                    height: 1px;
+                    border: unset;
+                    background-color: $tableCellBorder-color;
                 }
 
                 .summaryRow {

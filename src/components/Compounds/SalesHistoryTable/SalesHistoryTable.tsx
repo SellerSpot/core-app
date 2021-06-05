@@ -1,47 +1,58 @@
-import { ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
-import { omit } from 'lodash';
+import {
+    ITableCollapsedCustomRenderer,
+    ITableProps,
+    Table,
+} from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { SalesHistoryDetails } from './Components/SalesHistoryDetails';
-import { SalesHistoryService } from './SalesHistoryTable.service';
 import { ISalesHistoryTableProps } from './SalesHistoryTable.types';
 
 export { ISalesHistoryTableProps } from './SalesHistoryTable.types';
 
-const getTableBody = (props: {
-    toggleRowExpansion: (rowIndex: number) => void;
-    saleHistory: ISalesHistoryTableProps['saleHistory'];
-}): ITableRow[] => {
-    const { saleHistory, toggleRowExpansion } = props;
-    return saleHistory.map((sale, saleIndex) => {
-        const handleRowOnClick = () => {
-            toggleRowExpansion(saleIndex);
-        };
-
-        return {
-            cells: SalesHistoryService.getCells(omit(sale, 'products')),
-            onClick: handleRowOnClick,
-            collapsedContent: <SalesHistoryDetails sale={sale} />,
-        };
-    });
-};
-
 export const SalesHistoryTable = (props: ISalesHistoryTableProps): ReactElement => {
+    // props
     const { saleHistory } = props;
-    const tableBody: ITableProps['body'] = ({ toggleRowExpansion }) => {
-        return getTableBody({
-            saleHistory,
-            toggleRowExpansion,
-        });
+
+    // compute
+    const CollapsedComponent: ITableCollapsedCustomRenderer<
+        ISalesHistoryTableProps['saleHistory'][0]
+    > = (props) => {
+        const { rowData } = props;
+        return <SalesHistoryDetails sale={rowData} />;
+    };
+    const tableProps: ITableProps<ISalesHistoryTableProps['saleHistory'][0]> = {
+        data: saleHistory,
+        shape: [
+            {
+                dataKey: 'saleTime',
+                columnName: 'Sale Time',
+                width: '20%',
+            },
+            {
+                dataKey: 'customer',
+                columnName: 'Customer',
+                width: '25%',
+            },
+            {
+                dataKey: 'cashier',
+                columnName: 'Cashier',
+                width: '25%',
+            },
+            {
+                dataKey: 'saleTotal',
+                columnName: 'Sale Total',
+                align: 'right',
+                width: '20%',
+            },
+            {
+                dataKey: 'status',
+                columnName: 'Status',
+                width: '10%',
+            },
+        ],
+        collapsedContentRenderer: CollapsedComponent,
     };
 
-    return (
-        <Table
-            height={700}
-            hasExpandableRows
-            unmountOnCollapse
-            stickyHeader
-            headers={SalesHistoryService.headers}
-            body={tableBody}
-        />
-    );
+    // draw
+    return <Table {...tableProps} />;
 };

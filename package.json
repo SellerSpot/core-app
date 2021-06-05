@@ -103,7 +103,6 @@
         "react-router-dom": "^5.2.0",
         "react-sortable-tree": "^2.8.0",
         "react-to-print": "^2.12.4",
-        "yup": "^0.32.9",
-        "zustand": "^3.4.1"
+        "yup": "^0.32.9"
     }
 }
