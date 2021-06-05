@@ -5,6 +5,11 @@
     @include flex(center, space-between);
     .productMeta {
         @include flex(center, flex-start, $gap: 10px);
+
+        .icon {
+            height: 65px;
+        }
+
         .title {
             display: -webkit-box;
             overflow: hidden;

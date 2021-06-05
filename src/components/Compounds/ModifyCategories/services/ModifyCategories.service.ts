@@ -4,6 +4,7 @@ import {
     getNodeAtPath,
     NodeData,
     OnDragPreviousAndNextLocation,
+    SearchData,
     TreeItem,
 } from 'react-sortable-tree';
 import * as yup from 'yup';
@@ -25,21 +26,22 @@ export class ModifyCategoriesService {
         });
     };
 
-    static generalSearchMethod = (props: { node: TreeItem; searchQuery: string }): boolean => {
-        const { node, searchQuery } = props;
+    static generalSearchMethod = (data: SearchData): boolean => {
+        const { node, searchQuery } = data;
+
         return (
-            searchQuery && node.title.toString().toLowerCase().startsWith(searchQuery.toLowerCase())
+            searchQuery &&
+            node.title.toString().toLowerCase().startsWith(searchQuery.value?.toLowerCase())
         );
     };
 
-    static sibilingCheckSearchMethod = (props: {
-        node: TreeItem;
-        searchQuery: string;
-    }): boolean => {
-        const { node, searchQuery } = props;
+    static sibilingCheckSearchMethod = (data: SearchData): boolean => {
+        const { node, searchQuery } = data;
+
         return (
             searchQuery &&
-            node.title.toString().toLowerCase().localeCompare(searchQuery.toLowerCase()) === 0
+            node.title.toString().toLowerCase().localeCompare(searchQuery.value?.toLowerCase()) ===
+                0
         );
     };
 

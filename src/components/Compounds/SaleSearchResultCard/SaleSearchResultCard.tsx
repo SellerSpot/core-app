@@ -9,7 +9,11 @@ export default function SaleSearchResultCard(props: ISaleSearchResultCard): Reac
     return (
         <div className={styles.cardWrapper} onClick={props.onClick}>
             <div className={styles.productMeta}>
-                {!isUndefined(props.productImage) && <Image src={props.productImage} />}
+                {!isUndefined(props.productImage) && (
+                    <div className={styles.icon}>
+                        <Image objectFit="contain" src={props.productImage} />
+                    </div>
+                )}
                 <h5 className={styles.title}>{props.productName}</h5>
             </div>
             <div className={styles.productPrice}>

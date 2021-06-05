@@ -1,8 +1,7 @@
-import { Button, ITableProps, ITableRow, Table } from '@sellerspot/universal-components';
+import { Button } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { IProductsInventoryTableProps } from '../ProductsInventoryTable';
 import styles from '../ProductsInventoryTable.module.scss';
-import { ProductsInventoryTableService } from '../ProductsInventoryTable.service';
 
 const Controls = (): ReactElement => {
     return (
@@ -25,44 +24,11 @@ const Controls = (): ReactElement => {
     );
 };
 
-const getTableBody = (props: {
-    outlets: IProductsInventoryTableProps['products'][0]['outlets'];
-}): ITableRow[] => {
-    const { outlets } = props;
-    return outlets.map((outlet) => {
-        return {
-            cells: ProductsInventoryTableService.outletTableCell(outlet),
-        };
-    });
-};
-
-const OutletTable = (props: {
-    outlets: IProductsInventoryTableProps['products'][0]['outlets'];
-}) => {
-    const { outlets } = props;
-    const tableBody: ITableProps['body'] = ({}) => {
-        return getTableBody({
-            outlets,
-        });
-    };
-
-    return (
-        <Table
-            size="small"
-            variant="simple"
-            maxHeight={150}
-            stickyHeader
-            headers={ProductsInventoryTableService.outletTableHeaders}
-            body={tableBody}
-        />
-    );
-};
-
 export const ProductsInventoryDetails = (props: {
     product: IProductsInventoryTableProps['products'][0];
 }): ReactElement => {
     const {
-        product: { productName, category, brand, description, outlets },
+        product: { productName, category, brand, description },
     } = props;
     return (
         <div className={styles.productsCatalogDetails}>
@@ -87,7 +53,6 @@ export const ProductsInventoryDetails = (props: {
                         <p>{description}</p>
                     </div>
                 </div>
-                <OutletTable outlets={outlets} />
             </div>
             <div className={styles.controlsWrapper}>
                 <Controls />

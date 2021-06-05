@@ -5,49 +5,42 @@ import React, { Fragment, ReactElement, useCallback, useEffect, useRef } from 'r
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { routeSelector } from 'store/models/route';
-import create from 'zustand';
 import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationPluginMenuTile } from '../StoreInformationPluginMenuTile/StoreInformationPluginMenuTile';
 import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
 import styles from './PluginMenu.module.scss';
 import { PluginMenuService } from './PluginMenu.service';
 import { IUsePluginMenuStore } from './PluginMenu.types';
+import { State, useState } from '@hookstate/core';
 import { CONFIG } from 'config/config';
 
-const usePluginMenuStore = create<IUsePluginMenuStore>((set) => ({
-    expandMenu: false,
-    hoverMenu: false,
-    setExpandMenu: (value) => {
-        set({ expandMenu: value });
-    },
-    setHoverMenu: (value) => {
-        set({ hoverMenu: value });
-    },
-}));
+const ExpandMenuIcon = (props: { componentState: State<IUsePluginMenuStore> }) => {
+    const { componentState } = props;
+    const { expandMenu, hoverMenu } = componentState;
 
-const ExpandMenuIcon = () => {
-    const { expandMenu, hoverMenu, setExpandMenu } = usePluginMenuStore();
+    // compute
     const className = cn(
         styles.expandIcon,
-        { [animationStyles.fadeIn]: hoverMenu && !expandMenu },
-        { [styles.expandIconFadeOut]: !hoverMenu && !expandMenu },
-        { [styles.expandIconRotate]: expandMenu },
-        { [styles.expandIconRotateReverse]: !expandMenu },
+        { [animationStyles.fadeIn]: hoverMenu.get() && !expandMenu.get() },
+        { [styles.expandIconFadeOut]: !hoverMenu.get() && !expandMenu.get() },
+        { [styles.expandIconRotate]: expandMenu.get() },
+        { [styles.expandIconRotateReverse]: !expandMenu.get() },
     );
 
     return (
         <div className={className}>
             <ExpandPluginMenuButton
                 onClick={() => {
-                    setExpandMenu(!expandMenu);
+                    expandMenu.set(!expandMenu.get());
                 }}
             />
         </div>
     );
 };
 
-const PluginMenuTiles = () => {
-    const expandMenu = usePluginMenuStore((state) => state.expandMenu);
+const PluginMenuTiles = (props: { componentState: State<IUsePluginMenuStore> }) => {
+    const { componentState } = props;
+    const { expandMenu } = componentState;
     const { routeKeys } = useSelector(routeSelector);
     const tiles = PluginMenuService.getPlugins();
     const history = useHistory();
@@ -64,7 +57,7 @@ const PluginMenuTiles = () => {
                         <PluginMenuTile
                             pluginIcon={<Icon icon={icon} height={'24px'} />}
                             pluginTitle={title}
-                            expanded={expandMenu}
+                            expanded={expandMenu.get()}
                             selected={routeKeys.includes(routeKey)}
                             events={{
                                 onClick: handleTileClick,
@@ -77,11 +70,12 @@ const PluginMenuTiles = () => {
     );
 };
 
-const SellerSpotFooterBanner = () => {
-    const expandMenu = usePluginMenuStore((state) => state.expandMenu);
+const SellerSpotFooterBanner = (props: { componentState: State<IUsePluginMenuStore> }) => {
+    const { componentState } = props;
+    const { expandMenu } = componentState;
     const bannerWrapperClassName = cn(styles.bannerWrapper, {
-        [styles.bannerWrapperExpanded]: expandMenu,
-        [styles.bannerWrapperCollapsed]: !expandMenu,
+        [styles.bannerWrapperExpanded]: expandMenu.get(),
+        [styles.bannerWrapperCollapsed]: !expandMenu.get(),
     });
     return (
         <div className={bannerWrapperClassName}>
@@ -91,18 +85,23 @@ const SellerSpotFooterBanner = () => {
 };
 
 export const PluginMenu = (): ReactElement => {
-    const { setExpandMenu, setHoverMenu, expandMenu } = usePluginMenuStore();
+    // state
+    const componentState = useState<IUsePluginMenuStore>({
+        expandMenu: false,
+        hoverMenu: false,
+    });
+    const { expandMenu, hoverMenu } = componentState;
     const PluginMenuRef = useRef(null);
 
-    const handleOnMouseEnter = () => setHoverMenu(true);
-    const handleOnMouseLeave = () => setHoverMenu(false);
-    const wrapperClassName = cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu });
+    const handleOnMouseEnter = () => hoverMenu.set(true);
+    const handleOnMouseLeave = () => hoverMenu.set(false);
+    const wrapperClassName = cn(styles.wrapper, { [styles.wrapperExpanded]: expandMenu.get() });
 
     // handler for document onClickListener
     const onClickListener = useCallback(
         (e: MouseEvent) => {
             if (!PluginMenuRef.current.contains(e.target)) {
-                setExpandMenu(false);
+                expandMenu.set(false);
             }
         },
         [PluginMenuRef],
@@ -121,13 +120,13 @@ export const PluginMenu = (): ReactElement => {
             onMouseLeave={handleOnMouseLeave}
             className={wrapperClassName}
         >
-            <ExpandMenuIcon />
+            <ExpandMenuIcon componentState={componentState} />
             <StoreInformationPluginMenuTile
-                expanded={expandMenu}
+                expanded={expandMenu.get()}
                 storeName={'Sreenithi Margin Free Store'}
             />
-            <PluginMenuTiles />
-            <SellerSpotFooterBanner />
+            <PluginMenuTiles componentState={componentState} />
+            <SellerSpotFooterBanner componentState={componentState} />
         </div>
     );
 };

@@ -1,38 +1,9 @@
 import * as yup from 'yup';
 import { store } from 'store/store';
 import { updateCartProduct } from 'store/models/cart';
-import { ITableCell } from '@sellerspot/universal-components';
 import { ICartTableFormValue, ICartTableProduct } from './CartTable.types';
 
 export class CartTableService {
-    public static tableHeaders: ITableCell[] = [
-        {
-            content: 'S.No',
-            width: '5%',
-            align: 'left',
-        },
-        {
-            content: 'Product',
-            width: '55%',
-            align: 'left',
-        },
-        {
-            content: 'Qty',
-            width: '5%',
-            align: 'right',
-        },
-        {
-            content: 'Sub-Total',
-            width: '25%',
-            align: 'right',
-        },
-        {
-            content: '',
-            width: '5%',
-            align: 'right',
-        },
-    ];
-
     // gets the initial values for collapsed form
     public static collapsedFormGetInitialValues = (
         product: ICartTableProduct,

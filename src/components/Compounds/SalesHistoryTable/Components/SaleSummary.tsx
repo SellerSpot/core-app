@@ -3,7 +3,7 @@ import { ISalesHistoryTableProps } from '../SalesHistoryTable';
 import styles from '../SalesHistoryTable.module.scss';
 
 const Divider = () => {
-    return <hr className={styles.divider} />;
+    return <div className={styles.divider} />;
 };
 
 export const SaleSummary = (props: {
