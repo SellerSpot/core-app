@@ -35,13 +35,16 @@ export default class ApiService {
     public async request(requestPayload: IRequestPayload): Promise<IResponse> {
         try {
             const { url, method, payload } = requestPayload;
-            const { data } = await this.axios.request({
+            const { data, status } = await this.axios.request({
                 url,
                 method,
                 data: payload,
             });
-            if (data.status !== undefined) return data;
-            else {
+            if (data.status !== undefined) {
+                return data;
+            } else if (status === 204) {
+                return { status: true };
+            } else {
                 throw new Error('unknown error');
             }
         } catch (errorInstance) {
