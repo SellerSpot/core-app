@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Loader } from 'components/Atoms/Loader/Loader';
@@ -20,9 +20,6 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
     // selectors
     const { tenantDetails } = useSelector(appSelector);
 
-    // state
-    const [hasValidTenantDetails, setHasValidTenantDetails] = useState(false);
-
     // handlers
     const fetchTenantDetails = async () => {
         // fetch tenant details from server
@@ -37,10 +34,8 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        if (tenantDetails) {
-            setHasValidTenantDetails(true);
-        } else {
-            setHasValidTenantDetails(false);
+        debugger;
+        if (!!!tenantDetails) {
             fetchTenantDetails();
         }
     }, [tenantDetails]);
@@ -48,8 +43,8 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
     return (
         <Loader
             loaderType="spinner"
-            isLoading={!hasValidTenantDetails}
-            message={'Validating your store...'}
+            isLoading={!!!tenantDetails}
+            message="Validating your store..."
         >
             {children}
         </Loader>

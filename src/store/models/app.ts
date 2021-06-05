@@ -37,6 +37,10 @@ const appSlice = createSlice({
         resetUserDetails: (state) => {
             state.userDetails = null;
         },
+        resetAppState: (state) => {
+            state.userDetails = null;
+            state.tenantDetails = null;
+        },
     },
 });
 
@@ -44,8 +48,13 @@ const appSlice = createSlice({
 export default appSlice.reducer;
 
 // exporting actions
-export const { updateActiveStatus, updateTenantDetails, updateUserDetails, resetUserDetails } =
-    appSlice.actions;
+export const {
+    updateActiveStatus,
+    updateTenantDetails,
+    updateUserDetails,
+    resetUserDetails,
+    resetAppState,
+} = appSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const appSelector: Selector<RootState, IAppState> = (state: RootState) => state.app;

@@ -6,12 +6,14 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
+    showNotify,
 } from '@sellerspot/universal-components';
 import styles from './DeleteAccountCard.module.scss';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
+import DeleteAccountService from './DeleteAccount.service';
+import AuthProviderService from 'layouts/App/components/AuthProvider/AuthProvider.service';
 
 export default function DeleteAccountCard(): ReactElement {
     // state
@@ -29,9 +31,16 @@ export default function DeleteAccountCard(): ReactElement {
         if (!isDeleting) setShowConfirmDialog(true);
     };
 
-    const onConfirmDeleteHandler = () => {
+    const onConfirmDeleteHandler = async () => {
         setShowConfirmDialog(false);
         setIsDeleting(true);
+        const deleteAccountResponse = await DeleteAccountService.deleteAccount();
+        if (deleteAccountResponse.status) {
+            AuthProviderService.clearApp();
+        } else {
+            showNotify('Something went wrong, please try again later');
+            setIsDeleting(false);
+        }
     };
 
     const getDeleteButtonLabel = () => {
@@ -78,7 +87,7 @@ export default function DeleteAccountCard(): ReactElement {
                             />
                         </div>
                         <div className={styles.bottomContent}>
-                            <Alert type={'error'}>
+                            <Alert type="error">
                                 This is a desctructive operation! All data generated in this account
                                 will be deleted permanently
                             </Alert>
@@ -89,12 +98,10 @@ export default function DeleteAccountCard(): ReactElement {
             <Dialog open={showConfirmDialog}>
                 <DialogTitle>Delete account</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <Alert type={'error'}>
-                            This is a desctructive operation! All data generated in this account
-                            will be deleted permanently
-                        </Alert>
-                    </DialogContentText>
+                    <Alert type="error">
+                        This is a desctructive operation! All data generated in this account will be
+                        deleted permanently
+                    </Alert>
                 </DialogContent>
                 <DialogActions>
                     <Button
