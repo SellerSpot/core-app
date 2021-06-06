@@ -9,13 +9,13 @@ import {
     DialogTitle,
     showNotify,
 } from '@sellerspot/universal-components';
-import styles from './DeleteAccountCard.module.scss';
+import styles from './DeleteStoreCard.module.scss';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
-import DeleteAccountService from './DeleteAccount.service';
+import DeleteStoreService from './DeleteStore.service';
 import AuthProviderService from 'layouts/App/components/AuthProvider/AuthProvider.service';
 
-export default function DeleteAccountCard(): ReactElement {
+export default function DeleteStoreCard(): ReactElement {
     // state
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -34,8 +34,8 @@ export default function DeleteAccountCard(): ReactElement {
     const onConfirmDeleteHandler = async () => {
         setShowConfirmDialog(false);
         setIsDeleting(true);
-        const deleteAccountResponse = await DeleteAccountService.deleteAccount();
-        if (deleteAccountResponse.status) {
+        const deleteStoreResponse = await DeleteStoreService.deleteStore();
+        if (deleteStoreResponse.status) {
             AuthProviderService.clearApp();
         } else {
             showNotify('Something went wrong, please try again later');
@@ -47,11 +47,14 @@ export default function DeleteAccountCard(): ReactElement {
         if (showConfirmDialog) {
             return 'waiting for confirmation';
         } else if (isDeleting) {
-            return 'Deleteing your account';
+            return 'Deleteing your store';
         } else {
-            return 'Delete account';
+            return 'Delete store';
         }
     };
+
+    const alertMessage = `This is a desctructive operation! All data generated in this store
+    will be deleted permanently`;
 
     return (
         <>
@@ -64,7 +67,7 @@ export default function DeleteAccountCard(): ReactElement {
                     <div className={styles.content}>
                         <div className={styles.topContent}>
                             <div className={styles.domainMessage}>
-                                <h5>Delete your account</h5>
+                                <h5>Delete your store</h5>
                                 <h6>
                                     <a
                                         href={domainUrl}
@@ -87,21 +90,15 @@ export default function DeleteAccountCard(): ReactElement {
                             />
                         </div>
                         <div className={styles.bottomContent}>
-                            <Alert type="error">
-                                This is a desctructive operation! All data generated in this account
-                                will be deleted permanently
-                            </Alert>
+                            <Alert type="error">{alertMessage}</Alert>
                         </div>
                     </div>
                 }
             />
             <Dialog open={showConfirmDialog}>
-                <DialogTitle>Delete account</DialogTitle>
+                <DialogTitle>Delete store</DialogTitle>
                 <DialogContent>
-                    <Alert type="error">
-                        This is a desctructive operation! All data generated in this account will be
-                        deleted permanently
-                    </Alert>
+                    <Alert type="error">{alertMessage}</Alert>
                 </DialogContent>
                 <DialogActions>
                     <Button

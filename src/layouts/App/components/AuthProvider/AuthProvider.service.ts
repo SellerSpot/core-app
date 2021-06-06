@@ -49,8 +49,6 @@ export default class AuthProviderService {
         const { status, error = templateError } = await requests.authRequest.logoutUser();
         if (!noAction) {
             if (status) {
-                showNotify('Signed out successfully');
-                await introduceDelay(1500);
                 store.dispatch(resetUserDetails()); //- redirect with caution, only redirect if user has stable connection , otherwise show fallback page
             } else {
                 if (error.code && error.message) {
@@ -67,7 +65,7 @@ export default class AuthProviderService {
     static async clearApp(): Promise<void> {
         const signOutStatus = this.logoutUser(true);
         if (signOutStatus) {
-            showNotify('Account deleted successfully');
+            showNotify('Store deleted successfully');
             store.dispatch(resetAppState());
         } else {
             showNotify('Something went wrong please try again later');

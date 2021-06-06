@@ -34,7 +34,6 @@ const AuthProvider = (props: IAuthProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        debugger;
         if (!!!userDetails) {
             fetchUserDetails();
         }

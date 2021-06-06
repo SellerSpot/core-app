@@ -34,7 +34,6 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        debugger;
         if (!!!tenantDetails) {
             fetchTenantDetails();
         }

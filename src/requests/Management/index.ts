@@ -1,3 +1,3 @@
-import AccountRequest from './AccountRequest';
+import StoreRequest from './StoreRequest';
 
-export const accountRequest = new AccountRequest();
+export const storeRequest = new StoreRequest();

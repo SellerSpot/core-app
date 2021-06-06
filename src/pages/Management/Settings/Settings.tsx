@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styles from './Settings.module.scss';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import DeleteAccountCard from './components/DeleteAccountCard/DeleteAccountCard';
+import DeleteAccountCard from './components/DeleteStoreCard/DeleteStoreCard';
 
 export const Settings = (): ReactElement => {
     return (
