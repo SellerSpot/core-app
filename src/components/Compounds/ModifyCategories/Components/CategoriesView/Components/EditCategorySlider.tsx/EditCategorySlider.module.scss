@@ -1,15 +1,3 @@
-.headerWrapper {
-    width: 100%;
-    height: 100%;
-    margin-top: 5px;
-    @include flex(center, space-between);
-
-    .actionButtons {
-        height: 100%;
-        @include flex(center, flex-end, $gap: 10px);
-    }
-}
-
 .bodyWrapper {
     width: 100%;
     height: 100%;

@@ -1,83 +1,25 @@
+import { State } from '@hookstate/core';
 import {
     Button,
     IInputFieldProps,
     InputField,
     showNotify,
     SliderModal,
+    SliderModalBody,
+    SliderModalFooter,
+    SliderModalHeader,
+    SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { useState, State } from '@hookstate/core';
 import { Field, Form, FormProps } from 'react-final-form';
 import { addNodeUnderParent, changeNodeAtPath, TreeItem } from 'react-sortable-tree';
+import { rawClone } from 'utilities/general';
+import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
+import { EditCategorySliderService } from '../../../../services/EditCategorySlider.service';
 import { IEditCategoryForm } from './EditCategory.types';
 import styles from './EditCategorySlider.module.scss';
-import { EditCategorySliderService } from '../../../../services/EditCategorySlider.service';
-import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
-import { rawClone } from 'utilities/general';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
-
-const EditCategoryHeader = (props: {
-    isAddMode: boolean;
-    submitting: boolean;
-    componentState: State<IUseModifyCategoriesStore>;
-}) => {
-    // props
-    const { componentState } = props;
-    const state = useState(componentState);
-    const { isAddMode, submitting } = props;
-    const { editableNodeDetails, toBeAddedNodeDetails, selectedNode } = state;
-
-    // handler
-    const handleSliderOnClose = () => {
-        // resetting selected node since we lose track of the selected node parents
-        selectedNode.set(null);
-        if (isAddMode) {
-            toBeAddedNodeDetails.set(null);
-        } else {
-            editableNodeDetails.set(null);
-        }
-    };
-
-    // compute
-    const sliderHeader = isAddMode ? 'Create Category' : 'Edit Category';
-    let submitButtonLabel;
-    if (isAddMode) {
-        if (submitting) {
-            submitButtonLabel = 'Creating Category...';
-        } else {
-            submitButtonLabel = 'Add Category';
-        }
-    } else {
-        if (submitting) {
-            submitButtonLabel = 'Saving Changes...';
-        } else {
-            submitButtonLabel = 'Save Changes';
-        }
-    }
-
-    // draw
-    return (
-        <div className={styles.headerWrapper}>
-            <h3>{sliderHeader}</h3>
-            <div className={styles.actionButtons}>
-                <Button
-                    label={'Cancel'}
-                    variant="outlined"
-                    theme="danger"
-                    onClick={handleSliderOnClose}
-                />
-                <Button
-                    label={submitButtonLabel}
-                    variant="contained"
-                    theme="primary"
-                    disabled={submitting}
-                    type="submit"
-                />
-            </div>
-        </div>
-    );
-};
 
 export const EditCategorySlider = (props: {
     componentState: State<IUseModifyCategoriesStore>;
@@ -156,110 +98,114 @@ export const EditCategorySlider = (props: {
 
     // draw
     return (
-        <Form
-            subscription={{ submitting: true }}
-            onSubmit={formOnSubmit}
-            initialValues={categoryFormInitialValues}
-        >
-            {({ handleSubmit, submitting }) => {
-                return (
-                    <form onSubmit={handleSubmit} noValidate>
-                        <SliderModal show={showSlider} type="fixed" width={'40%'}>
-                            <EditCategoryHeader
-                                isAddMode={isAddMode}
-                                submitting={submitting}
-                                componentState={componentState}
-                            />
-                            <div className={styles.bodyWrapper}>
-                                <Field
-                                    name={'categoryName' as keyof IEditCategoryForm}
-                                    validate={(value) =>
-                                        EditCategorySliderService.validateField({
-                                            fieldName: 'categoryName',
-                                            path: currentNodePath,
-                                            treeData: treeData.get(),
-                                            value,
-                                        })
-                                    }
-                                >
-                                    {({ input, meta }) => {
-                                        const { value, onChange } = input;
-                                        const { error, visited } = meta;
+        <SliderModal showModal={showSlider} type="fixed" width={'40%'}>
+            <SliderModalLayoutWrapper>
+                <SliderModalHeader title={isAddMode ? 'Create Category' : 'Edit Category'} />
+                <SliderModalBody>
+                    <Form
+                        subscription={{ submitting: true }}
+                        onSubmit={formOnSubmit}
+                        initialValues={categoryFormInitialValues}
+                    >
+                        {({ handleSubmit }) => {
+                            return (
+                                <form onSubmit={handleSubmit} noValidate>
+                                    <div className={styles.bodyWrapper}>
+                                        <Field
+                                            name={'categoryName' as keyof IEditCategoryForm}
+                                            validate={(value) =>
+                                                EditCategorySliderService.validateField({
+                                                    fieldName: 'categoryName',
+                                                    path: currentNodePath,
+                                                    treeData: treeData.get(),
+                                                    value,
+                                                })
+                                            }
+                                        >
+                                            {({ input, meta }) => {
+                                                const { value, onChange } = input;
+                                                const { error, visited } = meta;
 
-                                        const showError = !!error && visited;
-                                        const helperMessage: IInputFieldProps['helperMessage'] = {
-                                            enabled: showError,
-                                            content: error,
-                                            type: 'error',
-                                        };
-                                        const fieldTheme: IInputFieldProps['theme'] = showError
-                                            ? 'danger'
-                                            : 'primary';
-                                        return (
-                                            <InputField
-                                                {...input}
-                                                name={undefined}
-                                                type="text"
-                                                fullWidth
-                                                value={value}
-                                                required
-                                                autoFocus={showSlider}
-                                                theme={fieldTheme}
-                                                label={'Category Name'}
-                                                helperMessage={helperMessage}
-                                                selectTextOnFocus
-                                                onChange={onChange}
-                                            />
-                                        );
-                                    }}
-                                </Field>
-                                <Field
-                                    name={'categoryDescription' as keyof IEditCategoryForm}
-                                    validate={(value) =>
-                                        EditCategorySliderService.validateField({
-                                            fieldName: 'categoryDescription',
-                                            path: currentNodePath,
-                                            treeData: treeData.get(),
-                                            value,
-                                        })
-                                    }
-                                >
-                                    {({ input, meta }) => {
-                                        const { value, onChange } = input;
-                                        const { error, dirty } = meta;
-                                        const showError = !!error && dirty;
-                                        const helperMessage: IInputFieldProps['helperMessage'] = {
-                                            enabled: showError,
-                                            content: error,
-                                            type: 'error',
-                                        };
-                                        const fieldTheme: IInputFieldProps['theme'] = showError
-                                            ? 'danger'
-                                            : 'primary';
-                                        return (
-                                            <InputField
-                                                {...input}
-                                                name={undefined}
-                                                type="text"
-                                                fullWidth
-                                                value={value}
-                                                theme={fieldTheme}
-                                                multiline
-                                                rows={4}
-                                                maxRows={5}
-                                                label={'Category Description'}
-                                                helperMessage={helperMessage}
-                                                selectTextOnFocus
-                                                onChange={onChange}
-                                            />
-                                        );
-                                    }}
-                                </Field>
-                            </div>
-                        </SliderModal>
-                    </form>
-                );
-            }}
-        </Form>
+                                                const showError = !!error && visited;
+                                                const helperMessage: IInputFieldProps['helperMessage'] =
+                                                    {
+                                                        enabled: showError,
+                                                        content: error,
+                                                        type: 'error',
+                                                    };
+                                                const fieldTheme: IInputFieldProps['theme'] =
+                                                    showError ? 'danger' : 'primary';
+                                                return (
+                                                    <InputField
+                                                        {...input}
+                                                        name={undefined}
+                                                        type="text"
+                                                        fullWidth
+                                                        value={value}
+                                                        required
+                                                        autoFocus={showSlider}
+                                                        theme={fieldTheme}
+                                                        label={'Category Name'}
+                                                        helperMessage={helperMessage}
+                                                        selectTextOnFocus
+                                                        onChange={onChange}
+                                                    />
+                                                );
+                                            }}
+                                        </Field>
+                                        <Field
+                                            name={'categoryDescription' as keyof IEditCategoryForm}
+                                            validate={(value) =>
+                                                EditCategorySliderService.validateField({
+                                                    fieldName: 'categoryDescription',
+                                                    path: currentNodePath,
+                                                    treeData: treeData.get(),
+                                                    value,
+                                                })
+                                            }
+                                        >
+                                            {({ input, meta }) => {
+                                                const { value, onChange } = input;
+                                                const { error, dirty } = meta;
+                                                const showError = !!error && dirty;
+                                                const helperMessage: IInputFieldProps['helperMessage'] =
+                                                    {
+                                                        enabled: showError,
+                                                        content: error,
+                                                        type: 'error',
+                                                    };
+                                                const fieldTheme: IInputFieldProps['theme'] =
+                                                    showError ? 'danger' : 'primary';
+                                                return (
+                                                    <InputField
+                                                        {...input}
+                                                        name={undefined}
+                                                        type="text"
+                                                        fullWidth
+                                                        value={value}
+                                                        theme={fieldTheme}
+                                                        multiline
+                                                        rows={4}
+                                                        maxRows={5}
+                                                        label={'Category Description'}
+                                                        helperMessage={helperMessage}
+                                                        selectTextOnFocus
+                                                        onChange={onChange}
+                                                    />
+                                                );
+                                            }}
+                                        </Field>
+                                    </div>
+                                </form>
+                            );
+                        }}
+                    </Form>
+                </SliderModalBody>
+                <SliderModalFooter>
+                    <Button label={'Cancel'} variant="outlined" theme="danger" />
+                    <Button label={'Submit'} variant="contained" theme="primary" type="submit" />
+                </SliderModalFooter>
+            </SliderModalLayoutWrapper>
+        </SliderModal>
     );
 };
