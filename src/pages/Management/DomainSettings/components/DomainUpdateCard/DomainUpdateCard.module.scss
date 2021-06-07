@@ -33,6 +33,8 @@
         @include flex(center, flex-start);
 
         .cardDetailsComponents {
+            width: 100%;
+
             @include flex(flex-start, center, column, 5px);
 
             .helperTextSuccess {
