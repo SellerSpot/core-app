@@ -1,19 +1,20 @@
-import React, { ReactElement, useState } from 'react';
 import {
     Alert,
     Button,
     Card,
     Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
+    DialogBody,
+    DialogFooter,
+    DialogHeader,
+    DialogLayoutWrapper,
     showNotify,
 } from '@sellerspot/universal-components';
-import styles from './DeleteStoreCard.module.scss';
+import AuthProviderService from 'layouts/App/components/AuthProvider/AuthProvider.service';
+import React, { ReactElement, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
 import DeleteStoreService from './DeleteStore.service';
-import AuthProviderService from 'layouts/App/components/AuthProvider/AuthProvider.service';
+import styles from './DeleteStoreCard.module.scss';
 
 export default function DeleteStoreCard(): ReactElement {
     // state
@@ -95,25 +96,27 @@ export default function DeleteStoreCard(): ReactElement {
                     </div>
                 }
             />
-            <Dialog open={showConfirmDialog}>
-                <DialogTitle>Delete store</DialogTitle>
-                <DialogContent>
-                    <Alert type="error">{alertMessage}</Alert>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        variant="outlined"
-                        theme="primary"
-                        onClick={() => setShowConfirmDialog(false)}
-                        label={'Cancel'}
-                    />
-                    <Button
-                        variant="contained"
-                        theme="danger"
-                        onClick={() => onConfirmDeleteHandler()}
-                        label={'Confirm to delete'}
-                    />
-                </DialogActions>
+            <Dialog showDialog={showConfirmDialog}>
+                <DialogLayoutWrapper>
+                    <DialogHeader title={'Delete Store'} />
+                    <DialogBody>
+                        <Alert type="error">{alertMessage}</Alert>
+                    </DialogBody>
+                    <DialogFooter>
+                        <Button
+                            variant="outlined"
+                            theme="primary"
+                            onClick={() => setShowConfirmDialog(false)}
+                            label={'Cancel'}
+                        />
+                        <Button
+                            variant="contained"
+                            theme="danger"
+                            onClick={() => onConfirmDeleteHandler()}
+                            label={'Confirm to delete'}
+                        />
+                    </DialogFooter>
+                </DialogLayoutWrapper>
             </Dialog>
         </>
     );
