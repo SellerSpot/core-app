@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 import { Settings } from '../../pages/Management/Settings/Settings';
 import { Billing } from 'pages/Management/Billing/Billing';
+import { DomainSettings } from 'pages/Management/DomainSettings/DomainSettings';
 
 export const Management = (): ReactElement => {
     return (
@@ -18,7 +19,7 @@ export const Management = (): ReactElement => {
                     <h6>Plugin Store</h6>
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__DOMAIN_SETTINGS}>
-                    <h6>Domain Settings</h6>
+                    <DomainSettings />
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__BILLING}>
                     <Billing />
