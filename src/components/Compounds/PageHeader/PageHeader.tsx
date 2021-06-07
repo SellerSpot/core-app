@@ -10,7 +10,7 @@ export const PageHeader = (props: IPageHeaderProps): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <h3>{title}</h3>
-            <div className={styles.headerActions}>{actions}</div>
+            {actions && <div className={styles.headerActions}>{actions}</div>}
         </div>
     );
 };

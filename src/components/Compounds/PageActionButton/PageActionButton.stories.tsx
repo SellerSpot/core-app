@@ -21,6 +21,6 @@ PageActionButton.args = {
 } as IPageActionButton;
 
 export default {
-    title: 'Design System/Compounds/Page Action Button',
+    title: 'Core App/Compounds/Page Action Button',
     component: PageActionButtonComponent,
 } as Meta;

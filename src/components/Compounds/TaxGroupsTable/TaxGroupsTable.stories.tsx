@@ -43,6 +43,6 @@ TaxGroupsTable.args = {
 } as ITaxGroupsTableProps;
 
 export default {
-    title: 'Design System/Compounds/Tax Groups Table',
+    title: 'Core App/Compounds/Tax Groups Table',
     component: TaxGroupsTableComponent,
 } as Meta;

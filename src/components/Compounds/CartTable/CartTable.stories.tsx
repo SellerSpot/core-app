@@ -17,6 +17,6 @@ const Template: Story = () => {
 export const CartTable = Template.bind({});
 
 export default {
-    title: 'Design System/Compounds/Cart Table',
+    title: 'Core App/Compounds/Cart Table',
     component: CartTableComponent,
 } as Meta;

@@ -21,7 +21,7 @@ const Template: Story = () => (
 export const PluginMenu = Template.bind({});
 
 export default {
-    title: 'Design System/Compounds/Plugin Menu',
+    title: 'Core App/Compounds/Plugin Menu',
     parameters: {
         layout: 'fullscreen',
     },

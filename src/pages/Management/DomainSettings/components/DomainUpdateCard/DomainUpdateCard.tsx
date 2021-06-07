@@ -2,11 +2,13 @@ import React, { ReactElement, useState } from 'react';
 import cn from 'classnames';
 import { Alert, Button, ExpandableCard, InputField } from '@sellerspot/universal-components';
 import styles from './DomainUpdateCard.module.scss';
-import animationStyles from '../../../styles/animation.module.scss';
+import animationStyles from '../../../../../styles/animation.module.scss';
+
+type TUrlFieldState = 'default' | 'success' | 'error';
 
 export default function DomainUpdateCard(): ReactElement {
     const [cardExpanded, setCardExpanded] = useState(false);
-    const [urlFieldState, setUrlFieldState] = useState<'default' | 'success' | 'error'>('default');
+    const [urlFieldState, setUrlFieldState] = useState<TUrlFieldState>('default');
     const [urlFieldHelperText, setUrlFieldHelperText] = useState('Please enter your new domain');
 
     const urlFieldOnChangeHandler = (typedString: string) => {
@@ -112,8 +114,9 @@ export default function DomainUpdateCard(): ReactElement {
                                     This is a destructive operation! All SEO related progress for
                                     the current domain will be lost
                                 </b>
-                                (You may loose user traction to your e-commerce site if the feature
-                                has been activated)
+                                <br />
+                                (You may loose user traction to your e-commerce site if you update
+                                your current domain)
                             </div>
                         </Alert>
                     </div>

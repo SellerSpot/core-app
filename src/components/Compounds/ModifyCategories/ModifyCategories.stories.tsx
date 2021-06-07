@@ -58,7 +58,7 @@ ModifyCategories.args = {
 } as IModifyCategoriesProps;
 
 export default {
-    title: 'Design System/Compounds/Modify Categories',
+    title: 'Core App/Compounds/Modify Categories',
     component: ModifyCategoriesComponent,
     parameters: {
         layout: 'fullscreen',

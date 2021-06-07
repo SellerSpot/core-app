@@ -17,6 +17,6 @@ PageHeader.args = {
 } as IPageHeaderProps;
 
 export default {
-    title: 'Design System/Compounds/Page Header',
+    title: 'Core App/Compounds/Page Header',
     component: PageHeaderComponent,
 } as Meta;
