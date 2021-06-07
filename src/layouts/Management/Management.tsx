@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 import { Settings } from '../../pages/Management/Settings/Settings';
+import { Billing } from 'pages/Management/Billing/Billing';
 
 export const Management = (): ReactElement => {
     return (
@@ -20,7 +21,7 @@ export const Management = (): ReactElement => {
                     <h6>Domain Settings</h6>
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__BILLING}>
-                    <h6>Billing</h6>
+                    <Billing />
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__SETTINGS}>
                     <Settings />

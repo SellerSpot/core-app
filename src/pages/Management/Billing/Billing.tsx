@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
-import styles from './Settings.module.scss';
+import styles from './Billing.module.scss';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import DeleteStoreCard from './components/DeleteStoreCard/DeleteStoreCard';
+import BillingBetaCard from './components/BillingBetaCard/BillingBetaCard';
 
-export const Settings = (): ReactElement => {
+export const Billing = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
-            <PageHeader title="Settings" />
+            <PageHeader title="Billing" />
             <div className={styles.bodyWrapper}>
-                <DeleteStoreCard />
+                <BillingBetaCard />
             </div>
         </div>
     );
