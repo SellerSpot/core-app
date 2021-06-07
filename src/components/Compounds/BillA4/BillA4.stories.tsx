@@ -22,7 +22,7 @@ export const BillA4 = Template.bind({});
 BillA4.args = {} as IBillA4Props;
 
 export default {
-    title: 'Design System/Compounds/Bill A 4',
+    title: 'Core App/Compounds/Bill A 4',
     parameters: {
         layout: 'fullscreen',
     },

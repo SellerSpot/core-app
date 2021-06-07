@@ -44,6 +44,6 @@ Bill90MM.args = {
 } as IBill90MMProps;
 
 export default {
-    title: 'Design System/Compounds/Bill 90 MM',
+    title: 'Core App/Compounds/Bill 90 MM',
     component: Bill90MMComponent,
 } as Meta;

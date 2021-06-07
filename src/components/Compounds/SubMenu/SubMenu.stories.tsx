@@ -70,7 +70,7 @@ SubMenu.args = {
 } as ISubMenuProps;
 
 export default {
-    title: 'Design System/Compounds/Sub Menu',
+    title: 'Core App/Compounds/Sub Menu',
     component: SubMenuComponent,
     parameters: {
         layout: 'fullscreen',

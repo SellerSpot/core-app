@@ -112,7 +112,7 @@ const Template: Story = () => {
 export const BillHolder = Template.bind({});
 
 export default {
-    title: 'Design System/Compounds/Bill Holder',
+    title: 'Core App/Compounds/Bill Holder',
     parameters: {
         layout: 'fullscreen',
     },

@@ -20,6 +20,6 @@ SaleSearchResultCard.args = {
     productImage: 'https://i.ibb.co/MZMJMCn/Rectangle-18.png',
 } as ISaleSearchResultCard;
 export default {
-    title: 'Design System/Compounds/Sale Search Result Card',
+    title: 'Core App/Compounds/Sale Search Result Card',
     component: SaleSearchResultCardComponent,
 } as Meta;

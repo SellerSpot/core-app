@@ -7,7 +7,7 @@ const Template: Story = () => <AppBarComponent />;
 export const AppBar = Template.bind({});
 
 export default {
-    title: 'Design System/Compounds/App Bar',
+    title: 'Core App/Compounds/App Bar',
     component: AppBarComponent,
     parameters: {
         layout: 'fullscreen',
