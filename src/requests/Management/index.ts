@@ -1,3 +1,3 @@
-import StoreRequest from './StoreRequest';
+import SettingsRequest from './SettingsRequest';
 
-export const storeRequest = new StoreRequest();
+export const settingsRequest = new SettingsRequest();

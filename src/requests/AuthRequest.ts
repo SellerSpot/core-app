@@ -10,7 +10,7 @@ import BaseRequest from './BaseRequest';
 
 export default class AuthRequest extends BaseRequest {
     constructor() {
-        super(ROUTES.SERVICE.AUTH);
+        super('AUTH');
     }
 
     /**

@@ -1,5 +1,11 @@
 import Axios, { AxiosError, AxiosInstance } from 'axios';
-import { IResponse, IErrorResponse, ERROR_CODE, REQUEST_METHOD } from '@sellerspot/universal-types';
+import {
+    IResponse,
+    IErrorResponse,
+    ERROR_CODE,
+    REQUEST_METHOD,
+    ROUTES,
+} from '@sellerspot/universal-types';
 import { CONFIG } from 'config/config';
 import { showNotify } from '@sellerspot/universal-components';
 
@@ -9,8 +15,12 @@ export interface IApiServiceProps {
 
 export interface IRequestPayload {
     url: string;
-    method: REQUEST_METHOD;
+    method: keyof typeof REQUEST_METHOD;
     payload?: unknown;
+    /**
+     * pass service to override default scoped service of the class
+     */
+    service?: keyof typeof ROUTES.SERVICE;
 }
 
 export default class ApiService {

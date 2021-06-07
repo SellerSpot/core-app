@@ -2,7 +2,6 @@ import {
     ICreateBrandRequest,
     ICreateBrandResponse,
     IGetAllBrandResponse,
-    ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
 import { generateRandomString, introduceDelay } from 'utilities/general';
@@ -39,7 +38,7 @@ const catalogueServer: ICatalogServer = {
 
 export default class CatalogueBrandsRequest extends BaseRequest {
     constructor() {
-        super(ROUTES.SERVICE.CATALOGUE);
+        super('CATALOGUE');
     }
 
     getAllBrand = async (): Promise<IGetAllBrandResponse> => {

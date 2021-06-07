@@ -63,7 +63,7 @@ export default class AuthProviderService {
     }
 
     static async clearApp(): Promise<void> {
-        const signOutStatus = this.logoutUser(true);
+        const signOutStatus = AuthProviderService.logoutUser(true);
         if (signOutStatus) {
             showNotify('Store deleted successfully');
             store.dispatch(resetAppState());

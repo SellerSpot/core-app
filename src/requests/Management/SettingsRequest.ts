@@ -1,17 +1,17 @@
-import { IResponse, REQUEST_METHOD, ROUTES } from '@sellerspot/universal-types';
+import { IResponse, ROUTES } from '@sellerspot/universal-types';
 
 import BaseRequest from '../BaseRequest';
 
-export default class StoreRequest extends BaseRequest {
+export default class SettingsRequest extends BaseRequest {
     constructor() {
-        super(ROUTES.SERVICE.CORE);
+        super('CORE');
     }
     /**
      * logout the user by clearing cookies through server
      */
     async deleteStore(): Promise<IResponse> {
         return await this.request({
-            method: REQUEST_METHOD.DELETE,
+            method: 'DELETE',
             url: ROUTES.CORE.DELETE_TENANT,
         });
     }

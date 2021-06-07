@@ -3,6 +3,6 @@ import { requests } from 'requests/requests';
 
 export default class DeleteStoreService {
     public static async deleteStore(): Promise<IResponse> {
-        return await requests.management.storeRequest.deleteStore();
+        return await requests.management.settingsRequest.deleteStore();
     }
 }
