@@ -1,23 +1,22 @@
-import React, { ReactElement, useState } from 'react';
-import cn from 'classnames';
 import {
     Alert,
     Button,
     ExpandableCard,
     InputField,
-    TOnChangeMiddleware,
     sanitize,
     TFormSubmitionHandler,
+    TOnChangeMiddleware,
 } from '@sellerspot/universal-components';
-import styles from './DomainUpdateCard.module.scss';
-import animationStyles from '../../../../../styles/animation.module.scss';
-import { Field, Form } from 'react-final-form';
-import DomainUpdateCardService from './DomainUpdate.service';
-import { IDomainUpdateCardFormValues } from './DomainUpdateCard.types';
-import { FormApi, Mutator } from 'final-form';
 import { CONFIG } from 'config/config';
+import { FormApi, Mutator } from 'final-form';
+import React, { ReactElement, useState } from 'react';
+import { Field, Form } from 'react-final-form';
 import { useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { appSelector } from 'store/models/app';
+import DomainUpdateCardService from './DomainUpdate.service';
+import styles from './DomainUpdateCard.module.scss';
+import { IDomainUpdateCardFormValues } from './DomainUpdateCard.types';
 
 export const StoreUrlField = (props: {
     form: FormApi<IDomainUpdateCardFormValues, Partial<IDomainUpdateCardFormValues>>;
@@ -27,7 +26,7 @@ export const StoreUrlField = (props: {
     const { form, cardExpanded } = props;
 
     // hooks
-    const { name: domainName } = useSelector(appSelector).tenantDetails.domainDetails;
+    const { domainName: domainName } = useSelector(appSelector).tenantDetails.domainDetails;
 
     return (
         <Field
@@ -77,7 +76,7 @@ export const StoreUrlField = (props: {
 
 export const DomainUpdateCard = (): ReactElement => {
     // hooks
-    const { name: domain, domainName } = useSelector(appSelector).tenantDetails.domainDetails;
+    const { domainName } = useSelector(appSelector).tenantDetails.domainDetails;
 
     const [cardExpanded, setCardExpanded] = useState(true); // set to false
 
@@ -111,17 +110,13 @@ export const DomainUpdateCard = (): ReactElement => {
                             <h5>Your Current Domain</h5>
                             <h6 className={styles.domainAddress}>{domainName ?? ''}</h6>
                         </div>
-                        <div className={styles.cardRHSComponents}>
-                            <div
-                                className={cn(
-                                    {
-                                        [animationStyles.fadeOut]: cardExpanded,
-                                    },
-                                    {
-                                        [animationStyles.fadeIn]: !cardExpanded,
-                                    },
-                                )}
-                            >
+                        <CSSTransition
+                            in={!cardExpanded}
+                            classNames={'fade-in-out'}
+                            unmountOnExit
+                            timeout={300}
+                        >
+                            <div className={styles.cardRHSComponents}>
                                 <Button
                                     variant="contained"
                                     onClick={() => setCardExpanded(true)}
@@ -129,13 +124,13 @@ export const DomainUpdateCard = (): ReactElement => {
                                     theme="primary"
                                 />
                             </div>
-                        </div>
+                        </CSSTransition>
                     </div>
                 ),
                 detailsContent: (
                     <Form
                         onSubmit={submitionHandler}
-                        initialValues={{ domainName: domain }}
+                        initialValues={{ domainName: domainName.split('.')[0] }}
                         subscription={{ submitting: true, submitSucceeded: true }} // empty object overrides all subscriptions
                         mutators={{
                             resetMutator: resetMutator as Mutator<IDomainUpdateCardFormValues>,
