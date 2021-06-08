@@ -1,5 +1,6 @@
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
+import { Brands } from 'pages/Catalogue/Brands/Brands';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -14,7 +15,7 @@ export const Catalogue = (): ReactElement => {
                     <h6>Products</h6>
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__BRANDS}>
-                    <h6>Brands</h6>
+                    <Brands />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__CATEGORIES}>
                     <h6>Categories</h6>

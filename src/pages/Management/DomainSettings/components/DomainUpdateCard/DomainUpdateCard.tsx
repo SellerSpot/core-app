@@ -6,6 +6,7 @@ import {
     sanitize,
     TFormSubmitionHandler,
     TOnChangeMiddleware,
+    TRANSITIONS,
 } from '@sellerspot/universal-components';
 import { CONFIG } from 'config/config';
 import { FormApi, Mutator } from 'final-form';
@@ -76,7 +77,7 @@ export const StoreUrlField = (props: {
 
 export const DomainUpdateCard = (): ReactElement => {
     // hooks
-    const { domainName } = useSelector(appSelector).tenantDetails.domainDetails;
+    const { name, domainName } = useSelector(appSelector).tenantDetails.domainDetails;
 
     const [cardExpanded, setCardExpanded] = useState(true); // set to false
 
@@ -112,7 +113,7 @@ export const DomainUpdateCard = (): ReactElement => {
                         </div>
                         <CSSTransition
                             in={!cardExpanded}
-                            classNames={'fade-in-out'}
+                            classNames={TRANSITIONS.fadeInOut}
                             unmountOnExit
                             timeout={300}
                         >
@@ -130,7 +131,7 @@ export const DomainUpdateCard = (): ReactElement => {
                 detailsContent: (
                     <Form
                         onSubmit={submitionHandler}
-                        initialValues={{ domainName: domainName.split('.')[0] }}
+                        initialValues={{ domainName: name }}
                         subscription={{ submitting: true, submitSucceeded: true }} // empty object overrides all subscriptions
                         mutators={{
                             resetMutator: resetMutator as Mutator<IDomainUpdateCardFormValues>,
