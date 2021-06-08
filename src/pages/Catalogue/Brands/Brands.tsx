@@ -6,6 +6,7 @@ import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './Brands.module.scss';
 import { IBrandsPageProps } from './Brands.types';
+import { BrandsTable } from './Components/BrandsTable/BrandsTable';
 
 const PageHeaderComponent = (props: { pageState: State<IBrandsPageProps> }) => {
     // props
@@ -45,6 +46,7 @@ export const Brands = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
+            <BrandsTable pageState={pageState} />
         </div>
     );
 };
