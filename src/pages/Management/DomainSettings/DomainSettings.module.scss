@@ -8,6 +8,6 @@
         width: 100%;
         height: 100%;
 
-        @include flex(center, flex-start, column, 20px);
+        @include flex(center, flex-start, column);
     }
 }

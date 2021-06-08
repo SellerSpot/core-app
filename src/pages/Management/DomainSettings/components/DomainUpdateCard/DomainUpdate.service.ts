@@ -1,39 +1,100 @@
-import yup from 'yup';
-import { IDomainUpdateFormValues } from './DomainUpdateCard.types';
+import { IInputFieldProps } from '@sellerspot/universal-components';
+import { CONFIG } from 'config/config';
+import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
+import * as yup from 'yup';
+import { IDomainUpdateCardFormValues } from './DomainUpdateCard.types';
 
-export default class DomainUpdateService {
-    static initialFormValues: IDomainUpdateFormValues = {
+export default class DomainUpdateCardService {
+    static initialFormValues: IDomainUpdateCardFormValues = {
         domainName: '',
     };
 
-    private static validationSchema: yup.SchemaOf<IDomainUpdateFormValues> = yup.object().shape({
-        domainName: yup
-            .string()
-            .required('Store url is required')
-            .min(3, 'NOT_AVAILABLE')
-            .max(15, 'NOT_AVAILABLE'),
-    });
+    private static validationSchema: yup.SchemaOf<IDomainUpdateCardFormValues> = yup
+        .object()
+        .shape({
+            domainName: yup
+                .string()
+                .required('Store url is required')
+                .min(3, 'NOT_AVAILABLE')
+                .max(15, 'NOT_AVAILABLE'),
+        });
 
-    static storeUrlAvailabilityCheckHandler = async (value: string): Promise<string> => {
+    static storeUrlAvailabilityCheckHandler = async (
+        value: string,
+        currentDomain: string,
+    ): Promise<string> => {
         try {
-            const fieldPath: keyof IDomainUpdateFormValues = 'domainName';
+            const fieldPath: keyof IDomainUpdateCardFormValues = 'domainName';
             // get schema instance for the required field
-            const requiredSchema: yup.SchemaOf<IDomainUpdateFormValues['domainName']> = yup.reach(
-                DomainUpdateService.validationSchema,
-                fieldPath,
-            );
+            const requiredSchema: yup.SchemaOf<IDomainUpdateCardFormValues['domainName']> =
+                yup.reach(DomainUpdateCardService.validationSchema, fieldPath);
             requiredSchema.validateSync(value, { abortEarly: true });
             // do api validation here
-            // const response = await authRequest.checkDomainAvailability(value);
-            // if (!response?.status) {
-            //     throw new Error('NOT_AVAILABLE');
-            // }
+            if (value === currentDomain) {
+                throw new Error('SAME_AS_CURRENT');
+            } else {
+                const response =
+                    await requests.management.domainSettingsRequest.checkDomainAvailability(value);
+                if (!response?.status) {
+                    throw new Error('NOT_AVAILABLE');
+                }
+            }
         } catch (error) {
             if (error instanceof yup.ValidationError) {
                 return error.message;
             }
             // uncaught error
-            return 'NOT_AVAILABLE'; // which will be caught in ui layer and will be displayed as domain not availble
+            return error?.message; // which will be caught in ui layer and will be displayed as domain not availble
         }
+    };
+
+    static getStoreUrlFieldProps = (
+        value: string,
+        { error, validating, valid, modified, submitError }: FieldMetaState<string>,
+    ): {
+        helperMessage: IInputFieldProps['helperMessage'];
+        inputFieldTheme: IInputFieldProps['theme'];
+    } => {
+        const baseDomainSuffix = `.${CONFIG.BASE_DOMAIN_NAME}`;
+        let helperTextType: IInputFieldProps['helperMessage']['type'] = 'none';
+        let helperTextContent: string = error || submitError;
+        let inputFieldTheme: IInputFieldProps['theme'] = 'primary';
+        const helperMessageEnabled = (error || validating || valid || submitError) && modified;
+        if (helperMessageEnabled) {
+            if (validating) {
+                helperTextType = 'loading';
+                helperTextContent = 'Checking for availability';
+            } else if (valid) {
+                helperTextType = 'success';
+                inputFieldTheme = 'success';
+                helperTextContent = `${value}${baseDomainSuffix} is available.`;
+            } else if (error || submitError) {
+                if (error === 'SAME_AS_CURRENT') {
+                    // same as current domain error
+                    helperTextType = 'warning';
+                    inputFieldTheme = 'warning';
+                    helperTextContent = `${value}${baseDomainSuffix} is your current domain.`;
+                } else {
+                    // other error
+                    helperTextType = 'error';
+                    inputFieldTheme = 'danger';
+                    helperTextContent =
+                        error === 'NOT_AVAILABLE'
+                            ? `${value}${baseDomainSuffix} is not available.`
+                            : error || submitError;
+                }
+            }
+        }
+        const helperMessage: IInputFieldProps['helperMessage'] = {
+            enabled: helperMessageEnabled,
+            type: helperTextType,
+            content: helperTextContent,
+        };
+
+        return {
+            helperMessage,
+            inputFieldTheme,
+        };
     };
 }

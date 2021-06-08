@@ -1,3 +1,3 @@
-export interface IDomainUpdateFormValues {
+export interface IDomainUpdateCardFormValues {
     domainName: string;
 }

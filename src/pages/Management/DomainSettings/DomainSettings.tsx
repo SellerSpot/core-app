@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styles from './DomainSettings.module.scss';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import DomainUpdateCard from './components/DomainUpdateCard/DomainUpdateCard';
+import { DomainUpdateCard } from './components/DomainUpdateCard/DomainUpdateCard';
 import DomainInformationCard from './components/DomainInformationCard/DomainInformationCard';
 
 export const DomainSettings = (): ReactElement => {
