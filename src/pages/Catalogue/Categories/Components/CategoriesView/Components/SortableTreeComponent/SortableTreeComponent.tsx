@@ -16,13 +16,13 @@ import { CategoriesNodeDataStore } from '../../../../services/CategoriesNodeData
 import { CategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
 
 export const SortableTreeComponent = (props: {
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }): ReactElement => {
     // props
-    const { componentState } = props;
+    const { pageState } = props;
 
     // state
-    const state = componentState;
+    const state = pageState;
     const { treeData, searchQuery, editableNodeDetails, toBeDeletedNode, selectedNode } = state;
     const themeState = useSelector(themeSelector);
 
@@ -83,7 +83,7 @@ export const SortableTreeComponent = (props: {
             title: <h5 className="nodeTitle">{nodeTitle}</h5>,
             buttons: [
                 <div key={'controls'}>
-                    <CategoriesNodeButtons nodeInstance={nodeInstance} componentState={state} />
+                    <CategoriesNodeButtons nodeInstance={nodeInstance} pageState={state} />
                 </div>,
             ],
             onClick: nodeOnClickHandler,

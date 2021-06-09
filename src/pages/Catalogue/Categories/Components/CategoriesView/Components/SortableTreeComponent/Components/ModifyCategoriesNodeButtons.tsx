@@ -18,10 +18,10 @@ const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
 const EditCategoryButton = (props: {
     nodeInstance: CategoriesNodeDataStore;
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }) => {
-    const { nodeInstance, componentState } = props;
-    const { editableNodeDetails } = useState(componentState);
+    const { nodeInstance, pageState } = props;
+    const { editableNodeDetails } = useState(pageState);
     // fetching data from node class instance
     const {
         isEditable,
@@ -53,10 +53,10 @@ const EditCategoryButton = (props: {
 
 const AddCategoryButton = (props: {
     nodeInstance: CategoriesNodeDataStore;
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }) => {
-    const { nodeInstance, componentState } = props;
-    const { toBeAddedNodeDetails } = useState(componentState);
+    const { nodeInstance, pageState } = props;
+    const { toBeAddedNodeDetails } = useState(pageState);
     // fetching data from node class instance
     const {
         nodeData: { path },
@@ -89,10 +89,10 @@ const AddCategoryButton = (props: {
 
 const DeleteCategoryButton = (props: {
     nodeInstance: CategoriesNodeDataStore;
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }) => {
-    const { nodeInstance, componentState } = props;
-    const { toBeDeletedNode } = useState(componentState);
+    const { nodeInstance, pageState } = props;
+    const { toBeDeletedNode } = useState(pageState);
     // fetching data from node class instance
     const {
         nodeData: { node },
@@ -115,9 +115,9 @@ const DeleteCategoryButton = (props: {
     );
 };
 
-const CancelDeleteConfirmation = (props: { componentState: State<IUseCategoriesStore> }) => {
-    const { componentState } = props;
-    const { toBeDeletedNode } = useState(componentState);
+const CancelDeleteConfirmation = (props: { pageState: State<IUseCategoriesStore> }) => {
+    const { pageState } = props;
+    const { toBeDeletedNode } = useState(pageState);
     const onClickHandler = () => {
         toBeDeletedNode.set(null);
     };
@@ -134,10 +134,10 @@ const CancelDeleteConfirmation = (props: { componentState: State<IUseCategoriesS
 
 const ProceedDeleteConfirmation = (props: {
     nodeInstance: CategoriesNodeDataStore;
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }) => {
-    const { nodeInstance, componentState } = props;
-    const { treeData } = useState(componentState);
+    const { nodeInstance, pageState } = props;
+    const { treeData } = useState(pageState);
     // fetching data from node class instance
     const {
         nodeData: {
@@ -172,10 +172,10 @@ const ProceedDeleteConfirmation = (props: {
 
 export const CategoriesNodeButtons = (props: {
     nodeInstance: CategoriesNodeDataStore;
-    componentState: State<IUseCategoriesStore>;
+    pageState: State<IUseCategoriesStore>;
 }): ReactElement => {
-    const { nodeInstance, componentState } = props;
-    const state = useState(componentState);
+    const { nodeInstance, pageState } = props;
+    const state = useState(pageState);
 
     // fetching data from node class instance
     const { isToBeDeleted } = nodeInstance;
@@ -183,17 +183,17 @@ export const CategoriesNodeButtons = (props: {
     return (
         <div className={styles.controls}>
             {!isToBeDeleted ? (
-                <EditCategoryButton nodeInstance={nodeInstance} componentState={state} />
+                <EditCategoryButton nodeInstance={nodeInstance} pageState={state} />
             ) : null}
             {!isToBeDeleted ? (
-                <AddCategoryButton nodeInstance={nodeInstance} componentState={state} />
+                <AddCategoryButton nodeInstance={nodeInstance} pageState={state} />
             ) : null}
             {!isToBeDeleted ? (
-                <DeleteCategoryButton nodeInstance={nodeInstance} componentState={state} />
+                <DeleteCategoryButton nodeInstance={nodeInstance} pageState={state} />
             ) : null}
-            {isToBeDeleted ? <CancelDeleteConfirmation componentState={state} /> : null}
+            {isToBeDeleted ? <CancelDeleteConfirmation pageState={state} /> : null}
             {isToBeDeleted ? (
-                <ProceedDeleteConfirmation nodeInstance={nodeInstance} componentState={state} />
+                <ProceedDeleteConfirmation nodeInstance={nodeInstance} pageState={state} />
             ) : null}
         </div>
     );
