@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { Categories } from '../../pages/Catalogue/Categories/Categories';
+import { StockUnits } from '../../pages/Catalogue/StockUnits/StockUnits';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 
 export const Catalogue = (): ReactElement => {
@@ -22,7 +23,7 @@ export const Catalogue = (): ReactElement => {
                     <Categories />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__STOCKUNITS}>
-                    <h6>StockUnits</h6>
+                    <StockUnits />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__TAXBRACKETS}>
                     <h6>Tax Brackets</h6>

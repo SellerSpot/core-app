@@ -5,10 +5,10 @@ import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './Brands.module.scss';
-import { IBrandsPageProps } from './Brands.types';
+import { IBrandsPageState } from './Brands.types';
 import { BrandsTable } from './Components/BrandsTable/BrandsTable';
 
-const PageHeaderComponent = (props: { pageState: State<IBrandsPageProps> }) => {
+const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
     // props
     const { pageState } = props;
 
@@ -37,7 +37,7 @@ const PageHeaderComponent = (props: { pageState: State<IBrandsPageProps> }) => {
 
 export const Brands = (): ReactElement => {
     // state
-    const pageState = useState<IBrandsPageProps>({
+    const pageState = useState<IBrandsPageState>({
         brands: [],
         showSliderModal: false,
     });

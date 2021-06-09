@@ -1,3 +1,5 @@
+import { State } from '@hookstate/core';
+import Icon from '@iconify/react';
 import {
     IconButton,
     ITableProps,
@@ -5,27 +7,25 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import React from 'react';
-import styles from './BrandsTable.module.scss';
-import { IBrandsPageState } from '../../Brands.types';
-import Icon from '@iconify/react';
-import { ICONS } from 'utilities/utilities';
+import { ICONS } from '../../../../../utilities/utilities';
+import styles from '../../StockUnits.module.scss';
+import { IStockUnit, IStockUnitPageState } from '../../StockUnits.types';
 
-export class BrandsTableService {
-    static getTableProps = (
-        brands: IBrandsPageState['brands'],
-    ): ITableProps<IBrandsPageState['brands'][0]> => {
-        // custom renderers
-        const snoCustomRenderer: TTableCellCustomRenderer<IBrandsPageState['brands'][0]> = (
-            props,
-        ) => {
+export class StockUnitsTableService {
+    static getTableProps = (props: {
+        pageState: State<IStockUnitPageState>;
+    }): ITableProps<IStockUnit> => {
+        // props
+        const {} = props;
+
+        // components
+        const sNoCustomRenderer: TTableCellCustomRenderer<IStockUnit> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
         };
-        const actionsCustomRenderer: TTableCellCustomRenderer<IBrandsPageState['brands'][0]> = (
-            props,
-        ) => {
+        const actionsCustomRenderer: TTableCellCustomRenderer<IStockUnit> = (props) => {
             // props
             const {} = props;
 
@@ -67,25 +67,24 @@ export class BrandsTableService {
             );
         };
 
-        // return
+        // draw
         return {
-            data: brands,
+            data: [],
             shape: [
                 {
-                    columnName: 'Sno',
-                    align: 'center',
+                    columnName: 'SNo',
                     width: '5%',
-                    customRenderer: snoCustomRenderer,
+                    align: 'center',
+                    customRenderer: sNoCustomRenderer,
                 },
                 {
-                    dataKey: 'name',
-                    columnName: 'Brand Name',
-                    width: '65%',
+                    columnName: 'Unit',
+                    width: '70%',
+                    dataKey: 'unit',
                 },
                 {
                     columnName: 'Actions',
                     align: 'center',
-                    width: '30%',
                     customRenderer: actionsCustomRenderer,
                 },
             ],
