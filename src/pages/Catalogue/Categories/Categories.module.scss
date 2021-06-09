@@ -6,7 +6,7 @@
     grid-template-rows: 50px 1fr;
 
     .searchField {
-        width: 250px;
+        width: 200px;
     }
 
     .loaderSkeleton {
@@ -30,13 +30,6 @@
             width: 100%;
             padding-bottom: 100px;
             margin-top: 0px;
-
-            .addTopLevelCategoryWrapper {
-                width: 100%;
-
-                margin-left: 15px;
-                float: left;
-            }
 
             .categoryNameField {
                 width: 200px;

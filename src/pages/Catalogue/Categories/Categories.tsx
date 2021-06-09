@@ -60,9 +60,8 @@ const PageHeaderComponent = (props: { pageState: State<IUseCategoriesStore> }) =
                 <InputField
                     fullWidth
                     theme="primary"
-                    autoFocus
                     size="small"
-                    label="Hi there"
+                    variant="standard"
                     value={localFieldValue.get()}
                     placeHolder={'Search for category'}
                     disableHelperTextPlaceholderPadding

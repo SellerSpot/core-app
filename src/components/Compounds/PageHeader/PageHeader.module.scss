@@ -1,9 +1,9 @@
 .wrapper {
     width: 100%;
 
-    @include flex(flex-end, space-between);
+    @include flex(center, space-between);
 
     .headerActions {
-        @include flex(center, flex-end, $gap: 10px);
+        @include flex(flex-end, flex-end, $gap: 10px);
     }
 }
