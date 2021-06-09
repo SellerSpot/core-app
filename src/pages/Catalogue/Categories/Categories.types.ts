@@ -11,7 +11,7 @@ interface ICategory {
     children?: ICategory[];
 }
 
-export interface IModifyCategoriesProps {
+export interface ICategoriesProps {
     categoriesData: ICategory[];
 }
 
@@ -20,7 +20,7 @@ type TEditableNodeDetails = {
     path: string[];
 };
 
-export interface IUseModifyCategoriesStore {
+export interface IUseCategoriesStore {
     treeData: TreeItem[];
     searchQuery: string;
     editableNodeDetails: TEditableNodeDetails;
@@ -32,7 +32,7 @@ export interface IUseModifyCategoriesStore {
 export type TOpenPopperHandler = (props: { anchorEl: HTMLElement }) => void;
 export type IInputFieldOnChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-export interface IModifyCategoriesNodeDataStoreProps {
+export interface ICategoriesNodeDataStoreProps {
     data: ExtendedNodeData;
     isEditable: boolean;
     isSelected: boolean;

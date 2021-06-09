@@ -1,9 +1,9 @@
 import { IColors } from '@sellerspot/universal-components';
 import React, { CSSProperties } from 'react';
 import { ExtendedNodeData } from 'react-sortable-tree';
-import { IModifyCategoriesNodeDataStoreProps } from '../ModifyCategories.types';
+import { ICategoriesNodeDataStoreProps } from '../Categories.types';
 
-export class ModifyCategoriesNodeDataStore {
+export class CategoriesNodeDataStore {
     // all sortable-tree data related to the current node
     nodeData: ExtendedNodeData;
     // if the node is in editable state
@@ -17,7 +17,7 @@ export class ModifyCategoriesNodeDataStore {
     // color information for the application
     colors: IColors;
 
-    constructor(props: IModifyCategoriesNodeDataStoreProps) {
+    constructor(props: ICategoriesNodeDataStoreProps) {
         const { data, colors, isToBeDeleted, isEditable, isParentNode, isSelected } = props;
         this.nodeData = data;
         this.colors = colors;

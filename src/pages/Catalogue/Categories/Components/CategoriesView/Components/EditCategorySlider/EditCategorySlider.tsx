@@ -14,7 +14,7 @@ import React, { ReactElement } from 'react';
 import { Field, Form, FormProps } from 'react-final-form';
 import { addNodeUnderParent, changeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { rawClone } from 'utilities/general';
-import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
+import { IUseCategoriesStore } from '../../../../Categories.types';
 import { EditCategorySliderService } from '../../../../services/EditCategorySlider.service';
 import { IEditCategoryForm } from './EditCategory.types';
 import styles from './EditCategorySlider.module.scss';
@@ -22,7 +22,7 @@ import styles from './EditCategorySlider.module.scss';
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
 export const EditCategorySlider = (props: {
-    componentState: State<IUseModifyCategoriesStore>;
+    componentState: State<IUseCategoriesStore>;
 }): ReactElement => {
     // props
     const { componentState } = props;

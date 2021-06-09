@@ -10,7 +10,7 @@ import {
 import * as yup from 'yup';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
-export class ModifyCategoriesService {
+export class CategoriesService {
     static canDropCategory = (props: {
         dropProps: OnDragPreviousAndNextLocation & NodeData;
         treeData: TreeItem[];
@@ -18,7 +18,7 @@ export class ModifyCategoriesService {
         const { dropProps, treeData } = props;
         const { node, nextParent, nextPath } = dropProps;
 
-        return !ModifyCategoriesService.isThereASibilingNodeWithSameTitleDNDCheck({
+        return !CategoriesService.isThereASibilingNodeWithSameTitleDNDCheck({
             nextParent,
             currentNode: node,
             nextPath: nextPath as string[],
@@ -58,7 +58,7 @@ export class ModifyCategoriesService {
             treeData,
             searchQuery: `${currentNodeTitle}`,
             getNodeKey,
-            searchMethod: ModifyCategoriesService.sibilingCheckSearchMethod,
+            searchMethod: CategoriesService.sibilingCheckSearchMethod,
         });
         // invalidNode flag
         let invalidNodeFlag = false;
@@ -119,7 +119,7 @@ export class ModifyCategoriesService {
             treeData,
             searchQuery: titleOfCurrentNode,
             getNodeKey,
-            searchMethod: ModifyCategoriesService.sibilingCheckSearchMethod,
+            searchMethod: CategoriesService.sibilingCheckSearchMethod,
         });
         // invalidNode flag
         let invalidNodeFlag = false;
@@ -168,7 +168,7 @@ export class ModifyCategoriesService {
 
         // checking for sibling with same name
         if (
-            ModifyCategoriesService.isThereASibilingNodeWithSameTitle({
+            CategoriesService.isThereASibilingNodeWithSameTitle({
                 pathOfCurrentNode: path,
                 titleOfCurrentNode: title,
                 treeData,

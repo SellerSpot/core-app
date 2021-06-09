@@ -1,7 +1,7 @@
 import { TreeItem } from 'react-sortable-tree';
 import * as yup from 'yup';
-import { IEditCategoryForm } from '../Components/CategoriesView/Components/EditCategorySlider.tsx/EditCategory.types';
-import { ModifyCategoriesService } from './ModifyCategories.service';
+import { IEditCategoryForm } from '../Components/CategoriesView/Components/EditCategorySlider/EditCategory.types';
+import { CategoriesService } from './Categories.service';
 
 export class EditCategorySliderService {
     // posts category to the server and returns the new category id
@@ -33,7 +33,7 @@ export class EditCategorySliderService {
             requiredSchema.validateSync(value);
 
             if (fieldName === 'categoryName') {
-                const isInvalidName = ModifyCategoriesService.isThereASibilingNodeWithSameTitle({
+                const isInvalidName = CategoriesService.isThereASibilingNodeWithSameTitle({
                     titleOfCurrentNode: value,
                     treeData,
                     pathOfCurrentNode: path,

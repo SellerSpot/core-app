@@ -4,6 +4,7 @@ import { Brands } from 'pages/Catalogue/Brands/Brands';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
+import { Categories } from '../../pages/Catalogue/Categories/Categories';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 
 export const Catalogue = (): ReactElement => {
@@ -18,7 +19,7 @@ export const Catalogue = (): ReactElement => {
                     <Brands />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__CATEGORIES}>
-                    <h6>Categories</h6>
+                    <Categories />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__STOCKUNITS}>
                     <h6>StockUnits</h6>

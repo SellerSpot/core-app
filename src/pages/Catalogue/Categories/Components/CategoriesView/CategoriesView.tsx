@@ -4,11 +4,11 @@ import { Loader } from 'components/Atoms/Loader/Loader';
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { State, useState } from '@hookstate/core';
 import { ICONS } from 'utilities/utilities';
-import styles from '../../ModifyCategories.module.scss';
+import styles from '../../Categories.module.scss';
 import { SortableTreeComponent } from './Components/SortableTreeComponent/SortableTreeComponent';
-import { IUseModifyCategoriesStore } from '../../ModifyCategories.types';
+import { IUseCategoriesStore } from '../../Categories.types';
 
-const AddTopLevelCategory = (props: { componentState: State<IUseModifyCategoriesStore> }) => {
+const AddTopLevelCategory = (props: { componentState: State<IUseCategoriesStore> }) => {
     // props
     const { componentState } = props;
 
@@ -29,7 +29,7 @@ const AddTopLevelCategory = (props: { componentState: State<IUseModifyCategories
     return (
         <div className={styles.addTopLevelCategoryWrapper}>
             <Button
-                label={'ADD CATEGORY'}
+                label={'NEW CATEGORY'}
                 theme="primary"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
@@ -61,14 +61,14 @@ const LoadingSkeleton = () => {
 };
 
 export const CategoriesView = (props: {
-    componentState: State<IUseModifyCategoriesStore>;
+    componentState: State<IUseCategoriesStore>;
 }): ReactElement => {
     // props
     const { componentState } = props;
 
     // state
     const state = componentState;
-    const categoriesViewHeight = useState(null);
+    const categoriesViewHeight = useState<number>(100);
     const isLoading = useState(true);
 
     // hooks

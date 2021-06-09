@@ -1,7 +1,5 @@
 import { State } from '@hookstate/core';
 import { colorThemes, showNotify } from '@sellerspot/universal-components';
-import { ModifyCategoriesService } from 'components/Compounds/ModifyCategories/services/ModifyCategories.service';
-import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import SortableTree, {
@@ -12,11 +10,13 @@ import SortableTree, {
 } from 'react-sortable-tree';
 import { themeSelector } from 'store/models/theme';
 import { rawClone } from 'utilities/general';
-import { IUseModifyCategoriesStore } from '../../../../ModifyCategories.types';
-import { ModifyCategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
+import { IUseCategoriesStore } from '../../../../Categories.types';
+import { CategoriesService } from '../../../../services/Categories.service';
+import { CategoriesNodeDataStore } from '../../../../services/CategoriesNodeDataStore.service';
+import { CategoriesNodeButtons } from './Components/ModifyCategoriesNodeButtons';
 
 export const SortableTreeComponent = (props: {
-    componentState: State<IUseModifyCategoriesStore>;
+    componentState: State<IUseCategoriesStore>;
 }): ReactElement => {
     // props
     const { componentState } = props;
@@ -28,7 +28,7 @@ export const SortableTreeComponent = (props: {
 
     // handler
     const canDropCallback: ReactSortableTreeProps['canDrop'] = (props) => {
-        return ModifyCategoriesService.canDropCategory({
+        return CategoriesService.canDropCategory({
             dropProps: props,
             treeData: treeData.get(),
         });
@@ -47,7 +47,7 @@ export const SortableTreeComponent = (props: {
 
         // data store
         // creating data store instance
-        const nodeInstance = new ModifyCategoriesNodeDataStore({
+        const nodeInstance = new CategoriesNodeDataStore({
             data,
             colors: colorThemes[themeState.colorTheme],
             isEditable,
@@ -83,10 +83,7 @@ export const SortableTreeComponent = (props: {
             title: <h5 className="nodeTitle">{nodeTitle}</h5>,
             buttons: [
                 <div key={'controls'}>
-                    <ModifyCategoriesNodeButtons
-                        nodeInstance={nodeInstance}
-                        componentState={state}
-                    />
+                    <CategoriesNodeButtons nodeInstance={nodeInstance} componentState={state} />
                 </div>,
             ],
             onClick: nodeOnClickHandler,
@@ -102,9 +99,10 @@ export const SortableTreeComponent = (props: {
         <SortableTree
             rowHeight={80}
             treeData={rawClone<TreeItem[]>(treeData.value)}
+            isVirtualized={false}
             searchQuery={searchQuery}
             canDrop={canDropCallback}
-            searchMethod={ModifyCategoriesService.generalSearchMethod}
+            searchMethod={CategoriesService.generalSearchMethod}
             onChange={handleSortableTreeOnChange}
             generateNodeProps={generateNodePropsHandler}
         />

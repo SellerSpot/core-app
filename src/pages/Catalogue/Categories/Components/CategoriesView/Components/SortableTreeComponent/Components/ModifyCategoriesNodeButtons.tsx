@@ -7,18 +7,18 @@ import {
     showNotify,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { IUseModifyCategoriesStore } from 'components/Compounds/ModifyCategories/ModifyCategories.types';
-import { ModifyCategoriesNodeDataStore } from 'components/Compounds/ModifyCategories/services/ModifyCategoriesNodeDataStore.service';
 import React, { ReactElement } from 'react';
 import { removeNodeAtPath } from 'react-sortable-tree';
 import { ICONS } from 'utilities/utilities';
-import styles from '../../../../../ModifyCategories.module.scss';
+import styles from '../../../../../Categories.module.scss';
+import { IUseCategoriesStore } from '../../../../../Categories.types';
+import { CategoriesNodeDataStore } from '../../../../../services/CategoriesNodeDataStore.service';
 
 const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 
 const EditCategoryButton = (props: {
-    nodeInstance: ModifyCategoriesNodeDataStore;
-    componentState: State<IUseModifyCategoriesStore>;
+    nodeInstance: CategoriesNodeDataStore;
+    componentState: State<IUseCategoriesStore>;
 }) => {
     const { nodeInstance, componentState } = props;
     const { editableNodeDetails } = useState(componentState);
@@ -52,8 +52,8 @@ const EditCategoryButton = (props: {
 };
 
 const AddCategoryButton = (props: {
-    nodeInstance: ModifyCategoriesNodeDataStore;
-    componentState: State<IUseModifyCategoriesStore>;
+    nodeInstance: CategoriesNodeDataStore;
+    componentState: State<IUseCategoriesStore>;
 }) => {
     const { nodeInstance, componentState } = props;
     const { toBeAddedNodeDetails } = useState(componentState);
@@ -88,8 +88,8 @@ const AddCategoryButton = (props: {
 };
 
 const DeleteCategoryButton = (props: {
-    nodeInstance: ModifyCategoriesNodeDataStore;
-    componentState: State<IUseModifyCategoriesStore>;
+    nodeInstance: CategoriesNodeDataStore;
+    componentState: State<IUseCategoriesStore>;
 }) => {
     const { nodeInstance, componentState } = props;
     const { toBeDeletedNode } = useState(componentState);
@@ -115,7 +115,7 @@ const DeleteCategoryButton = (props: {
     );
 };
 
-const CancelDeleteConfirmation = (props: { componentState: State<IUseModifyCategoriesStore> }) => {
+const CancelDeleteConfirmation = (props: { componentState: State<IUseCategoriesStore> }) => {
     const { componentState } = props;
     const { toBeDeletedNode } = useState(componentState);
     const onClickHandler = () => {
@@ -133,8 +133,8 @@ const CancelDeleteConfirmation = (props: { componentState: State<IUseModifyCateg
 };
 
 const ProceedDeleteConfirmation = (props: {
-    nodeInstance: ModifyCategoriesNodeDataStore;
-    componentState: State<IUseModifyCategoriesStore>;
+    nodeInstance: CategoriesNodeDataStore;
+    componentState: State<IUseCategoriesStore>;
 }) => {
     const { nodeInstance, componentState } = props;
     const { treeData } = useState(componentState);
@@ -170,9 +170,9 @@ const ProceedDeleteConfirmation = (props: {
     );
 };
 
-export const ModifyCategoriesNodeButtons = (props: {
-    nodeInstance: ModifyCategoriesNodeDataStore;
-    componentState: State<IUseModifyCategoriesStore>;
+export const CategoriesNodeButtons = (props: {
+    nodeInstance: CategoriesNodeDataStore;
+    componentState: State<IUseCategoriesStore>;
 }): ReactElement => {
     const { nodeInstance, componentState } = props;
     const state = useState(componentState);

@@ -1,8 +1,7 @@
-.modifyCategories {
+.wrapper {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding: 10px;
-    background-color: $backgroundPrimary-color;
     @include flex(center, flex-start, column, 10px);
 
     .searchField {
@@ -20,13 +19,16 @@
     }
 
     .categoriesViewWrapper {
+        display: grid;
         width: 100%;
         height: 100%;
+        grid-template-rows: 50px 1fr;
 
         .categoriesView {
+            overflow: auto;
             width: 100%;
-            // height: 600px;
-            margin-top: 5px;
+            padding-bottom: 100px;
+            margin-top: 0px;
 
             .addTopLevelCategoryWrapper {
                 width: 100%;

@@ -1,43 +1,43 @@
 .rst__rowWrapper {
-    padding: 10px 10px 10px 0;
+    padding: 10px 10px 10px 0 !important;
 }
 
 .rst__rowSearchMatch {
-    outline-color: $primary-color;
-    outline-offset: 2px;
-    outline-style: dashed;
+    outline-color: $primary-color !important;
+    outline-offset: 2px !important;
+    outline-style: dashed !important;
 }
 
 .rst__moveHandle {
     background: $backgroundPrimary-color url('../assets/icons/DragHandle/dragHandle.svg') no-repeat
-        center;
-    border-radius: 3px;
+        center !important;
+    border-radius: 3px !important;
 }
 
 .rst__rowContents {
-    background-color: $backgroundPrimary-color;
-    border-radius: 3px;
+    background-color: $backgroundPrimary-color !important;
+    border-radius: 3px !important;
 }
 
 .rst__tree {
-    background-color: $backgroundPrimary-color;
-    &::before {
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        display: block;
-        width: 100%;
-        height: 2%;
-        background-image: linear-gradient($backgroundPrimary-color, transparent);
-        content: '';
-    }
-    &::after {
-        position: absolute;
-        bottom: 0;
-        display: block;
-        width: 100%;
-        height: 2%;
-        background-image: linear-gradient(transparent, $backgroundPrimary-color);
-        content: '';
-    }
+    background-color: transparent !important;
+    // &::before {
+    //     position: absolute !important;
+    //     z-index: 1 !important;
+    //     top: 0 !important;
+    //     display: block !important;
+    //     width: 100% !important;
+    //     height: 2% !important;
+    //     background-image: linear-gradient($backgroundPrimary-color, transparent) !important;
+    //     content: '' !important;
+    // }
+    // &::after {
+    //     position: absolute !important;
+    //     bottom: 0 !important;
+    //     display: block !important;
+    //     width: 100% !important;
+    //     height: 2% !important;
+    //     background-image: linear-gradient(transparent, $backgroundPrimary-color) !important;
+    //     content: '' !important;
+    // }
 }
