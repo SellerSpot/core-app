@@ -1,8 +1,8 @@
 import { State } from '@hookstate/core';
 import React, { ReactElement } from 'react';
-import { ITaxBracketsState } from '../../TaxSettings.types';
+import { ITaxSettingsState } from '../../TaxSettings.types';
 
-export const TaxBracketsTable = (props: { pageState: State<ITaxBracketsState> }): ReactElement => {
+export const TaxBracketsTable = (props: { pageState: State<ITaxSettingsState> }): ReactElement => {
     // props
     const {} = props;
 
