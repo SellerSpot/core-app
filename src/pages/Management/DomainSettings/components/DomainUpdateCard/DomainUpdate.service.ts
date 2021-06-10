@@ -1,9 +1,10 @@
-import { IInputFieldProps } from '@sellerspot/universal-components';
+import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
 import { CONFIG } from 'config/config';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
+import { redirectTo } from 'utilities/general';
 import * as yup from 'yup';
-import { IDomainUpdateCardFormValues } from './DomainUpdateCard.types';
+import { IDomainUpdateCardFormValues, TUpdatFormError } from './DomainUpdateCard.types';
 
 export default class DomainUpdateCardService {
     static initialFormValues: IDomainUpdateCardFormValues = {
@@ -96,5 +97,23 @@ export default class DomainUpdateCardService {
             helperMessage,
             inputFieldTheme,
         };
+    };
+
+    static updateDomain = async (domain: string): Promise<Partial<TUpdatFormError>> => {
+        const { status, data, error } =
+            await requests.management.domainSettingsRequest.updateDomain(domain);
+        if (status) {
+            const { url } = data?.domainDetails;
+            showNotify('Domain updated successfully, redirecting to your new domain', {
+                autoHideDuration: 2000,
+                onClose: () => {
+                    redirectTo(url, '_self', true);
+                },
+            });
+            return;
+        } else {
+            showNotify(error?.message ?? 'Something went wrong! please try again later');
+            return { domainName: error?.message ?? 'Something went wrong! please try again later' };
+        }
     };
 }
