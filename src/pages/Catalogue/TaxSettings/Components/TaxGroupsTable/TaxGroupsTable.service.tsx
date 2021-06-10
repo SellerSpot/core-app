@@ -1,38 +1,32 @@
 import { State } from '@hookstate/core';
+import Icon from '@iconify/react';
 import {
-    Chip,
     IconButton,
+    ITableCollapsedCustomRenderer,
     ITableProps,
+    Table,
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
+import styles from './TaxGroupsTable.module.scss';
 import React from 'react';
-import styles from './TaxBracketsTable.module.scss';
-import { ITaxBracket, ITaxSettingsState } from '../../TaxSettings.types';
-import Icon from '@iconify/react';
 import { ICONS } from 'utilities/utilities';
+import { ITaxBracket, ITaxGroup, ITaxSettingsState } from '../../TaxSettings.types';
 
-export class TaxBracketsTableService {
+export class TaxGroupsTableService {
     static getTableProps = (props: {
         pageState: State<ITaxSettingsState>;
-    }): ITableProps<ITaxBracket> => {
+    }): ITableProps<ITaxGroup> => {
         // props
-        const { pageState } = props;
+        const {} = props;
 
-        // custom renderes
-        const rateTypeCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
-            // props
-            const {} = props;
-            // draw
-            return <Chip label="State Tax" />;
-        };
-        const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
+        const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroup> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
         };
-        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
+        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxGroup> = (props) => {
             // props
             const {} = props;
 
@@ -73,17 +67,48 @@ export class TaxBracketsTableService {
                 </div>
             );
         };
+        const collapsedContentRenderer: ITableCollapsedCustomRenderer<ITaxGroup> = (props) => {
+            // props
+            const { rowData } = props;
+            const { brackets } = rowData;
+
+            const tableProps: ITableProps<ITaxBracket> = {
+                data: brackets,
+                shape: [
+                    {
+                        dataKey: 'name',
+                        columnName: 'Bracket',
+                        align: 'left',
+                        width: '90%',
+                    },
+                    {
+                        dataKey: 'rate',
+                        columnName: 'Rate',
+                        align: 'right',
+                        width: '10%',
+                    },
+                ],
+                size: 'small',
+            };
+
+            return <Table {...tableProps} />;
+        };
 
         // draw
         return {
-            data: pageState.taxBrackets.get(),
-            // data: [
-            //     {
-            //         name: 'sdfasdfasd',
-            //         rate: 43,
-            //         isStateTax: true,
-            //     },
-            // ],
+            // data: pageState.taxGroups.get(),
+            data: [
+                {
+                    name: 'LALA',
+                    brackets: [
+                        {
+                            name: 'sdfasdf',
+                            rate: 23,
+                            isStateTax: false,
+                        },
+                    ],
+                },
+            ],
             shape: [
                 {
                     columnName: 'S.No',
@@ -95,19 +120,7 @@ export class TaxBracketsTableService {
                     dataKey: 'name',
                     columnName: 'Bracket Name',
                     align: 'left',
-                    width: '50%',
-                },
-                {
-                    dataKey: 'rate',
-                    columnName: 'Rate',
-                    align: 'right',
-                    width: '10%',
-                },
-                {
-                    columnName: 'Type',
-                    align: 'center',
-                    width: '74px',
-                    customRenderer: rateTypeCustomRenderer,
+                    width: '65%',
                 },
                 {
                     columnName: 'Actions',
@@ -116,6 +129,7 @@ export class TaxBracketsTableService {
                     customRenderer: actionsCustomRenderer,
                 },
             ],
+            collapsedContentRenderer,
         };
     };
 }

@@ -2,15 +2,15 @@ import { State } from '@hookstate/core';
 import { Table } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { ITaxSettingsState } from '../../TaxSettings.types';
-import { TaxBracketsTableService } from './TaxBracketsTable.service';
+import { TaxGroupsTableService } from './TaxGroupsTable.service';
 
-export const TaxBracketsTable = (props: { pageState: State<ITaxSettingsState> }): ReactElement => {
+export const TaxGroupsTable = (props: { pageState: State<ITaxSettingsState> }): ReactElement => {
     // props
     const { pageState } = props;
 
     // compute
-    const tableProps = TaxBracketsTableService.getTableProps({ pageState });
+    const tableProps = TaxGroupsTableService.getTableProps({ pageState });
 
-    // state
+    // draw
     return <Table {...tableProps} />;
 };

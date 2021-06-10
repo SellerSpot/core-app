@@ -26,7 +26,7 @@ export const Catalogue = (): ReactElement => {
                 <Route exact path={ROUTES.CATALOGUE__STOCKUNITS}>
                     <StockUnits />
                 </Route>
-                <Route exact path={ROUTES.CATALOGUE__TAXBRACKETS}>
+                <Route exact path={ROUTES.CATALOGUE__TAXSETTINGS}>
                     <TaxSettings />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__SETTINGS}>

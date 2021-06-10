@@ -32,9 +32,9 @@ export const SubMenuManager = (): ReactElement => {
         },
         {
             icon: ICONS.percentOutline,
-            title: 'Tax Brackets',
-            routeKey: 'CATALOGUE__TAXBRACKETS',
-            redirectRoute: ROUTES.CATALOGUE__TAXBRACKETS,
+            title: 'Tax Settings',
+            routeKey: 'CATALOGUE__TAXSETTINGS',
+            redirectRoute: ROUTES.CATALOGUE__TAXSETTINGS,
         },
         {
             icon: ICONS.cog,

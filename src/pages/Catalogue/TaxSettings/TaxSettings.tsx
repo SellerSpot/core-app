@@ -4,6 +4,8 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
+import { TaxBracketsTable } from './Components/TaxBracketsTable/TaxBracketsTable';
+import { TaxGroupsTable } from './Components/TaxGroupsTable/TaxGroupsTable';
 import styles from './TaxSettings.module.scss';
 import { ITaxSettingsState } from './TaxSettings.types';
 
@@ -63,9 +65,11 @@ export const TaxSettings = (): ReactElement => {
         <div className={styles.wrapper}>
             <div className={styles.taxBracketsWrapper}>
                 <UpperPageHeaderComponent pageState={pageState} />
+                <TaxBracketsTable pageState={pageState} />
             </div>
             <div className={styles.taxGroupsWrapper}>
                 <LowerPageHeaderComponent pageState={pageState} />
+                <TaxGroupsTable pageState={pageState} />
             </div>
         </div>
     );
