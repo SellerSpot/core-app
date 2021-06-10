@@ -4,10 +4,10 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
-import styles from './TaxBrackets.module.scss';
-import { ITaxBracketsState } from './TaxBrackets.types';
+import styles from './TaxSettings.module.scss';
+import { ITaxSettingsState } from './TaxSettings.types';
 
-const UpperPageHeaderComponent = (props: { pageState: State<ITaxBracketsState> }) => {
+const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }) => {
     // props
     const {} = props;
     // components
@@ -30,7 +30,7 @@ const UpperPageHeaderComponent = (props: { pageState: State<ITaxBracketsState> }
     );
 };
 
-const LowerPageHeaderComponent = (props: { pageState: State<ITaxBracketsState> }) => {
+const LowerPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }) => {
     // props
     const {} = props;
     // components
@@ -50,9 +50,9 @@ const LowerPageHeaderComponent = (props: { pageState: State<ITaxBracketsState> }
     );
 };
 
-export const TaxBrackets = (): ReactElement => {
+export const TaxSettings = (): ReactElement => {
     // state
-    const pageState = useState<ITaxBracketsState>({
+    const pageState = useState<ITaxSettingsState>({
         taxBrackets: [],
         taxGroups: [],
         showSliderModal: false,

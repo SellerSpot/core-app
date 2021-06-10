@@ -9,7 +9,7 @@ export interface ITaxGroup {
     brackets: ITaxBracket[];
 }
 
-export interface ITaxBracketsState {
+export interface ITaxSettingsState {
     taxBrackets: ITaxBracket[];
     taxGroups: ITaxGroup[];
     showSliderModal: boolean;
