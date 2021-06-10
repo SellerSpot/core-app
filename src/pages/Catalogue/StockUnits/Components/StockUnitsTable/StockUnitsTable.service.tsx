@@ -8,7 +8,7 @@ import {
 } from '@sellerspot/universal-components';
 import React from 'react';
 import { ICONS } from '../../../../../utilities/utilities';
-import styles from '../../StockUnits.module.scss';
+import styles from './StockUnitsTable.module.scss';
 import { IStockUnit, IStockUnitPageState } from '../../StockUnits.types';
 
 export class StockUnitsTableService {

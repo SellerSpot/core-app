@@ -1,6 +1,7 @@
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
 import { Brands } from 'pages/Catalogue/Brands/Brands';
+import { TaxBrackets } from 'pages/Catalogue/TaxBrackets/TaxBrackets';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -26,7 +27,7 @@ export const Catalogue = (): ReactElement => {
                     <StockUnits />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__TAXBRACKETS}>
-                    <h6>Tax Brackets</h6>
+                    <TaxBrackets />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__SETTINGS}>
                     <h6>Settings</h6>
