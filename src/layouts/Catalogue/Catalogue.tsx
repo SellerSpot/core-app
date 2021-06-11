@@ -1,6 +1,7 @@
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
 import { Brands } from 'pages/Catalogue/Brands/Brands';
+import { Products } from 'pages/Catalogue/Products/Products';
 import { TaxSettings } from 'pages/Catalogue/TaxSettings/TaxSettings';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
@@ -15,7 +16,7 @@ export const Catalogue = (): ReactElement => {
             <SubMenuManager />
             <Switch>
                 <Route exact path={ROUTES.CATALOGUE__PRODUCTS}>
-                    <h6>Products</h6>
+                    <Products />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__BRANDS}>
                     <Brands />
