@@ -18,11 +18,11 @@ export const Management = (): ReactElement => {
                 <Route exact path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
                     <h6>Plugin Store</h6>
                 </Route>
-                <Route exact path={ROUTES.MANAGEMENT__DOMAIN_SETTINGS}>
-                    <DomainSettings />
-                </Route>
                 <Route exact path={ROUTES.MANAGEMENT__BILLING}>
                     <Billing />
+                </Route>
+                <Route exact path={ROUTES.MANAGEMENT__DOMAIN_SETTINGS}>
+                    <DomainSettings />
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__SETTINGS}>
                     <Settings />

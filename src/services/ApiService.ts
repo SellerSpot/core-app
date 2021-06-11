@@ -38,7 +38,7 @@ export default class ApiService {
                 headers: {
                     // AUTHORIZATION: `Bearer ${props.token}`,
                 },
-                withCredentials: true,
+                withCredentials: true, // set true to attach cookie along with all requests
             });
     };
 

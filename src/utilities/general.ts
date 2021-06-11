@@ -43,11 +43,20 @@ export const COMMON_SYMBOLS = {
 /**
  * Redirects to the passed url
  *
- * @param {string} url url to open
- * @param {'_self' | '_blank'} whether to open in the same tab or in new tab
+ * @param url url to open
+ * @param target whether to open in the same tab or in new tab
+ * @param replace whether to replace the the current window url and completely replace it with new one
  */
-export const redirectTo = (url: string, target: '_self' | '_blank' = '_self'): void => {
-    window.open(url, target);
+export const redirectTo = (
+    url: string,
+    target: '_self' | '_blank' = '_self',
+    replace = false,
+): void => {
+    if (replace) {
+        location.replace(url);
+    } else {
+        window.open(url, target);
+    }
 };
 
 export const rawClone = <T = unknown>(data: unknown): T => {

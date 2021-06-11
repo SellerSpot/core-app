@@ -19,16 +19,16 @@ export const SubMenuManager = (): ReactElement => {
             redirectRoute: ROUTES.MANAGEMENT__PLUGIN_STORE,
         },
         {
-            icon: ICONS.bxLink,
-            title: 'Domain Settings',
-            routeKey: 'MANAGEMENT__DOMAIN_SETTINGS',
-            redirectRoute: ROUTES.MANAGEMENT__DOMAIN_SETTINGS,
-        },
-        {
             icon: ICONS.purchase,
             title: 'Billing',
             routeKey: 'MANAGEMENT__BILLING',
             redirectRoute: ROUTES.MANAGEMENT__BILLING,
+        },
+        {
+            icon: ICONS.bxLink,
+            title: 'Domain Settings',
+            routeKey: 'MANAGEMENT__DOMAIN_SETTINGS',
+            redirectRoute: ROUTES.MANAGEMENT__DOMAIN_SETTINGS,
         },
         {
             icon: ICONS.settingsIcon,

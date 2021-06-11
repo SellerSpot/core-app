@@ -77,14 +77,12 @@ export const StoreUrlField = (props: {
 
 export const DomainUpdateCard = (): ReactElement => {
     // hooks
-    const { name, domainName } = useSelector(appSelector).tenantDetails.domainDetails;
+    const { name: domain, domainName } = useSelector(appSelector).tenantDetails.domainDetails;
 
-    const [cardExpanded, setCardExpanded] = useState(true); // set to false
+    const [cardExpanded, setCardExpanded] = useState(false);
 
-    const submitionHandler = (values: IDomainUpdateCardFormValues) => {
-        // handle submition
-        console.log('update url', values);
-        return;
+    const submitionHandler = async (values: IDomainUpdateCardFormValues) => {
+        return await DomainUpdateCardService.updateDomain(values.domainName);
     };
 
     const resetMutator = (
@@ -131,13 +129,25 @@ export const DomainUpdateCard = (): ReactElement => {
                 detailsContent: (
                     <Form
                         onSubmit={submitionHandler}
-                        initialValues={{ domainName: name }}
-                        subscription={{ submitting: true, submitSucceeded: true }} // empty object overrides all subscriptions
+                        initialValues={{ domainName: domain }}
+                        subscription={{
+                            submitting: true,
+                            submitSucceeded: true,
+                            valid: true,
+                            submitFailed: true,
+                        }} // empty object overrides all subscriptions
                         mutators={{
                             resetMutator: resetMutator as Mutator<IDomainUpdateCardFormValues>,
                         }}
                     >
-                        {({ handleSubmit, submitting, form, submitSucceeded }) => {
+                        {({
+                            handleSubmit,
+                            submitting,
+                            form,
+                            submitSucceeded,
+                            valid,
+                            submitFailed,
+                        }) => {
                             const validatedHandleSubmit: TFormSubmitionHandler = (e) => {
                                 e.preventDefault();
                                 if (!(submitting || submitSucceeded)) handleSubmit(e);
@@ -157,8 +167,11 @@ export const DomainUpdateCard = (): ReactElement => {
                                             variant="contained"
                                             theme="primary"
                                             type="submit"
+                                            disabled={!valid}
                                             label={submitButtonLabel}
-                                            isLoading={submitting || submitSucceeded}
+                                            isLoading={
+                                                submitting || (submitSucceeded && !submitFailed)
+                                            }
                                         />
                                         <Button
                                             size="medium"

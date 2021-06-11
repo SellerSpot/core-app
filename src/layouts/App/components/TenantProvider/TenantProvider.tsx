@@ -34,17 +34,13 @@ const TenantProvider = (props: ITenantProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        if (!!!tenantDetails) {
+        if (!tenantDetails) {
             fetchTenantDetails();
         }
     }, [tenantDetails]);
 
     return (
-        <Loader
-            loaderType="spinner"
-            isLoading={!!!tenantDetails}
-            message="Validating your store..."
-        >
+        <Loader loaderType="spinner" isLoading={!tenantDetails} message="Validating your store...">
             {children}
         </Loader>
     );
