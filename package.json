@@ -89,6 +89,7 @@
         "@reduxjs/toolkit": "^1.5.1",
         "@sellerspot/universal-components": "^1.17.0",
         "@sellerspot/universal-types": "^1.8.8",
+        "@types/react-transition-group": "^4.4.1",
         "axios": "^0.21.1",
         "classnames": "^2.3.1",
         "dotenv": "^8.2.0",
@@ -103,6 +104,7 @@
         "react-router-dom": "^5.2.0",
         "react-sortable-tree": "^2.8.0",
         "react-to-print": "^2.12.4",
+        "react-transition-group": "^4.4.2",
         "yup": "^0.32.9"
     }
 }

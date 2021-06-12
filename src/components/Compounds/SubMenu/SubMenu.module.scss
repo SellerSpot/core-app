@@ -1,10 +1,10 @@
 .wrapper {
-    width: 222px;
+    width: 220px;
     height: 100%;
     padding: 6px 10px;
     background-color: $backgroundSecondary-color;
 
-    @include flex(flex-start, space-between, column);
+    @include flex(flex-start, flex-start, column);
 
     .upperTiles {
         @include flex(flex-end, flex-start, column, 20px);

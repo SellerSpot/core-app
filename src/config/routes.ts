@@ -28,7 +28,7 @@ const CATALOGUE = {
     CATALOGUE__BRANDS: '/catalogue/brands',
     CATALOGUE__CATEGORIES: '/catalogue/categories',
     CATALOGUE__STOCKUNITS: '/catalogue/stockunits',
-    CATALOGUE__TAXBRACKETS: '/catalogue/taxbrackets',
+    CATALOGUE__TAXSETTINGS: '/catalogue/taxsettings',
     CATALOGUE__SETTINGS: '/catalogue/settings',
 };
 
