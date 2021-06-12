@@ -6,6 +6,7 @@ import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 import { Settings } from '../../pages/Management/Settings/Settings';
 import { Billing } from 'pages/Management/Billing/Billing';
 import { DomainSettings } from 'pages/Management/DomainSettings/DomainSettings';
+import { PluginStore } from 'pages/Management/PluginStore/PluginStore';
 
 export const Management = (): ReactElement => {
     return (
@@ -16,7 +17,7 @@ export const Management = (): ReactElement => {
                     <h6>Installed Plugins</h6>
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
-                    <h6>Plugin Store</h6>
+                    <PluginStore />
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__BILLING}>
                     <Billing />

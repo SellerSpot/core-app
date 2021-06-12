@@ -9,16 +9,16 @@ import { Icon } from '@iconify/react';
 import styles from './PluginCard.module.scss';
 import { colorThemes } from '@sellerspot/universal-components';
 
-export default function PluginCard(props: IPluginCardProps): ReactElement {
+const PluginCard = (props: IPluginCardProps): ReactElement => {
     const themeState = useSelector(themeSelector);
     const {
-        imageUrl,
-        installed,
-        pluginDescription,
-        pluginIcon,
-        pluginName,
-        pluginPrimaryCallback,
-        pluginSecondaryCallback,
+        image,
+        isInstalled,
+        description,
+        icon,
+        name,
+        installOrLaunchCallBack,
+        exploreCallBack,
     } = props;
     return (
         <Card
@@ -28,27 +28,27 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                 contentWrapper: styles.contentWrapper,
                 actionsWrapper: styles.actionWrapper,
             }}
-            image={imageUrl}
+            image={image}
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
-                        <Icon icon={pluginIcon} height={'22px'} />
-                        <h4 className={styles.titleText}>{pluginName}</h4>
+                        <Icon icon={icon} height={'22px'} />
+                        <h4 className={styles.titleText}>{name}</h4>
                     </div>
-                    <p className={styles.pluginContent}>{pluginDescription}</p>
+                    <p className={styles.pluginContent}>{description}</p>
                 </div>
             }
             actions={
                 <div className={styles.pluginActions}>
                     <Button
-                        onClick={pluginSecondaryCallback}
+                        onClick={exploreCallBack}
                         size="small"
                         theme="accent"
                         label={'Explore'}
                         variant="text"
                     />
                     <div className={styles.pluginActionsRHSSection}>
-                        {installed ? (
+                        {isInstalled ? (
                             <Icon
                                 icon={ICONS.checkCircleOutline}
                                 height="20px"
@@ -56,22 +56,24 @@ export default function PluginCard(props: IPluginCardProps): ReactElement {
                             />
                         ) : null}
                         <Button
-                            theme={installed ? 'success' : 'primary'}
-                            label={installed ? 'LAUNCH' : 'INSTALL'}
+                            theme={isInstalled ? 'success' : 'primary'}
+                            label={isInstalled ? 'LAUNCH' : 'INSTALL'}
                             variant="contained"
                             size="small"
                             startIcon={
-                                installed ? (
+                                isInstalled ? (
                                     <Icon icon={ICONS.outlineLaunch} />
                                 ) : (
                                     <Icon icon={ICONS.outlineFileDownload} />
                                 )
                             }
-                            onClick={pluginPrimaryCallback}
+                            onClick={installOrLaunchCallBack}
                         />
                     </div>
                 </div>
             }
         />
     );
-}
+};
+
+export default PluginCard;

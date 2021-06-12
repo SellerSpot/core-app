@@ -9,11 +9,11 @@ const Template: Story = (args: IPluginCardProps) => {
 };
 export const PluginCard = Template.bind({});
 PluginCard.args = {
-    installed: false,
-    imageUrl: 'https://picsum.photos/id/237/200/300',
-    pluginName: 'Point of Sale',
-    pluginIcon: ICONS.cashRegister,
-    pluginDescription: 'An all purpose point of sale system to handle your everyday sales',
+    isInstalled: false,
+    image: 'https://picsum.photos/id/237/200/300',
+    name: 'Point of Sale',
+    icon: ICONS.cashRegister,
+    description: 'An all purpose point of sale system to handle your everyday sales',
 } as IPluginCardProps;
 export default {
     title: 'Core App/Compounds/Plugin Card',
