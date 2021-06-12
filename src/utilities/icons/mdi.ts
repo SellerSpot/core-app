@@ -9,3 +9,4 @@ export { default as alphaBCircleOutline } from '@iconify/icons-mdi/alpha-b-circl
 export { default as alphaUBoxOutline } from '@iconify/icons-mdi/alpha-u-box-outline';
 export { default as percentOutline } from '@iconify/icons-mdi/percent-outline';
 export { default as cog } from '@iconify/icons-mdi/cog';
+export { default as close } from '@iconify/icons-mdi/close';

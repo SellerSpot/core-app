@@ -6,6 +6,7 @@ import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './Brands.module.scss';
 import { IBrandsPageState } from './Brands.types';
+import { BrandsSlider } from './Components/BrandsSlider/BrandsSlider';
 import { BrandsTable } from './Components/BrandsTable/BrandsTable';
 
 const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
@@ -16,7 +17,7 @@ const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
     const NewBrandButton = () => {
         // handlers
         const onClickHandler: TButtonOnClickHandler = () => {
-            pageState.showSliderModal.set(true);
+            pageState.slider.showSliderModal.set(true);
         };
 
         // draw
@@ -39,7 +40,10 @@ export const Brands = (): ReactElement => {
     // state
     const pageState = useState<IBrandsPageState>({
         brands: [],
-        showSliderModal: false,
+        slider: {
+            showSliderModal: true,
+            isEditMode: false,
+        },
     });
 
     // draw
@@ -47,6 +51,7 @@ export const Brands = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <BrandsTable pageState={pageState} />
+            <BrandsSlider sliderState={pageState.slider} />
         </div>
     );
 };
