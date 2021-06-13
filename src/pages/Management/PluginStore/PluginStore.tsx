@@ -1,23 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styles from './PluginStore.module.scss';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import PluginCard from 'components/Compounds/PluginCard/PluginCard';
 import { ICONS } from 'utilities/utilities';
 import { PosPluginImage } from 'assets/images/images';
 import { useState } from '@hookstate/core';
-import { IPlugin } from './PluginStore.types';
+import PluginStoreService from './PluginStore.service';
+import { IPlugin } from '@sellerspot/universal-types/dist';
+import { showNotify } from '@sellerspot/universal-components';
 
 export const PluginStore = (): ReactElement => {
-    const plugins = useState<IPlugin[]>([
-        {
-            name: 'Point of Sale',
-            description:
-                'Day to day store sales with inventory control and bill generation and printing',
-            iconName: 'cashRegister',
-            id: 'pointofsale',
-            image: PosPluginImage,
-        },
-    ]);
+    const plugins = useState<IPlugin[]>([]);
     const installedPlugin = useState<IPlugin[]>([]);
 
     // handlers
@@ -35,13 +28,20 @@ export const PluginStore = (): ReactElement => {
         }
     };
 
+    // effects
+    useEffect(() => {
+        PluginStoreService.getAllPlugins()
+            .then((data) => plugins.set(data))
+            .catch((err) => showNotify(err.message));
+    }, []);
+
     return (
         <div className={styles.wrapper}>
             <PageHeader title="Plugin Store" />
             <div className={styles.bodyWrapper}>
                 <div className={styles.cardsWrapper}>
                     {plugins.map((plugin, key) => {
-                        const { description, iconName, id, image, name } = plugin.get();
+                        const { shortDescription, iconName, id, image, name } = plugin.get();
                         const isInstalled = installedPlugin.some(
                             (installedPlugin) => installedPlugin.id.get() === id,
                         );
@@ -49,10 +49,10 @@ export const PluginStore = (): ReactElement => {
                             <PluginCard
                                 key={id}
                                 isInstalled={isInstalled}
-                                image={image}
+                                image={image || PosPluginImage}
                                 name={name}
-                                icon={ICONS[iconName]}
-                                description={description}
+                                icon={ICONS[iconName as keyof typeof ICONS]}
+                                description={shortDescription}
                                 installOrLaunchCallBack={installOrLaunchCallBackHandler(
                                     key,
                                     isInstalled,
