@@ -13,6 +13,7 @@ import { ICONS } from 'utilities/utilities';
 export class BrandsTableService {
     static getTableProps = (
         brands: IBrandsPageState['brands'],
+        isLoading: boolean,
     ): ITableProps<IBrandsPageState['brands'][0]> => {
         // custom renderers
         const snoCustomRenderer: TTableCellCustomRenderer<IBrandsPageState['brands'][0]> = (
@@ -70,6 +71,7 @@ export class BrandsTableService {
         // return
         return {
             data: brands,
+            isLoading,
             shape: [
                 {
                     columnName: 'Sno',

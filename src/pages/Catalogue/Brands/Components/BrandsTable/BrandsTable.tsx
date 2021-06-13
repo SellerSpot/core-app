@@ -9,7 +9,10 @@ export const BrandsTable = (props: { pageState: State<IBrandsPageState> }): Reac
     const { pageState } = props;
 
     // compute
-    const tableProps = BrandsTableService.getTableProps(pageState.brands.get());
+    const tableProps = BrandsTableService.getTableProps(
+        pageState.brands.get(),
+        pageState.isBrandsTableLoading.get(),
+    );
 
     // draw
     return <Table {...tableProps} />;

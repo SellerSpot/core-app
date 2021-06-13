@@ -3,5 +3,6 @@ import { IBrandSliderState } from './Components/BrandsSlider/BrandsSlider.types'
 
 export interface IBrandsPageState {
     brands: IBrandData[];
+    isBrandsTableLoading: boolean;
     slider: IBrandSliderState;
 }
