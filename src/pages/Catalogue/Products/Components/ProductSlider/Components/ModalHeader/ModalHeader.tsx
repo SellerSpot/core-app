@@ -1,14 +1,14 @@
 import { State } from '@hookstate/core';
 import { SliderModalHeader } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { IBrandSliderState } from '../../BrandsSlider.types';
+import { IProductSliderState } from '../../ProductSlider.types';
 
-const ModalHeader = (props: { sliderState: State<IBrandSliderState> }): ReactElement => {
+const ModalHeader = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
 
     // compute
-    const modalTitle = sliderState.isEditMode.get() ? 'Edit brand' : 'Create a new brand';
+    const modalTitle = sliderState.isEditMode.get() ? 'Edit product' : 'Create a new product';
     // handlers
     const modalCloseCallback = () => sliderState.showSliderModal.set(false);
 

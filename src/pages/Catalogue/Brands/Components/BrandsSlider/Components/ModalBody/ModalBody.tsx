@@ -1,11 +1,10 @@
 import { State } from '@hookstate/core';
 import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
-import { IBrandsPageState } from 'pages/Catalogue/Brands/Brands.types';
-import styles from './ModalBody.module.scss';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
 import { BrandsSliderService } from '../../BrandsSlider.service';
-import { IBrandsSliderForm } from '../../BrandsSlider.types';
+import { IBrandSliderState, IBrandsSliderForm } from '../../BrandsSlider.types';
+import styles from './ModalBody.module.scss';
 
 const BrandNameField = (props: { autoFocus: boolean }) => {
     // props
@@ -45,7 +44,7 @@ const BrandNameField = (props: { autoFocus: boolean }) => {
     );
 };
 
-const ModalBody = (props: { sliderState: State<IBrandsPageState['slider']> }): ReactElement => {
+const ModalBody = (props: { sliderState: State<IBrandSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
 

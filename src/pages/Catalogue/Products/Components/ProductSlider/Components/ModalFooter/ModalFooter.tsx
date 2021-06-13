@@ -4,9 +4,9 @@ import { Button, SliderModalFooter } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { FormSpy } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
-import { IBrandSliderState } from '../../BrandsSlider.types';
+import { IProductSliderState } from '../../ProductSlider.types';
 
-const ModalFooter = (props: { sliderState: State<IBrandSliderState> }): ReactElement => {
+const ModalFooter = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
 

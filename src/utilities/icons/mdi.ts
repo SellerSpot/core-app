@@ -10,3 +10,5 @@ export { default as alphaUBoxOutline } from '@iconify/icons-mdi/alpha-u-box-outl
 export { default as percentOutline } from '@iconify/icons-mdi/percent-outline';
 export { default as cog } from '@iconify/icons-mdi/cog';
 export { default as close } from '@iconify/icons-mdi/close';
+export { default as caretDown } from '@iconify/icons-mdi/caret-down';
+export { default as caretUp } from '@iconify/icons-mdi/caret-up';
