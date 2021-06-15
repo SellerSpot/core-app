@@ -49,7 +49,7 @@ export const Brands = (): ReactElement => {
     });
 
     // handlers
-    const getBrandsData = async () => {
+    const getAllBrands = async () => {
         pageState.isBrandsTableLoading.set(true);
         const allBrands = await BrandsService.getAllBrands();
         pageState.merge({
@@ -60,7 +60,7 @@ export const Brands = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        getBrandsData();
+        getAllBrands();
     }, []);
 
     // draw

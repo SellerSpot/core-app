@@ -9,6 +9,8 @@ import styles from './BrandsTable.module.scss';
 import { IBrandsPageState } from '../../Brands.types';
 import Icon from '@iconify/react';
 import { ICONS } from 'utilities/utilities';
+import { times } from 'lodash';
+import { IBrandData } from '@sellerspot/universal-types';
 
 export class BrandsTableService {
     static getTableProps = (
@@ -70,7 +72,12 @@ export class BrandsTableService {
 
         // return
         return {
-            data: brands,
+            data: times(100, (num): IBrandData => {
+                return {
+                    id: `${num}`,
+                    name: 'Sample',
+                };
+            }),
             isLoading,
             shape: [
                 {
