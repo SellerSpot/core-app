@@ -6,6 +6,10 @@ const MANAGEMENT = {
     MANAGEMENT: '/management',
     MANAGEMENT__INSTALLED_PLUGINS: '/management/installedplugins',
     MANAGEMENT__PLUGIN_STORE: '/management/pluginstore',
+    /**
+     * has :id param, replace :id with string using string.replce on usage
+     */
+    MANAGEMENT__PLUGIN_STORE__VIEW_PLUGIN: '/management/pluginstore/viewplugin/:id',
     MANAGEMENT__DOMAIN_SETTINGS: '/management/domainsettings',
     MANAGEMENT__BILLING: '/management/billing',
     MANAGEMENT__SETTINGS: '/management/settings',

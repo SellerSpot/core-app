@@ -1,5 +1,9 @@
 import BaseRequest from 'requests/BaseRequest';
-import { IGetAllPluginsResponse, ROUTES } from '@sellerspot/universal-types/dist';
+import {
+    IGetAllPluginsResponse,
+    IGetPluginDetailsByIdResponse,
+    ROUTES,
+} from '@sellerspot/universal-types';
 
 export default class PluginStoreRequest extends BaseRequest {
     constructor() {
@@ -10,6 +14,13 @@ export default class PluginStoreRequest extends BaseRequest {
         return <IGetAllPluginsResponse>await this.request({
             method: 'GET',
             url: ROUTES.CORE.GET_ALL_PLUGINS,
+        });
+    };
+
+    getPluginDetailsById = async (pluginId: string): Promise<IGetPluginDetailsByIdResponse> => {
+        return <IGetPluginDetailsByIdResponse>await this.request({
+            method: 'GET',
+            url: `${ROUTES.CORE.GET_PLUGIN_DETAILS_BY_ID}?id=${pluginId}`,
         });
     };
 }

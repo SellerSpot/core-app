@@ -5,7 +5,7 @@ import { ILoaderProps } from './Loader.types';
 
 export const Loader = (props: ILoaderProps): ReactElement => {
     // props
-    const { children, isLoading, skeleton, loaderType, message } = props;
+    const { children, isLoading, skeleton, loaderType = 'spinner', message } = props;
 
     // draw
     const shimmer = skeleton ?? (
@@ -13,5 +13,5 @@ export const Loader = (props: ILoaderProps): ReactElement => {
     );
     const loader = loaderType === 'spinner' ? <AppPreloader message={message} /> : shimmer;
 
-    return <>{isLoading ? loader : <div className={styles.childrenContent}>{children}</div>}</>;
+    return <>{isLoading ? loader : <div className={styles.childrenContent}>{children}</div>}</>; // need to replace with react-group-transition => remove div container, just wrap it with cssTransition
 };

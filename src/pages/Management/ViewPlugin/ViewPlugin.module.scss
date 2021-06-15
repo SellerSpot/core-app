@@ -1,0 +1,44 @@
+.wrapper {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding: 50px 10px;
+    @include flex(flex-start, flex-start, $direction: column, $gap: 30px);
+
+    .header {
+        @include flex($gap: 15px);
+
+        .pluginImageHolder {
+            overflow: hidden;
+            width: 350px;
+            height: 175px;
+        }
+
+        .pluginInfoHolder {
+            @include flex(flex-start, $direction: column, $gap: 10px);
+
+            .pluginTitleHolder {
+                @include flex($gap: 10px);
+                .pluginIcon {
+                    font-size: 26px;
+                }
+            }
+            .shortDescription {
+                max-width: 70%;
+                line-height: 22px;
+            }
+            .actions {
+                @include flex($gap: 15px);
+            }
+        }
+    }
+
+    .bannersWrapper {
+        width: 100%;
+        height: auto;
+    }
+
+    .descriptWrapper {
+        line-height: 26px;
+    }
+}

@@ -7,6 +7,7 @@ import { Settings } from '../../pages/Management/Settings/Settings';
 import { Billing } from 'pages/Management/Billing/Billing';
 import { DomainSettings } from 'pages/Management/DomainSettings/DomainSettings';
 import { PluginStore } from 'pages/Management/PluginStore/PluginStore';
+import { ViewPlugin } from 'pages/Management/ViewPlugin/ViewPlugin';
 
 export const Management = (): ReactElement => {
     return (
@@ -16,8 +17,15 @@ export const Management = (): ReactElement => {
                 <Route exact path={ROUTES.MANAGEMENT__INSTALLED_PLUGINS}>
                     <h6>Installed Plugins</h6>
                 </Route>
-                <Route exact path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
-                    <PluginStore />
+                <Route path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
+                    <Switch>
+                        <Route exact path={ROUTES.MANAGEMENT__PLUGIN_STORE}>
+                            <PluginStore />
+                        </Route>
+                        <Route path={ROUTES.MANAGEMENT__PLUGIN_STORE__VIEW_PLUGIN}>
+                            <ViewPlugin />
+                        </Route>
+                    </Switch>
                 </Route>
                 <Route exact path={ROUTES.MANAGEMENT__BILLING}>
                     <Billing />
