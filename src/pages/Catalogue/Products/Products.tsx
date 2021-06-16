@@ -11,10 +11,15 @@ import { IProductsPageState } from './Products.types';
 
 const PageHeaderComponent = (props: { pageState: State<IProductsPageState> }) => {
     // props
-    const {} = props;
+    const { pageState } = props;
 
     // components
     const NewProductButton = () => {
+        // handlers
+        const handleOnClick = () => {
+            pageState.slider.showSliderModal.set(true);
+        };
+
         // draw
         return (
             <Button
@@ -22,6 +27,7 @@ const PageHeaderComponent = (props: { pageState: State<IProductsPageState> }) =>
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
                 theme="primary"
+                onClick={handleOnClick}
             />
         );
     };
@@ -35,7 +41,7 @@ export const Products = (): ReactElement => {
     const pageState = useState<IProductsPageState>({
         products: [],
         slider: {
-            showSliderModal: true,
+            showSliderModal: false,
             isEditMode: false,
         },
     });
