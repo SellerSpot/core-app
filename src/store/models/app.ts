@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { IStoreDetails, IUserDetails } from '@sellerspot/universal-types';
+import { IInstalledPlugin, IStoreDetails, IUserDetails } from '@sellerspot/universal-types';
 import { RootState } from '../store';
 import { cloneDeep } from 'lodash';
 import { getActiveStatus } from 'config/activeStatus';
@@ -34,6 +34,9 @@ const appSlice = createSlice({
         updateUserDetails: (state, { payload }: PayloadAction<IUserDetails>) => {
             state.userDetails = payload;
         },
+        updateInstalledPlugins: (state, { payload }: PayloadAction<IInstalledPlugin[]>) => {
+            state.tenantDetails.installedPlugins = payload;
+        },
         resetUserDetails: (state) => {
             state.userDetails = null;
         },
@@ -52,6 +55,7 @@ export const {
     updateActiveStatus,
     updateTenantDetails,
     updateUserDetails,
+    updateInstalledPlugins,
     resetUserDetails,
     resetAppState,
 } = appSlice.actions;

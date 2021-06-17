@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, ImageCarousel, showNotify, Image } from '@sellerspot/universal-components';
-import { IPlugin } from '@sellerspot/universal-types';
+import { IErrorResponse, IPlugin } from '@sellerspot/universal-types';
 import { useState } from '@hookstate/core';
 
 import { ROUTES } from 'config/routes';
@@ -11,19 +11,23 @@ import { Loader } from 'components/Atoms/Loader/Loader';
 import { isArray, isString, times } from 'lodash';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
-import { PosPluginImage } from 'assets/images/plugins';
+import { PLUGIN_IMAGES } from 'assets/images/images';
 import Icon from '@iconify/react';
 import { ICONS } from 'utilities/utilities';
+import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
+import { IViewPluginLocationState } from './ViewPlugin.types';
 
 export const ViewPlugin = (): ReactElement => {
     // hooks
     const params = useParams<{ id: string }>();
     const history = useHistory();
+    const location = useLocation<IViewPluginLocationState>();
 
     // state
     const plugin = useState<IPlugin>(null);
     const isInstalled = useState(false);
     const { tenantDetails } = useSelector(appSelector);
+    const isInstalling = useState(false);
 
     // handlers
     const errorRedirect = (errorMessage: string) => {
@@ -31,8 +35,33 @@ export const ViewPlugin = (): ReactElement => {
         history.push(ROUTES.MANAGEMENT__PLUGIN_STORE);
     };
 
-    const onInstallClickHandler = () => {
+    const checkIsPluginInstalled = (pluginId: string) => {
+        const isPluginInstalled = tenantDetails.installedPlugins?.some(
+            (installedPlugin) => installedPlugin.plugin.id === pluginId,
+        );
+        isInstalled.set(isPluginInstalled);
+        return isPluginInstalled;
+    };
+
+    const onInstallClickHandler = async () => {
         // handle install
+        try {
+            isInstalling.set(true);
+            const response = await ViewPluginServie.installPlugin(plugin.value.id);
+            if (response) {
+                checkIsPluginInstalled(plugin.value.id);
+                isInstalling.set(false);
+                showNotify('Plugin installed successfully');
+            } else {
+                throw null;
+            }
+        } catch (err) {
+            const error = (err as IErrorResponse) ?? {
+                message: 'Something went wrong, please try again later',
+            };
+            showNotify(error.message);
+            isInstalling.set(false);
+        }
     };
 
     const onUnInstallClickHandler = () => {
@@ -40,7 +69,7 @@ export const ViewPlugin = (): ReactElement => {
     };
 
     const onLaunchClickHandler = () => {
-        // handle install
+        history.push(PLUGIN_ROUTES[plugin.value.uniqueName as keyof typeof PLUGIN_ROUTES]);
     };
 
     // effects
@@ -49,23 +78,32 @@ export const ViewPlugin = (): ReactElement => {
         if (!pluginId) errorRedirect('Invalid plugin');
         ViewPluginServie.fetchPluginDetails(pluginId)
             .then(async (data) => {
-                const isPluginInstalled = tenantDetails.installedPlugins?.some(
-                    (installedPlugin) => installedPlugin.id === data.id,
-                );
-                isInstalled.set(isPluginInstalled);
+                const isInstalled = checkIsPluginInstalled(data.id);
                 plugin.set(data);
+                if (!isInstalled && location.state?.install) {
+                    // trigger install sequence
+                    onInstallClickHandler();
+                }
             })
             .catch((err) => {
                 errorRedirect(err.message);
             });
     }, []);
+
     return (
         <Loader isLoading={!plugin.get()}>
             {plugin.get() && (
                 <div className={styles.wrapper}>
                     <div className={styles.header}>
                         <div className={styles.pluginImageHolder}>
-                            <Image src={plugin.value.image || PosPluginImage} />
+                            <Image
+                                src={
+                                    plugin.value.image ||
+                                    PLUGIN_IMAGES[
+                                        plugin.value.uniqueName as keyof typeof PLUGIN_IMAGES
+                                    ]
+                                }
+                            />
                         </div>
                         <div className={styles.pluginInfoHolder}>
                             <div className={styles.pluginTitleHolder}>
@@ -88,7 +126,7 @@ export const ViewPlugin = (): ReactElement => {
                                     <>
                                         <Button
                                             variant="contained"
-                                            theme="primary"
+                                            theme="success"
                                             size="large"
                                             label="Launch"
                                             onClick={onLaunchClickHandler}
@@ -102,10 +140,11 @@ export const ViewPlugin = (): ReactElement => {
                                     </>
                                 ) : (
                                     <Button
-                                        label="Install"
+                                        label={isInstalling.get() ? 'Installing' : 'Install'}
                                         variant="contained"
                                         theme="primary"
                                         size="large"
+                                        isLoading={isInstalling.get()}
                                         onClick={onInstallClickHandler}
                                     />
                                 )}

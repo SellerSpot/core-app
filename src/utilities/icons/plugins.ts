@@ -1,4 +1,4 @@
 // static plugins - non movable plugins like home, managements goes here
 
 // dynamic plugins
-export { cashRegister } from './mdi'; // for - point of sale plugin
+export { cashRegister as POINT_OF_SALE } from './mdi'; // for - point of sale plugin

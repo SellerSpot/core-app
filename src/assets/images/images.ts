@@ -1,2 +1,2 @@
 export { default as LogoImage } from './logo.png';
-export * from './plugins';
+export * as PLUGIN_IMAGES from './plugins';
