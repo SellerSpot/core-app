@@ -28,6 +28,7 @@ export const ViewPlugin = (): ReactElement => {
     const isInstalled = useState(false);
     const { tenantDetails } = useSelector(appSelector);
     const isInstalling = useState(false);
+    const isUnInstalling = useState(false);
 
     // handlers
     const errorRedirect = (errorMessage: string) => {
@@ -49,7 +50,6 @@ export const ViewPlugin = (): ReactElement => {
             isInstalling.set(true);
             const response = await ViewPluginServie.installPlugin(plugin.value.id);
             if (response) {
-                checkIsPluginInstalled(plugin.value.id);
                 isInstalling.set(false);
                 showNotify('Plugin installed successfully');
             } else {
@@ -64,8 +64,23 @@ export const ViewPlugin = (): ReactElement => {
         }
     };
 
-    const onUnInstallClickHandler = () => {
-        // handle install
+    const onUnInstallClickHandler = async () => {
+        try {
+            isUnInstalling.set(true);
+            const response = await ViewPluginServie.unInstallPlugin(plugin.value.id);
+            if (response) {
+                isUnInstalling.set(false);
+                showNotify('Plugin uninstalled successfully');
+            } else {
+                throw null;
+            }
+        } catch (err) {
+            const error = (err as IErrorResponse) ?? {
+                message: 'Something went wrong, please try again later',
+            };
+            showNotify(error.message);
+            isUnInstalling.set(false);
+        }
     };
 
     const onLaunchClickHandler = () => {
@@ -89,6 +104,14 @@ export const ViewPlugin = (): ReactElement => {
                 errorRedirect(err.message);
             });
     }, []);
+
+    // updates the installation status, listening the installedPlugins from app state
+    useEffect(() => {
+        if (plugin?.id?.get()) checkIsPluginInstalled(plugin?.id?.get());
+    }, [tenantDetails.installedPlugins]);
+
+    // unInstallation label
+    const unInstallLabel = isUnInstalling.get() ? 'Uninstalling' : 'Uninstall';
 
     return (
         <Loader isLoading={!plugin.get()}>
@@ -130,12 +153,14 @@ export const ViewPlugin = (): ReactElement => {
                                             size="large"
                                             label="Launch"
                                             onClick={onLaunchClickHandler}
+                                            disabled={isUnInstalling.get()}
                                         />
                                         <Button
-                                            label="Uninstall"
+                                            label={unInstallLabel}
                                             theme="danger"
                                             variant="text"
                                             onClick={onUnInstallClickHandler}
+                                            isLoading={isUnInstalling.get()}
                                         />
                                     </>
                                 ) : (

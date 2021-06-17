@@ -25,4 +25,15 @@ export default class ViewPluginServie {
             throw error;
         }
     };
+
+    static unInstallPlugin = async (pluginId: string): Promise<boolean> => {
+        const { status, data, error } =
+            await requests.management.pluginStoreRequest.unInstallPlugin(pluginId);
+        if (status && data) {
+            store.dispatch(updateInstalledPlugins(data));
+            return true;
+        } else {
+            throw error;
+        }
+    };
 }
