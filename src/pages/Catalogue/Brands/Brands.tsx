@@ -49,8 +49,7 @@ export const Brands = (): ReactElement => {
     });
 
     // handlers
-    const getAllBrands = async () => {
-        pageState.isBrandsTableLoading.set(true);
+    const getAllBrands = async (): Promise<void> => {
         const allBrands = await BrandsService.getAllBrands();
         pageState.merge({
             brands: allBrands,
@@ -60,6 +59,7 @@ export const Brands = (): ReactElement => {
 
     // effects
     useEffect(() => {
+        pageState.isBrandsTableLoading.set(true);
         getAllBrands();
     }, []);
 
@@ -68,7 +68,7 @@ export const Brands = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <BrandsTable pageState={pageState} />
-            <BrandsSlider sliderState={pageState.slider} />
+            <BrandsSlider sliderState={pageState.slider} getAllBrands={getAllBrands} />
         </div>
     );
 };

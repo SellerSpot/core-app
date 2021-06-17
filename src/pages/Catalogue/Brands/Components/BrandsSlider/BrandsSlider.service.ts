@@ -1,6 +1,11 @@
 import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import * as yup from 'yup';
+import {
+    IBrandData,
+    ICreateBrandRequest,
+} from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { IBrandsSliderForm } from './BrandsSlider.types';
 
 export class BrandsSliderService {
@@ -61,5 +66,20 @@ export class BrandsSliderService {
             type,
             theme,
         };
+    };
+
+    static createNewBrand = async (values: IBrandsSliderForm): Promise<IBrandData> => {
+        const { name } = values;
+        const requestData: ICreateBrandRequest = {
+            name,
+        };
+        const { data, status, error } = await requests.catalogue.brandRequest.createNewBrand(
+            requestData,
+        );
+        if (status) {
+            return data;
+        }
+        BrandsSliderService.showGeneralErrorNotify(error.message);
+        return null;
     };
 }

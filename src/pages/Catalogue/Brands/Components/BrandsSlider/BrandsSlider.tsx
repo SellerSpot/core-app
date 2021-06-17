@@ -1,8 +1,8 @@
 import { SliderModal, SliderModalLayoutWrapper } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { introduceDelay } from 'utilities/general';
 import styles from './BrandsSlider.module.scss';
+import { BrandsSliderService } from './BrandsSlider.service';
 import { IBrandSliderProps, IBrandsSliderForm } from './BrandsSlider.types';
 import ModalBody from './Components/ModalBody/ModalBody';
 import ModalFooter from './Components/ModalFooter/ModalFooter';
@@ -10,7 +10,7 @@ import ModalHeader from './Components/ModalHeader/ModalHeader';
 
 export const BrandsSlider = (props: IBrandSliderProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderState, getAllBrands } = props;
 
     // compute
     const initialValues: IBrandsSliderForm = {
@@ -22,8 +22,13 @@ export const BrandsSlider = (props: IBrandSliderProps): ReactElement => {
         sliderState.showSliderModal.set(false);
     };
     const onSubmit = async (values: IBrandsSliderForm) => {
-        await introduceDelay(4000);
-        console.log('🚀 ~ file: BrandsSlider.tsx ~ line 73 ~ onSubmit ~ values', values);
+        const newBrandData = await BrandsSliderService.createNewBrand(values);
+        // if new brand has been created, update
+        if (!!newBrandData) {
+            await getAllBrands();
+            // closing sliderModal
+            sliderState.showSliderModal.set(false);
+        }
     };
 
     // draw

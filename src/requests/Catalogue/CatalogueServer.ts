@@ -1,7 +1,14 @@
 import { createState, State } from '@hookstate/core';
 import { Persistence } from '@hookstate/persistence';
-import { introduceDelay } from '@sellerspot/universal-components';
-import { IBrandData, ICategoryData, ITaxBracketData } from '@sellerspot/universal-types';
+import { generateRandomString, introduceDelay } from '@sellerspot/universal-components';
+import {
+    IBrandData,
+    ICategoryData,
+    ICreateBrandRequest,
+    ICreateBrandResponse,
+    IGetAllBrandResponse,
+    ITaxBracketData,
+} from '@sellerspot/universal-types';
 
 // support types
 export interface IStockUnitData {
@@ -25,7 +32,8 @@ interface ICatalogueServerDBState {
 }
 // server interface
 interface ICatalogueServer {
-    getAllBrands: () => Promise<IBrandData[]>;
+    getAllBrands: () => Promise<IGetAllBrandResponse>;
+    createNewBrand: (value: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
 }
 
 // db state
@@ -42,9 +50,27 @@ catalogueDBState.attach(Persistence('catalogueDB'));
 
 // server
 const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatalogueServer => ({
-    getAllBrands: async (): Promise<IBrandData[]> => {
-        await introduceDelay(4000);
-        return state.brands.value;
+    getAllBrands: async (): Promise<IGetAllBrandResponse> => {
+        await introduceDelay(2000);
+        return {
+            status: true,
+            data: state.brands.value,
+        };
+    },
+    createNewBrand: async (data: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
+        await introduceDelay(2000);
+        const newBrand: IBrandData = {
+            id: generateRandomString(),
+            name: data.name,
+        };
+        state.brands.set((state) => {
+            state.unshift(newBrand);
+            return state;
+        });
+        return {
+            data: newBrand,
+            status: true,
+        };
     },
 });
 

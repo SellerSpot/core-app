@@ -1,4 +1,8 @@
-import { IGetAllBrandResponse } from '@sellerspot/universal-types';
+import {
+    ICreateBrandRequest,
+    ICreateBrandResponse,
+    IGetAllBrandResponse,
+} from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
 import { accessCatalogueServer } from './CatalogueServer';
 
@@ -8,9 +12,10 @@ export default class CatalogueBrandsRequest extends BaseRequest {
     }
 
     getAllBrands = async (): Promise<IGetAllBrandResponse> => {
-        return {
-            status: true,
-            data: await accessCatalogueServer().getAllBrands(),
-        };
+        return await accessCatalogueServer().getAllBrands();
+    };
+
+    createNewBrand = async (values: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
+        return await accessCatalogueServer().createNewBrand(values);
     };
 }

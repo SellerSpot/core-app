@@ -6,6 +6,7 @@ export interface IBrandSliderState {
 }
 export interface IBrandSliderProps {
     sliderState: State<IBrandSliderState>;
+    getAllBrands: () => Promise<void>;
 }
 
 export interface IBrandsSliderForm {
