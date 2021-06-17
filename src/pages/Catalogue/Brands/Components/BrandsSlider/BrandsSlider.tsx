@@ -1,4 +1,8 @@
-import { SliderModal, SliderModalLayoutWrapper } from '@sellerspot/universal-components';
+import {
+    showNotify,
+    SliderModal,
+    SliderModalLayoutWrapper,
+} from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
 import styles from './BrandsSlider.module.scss';
@@ -26,6 +30,10 @@ export const BrandsSlider = (props: IBrandSliderProps): ReactElement => {
         // if new brand has been created, update
         if (!!newBrandData) {
             await getAllBrands();
+            // calling notify
+            showNotify(`${newBrandData.name} brand created successfully!`, {
+                theme: 'success',
+            });
             // closing sliderModal
             sliderState.showSliderModal.set(false);
         }
@@ -46,12 +54,12 @@ export const BrandsSlider = (props: IBrandSliderProps): ReactElement => {
                     submitting: true,
                 }}
             >
-                {({ handleSubmit }) => {
+                {({ handleSubmit, submitting }) => {
                     return (
                         <form className={styles.form} onSubmit={handleSubmit} noValidate>
                             <SliderModalLayoutWrapper>
                                 <ModalHeader sliderState={sliderState} />
-                                <ModalBody sliderState={sliderState} />
+                                <ModalBody sliderState={sliderState} submitting={submitting} />
                                 <ModalFooter sliderState={sliderState} />
                             </SliderModalLayoutWrapper>
                         </form>

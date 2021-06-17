@@ -6,9 +6,9 @@ import { BrandsSliderService } from '../../BrandsSlider.service';
 import { IBrandSliderState, IBrandsSliderForm } from '../../BrandsSlider.types';
 import styles from './ModalBody.module.scss';
 
-const BrandNameField = (props: { autoFocus: boolean }) => {
+const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     // props
-    const { autoFocus } = props;
+    const { autoFocus, submitting } = props;
     const fieldName: keyof IBrandsSliderForm = 'name';
 
     // hooks
@@ -32,6 +32,7 @@ const BrandNameField = (props: { autoFocus: boolean }) => {
             {...input}
             value={value.name}
             type="text"
+            disabled={submitting}
             name={undefined}
             autoFocus={autoFocus}
             fullWidth
@@ -44,15 +45,21 @@ const BrandNameField = (props: { autoFocus: boolean }) => {
     );
 };
 
-const ModalBody = (props: { sliderState: State<IBrandSliderState> }): ReactElement => {
+const ModalBody = (props: {
+    sliderState: State<IBrandSliderState>;
+    submitting: boolean;
+}): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderState, submitting } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <BrandNameField autoFocus={sliderState.showSliderModal.get()} />
+                <BrandNameField
+                    autoFocus={sliderState.showSliderModal.get()}
+                    submitting={submitting}
+                />
             </div>
         </SliderModalBody>
     );
