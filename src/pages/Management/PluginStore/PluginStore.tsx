@@ -7,7 +7,12 @@ import { PLUGIN_IMAGES } from 'assets/images/images';
 import { useState } from '@hookstate/core';
 import PluginStoreService from './PluginStore.service';
 import { IPlugin } from '@sellerspot/universal-types';
-import { introduceDelay, showNotify, Skeleton } from '@sellerspot/universal-components';
+import {
+    introduceDelay,
+    showNotify,
+    Skeleton,
+    useIsMounted,
+} from '@sellerspot/universal-components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { Loader } from 'components/Atoms/Loader/Loader';
@@ -25,6 +30,7 @@ export const PluginStore = (): ReactElement => {
 
     // hooks
     const history = useHistory();
+    const isMounted = useIsMounted();
 
     // handlers
     const getPluginUrl = (pluginId: string): string =>
@@ -52,9 +58,11 @@ export const PluginStore = (): ReactElement => {
     useEffect(() => {
         PluginStoreService.fetchAllPlugins()
             .then(async (data) => {
-                plugins.set(data);
-                await introduceDelay(2000);
-                isLoading.set(false);
+                if (isMounted) {
+                    plugins.set(data);
+                    await introduceDelay(2000);
+                    isLoading.set(false);
+                }
             })
             .catch((err) => showNotify(err.message));
     }, []);
