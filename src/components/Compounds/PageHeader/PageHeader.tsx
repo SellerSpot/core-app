@@ -6,11 +6,16 @@ import styles from './PageHeader.module.scss';
 export { IPageHeaderProps } from './PageHeader.types';
 
 export const PageHeader = (props: IPageHeaderProps): ReactElement => {
-    const { actions, title } = props;
+    const { actions, actionsLHS, title } = props;
     return (
         <div className={styles.wrapper}>
-            <h3>{title}</h3>
-            {actions && <div className={styles.headerActions}>{actions}</div>}
+            <div className={styles.titleHolder}>
+                <h3>{title}</h3>
+            </div>
+            <div className={styles.actionsWrapper}>
+                <div className={styles.actions}>{actionsLHS}</div>
+                <div className={styles.actions}>{actions}</div>
+            </div>
         </div>
     );
 };

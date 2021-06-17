@@ -62,3 +62,7 @@ export const {
 
 // exporting selector - useful when using it in components to select particular state from global store
 export const appSelector: Selector<RootState, IAppState> = (state: RootState) => state.app;
+export const tenantSelector: Selector<RootState, IStoreDetails> = (state: RootState) =>
+    state.app.tenantDetails;
+export const userSelector: Selector<RootState, IUserDetails> = (state: RootState) =>
+    state.app.userDetails;

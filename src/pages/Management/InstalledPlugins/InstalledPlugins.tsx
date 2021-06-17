@@ -8,15 +8,16 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from 'config/routes';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import { useSelector } from 'react-redux';
-import { appSelector } from 'store/models/app';
+import { tenantSelector } from 'store/models/app';
 import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
 import styles from './InstalledPlugins.module.scss';
+import pluginStoreStyles from '../PluginStore/PluginStore.module.scss';
 import { Button, TableEmptyState } from '@sellerspot/universal-components';
 
 export const InstalledPlugins = (): ReactElement => {
     // state
     const isLoading = useState<boolean>(true);
-    const { tenantDetails } = useSelector(appSelector);
+    const tenantDetails = useSelector(tenantSelector);
 
     // hooks
     const history = useHistory();
@@ -68,7 +69,7 @@ export const InstalledPlugins = (): ReactElement => {
                             </div>
                         </>
                     ) : (
-                        <div className={styles.cardsWrapper}>
+                        <div className={pluginStoreStyles.cardsWrapper}>
                             {tenantDetails?.installedPlugins?.map((plugin, key) => {
                                 const { shortDescription, iconName, id, image, name, uniqueName } =
                                     plugin.plugin;

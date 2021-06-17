@@ -18,7 +18,7 @@ import { ROUTES } from 'config/routes';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import { times } from 'lodash';
 import { useSelector } from 'react-redux';
-import { appSelector } from 'store/models/app';
+import { tenantSelector } from 'store/models/app';
 import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
 import { IViewPluginLocationState } from '../ViewPlugin/ViewPlugin.types';
 
@@ -26,7 +26,7 @@ export const PluginStore = (): ReactElement => {
     // state
     const plugins = useState<IPlugin[]>([]);
     const isLoading = useState<boolean>(true);
-    const { tenantDetails } = useSelector(appSelector);
+    const tenantDetails = useSelector(tenantSelector);
 
     // hooks
     const history = useHistory();
@@ -58,11 +58,9 @@ export const PluginStore = (): ReactElement => {
     useEffect(() => {
         PluginStoreService.fetchAllPlugins()
             .then(async (data) => {
-                if (isMounted) {
-                    plugins.set(data);
-                    await introduceDelay(2000);
-                    isLoading.set(false);
-                }
+                if (isMounted.current) plugins.set(data);
+                await introduceDelay(2000);
+                if (isMounted.current) isLoading.set(false);
             })
             .catch((err) => showNotify(err.message));
     }, []);
