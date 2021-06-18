@@ -37,6 +37,12 @@ export const StockUnit = (): ReactElement => {
     // state
     const pageState = useState<IStockUnitPageState>({
         stockUnits: [],
+        isStockUnitTableLoading: false,
+        slider: {
+            isEditMode: false,
+            prefillData: null,
+            showSliderModal: false,
+        },
     });
 
     // draw

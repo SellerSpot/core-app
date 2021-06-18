@@ -16,7 +16,7 @@ export class StockUnitTableService {
         pageState: State<IStockUnitPageState>;
     }): ITableProps<IStockUnit> => {
         // props
-        const {} = props;
+        const { pageState } = props;
 
         // components
         const sNoCustomRenderer: TTableCellCustomRenderer<IStockUnit> = (props) => {
@@ -70,6 +70,7 @@ export class StockUnitTableService {
         // draw
         return {
             data: [],
+            isLoading: pageState.isStockUnitTableLoading.get(),
             shape: [
                 {
                     columnName: 'SNo',
