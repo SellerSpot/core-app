@@ -1,57 +1,31 @@
 import {
     ICreateBrandRequest,
     ICreateBrandResponse,
+    IDeleteBrandResponse,
+    IEditBrandRequest,
+    IEditBrandResponse,
     IGetAllBrandResponse,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { generateRandomString, introduceDelay } from 'utilities/general';
-
-type IBrandData = IGetAllBrandResponse['data'][0];
-
-interface ICatalogServer {
-    brands: IBrandData[];
-    getAllBrand: () => IGetAllBrandResponse;
-    createBrand: (brandData: ICreateBrandRequest) => ICreateBrandResponse;
-}
-
-const catalogueServer: ICatalogServer = {
-    brands: <IBrandData[]>[],
-    getAllBrand: () => {
-        return {
-            status: true,
-            data: catalogueServer.brands,
-        };
-    },
-    createBrand: (brandData: ICreateBrandRequest): ICreateBrandResponse => {
-        const { name } = brandData;
-        const newBrandData: IBrandData = {
-            id: generateRandomString(),
-            name,
-        };
-        catalogueServer.brands = [newBrandData, ...catalogueServer.brands];
-        return {
-            status: true,
-            data: newBrandData,
-        };
-    },
-};
+import { accessCatalogueServer } from './CatalogueServer';
 
 export default class CatalogueBrandsRequest extends BaseRequest {
     constructor() {
         super('CATALOGUE');
     }
 
-    getAllBrand = async (): Promise<IGetAllBrandResponse> => {
-        await introduceDelay(1000);
-
-        const response = catalogueServer.getAllBrand();
-        return response;
+    getAllBrands = async (): Promise<IGetAllBrandResponse> => {
+        return await accessCatalogueServer().getAllBrands();
     };
 
-    createBrand = async (data: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
-        await introduceDelay(1000);
+    createNewBrand = async (values: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
+        return await accessCatalogueServer().createNewBrand(values);
+    };
 
-        const response = catalogueServer.createBrand(data);
-        return response;
+    deleteBrand = async (brandId: string): Promise<IDeleteBrandResponse> => {
+        return await accessCatalogueServer().deleteBrand(brandId);
+    };
+    editBrand = async (data: IEditBrandRequest): Promise<IEditBrandResponse> => {
+        return await accessCatalogueServer().editBrand(data);
     };
 }

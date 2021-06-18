@@ -1,16 +1,17 @@
 import { State } from '@hookstate/core';
 import { ITableProps, TTableCellCustomRenderer } from '@sellerspot/universal-components';
-import { IProduct, IProductsPageState } from '../../Products.types';
+import { IProductData } from 'requests/Catalogue/CatalogueServer';
+import { IProductsPageState } from '../../Products.types';
 
 export class ProductsTableService {
     static getTableProps = (props: {
         pageState: State<IProductsPageState>;
-    }): ITableProps<IProduct> => {
+    }): ITableProps<IProductData> => {
         // props
         const { pageState } = props;
 
         // custom renderers
-        const sNoCustomRenderer: TTableCellCustomRenderer<IProduct> = (props) => {
+        const sNoCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowIndex } = props;
 

@@ -2,10 +2,12 @@ import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button, TButtonOnClickHandler } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
 import styles from './Brands.module.scss';
+import { BrandsService } from './Brands.service';
 import { IBrandsPageState } from './Brands.types';
+import { BrandsSlider } from './Components/BrandsSlider/BrandsSlider';
 import { BrandsTable } from './Components/BrandsTable/BrandsTable';
 
 const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
@@ -16,7 +18,11 @@ const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
     const NewBrandButton = () => {
         // handlers
         const onClickHandler: TButtonOnClickHandler = () => {
-            pageState.showSliderModal.set(true);
+            pageState.slider.merge({
+                isEditMode: false,
+                prefillBrandsData: null,
+                showSliderModal: true,
+            });
         };
 
         // draw
@@ -39,14 +45,35 @@ export const Brands = (): ReactElement => {
     // state
     const pageState = useState<IBrandsPageState>({
         brands: [],
-        showSliderModal: false,
+        isBrandsTableLoading: false,
+        slider: {
+            prefillBrandsData: null,
+            showSliderModal: false,
+            isEditMode: false,
+        },
     });
+
+    // handlers
+    const getAllBrands = async (): Promise<void> => {
+        const allBrands = await BrandsService.getAllBrands();
+        pageState.merge({
+            brands: allBrands,
+            isBrandsTableLoading: false,
+        });
+    };
+
+    // effects
+    useEffect(() => {
+        pageState.isBrandsTableLoading.set(true);
+        getAllBrands();
+    }, []);
 
     // draw
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
-            <BrandsTable pageState={pageState} />
+            <BrandsTable pageState={pageState} getAllBrands={getAllBrands} />
+            <BrandsSlider sliderState={pageState.slider} getAllBrands={getAllBrands} />
         </div>
     );
 };
