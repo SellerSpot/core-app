@@ -27,7 +27,7 @@ export const Dashboard = (): ReactElement => {
                         <Route path={ROUTES.CATALOGUE}>
                             <Catalogue />
                         </Route>
-                        <Route path={ROUTES.POS}>
+                        <Route path={ROUTES.POINT_OF_SALE}>
                             <PointOfSale />
                         </Route>
                         {/* '/' route should be placed atlast */}

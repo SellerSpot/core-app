@@ -1,34 +1,37 @@
-import { ROUTES } from 'config/routes';
-import { ICONS } from 'utilities/utilities';
-import { TPlugins } from './PluginMenu.types';
+import { IInstalledPlugin } from '@sellerspot/universal-types';
+import { EDEFAULT_PLUGINS } from 'config/pluginsBaseRoutes';
 
 export class PluginMenuService {
-    static getPlugins = (): Partial<TPlugins> => {
-        return {
-            HOME: {
-                icon: ICONS.homeVariant,
-                title: 'Home',
-                routeKey: 'HOME',
-                redirectRoute: ROUTES.HOME,
+    static getDefaultPlugins = (): IInstalledPlugin[] => {
+        return [
+            {
+                plugin: {
+                    pluginId: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME],
+                    name: 'Home',
+                    icon: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME],
+                    bannerImages: [],
+                    dependantPlugins: [],
+                    image: '',
+                    isVisibleInPluginMenu: true,
+                    isVisibleInPluginStore: false,
+                    longDescription: '',
+                    shortDescription: '',
+                },
             },
-            MANAGEMENT: {
-                icon: ICONS.settingsIcon,
-                title: 'Management',
-                routeKey: 'MANAGEMENT',
-                redirectRoute: ROUTES.MANAGEMENT,
+            {
+                plugin: {
+                    pluginId: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT],
+                    name: 'Management',
+                    icon: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT],
+                    bannerImages: [],
+                    dependantPlugins: [],
+                    image: '',
+                    isVisibleInPluginMenu: true,
+                    isVisibleInPluginStore: false,
+                    longDescription: '',
+                    shortDescription: '',
+                },
             },
-            POS: {
-                icon: ICONS.cashRegister,
-                title: 'Point Of Sale',
-                routeKey: 'POS',
-                redirectRoute: ROUTES.POS,
-            },
-            CATALOGUE: {
-                icon: ICONS.outlineListAlt,
-                title: 'Catalogue',
-                routeKey: 'CATALOGUE',
-                redirectRoute: ROUTES.CATALOGUE,
-            },
-        };
+        ];
     };
 }

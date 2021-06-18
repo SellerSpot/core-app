@@ -27,18 +27,18 @@ SubMenu.args = {
             title: 'Sales',
             disabled: false,
             icon: ICONS.cashRegister,
-            routeKey: 'POS__SALES',
+            routeKey: 'POINT_OF_SALE__SALES',
             redirectRoute: '',
             childTiles: [
                 {
                     title: 'New Sales',
-                    routeKey: 'POS__SALES__NEW_SALE',
+                    routeKey: 'POINT_OF_SALE__SALES__NEW_SALE',
                     redirectRoute: '',
                     disabled: false,
                 },
                 {
                     title: 'Sales History',
-                    routeKey: 'POS__SALES__SALES_HISTORY',
+                    routeKey: 'POINT_OF_SALE__SALES__SALES_HISTORY',
                     redirectRoute: '',
                     disabled: false,
                 },
@@ -53,7 +53,7 @@ SubMenu.args = {
             childTiles: [
                 {
                     title: 'Products',
-                    routeKey: 'POS__INVENTORY__PRODUCTS',
+                    routeKey: 'POINT_OF_SALE__INVENTORY__PRODUCTS',
                     disabled: false,
                     redirectRoute: '',
                 },
@@ -63,7 +63,7 @@ SubMenu.args = {
             title: 'Bill Settings',
             icon: ICONS.billLine,
             disabled: true,
-            routeKey: 'POS__BILL_SETTINGS',
+            routeKey: 'POINT_OF_SALE__BILL_SETTINGS',
             redirectRoute: '',
         },
     ],

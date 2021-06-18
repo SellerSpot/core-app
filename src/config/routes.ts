@@ -16,14 +16,14 @@ const MANAGEMENT = {
 };
 
 // later move it to separate files
-const POS = {
-    POS: '/pos',
-    POS__SALES: '/pos/sales',
-    POS__SALES__NEW_SALE: '/pos/sales/newsale',
-    POS__SALES__SALES_HISTORY: '/pos/sales/saleshistory',
-    POS__INVENTORY: '/pos/inventory',
-    POS__INVENTORY__PRODUCTS: '/pos/inventory/products',
-    POS__BILL_SETTINGS: '/pos/billsettings',
+const POINT_OF_SALE = {
+    POINT_OF_SALE: '/pos',
+    POINT_OF_SALE__SALES: '/pos/sales',
+    POINT_OF_SALE__SALES__NEW_SALE: '/pos/sales/newsale',
+    POINT_OF_SALE__SALES__SALES_HISTORY: '/pos/sales/saleshistory',
+    POINT_OF_SALE__INVENTORY: '/pos/inventory',
+    POINT_OF_SALE__INVENTORY__PRODUCTS: '/pos/inventory/products',
+    POINT_OF_SALE__BILL_SETTINGS: '/pos/billsettings',
 };
 
 const CATALOGUE = {
@@ -36,8 +36,8 @@ const CATALOGUE = {
     CATALOGUE__SETTINGS: '/catalogue/settings',
 };
 
-const ECOM = {
-    ECOM: '/ecom',
+const ECOMMERCE = {
+    ECOMMERCE: '/ecom',
 };
 
 export const ROUTES = {
@@ -45,9 +45,9 @@ export const ROUTES = {
     FAIL_SAFE: '/failsafe',
     NOT_FOUND: '/notfound',
     ...MANAGEMENT,
-    ...POS,
+    ...POINT_OF_SALE,
     ...CATALOGUE,
-    ...ECOM,
+    ...ECOMMERCE,
 };
 
 export type TRouteKeys = keyof typeof ROUTES;

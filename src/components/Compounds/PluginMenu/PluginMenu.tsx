@@ -9,10 +9,14 @@ import animationStyles from '../../../styles/animation.module.scss';
 import { StoreInformationPluginMenuTile } from '../StoreInformationPluginMenuTile/StoreInformationPluginMenuTile';
 import { PluginMenuTile } from '../PluginMenuTile/PluginMenuTile';
 import styles from './PluginMenu.module.scss';
-import { PluginMenuService } from './PluginMenu.service';
 import { IUsePluginMenuStore } from './PluginMenu.types';
 import { State, useState } from '@hookstate/core';
 import { CONFIG } from 'config/config';
+import { tenantSelector } from 'store/models/app';
+import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
+import { EPLUGINS } from '@sellerspot/universal-types';
+import { PLUGIN_ICONS } from 'utilities/utilities';
+import { PluginMenuService } from './PluginMenu.service';
 
 const ExpandMenuIcon = (props: { componentState: State<IUsePluginMenuStore> }) => {
     const { componentState } = props;
@@ -39,30 +43,46 @@ const ExpandMenuIcon = (props: { componentState: State<IUsePluginMenuStore> }) =
 };
 
 const PluginMenuTiles = (props: { componentState: State<IUsePluginMenuStore> }) => {
+    // props
     const { componentState } = props;
     const { expandMenu } = componentState;
-    const { routeKeys } = useSelector(routeSelector);
-    const tiles = PluginMenuService.getPlugins();
+
+    // hooks
     const history = useHistory();
+    const { routeKeys } = useSelector(routeSelector);
+    const tenantDetails = useSelector(tenantSelector);
+
+    const allPlugins = [
+        ...PluginMenuService.getDefaultPlugins(),
+        ...(tenantDetails?.installedPlugins ?? []),
+    ];
 
     return (
         <div className={styles.pluginMenuTilesWrapper}>
-            {Object.values(tiles).map((tile, tileIndex) => {
-                const { icon, title, redirectRoute, routeKey } = tile;
+            {allPlugins?.map((installedPlugin) => {
+                const { isVisibleInPluginMenu, icon, name, pluginId } = installedPlugin.plugin;
+                const redirectRoute = PLUGIN_ROUTES[pluginId as keyof typeof EPLUGINS];
                 const handleTileClick = () => {
                     history.push(redirectRoute);
                 };
                 return (
-                    <Fragment key={tileIndex}>
-                        <PluginMenuTile
-                            pluginIcon={<Icon icon={icon} height={'24px'} />}
-                            pluginTitle={title}
-                            expanded={expandMenu.get()}
-                            selected={routeKeys.includes(routeKey)}
-                            events={{
-                                onClick: handleTileClick,
-                            }}
-                        />
+                    <Fragment key={pluginId}>
+                        {isVisibleInPluginMenu && (
+                            <PluginMenuTile
+                                pluginIcon={
+                                    <Icon
+                                        icon={PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
+                                        height={'24px'}
+                                    />
+                                }
+                                pluginTitle={name}
+                                expanded={expandMenu.get()}
+                                selected={routeKeys.includes(pluginId as keyof typeof EPLUGINS)}
+                                events={{
+                                    onClick: handleTileClick,
+                                }}
+                            />
+                        )}
                     </Fragment>
                 );
             })}

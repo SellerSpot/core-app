@@ -13,20 +13,20 @@ export const PointOfSale = (): ReactElement => {
             </div>
             <div className={styles.pageWrapper}>
                 <Switch>
-                    <Route exact path={ROUTES.POS__SALES__NEW_SALE}>
+                    <Route exact path={ROUTES.POINT_OF_SALE__SALES__NEW_SALE}>
                         <h6>New Sale</h6>
                     </Route>
-                    <Route exact path={ROUTES.POS__SALES__SALES_HISTORY}>
+                    <Route exact path={ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY}>
                         <h6>Sales History</h6>
                     </Route>
-                    <Route exact path={ROUTES.POS__INVENTORY__PRODUCTS}>
+                    <Route exact path={ROUTES.POINT_OF_SALE__INVENTORY__PRODUCTS}>
                         <h6>Inventory Products</h6>
                     </Route>
-                    <Route exact path={ROUTES.POS__BILL_SETTINGS}>
+                    <Route exact path={ROUTES.POINT_OF_SALE__BILL_SETTINGS}>
                         <h6>Bill Settings</h6>
                     </Route>
                     <Route>
-                        <Redirect to={ROUTES.POS__SALES__NEW_SALE} />
+                        <Redirect to={ROUTES.POINT_OF_SALE__SALES__NEW_SALE} />
                     </Route>
                 </Switch>
             </div>

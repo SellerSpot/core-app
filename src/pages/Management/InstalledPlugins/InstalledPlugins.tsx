@@ -13,6 +13,7 @@ import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
 import styles from './InstalledPlugins.module.scss';
 import pluginStoreStyles from '../PluginStore/PluginStore.module.scss';
 import { Button, TableEmptyState } from '@sellerspot/universal-components';
+import { EPLUGINS } from '../../../../.yalc/@sellerspot/universal-types/dist';
 
 export const InstalledPlugins = (): ReactElement => {
     // state
@@ -28,12 +29,12 @@ export const InstalledPlugins = (): ReactElement => {
 
     const launchCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = tenantDetails?.installedPlugins?.[pluginIndex].plugin;
-        history.push(PLUGIN_ROUTES[currentPlugin.uniqueName as keyof typeof PLUGIN_ROUTES]);
+        history.push(PLUGIN_ROUTES[currentPlugin.pluginId as keyof typeof PLUGIN_ROUTES]);
     };
 
     const exploreCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = tenantDetails?.installedPlugins?.[pluginIndex].plugin;
-        history.push(getPluginUrl(currentPlugin.id));
+        history.push(getPluginUrl(currentPlugin.pluginId));
     };
 
     const onInstallPluginsClickHandler = () => {
@@ -71,18 +72,18 @@ export const InstalledPlugins = (): ReactElement => {
                     ) : (
                         <div className={pluginStoreStyles.cardsWrapper}>
                             {tenantDetails?.installedPlugins?.map((plugin, key) => {
-                                const { shortDescription, iconName, id, image, name, uniqueName } =
+                                const { shortDescription, icon, image, name, pluginId } =
                                     plugin.plugin;
                                 return (
                                     <PluginCard
-                                        key={id}
+                                        key={pluginId}
                                         isInstalled={true}
                                         image={
                                             image ||
-                                            PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
+                                            PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
                                         }
                                         name={name}
-                                        icon={ICONS[iconName as keyof typeof ICONS]}
+                                        icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
                                         description={shortDescription}
                                         installOrLaunchCallBack={launchCallBackHandler(key)}
                                         exploreCallBack={exploreCallBackHandler(key)}

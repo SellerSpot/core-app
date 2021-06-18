@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, ImageCarousel, showNotify, Image } from '@sellerspot/universal-components';
-import { IErrorResponse, IPlugin } from '@sellerspot/universal-types';
+import { EPLUGINS, IErrorResponse, IPlugin } from '@sellerspot/universal-types';
 import { useState } from '@hookstate/core';
 
 import { ROUTES } from 'config/routes';
@@ -38,7 +38,7 @@ export const ViewPlugin = (): ReactElement => {
 
     const checkIsPluginInstalled = (pluginId: string) => {
         const isPluginInstalled = tenantDetails.installedPlugins?.some(
-            (installedPlugin) => installedPlugin.plugin.id === pluginId,
+            (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
         );
         isInstalled.set(isPluginInstalled);
         return isPluginInstalled;
@@ -48,7 +48,7 @@ export const ViewPlugin = (): ReactElement => {
         // handle install
         try {
             isInstalling.set(true);
-            const response = await ViewPluginServie.installPlugin(plugin.value.id);
+            const response = await ViewPluginServie.installPlugin(plugin.value.pluginId);
             if (response) {
                 isInstalling.set(false);
                 showNotify('Plugin installed successfully');
@@ -67,7 +67,7 @@ export const ViewPlugin = (): ReactElement => {
     const onUnInstallClickHandler = async () => {
         try {
             isUnInstalling.set(true);
-            const response = await ViewPluginServie.unInstallPlugin(plugin.value.id);
+            const response = await ViewPluginServie.unInstallPlugin(plugin.value.pluginId);
             if (response) {
                 isUnInstalling.set(false);
                 showNotify('Plugin uninstalled successfully');
@@ -84,7 +84,7 @@ export const ViewPlugin = (): ReactElement => {
     };
 
     const onLaunchClickHandler = () => {
-        history.push(PLUGIN_ROUTES[plugin.value.uniqueName as keyof typeof PLUGIN_ROUTES]);
+        history.push(PLUGIN_ROUTES[plugin.value.pluginId as keyof typeof PLUGIN_ROUTES]);
     };
 
     // effects
@@ -93,7 +93,7 @@ export const ViewPlugin = (): ReactElement => {
         if (!pluginId) errorRedirect('Invalid plugin');
         ViewPluginServie.fetchPluginDetails(pluginId)
             .then(async (data) => {
-                const isInstalled = checkIsPluginInstalled(data.id);
+                const isInstalled = checkIsPluginInstalled(data.pluginId);
                 plugin.set(data);
                 if (!isInstalled && location.state?.install) {
                     // trigger install sequence
@@ -107,7 +107,7 @@ export const ViewPlugin = (): ReactElement => {
 
     // updates the installation status, listening the installedPlugins from app state
     useEffect(() => {
-        if (plugin?.id?.get()) checkIsPluginInstalled(plugin?.id?.get());
+        if (plugin?.pluginId?.get()) checkIsPluginInstalled(plugin?.pluginId?.get());
     }, [tenantDetails.installedPlugins]);
 
     // unInstallation label
@@ -123,7 +123,7 @@ export const ViewPlugin = (): ReactElement => {
                                 src={
                                     plugin.value.image ||
                                     PLUGIN_IMAGES[
-                                        plugin.value.uniqueName as keyof typeof PLUGIN_IMAGES
+                                        plugin.value.pluginId as keyof typeof PLUGIN_IMAGES
                                     ]
                                 }
                             />
@@ -133,8 +133,8 @@ export const ViewPlugin = (): ReactElement => {
                                 <div className={styles.pluginIcon}>
                                     <Icon
                                         icon={
-                                            ICONS.PLUGINS[
-                                                plugin.value.iconName as keyof typeof ICONS.PLUGINS
+                                            ICONS.PLUGIN_ICONS[
+                                                plugin.value.icon as keyof typeof EPLUGINS
                                             ]
                                         }
                                     />

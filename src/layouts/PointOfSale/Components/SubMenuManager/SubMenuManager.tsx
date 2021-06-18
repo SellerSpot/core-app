@@ -9,37 +9,37 @@ export const SubMenuManager = (): ReactElement => {
         {
             icon: ICONS.cashRegister,
             title: 'Sales',
-            routeKey: 'POS__SALES',
+            routeKey: 'POINT_OF_SALE__SALES',
             childTiles: [
                 {
                     title: 'New Sale',
-                    redirectRoute: ROUTES.POS__SALES__NEW_SALE,
-                    routeKey: 'POS__SALES__NEW_SALE',
+                    redirectRoute: ROUTES.POINT_OF_SALE__SALES__NEW_SALE,
+                    routeKey: 'POINT_OF_SALE__SALES__NEW_SALE',
                 },
                 {
                     title: 'Sales History',
-                    redirectRoute: ROUTES.POS__SALES__SALES_HISTORY,
-                    routeKey: 'POS__SALES__SALES_HISTORY',
+                    redirectRoute: ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY,
+                    routeKey: 'POINT_OF_SALE__SALES__SALES_HISTORY',
                 },
             ],
         },
         {
             icon: ICONS.bxBox,
             title: 'Inventory',
-            routeKey: 'POS__INVENTORY',
+            routeKey: 'POINT_OF_SALE__INVENTORY',
             childTiles: [
                 {
                     title: 'Products',
-                    redirectRoute: ROUTES.POS__INVENTORY__PRODUCTS,
-                    routeKey: 'POS__INVENTORY__PRODUCTS',
+                    redirectRoute: ROUTES.POINT_OF_SALE__INVENTORY__PRODUCTS,
+                    routeKey: 'POINT_OF_SALE__INVENTORY__PRODUCTS',
                 },
             ],
         },
         {
             icon: ICONS.bxReceipt,
             title: 'Bill Settings',
-            redirectRoute: ROUTES.POS__BILL_SETTINGS,
-            routeKey: 'POS__BILL_SETTINGS',
+            redirectRoute: ROUTES.POINT_OF_SALE__BILL_SETTINGS,
+            routeKey: 'POINT_OF_SALE__BILL_SETTINGS',
         },
     ];
 
