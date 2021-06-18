@@ -78,7 +78,7 @@ export class BrandsTableService {
 
             return (
                 <Button
-                    label="New Brand"
+                    label="NEW BRAND"
                     theme="primary"
                     onClick={handleOnClick}
                     variant="contained"
