@@ -1,6 +1,6 @@
 .rowActions {
     width: 100%;
-    @include flex(center, flex-end, $gap: 20px);
+    @include flex(center, center, $gap: 20px);
 
     .minActions {
         @include flex(center, flex-end, $gap: 12px);

@@ -1,4 +1,4 @@
-import { IProductData } from 'requests/Catalogue/CatalogueServer';
+import { IProductData } from 'requests/Catalogue/Server';
 import { IProductSliderState } from './Components/ProductSlider/ProductSlider.types';
 
 export interface IProductPageState {

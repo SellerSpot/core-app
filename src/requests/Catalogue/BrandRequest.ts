@@ -6,9 +6,9 @@ import {
     IGetAllBrandResponse,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { accessCatalogueServer } from './CatalogueServer';
+import { accessCatalogueServer } from './Server';
 
-export default class CatalogueBrandRequest extends BaseRequest {
+export default class BrandRequest extends BaseRequest {
     constructor() {
         super('CATALOGUE');
     }

@@ -20,7 +20,7 @@ const PageHeaderComponent = (props: { pageState: State<IBrandPageState> }) => {
         const onClickHandler: TButtonOnClickHandler = () => {
             pageState.slider.merge({
                 isEditMode: false,
-                prefillBrandData: null,
+                prefillData: null,
                 showSliderModal: true,
             });
         };
@@ -47,7 +47,7 @@ export const Brand = (): ReactElement => {
         brands: [],
         isBrandTableLoading: false,
         slider: {
-            prefillBrandData: null,
+            prefillData: null,
             showSliderModal: false,
             isEditMode: false,
         },

@@ -71,7 +71,7 @@ export class BrandTableService {
             const handleOnClick = () => {
                 pageState.slider.merge({
                     isEditMode: false,
-                    prefillBrandData: null,
+                    prefillData: null,
                     showSliderModal: true,
                 });
             };

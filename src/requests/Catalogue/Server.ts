@@ -6,18 +6,21 @@ import {
     ICategoryData,
     ICreateBrandRequest,
     ICreateBrandResponse,
+    ICreateStockUnitRequest,
+    ICreateStockUnitResponse,
     IDeleteBrandResponse,
+    IDeleteStockUnitResponse,
     IEditBrandRequest,
     IEditBrandResponse,
+    IEditStockUnitRequest,
+    IEditStockUnitResponse,
     IGetAllBrandResponse,
+    IGetAllStockUnitResponse,
+    IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
 
 // support types
-export interface IStockUnitData {
-    id: string;
-    unit: string;
-}
 export interface IProductData {
     name: string;
     barcode: string;
@@ -41,6 +44,12 @@ interface ICatalogueServer {
     deleteBrand: (id: string) => Promise<IDeleteBrandResponse>;
     editBrand: (data: IEditBrandRequest & { id: string }) => Promise<IEditBrandResponse>;
     // stockUnit methods
+    getAllStockUnit: () => Promise<IGetAllStockUnitResponse>;
+    createNewStockUnit: (data: ICreateStockUnitRequest) => Promise<ICreateStockUnitResponse>;
+    deleteStockUnit: (id: string) => Promise<IDeleteStockUnitResponse>;
+    editStockUnit: (
+        data: IEditStockUnitRequest & { id: string },
+    ) => Promise<IEditStockUnitResponse>;
 }
 
 // db state
@@ -48,7 +57,23 @@ const catalogueDBState = createState<ICatalogueServerDBState>({
     brands: [],
     categories: [],
     products: [],
-    stockUnits: [],
+    stockUnits: [
+        {
+            id: generateRandomString(),
+            name: 'kg',
+            isDefault: true,
+        },
+        {
+            id: generateRandomString(),
+            name: 'mg',
+            isDefault: true,
+        },
+        {
+            id: generateRandomString(),
+            name: 'g',
+            isDefault: true,
+        },
+    ],
     taxBrackets: [],
 });
 
@@ -86,7 +111,6 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
             const requiredIndex = state.findIndex((brand) => brand.id === id);
             dataToDelete = state[requiredIndex];
             state.splice(requiredIndex, 1);
-            console.log(state);
             return state;
         });
         return {
@@ -99,6 +123,60 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         const { name, id } = data;
         let updatedData: IBrandData = null;
         state.brands.set((state) => {
+            const requiredIndex = state.findIndex((brand) => brand.id === id);
+            state[requiredIndex].name = name;
+            updatedData = state[requiredIndex];
+            return state;
+        });
+        return {
+            data: updatedData,
+            status: true,
+        };
+    },
+
+    // stockUnit
+    getAllStockUnit: async () => {
+        await introduceDelay(2000);
+        return {
+            status: true,
+            data: state.stockUnits.get(),
+        };
+    },
+    createNewStockUnit: async (data) => {
+        await introduceDelay(2000);
+        const newStockUnit: IStockUnitData = {
+            id: generateRandomString(),
+            name: data.name,
+            isDefault: false,
+        };
+        state.stockUnits.set((state) => {
+            state.unshift(newStockUnit);
+            return state;
+        });
+        return {
+            data: newStockUnit,
+            status: true,
+        };
+    },
+    deleteStockUnit: async (id) => {
+        await introduceDelay(2000);
+        let dataToDelete: IStockUnitData = null;
+        state.stockUnits.set((state) => {
+            const requiredIndex = state.findIndex((stockUnit) => stockUnit.id === id);
+            dataToDelete = state[requiredIndex];
+            state.splice(requiredIndex, 1);
+            return state;
+        });
+        return {
+            data: dataToDelete,
+            status: true,
+        };
+    },
+    editStockUnit: async (data) => {
+        await introduceDelay(2000);
+        const { name, id } = data;
+        let updatedData: IStockUnitData = null;
+        state.stockUnits.set((state) => {
             const requiredIndex = state.findIndex((brand) => brand.id === id);
             state[requiredIndex].name = name;
             updatedData = state[requiredIndex];

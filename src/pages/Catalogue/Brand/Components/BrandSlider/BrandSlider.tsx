@@ -72,7 +72,7 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
 
     // compute
     const initialValues: IBrandSliderForm = {
-        name: sliderState.isEditMode.get() ? sliderState.prefillBrandData?.name?.get() : '',
+        name: sliderState.isEditMode.get() ? sliderState.prefillData?.name?.get() : '',
     };
 
     // handlers
@@ -88,7 +88,7 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
         // if new brand has been created, update
         if (!!newBrandData) {
             // calling notify
-            showNotify(`${newBrandData.name} brand created successfully!`, {
+            showNotify(`'${newBrandData.name}' brand created successfully!`, {
                 theme: 'success',
             });
             await getAllBrand();
@@ -101,16 +101,16 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
         const { name } = values;
         // request
         const editedBrandData = await BrandSliderService.editBrand({
-            id: sliderState.prefillBrandData?.get().id,
+            id: sliderState.prefillData?.get().id,
             name,
         });
         // if brand has been edited
         if (!!editedBrandData) {
             // calling notify
             showNotify(
-                `${sliderState.prefillBrandData?.get().name} brand edited to ${
+                `'${sliderState.prefillData?.get().name}' brand edited to '${
                     editedBrandData.name
-                } successfully!`,
+                }' successfully!`,
                 {
                     theme: 'success',
                 },

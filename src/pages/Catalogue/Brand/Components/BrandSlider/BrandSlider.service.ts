@@ -2,10 +2,7 @@ import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
 import * as yup from 'yup';
-import {
-    IBrandData,
-    ICreateBrandRequest,
-} from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { IBrandData, ICreateBrandRequest } from '@sellerspot/universal-types';
 import { IBrandSliderForm } from './BrandSlider.types';
 
 export class BrandSliderService {

@@ -1,11 +1,13 @@
 import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
+import { ICreateStockUnitRequest, IStockUnitData } from '@sellerspot/universal-types';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import * as yup from 'yup';
 import { IStockUnitSliderForm } from './StockUnitSlider.types';
 
 export class StockUnitSliderService {
     private static validationSchema: yup.SchemaOf<IStockUnitSliderForm> = yup.object({
-        name: yup.string().required('Brand name is required'),
+        name: yup.string().required('StockUnit name is required'),
     });
 
     private static showGeneralErrorNotify = (message: string) => {
@@ -61,5 +63,32 @@ export class StockUnitSliderService {
             type,
             theme,
         };
+    };
+
+    static createNewStockUnit = async (values: IStockUnitSliderForm): Promise<IStockUnitData> => {
+        const { name } = values;
+        const requestData: ICreateStockUnitRequest = {
+            name,
+        };
+        const { data, status, error } =
+            await requests.catalogue.stockUnitRequest.createNewStockUnit(requestData);
+        if (status) {
+            return data;
+        }
+        StockUnitSliderService.showGeneralErrorNotify(error.message);
+        return null;
+    };
+
+    static editStockUnit = async (props: { name: string; id: string }): Promise<IStockUnitData> => {
+        const { name, id } = props;
+        const { data, status, error } = await requests.catalogue.stockUnitRequest.editStockUnit({
+            name,
+            id,
+        });
+        if (status) {
+            return data;
+        }
+        StockUnitSliderService.showGeneralErrorNotify(error.message);
+        return null;
     };
 }

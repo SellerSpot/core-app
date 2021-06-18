@@ -8,7 +8,7 @@ export interface IStockUnitSliderState {
 }
 export interface IStockUnitSliderProps {
     sliderState: State<IStockUnitSliderState>;
-    getAllStockUnits: () => Promise<void>;
+    getAllStockUnit: () => Promise<void>;
 }
 
 export interface IStockUnitSliderForm {

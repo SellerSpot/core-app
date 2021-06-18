@@ -4,7 +4,7 @@ import { IBrandData } from '@sellerspot/universal-types';
 export interface IBrandSliderState {
     showSliderModal: boolean;
     isEditMode: boolean;
-    prefillBrandData: IBrandData;
+    prefillData: IBrandData;
 }
 export interface IBrandSliderProps {
     sliderState: State<IBrandSliderState>;

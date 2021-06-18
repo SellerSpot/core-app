@@ -38,9 +38,9 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
             fullWidth
             size="medium"
             theme={specialInputFieldProps.theme}
-            label="Brand Name"
+            label="Stock Unit Name"
             helperMessage={helperMessage}
-            placeHolder="Brand Name"
+            placeHolder="Stock Unit Name"
         />
     );
 };

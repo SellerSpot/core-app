@@ -1,6 +1,6 @@
 import { State } from '@hookstate/core';
 import { ITableProps, TTableCellCustomRenderer } from '@sellerspot/universal-components';
-import { IProductData } from 'requests/Catalogue/CatalogueServer';
+import { IProductData } from 'requests/Catalogue/Server';
 import { IProductPageState } from '../../Product.types';
 
 export class ProductTableService {

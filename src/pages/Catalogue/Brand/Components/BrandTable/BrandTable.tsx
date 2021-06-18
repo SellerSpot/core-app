@@ -39,7 +39,7 @@ const DialogComponent = (props: {
         // compute
         if (result) {
             getAllBrand();
-            showNotify(`${dialogState.brandName.get()} brand deleted successfully!`, {
+            showNotify(`'${dialogState.brandName.get()}' brand deleted successfully!`, {
                 theme: 'success',
             });
         }
@@ -54,7 +54,7 @@ const DialogComponent = (props: {
             <DialogLayoutWrapper>
                 <DialogHeader title={'Are you sure?'} />
                 <DialogBody>
-                    <Alert type="error">{`This action will delete brand ${dialogState.brandName.get()}`}</Alert>
+                    <Alert type="error">{`This action will delete brand '${dialogState.brandName.get()}'`}</Alert>
                 </DialogBody>
                 <DialogFooter>
                     <Button
@@ -106,7 +106,7 @@ export const BrandTable = (props: {
     const editItemClickHandler = (brandData: IBrandData) => async () => {
         // state update
         pageState.slider.merge({
-            prefillBrandData: brandData,
+            prefillData: brandData,
             showSliderModal: true,
             isEditMode: true,
         });

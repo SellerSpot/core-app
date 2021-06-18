@@ -1,3 +1,5 @@
-import CatalogueBrandRequest from './CatalogueBrandRequest';
+import BrandRequest from './BrandRequest';
+import StockUnitRequest from './StockUnitRequest';
 
-export const brandRequest = new CatalogueBrandRequest();
+export const brandRequest = new BrandRequest();
+export const stockUnitRequest = new StockUnitRequest();

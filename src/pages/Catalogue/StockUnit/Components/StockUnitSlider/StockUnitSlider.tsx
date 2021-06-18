@@ -4,15 +4,16 @@ import {
     Button,
     Dialog,
     DialogBody,
+    SliderModal,
     DialogFooter,
     DialogHeader,
     DialogLayoutWrapper,
-    SliderModal,
     SliderModalLayoutWrapper,
+    showNotify,
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import styles from './BrandSlider.module.scss';
+import styles from './StockUnitSlider.module.scss';
 import ModalBody from './Components/ModalBody/ModalBody';
 import ModalFooter from './Components/ModalFooter/ModalFooter';
 import ModalHeader from './Components/ModalHeader/ModalHeader';
@@ -21,6 +22,7 @@ import {
     IStockUnitSliderProps,
     IStockUnitSliderState,
 } from './StockUnitSlider.types';
+import { StockUnitSliderService } from './StockUnitSlider.service';
 
 const DialogComponent = (props: {
     showDialog: State<boolean>;
@@ -66,7 +68,7 @@ const DialogComponent = (props: {
 
 export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderState, getAllStockUnit } = props;
 
     // state
     const formDirty = useState(false);
@@ -85,49 +87,48 @@ export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
             sliderState.showSliderModal.set(false);
         }
     };
-    const createNewBrand = async (values: IStockUnitSliderForm) => {
-        console.log(values);
-        // const newBrandData = await StockUnitSliderService.createNewBrand(values);
-        // // if new brand has been created, update
-        // if (!!newBrandData) {
-        //     // calling notify
-        //     showNotify(`${newBrandData.name} brand created successfully!`, {
-        //         theme: 'success',
-        //     });
-        //     await getAllBrand();
-        //     // closing sliderModal
-        //     sliderState.showSliderModal.set(false);
-        // }
+    const createNewStockUnit = async (values: IStockUnitSliderForm) => {
+        const newStockUnitData = await StockUnitSliderService.createNewStockUnit(values);
+        // if new StockUnit has been created, update
+        if (!!newStockUnitData) {
+            // calling notify
+            showNotify(`'${newStockUnitData.name}' stock unit created successfully!`, {
+                theme: 'success',
+            });
+            await getAllStockUnit();
+            // closing sliderModal
+            sliderState.showSliderModal.set(false);
+        }
     };
-    const editExistingBrand = async (values: IStockUnitSliderForm) => {
+    const editExistingStockUnit = async (values: IStockUnitSliderForm) => {
         // props
-        const {} = values;
+        const { name } = values;
         // request
-        // const editedBrandData = await StockUnitSliderService.editBrand({
-        //     id: sliderState.prefillBrandData?.get().id,
-        //     name,
-        // });
-        // // if brand has been edited
-        // if (!!editedBrandData) {
-        //     // calling notify
-        //     showNotify(
-        //         `${sliderState.prefillBrandData?.get().name} brand edited to ${
-        //             editedBrandData.name
-        //         } successfully!`,
-        //         {
-        //             theme: 'success',
-        //         },
-        //     );
-        //     await getAllBrand();
-        //     // closing sliderModal
-        //     sliderState.showSliderModal.set(false);
-        // }
+        const editedStockUnitData = await StockUnitSliderService.editStockUnit({
+            id: sliderState.prefillData?.get().id,
+            name,
+        });
+        // if StockUnit has been edited
+        if (!!editedStockUnitData) {
+            // calling notify
+            showNotify(
+                `'${sliderState.prefillData?.get().name}' stock unit edited to ${
+                    editedStockUnitData.name
+                } successfully!`,
+                {
+                    theme: 'success',
+                },
+            );
+            await getAllStockUnit();
+            // closing sliderModal
+            sliderState.showSliderModal.set(false);
+        }
     };
     const onSubmit = async (values: IStockUnitSliderForm) => {
         if (sliderState.isEditMode.get()) {
-            await editExistingBrand(values);
+            await editExistingStockUnit(values);
         } else {
-            await createNewBrand(values);
+            await createNewStockUnit(values);
         }
     };
     // draw
