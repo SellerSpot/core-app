@@ -35,10 +35,12 @@ interface ICatalogueServerDBState {
 }
 // server interface
 interface ICatalogueServer {
+    // brand methods
     getAllBrand: () => Promise<IGetAllBrandResponse>;
     createNewBrand: (data: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
     deleteBrand: (id: string) => Promise<IDeleteBrandResponse>;
-    editBrand: (data: IEditBrandRequest) => Promise<IEditBrandResponse>;
+    editBrand: (data: IEditBrandRequest & { id: string }) => Promise<IEditBrandResponse>;
+    // stockUnit methods
 }
 
 // db state

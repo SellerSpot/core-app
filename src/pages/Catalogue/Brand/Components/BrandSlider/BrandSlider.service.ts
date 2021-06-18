@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import {
     IBrandData,
     ICreateBrandRequest,
-    IEditBrandRequest,
 } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { IBrandSliderForm } from './BrandSlider.types';
 
@@ -86,7 +85,7 @@ export class BrandSliderService {
 
     static editBrand = async (props: { name: string; id: string }): Promise<IBrandData> => {
         const { name, id } = props;
-        const requestData: IEditBrandRequest = {
+        const requestData = {
             name,
             id,
         };
