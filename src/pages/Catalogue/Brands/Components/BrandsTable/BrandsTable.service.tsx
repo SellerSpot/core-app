@@ -1,4 +1,5 @@
 import {
+    Button,
     IconButton,
     ITableProps,
     ToolTip,
@@ -65,6 +66,26 @@ export class BrandsTableService {
                 </div>
             );
         };
+        const EmptyStatePrimaryCallToAction = () => {
+            // handlers
+            const handleOnClick = () => {
+                pageState.slider.merge({
+                    isEditMode: false,
+                    prefillBrandsData: null,
+                    showSliderModal: true,
+                });
+            };
+
+            return (
+                <Button
+                    label="New Brand"
+                    theme="primary"
+                    onClick={handleOnClick}
+                    variant="contained"
+                    startIcon={<Icon icon={ICONS.outlineAdd} />}
+                />
+            );
+        };
 
         // return
         return {
@@ -88,6 +109,8 @@ export class BrandsTableService {
                     customRenderer: actionsCustomRenderer,
                 },
             ],
+            emptyStateMessage: 'You have not added any brands yet',
+            emptyStatePrimaryCallToAction: <EmptyStatePrimaryCallToAction />,
         };
     };
 
