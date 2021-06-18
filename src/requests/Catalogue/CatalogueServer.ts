@@ -6,6 +6,9 @@ import {
     ICategoryData,
     ICreateBrandRequest,
     ICreateBrandResponse,
+    IDeleteBrandResponse,
+    IEditBrandRequest,
+    IEditBrandResponse,
     IGetAllBrandResponse,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
@@ -33,7 +36,9 @@ interface ICatalogueServerDBState {
 // server interface
 interface ICatalogueServer {
     getAllBrands: () => Promise<IGetAllBrandResponse>;
-    createNewBrand: (value: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
+    createNewBrand: (data: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
+    deleteBrand: (id: string) => Promise<IDeleteBrandResponse>;
+    editBrand: (data: IEditBrandRequest) => Promise<IEditBrandResponse>;
 }
 
 // db state
@@ -50,14 +55,14 @@ catalogueDBState.attach(Persistence('catalogueDB'));
 
 // server
 const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatalogueServer => ({
-    getAllBrands: async (): Promise<IGetAllBrandResponse> => {
+    getAllBrands: async () => {
         await introduceDelay(2000);
         return {
             status: true,
             data: state.brands.value,
         };
     },
-    createNewBrand: async (data: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
+    createNewBrand: async (data) => {
         await introduceDelay(2000);
         const newBrand: IBrandData = {
             id: generateRandomString(),
@@ -69,6 +74,36 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         });
         return {
             data: newBrand,
+            status: true,
+        };
+    },
+    deleteBrand: async (id) => {
+        await introduceDelay(2000);
+        let dataToDelete: IBrandData = null;
+        state.brands.set((state) => {
+            const requiredIndex = state.findIndex((brand) => brand.id === id);
+            dataToDelete = state[requiredIndex];
+            state.splice(requiredIndex, 1);
+            console.log(state);
+            return state;
+        });
+        return {
+            data: dataToDelete,
+            status: true,
+        };
+    },
+    editBrand: async (data) => {
+        await introduceDelay(2000);
+        const { name, id } = data;
+        let updatedData: IBrandData = null;
+        state.brands.set((state) => {
+            const requiredIndex = state.findIndex((brand) => brand.id === id);
+            state[requiredIndex].name = name;
+            updatedData = state[requiredIndex];
+            return state;
+        });
+        return {
+            data: updatedData,
             status: true,
         };
     },

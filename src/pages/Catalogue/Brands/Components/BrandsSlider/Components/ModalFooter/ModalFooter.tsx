@@ -6,22 +6,41 @@ import { FormSpy } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
 import { IBrandSliderState } from '../../BrandsSlider.types';
 
-const ModalFooter = (props: { sliderState: State<IBrandSliderState> }): ReactElement => {
+const ModalFooter = (props: {
+    sliderState: State<IBrandSliderState>;
+    formDirty: State<boolean>;
+    showDialog: State<boolean>;
+}): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderState, formDirty, showDialog } = props;
 
     // compute
-    let primaryButtonTitle = 'SAVE CHANGES';
-    let primaryButtonIcon = ICONS.check;
+    let primaryButtonTitle = 'CREATE';
+    let primaryButtonIcon = ICONS.outlineAdd;
+
     if (sliderState.isEditMode.get()) {
-        primaryButtonTitle = 'CREATE';
-        primaryButtonIcon = ICONS.outlineAdd;
+        primaryButtonTitle = 'SAVE CHANGES';
+        primaryButtonIcon = ICONS.check;
     }
+
+    // handlers
+    const handleSecondaryButtonOnClick = () => {
+        if (formDirty.get()) {
+            showDialog.set(true);
+        } else {
+            sliderState.showSliderModal.set(false);
+        }
+    };
 
     // draw
     return (
         <SliderModalFooter>
-            <Button label="CANCEL" theme="danger" variant="outlined" />
+            <Button
+                label="CANCEL"
+                theme="danger"
+                variant="outlined"
+                onClick={handleSecondaryButtonOnClick}
+            />
             <FormSpy subscription={{ submitting: true }}>
                 {({ submitting }) => {
                     return (

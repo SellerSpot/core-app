@@ -18,7 +18,11 @@ const PageHeaderComponent = (props: { pageState: State<IBrandsPageState> }) => {
     const NewBrandButton = () => {
         // handlers
         const onClickHandler: TButtonOnClickHandler = () => {
-            pageState.slider.showSliderModal.set(true);
+            pageState.slider.merge({
+                isEditMode: false,
+                prefillBrandsData: null,
+                showSliderModal: true,
+            });
         };
 
         // draw
@@ -43,6 +47,7 @@ export const Brands = (): ReactElement => {
         brands: [],
         isBrandsTableLoading: false,
         slider: {
+            prefillBrandsData: null,
             showSliderModal: false,
             isEditMode: false,
         },
@@ -67,7 +72,7 @@ export const Brands = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
-            <BrandsTable pageState={pageState} />
+            <BrandsTable pageState={pageState} getAllBrands={getAllBrands} />
             <BrandsSlider sliderState={pageState.slider} getAllBrands={getAllBrands} />
         </div>
     );

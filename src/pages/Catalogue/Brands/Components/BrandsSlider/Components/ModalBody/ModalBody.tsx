@@ -30,7 +30,7 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     return (
         <InputField
             {...input}
-            value={value.name}
+            value={value}
             type="text"
             disabled={submitting}
             name={undefined}

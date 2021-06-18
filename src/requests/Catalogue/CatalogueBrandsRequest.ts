@@ -1,6 +1,9 @@
 import {
     ICreateBrandRequest,
     ICreateBrandResponse,
+    IDeleteBrandResponse,
+    IEditBrandRequest,
+    IEditBrandResponse,
     IGetAllBrandResponse,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
@@ -17,5 +20,12 @@ export default class CatalogueBrandsRequest extends BaseRequest {
 
     createNewBrand = async (values: ICreateBrandRequest): Promise<ICreateBrandResponse> => {
         return await accessCatalogueServer().createNewBrand(values);
+    };
+
+    deleteBrand = async (brandId: string): Promise<IDeleteBrandResponse> => {
+        return await accessCatalogueServer().deleteBrand(brandId);
+    };
+    editBrand = async (data: IEditBrandRequest): Promise<IEditBrandResponse> => {
+        return await accessCatalogueServer().editBrand(data);
     };
 }

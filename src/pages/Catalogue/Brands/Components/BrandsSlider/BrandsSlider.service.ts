@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import {
     IBrandData,
     ICreateBrandRequest,
+    IEditBrandRequest,
 } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { IBrandsSliderForm } from './BrandsSlider.types';
 
@@ -22,7 +23,7 @@ export class BrandsSliderService {
 
     static validateField =
         (fieldName: keyof IBrandsSliderForm) =>
-        (values: IBrandsSliderForm): string => {
+        (values: IBrandsSliderForm['name']): string => {
             const requiredSchema: yup.SchemaOf<IBrandsSliderForm['name']> = yup.reach(
                 BrandsSliderService.validationSchema,
                 fieldName,
@@ -38,7 +39,7 @@ export class BrandsSliderService {
         };
 
     static getSpecialInputFieldProps = (
-        meta: FieldMetaState<IBrandsSliderForm>,
+        meta: FieldMetaState<IBrandsSliderForm['name']>,
     ): IInputFieldProps['helperMessage'] & {
         theme: IInputFieldProps['theme'];
     } => {
@@ -74,6 +75,22 @@ export class BrandsSliderService {
             name,
         };
         const { data, status, error } = await requests.catalogue.brandRequest.createNewBrand(
+            requestData,
+        );
+        if (status) {
+            return data;
+        }
+        BrandsSliderService.showGeneralErrorNotify(error.message);
+        return null;
+    };
+
+    static editBrand = async (props: { name: string; id: string }): Promise<IBrandData> => {
+        const { name, id } = props;
+        const requestData: IEditBrandRequest = {
+            name,
+            id,
+        };
+        const { data, status, error } = await requests.catalogue.brandRequest.editBrand(
             requestData,
         );
         if (status) {
