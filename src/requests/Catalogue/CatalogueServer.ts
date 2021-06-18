@@ -35,7 +35,7 @@ interface ICatalogueServerDBState {
 }
 // server interface
 interface ICatalogueServer {
-    getAllBrands: () => Promise<IGetAllBrandResponse>;
+    getAllBrand: () => Promise<IGetAllBrandResponse>;
     createNewBrand: (data: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
     deleteBrand: (id: string) => Promise<IDeleteBrandResponse>;
     editBrand: (data: IEditBrandRequest) => Promise<IEditBrandResponse>;
@@ -55,7 +55,7 @@ catalogueDBState.attach(Persistence('catalogueDB'));
 
 // server
 const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatalogueServer => ({
-    getAllBrands: async () => {
+    getAllBrand: async () => {
         await introduceDelay(2000);
         return {
             status: true,

@@ -4,8 +4,8 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { TaxBracketsTable } from './Components/TaxBracketsTable/TaxBracketsTable';
-import { TaxGroupsTable } from './Components/TaxGroupsTable/TaxGroupsTable';
+import { TaxBracketsTable } from './Components/TaxBracketTable/TaxBracketTable';
+import { TaxGroupsTable } from './Components/TaxGroupTable/TaxGroupTable';
 import styles from './TaxSettings.module.scss';
 import { ITaxSettingsState } from './TaxSettings.types';
 

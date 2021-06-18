@@ -1,3 +1,3 @@
-import CatalogueBrandsRequest from './CatalogueBrandsRequest';
+import CatalogueBrandRequest from './CatalogueBrandRequest';
 
-export const brandRequest = new CatalogueBrandsRequest();
+export const brandRequest = new CatalogueBrandRequest();

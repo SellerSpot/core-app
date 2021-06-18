@@ -1,13 +1,13 @@
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
-import { Brands } from 'pages/Catalogue/Brands/Brands';
-import { Products } from 'pages/Catalogue/Products/Products';
+import { Brand } from 'pages/Catalogue/Brand/Brand';
+import { Product } from 'pages/Catalogue/Product/Product';
 import { TaxSettings } from 'pages/Catalogue/TaxSettings/TaxSettings';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
-import { Categories } from '../../pages/Catalogue/Categories/Categories';
-import { StockUnits } from '../../pages/Catalogue/StockUnits/StockUnits';
+import { Category } from '../../pages/Catalogue/Category/Category';
+import { StockUnit } from '../../pages/Catalogue/StockUnit/StockUnit';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
 
 export const Catalogue = (): ReactElement => {
@@ -16,16 +16,16 @@ export const Catalogue = (): ReactElement => {
             <SubMenuManager />
             <Switch>
                 <Route exact path={ROUTES.CATALOGUE__PRODUCTS}>
-                    <Products />
+                    <Product />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__BRANDS}>
-                    <Brands />
+                    <Brand />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__CATEGORIES}>
-                    <Categories />
+                    <Category />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__STOCKUNITS}>
-                    <StockUnits />
+                    <StockUnit />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__TAXSETTINGS}>
                     <TaxSettings />
