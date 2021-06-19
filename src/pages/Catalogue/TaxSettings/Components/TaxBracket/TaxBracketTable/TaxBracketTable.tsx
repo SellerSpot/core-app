@@ -1,7 +1,7 @@
 import { State } from '@hookstate/core';
 import { Table } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ITaxSettingsState } from '../../TaxSettings.types';
+import { ITaxSettingsState } from '../../../TaxSettings.types';
 import { TaxBracketsTableService } from './TaxBracketTable.service';
 
 export const TaxBracketsTable = (props: { pageState: State<ITaxSettingsState> }): ReactElement => {

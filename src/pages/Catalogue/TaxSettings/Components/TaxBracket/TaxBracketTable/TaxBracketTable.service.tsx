@@ -8,31 +8,32 @@ import {
 } from '@sellerspot/universal-components';
 import React from 'react';
 import styles from './TaxBracketTable.module.scss';
-import { ITaxBracket, ITaxSettingsState } from '../../TaxSettings.types';
+import { ITaxSettingsState } from '../../../TaxSettings.types';
 import Icon from '@iconify/react';
 import { ICONS } from 'utilities/utilities';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 
 export class TaxBracketsTableService {
     static getTableProps = (props: {
         pageState: State<ITaxSettingsState>;
-    }): ITableProps<ITaxBracket> => {
+    }): ITableProps<ITaxBracketData> => {
         // props
         const { pageState } = props;
 
         // custom renderes
-        const rateTypeCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
+        const rateTypeCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const {} = props;
             // draw
             return <Chip label="State Tax" />;
         };
-        const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
+        const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
         };
-        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxBracket> = (props) => {
+        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const {} = props;
 
@@ -77,13 +78,7 @@ export class TaxBracketsTableService {
         // draw
         return {
             data: pageState.taxBrackets.get(),
-            // data: [
-            //     {
-            //         name: 'sdfasdfasd',
-            //         rate: 43,
-            //         isStateTax: true,
-            //     },
-            // ],
+            isLoading: pageState.isTaxBracketsTableLoading.get(),
             shape: [
                 {
                     columnName: 'S.No',

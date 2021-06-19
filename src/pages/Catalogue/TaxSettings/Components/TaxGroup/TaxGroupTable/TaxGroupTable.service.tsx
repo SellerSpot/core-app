@@ -11,7 +11,7 @@ import {
 import styles from './TaxGroupTable.module.scss';
 import React from 'react';
 import { ICONS } from 'utilities/utilities';
-import { ITaxBracket, ITaxGroup, ITaxSettingsState } from '../../TaxSettings.types';
+import { ITaxBracket, ITaxGroup, ITaxSettingsState } from '../../../TaxSettings.types';
 
 export class TaxGroupsTableService {
     static getTableProps = (props: {

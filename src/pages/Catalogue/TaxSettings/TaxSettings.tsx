@@ -2,11 +2,14 @@ import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { TaxBracketsTable } from './Components/TaxBracketTable/TaxBracketTable';
-import { TaxGroupsTable } from './Components/TaxGroupTable/TaxGroupTable';
+import { TaxBracketSlider } from './Components/TaxBracket/TaxBracketSlider/TaxBracketSlider';
+import { TaxBracketsTable } from './Components/TaxBracket/TaxBracketTable/TaxBracketTable';
+import { TaxGroupSlider } from './Components/TaxGroup/TaxGroupSlider/TaxGroupSlider';
+import { TaxGroupsTable } from './Components/TaxGroup/TaxGroupTable/TaxGroupTable';
 import styles from './TaxSettings.module.scss';
+import { TaxSettingsService } from './TaxSettings.service';
 import { ITaxSettingsState } from './TaxSettings.types';
 
 const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }) => {
@@ -57,8 +60,28 @@ export const TaxSettings = (): ReactElement => {
     const pageState = useState<ITaxSettingsState>({
         taxBrackets: [],
         taxGroups: [],
-        showSliderModal: false,
+        isTaxBracketsTableLoading: false,
+        taxBracketsSlider: {
+            isEditMode: false,
+            prefillData: null,
+            showSliderModal: false,
+        },
     });
+
+    // handlers
+    const getAllTaxBracket = async (): Promise<void> => {
+        const allTaxBrackets = await TaxSettingsService.getAllTaxBracket();
+        pageState.merge({
+            taxBrackets: allTaxBrackets,
+            isTaxBracketsTableLoading: false,
+        });
+    };
+
+    // effects
+    useEffect(() => {
+        pageState.isTaxBracketsTableLoading.set(true);
+        getAllTaxBracket();
+    }, []);
 
     // draw
     return (
@@ -66,10 +89,15 @@ export const TaxSettings = (): ReactElement => {
             <div className={styles.taxBracketsWrapper}>
                 <UpperPageHeaderComponent pageState={pageState} />
                 <TaxBracketsTable pageState={pageState} />
+                <TaxBracketSlider
+                    sliderState={pageState.taxBracketsSlider}
+                    getAllTaxBracket={getAllTaxBracket}
+                />
             </div>
             <div className={styles.taxGroupsWrapper}>
                 <LowerPageHeaderComponent pageState={pageState} />
                 <TaxGroupsTable pageState={pageState} />
+                <TaxGroupSlider />
             </div>
         </div>
     );
