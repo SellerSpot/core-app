@@ -1,0 +1,22 @@
+.rowActions {
+    width: 100%;
+    @include flex(center, center, $gap: 20px);
+
+    .minActions {
+        @include flex(center, flex-end, $gap: 12px);
+    }
+}
+
+.link {
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 100%;
+    -webkit-box-orient: vertical;
+    color: $primaryDark-color;
+    cursor: pointer;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    &:hover {
+        text-decoration: underline;
+    }
+}
