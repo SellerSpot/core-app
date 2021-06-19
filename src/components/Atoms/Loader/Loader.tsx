@@ -1,11 +1,19 @@
 import React, { ReactElement } from 'react';
+import cn from 'classnames';
 import { AppPreloader, Skeleton } from '@sellerspot/universal-components';
 import styles from './Loader.module.scss';
 import { ILoaderProps } from './Loader.types';
 
 export const Loader = (props: ILoaderProps): ReactElement => {
     // props
-    const { children, isLoading, skeleton, loaderType = 'spinner', message } = props;
+    const {
+        children,
+        isLoading,
+        skeleton,
+        loaderType = 'spinner',
+        message,
+        wrapperDivClassName,
+    } = props;
 
     // draw
     const shimmer = skeleton ?? (
@@ -13,5 +21,13 @@ export const Loader = (props: ILoaderProps): ReactElement => {
     );
     const loader = loaderType === 'spinner' ? <AppPreloader message={message} /> : shimmer;
 
-    return <>{isLoading ? loader : <div className={styles.childrenContent}>{children}</div>}</>; // need to replace with react-group-transition => remove div container, just wrap it with cssTransition
+    return (
+        <>
+            {isLoading ? (
+                <div className={cn(styles.childrenContent, wrapperDivClassName)}>{loader}</div>
+            ) : (
+                <div className={cn(styles.childrenContent, wrapperDivClassName)}>{children}</div>
+            )}
+        </>
+    ); // need to replace with react-group-transition => remove div container, just wrap it with cssTransition
 };

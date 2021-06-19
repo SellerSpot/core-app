@@ -155,13 +155,15 @@ export const ViewPlugin = (): ReactElement => {
                                             onClick={onLaunchClickHandler}
                                             disabled={isUnInstalling.get()}
                                         />
-                                        <Button
-                                            label={unInstallLabel}
-                                            theme="danger"
-                                            variant="text"
-                                            onClick={onUnInstallClickHandler}
-                                            isLoading={isUnInstalling.get()}
-                                        />
+                                        {plugin.value.isVisibleInPluginStore && (
+                                            <Button
+                                                label={unInstallLabel}
+                                                theme="danger"
+                                                variant="text"
+                                                onClick={onUnInstallClickHandler}
+                                                isLoading={isUnInstalling.get()}
+                                            />
+                                        )}
                                     </>
                                 ) : (
                                     <Button
