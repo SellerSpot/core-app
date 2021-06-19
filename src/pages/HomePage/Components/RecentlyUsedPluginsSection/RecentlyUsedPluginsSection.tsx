@@ -62,45 +62,43 @@ export const RecentlyUsedPluginsSection = (): ReactElement => {
                     />,
                 ]}
             />
-            <div className={pluginStoreStyles.cardsWrapper}>
-                <Loader
-                    isLoading={isLoading.get()}
-                    loaderType="shimmer"
-                    skeleton={
-                        <>
-                            {times(3).map((key) => (
-                                <Skeleton
-                                    key={key}
-                                    animation={'wave'}
-                                    height={'300px'}
-                                    width={'300px'}
-                                    variant={'rect'}
-                                />
-                            ))}
-                        </>
-                    }
-                >
-                    {!isLoading.get() &&
-                        tenantDetails?.installedPlugins?.map((plugin, key) => {
-                            const { shortDescription, icon, pluginId, image, name } = plugin.plugin;
-                            return (
-                                <PluginCard
-                                    key={pluginId}
-                                    isInstalled={true}
-                                    image={
-                                        image ||
-                                        PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
-                                    }
-                                    name={name}
-                                    icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
-                                    description={shortDescription}
-                                    installOrLaunchCallBack={launchCallBackHandler(key)}
-                                    exploreCallBack={exploreCallBackHandler(key)}
-                                />
-                            );
-                        })}
-                </Loader>
-            </div>
+            <Loader
+                isLoading={isLoading.get()}
+                loaderType="shimmer"
+                wrapperDivClassName={pluginStoreStyles.cardsWrapper}
+                skeleton={
+                    <>
+                        {times(3).map((key) => (
+                            <Skeleton
+                                key={key}
+                                animation={'wave'}
+                                height={'300px'}
+                                width={'300px'}
+                                variant={'rect'}
+                            />
+                        ))}
+                    </>
+                }
+            >
+                {!isLoading.get() &&
+                    tenantDetails?.installedPlugins?.map((plugin, key) => {
+                        const { shortDescription, icon, pluginId, image, name } = plugin.plugin;
+                        return (
+                            <PluginCard
+                                key={pluginId}
+                                isInstalled={true}
+                                image={
+                                    image || PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
+                                }
+                                name={name}
+                                icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
+                                description={shortDescription}
+                                installOrLaunchCallBack={launchCallBackHandler(key)}
+                                exploreCallBack={exploreCallBackHandler(key)}
+                            />
+                        );
+                    })}
+            </Loader>
         </div>
     );
 };

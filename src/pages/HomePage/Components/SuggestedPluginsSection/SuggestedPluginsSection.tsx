@@ -80,51 +80,49 @@ export const SuggestedPluginsSection = (): ReactElement => {
                     />,
                 ]}
             />
-            <div className={pluginStoreStyles.cardsWrapper}>
-                <Loader
-                    isLoading={isLoading.get()}
-                    loaderType="shimmer"
-                    skeleton={
-                        <>
-                            {times(3).map((key) => (
-                                <Skeleton
-                                    key={key}
-                                    animation={'wave'}
-                                    height={'300px'}
-                                    width={'300px'}
-                                    variant={'rect'}
-                                />
-                            ))}
-                        </>
-                    }
-                >
-                    {!isLoading.get() &&
-                        plugins.map((plugin, key) => {
-                            const { shortDescription, icon, pluginId, image, name } = plugin.get();
-                            const isInstalled = tenantDetails?.installedPlugins?.some(
-                                (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
-                            );
-                            return (
-                                <PluginCard
-                                    key={pluginId}
-                                    isInstalled={isInstalled}
-                                    image={
-                                        image ||
-                                        PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
-                                    }
-                                    name={name}
-                                    icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
-                                    description={shortDescription}
-                                    installOrLaunchCallBack={installOrLaunchCallBackHandler(
-                                        key,
-                                        isInstalled,
-                                    )}
-                                    exploreCallBack={exploreCallBackHandler(key)}
-                                />
-                            );
-                        })}
-                </Loader>
-            </div>
+            <Loader
+                wrapperDivClassName={pluginStoreStyles.cardsWrapper}
+                isLoading={isLoading.get()}
+                loaderType="shimmer"
+                skeleton={
+                    <>
+                        {times(3).map((key) => (
+                            <Skeleton
+                                key={key}
+                                animation={'wave'}
+                                height={'300px'}
+                                width={'300px'}
+                                variant={'rect'}
+                            />
+                        ))}
+                    </>
+                }
+            >
+                {!isLoading.get() &&
+                    plugins.map((plugin, key) => {
+                        const { shortDescription, icon, pluginId, image, name } = plugin.get();
+                        const isInstalled = tenantDetails?.installedPlugins?.some(
+                            (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
+                        );
+                        return (
+                            <PluginCard
+                                key={pluginId}
+                                isInstalled={isInstalled}
+                                image={
+                                    image || PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
+                                }
+                                name={name}
+                                icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
+                                description={shortDescription}
+                                installOrLaunchCallBack={installOrLaunchCallBackHandler(
+                                    key,
+                                    isInstalled,
+                                )}
+                                exploreCallBack={exploreCallBackHandler(key)}
+                            />
+                        );
+                    })}
+            </Loader>
         </div>
     );
 };

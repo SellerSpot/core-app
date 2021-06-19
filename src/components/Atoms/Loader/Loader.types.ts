@@ -6,4 +6,5 @@ export interface ILoaderProps {
     skeleton?: ReactElement;
     children?: ReactElement | ReactElement[] | string | number;
     message?: string;
+    wrapperDivClassName?: string;
 }
