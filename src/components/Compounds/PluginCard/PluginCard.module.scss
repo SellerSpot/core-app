@@ -1,12 +1,19 @@
 .card {
     width: 300px;
     height: auto;
+    cursor: pointer;
 
     .mediaWrapper {
-        height: 160px;
+        // height: 160px;
+        transition: transform 200ms ease;
+    }
+
+    &:hover > .mediaWrapper {
+        transform: scale(0.9);
     }
 
     .contentWrapper {
+        min-height: 70px;
         padding-top: 10px;
         padding-bottom: 0;
         .content {

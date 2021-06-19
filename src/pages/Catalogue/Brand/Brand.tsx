@@ -1,6 +1,6 @@
 import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
-import { Button, TButtonOnClickHandler } from '@sellerspot/universal-components';
+import { Button, TOnNodeClickHandler } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
@@ -17,7 +17,7 @@ const PageHeaderComponent = (props: { pageState: State<IBrandPageState> }) => {
     // components
     const NewBrandButton = () => {
         // handlers
-        const onClickHandler: TButtonOnClickHandler = () => {
+        const onClickHandler: TOnNodeClickHandler<HTMLButtonElement> = () => {
             pageState.slider.merge({
                 isEditMode: false,
                 prefillData: null,

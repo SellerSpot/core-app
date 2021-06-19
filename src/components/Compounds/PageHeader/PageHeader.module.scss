@@ -1,9 +1,16 @@
 .wrapper {
+    display: grid;
     width: 100%;
 
-    @include flex(center, space-between);
+    align-items: center;
+    gap: 10px;
+    grid-template-columns: auto 1fr;
 
-    .headerActions {
-        @include flex(flex-end, flex-end, $gap: 10px);
+    .actionsWrapper {
+        @include flex(center, space-between);
+
+        .actions {
+            @include flex(flex-start, center, $gap: 10px);
+        }
     }
 }

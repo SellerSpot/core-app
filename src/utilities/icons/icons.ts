@@ -4,3 +4,4 @@ export * from './codicon';
 export * from './ri';
 export * from './bx';
 export * from './carbon';
+export * from './plugins';

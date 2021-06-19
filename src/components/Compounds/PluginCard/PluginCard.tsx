@@ -2,7 +2,7 @@ import { ICONS } from 'utilities/utilities';
 import { themeSelector } from 'store/models/theme';
 import { useSelector } from 'react-redux';
 import React, { ReactElement } from 'react';
-import { Button, Card } from '@sellerspot/universal-components';
+import { Button, Card, TOnNodeClickHandler } from '@sellerspot/universal-components';
 import { IPluginCardProps } from './PluginCard.types';
 import { Icon } from '@iconify/react';
 
@@ -10,7 +10,10 @@ import styles from './PluginCard.module.scss';
 import { colorThemes } from '@sellerspot/universal-components';
 
 const PluginCard = (props: IPluginCardProps): ReactElement => {
+    // hooks
     const themeState = useSelector(themeSelector);
+
+    // props
     const {
         image,
         isInstalled,
@@ -20,6 +23,18 @@ const PluginCard = (props: IPluginCardProps): ReactElement => {
         installOrLaunchCallBack,
         exploreCallBack,
     } = props;
+
+    const onButtonClickHandler =
+        (type: 'explore' | 'install'): TOnNodeClickHandler<HTMLButtonElement> =>
+        (e) => {
+            e.stopPropagation();
+            if (type === 'explore') {
+                exploreCallBack?.(e);
+                return;
+            }
+            installOrLaunchCallBack?.(e);
+        };
+
     return (
         <Card
             className={{
@@ -29,6 +44,7 @@ const PluginCard = (props: IPluginCardProps): ReactElement => {
                 actionsWrapper: styles.actionWrapper,
             }}
             image={image}
+            onClick={exploreCallBack}
             content={
                 <div className={styles.content}>
                     <div className={styles.pluginTitle}>
@@ -41,10 +57,10 @@ const PluginCard = (props: IPluginCardProps): ReactElement => {
             actions={
                 <div className={styles.pluginActions}>
                     <Button
-                        onClick={exploreCallBack}
+                        onClick={onButtonClickHandler('explore')}
                         size="small"
                         theme="accent"
-                        label={'Explore'}
+                        label="Explore"
                         variant="text"
                     />
                     <div className={styles.pluginActionsRHSSection}>
@@ -67,7 +83,7 @@ const PluginCard = (props: IPluginCardProps): ReactElement => {
                                     <Icon icon={ICONS.outlineFileDownload} />
                                 )
                             }
-                            onClick={installOrLaunchCallBack}
+                            onClick={onButtonClickHandler('install')}
                         />
                     </div>
                 </div>

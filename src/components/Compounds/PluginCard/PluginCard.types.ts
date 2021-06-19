@@ -1,4 +1,5 @@
 import { IconifyIcon } from '@iconify/react';
+import { TOnNodeClickHandler } from '@sellerspot/universal-components/dist';
 
 export interface IPluginCardProps {
     isInstalled: boolean;
@@ -9,9 +10,9 @@ export interface IPluginCardProps {
     /**
      * Callback for the install or launch action
      */
-    installOrLaunchCallBack: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    installOrLaunchCallBack: TOnNodeClickHandler<HTMLButtonElement>;
     /**
      * Callback for the explore action
      */
-    exploreCallBack: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    exploreCallBack: TOnNodeClickHandler<HTMLDivElement | HTMLButtonElement>;
 }
