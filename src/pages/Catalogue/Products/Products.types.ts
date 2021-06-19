@@ -1,12 +1,7 @@
-import { IBrandData, ICategoryData } from '@sellerspot/universal-types';
-
-export interface IProduct {
-    name: string;
-    barcode: string;
-    brand: IBrandData;
-    category: ICategoryData;
-}
+import { IProductData } from 'requests/Catalogue/CatalogueServer';
+import { IProductSliderState } from './Components/ProductSlider/ProductSlider.types';
 
 export interface IProductsPageState {
-    products: IProduct[];
+    products: IProductData[];
+    slider: IProductSliderState;
 }

@@ -9,11 +9,18 @@ import styles from './BrandsTable.module.scss';
 import { IBrandsPageState } from '../../Brands.types';
 import Icon from '@iconify/react';
 import { ICONS } from 'utilities/utilities';
+import { State } from '@hookstate/core';
+import { IBrandData } from '@sellerspot/universal-types';
+import { requests } from 'requests/requests';
 
 export class BrandsTableService {
-    static getTableProps = (
-        brands: IBrandsPageState['brands'],
-    ): ITableProps<IBrandsPageState['brands'][0]> => {
+    static getTableProps = (props: {
+        pageState: State<IBrandsPageState>;
+        deleteItemClickHandler: (brandData: IBrandData) => () => Promise<void>;
+        editItemClickHandler: (brandData: IBrandData) => () => Promise<void>;
+    }): ITableProps<IBrandsPageState['brands'][0]> => {
+        // props
+        const { pageState, deleteItemClickHandler, editItemClickHandler } = props;
         // custom renderers
         const snoCustomRenderer: TTableCellCustomRenderer<IBrandsPageState['brands'][0]> = (
             props,
@@ -27,15 +34,7 @@ export class BrandsTableService {
             props,
         ) => {
             // props
-            const {} = props;
-
-            // handlers
-            const editItemClickHandler = () => {
-                console.log('Edit Item Clicked');
-            };
-            const deleteItemClickHandler = () => {
-                console.log('Delete Item Clicked');
-            };
+            const { rowData } = props;
 
             // draw
             return (
@@ -48,7 +47,7 @@ export class BrandsTableService {
                                     icon={<Icon icon={ICONS.baselineEdit} />}
                                     size="small"
                                     theme="primary"
-                                    onClick={editItemClickHandler}
+                                    onClick={editItemClickHandler(rowData)}
                                 />
                             </div>
                         </ToolTip>
@@ -58,7 +57,7 @@ export class BrandsTableService {
                                     icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                                     size="small"
                                     theme="danger"
-                                    onClick={deleteItemClickHandler}
+                                    onClick={deleteItemClickHandler(rowData)}
                                 />
                             </div>
                         </ToolTip>
@@ -69,7 +68,8 @@ export class BrandsTableService {
 
         // return
         return {
-            data: brands,
+            data: pageState.brands.get(),
+            isLoading: pageState.isBrandsTableLoading.get(),
             shape: [
                 {
                     columnName: 'Sno',
@@ -80,15 +80,19 @@ export class BrandsTableService {
                 {
                     dataKey: 'name',
                     columnName: 'Brand Name',
-                    width: '65%',
                 },
                 {
                     columnName: 'Actions',
                     align: 'center',
-                    width: '30%',
+                    width: '198px',
                     customRenderer: actionsCustomRenderer,
                 },
             ],
         };
+    };
+
+    static deleteBrand = async (brandId: string): Promise<boolean> => {
+        const { status } = await requests.catalogue.brandRequest.deleteBrand(brandId);
+        return status;
     };
 }
