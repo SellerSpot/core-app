@@ -12,7 +12,7 @@ export default class SettingsRequest extends BaseRequest {
     async deleteStore(): Promise<IResponse> {
         return await this.request({
             method: 'DELETE',
-            url: ROUTES.CORE.DELETE_TENANT,
+            url: ROUTES.CORE.TENANT.DELETE_TENANT,
         });
     }
 }

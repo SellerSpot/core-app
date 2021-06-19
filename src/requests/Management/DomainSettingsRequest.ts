@@ -14,14 +14,14 @@ export default class DomainSettingsRequest extends BaseRequest {
 
     async checkDomainAvailability(domainName: string): Promise<ICheckDomainAvailabilityResponse> {
         return await this.request({
-            url: `${ROUTES.AUTH.CHECK_DOMAIN_AVAILABILITY}?domain=${domainName}`,
+            url: `${ROUTES.AUTH.DOMAIN.CHECK_DOMAIN_AVAILABILITY}?domain=${domainName}`,
             method: 'GET',
         });
     }
 
     async updateDomain(domain: string): Promise<IDomainUpdateResponse> {
         return <IDomainUpdateResponse>await this.request({
-            url: `${ROUTES.CORE.UPDATE_DOMAIN}`,
+            url: `${ROUTES.CORE.DOMAIN.UPDATE_DOMAIN}`,
             method: 'PUT',
             payload: <IDomainUpdateRequest>{ domain },
             service: 'CORE',
