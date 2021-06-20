@@ -216,7 +216,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
             name: data.name,
             rate: data.rate,
         };
-        state.brands.set((state) => {
+        state.taxBrackets.set((state) => {
             state.unshift(newTaxBracket);
             return state;
         });

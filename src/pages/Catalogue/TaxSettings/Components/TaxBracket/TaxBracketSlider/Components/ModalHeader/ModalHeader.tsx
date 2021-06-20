@@ -12,7 +12,9 @@ const ModalHeader = (props: {
     const { sliderState, formDirty, showDialog } = props;
 
     // compute
-    const modalTitle = sliderState.isEditMode.get() ? 'Edit stock unit' : 'Create a new stock unit';
+    const modalTitle = sliderState.isEditMode.get()
+        ? 'Edit tax bracket'
+        : 'Create a new tax bracket';
     // handlers
     const modalCloseCallback = () => {
         if (formDirty.get()) {

@@ -14,14 +14,24 @@ import { ITaxSettingsState } from './TaxSettings.types';
 
 const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }) => {
     // props
-    const {} = props;
+    const { pageState } = props;
     // components
     const NewTaxBracketButton = () => {
+        // handlers
+        const handleOnClick = () => {
+            pageState.taxBracketSlider.merge({
+                isEditMode: false,
+                prefillData: null,
+                showSliderModal: true,
+            });
+        };
+        // draw
         return (
             <Button
                 label="NEW TAX BRACKET"
                 theme="primary"
                 variant="contained"
+                onClick={handleOnClick}
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
             />
         );
@@ -60,8 +70,8 @@ export const TaxSettings = (): ReactElement => {
     const pageState = useState<ITaxSettingsState>({
         taxBrackets: [],
         taxGroups: [],
-        isTaxBracketsTableLoading: false,
-        taxBracketsSlider: {
+        isTaxBracketTableLoading: false,
+        taxBracketSlider: {
             isEditMode: false,
             prefillData: null,
             showSliderModal: false,
@@ -73,13 +83,13 @@ export const TaxSettings = (): ReactElement => {
         const allTaxBrackets = await TaxSettingsService.getAllTaxBracket();
         pageState.merge({
             taxBrackets: allTaxBrackets,
-            isTaxBracketsTableLoading: false,
+            isTaxBracketTableLoading: false,
         });
     };
 
     // effects
     useEffect(() => {
-        pageState.isTaxBracketsTableLoading.set(true);
+        pageState.isTaxBracketTableLoading.set(true);
         getAllTaxBracket();
     }, []);
 
@@ -90,7 +100,7 @@ export const TaxSettings = (): ReactElement => {
                 <UpperPageHeaderComponent pageState={pageState} />
                 <TaxBracketsTable pageState={pageState} />
                 <TaxBracketSlider
-                    sliderState={pageState.taxBracketsSlider}
+                    sliderState={pageState.taxBracketSlider}
                     getAllTaxBracket={getAllTaxBracket}
                 />
             </div>

@@ -1,16 +1,23 @@
 .wrapper {
     display: grid;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     gap: 10px;
-    grid-template-rows: 2fr 3fr;
+    grid-template-rows: 45% 55%;
 
     .taxBracketsWrapper {
         display: grid;
         width: 100%;
         height: 100%;
+
         gap: 10px;
         grid-template-rows: 36px 1fr;
+
+        .taxBracketsTableWrapper {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .taxGroupsWrapper {

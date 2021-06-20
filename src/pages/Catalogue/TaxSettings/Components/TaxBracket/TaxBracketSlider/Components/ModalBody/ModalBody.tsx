@@ -70,9 +70,11 @@ const TaxBracketRateField = (props: { submitting: boolean }) => {
         <InputField
             {...input}
             value={value as string}
-            type="text"
+            type="number"
             disabled={submitting}
             name={undefined}
+            maxNumericValue={100}
+            minNumericValue={0}
             fullWidth
             size="medium"
             theme={specialInputFieldProps.theme}

@@ -14,13 +14,13 @@ export const SubMenuManager = (): ReactElement => {
         },
         {
             icon: ICONS.alphaBCircleOutline,
-            title: 'Brand',
+            title: 'Brands',
             routeKey: 'CATALOGUE__BRANDS',
             redirectRoute: ROUTES.CATALOGUE__BRANDS,
         },
         {
             icon: ICONS.bxCategoryAlt,
-            title: 'Category',
+            title: 'Categories',
             routeKey: 'CATALOGUE__CATEGORIES',
             redirectRoute: ROUTES.CATALOGUE__CATEGORIES,
         },

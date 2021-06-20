@@ -15,7 +15,7 @@ const ModalFooter = (props: {
     const { sliderState, formDirty, showDialog } = props;
 
     // compute
-    let primaryButtonTitle = 'CREATE STOCK UNIT';
+    let primaryButtonTitle = 'CREATE TAX BRACKET';
     let primaryButtonIcon = ICONS.outlineAdd;
 
     if (sliderState.isEditMode.get()) {

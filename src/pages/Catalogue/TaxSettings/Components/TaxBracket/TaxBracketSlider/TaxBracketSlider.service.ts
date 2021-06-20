@@ -39,6 +39,17 @@ export class TaxBracketSliderService {
             }
         };
 
+    static validateForm = (values: ITaxBracketSliderForm): string => {
+        try {
+            TaxBracketSliderService.validationSchema.validateSync(values);
+            return null;
+        } catch (e) {
+            if (e instanceof yup.ValidationError) {
+                return e.message;
+            }
+        }
+    };
+
     static getSpecialInputFieldProps = (
         meta: FieldMetaState<ITaxBracketSliderForm[keyof ITaxBracketSliderForm]>,
     ): IInputFieldProps['helperMessage'] & {
@@ -76,13 +87,14 @@ export class TaxBracketSliderService {
         const { name, rate } = values;
         const requestData: ICreateTaxBracketRequest = {
             name,
-            rate,
+            rate: +rate,
         };
         const { data, status, error } =
             await requests.catalogue.taxBracketRequest.createNewTaxBracket(requestData);
         if (status) {
             return data;
         }
+
         TaxBracketSliderService.showGeneralErrorNotify(error.message);
         return null;
     };

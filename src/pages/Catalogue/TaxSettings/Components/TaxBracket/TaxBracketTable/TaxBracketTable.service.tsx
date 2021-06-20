@@ -1,17 +1,16 @@
 import { State } from '@hookstate/core';
+import Icon from '@iconify/react';
 import {
-    Chip,
     IconButton,
     ITableProps,
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
-import React from 'react';
-import styles from './TaxBracketTable.module.scss';
-import { ITaxSettingsState } from '../../../TaxSettings.types';
-import Icon from '@iconify/react';
-import { ICONS } from 'utilities/utilities';
 import { ITaxBracketData } from '@sellerspot/universal-types';
+import React from 'react';
+import { ICONS } from 'utilities/utilities';
+import { ITaxSettingsState } from '../../../TaxSettings.types';
+import styles from './TaxBracketTable.module.scss';
 
 export class TaxBracketsTableService {
     static getTableProps = (props: {
@@ -21,17 +20,16 @@ export class TaxBracketsTableService {
         const { pageState } = props;
 
         // custom renderes
-        const rateTypeCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
-            // props
-            const {} = props;
-            // draw
-            return <Chip label="State Tax" />;
-        };
         const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
+        };
+        const rateCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
+            // props
+            const { rowData } = props;
+            return `${rowData['rate']}%`;
         };
         const actionsCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
@@ -48,7 +46,7 @@ export class TaxBracketsTableService {
             // draw
             return (
                 <div className={styles.rowActions}>
-                    <span className={styles.link}>View Product</span>
+                    <span className={styles.link}>View Products</span>
                     <div className={styles.minActions}>
                         <ToolTip content="Edit">
                             <div>
@@ -78,7 +76,7 @@ export class TaxBracketsTableService {
         // draw
         return {
             data: pageState.taxBrackets.get(),
-            isLoading: pageState.isTaxBracketsTableLoading.get(),
+            isLoading: pageState.isTaxBracketTableLoading.get(),
             shape: [
                 {
                     columnName: 'S.No',
@@ -90,19 +88,13 @@ export class TaxBracketsTableService {
                     dataKey: 'name',
                     columnName: 'Bracket Name',
                     align: 'left',
-                    width: '50%',
                 },
                 {
                     dataKey: 'rate',
                     columnName: 'Rate',
-                    align: 'right',
-                    width: '10%',
-                },
-                {
-                    columnName: 'Type',
                     align: 'center',
-                    width: '74px',
-                    customRenderer: rateTypeCustomRenderer,
+                    width: '68px',
+                    customRenderer: rateCustomRenderer,
                 },
                 {
                     columnName: 'Actions',

@@ -4,6 +4,6 @@ import { ITaxBracketSliderState } from './Components/TaxBracket/TaxBracketSlider
 export interface ITaxSettingsState {
     taxBrackets: ITaxBracketData[];
     taxGroups: ITaxGroupData[];
-    isTaxBracketsTableLoading: boolean;
-    taxBracketsSlider: ITaxBracketSliderState;
+    isTaxBracketTableLoading: boolean;
+    taxBracketSlider: ITaxBracketSliderState;
 }

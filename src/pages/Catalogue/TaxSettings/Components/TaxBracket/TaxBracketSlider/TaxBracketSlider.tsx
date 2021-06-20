@@ -77,7 +77,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
     // compute
     const initialValues: ITaxBracketSliderForm = {
         name: sliderState.isEditMode.get() ? sliderState.prefillData?.name?.get() : '',
-        rate: sliderState.isEditMode.get() ? sliderState.prefillData?.rate?.get() : null,
+        rate: sliderState.isEditMode.get() ? sliderState.prefillData?.rate?.get() : 0,
     };
 
     // handlers
@@ -93,7 +93,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
         // if new TaxBracket has been created, update
         if (!!newTaxBracketData) {
             // calling notify
-            showNotify(`'${newTaxBracketData.name}' stock unit created successfully!`, {
+            showNotify(`'${newTaxBracketData.name}' tax bracket created successfully!`, {
                 theme: 'success',
             });
             await getAllTaxBracket();
@@ -114,7 +114,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
         if (!!editedTaxBracketData) {
             // calling notify
             showNotify(
-                `'${sliderState.prefillData?.get().name}' stock unit edited to ${
+                `'${sliderState.prefillData?.get().name}' tax bracket edited to ${
                     editedTaxBracketData.name
                 } successfully!`,
                 {
