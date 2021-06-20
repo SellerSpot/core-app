@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { ITaxBracketSliderForm } from './TaxBracketSlider.types';
 
 export class TaxBracketSliderService {
-    private static validationSchema: yup.SchemaOf<ITaxBracketSliderForm> = yup.object({
+    static validationSchema: yup.SchemaOf<ITaxBracketSliderForm> = yup.object({
         name: yup.string().required('Bracket name is required'),
         rate: yup
             .number()

@@ -47,14 +47,26 @@ const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }
 
 const LowerPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }) => {
     // props
-    const {} = props;
+    const { pageState } = props;
+
     // components
     const NewTaxGroupButton = () => {
+        // handlers
+        const onClickHandler = () => {
+            pageState.taxGroupSlider.merge({
+                isEditMode: false,
+                prefillData: null,
+                showSliderModal: true,
+            });
+        };
+
+        // draw
         return (
             <Button
                 label="NEW TAX GROUP"
                 theme="primary"
                 variant="contained"
+                onClick={onClickHandler}
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
             />
         );
@@ -72,6 +84,11 @@ export const TaxSettings = (): ReactElement => {
         taxGroups: [],
         isTaxBracketTableLoading: false,
         taxBracketSlider: {
+            isEditMode: false,
+            prefillData: null,
+            showSliderModal: false,
+        },
+        taxGroupSlider: {
             isEditMode: false,
             prefillData: null,
             showSliderModal: false,
@@ -107,7 +124,10 @@ export const TaxSettings = (): ReactElement => {
             <div className={styles.taxGroupsWrapper}>
                 <LowerPageHeaderComponent pageState={pageState} />
                 <TaxGroupsTable pageState={pageState} />
-                <TaxGroupSlider />
+                <TaxGroupSlider
+                    getAllTaxGroup={getAllTaxBracket}
+                    sliderState={pageState.taxGroupSlider}
+                />
             </div>
         </div>
     );
