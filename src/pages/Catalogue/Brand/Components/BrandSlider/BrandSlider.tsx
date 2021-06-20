@@ -26,11 +26,13 @@ const DialogComponent = (props: {
 }) => {
     // props
     const { showDialog, sliderState } = props;
+
     // handlers
     const handlePrimaryButtonOnClick = () => {
         showDialog.set(false);
         sliderState.showSliderModal.set(false);
     };
+
     const handleSecondaryButtonOnClick = () => {
         showDialog.set(false);
     };
@@ -87,6 +89,7 @@ const BrandSliderContent = (
             sliderState.showSliderModal.set(false);
         }
     };
+
     const editExistingBrand = async (values: IBrandSliderForm) => {
         // props
         const { name } = values;
@@ -111,6 +114,7 @@ const BrandSliderContent = (
             sliderState.showSliderModal.set(false);
         }
     };
+
     const onSubmit = async (values: IBrandSliderForm) => {
         if (sliderState.isEditMode.get()) {
             await editExistingBrand(values);
@@ -118,6 +122,7 @@ const BrandSliderContent = (
             await createNewBrand(values);
         }
     };
+
     // draw
     return (
         <>
@@ -177,6 +182,8 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
             sliderState.showSliderModal.set(false);
         }
     };
+
+    // draw
     return (
         <SliderModal
             showModal={sliderState.showSliderModal.get()}
