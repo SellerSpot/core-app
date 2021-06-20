@@ -52,7 +52,8 @@ export default class ApiService {
             });
             if (data.status !== undefined) {
                 return data;
-            } else if (status === 204) {
+            } else if ([200, 204].includes(status)) {
+                // success but not getting body - response handler
                 return { status: true };
             } else {
                 throw new Error('unknown error');
