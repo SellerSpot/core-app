@@ -62,13 +62,11 @@ const DialogComponent = (props: {
     );
 };
 
-export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
+const BrandSliderContent = (
+    props: IBrandSliderProps & { showDialog: State<boolean>; formDirty: State<boolean> },
+): ReactElement => {
     // props
-    const { sliderState, getAllBrand } = props;
-
-    // state
-    const formDirty = useState(false);
-    const showDialog = useState(false);
+    const { sliderState, formDirty, showDialog, getAllBrand } = props;
 
     // compute
     const initialValues: IBrandSliderForm = {
@@ -76,13 +74,6 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
     };
 
     // handlers
-    const onBackdropClick = () => {
-        if (formDirty.get()) {
-            showDialog.set(true);
-        } else {
-            sliderState.showSliderModal.set(false);
-        }
-    };
     const createNewBrand = async (values: IBrandSliderForm) => {
         const newBrandData = await BrandSliderService.createNewBrand(values);
         // if new brand has been created, update
@@ -129,12 +120,7 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
     };
     // draw
     return (
-        <SliderModal
-            showModal={sliderState.showSliderModal.get()}
-            onBackdropClick={onBackdropClick}
-            width="40%"
-            type="fixed"
-        >
+        <>
             <Form
                 onSubmit={onSubmit}
                 initialValues={initialValues}
@@ -171,6 +157,34 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
                     );
                 }}
             </Form>
+        </>
+    );
+};
+
+export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
+    // props
+    const { sliderState } = props;
+
+    // state
+    const formDirty = useState(false);
+    const showDialog = useState(false);
+
+    // handlers
+    const onBackdropClick = () => {
+        if (formDirty.get()) {
+            showDialog.set(true);
+        } else {
+            sliderState.showSliderModal.set(false);
+        }
+    };
+    return (
+        <SliderModal
+            showModal={sliderState.showSliderModal.get()}
+            onBackdropClick={onBackdropClick}
+            width="40%"
+            type="fixed"
+        >
+            <BrandSliderContent {...{ ...props, formDirty, showDialog }} />
             <DialogComponent showDialog={showDialog} sliderState={sliderState} />
         </SliderModal>
     );
