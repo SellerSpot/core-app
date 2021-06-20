@@ -107,8 +107,8 @@ export class StockUnitTableService {
         };
     };
 
-    static deleteStockUnit = async (brandId: string): Promise<boolean> => {
-        const { status } = await requests.catalogue.stockUnitRequest.deleteStockUnit(brandId);
+    static deleteStockUnit = async (stockUnitId: string): Promise<boolean> => {
+        const { status } = await requests.catalogue.stockUnitRequest.deleteStockUnit(stockUnitId);
         return status;
     };
 }

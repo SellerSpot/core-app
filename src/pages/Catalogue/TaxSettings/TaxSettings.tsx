@@ -98,7 +98,7 @@ export const TaxSettings = (): ReactElement => {
         <div className={styles.wrapper}>
             <div className={styles.taxBracketsWrapper}>
                 <UpperPageHeaderComponent pageState={pageState} />
-                <TaxBracketsTable pageState={pageState} />
+                <TaxBracketsTable pageState={pageState} getAllTaxBracket={getAllTaxBracket} />
                 <TaxBracketSlider
                     sliderState={pageState.taxBracketSlider}
                     getAllTaxBracket={getAllTaxBracket}

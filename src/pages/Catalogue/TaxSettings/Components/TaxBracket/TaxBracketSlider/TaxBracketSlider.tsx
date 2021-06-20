@@ -113,14 +113,9 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
         // if TaxBracket has been edited
         if (!!editedTaxBracketData) {
             // calling notify
-            showNotify(
-                `'${sliderState.prefillData?.get().name}' tax bracket edited to ${
-                    editedTaxBracketData.name
-                } successfully!`,
-                {
-                    theme: 'success',
-                },
-            );
+            showNotify(`'${editedTaxBracketData.name}' tax bracket edited successfully!`, {
+                theme: 'success',
+            });
             await getAllTaxBracket();
             // closing sliderModal
             sliderState.showSliderModal.set(false);
