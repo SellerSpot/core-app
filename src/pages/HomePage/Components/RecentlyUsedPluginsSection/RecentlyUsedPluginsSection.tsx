@@ -15,7 +15,7 @@ import PluginCard from 'components/Compounds/PluginCard/PluginCard';
 import { PLUGIN_IMAGES } from 'assets/images/images';
 import { ICONS } from 'utilities/utilities';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import { EPLUGINS } from '../../../../../.yalc/@sellerspot/universal-types/dist';
+import { EPLUGINS } from '@sellerspot/universal-types';
 
 export const RecentlyUsedPluginsSection = (): ReactElement => {
     // state
