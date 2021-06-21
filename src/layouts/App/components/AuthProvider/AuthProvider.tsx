@@ -34,13 +34,13 @@ const AuthProvider = (props: IAuthProviderProps): ReactElement => {
 
     // effects
     useEffect(() => {
-        if (!!!userDetails) {
+        if (!userDetails) {
             fetchUserDetails();
         }
     }, [userDetails]);
 
     return (
-        <Loader message="Authenticating user..." isLoading={!!!userDetails} loaderType="spinner">
+        <Loader message="Authenticating user..." isLoading={!userDetails} loaderType="spinner">
             {children}
         </Loader>
     );

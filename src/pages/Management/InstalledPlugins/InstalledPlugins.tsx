@@ -53,7 +53,7 @@ export const InstalledPlugins = (): ReactElement => {
                 <div className={styles.bodyWrapper}>
                     {tenantDetails?.installedPlugins.length === 0 ? (
                         <>
-                            <div className={styles.emptyInstallBannder}>
+                            <div className={styles.emptyInstallBanner}>
                                 <TableEmptyState
                                     message="No plugins were installed!"
                                     tableContainerHeight={500}

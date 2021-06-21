@@ -2,6 +2,7 @@ import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
 import { Brand } from 'pages/Catalogue/Brand/Brand';
 import { Product } from 'pages/Catalogue/Product/Product';
+import { Settings } from 'pages/Catalogue/Settings/Settings';
 import { TaxSettings } from 'pages/Catalogue/TaxSettings/TaxSettings';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
@@ -31,7 +32,7 @@ export const Catalogue = (): ReactElement => {
                     <TaxSettings />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__SETTINGS}>
-                    <h6>Settings</h6>
+                    <Settings />
                 </Route>
                 <Route>
                     <Redirect to={ROUTES.CATALOGUE__PRODUCTS} />
