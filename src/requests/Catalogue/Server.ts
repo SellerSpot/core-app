@@ -10,20 +10,24 @@ import {
     ICreateStockUnitResponse,
     ICreateTaxBracketRequest,
     ICreateTaxBracketResponse,
-    IDeleteBrandResponse,
-    IDeleteStockUnitResponse,
-    IDeleteTaxBracketResponse,
+    ICreateTaxGroupRequest,
+    ICreateTaxGroupResponse,
     IEditBrandRequest,
     IEditBrandResponse,
     IEditStockUnitRequest,
     IEditStockUnitResponse,
     IEditTaxBracketRequest,
     IEditTaxBracketResponse,
+    IEditTaxGroupRequest,
+    IEditTaxGroupResponse,
     IGetAllBrandResponse,
     IGetAllStockUnitResponse,
     IGetAllTaxBracketResponse,
+    IGetAllTaxGroupResponse,
+    IResponse,
     IStockUnitData,
     ITaxBracketData,
+    ITaxGroupData,
 } from '@sellerspot/universal-types';
 
 // support types
@@ -34,11 +38,18 @@ export interface IProductData {
     category: ICategoryData;
 }
 
+interface ITaxBracketServerData {
+    id: string;
+    name: string;
+    rate?: number;
+    bracket?: string[];
+}
+
 // db interface
 interface ICatalogueServerDBState {
     brands: IBrandData[];
     categories: ICategoryData[];
-    taxBrackets: ITaxBracketData[];
+    taxBrackets: ITaxBracketServerData[];
     stockUnits: IStockUnitData[];
     products: IProductData[];
 }
@@ -47,22 +58,27 @@ interface ICatalogueServer {
     // brand methods
     getAllBrand: () => Promise<IGetAllBrandResponse>;
     createNewBrand: (data: ICreateBrandRequest) => Promise<ICreateBrandResponse>;
-    deleteBrand: (id: string) => Promise<IDeleteBrandResponse>;
+    deleteBrand: (id: string) => Promise<IResponse>;
     editBrand: (data: IEditBrandRequest & { id: string }) => Promise<IEditBrandResponse>;
     // stockUnit methods
     getAllStockUnit: () => Promise<IGetAllStockUnitResponse>;
     createNewStockUnit: (data: ICreateStockUnitRequest) => Promise<ICreateStockUnitResponse>;
-    deleteStockUnit: (id: string) => Promise<IDeleteStockUnitResponse>;
+    deleteStockUnit: (id: string) => Promise<IResponse>;
     editStockUnit: (
         data: IEditStockUnitRequest & { id: string },
     ) => Promise<IEditStockUnitResponse>;
     // taxBracket
     getAllTaxBracket: () => Promise<IGetAllTaxBracketResponse>;
     createNewTaxBracket: (data: ICreateTaxBracketRequest) => Promise<ICreateTaxBracketResponse>;
-    deleteTaxBracket: (id: string) => Promise<IDeleteTaxBracketResponse>;
+    deleteTaxBracket: (id: string) => Promise<IResponse>;
     editTaxBracket: (
         data: IEditTaxBracketRequest & { id: string },
     ) => Promise<IEditTaxBracketResponse>;
+    // taxGroup
+    getAllTaxGroup: () => Promise<IGetAllTaxGroupResponse>;
+    createNewTaxGroup: (data: ICreateTaxGroupRequest) => Promise<ICreateTaxGroupResponse>;
+    deleteTaxGroup: (id: string) => Promise<IResponse>;
+    editTaxGroup: (data: IEditTaxGroupRequest & { id: string }) => Promise<IEditTaxGroupResponse>;
 }
 
 // db state
@@ -119,30 +135,26 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     },
     deleteBrand: async (id) => {
         await introduceDelay(2000);
-        let dataToDelete: IBrandData = null;
         state.brands.set((state) => {
             const requiredIndex = state.findIndex((brand) => brand.id === id);
-            dataToDelete = state[requiredIndex];
             state.splice(requiredIndex, 1);
             return state;
         });
         return {
-            data: dataToDelete,
+            data: null,
             status: true,
         };
     },
     editBrand: async (data) => {
         await introduceDelay(2000);
         const { name, id } = data;
-        let updatedData: IBrandData = null;
         state.brands.set((state) => {
             const requiredIndex = state.findIndex((brand) => brand.id === id);
             state[requiredIndex].name = name;
-            updatedData = state[requiredIndex];
             return state;
         });
         return {
-            data: updatedData,
+            data: null,
             status: true,
         };
     },
@@ -173,15 +185,13 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     },
     deleteStockUnit: async (id) => {
         await introduceDelay(2000);
-        let dataToDelete: IStockUnitData = null;
         state.stockUnits.set((state) => {
             const requiredIndex = state.findIndex((stockUnit) => stockUnit.id === id);
-            dataToDelete = state[requiredIndex];
             state.splice(requiredIndex, 1);
             return state;
         });
         return {
-            data: dataToDelete,
+            data: null,
             status: true,
         };
     },
@@ -190,7 +200,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         const { name, id } = data;
         let updatedData: IStockUnitData = null;
         state.stockUnits.set((state) => {
-            const requiredIndex = state.findIndex((brand) => brand.id === id);
+            const requiredIndex = state.findIndex((stockUnit) => stockUnit.id === id);
             state[requiredIndex].name = name;
             updatedData = state[requiredIndex];
             return state;
@@ -204,9 +214,15 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     // taxBracket
     getAllTaxBracket: async () => {
         await introduceDelay(2000);
+        const allTaxBrackets: ITaxBracketData[] = [];
+        state.taxBrackets.value.map((bracketData) => {
+            if (!bracketData.bracket) {
+                allTaxBrackets.push(bracketData as ITaxBracketData);
+            }
+        });
         return {
             status: true,
-            data: state.taxBrackets.value,
+            data: allTaxBrackets,
         };
     },
     createNewTaxBracket: async (data) => {
@@ -227,15 +243,13 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     },
     deleteTaxBracket: async (id) => {
         await introduceDelay(2000);
-        let dataToDelete: ITaxBracketData = null;
         state.taxBrackets.set((state) => {
-            const requiredIndex = state.findIndex((brand) => brand.id === id);
-            dataToDelete = state[requiredIndex];
+            const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state.splice(requiredIndex, 1);
             return state;
         });
         return {
-            data: dataToDelete,
+            data: null,
             status: true,
         };
     },
@@ -244,9 +258,126 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         const { name, id } = data;
         let updatedData: ITaxBracketData = null;
         state.taxBrackets.set((state) => {
-            const requiredIndex = state.findIndex((brand) => brand.id === id);
+            const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state[requiredIndex].name = name;
-            updatedData = state[requiredIndex];
+            updatedData = state[requiredIndex] as ITaxBracketData;
+            return state;
+        });
+        return {
+            data: updatedData,
+            status: true,
+        };
+    },
+
+    // taxGroup
+    getAllTaxGroup: async () => {
+        await introduceDelay(2000);
+        // stores data to return as response
+        const allTaxGroups: ITaxGroupData[] = [];
+        // iterating through all tax brackets
+        state.taxBrackets.value.map((bracketData) => {
+            // selecting brackets which are groups
+            if (bracketData.bracket) {
+                // to store total rate of taxGroup
+                let totalRate = 0;
+                // getting instances of all subBrackets of this group
+                const subBrackets = bracketData.bracket.map((subBracketId) => {
+                    return state.taxBrackets
+                        .find((bracket) => bracket.id.value === subBracketId)
+                        .get();
+                });
+                // computing the totalRate of this group
+                subBrackets.map((subBracket) => {
+                    const { rate } = subBracket;
+                    totalRate += rate;
+                });
+                // compiling data
+                const taxGroup: ITaxGroupData = {
+                    id: bracketData.id,
+                    name: bracketData.name,
+                    bracket: subBrackets as ITaxBracketData[],
+                    rate: totalRate,
+                };
+                allTaxGroups.push(taxGroup);
+            }
+        });
+        return {
+            status: true,
+            data: allTaxGroups,
+        };
+    },
+    createNewTaxGroup: async (data) => {
+        await introduceDelay(2000);
+        // holds the to-be-created taxGroup data
+        const newTaxGroup: ITaxBracketServerData = {
+            id: generateRandomString(),
+            name: data.name,
+            bracket: data.bracket,
+        };
+        // getting instances of all subBrackets of this group
+        const subBrackets = data.bracket.map((subBracketId) => {
+            return state.taxBrackets.find((bracket) => bracket.id.value === subBracketId).get();
+        });
+        // to store total rate of taxGroup
+        let totalRate = 0;
+        // computing the totalRate of this group
+        subBrackets.map((subBracket) => {
+            const { rate } = subBracket;
+            totalRate += rate;
+        });
+        // value to return
+        const newTaxGroupReturnValue: ITaxGroupData = {
+            id: newTaxGroup.id,
+            name: data.name,
+            bracket: subBrackets as ITaxBracketData[],
+            rate: totalRate,
+        };
+        state.taxBrackets.set((state) => {
+            state.unshift(newTaxGroup);
+            return state;
+        });
+        return {
+            data: newTaxGroupReturnValue,
+            status: true,
+        };
+    },
+    deleteTaxGroup: async (id) => {
+        await introduceDelay(2000);
+        state.taxBrackets.set((state) => {
+            const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
+            state.splice(requiredIndex, 1);
+            return state;
+        });
+        return {
+            data: null,
+            status: true,
+        };
+    },
+    editTaxGroup: async (data) => {
+        await introduceDelay(2000);
+        const { name, id, bracket } = data;
+        let updatedData: ITaxGroupData = null;
+        state.taxBrackets.set((state) => {
+            const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
+            state[requiredIndex].name = name;
+            state[requiredIndex].bracket = bracket;
+            // getting instances of all subBrackets of this group
+            const subBrackets = data.bracket.map((subBracketId) => {
+                return state.find((bracket) => bracket.id === subBracketId);
+            });
+            // to store total rate of taxGroup
+            let totalRate = 0;
+            // computing the totalRate of this group
+            subBrackets.map((subBracket) => {
+                const { rate } = subBracket;
+                totalRate += rate;
+            });
+            updatedData = {
+                id: state[requiredIndex].id,
+                name,
+                rate: totalRate,
+                bracket: subBrackets as ITaxBracketData[],
+            };
             return state;
         });
         return {

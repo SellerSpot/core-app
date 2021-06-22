@@ -13,13 +13,18 @@ import React from 'react';
 import { ICONS } from 'utilities/utilities';
 import { ITaxSettingsState } from '../../../TaxSettings.types';
 import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { requests } from 'requests/requests';
+
+interface IGetTablePropsProps {
+    pageState: State<ITaxSettingsState>;
+    editItemClickHandler: (taxGroupData: ITaxBracketData) => () => Promise<void>;
+    deleteItemClickHandler: (taxGroupData: ITaxBracketData) => () => Promise<void>;
+}
 
 export class TaxGroupsTableService {
-    static getTableProps = (props: {
-        pageState: State<ITaxSettingsState>;
-    }): ITableProps<ITaxGroupData> => {
+    static getTableProps = (props: IGetTablePropsProps): ITableProps<ITaxGroupData> => {
         // props
-        const { pageState } = props;
+        const { pageState, deleteItemClickHandler, editItemClickHandler } = props;
 
         const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
             // props
@@ -29,15 +34,7 @@ export class TaxGroupsTableService {
         };
         const actionsCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
             // props
-            const {} = props;
-
-            // handlers
-            const editItemClickHandler = () => {
-                console.log('Edit Item Clicked');
-            };
-            const deleteItemClickHandler = () => {
-                console.log('Delete Item Clicked');
-            };
+            const { rowData } = props;
 
             // draw
             return (
@@ -50,7 +47,7 @@ export class TaxGroupsTableService {
                                     icon={<Icon icon={ICONS.baselineEdit} />}
                                     size="small"
                                     theme="primary"
-                                    onClick={editItemClickHandler}
+                                    onClick={editItemClickHandler(rowData)}
                                 />
                             </div>
                         </ToolTip>
@@ -60,7 +57,7 @@ export class TaxGroupsTableService {
                                     icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                                     size="small"
                                     theme="danger"
-                                    onClick={deleteItemClickHandler}
+                                    onClick={deleteItemClickHandler(rowData)}
                                 />
                             </div>
                         </ToolTip>
@@ -98,6 +95,7 @@ export class TaxGroupsTableService {
         // draw
         return {
             data: pageState.taxGroups.get(),
+            isLoading: pageState.isTaxGroupTableLoading.get(),
             shape: [
                 {
                     columnName: 'S.No',
@@ -120,5 +118,10 @@ export class TaxGroupsTableService {
             ],
             collapsedContentRenderer,
         };
+    };
+
+    static deleteTaxGroup = async (taxGroupId: string): Promise<boolean> => {
+        const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxGroup(taxGroupId);
+        return status;
     };
 }

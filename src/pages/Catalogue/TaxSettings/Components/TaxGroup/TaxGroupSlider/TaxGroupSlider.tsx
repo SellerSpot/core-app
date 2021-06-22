@@ -73,6 +73,9 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     const formDirty = useState(false);
     const showDialog = useState(false);
 
+    // effects
+    // useEffect(() => {}, []);
+
     // compute
     const initialValues: ITaxGroupSliderForm = {
         name: sliderState.isEditMode.get() ? sliderState.prefillData?.name?.get() : '',

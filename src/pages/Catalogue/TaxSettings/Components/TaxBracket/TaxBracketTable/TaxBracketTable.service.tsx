@@ -101,8 +101,10 @@ export class TaxBracketsTableService {
         };
     };
 
-    static deleteStockUnit = async (stockUnitId: string): Promise<boolean> => {
-        const { status } = await requests.catalogue.taxBracketRequest.deleteTaxBracket(stockUnitId);
+    static deleteTaxBracket = async (taxBracketId: string): Promise<boolean> => {
+        const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxBracket(
+            taxBracketId,
+        );
         return status;
     };
 }

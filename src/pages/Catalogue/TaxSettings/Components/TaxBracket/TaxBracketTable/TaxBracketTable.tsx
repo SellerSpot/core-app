@@ -1,16 +1,8 @@
 import { State, useState } from '@hookstate/core';
-import {
-    Alert,
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    DialogLayoutWrapper,
-    showNotify,
-    Table,
-} from '@sellerspot/universal-components';
+import { showNotify, Table } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
+import { AlertDialog } from 'components/Compounds/AlertDialog/AlertDialog';
+import { IAlertDialogProps } from 'components/Compounds/AlertDialog/AlertDialog.types';
 import React, { ReactElement } from 'react';
 import { ITaxSettingsState } from '../../../TaxSettings.types';
 import { TaxBracketsTableService } from './TaxBracketTable.service';
@@ -35,7 +27,7 @@ const DialogComponent = (props: {
     const handlePrimaryButtonOnClick = async () => {
         isLoading.set(true);
         // request
-        const result = await TaxBracketsTableService.deleteStockUnit(
+        const result = await TaxBracketsTableService.deleteTaxBracket(
             dialogState.taxBracketId.get(),
         );
         // compute
@@ -50,33 +42,26 @@ const DialogComponent = (props: {
     };
     const handleSecondaryButtonOnClick = () => dialogState.showDialog.set(false);
 
+    // compute
+    const alertDialogProps: IAlertDialogProps = {
+        showDialog: dialogState.showDialog.get(),
+        content: `This action will delete tax bracket '${dialogState.taxBracketName.get()}'`,
+        theme: 'error',
+        title: 'Are you sure?',
+        secondaryButtonProps: {
+            disabled: isLoading.get(),
+            label: 'CANCEL',
+            onClick: handleSecondaryButtonOnClick,
+        },
+        primaryButtonProps: {
+            isLoading: isLoading.get(),
+            label: 'DELETE TAX BRACKET',
+            onClick: handlePrimaryButtonOnClick,
+        },
+    };
+
     // draw
-    return (
-        <Dialog showDialog={dialogState.showDialog.get()}>
-            <DialogLayoutWrapper>
-                <DialogHeader title={'Are you sure?'} />
-                <DialogBody>
-                    <Alert type="error">{`This action will delete tax bracket '${dialogState.taxBracketName.get()}'`}</Alert>
-                </DialogBody>
-                <DialogFooter>
-                    <Button
-                        variant="outlined"
-                        theme="primary"
-                        disabled={isLoading.get()}
-                        label={'CANCEL'}
-                        onClick={handleSecondaryButtonOnClick}
-                    />
-                    <Button
-                        variant="contained"
-                        theme="danger"
-                        isLoading={isLoading.get()}
-                        label={'DELETE STOCK UNIT'}
-                        onClick={handlePrimaryButtonOnClick}
-                    />
-                </DialogFooter>
-            </DialogLayoutWrapper>
-        </Dialog>
-    );
+    return <AlertDialog {...alertDialogProps} />;
 };
 
 export const TaxBracketsTable = (props: {

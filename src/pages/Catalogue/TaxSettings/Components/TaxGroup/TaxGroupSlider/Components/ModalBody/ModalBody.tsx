@@ -3,7 +3,7 @@ import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/unive
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
 import { TaxGroupSliderService } from '../../TaxGroupSlider.service';
-import { ITaxGroupSliderState, ITaxGroupSliderForm } from '../../TaxGroupSlider.types';
+import { ITaxGroupSliderForm, ITaxGroupSliderState } from '../../TaxGroupSlider.types';
 import styles from './ModalBody.module.scss';
 
 const TaxGroupNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
@@ -44,6 +44,11 @@ const TaxGroupNameField = (props: { autoFocus: boolean; submitting: boolean }) =
         />
     );
 };
+
+// const TaxBracketSelect = () => {
+//     // draw
+//     return <Select options={} />;
+// };
 
 const ModalBody = (props: {
     sliderState: State<ITaxGroupSliderState>;

@@ -6,6 +6,7 @@ export interface ITaxSettingsState {
     taxBrackets: ITaxBracketData[];
     taxGroups: ITaxGroupData[];
     isTaxBracketTableLoading: boolean;
+    isTaxGroupTableLoading: boolean;
     taxBracketSlider: ITaxBracketSliderState;
     taxGroupSlider: ITaxGroupSliderState;
 }

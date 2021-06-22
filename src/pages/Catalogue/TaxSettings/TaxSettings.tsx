@@ -82,7 +82,8 @@ export const TaxSettings = (): ReactElement => {
     const pageState = useState<ITaxSettingsState>({
         taxBrackets: [],
         taxGroups: [],
-        isTaxBracketTableLoading: false,
+        isTaxBracketTableLoading: true,
+        isTaxGroupTableLoading: true,
         taxBracketSlider: {
             isEditMode: false,
             prefillData: null,
@@ -103,11 +104,20 @@ export const TaxSettings = (): ReactElement => {
             isTaxBracketTableLoading: false,
         });
     };
+    const getAllTaxGroup = async (): Promise<void> => {
+        const allTaxGroups = await TaxSettingsService.getAllTaxGroup();
+        pageState.merge({
+            taxGroups: allTaxGroups,
+            isTaxGroupTableLoading: false,
+        });
+    };
 
     // effects
     useEffect(() => {
         pageState.isTaxBracketTableLoading.set(true);
+        pageState.isTaxGroupTableLoading.set(true);
         getAllTaxBracket();
+        getAllTaxGroup();
     }, []);
 
     // draw
@@ -123,7 +133,7 @@ export const TaxSettings = (): ReactElement => {
             </div>
             <div className={styles.taxGroupsWrapper}>
                 <LowerPageHeaderComponent pageState={pageState} />
-                <TaxGroupsTable pageState={pageState} />
+                <TaxGroupsTable pageState={pageState} getAllTaxGroup={getAllTaxGroup} />
                 <TaxGroupSlider
                     getAllTaxGroup={getAllTaxBracket}
                     sliderState={pageState.taxGroupSlider}
