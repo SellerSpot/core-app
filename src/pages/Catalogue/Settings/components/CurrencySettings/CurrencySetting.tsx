@@ -3,36 +3,43 @@ import { useState } from '@hookstate/core';
 import { Card, showNotify, CircularProgress } from '@sellerspot/universal-components';
 import Select from 'react-select';
 
-import { ICurrency } from './CurrencySetting.types';
+import { IErrorResponse, IStoreCurrency } from '@sellerspot/universal-types';
 import styles from './CurrencySetting.module.scss';
 import { ISelectOption } from 'typings/common.types';
 import { Loader } from 'components/Atoms/Loader/Loader';
 import CurrencySettingService from './CurrentSetting.service';
-import { introduceDelay } from 'utilities/general';
+import { useSelector } from 'react-redux';
+import { tenantSelector } from 'store/models/app';
 
 export const CurrencySetting = (): ReactElement => {
+    // hooks
+    const tenantDetails = useSelector(tenantSelector);
+
     // state
-    const currencies = useState<ICurrency[]>([]);
-    const currentCurrency = useState<ICurrency>(null);
+    const currencies = useState<IStoreCurrency[]>([]);
     const loading = useState<boolean>(true);
     const isSaving = useState<boolean>(false);
 
     // handlers
-    const getFormattedCurrency = (currency: ICurrency): ISelectOption<string> => ({
-        label: `${currency.name} (${currency.logo})`,
+    const getFormattedCurrency = (currency: IStoreCurrency): ISelectOption<string> => ({
+        label: `${currency.code} (${currency.symbol})`,
         value: JSON.stringify(currency),
     });
 
     const getFormattedOptions = (): ISelectOption<string>[] =>
         currencies.map((currency) => getFormattedCurrency(currency.get()));
 
-    const onSelectChangeHandler = async (currency: string) => {
-        isSaving.set(true);
-        currentCurrency.set(JSON.parse(currency));
-        // fire an api call to save the changed currency
-        await introduceDelay();
-        showNotify('Store currency has been updated', { theme: 'success' });
-        isSaving.set(false);
+    const onSelectChangeHandler = async (currencyString: string) => {
+        try {
+            isSaving.set(true);
+            const currency = JSON.parse(currencyString) as IStoreCurrency;
+            await CurrencySettingService.udpateStoreCurrency(currency.id);
+        } catch (err) {
+            const error = err as IErrorResponse;
+            showNotify(error.message);
+        } finally {
+            isSaving.set(false);
+        }
     };
 
     // effects
@@ -40,13 +47,12 @@ export const CurrencySetting = (): ReactElement => {
         // get from api
         CurrencySettingService.fetchStoreCurrencies()
             .then((data) => {
-                currencies.set(data.currencies);
-                currentCurrency.set(data.currentCurrency);
+                currencies.set(data);
                 loading.set(false);
             })
             .catch((err) => {
                 showNotify(err);
-                // set error flag up and show error happened in the hard and ask to reload through reload call to action button
+                // set error flag up and show error happened and ask to reload through reload call to action button
             });
     }, []);
 
@@ -78,7 +84,7 @@ export const CurrencySetting = (): ReactElement => {
                                     classNamePrefix="custom-select"
                                     options={getFormattedOptions()}
                                     onChange={(currency) => onSelectChangeHandler(currency.value)}
-                                    value={getFormattedCurrency(currentCurrency.get())}
+                                    value={getFormattedCurrency(tenantDetails?.storeCurrency)}
                                     isDisabled={isSaving.get()}
                                 />
                             </div>
