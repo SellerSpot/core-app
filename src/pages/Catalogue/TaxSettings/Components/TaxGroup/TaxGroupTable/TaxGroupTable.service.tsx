@@ -11,22 +11,23 @@ import {
 import styles from './TaxGroupTable.module.scss';
 import React from 'react';
 import { ICONS } from 'utilities/utilities';
-import { ITaxBracket, ITaxGroup, ITaxSettingsState } from '../../TaxSettings.types';
+import { ITaxSettingsState } from '../../../TaxSettings.types';
+import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
 
 export class TaxGroupsTableService {
     static getTableProps = (props: {
         pageState: State<ITaxSettingsState>;
-    }): ITableProps<ITaxGroup> => {
+    }): ITableProps<ITaxGroupData> => {
         // props
-        const {} = props;
+        const { pageState } = props;
 
-        const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroup> = (props) => {
+        const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
         };
-        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxGroup> = (props) => {
+        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
             // props
             const {} = props;
 
@@ -67,13 +68,13 @@ export class TaxGroupsTableService {
                 </div>
             );
         };
-        const collapsedContentRenderer: ITableCollapsedCustomRenderer<ITaxGroup> = (props) => {
+        const collapsedContentRenderer: ITableCollapsedCustomRenderer<ITaxGroupData> = (props) => {
             // props
             const { rowData } = props;
-            const { brackets } = rowData;
+            const { bracket } = rowData;
 
-            const tableProps: ITableProps<ITaxBracket> = {
-                data: brackets,
+            const tableProps: ITableProps<ITaxBracketData> = {
+                data: bracket,
                 shape: [
                     {
                         dataKey: 'name',
@@ -96,19 +97,7 @@ export class TaxGroupsTableService {
 
         // draw
         return {
-            // data: pageState.taxGroups.get(),
-            data: [
-                {
-                    name: 'LALA',
-                    brackets: [
-                        {
-                            name: 'sdfasdf',
-                            rate: 23,
-                            isStateTax: false,
-                        },
-                    ],
-                },
-            ],
+            data: pageState.taxGroups.get(),
             shape: [
                 {
                     columnName: 'S.No',

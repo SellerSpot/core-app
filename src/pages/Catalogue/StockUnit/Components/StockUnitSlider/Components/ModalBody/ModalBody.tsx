@@ -6,7 +6,7 @@ import { StockUnitSliderService } from '../../StockUnitSlider.service';
 import { IStockUnitSliderState, IStockUnitSliderForm } from '../../StockUnitSlider.types';
 import styles from './ModalBody.module.scss';
 
-const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
+const StockUnitNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     // props
     const { autoFocus, submitting } = props;
     const fieldName: keyof IStockUnitSliderForm = 'name';
@@ -56,7 +56,7 @@ const ModalBody = (props: {
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <BrandNameField
+                <StockUnitNameField
                     autoFocus={sliderState.showSliderModal.get()}
                     submitting={submitting}
                 />

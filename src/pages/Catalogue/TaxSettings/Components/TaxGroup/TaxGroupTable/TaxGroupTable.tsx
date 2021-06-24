@@ -1,7 +1,7 @@
 import { State } from '@hookstate/core';
 import { Table } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { ITaxSettingsState } from '../../TaxSettings.types';
+import { ITaxSettingsState } from '../../../TaxSettings.types';
 import { TaxGroupsTableService } from './TaxGroupTable.service';
 
 export const TaxGroupsTable = (props: { pageState: State<ITaxSettingsState> }): ReactElement => {

@@ -13,7 +13,7 @@ import { PLUGIN_ROUTES } from 'config/pluginsBaseRoutes';
 import styles from './InstalledPlugins.module.scss';
 import pluginStoreStyles from '../PluginStore/PluginStore.module.scss';
 import { Button, TableEmptyState } from '@sellerspot/universal-components';
-import { EPLUGINS } from '../../../../.yalc/@sellerspot/universal-types/dist';
+import { EPLUGINS } from '@sellerspot/universal-types';
 
 export const InstalledPlugins = (): ReactElement => {
     // state
