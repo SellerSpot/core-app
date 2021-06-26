@@ -29,12 +29,12 @@ export const InstalledPlugins = (): ReactElement => {
 
     const launchCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = tenantDetails?.installedPlugins?.[pluginIndex].plugin;
-        history.push(PLUGIN_ROUTES[currentPlugin.pluginId as keyof typeof PLUGIN_ROUTES]);
+        history.push(PLUGIN_ROUTES[currentPlugin.uniqueName as keyof typeof PLUGIN_ROUTES]);
     };
 
     const exploreCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = tenantDetails?.installedPlugins?.[pluginIndex].plugin;
-        history.push(getPluginUrl(currentPlugin.pluginId));
+        history.push(getPluginUrl(currentPlugin.id));
     };
 
     const onInstallPluginsClickHandler = () => {
@@ -72,15 +72,15 @@ export const InstalledPlugins = (): ReactElement => {
                     ) : (
                         <div className={pluginStoreStyles.cardsWrapper}>
                             {tenantDetails?.installedPlugins?.map((plugin, key) => {
-                                const { shortDescription, icon, image, name, pluginId } =
+                                const { shortDescription, icon, image, name, id, uniqueName } =
                                     plugin.plugin;
                                 return (
                                     <PluginCard
-                                        key={pluginId}
+                                        key={id}
                                         isInstalled={true}
                                         image={
                                             image ||
-                                            PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
+                                            PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
                                         }
                                         name={name}
                                         icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}

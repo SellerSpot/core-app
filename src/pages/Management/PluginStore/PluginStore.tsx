@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, Fragment } from 'react';
 import styles from './PluginStore.module.scss';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import PluginCard from 'components/Compounds/PluginCard/PluginCard';
@@ -40,10 +40,10 @@ export const PluginStore = (): ReactElement => {
         const currentPlugin = plugins[pluginIndex].get();
         if (isInstalled) {
             // perform launch sequence
-            history.push(PLUGIN_ROUTES[currentPlugin.pluginId as keyof typeof PLUGIN_ROUTES]);
+            history.push(PLUGIN_ROUTES[currentPlugin.id as keyof typeof PLUGIN_ROUTES]);
         } else {
             // perform install sequence - trigger installation flow by passing in history state install:true along with push
-            history.push(getPluginUrl(currentPlugin.pluginId), {
+            history.push(getPluginUrl(currentPlugin.id), {
                 install: true, // triggers installation sequence in view plugin component
             } as IViewPluginLocationState);
         }
@@ -51,7 +51,7 @@ export const PluginStore = (): ReactElement => {
 
     const exploreCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = plugins[pluginIndex].get();
-        history.push(getPluginUrl(currentPlugin.pluginId));
+        history.push(getPluginUrl(currentPlugin.id));
     };
 
     // effects
@@ -59,7 +59,7 @@ export const PluginStore = (): ReactElement => {
         PluginStoreService.fetchAllPlugins()
             .then(async (data) => {
                 if (isMounted.current) plugins.set(data);
-                await introduceDelay(2000);
+                await introduceDelay(1000);
                 if (isMounted.current) isLoading.set(false);
             })
             .catch((err) => showNotify(err.message));
@@ -89,17 +89,26 @@ export const PluginStore = (): ReactElement => {
                 >
                     {!isLoading.get() &&
                         plugins.map((plugin, key) => {
-                            const { shortDescription, icon, pluginId, image, name } = plugin.get();
+                            const {
+                                shortDescription,
+                                icon,
+                                id,
+                                uniqueName,
+                                image,
+                                name,
+                                isVisibleInPluginStore,
+                            } = plugin.get();
                             const isInstalled = tenantDetails?.installedPlugins?.some(
-                                (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
+                                (installedPlugin) => installedPlugin.plugin.id === id,
                             );
+                            if (!isVisibleInPluginStore) return <Fragment key={id} />;
                             return (
                                 <PluginCard
-                                    key={pluginId}
+                                    key={id}
                                     isInstalled={isInstalled}
                                     image={
                                         image ||
-                                        PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
+                                        PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
                                     }
                                     name={name}
                                     icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}

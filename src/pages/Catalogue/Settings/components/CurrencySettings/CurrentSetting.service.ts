@@ -16,7 +16,6 @@ export default class CurrencySettingService {
     };
 
     static udpateStoreCurrency = async (currencyId: string): Promise<boolean> => {
-        debugger;
         await introduceDelay(2000);
         const { status, data, error } =
             await requests.catalogue.settingsRequest.updateStoreCurrency({ currencyId });
