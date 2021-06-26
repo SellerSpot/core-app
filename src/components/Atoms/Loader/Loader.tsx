@@ -24,9 +24,15 @@ export const Loader = (props: ILoaderProps): ReactElement => {
     return (
         <>
             {isLoading ? (
-                <div className={cn(styles.childrenContent, wrapperDivClassName)}>{loader}</div>
+                <div
+                    className={cn(styles.childrenContent, wrapperDivClassName, {
+                        [styles.frameDimension]: !wrapperDivClassName,
+                    })}
+                >
+                    {loader}
+                </div>
             ) : (
-                <div className={cn(styles.childrenContent, wrapperDivClassName)}>{children}</div>
+                <span className={cn(styles.childrenContent, wrapperDivClassName)}>{children}</span>
             )}
         </>
     ); // need to replace with react-group-transition => remove div container, just wrap it with cssTransition

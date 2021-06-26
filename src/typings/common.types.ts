@@ -18,3 +18,8 @@ export interface IComponentEvents {
 export type TReactChildren = ReactElement | ReactElement[] | string | number;
 
 export type TObject<T = string | number> = { [k: string]: T };
+
+export interface ISelectOption<T = string> {
+    label: string;
+    value: T;
+}

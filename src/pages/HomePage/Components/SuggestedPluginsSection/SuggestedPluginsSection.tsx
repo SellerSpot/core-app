@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { ReactElement } from 'react';
 import styles from './SuggestedPluginsSection.module.scss';
 import pluginStoreStyles from '../../../Management/PluginStore/PluginStore.module.scss';
@@ -38,10 +38,10 @@ export const SuggestedPluginsSection = (): ReactElement => {
         const currentPlugin = plugins[pluginIndex].get();
         if (isInstalled) {
             // perform launch sequence
-            history.push(PLUGIN_ROUTES[currentPlugin.pluginId as keyof typeof PLUGIN_ROUTES]);
+            history.push(PLUGIN_ROUTES[currentPlugin.uniqueName as keyof typeof PLUGIN_ROUTES]);
         } else {
             // perform install sequence - trigger installation flow by passing in history state install:true along with push
-            history.push(getPluginUrl(currentPlugin.pluginId), {
+            history.push(getPluginUrl(currentPlugin.id), {
                 install: true, // triggers installation sequence in view plugin component
             } as IViewPluginLocationState);
         }
@@ -49,7 +49,7 @@ export const SuggestedPluginsSection = (): ReactElement => {
 
     const exploreCallBackHandler = (pluginIndex: number) => () => {
         const currentPlugin = plugins[pluginIndex].get();
-        history.push(getPluginUrl(currentPlugin.pluginId));
+        history.push(getPluginUrl(currentPlugin.id));
     };
 
     const onExploreAllPluginsClickHandler = () => history.push(ROUTES.MANAGEMENT__PLUGIN_STORE);
@@ -100,16 +100,25 @@ export const SuggestedPluginsSection = (): ReactElement => {
             >
                 {!isLoading.get() &&
                     plugins.map((plugin, key) => {
-                        const { shortDescription, icon, pluginId, image, name } = plugin.get();
+                        const {
+                            shortDescription,
+                            icon,
+                            id,
+                            uniqueName,
+                            image,
+                            name,
+                            isVisibleInPluginStore,
+                        } = plugin.get();
                         const isInstalled = tenantDetails?.installedPlugins?.some(
-                            (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
+                            (installedPlugin) => installedPlugin.plugin.id === id,
                         );
+                        if (!isVisibleInPluginStore) return <Fragment key={id} />;
                         return (
                             <PluginCard
-                                key={pluginId}
+                                key={id}
                                 isInstalled={isInstalled}
                                 image={
-                                    image || PLUGIN_IMAGES[pluginId as keyof typeof PLUGIN_IMAGES]
+                                    image || PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
                                 }
                                 name={name}
                                 icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}

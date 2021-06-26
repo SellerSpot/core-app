@@ -38,7 +38,7 @@ export const ViewPlugin = (): ReactElement => {
 
     const checkIsPluginInstalled = (pluginId: string) => {
         const isPluginInstalled = tenantDetails.installedPlugins?.some(
-            (installedPlugin) => installedPlugin.plugin.pluginId === pluginId,
+            (installedPlugin) => installedPlugin.plugin.id === pluginId,
         );
         isInstalled.set(isPluginInstalled);
         return isPluginInstalled;
@@ -48,7 +48,7 @@ export const ViewPlugin = (): ReactElement => {
         // handle install
         try {
             isInstalling.set(true);
-            const response = await ViewPluginServie.installPlugin(plugin.value.pluginId);
+            const response = await ViewPluginServie.installPlugin(plugin.value.id);
             if (response) {
                 isInstalling.set(false);
                 showNotify('Plugin installed successfully');
@@ -67,7 +67,7 @@ export const ViewPlugin = (): ReactElement => {
     const onUnInstallClickHandler = async () => {
         try {
             isUnInstalling.set(true);
-            const response = await ViewPluginServie.unInstallPlugin(plugin.value.pluginId);
+            const response = await ViewPluginServie.unInstallPlugin(plugin.value.id);
             if (response) {
                 isUnInstalling.set(false);
                 showNotify('Plugin uninstalled successfully');
@@ -84,7 +84,7 @@ export const ViewPlugin = (): ReactElement => {
     };
 
     const onLaunchClickHandler = () => {
-        history.push(PLUGIN_ROUTES[plugin.value.pluginId as keyof typeof PLUGIN_ROUTES]);
+        history.push(PLUGIN_ROUTES[plugin.value.id as keyof typeof PLUGIN_ROUTES]);
     };
 
     // effects
@@ -93,7 +93,7 @@ export const ViewPlugin = (): ReactElement => {
         if (!pluginId) errorRedirect('Invalid plugin');
         ViewPluginServie.fetchPluginDetails(pluginId)
             .then(async (data) => {
-                const isInstalled = checkIsPluginInstalled(data.pluginId);
+                const isInstalled = checkIsPluginInstalled(data.id);
                 plugin.set(data);
                 if (!isInstalled && location.state?.install) {
                     // trigger install sequence
@@ -107,7 +107,7 @@ export const ViewPlugin = (): ReactElement => {
 
     // updates the installation status, listening the installedPlugins from app state
     useEffect(() => {
-        if (plugin?.pluginId?.get()) checkIsPluginInstalled(plugin?.pluginId?.get());
+        if (plugin?.id?.get()) checkIsPluginInstalled(plugin?.id?.get());
     }, [tenantDetails.installedPlugins]);
 
     // unInstallation label
@@ -123,7 +123,7 @@ export const ViewPlugin = (): ReactElement => {
                                 src={
                                     plugin.value.image ||
                                     PLUGIN_IMAGES[
-                                        plugin.value.pluginId as keyof typeof PLUGIN_IMAGES
+                                        plugin.value.uniqueName as keyof typeof PLUGIN_IMAGES
                                     ]
                                 }
                             />
