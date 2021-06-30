@@ -9,10 +9,11 @@ import { AlertDialog } from 'components/Compounds/AlertDialog/AlertDialog';
 import { IAlertDialogProps } from 'components/Compounds/AlertDialog/AlertDialog.types';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { ITaxBracketData } from '../../../../../../../.yalc/@sellerspot/universal-types/dist';
-import ModalBody from './Components/ModalBody/ModalBody';
-import ModalFooter from './Components/ModalFooter/ModalFooter';
-import ModalHeader from './Components/ModalHeader/ModalHeader';
+import { ITaxBracketData } from '@sellerspot/universal-types';
+import { ModalBody } from './Components/ModalBody/ModalBody';
+import { ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { ModalHeader } from './Components/ModalHeader/ModalHeader';
+import { TaxBracketSlider } from './Components/TaxBracketSlider/TaxBracketSlider';
 import styles from './TaxGroupSlider.module.scss';
 import { TaxGroupSliderService } from './TaxGroupSlider.service';
 import {
@@ -181,6 +182,9 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                                     showDialog={showDialog}
                                 />
                             </SliderModalLayoutWrapper>
+                            <TaxBracketSlider
+                                sliderState={sliderState.createTaxBracketSliderState}
+                            />
                             <DialogComponent showDialog={showDialog} sliderState={sliderState} />
                         </form>
                     </SliderModal>

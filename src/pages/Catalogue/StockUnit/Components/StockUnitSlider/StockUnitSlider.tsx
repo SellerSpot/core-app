@@ -14,9 +14,9 @@ import {
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
 import styles from './StockUnitSlider.module.scss';
-import ModalBody from './Components/ModalBody/ModalBody';
-import ModalFooter from './Components/ModalFooter/ModalFooter';
-import ModalHeader from './Components/ModalHeader/ModalHeader';
+import { ModalBody } from './Components/ModalBody/ModalBody';
+import { ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { ModalHeader } from './Components/ModalHeader/ModalHeader';
 import {
     IStockUnitSliderForm,
     IStockUnitSliderProps,

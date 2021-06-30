@@ -1,9 +1,11 @@
 import { State } from '@hookstate/core';
 import { ITaxGroupData } from '@sellerspot/universal-types';
-import { ISelectOption } from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
+import { ISelectOption } from '@sellerspot/universal-components';
+import { ITaxBracketSliderState } from './Components/TaxBracketSlider/TaxBracketSlider.types';
 
 export interface ITaxGroupSliderState {
     showSliderModal: boolean;
+    createTaxBracketSliderState: ITaxBracketSliderState;
     isEditMode: boolean;
     prefillData: ITaxGroupData;
 }

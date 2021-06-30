@@ -3,7 +3,7 @@ import { SliderModalHeader } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { ITaxBracketSliderState } from '../../TaxBracketSlider.types';
 
-const ModalHeader = (props: {
+export const ModalHeader = (props: {
     sliderState: State<ITaxBracketSliderState>;
     formDirty: State<boolean>;
     showDialog: State<boolean>;
@@ -27,5 +27,3 @@ const ModalHeader = (props: {
     // draw
     return <SliderModalHeader modalCloseCallback={modalCloseCallback} title={modalTitle} />;
 };
-
-export default ModalHeader;

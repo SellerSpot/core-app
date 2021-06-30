@@ -4,9 +4,9 @@ import { Form } from 'react-final-form';
 import { introduceDelay } from 'utilities/general';
 import styles from './ProductSlider.module.scss';
 import { IProductSliderForm, IProductSliderProps } from './ProductSlider.types';
-import ModalBody from './Components/ModalBody/ModalBody';
-import ModalFooter from './Components/ModalFooter/ModalFooter';
-import ModalHeader from './Components/ModalHeader/ModalHeader';
+import { ModalBody } from './Components/ModalBody/ModalBody';
+import { ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { ModalHeader } from './Components/ModalHeader/ModalHeader';
 
 export const ProductSlider = (props: IProductSliderProps): ReactElement => {
     // props

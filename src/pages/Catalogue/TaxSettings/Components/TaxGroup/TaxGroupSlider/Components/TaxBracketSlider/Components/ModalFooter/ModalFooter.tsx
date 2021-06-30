@@ -4,32 +4,19 @@ import { Button, SliderModalFooter } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { FormSpy } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
-import { IStockUnitSliderState } from '../../StockUnitSlider.types';
+import { ITaxBracketSliderState } from '../../TaxBracketSlider.types';
 
-export const ModalFooter = (props: {
-    sliderState: State<IStockUnitSliderState>;
-    formDirty: State<boolean>;
-    showDialog: State<boolean>;
-}): ReactElement => {
+interface IModalFooter {
+    sliderState: State<ITaxBracketSliderState>;
+}
+
+export const ModalFooter = (props: IModalFooter): ReactElement => {
     // props
-    const { sliderState, formDirty, showDialog } = props;
-
-    // compute
-    let primaryButtonTitle = 'CREATE STOCK UNIT';
-    let primaryButtonIcon = ICONS.outlineAdd;
-
-    if (sliderState.isEditMode.get()) {
-        primaryButtonTitle = 'SAVE CHANGES';
-        primaryButtonIcon = ICONS.check;
-    }
+    const { sliderState } = props;
 
     // handlers
     const handleSecondaryButtonOnClick = () => {
-        if (formDirty.get()) {
-            showDialog.set(true);
-        } else {
-            sliderState.showSliderModal.set(false);
-        }
+        sliderState.showSliderModal.set(false);
     };
 
     // draw
@@ -45,12 +32,12 @@ export const ModalFooter = (props: {
                 {({ submitting }) => {
                     return (
                         <Button
-                            label={primaryButtonTitle}
+                            label="CREATE TAX BRACKET"
                             theme="primary"
                             variant="contained"
                             isLoading={submitting}
                             type="submit"
-                            startIcon={<Icon icon={primaryButtonIcon} />}
+                            startIcon={<Icon icon={ICONS.outlineAdd} />}
                         />
                     );
                 }}

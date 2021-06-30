@@ -76,7 +76,7 @@ const BarcodeField = () => {
     );
 };
 
-const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
+export const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
 
@@ -90,5 +90,3 @@ const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactEle
         </SliderModalBody>
     );
 };
-
-export default ModalBody;

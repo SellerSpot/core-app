@@ -6,7 +6,7 @@ import { FormSpy } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
 import { IBrandSliderState } from '../../BrandSlider.types';
 
-const ModalFooter = (props: {
+export const ModalFooter = (props: {
     sliderState: State<IBrandSliderState>;
     formDirty: State<boolean>;
     showDialog: State<boolean>;
@@ -58,5 +58,3 @@ const ModalFooter = (props: {
         </SliderModalFooter>
     );
 };
-
-export default ModalFooter;

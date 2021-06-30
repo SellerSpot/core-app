@@ -1,9 +1,9 @@
-import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
-import { ICreateTaxBracketRequest, ITaxBracketData } from '@sellerspot/universal-types';
-import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
 import * as yup from 'yup';
+import { IInputFieldProps, showNotify } from '@sellerspot/universal-components';
 import { ITaxBracketSliderForm } from './TaxBracketSlider.types';
+import { FieldMetaState } from 'react-final-form';
+import { ITaxBracketData, ICreateTaxBracketRequest } from '@sellerspot/universal-types';
 
 export class TaxBracketSliderService {
     static validationSchema: yup.SchemaOf<ITaxBracketSliderForm> = yup.object({
@@ -84,24 +84,6 @@ export class TaxBracketSliderService {
             return data;
         }
 
-        TaxBracketSliderService.showGeneralErrorNotify(error.message);
-        return null;
-    };
-
-    static editTaxBracket = async (props: {
-        name: string;
-        rate: number;
-        id: string;
-    }): Promise<ITaxBracketData> => {
-        const { name, id, rate } = props;
-        const { data, status, error } = await requests.catalogue.taxSettingsRequest.editTaxBracket({
-            name,
-            rate,
-            id,
-        });
-        if (status) {
-            return data;
-        }
         TaxBracketSliderService.showGeneralErrorNotify(error.message);
         return null;
     };

@@ -10,3 +10,12 @@ export interface ITaxSettingsState {
     taxBracketSlider: ITaxBracketSliderState;
     taxGroupSlider: ITaxGroupSliderState;
 }
+
+export interface ITaxSettingsDataStoreState {
+    taxBrackets: ITaxBracketData[];
+    taxGroups: ITaxGroupData[];
+}
+
+// export interface ITaxSettingsSliderModalState{
+//     showTaxBracketsSliderModal
+// }

@@ -6,7 +6,21 @@ import { TaxBracketSliderService } from '../../TaxBracketSlider.service';
 import { ITaxBracketSliderState, ITaxBracketSliderForm } from '../../TaxBracketSlider.types';
 import styles from './ModalBody.module.scss';
 
-const TaxBracketNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
+interface ITaxBracketNameFieldProps {
+    autoFocus: boolean;
+    submitting: boolean;
+}
+
+interface ITaxBracketRateFieldProps {
+    submitting: boolean;
+}
+
+interface IModalBodyProps {
+    sliderState: State<ITaxBracketSliderState>;
+    submitting: boolean;
+}
+
+const TaxBracketNameField = (props: ITaxBracketNameFieldProps) => {
     // props
     const { autoFocus, submitting } = props;
     const fieldName: keyof ITaxBracketSliderForm = 'name';
@@ -45,7 +59,7 @@ const TaxBracketNameField = (props: { autoFocus: boolean; submitting: boolean })
     );
 };
 
-const TaxBracketRateField = (props: { submitting: boolean }) => {
+const TaxBracketRateField = (props: ITaxBracketRateFieldProps) => {
     // props
     const { submitting } = props;
     const fieldName: keyof ITaxBracketSliderForm = 'rate';
@@ -85,10 +99,7 @@ const TaxBracketRateField = (props: { submitting: boolean }) => {
     );
 };
 
-export const ModalBody = (props: {
-    sliderState: State<ITaxBracketSliderState>;
-    submitting: boolean;
-}): ReactElement => {
+export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
     const { sliderState, submitting } = props;
 

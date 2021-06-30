@@ -93,6 +93,10 @@ export const TaxSettings = (): ReactElement => {
             isEditMode: false,
             prefillData: null,
             showSliderModal: false,
+            createTaxBracketSliderState: {
+                showSliderModal: false,
+                bracketName: '',
+            },
         },
     });
 

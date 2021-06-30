@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import { ITaxGroupSliderState } from '../../TaxGroupSlider.types';
 
-const ModalFooter = (props: {
+export const ModalFooter = (props: {
     sliderState: State<ITaxGroupSliderState>;
     isFormDirty: boolean;
     isSubmitting: boolean;
@@ -53,5 +53,3 @@ const ModalFooter = (props: {
         </SliderModalFooter>
     );
 };
-
-export default ModalFooter;

@@ -45,7 +45,7 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     );
 };
 
-const ModalBody = (props: {
+export const ModalBody = (props: {
     sliderState: State<IBrandSliderState>;
     submitting: boolean;
 }): ReactElement => {
@@ -64,5 +64,3 @@ const ModalBody = (props: {
         </SliderModalBody>
     );
 };
-
-export default ModalBody;

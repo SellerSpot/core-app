@@ -26,9 +26,9 @@ interface ITaxGroupNameFieldProps {
     submitting: boolean;
 }
 
-// interface ITaxBracketSelect {
-//     allTaxGroup: ITaxGroupData[];
-// }
+interface ITaxBracketSelectProps {
+    sliderState: State<ITaxGroupSliderState>;
+}
 
 const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     // props
@@ -69,7 +69,10 @@ const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     );
 };
 
-const TaxBracketSelect = () => {
+const TaxBracketSelect = (props: ITaxBracketSelectProps) => {
+    // props
+    const { sliderState } = props;
+
     // state
     const isGettingOptions = useState(false);
     const fieldName: keyof ITaxGroupSliderForm = 'taxBrackets';
@@ -100,6 +103,25 @@ const TaxBracketSelect = () => {
     const getFormatCreateLabel: IAsyncCreatableSelectProps['formatCreateLabel'] = (value) => {
         return `Create a new tax bracket "${value}"`;
     };
+    const onCreateOptionHandler: IAsyncCreatableSelectProps['onCreateOption'] = (value) => {
+        isGettingOptions.set(true);
+        sliderState.createTaxBracketSliderState.merge({
+            showSliderModal: true,
+            bracketName: value,
+        });
+    };
+
+    // // effects
+    // useEffect(() => {
+    //     // state
+    //     const { showSliderModal } = sliderState.createTaxBracketSliderState;
+    //     // compute
+    //     if (!showSliderModal) {
+    //         sliderState.createTaxBracketSliderState.merge({
+    //             bracketName: '',
+    //         });
+    //     }
+    // }, [sliderState.createTaxBracketSliderState.showSliderModal]);
 
     // draw
     return (
@@ -121,15 +143,16 @@ const TaxBracketSelect = () => {
                 // draw
                 return (
                     <AsyncCreatableSelect
+                        closeMenuOnSelect={false}
                         label={'Tax Brackets'}
                         placeholder={'Choose the Tax Brackets'}
                         isLoading={isGettingOptions.get()}
                         value={value as ISelectOption[]}
-                        formatCreateLabel={getFormatCreateLabel}
-                        closeMenuOnSelect={false}
-                        onChange={onChange}
                         helperMessage={helperMessage}
+                        formatCreateLabel={getFormatCreateLabel}
+                        onChange={onChange}
                         loadOptions={getOptions}
+                        onCreateOption={onCreateOptionHandler}
                         isMulti
                     />
                 );
@@ -138,7 +161,7 @@ const TaxBracketSelect = () => {
     );
 };
 
-const ModalBody = (props: IModalBodyProps): ReactElement => {
+export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
     const { sliderState, submitting } = props;
 
@@ -150,10 +173,8 @@ const ModalBody = (props: IModalBodyProps): ReactElement => {
                     autoFocus={sliderState.showSliderModal.get()}
                     submitting={submitting}
                 />
-                <TaxBracketSelect />
+                <TaxBracketSelect sliderState={sliderState} />
             </div>
         </SliderModalBody>
     );
 };
-
-export default ModalBody;

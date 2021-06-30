@@ -16,9 +16,9 @@ import { Form } from 'react-final-form';
 import styles from './BrandSlider.module.scss';
 import { BrandSliderService } from './BrandSlider.service';
 import { IBrandSliderProps, IBrandSliderState, IBrandSliderForm } from './BrandSlider.types';
-import ModalBody from './Components/ModalBody/ModalBody';
-import ModalFooter from './Components/ModalFooter/ModalFooter';
-import ModalHeader from './Components/ModalHeader/ModalHeader';
+import { ModalBody } from './Components/ModalBody/ModalBody';
+import { ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { ModalHeader } from './Components/ModalHeader/ModalHeader';
 
 const DialogComponent = (props: {
     showDialog: State<boolean>;

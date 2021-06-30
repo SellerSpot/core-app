@@ -3,7 +3,7 @@ import { SliderModalHeader } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { IBrandSliderState } from '../../BrandSlider.types';
 
-const ModalHeader = (props: {
+export const ModalHeader = (props: {
     sliderState: State<IBrandSliderState>;
     formDirty: State<boolean>;
     showDialog: State<boolean>;
@@ -25,5 +25,3 @@ const ModalHeader = (props: {
     // draw
     return <SliderModalHeader modalCloseCallback={modalCloseCallback} title={modalTitle} />;
 };
-
-export default ModalHeader;

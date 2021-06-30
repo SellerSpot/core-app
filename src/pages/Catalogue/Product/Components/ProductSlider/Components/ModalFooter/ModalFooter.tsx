@@ -6,7 +6,7 @@ import { FormSpy } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
 import { IProductSliderState } from '../../ProductSlider.types';
 
-const ModalFooter = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
+export const ModalFooter = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
 
@@ -39,5 +39,3 @@ const ModalFooter = (props: { sliderState: State<IProductSliderState> }): ReactE
         </SliderModalFooter>
     );
 };
-
-export default ModalFooter;
