@@ -90,7 +90,7 @@ export class TaxBracketSliderService {
             rate: +rate,
         };
         const { data, status, error } =
-            await requests.catalogue.taxBracketRequest.createNewTaxBracket(requestData);
+            await requests.catalogue.taxSettingsRequest.createNewTaxBracket(requestData);
         if (status) {
             return data;
         }
@@ -105,7 +105,7 @@ export class TaxBracketSliderService {
         id: string;
     }): Promise<ITaxBracketData> => {
         const { name, id, rate } = props;
-        const { data, status, error } = await requests.catalogue.taxBracketRequest.editTaxBracket({
+        const { data, status, error } = await requests.catalogue.taxSettingsRequest.editTaxBracket({
             name,
             rate,
             id,

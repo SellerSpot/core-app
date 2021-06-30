@@ -5,17 +5,17 @@ import { ITaxGroupSliderState } from '../../TaxGroupSlider.types';
 
 const ModalHeader = (props: {
     sliderState: State<ITaxGroupSliderState>;
-    formDirty: State<boolean>;
+    isFormDirty: boolean;
     showDialog: State<boolean>;
 }): ReactElement => {
     // props
-    const { sliderState, formDirty, showDialog } = props;
+    const { sliderState, isFormDirty, showDialog } = props;
 
     // compute
     const modalTitle = sliderState.isEditMode.get() ? 'Edit tax group' : 'Create a new tax group';
     // handlers
     const modalCloseCallback = () => {
-        if (formDirty.get()) {
+        if (isFormDirty) {
             showDialog.set(true);
         } else {
             sliderState.showSliderModal.set(false);

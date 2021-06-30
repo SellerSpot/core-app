@@ -1,11 +1,11 @@
-import BaseRequest from 'requests/BaseRequest';
 import {
     ICreateStockUnitRequest,
     ICreateStockUnitResponse,
-    IDeleteStockUnitResponse,
     IEditStockUnitResponse,
     IGetAllStockUnitResponse,
+    IResponse,
 } from '@sellerspot/universal-types';
+import BaseRequest from 'requests/BaseRequest';
 import { accessCatalogueServer } from './Server';
 
 export default class StockUnitRequest extends BaseRequest {
@@ -23,7 +23,7 @@ export default class StockUnitRequest extends BaseRequest {
         return await accessCatalogueServer().createNewStockUnit(values);
     };
 
-    deleteStockUnit = async (StockUnitId: string): Promise<IDeleteStockUnitResponse> => {
+    deleteStockUnit = async (StockUnitId: string): Promise<IResponse> => {
         return await accessCatalogueServer().deleteStockUnit(StockUnitId);
     };
 

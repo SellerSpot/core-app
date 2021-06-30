@@ -2,6 +2,7 @@ import { State } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
     IconButton,
+    IIconButtonProps,
     ITableCollapsedCustomRenderer,
     ITableProps,
     Table,
@@ -17,8 +18,8 @@ import { requests } from 'requests/requests';
 
 interface IGetTablePropsProps {
     pageState: State<ITaxSettingsState>;
-    editItemClickHandler: (taxGroupData: ITaxBracketData) => () => Promise<void>;
-    deleteItemClickHandler: (taxGroupData: ITaxBracketData) => () => Promise<void>;
+    editItemClickHandler: (taxGroupData: ITaxBracketData) => IIconButtonProps['onClick'];
+    deleteItemClickHandler: (taxGroupData: ITaxBracketData) => IIconButtonProps['onClick'];
 }
 
 export class TaxGroupsTableService {

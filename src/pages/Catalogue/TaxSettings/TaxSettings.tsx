@@ -106,6 +106,7 @@ export const TaxSettings = (): ReactElement => {
     };
     const getAllTaxGroup = async (): Promise<void> => {
         const allTaxGroups = await TaxSettingsService.getAllTaxGroup();
+        debugger;
         pageState.merge({
             taxGroups: allTaxGroups,
             isTaxGroupTableLoading: false,
@@ -114,8 +115,10 @@ export const TaxSettings = (): ReactElement => {
 
     // effects
     useEffect(() => {
+        // setting loading states
         pageState.isTaxBracketTableLoading.set(true);
         pageState.isTaxGroupTableLoading.set(true);
+        // fetching data from server
         getAllTaxBracket();
         getAllTaxGroup();
     }, []);
@@ -135,8 +138,9 @@ export const TaxSettings = (): ReactElement => {
                 <LowerPageHeaderComponent pageState={pageState} />
                 <TaxGroupsTable pageState={pageState} getAllTaxGroup={getAllTaxGroup} />
                 <TaxGroupSlider
-                    getAllTaxGroup={getAllTaxBracket}
+                    getAllTaxGroup={getAllTaxGroup}
                     sliderState={pageState.taxGroupSlider}
+                    allTaxGroup={pageState.taxGroups.get()}
                 />
             </div>
         </div>

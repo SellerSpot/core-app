@@ -8,6 +8,8 @@ import {
     IGetAllTaxBracketResponse,
     IGetAllTaxGroupResponse,
     IResponse,
+    ISearchTaxBracketRequest,
+    ISearchTaxBracketResponse,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
 import { accessCatalogueServer } from './Server';
@@ -19,6 +21,13 @@ export default class TaxSettingsRequest extends BaseRequest {
 
     getAllTaxBracket = async (): Promise<IGetAllTaxBracketResponse> => {
         return await accessCatalogueServer().getAllTaxBracket();
+    };
+
+    searchTaxBracket = async (
+        values: ISearchTaxBracketRequest,
+    ): Promise<ISearchTaxBracketResponse> => {
+        const { searchQuery } = values;
+        return await accessCatalogueServer().searchTaxBracket(searchQuery);
     };
 
     createNewTaxBracket = async (

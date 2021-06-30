@@ -1,9 +1,9 @@
 import {
     ICreateBrandRequest,
     ICreateBrandResponse,
-    IDeleteBrandResponse,
     IEditBrandResponse,
     IGetAllBrandResponse,
+    IResponse,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
 import { accessCatalogueServer } from './Server';
@@ -21,7 +21,7 @@ export default class BrandRequest extends BaseRequest {
         return await accessCatalogueServer().createNewBrand(values);
     };
 
-    deleteBrand = async (brandId: string): Promise<IDeleteBrandResponse> => {
+    deleteBrand = async (brandId: string): Promise<IResponse> => {
         return await accessCatalogueServer().deleteBrand(brandId);
     };
     editBrand = async (data: { name: string; id: string }): Promise<IEditBrandResponse> => {

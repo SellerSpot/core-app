@@ -1,31 +1,32 @@
 import { State, useState } from '@hookstate/core';
 import {
-    Alert,
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    DialogLayoutWrapper,
+    ISelectOption,
+    showNotify,
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
+import { AlertDialog } from 'components/Compounds/AlertDialog/AlertDialog';
+import { IAlertDialogProps } from 'components/Compounds/AlertDialog/AlertDialog.types';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
+import { ITaxBracketData } from '../../../../../../../.yalc/@sellerspot/universal-types/dist';
 import ModalBody from './Components/ModalBody/ModalBody';
 import ModalFooter from './Components/ModalFooter/ModalFooter';
 import ModalHeader from './Components/ModalHeader/ModalHeader';
 import styles from './TaxGroupSlider.module.scss';
+import { TaxGroupSliderService } from './TaxGroupSlider.service';
 import {
     ITaxGroupSliderForm,
     ITaxGroupSliderProps,
     ITaxGroupSliderState,
 } from './TaxGroupSlider.types';
 
-const DialogComponent = (props: {
+interface IDialogComponent {
     showDialog: State<boolean>;
     sliderState: State<ITaxGroupSliderState>;
-}) => {
+}
+
+const DialogComponent = (props: IDialogComponent) => {
     // props
     const { showDialog, sliderState } = props;
 
@@ -38,148 +39,153 @@ const DialogComponent = (props: {
         showDialog.set(false);
     };
 
+    // compute
+    const alertDialogProps: IAlertDialogProps = {
+        showDialog: showDialog.get(),
+        content: `All entered form data will be lost if you close the form`,
+        theme: 'error',
+        title: 'Are you sure?',
+        secondaryButtonProps: {
+            label: 'CLOSE FORM',
+            onClick: handleSecondaryButtonOnClick,
+        },
+        primaryButtonProps: {
+            label: 'CANCEL',
+            onClick: handlePrimaryButtonOnClick,
+        },
+    };
+
     // draw
-    return (
-        <Dialog showDialog={showDialog.get()}>
-            <DialogLayoutWrapper>
-                <DialogHeader title={'Are you sure?'} />
-                <DialogBody>
-                    <Alert type="error">{`All entered form data will be lost if you close the form`}</Alert>
-                </DialogBody>
-                <DialogFooter>
-                    <Button
-                        variant="outlined"
-                        theme="primary"
-                        label={'Cancel'}
-                        onClick={handleSecondaryButtonOnClick}
-                    />
-                    <Button
-                        variant="contained"
-                        theme="danger"
-                        label={'Close Form'}
-                        onClick={handlePrimaryButtonOnClick}
-                    />
-                </DialogFooter>
-            </DialogLayoutWrapper>
-        </Dialog>
-    );
+    return <AlertDialog {...alertDialogProps} />;
 };
 
 export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderState, allTaxGroup, getAllTaxGroup } = props;
 
     // state
-    const formDirty = useState(false);
     const showDialog = useState(false);
 
-    // effects
-    // useEffect(() => {}, []);
-
     // compute
+    const convertPrefillDataToISelectOption = (brackets: ITaxBracketData[]): ISelectOption[] => {
+        return brackets.map((bracket) => {
+            // props
+            const { name, rate, id } = bracket;
+            // return
+            return {
+                label: `${name} - ${rate}%`,
+                value: id,
+            };
+        });
+    };
     const initialValues: ITaxGroupSliderForm = {
         name: sliderState.isEditMode.get() ? sliderState.prefillData?.name?.get() : '',
+        taxBrackets: sliderState.isEditMode.get()
+            ? convertPrefillDataToISelectOption(sliderState.prefillData?.bracket?.get())
+            : [],
     };
 
     // handlers
-    const onBackdropClick = () => {
-        if (formDirty.get()) {
-            showDialog.set(true);
-        } else {
+    const onBackdropClick = (props: { isSubmitting: boolean; isDirty: boolean }) => () => {
+        // props
+        const { isDirty, isSubmitting } = props;
+
+        // compute
+        if (!isSubmitting) {
+            if (isDirty) {
+                showDialog.set(true);
+            } else {
+                sliderState.showSliderModal.set(false);
+            }
+        }
+    };
+    const createNewTaxGroup = async (values: ITaxGroupSliderForm) => {
+        const newTaxGroupData = await TaxGroupSliderService.createNewTaxGroup(values);
+        // if new TaxGroup has been created, update
+        if (!!newTaxGroupData) {
+            // calling notify
+            showNotify(`'${newTaxGroupData.name}' tax group created successfully!`, {
+                theme: 'success',
+            });
+            await getAllTaxGroup();
+            // closing sliderModal
             sliderState.showSliderModal.set(false);
         }
     };
-    // const createNewTaxGroup = async (values: ITaxGroupSliderForm) => {
-    //     const newTaxGroupData = await TaxGroupSliderService.createNewTaxGroup(values);
-    //     // if new TaxGroup has been created, update
-    //     if (!!newTaxGroupData) {
-    //         // calling notify
-    //         showNotify(`'${newTaxGroupData.name}' stock unit created successfully!`, {
-    //             theme: 'success',
-    //         });
-    //         await getAllTaxGroup();
-    //         // closing sliderModal
-    //         sliderState.showSliderModal.set(false);
-    //     }
-    // };
-    // const editExistingTaxGroup = async (values: ITaxGroupSliderForm) => {
-    //     // props
-    //     const { name } = values;
-    //     // request
-    //     const editedTaxGroupData = await TaxGroupSliderService.editTaxGroup({
-    //         id: sliderState.prefillData?.get().id,
-    //         name,
-    //     });
-    //     // if TaxGroup has been edited
-    //     if (!!editedTaxGroupData) {
-    //         // calling notify
-    //         showNotify(
-    //             `'${sliderState.prefillData?.get().name}' stock unit edited to ${
-    //                 editedTaxGroupData.name
-    //             } successfully!`,
-    //             {
-    //                 theme: 'success',
-    //             },
-    //         );
-    //         await getAllTaxGroup();
-    //         // closing sliderModal
-    //         sliderState.showSliderModal.set(false);
-    //     }
-    // };
+    const editExistingTaxGroup = async (values: ITaxGroupSliderForm) => {
+        // props
+        const { name, taxBrackets } = values;
+        // request
+        const editedTaxGroupData = await TaxGroupSliderService.editTaxGroup({
+            id: sliderState.prefillData?.get().id,
+            bracket: taxBrackets.map((option) => option.value),
+            name,
+        });
+        // if TaxGroup has been edited
+        if (!!editedTaxGroupData) {
+            // calling notify
+            showNotify(`'${editedTaxGroupData.name}' tax group edited successfully!`, {
+                theme: 'success',
+            });
+            await getAllTaxGroup();
+            // closing sliderModal
+            sliderState.showSliderModal.set(false);
+        }
+    };
     const onSubmit = async (values: ITaxGroupSliderForm) => {
-        console.log(values);
-        // if (sliderState.isEditMode.get()) {
-        //     await editExistingTaxGroup(values);
-        // } else {
-        //     await createNewTaxGroup(values);
-        // }
+        if (sliderState.isEditMode.get()) {
+            await editExistingTaxGroup(values);
+        } else {
+            await createNewTaxGroup(values);
+        }
     };
 
     // draw
     return (
-        <SliderModal
-            showModal={sliderState.showSliderModal.get()}
-            onBackdropClick={onBackdropClick}
-            width="40%"
-            type="fixed"
+        <Form
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            subscription={{
+                submitting: true,
+                dirty: true,
+            }}
         >
-            <Form
-                onSubmit={onSubmit}
-                initialValues={initialValues}
-                subscription={{
-                    submitting: true,
-                    dirty: true,
-                }}
-            >
-                {({ handleSubmit, submitting, dirty }) => {
-                    // compute
-                    if (dirty) {
-                        formDirty.set(true);
-                    } else {
-                        formDirty.set(false);
-                    }
-
-                    // draw
-                    return (
+            {({ handleSubmit, submitting, dirty }) => {
+                // draw
+                return (
+                    <SliderModal
+                        showModal={sliderState.showSliderModal.get()}
+                        onBackdropClick={onBackdropClick({
+                            isDirty: dirty,
+                            isSubmitting: submitting,
+                        })}
+                        width="40%"
+                        type="fixed"
+                    >
                         <form className={styles.form} onSubmit={handleSubmit} noValidate>
                             <SliderModalLayoutWrapper>
                                 <ModalHeader
                                     sliderState={sliderState}
-                                    formDirty={formDirty}
+                                    isFormDirty={dirty}
                                     showDialog={showDialog}
                                 />
-                                <ModalBody sliderState={sliderState} submitting={submitting} />
+                                <ModalBody
+                                    sliderState={sliderState}
+                                    submitting={submitting}
+                                    allTaxGroup={allTaxGroup}
+                                />
                                 <ModalFooter
                                     sliderState={sliderState}
-                                    formDirty={formDirty}
+                                    isFormDirty={dirty}
+                                    isSubmitting={submitting}
                                     showDialog={showDialog}
                                 />
                             </SliderModalLayoutWrapper>
+                            <DialogComponent showDialog={showDialog} sliderState={sliderState} />
                         </form>
-                    );
-                }}
-            </Form>
-            <DialogComponent showDialog={showDialog} sliderState={sliderState} />
-        </SliderModal>
+                    </SliderModal>
+                );
+            }}
+        </Form>
     );
 };

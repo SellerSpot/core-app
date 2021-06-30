@@ -1,9 +1,9 @@
 import { State, useState } from '@hookstate/core';
-import { showNotify, Table } from '@sellerspot/universal-components';
+import { IIconButtonProps, showNotify, Table } from '@sellerspot/universal-components';
+import { ITaxGroupData } from '@sellerspot/universal-types';
 import { AlertDialog } from 'components/Compounds/AlertDialog/AlertDialog';
 import { IAlertDialogProps } from 'components/Compounds/AlertDialog/AlertDialog.types';
 import React, { ReactElement } from 'react';
-import { ITaxGroupData } from '../../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { ITaxSettingsState } from '../../../TaxSettings.types';
 import { TaxGroupsTableService } from './TaxGroupTable.service';
 
@@ -81,25 +81,31 @@ export const TaxGroupsTable = (props: ITaxGroupsTableProps): ReactElement => {
     });
 
     // handlers
-    const deleteItemClickHandler = (taxGroupData: ITaxGroupData) => async () => {
-        // props
-        const { id, name } = taxGroupData;
+    const deleteItemClickHandler =
+        (taxGroupData: ITaxGroupData): IIconButtonProps['onClick'] =>
+        async (event) => {
+            // props
+            const { id, name } = taxGroupData;
+            event.stopPropagation();
 
-        // state update
-        dialogState.merge({
-            taxGroupName: name,
-            taxGroupId: id,
-            showDialog: true,
-        });
-    };
-    const editItemClickHandler = (taxGroupData: ITaxGroupData) => async () => {
-        // state update
-        pageState.taxBracketSlider.merge({
-            prefillData: taxGroupData,
-            showSliderModal: true,
-            isEditMode: true,
-        });
-    };
+            // state update
+            dialogState.merge({
+                taxGroupName: name,
+                taxGroupId: id,
+                showDialog: true,
+            });
+        };
+    const editItemClickHandler =
+        (taxGroupData: ITaxGroupData): IIconButtonProps['onClick'] =>
+        async (event) => {
+            event.stopPropagation();
+            // state update
+            pageState.taxGroupSlider.merge({
+                prefillData: taxGroupData,
+                showSliderModal: true,
+                isEditMode: true,
+            });
+        };
 
     // compute
     const tableProps = TaxGroupsTableService.getTableProps({

@@ -2,7 +2,6 @@ import { State } from '@hookstate/core';
 import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
-import CreatableSelect from 'react-select/creatable';
 import { ProductSliderService } from '../../ProductSlider.service';
 import { IProductSliderForm, IProductSliderState } from '../../ProductSlider.types';
 import styles from './ModalBody.module.scss';
@@ -77,15 +76,6 @@ const BarcodeField = () => {
     );
 };
 
-const BrandField = () => {
-    // draw
-    return (
-        <div className={styles.selectWrapper}>
-            <CreatableSelect isClearable isSearchable classNamePrefix={'custom-select'} />
-        </div>
-    );
-};
-
 const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
     // props
     const { sliderState } = props;
@@ -96,7 +86,6 @@ const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactEle
             <div className={styles.modalBody}>
                 <ProductNameField autoFocus={sliderState.showSliderModal.get()} />
                 <BarcodeField />
-                <BrandField />
             </div>
         </SliderModalBody>
     );

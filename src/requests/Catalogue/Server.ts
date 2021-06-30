@@ -25,6 +25,7 @@ import {
     IGetAllTaxBracketResponse,
     IGetAllTaxGroupResponse,
     IResponse,
+    ISearchTaxBracketResponse,
     IStockUnitData,
     ITaxBracketData,
     ITaxGroupData,
@@ -69,6 +70,7 @@ interface ICatalogueServer {
     ) => Promise<IEditStockUnitResponse>;
     // taxBracket
     getAllTaxBracket: () => Promise<IGetAllTaxBracketResponse>;
+    searchTaxBracket: (searchQuery: string) => Promise<ISearchTaxBracketResponse>;
     createNewTaxBracket: (data: ICreateTaxBracketRequest) => Promise<ICreateTaxBracketResponse>;
     deleteTaxBracket: (id: string) => Promise<IResponse>;
     editTaxBracket: (
@@ -112,14 +114,14 @@ catalogueDBState.attach(Persistence('catalogueDB'));
 // server
 const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatalogueServer => ({
     getAllBrand: async () => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         return {
             status: true,
             data: state.brands.value,
         };
     },
     createNewBrand: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const newBrand: IBrandData = {
             id: generateRandomString(),
             name: data.name,
@@ -134,7 +136,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     deleteBrand: async (id) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         state.brands.set((state) => {
             const requiredIndex = state.findIndex((brand) => brand.id === id);
             state.splice(requiredIndex, 1);
@@ -146,7 +148,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     editBrand: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const { name, id } = data;
         state.brands.set((state) => {
             const requiredIndex = state.findIndex((brand) => brand.id === id);
@@ -161,14 +163,14 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
 
     // stockUnit
     getAllStockUnit: async () => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         return {
             status: true,
             data: state.stockUnits.get(),
         };
     },
     createNewStockUnit: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const newStockUnit: IStockUnitData = {
             id: generateRandomString(),
             name: data.name,
@@ -184,7 +186,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     deleteStockUnit: async (id) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         state.stockUnits.set((state) => {
             const requiredIndex = state.findIndex((stockUnit) => stockUnit.id === id);
             state.splice(requiredIndex, 1);
@@ -196,7 +198,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     editStockUnit: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const { name, id } = data;
         let updatedData: IStockUnitData = null;
         state.stockUnits.set((state) => {
@@ -213,7 +215,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
 
     // taxBracket
     getAllTaxBracket: async () => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const allTaxBrackets: ITaxBracketData[] = [];
         state.taxBrackets.value.map((bracketData) => {
             if (!bracketData.bracket) {
@@ -225,8 +227,27 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
             data: allTaxBrackets,
         };
     },
+    searchTaxBracket: async (searchQuery: string) => {
+        await introduceDelay(1000);
+        const allTaxBrackets = state.taxBrackets.get();
+        const searchResults: ITaxBracketData[] = [];
+        allTaxBrackets.map((bracket) => {
+            const { id, name, rate } = bracket;
+            if (name.toLocaleLowerCase().startsWith(searchQuery.toLocaleLowerCase())) {
+                searchResults.push({
+                    id,
+                    name,
+                    rate,
+                });
+            }
+        });
+        return {
+            status: true,
+            data: searchResults,
+        };
+    },
     createNewTaxBracket: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const newTaxBracket: ITaxBracketData = {
             id: generateRandomString(),
             name: data.name,
@@ -242,7 +263,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     deleteTaxBracket: async (id) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         state.taxBrackets.set((state) => {
             const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state.splice(requiredIndex, 1);
@@ -254,7 +275,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     editTaxBracket: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const { name, id } = data;
         let updatedData: ITaxBracketData = null;
         state.taxBrackets.set((state) => {
@@ -271,7 +292,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
 
     // taxGroup
     getAllTaxGroup: async () => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         // stores data to return as response
         const allTaxGroups: ITaxGroupData[] = [];
         // iterating through all tax brackets
@@ -307,7 +328,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     createNewTaxGroup: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         // holds the to-be-created taxGroup data
         const newTaxGroup: ITaxBracketServerData = {
             id: generateRandomString(),
@@ -342,7 +363,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     deleteTaxGroup: async (id) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         state.taxBrackets.set((state) => {
             const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state.splice(requiredIndex, 1);
@@ -354,7 +375,7 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         };
     },
     editTaxGroup: async (data) => {
-        await introduceDelay(2000);
+        await introduceDelay(1000);
         const { name, id, bracket } = data;
         let updatedData: ITaxGroupData = null;
         state.taxBrackets.set((state) => {
