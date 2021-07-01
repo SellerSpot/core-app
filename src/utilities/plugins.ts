@@ -1,9 +1,9 @@
 // static plugins - non movable plugins like home, managements goes here
 import { IconifyIcon } from '@iconify/react';
 
-import { cashRegister, homeVariant } from './mdi'; // for - point of sale plugin
-import { outlineListAlt } from './ic';
-import { settingsIcon } from './codicon';
+import { cashRegister, homeVariant } from './icons/mdi'; // for - point of sale plugin
+import { outlineListAlt } from './icons/ic';
+import { settingsIcon } from './icons/codicon';
 import { TAllPlugins } from 'config/pluginsBaseRoutes';
 
 export type TPluginIcons = {

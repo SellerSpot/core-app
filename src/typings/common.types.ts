@@ -15,6 +15,11 @@ export interface IComponentEvents {
     onMouseLeave?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
+export interface IOnClickEvents {
+    div: React.MouseEvent<HTMLDivElement, MouseEvent>;
+    button: React.MouseEvent<HTMLButtonElement, MouseEvent>;
+}
+
 export type TReactChildren = ReactElement | ReactElement[] | string | number;
 
 export type TObject<T = string | number> = { [k: string]: T };
