@@ -18,7 +18,7 @@ const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }
     // components
     const NewTaxBracketButton = () => {
         // handlers
-        const handleOnClick = () => {
+        const handleOnClick = async () => {
             pageState.taxBracketSlider.merge({
                 isEditMode: false,
                 prefillData: null,
@@ -110,7 +110,6 @@ export const TaxSettings = (): ReactElement => {
     };
     const getAllTaxGroup = async (): Promise<void> => {
         const allTaxGroups = await TaxSettingsService.getAllTaxGroup();
-        debugger;
         pageState.merge({
             taxGroups: allTaxGroups,
             isTaxGroupTableLoading: false,

@@ -1,18 +1,17 @@
-import { Route, Switch } from 'react-router-dom';
+import { initializeGlobalConfig } from 'config/globalConfig';
+import { ROUTES } from 'config/routes';
+import { Dashboard } from 'layouts/Dashboard/Dashboard';
+import { FailSafe } from 'pages/FailSafe/FailSafe';
+import { NotFound } from 'pages/NotFound/NotFound';
 import React, { ReactElement } from 'react';
-
+import { Route, Switch } from 'react-router-dom';
 import '../../styles/core.scss';
 import styles from './app.module.scss';
-
-import { Dashboard } from 'layouts/Dashboard/Dashboard';
-import { initializeGlobalConfig } from 'config/globalConfig';
-import { CommonProvider } from './components/CommonProvider/CommonProvider';
-import ThemeProvider from './components/ThemeProvider/ThemeProvider';
-import TenantProvider from './components/TenantProvider/TenantProvider';
 import AuthProvider from './components/AuthProvider/AuthProvider';
-import { NotFound } from 'pages/NotFound/NotFound';
-import { ROUTES } from 'config/routes';
-import { FailSafe } from 'pages/FailSafe/FailSafe';
+import { CommonProvider } from './components/CommonProvider/CommonProvider';
+import { Dialogs } from './components/GlobalComponents/Dialogs';
+import TenantProvider from './components/TenantProvider/TenantProvider';
+import ThemeProvider from './components/ThemeProvider/ThemeProvider';
 
 // global actions
 initializeGlobalConfig();
@@ -37,6 +36,7 @@ export const App = (): ReactElement => {
                                 </AuthProvider>
                             </Route>
                         </Switch>
+                        <Dialogs />
                     </TenantProvider>
                 </CommonProvider>
             </ThemeProvider>

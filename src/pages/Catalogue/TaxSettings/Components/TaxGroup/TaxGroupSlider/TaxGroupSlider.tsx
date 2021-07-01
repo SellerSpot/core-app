@@ -1,64 +1,55 @@
-import { State, useState } from '@hookstate/core';
+import { useState } from '@hookstate/core';
 import {
     ISelectOption,
     showNotify,
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
-import { AlertDialog } from 'components/Compounds/AlertDialog/AlertDialog';
-import { IAlertDialogProps } from 'components/Compounds/AlertDialog/AlertDialog.types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
+// import { AlertDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+// import { IAlertDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ModalBody } from './Components/ModalBody/ModalBody';
 import { ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { ModalHeader } from './Components/ModalHeader/ModalHeader';
 import { TaxBracketSlider } from './Components/TaxBracketSlider/TaxBracketSlider';
 import styles from './TaxGroupSlider.module.scss';
 import { TaxGroupSliderService } from './TaxGroupSlider.service';
-import {
-    ITaxGroupSliderForm,
-    ITaxGroupSliderProps,
-    ITaxGroupSliderState,
-} from './TaxGroupSlider.types';
+import { ITaxGroupSliderForm, ITaxGroupSliderProps } from './TaxGroupSlider.types';
 
-interface IDialogComponent {
-    showDialog: State<boolean>;
-    sliderState: State<ITaxGroupSliderState>;
-}
+// const DialogComponent = (props: IDialogComponent) => {
+//     // props
+//     const { showDialog, sliderState } = props;
 
-const DialogComponent = (props: IDialogComponent) => {
-    // props
-    const { showDialog, sliderState } = props;
+//     // handlers
+//     const handlePrimaryButtonOnClick = () => {
+//         showDialog.set(false);
+//         sliderState.showSliderModal.set(false);
+//     };
+//     const handleSecondaryButtonOnClick = () => {
+//         showDialog.set(false);
+//     };
 
-    // handlers
-    const handlePrimaryButtonOnClick = () => {
-        showDialog.set(false);
-        sliderState.showSliderModal.set(false);
-    };
-    const handleSecondaryButtonOnClick = () => {
-        showDialog.set(false);
-    };
+//     // compute
+//     const alertDialogProps: IAlertDialogProps = {
+//         showDialog: showDialog.get(),
+//         content: `All entered form data will be lost if you close the form`,
+//         theme: 'error',
+//         title: 'Are you sure?',
+//         secondaryButtonProps: {
+//             label: 'CLOSE FORM',
+//             onClick: handleSecondaryButtonOnClick,
+//         },
+//         primaryButtonProps: {
+//             label: 'CANCEL',
+//             onClick: handlePrimaryButtonOnClick,
+//         },
+//     };
 
-    // compute
-    const alertDialogProps: IAlertDialogProps = {
-        showDialog: showDialog.get(),
-        content: `All entered form data will be lost if you close the form`,
-        theme: 'error',
-        title: 'Are you sure?',
-        secondaryButtonProps: {
-            label: 'CLOSE FORM',
-            onClick: handleSecondaryButtonOnClick,
-        },
-        primaryButtonProps: {
-            label: 'CANCEL',
-            onClick: handlePrimaryButtonOnClick,
-        },
-    };
-
-    // draw
-    return <AlertDialog {...alertDialogProps} />;
-};
+//     // draw
+//     return <AlertDialog {...alertDialogProps} />;
+// };
 
 export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     // props
@@ -185,7 +176,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                             <TaxBracketSlider
                                 sliderState={sliderState.createTaxBracketSliderState}
                             />
-                            <DialogComponent showDialog={showDialog} sliderState={sliderState} />
+                            {/* <DialogComponent showDialog={showDialog} sliderState={sliderState} /> */}
                         </form>
                     </SliderModal>
                 );
