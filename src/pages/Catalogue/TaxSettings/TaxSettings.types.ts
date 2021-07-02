@@ -1,5 +1,5 @@
 import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
-import { ITaxBracketSliderState } from './Components/TaxBracket/TaxBracketSlider/TaxBracketSlider.types';
+import { ITaxBracketSliderProps } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.types';
 import { ITaxGroupSliderState } from './Components/TaxGroup/TaxGroupSlider/TaxGroupSlider.types';
 
 export interface ITaxSettingsState {
@@ -7,7 +7,7 @@ export interface ITaxSettingsState {
     taxGroups: ITaxGroupData[];
     isTaxBracketTableLoading: boolean;
     isTaxGroupTableLoading: boolean;
-    taxBracketSlider: ITaxBracketSliderState;
+    taxBracketSlider: Pick<ITaxBracketSliderProps, 'showModal' | 'prefillData' | 'mode'>;
     taxGroupSlider: ITaxGroupSliderState;
 }
 
@@ -15,7 +15,3 @@ export interface ITaxSettingsDataStoreState {
     taxBrackets: ITaxBracketData[];
     taxGroups: ITaxGroupData[];
 }
-
-// export interface ITaxSettingsSliderModalState{
-//     showTaxBracketsSliderModal
-// }

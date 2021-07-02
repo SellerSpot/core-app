@@ -1,7 +1,7 @@
 import { IInputFieldProps } from '@sellerspot/universal-components';
 import { FieldMetaState } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
-import yup from 'yup';
+import * as yup from 'yup';
 import {
     ITaxBracketSliderForm,
     ITaxBracketSliderModalDynamicValues,
@@ -17,7 +17,7 @@ export class TaxBracketSliderService {
         // props
         const { level, width, mode, prefillData } = props;
         const sliderModalProps: ITaxBracketSliderModalDynamicValues['sliderModalProps'] = {
-            showBackdrop: false,
+            showBackdrop: true,
             width: width,
             type: 'fixed',
         };

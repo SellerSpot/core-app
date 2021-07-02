@@ -41,6 +41,7 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
                 label="CANCEL"
                 theme="danger"
                 variant="outlined"
+                disabled={submitting}
                 onClick={handleSecondaryButtonOnClick}
             />
             <Button

@@ -94,8 +94,8 @@ export const TaxBracketsTable = (props: {
         // state update
         pageState.taxBracketSlider.merge({
             prefillData: taxBracketData,
-            showSliderModal: true,
-            isEditMode: true,
+            showModal: true,
+            mode: 'edit',
         });
     };
 

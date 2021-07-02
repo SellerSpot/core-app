@@ -19,13 +19,11 @@ export interface ITaxBracketSliderModalOnClose {
     event: IOnClickEvents['div'] | IOnClickEvents['button'];
 }
 
-type TMode = 'edit' | 'create';
-
 export interface ITaxBracketSliderProps {
     showModal: boolean;
-    onSubmit: (props: ITaxBracketSliderModalOnSubmit) => void;
+    onSubmit: (props: ITaxBracketSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxBracketSliderModalOnClose) => void;
-    mode: TMode;
+    mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
 }

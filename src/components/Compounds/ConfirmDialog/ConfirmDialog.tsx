@@ -7,6 +7,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogLayoutWrapper,
+    IDialogHeaderProps,
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import {
@@ -15,12 +16,14 @@ import {
     IConfirmDialogStateActions,
 } from './ConfirmDialog.types';
 
-const confirmDialogState = createState<IConfirmDialogState>({
+const confirmDialogStateInitialValues: IConfirmDialogState = {
     show: false,
     props: {},
     reject: null,
     resolve: null,
-});
+};
+
+const confirmDialogState = createState<IConfirmDialogState>(confirmDialogStateInitialValues);
 
 const confirmDialogStateActions = (state: State<Partial<IConfirmDialogState>>) => ({
     confirm: (props: IConfirmDialogProps) => {
@@ -62,12 +65,17 @@ export const ConfirmDialog = (): ReactElement => {
         state.show.set(false);
         state.reject.get()();
     };
+    const handleDialogCloseCallback: IDialogHeaderProps['dialogCloseCallback'] = (event) => {
+        state.show.set(false);
+        state.resolve.get()();
+        dialogCloseCallback(event);
+    };
 
     // draw
     return (
         <Dialog showDialog={state.show.get()} width={width} onBackdropClick={onBackdropClick}>
             <DialogLayoutWrapper>
-                <DialogHeader title={title} dialogCloseCallback={dialogCloseCallback} />
+                <DialogHeader title={title} dialogCloseCallback={handleDialogCloseCallback} />
                 <DialogBody>
                     <Alert type={theme}>{content}</Alert>
                 </DialogBody>

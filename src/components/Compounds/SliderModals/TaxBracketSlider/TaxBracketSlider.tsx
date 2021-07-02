@@ -1,28 +1,25 @@
-import React, { ReactElement } from 'react';
-import {
-    ITaxBracketSliderProps,
-    ITaxBracketSliderForm,
-    ITaxBracketSliderModalOnClose,
-} from './TaxBracketSlider.types';
-import { TaxBracketSliderService } from './TaxBracket.service';
-import { Form } from 'react-final-form';
 import {
     ISliderModalProps,
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
-import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
+import { FormApi } from 'final-form';
+import React, { ReactElement, useRef } from 'react';
+import { Form } from 'react-final-form';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
-
-type TOnBackdropClickHandler = (
-    props: Omit<ITaxBracketSliderModalOnClose, 'source' | 'event'>,
-) => ISliderModalProps['onBackdropClick'];
+import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
+import { TaxBracketSliderService } from './TaxBracket.service';
+import styles from './TaxBracketSlider.module.scss';
+import { ITaxBracketSliderForm, ITaxBracketSliderProps } from './TaxBracketSlider.types';
 
 export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement => {
     // props
     const { mode = 'create', level = 1, showModal, onClose, onSubmit, prefillData } = props;
-    const sliderModalWidth = '40%';
+    const sliderModalWidth = '30%';
+
+    // hooks
+    const formRef = useRef<FormApi<ITaxBracketSliderForm, Partial<ITaxBracketSliderForm>>>(null);
 
     // special props
     const {
@@ -40,16 +37,16 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
     });
 
     // handlers
-    const onSubmitHandler = (values: ITaxBracketSliderForm) => {
-        onSubmit({ values });
+    const onSubmitHandler = async (values: ITaxBracketSliderForm) => {
+        await onSubmit({ values });
     };
-    const onBackdropClickHandler: TOnBackdropClickHandler = (props) => (event) => {
+    const onBackdropClickHandler: ISliderModalProps['onBackdropClick'] = (event) => {
         // props
-        const { dirty, submitting } = props;
+        const formState = formRef.current?.getState();
         // callback
         onClose({
-            dirty,
-            submitting,
+            dirty: formState?.dirty,
+            submitting: formState?.submitting,
             source: 'backdrop',
             event,
         });
@@ -57,56 +54,56 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
 
     // draw
     return (
-        <Form
-            onSubmit={onSubmitHandler}
-            initialValues={initialFormValues}
-            subscription={{
-                submitting: true,
-                dirty: true,
-            }}
+        <SliderModal
+            showModal={showModal}
+            type={sliderModalProps.type}
+            width={sliderModalProps.width}
+            showBackdrop={sliderModalProps.showBackdrop}
+            onBackdropClick={onBackdropClickHandler}
         >
-            {({ handleSubmit, submitting, dirty }) => {
-                // props
-                const modalHeaderProps: IModalHeaderProps = {
-                    closeButtonType,
-                    dirty,
-                    modalTitle,
-                    onClose,
-                    submitting,
-                };
-                const modalBodyProps: IModalBodyProps = {
-                    showModal,
-                    submitting,
-                };
-                const modalFooterProps: IModalFooterProps = {
-                    dirty,
-                    onClose,
-                    modalFooterPrimaryButtonIcon,
-                    modalFooterPrimaryButtonLabel,
-                    submitting,
-                };
+            <Form
+                onSubmit={onSubmitHandler}
+                initialValues={initialFormValues}
+                destroyOnUnregister={true}
+                subscription={{
+                    submitting: true,
+                    dirty: true,
+                }}
+            >
+                {({ handleSubmit, submitting, dirty, form }) => {
+                    // form reference to access for outside
+                    formRef.current = form;
+                    // props
+                    const modalHeaderProps: IModalHeaderProps = {
+                        closeButtonType,
+                        dirty,
+                        modalTitle,
+                        onClose,
+                        submitting,
+                    };
+                    const modalBodyProps: IModalBodyProps = {
+                        showModal,
+                        submitting,
+                    };
+                    const modalFooterProps: IModalFooterProps = {
+                        dirty,
+                        onClose,
+                        modalFooterPrimaryButtonIcon,
+                        modalFooterPrimaryButtonLabel,
+                        submitting,
+                    };
 
-                return (
-                    <SliderModal
-                        showModal={showModal}
-                        type={sliderModalProps.type}
-                        width={sliderModalProps.width}
-                        showBackdrop={sliderModalProps.showBackdrop}
-                        onBackdropClick={onBackdropClickHandler({
-                            dirty,
-                            submitting,
-                        })}
-                    >
-                        <form onSubmit={handleSubmit} noValidate>
+                    return (
+                        <form className={styles.form} onSubmit={handleSubmit} noValidate>
                             <SliderModalLayoutWrapper>
                                 <ModalHeader {...modalHeaderProps} />
                                 <ModalBody {...modalBodyProps} />
                                 <ModalFooter {...modalFooterProps} />
                             </SliderModalLayoutWrapper>
                         </form>
-                    </SliderModal>
-                );
-            }}
-        </Form>
+                    );
+                }}
+            </Form>
+        </SliderModal>
     );
 };

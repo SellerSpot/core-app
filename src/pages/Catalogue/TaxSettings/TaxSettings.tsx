@@ -4,7 +4,7 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { TaxBracketSlider } from './Components/TaxBracket/TaxBracketSlider/TaxBracketSlider';
+import { TaxBracketSliderBase } from './Components/TaxBracket/TaxBracketSliderBase/TaxBracketSliderBase';
 import { TaxBracketsTable } from './Components/TaxBracket/TaxBracketTable/TaxBracketTable';
 import { TaxGroupSlider } from './Components/TaxGroup/TaxGroupSlider/TaxGroupSlider';
 import { TaxGroupsTable } from './Components/TaxGroup/TaxGroupTable/TaxGroupTable';
@@ -20,9 +20,9 @@ const UpperPageHeaderComponent = (props: { pageState: State<ITaxSettingsState> }
         // handlers
         const handleOnClick = async () => {
             pageState.taxBracketSlider.merge({
-                isEditMode: false,
+                mode: 'create',
                 prefillData: null,
-                showSliderModal: true,
+                showModal: true,
             });
         };
         // draw
@@ -85,9 +85,9 @@ export const TaxSettings = (): ReactElement => {
         isTaxBracketTableLoading: true,
         isTaxGroupTableLoading: true,
         taxBracketSlider: {
-            isEditMode: false,
+            showModal: false,
             prefillData: null,
-            showSliderModal: false,
+            mode: 'create',
         },
         taxGroupSlider: {
             isEditMode: false,
@@ -132,7 +132,7 @@ export const TaxSettings = (): ReactElement => {
             <div className={styles.taxBracketsWrapper}>
                 <UpperPageHeaderComponent pageState={pageState} />
                 <TaxBracketsTable pageState={pageState} getAllTaxBracket={getAllTaxBracket} />
-                <TaxBracketSlider
+                <TaxBracketSliderBase
                     sliderState={pageState.taxBracketSlider}
                     getAllTaxBracket={getAllTaxBracket}
                 />
