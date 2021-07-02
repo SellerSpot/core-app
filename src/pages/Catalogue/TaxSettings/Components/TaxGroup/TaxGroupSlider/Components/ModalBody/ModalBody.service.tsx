@@ -1,10 +1,6 @@
 import { ISearchTaxBracketRequest, ITaxBracketData } from '@sellerspot/universal-types';
 import { requests } from 'requests/requests';
 
-// interface IGetTaxGroupSelectOptionsProps {
-//     allTaxGroup: ITaxGroupData[];
-// }
-
 interface ISearchTaxBracketsProps {
     searchQuery: string;
 }

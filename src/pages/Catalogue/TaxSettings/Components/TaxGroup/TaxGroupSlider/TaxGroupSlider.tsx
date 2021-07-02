@@ -59,7 +59,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     const showDialog = useState(false);
 
     // compute
-    const convertPrefillDataToISelectOption = (brackets: ITaxBracketData[]): ISelectOption[] => {
+    const convertTaxBracketDataToISelectOption = (brackets: ITaxBracketData[]): ISelectOption[] => {
         return brackets.map((bracket) => {
             // props
             const { name, rate, id } = bracket;
@@ -73,7 +73,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     const initialValues: ITaxGroupSliderForm = {
         name: sliderState.isEditMode.get() ? sliderState.prefillData?.name?.get() : '',
         taxBrackets: sliderState.isEditMode.get()
-            ? convertPrefillDataToISelectOption(sliderState.prefillData?.bracket?.get())
+            ? convertTaxBracketDataToISelectOption(sliderState.prefillData?.bracket?.get())
             : [],
     };
 
