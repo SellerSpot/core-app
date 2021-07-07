@@ -8,12 +8,12 @@ import {
 export interface IConfirmDialogState {
     show: boolean;
     props: IConfirmDialogProps;
-    resolve: () => void;
+    resolve: (result: boolean) => void;
     reject: () => void;
 }
 
 export interface IConfirmDialogStateActions {
-    confirm: (props: IConfirmDialogProps) => Promise<void>;
+    confirm: (props: IConfirmDialogProps) => Promise<boolean>;
 }
 
 export interface IConfirmDialogProps {

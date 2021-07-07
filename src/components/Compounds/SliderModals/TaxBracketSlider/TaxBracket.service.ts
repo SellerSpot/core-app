@@ -52,12 +52,10 @@ export class TaxBracketSliderService {
         if (mode === 'edit') modalFooterPrimaryButtonIcon = ICONS.check;
 
         // initialFormValues
-        if (mode === 'edit') {
-            initialFormValues = {
-                name: prefillData?.name,
-                rate: prefillData?.rate,
-            };
-        }
+        initialFormValues = {
+            name: prefillData?.name,
+            rate: prefillData?.rate,
+        };
 
         // return
         return {

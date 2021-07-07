@@ -27,7 +27,7 @@ const confirmDialogState = createState<IConfirmDialogState>(confirmDialogStateIn
 
 const confirmDialogStateActions = (state: State<Partial<IConfirmDialogState>>) => ({
     confirm: (props: IConfirmDialogProps) => {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<boolean>((resolve, reject) => {
             state.merge({
                 show: true,
                 reject,
@@ -59,15 +59,15 @@ export const ConfirmDialog = (): ReactElement => {
     // handlers
     const handlePrimaryButtonOnClick = () => {
         state.show.set(false);
-        state.resolve.get()();
+        state.resolve.get()(true);
     };
     const handleSecondaryButtonOnClick = () => {
         state.show.set(false);
-        state.reject.get()();
+        state.resolve.get()(false);
     };
     const handleDialogCloseCallback: IDialogHeaderProps['dialogCloseCallback'] = (event) => {
         state.show.set(false);
-        state.resolve.get()();
+        state.resolve.get()(false);
         dialogCloseCallback(event);
     };
 

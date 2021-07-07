@@ -6,6 +6,7 @@ import {
 import { FormApi } from 'final-form';
 import React, { ReactElement, useRef } from 'react';
 import { Form } from 'react-final-form';
+import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
@@ -16,7 +17,7 @@ import { ITaxBracketSliderForm, ITaxBracketSliderProps } from './TaxBracketSlide
 export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement => {
     // props
     const { mode = 'create', level = 1, showModal, onClose, onSubmit, prefillData } = props;
-    const sliderModalWidth = '30%';
+    const sliderModalWidth = '35%';
 
     // hooks
     const formRef = useRef<FormApi<ITaxBracketSliderForm, Partial<ITaxBracketSliderForm>>>(null);
@@ -63,8 +64,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
         >
             <Form
                 onSubmit={onSubmitHandler}
-                initialValues={initialFormValues}
-                destroyOnUnregister={true}
+                initialValues={rawClone(initialFormValues)}
                 subscription={{
                     submitting: true,
                     dirty: true,

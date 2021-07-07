@@ -17,13 +17,14 @@ export interface ITaxGroupSliderModalOnClose {
 
 export interface ITaxGroupSliderProps {
     showModal: boolean;
+    isPageOnStandby: boolean;
     onSubmit: (props: ITaxGroupSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxGroupSliderModalOnClose) => void;
-    onCreateTaxBracket: (value: string) => void;
+    onCreateTaxSetting: (value: string) => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
     allBrackets: ITaxBracketData[];
-    taxBracketSliderProps: ITaxBracketSliderProps;
+    taxBracketSliderProps?: ITaxBracketSliderProps;
     prefillData?: ITaxGroupData;
 }
 

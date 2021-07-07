@@ -8,7 +8,7 @@ import {
 import Icon from '@iconify/react';
 
 export type IModalFooterProps = Pick<ITaxGroupSliderModalOnClose, 'dirty' | 'submitting'> &
-    Pick<ITaxGroupSliderProps, 'onClose'> &
+    Pick<ITaxGroupSliderProps, 'onClose' | 'isPageOnStandby'> &
     Pick<
         ITaxGroupSliderModalDynamicValues,
         'modalFooterPrimaryButtonLabel' | 'modalFooterPrimaryButtonIcon'
@@ -22,6 +22,7 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
         submitting,
         modalFooterPrimaryButtonLabel,
         modalFooterPrimaryButtonIcon,
+        isPageOnStandby,
     } = props;
 
     // handlers
@@ -41,14 +42,14 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
                 label="CANCEL"
                 theme="danger"
                 variant="outlined"
-                disabled={submitting}
+                disabled={submitting || isPageOnStandby}
                 onClick={handleSecondaryButtonOnClick}
             />
             <Button
                 label={modalFooterPrimaryButtonLabel}
                 theme="primary"
                 variant="contained"
-                isLoading={submitting}
+                isLoading={submitting || isPageOnStandby}
                 type="submit"
                 startIcon={<Icon icon={modalFooterPrimaryButtonIcon} />}
             />

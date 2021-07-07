@@ -1,13 +1,18 @@
-import React, { ReactElement, useRef } from 'react';
-import { SliderModal, SliderModalLayoutWrapper } from '@sellerspot/universal-components';
-import { ITaxGroupSliderForm, ITaxGroupSliderProps } from './TaxGroupSlider.types';
-import { TaxGroupSliderService } from './TaxGroupSlider.service';
+import {
+    ISliderModalProps,
+    SliderModal,
+    SliderModalLayoutWrapper,
+} from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
+import React, { ReactElement, useRef } from 'react';
 import { Form } from 'react-final-form';
-import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
-import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { TaxBracketSlider } from '../TaxBracketSlider/TaxBracketSlider';
+import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
+import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
+import styles from './TaxGroupSlider.module.scss';
+import { TaxGroupSliderService } from './TaxGroupSlider.service';
+import { ITaxGroupSliderForm, ITaxGroupSliderProps } from './TaxGroupSlider.types';
 
 export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     // props
@@ -18,11 +23,12 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
         onSubmit,
         showModal,
         taxBracketSliderProps,
-        onCreateTaxBracket,
+        onCreateTaxSetting,
         prefillData,
         allBrackets,
+        isPageOnStandby,
     } = props;
-    const sliderModalWidth = '30%';
+    const sliderModalWidth = '35%';
 
     // hooks
     const formRef = useRef<FormApi<ITaxGroupSliderForm, Partial<ITaxGroupSliderForm>>>(null);
@@ -46,6 +52,17 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
     const onSubmitHandler = async (values: ITaxGroupSliderForm) => {
         await onSubmit({ values });
     };
+    const onBackdropClickHandler: ISliderModalProps['onBackdropClick'] = (event) => {
+        // props
+        const formState = formRef.current?.getState();
+        // callback
+        onClose({
+            dirty: formState?.dirty,
+            submitting: formState?.submitting,
+            source: 'backdrop',
+            event,
+        });
+    };
 
     return (
         <>
@@ -53,12 +70,13 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                 showModal={showModal}
                 type={sliderModalProps.type}
                 width={sliderModalProps.width}
+                onBackdropClick={onBackdropClickHandler}
                 showBackdrop={sliderModalProps.showBackdrop}
             >
                 <Form
                     onSubmit={onSubmitHandler}
                     initialValues={initialFormValues}
-                    destroyOnUnregister={true}
+                    keepDirtyOnReinitialize
                     subscription={{
                         submitting: true,
                         dirty: true,
@@ -74,14 +92,17 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                             modalTitle,
                             onClose,
                             submitting,
+                            isPageOnStandby,
                         };
                         const modalBodyProps: IModalBodyProps = {
+                            isPageOnStandby,
                             showModal,
                             submitting,
                             allBrackets,
-                            onCreateTaxBracket,
+                            onCreateTaxSetting,
                         };
                         const modalFooterProps: IModalFooterProps = {
+                            isPageOnStandby,
                             dirty,
                             modalFooterPrimaryButtonIcon,
                             modalFooterPrimaryButtonLabel,
@@ -90,7 +111,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                         };
 
                         return (
-                            <form onSubmit={handleSubmit} noValidate>
+                            <form className={styles.form} onSubmit={handleSubmit} noValidate>
                                 <SliderModalLayoutWrapper>
                                     <ModalHeader {...modalHeaderProps} />
                                     <ModalBody {...modalBodyProps} />
@@ -100,8 +121,8 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                         );
                     }}
                 </Form>
+                <TaxBracketSlider {...taxBracketSliderProps} />
             </SliderModal>
-            <TaxBracketSlider {...taxBracketSliderProps} />
         </>
     );
 };
