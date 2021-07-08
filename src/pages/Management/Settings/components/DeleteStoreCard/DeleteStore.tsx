@@ -14,9 +14,9 @@ import React, { ReactElement, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from 'store/models/app';
 import DeleteStoreService from './DeleteStore.service';
-import styles from './DeleteStoreCard.module.scss';
+import styles from './DeleteStore.module.scss';
 
-export default function DeleteStoreCard(): ReactElement {
+export default function DeleteStore(): ReactElement {
     // state
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);

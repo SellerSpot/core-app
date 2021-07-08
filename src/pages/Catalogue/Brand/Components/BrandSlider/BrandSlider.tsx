@@ -26,11 +26,13 @@ const DialogComponent = (props: {
 }) => {
     // props
     const { showDialog, sliderState } = props;
+
     // handlers
     const handlePrimaryButtonOnClick = () => {
         showDialog.set(false);
         sliderState.showSliderModal.set(false);
     };
+
     const handleSecondaryButtonOnClick = () => {
         showDialog.set(false);
     };
@@ -62,13 +64,11 @@ const DialogComponent = (props: {
     );
 };
 
-export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
+const BrandSliderContent = (
+    props: IBrandSliderProps & { showDialog: State<boolean>; formDirty: State<boolean> },
+): ReactElement => {
     // props
-    const { sliderState, getAllBrand } = props;
-
-    // state
-    const formDirty = useState(false);
-    const showDialog = useState(false);
+    const { sliderState, formDirty, showDialog, getAllBrand } = props;
 
     // compute
     const initialValues: IBrandSliderForm = {
@@ -76,13 +76,6 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
     };
 
     // handlers
-    const onBackdropClick = () => {
-        if (formDirty.get()) {
-            showDialog.set(true);
-        } else {
-            sliderState.showSliderModal.set(false);
-        }
-    };
     const createNewBrand = async (values: IBrandSliderForm) => {
         const newBrandData = await BrandSliderService.createNewBrand(values);
         // if new brand has been created, update
@@ -96,6 +89,7 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
             sliderState.showSliderModal.set(false);
         }
     };
+
     const editExistingBrand = async (values: IBrandSliderForm) => {
         // props
         const { name } = values;
@@ -120,6 +114,7 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
             sliderState.showSliderModal.set(false);
         }
     };
+
     const onSubmit = async (values: IBrandSliderForm) => {
         if (sliderState.isEditMode.get()) {
             await editExistingBrand(values);
@@ -127,14 +122,10 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
             await createNewBrand(values);
         }
     };
+
     // draw
     return (
-        <SliderModal
-            showModal={sliderState.showSliderModal.get()}
-            onBackdropClick={onBackdropClick}
-            width="40%"
-            type="fixed"
-        >
+        <>
             <Form
                 onSubmit={onSubmit}
                 initialValues={initialValues}
@@ -171,6 +162,36 @@ export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
                     );
                 }}
             </Form>
+        </>
+    );
+};
+
+export const BrandSlider = (props: IBrandSliderProps): ReactElement => {
+    // props
+    const { sliderState } = props;
+
+    // state
+    const formDirty = useState(false);
+    const showDialog = useState(false);
+
+    // handlers
+    const onBackdropClick = () => {
+        if (formDirty.get()) {
+            showDialog.set(true);
+        } else {
+            sliderState.showSliderModal.set(false);
+        }
+    };
+
+    // draw
+    return (
+        <SliderModal
+            showModal={sliderState.showSliderModal.get()}
+            onBackdropClick={onBackdropClick}
+            width="40%"
+            type="fixed"
+        >
+            <BrandSliderContent {...{ ...props, formDirty, showDialog }} />
             <DialogComponent showDialog={showDialog} sliderState={sliderState} />
         </SliderModal>
     );

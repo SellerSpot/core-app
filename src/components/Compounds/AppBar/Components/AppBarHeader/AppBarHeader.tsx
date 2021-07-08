@@ -25,12 +25,12 @@ export const AppBarHeader = (): ReactElement => {
     const activePluginKey = routeKeys?.[0];
 
     // getting the Plugin data for the current Plugin
-    const pluginData = plugins.find((plugin) => plugin.plugin.pluginId === activePluginKey);
+    const pluginData = plugins.find(({ plugin }) => plugin.uniqueName === activePluginKey);
 
     if (!pluginData) return null; // fix to not found plugin / route
 
     const isNotHavingSubMenu = noSubMenuPlugins.includes(
-        pluginData.plugin.pluginId as keyof typeof ROUTES,
+        pluginData.plugin.uniqueName as keyof typeof ROUTES,
     );
 
     const wrapperClassName = cn(styles.wrapper, { [styles.noSubMenuVarient]: isNotHavingSubMenu });

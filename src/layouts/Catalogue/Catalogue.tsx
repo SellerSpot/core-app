@@ -3,6 +3,7 @@ import { ROUTES } from 'config/routes';
 import { Brand } from 'pages/Catalogue/Brand/Brand';
 import { Product } from 'pages/Catalogue/Product/Product';
 import { TaxSetting } from 'pages/Catalogue/TaxSetting/TaxSetting';
+import { Settings } from 'pages/Catalogue/Settings/Settings';
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -31,7 +32,7 @@ export const Catalogue = (): ReactElement => {
                     <TaxSetting />
                 </Route>
                 <Route exact path={ROUTES.CATALOGUE__SETTINGS}>
-                    <h6>Settings</h6>
+                    <Settings />
                 </Route>
                 <Route>
                     <Redirect to={ROUTES.CATALOGUE__PRODUCTS} />
