@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { Card, showNotify, CircularProgress } from '@sellerspot/universal-components';
-import Select from 'react-select';
+import { Card, showNotify, CircularProgress, Select } from '@sellerspot/universal-components';
 
 import { IErrorResponse, IStoreCurrency } from '@sellerspot/universal-types';
 import styles from './CurrencySetting.module.scss';
@@ -81,11 +80,14 @@ export const CurrencySetting = (): ReactElement => {
                             </div>
                             <div className={styles.selectOptionWrapper}>
                                 <Select
-                                    classNamePrefix="custom-select"
                                     options={getFormattedOptions()}
-                                    onChange={(currency) => onSelectChangeHandler(currency.value)}
+                                    onChange={(currency: ISelectOption) =>
+                                        onSelectChangeHandler(currency.value)
+                                    }
                                     value={getFormattedCurrency(tenantDetails?.storeCurrency)}
                                     isDisabled={isSaving.get()}
+                                    label="Currency"
+                                    isMulti={false}
                                 />
                             </div>
                         </div>
