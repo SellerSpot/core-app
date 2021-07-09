@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
-import { IInstalledPlugin, IStoreDetails, IUserDetails } from '@sellerspot/universal-types';
-import { RootState } from '../store';
 import { cloneDeep } from 'lodash';
+import {
+    IInstalledPlugin,
+    IStoreCurrency,
+    IStoreDetails,
+    IUserDetails,
+} from '@sellerspot/universal-types';
+
+import { RootState } from '../store';
 import { getActiveStatus } from 'config/activeStatus';
 
 export interface IAppActiveStatus {
@@ -37,6 +43,9 @@ const appSlice = createSlice({
         updateInstalledPlugins: (state, { payload }: PayloadAction<IInstalledPlugin[]>) => {
             state.tenantDetails.installedPlugins = payload;
         },
+        updateStoreCurrency: (state, { payload }: PayloadAction<IStoreCurrency>) => {
+            state.tenantDetails.storeCurrency = payload;
+        },
         resetUserDetails: (state) => {
             state.userDetails = null;
         },
@@ -58,6 +67,7 @@ export const {
     updateInstalledPlugins,
     resetUserDetails,
     resetAppState,
+    updateStoreCurrency,
 } = appSlice.actions;
 
 // exporting selector - useful when using it in components to select particular state from global store

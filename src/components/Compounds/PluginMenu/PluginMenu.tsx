@@ -60,13 +60,14 @@ const PluginMenuTiles = (props: { componentState: State<IUsePluginMenuStore> }) 
     return (
         <div className={styles.pluginMenuTilesWrapper}>
             {allPlugins?.map((installedPlugin) => {
-                const { isVisibleInPluginMenu, icon, name, pluginId } = installedPlugin.plugin;
-                const redirectRoute = PLUGIN_ROUTES[pluginId as keyof typeof EPLUGINS];
+                const { isVisibleInPluginMenu, icon, name, id, uniqueName } =
+                    installedPlugin.plugin;
+                const redirectRoute = PLUGIN_ROUTES[uniqueName as keyof typeof EPLUGINS];
                 const handleTileClick = () => {
                     history.push(redirectRoute);
                 };
                 return (
-                    <Fragment key={pluginId}>
+                    <Fragment key={id}>
                         {isVisibleInPluginMenu && (
                             <PluginMenuTile
                                 pluginIcon={
@@ -77,7 +78,7 @@ const PluginMenuTiles = (props: { componentState: State<IUsePluginMenuStore> }) 
                                 }
                                 pluginTitle={name}
                                 expanded={expandMenu.get()}
-                                selected={routeKeys.includes(pluginId as keyof typeof EPLUGINS)}
+                                selected={routeKeys.includes(uniqueName as keyof typeof EPLUGINS)}
                                 events={{
                                     onClick: handleTileClick,
                                 }}

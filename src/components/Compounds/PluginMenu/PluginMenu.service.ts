@@ -6,7 +6,8 @@ export class PluginMenuService {
         return [
             {
                 plugin: {
-                    pluginId: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME],
+                    id: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME], // in server, for other plugins, it will be 24 character hased value - mongo id
+                    uniqueName: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME],
                     name: 'Home',
                     icon: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.HOME],
                     bannerImages: [],
@@ -20,7 +21,8 @@ export class PluginMenuService {
             },
             {
                 plugin: {
-                    pluginId: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT],
+                    id: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT], // in server, for other plugins, it will be 24 character hased value - mongo id
+                    uniqueName: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT],
                     name: 'Management',
                     icon: EDEFAULT_PLUGINS[EDEFAULT_PLUGINS.MANAGEMENT],
                     bannerImages: [],

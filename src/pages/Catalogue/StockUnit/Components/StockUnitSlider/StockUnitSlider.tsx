@@ -66,13 +66,11 @@ const DialogComponent = (props: {
     );
 };
 
-export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
+const StockUnitSliderContent = (
+    props: IStockUnitSliderProps & { formDirty: State<boolean>; showDialog: State<boolean> },
+): ReactElement => {
     // props
-    const { sliderState, getAllStockUnit } = props;
-
-    // state
-    const formDirty = useState(false);
-    const showDialog = useState(false);
+    const { sliderState, formDirty, showDialog, getAllStockUnit } = props;
 
     // compute
     const initialValues: IStockUnitSliderForm = {
@@ -80,13 +78,6 @@ export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
     };
 
     // handlers
-    const onBackdropClick = () => {
-        if (formDirty.get()) {
-            showDialog.set(true);
-        } else {
-            sliderState.showSliderModal.set(false);
-        }
-    };
     const createNewStockUnit = async (values: IStockUnitSliderForm) => {
         const newStockUnitData = await StockUnitSliderService.createNewStockUnit(values);
         // if new StockUnit has been created, update
@@ -133,48 +124,71 @@ export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
     };
     // draw
     return (
+        <Form
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            subscription={{
+                submitting: true,
+                dirty: true,
+            }}
+        >
+            {({ handleSubmit, submitting, dirty }) => {
+                // compute
+                if (dirty) {
+                    formDirty.set(true);
+                } else {
+                    formDirty.set(false);
+                }
+
+                // draw
+                return (
+                    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                        <SliderModalLayoutWrapper>
+                            <ModalHeader
+                                sliderState={sliderState}
+                                formDirty={formDirty}
+                                showDialog={showDialog}
+                            />
+                            <ModalBody sliderState={sliderState} submitting={submitting} />
+                            <ModalFooter
+                                sliderState={sliderState}
+                                formDirty={formDirty}
+                                showDialog={showDialog}
+                            />
+                        </SliderModalLayoutWrapper>
+                    </form>
+                );
+            }}
+        </Form>
+    );
+};
+
+export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
+    // props
+    const { sliderState } = props;
+
+    // state
+    const formDirty = useState(false);
+    const showDialog = useState(false);
+
+    // handlers
+    const onBackdropClick = () => {
+        if (formDirty.get()) {
+            showDialog.set(true);
+        } else {
+            sliderState.showSliderModal.set(false);
+        }
+    };
+
+    // draw
+    return (
         <SliderModal
             showModal={sliderState.showSliderModal.get()}
             onBackdropClick={onBackdropClick}
             width="40%"
             type="fixed"
         >
-            <Form
-                onSubmit={onSubmit}
-                initialValues={initialValues}
-                subscription={{
-                    submitting: true,
-                    dirty: true,
-                }}
-            >
-                {({ handleSubmit, submitting, dirty }) => {
-                    // compute
-                    if (dirty) {
-                        formDirty.set(true);
-                    } else {
-                        formDirty.set(false);
-                    }
-
-                    // draw
-                    return (
-                        <form className={styles.form} onSubmit={handleSubmit} noValidate>
-                            <SliderModalLayoutWrapper>
-                                <ModalHeader
-                                    sliderState={sliderState}
-                                    formDirty={formDirty}
-                                    showDialog={showDialog}
-                                />
-                                <ModalBody sliderState={sliderState} submitting={submitting} />
-                                <ModalFooter
-                                    sliderState={sliderState}
-                                    formDirty={formDirty}
-                                    showDialog={showDialog}
-                                />
-                            </SliderModalLayoutWrapper>
-                        </form>
-                    );
-                }}
-            </Form>
+            <StockUnitSliderContent {...{ ...props, formDirty, showDialog }} />
             <DialogComponent showDialog={showDialog} sliderState={sliderState} />
         </SliderModal>
     );

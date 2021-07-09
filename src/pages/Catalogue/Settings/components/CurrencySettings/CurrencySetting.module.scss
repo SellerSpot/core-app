@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100%;
+    height: auto;
+
+    .cardWrapper {
+        height: 100%;
+
+        @include flex(center, center);
+
+        .contentWrapper {
+            width: 100%;
+
+            .content {
+                @include flex(center, space-between, $gap: 15px);
+
+                .contentLHS {
+                    @include flex(flex-start, $direction: column, $gap: 4px);
+                }
+
+                .saveNotifier {
+                    margin-left: auto;
+                    color: $foregroundTertiary-color;
+                    @include flex(center, center, $gap: 5px);
+                }
+
+                .selectOptionWrapper {
+                    width: 150px;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
