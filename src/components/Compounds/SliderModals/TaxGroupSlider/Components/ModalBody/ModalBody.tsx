@@ -19,7 +19,7 @@ import styles from './ModalBody.module.scss';
 export type IModalBodyProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
     Pick<
         ITaxGroupSliderProps,
-        'showModal' | 'allBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'
+        'showModal' | 'allTaxBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'
     >;
 
 interface ITaxGroupNameFieldProps {
@@ -29,7 +29,7 @@ interface ITaxGroupNameFieldProps {
 }
 
 type ITaxGroupSelectProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
-    Pick<ITaxGroupSliderProps, 'allBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'>;
+    Pick<ITaxGroupSliderProps, 'allTaxBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'>;
 
 const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     // props
@@ -72,11 +72,11 @@ const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
 
 const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
     // props
-    const { submitting, allBrackets, onCreateTaxSetting, isPageOnStandby } = props;
+    const { submitting, allTaxBrackets, onCreateTaxSetting, isPageOnStandby } = props;
     const fieldName: keyof ITaxGroupSliderForm = 'bracket';
 
     // compute
-    const allOptions = TaxGroupSliderService.convertTaxBracketDataToISelectOption(allBrackets);
+    const allOptions = TaxGroupSliderService.convertTaxBracketDataToISelectOption(allTaxBrackets);
     const getFormatCreateLabel: ICreatableSelectProps['formatCreateLabel'] = (value) => {
         return `Create a new tax Group "${value}"`;
     };
@@ -121,7 +121,7 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { showModal, submitting, allBrackets, onCreateTaxSetting, isPageOnStandby } = props;
+    const { showModal, submitting, allTaxBrackets, onCreateTaxSetting, isPageOnStandby } = props;
 
     // compiling data
     const taxGroupNameFieldProps: ITaxGroupNameFieldProps = {
@@ -130,7 +130,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
         submitting,
     };
     const taxGroupSelectProps: ITaxGroupSelectProps = {
-        allBrackets,
+        allTaxBrackets,
         isPageOnStandby,
         onCreateTaxSetting,
         submitting,

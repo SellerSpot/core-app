@@ -25,7 +25,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
         taxBracketSliderProps,
         onCreateTaxSetting,
         prefillData,
-        allBrackets,
+        allTaxBrackets,
         isPageOnStandby,
     } = props;
     const sliderModalWidth = '35%';
@@ -98,7 +98,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                             isPageOnStandby,
                             showModal,
                             submitting,
-                            allBrackets,
+                            allTaxBrackets,
                             onCreateTaxSetting,
                         };
                         const modalFooterProps: IModalFooterProps = {

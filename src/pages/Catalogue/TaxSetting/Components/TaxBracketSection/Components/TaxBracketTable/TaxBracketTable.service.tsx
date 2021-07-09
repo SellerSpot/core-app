@@ -6,14 +6,13 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
-import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React from 'react';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
 import styles from './TaxBracketTable.module.scss';
 
 interface IGetTableProps {
-    allTaxBrackets: ITaxSettingPageState['allBrackets'];
+    allTaxBrackets: ITaxBracketData[];
     isTableLoading: boolean;
     editItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
     deleteItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;

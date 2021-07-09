@@ -6,7 +6,7 @@ import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.type
 import React, { ReactElement } from 'react';
 
 interface ITaxGroupSliderBaseProps {
-    allBrackets: ITaxSettingPageState['allBrackets'];
+    allTaxBrackets: ITaxSettingPageState['allTaxBrackets'];
     taxGroupSlider: State<Pick<ITaxGroupSliderProps, 'showModal' | 'prefillData' | 'mode'>>;
 }
 interface ITaxGroupSliderBaseState {
@@ -15,7 +15,7 @@ interface ITaxGroupSliderBaseState {
 
 export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElement => {
     // props
-    const { allBrackets, taxGroupSlider } = props;
+    const { allTaxBrackets, taxGroupSlider } = props;
 
     // state
     const componentState = useState<ITaxGroupSliderBaseState>({
@@ -66,7 +66,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         showModal: taxGroupSlider.showModal.get(),
         prefillData: taxGroupSlider.prefillData.get(),
         taxBracketSliderProps,
-        allBrackets,
+        allTaxBrackets,
     };
 
     // draw

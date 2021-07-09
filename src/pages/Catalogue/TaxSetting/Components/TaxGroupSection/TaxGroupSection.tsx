@@ -1,22 +1,20 @@
 import { State, useState } from '@hookstate/core';
-import { ITaxGroupData } from '@sellerspot/universal-types';
-import React, { ReactElement } from 'react';
-import { Button } from '@sellerspot/universal-components';
 import Icon from '@iconify/react';
-import { ICONS } from 'utilities/utilities';
+import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import styles from './TaxGroupSection.module.scss';
+import { ITaxGroupSliderProps } from 'components/Compounds/SliderModals/TaxGroupSlider/TaxGroupSlider.types';
+import React, { ReactElement } from 'react';
+import { ICONS } from 'utilities/utilities';
 import { ITaxSettingPageState } from '../../TaxSetting.types';
 import { TaxGroupSliderBase } from './Components/TaxGroupSliderBase/TaxGroupSliderBase';
-import { ITaxGroupSliderProps } from 'components/Compounds/SliderModals/TaxGroupSlider/TaxGroupSlider.types';
 import { TaxGroupTable } from './Components/TaxGroupTable/TaxGroupTable';
+import styles from './TaxGroupSection.module.scss';
 
 interface ITaxGroupSectionProps {
-    allBrackets: ITaxSettingPageState['allBrackets'];
+    allTaxBrackets: ITaxSettingPageState['allTaxBrackets'];
 }
 
 interface IComponentState {
-    allTaxGroups: ITaxGroupData[];
     taxGroupSlider: Pick<ITaxGroupSliderProps, 'showModal' | 'prefillData' | 'mode'>;
 }
 
@@ -61,11 +59,10 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
 
 export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
     // props
-    const { allBrackets } = props;
+    const { allTaxBrackets } = props;
 
     // state
     const componentState = useState<IComponentState>({
-        allTaxGroups: [],
         taxGroupSlider: {
             showModal: false,
             prefillData: null,
@@ -79,7 +76,7 @@ export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
             <PageHeaderComponent taxGroupSlider={componentState.taxGroupSlider} />
             <TaxGroupTable />
             <TaxGroupSliderBase
-                allBrackets={allBrackets}
+                allTaxBrackets={allTaxBrackets}
                 taxGroupSlider={componentState.taxGroupSlider}
             />
         </div>

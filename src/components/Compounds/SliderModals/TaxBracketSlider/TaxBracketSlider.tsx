@@ -17,7 +17,7 @@ import { ITaxBracketSliderForm, ITaxBracketSliderProps } from './TaxBracketSlide
 export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement => {
     // props
     const { mode = 'create', level = 1, showModal, onClose, onSubmit, prefillData } = props;
-    const sliderModalWidth = '35%';
+    const sliderModalWidth = '30%';
 
     // hooks
     const formRef = useRef<FormApi<ITaxBracketSliderForm, Partial<ITaxBracketSliderForm>>>(null);

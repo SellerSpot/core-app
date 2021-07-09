@@ -23,7 +23,7 @@ export interface ITaxGroupSliderProps {
     onCreateTaxSetting: (value: string) => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
-    allBrackets: ITaxBracketData[];
+    allTaxBrackets: ITaxBracketData[];
     taxBracketSliderProps?: ITaxBracketSliderProps;
     prefillData?: ITaxGroupData;
 }

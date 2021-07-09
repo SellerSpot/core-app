@@ -1,28 +1,19 @@
-import { State, useState } from '@hookstate/core';
-import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
-import React, { ReactElement, useEffect } from 'react';
+import { State } from '@hookstate/core';
 import { Table } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
+import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
+import React, { ReactElement } from 'react';
 import { TaxBracketTableService } from './TaxBracketTable.service';
 
 interface ITaxBracketTableProps {
-    pageState: State<ITaxSettingPageState>;
+    sectionState: State<ITaxSettingPageState['taxBracketSection']>;
 }
 
 export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
     // props
-    const { pageState } = props;
-
-    // state
-    const isLoading = useState(false);
+    const { sectionState } = props;
 
     // handlers
-    const getAllTaxBrackets = async () => {
-        isLoading.set(true);
-        const allTaxBrackets = await TaxBracketTableService.getAllTaxBracket();
-        pageState.allBrackets.set(allTaxBrackets);
-        isLoading.set(false);
-    };
     const editItemClickHandler = (taxBracketData: ITaxBracketData) => async () => {
         console.log(taxBracketData);
     };
@@ -30,17 +21,12 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
         console.log(taxBracketData);
     };
 
-    // effects
-    useEffect(() => {
-        getAllTaxBrackets();
-    }, []);
-
     // compile table data
     const tableProps = TaxBracketTableService.getTableProps({
-        allTaxBrackets: pageState.allBrackets.get(),
+        allTaxBrackets: sectionState.allTaxBrackets.get(),
         deleteItemClickHandler,
         editItemClickHandler,
-        isTableLoading: isLoading.get(),
+        isTableLoading: sectionState.isTableLoading.get(),
     });
 
     return <Table {...tableProps} />;

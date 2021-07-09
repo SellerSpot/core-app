@@ -1,25 +1,41 @@
 import { useState } from '@hookstate/core';
 import React, { ReactElement } from 'react';
 import { TaxBracketSection } from './Components/TaxBracketSection/TaxBracketSection';
-import { TaxGroupSection } from './Components/TaxGroupSection/TaxGroupSection';
 import styles from './TaxSetting.module.scss';
 import { ITaxSettingPageState } from './TaxSetting.types';
 
 export const TaxSetting = (): ReactElement => {
     // state
     const pageState = useState<ITaxSettingPageState>({
-        allBrackets: [],
+        taxBracketSection: {
+            allTaxBrackets: [],
+            isTableLoading: true,
+            sliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+        },
+        taxGroupSection: {
+            allTaxGroups: [],
+            isTableLoading: true,
+            sliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+        },
     });
 
     // draw
     return (
         <div className={styles.wrapper}>
             <div className={styles.taxBracketSection}>
-                <TaxBracketSection pageState={pageState} />
+                <TaxBracketSection sectionState={pageState.taxBracketSection} />
             </div>
-            <div className={styles.taxGroupSection}>
-                <TaxGroupSection allBrackets={pageState.allBrackets.get()} />
-            </div>
+            {/* <div className={styles.taxGroupSection}>
+                <TaxGroupSection allTaxBrackets={pageState.allTaxBrackets.get()} />
+            </div> */}
         </div>
     );
 };
