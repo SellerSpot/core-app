@@ -3,8 +3,7 @@ import {
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
-import { FormApi } from 'final-form';
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
 import { TaxBracketSlider } from '../TaxBracketSlider/TaxBracketSlider';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
@@ -23,15 +22,13 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
         onSubmit,
         showModal,
         taxBracketSliderProps,
-        onCreateTaxSetting,
+        onCreateTaxBracket,
         prefillData,
         allTaxBrackets,
         isPageOnStandby,
+        formRef,
     } = props;
-    const sliderModalWidth = '35%';
-
-    // hooks
-    const formRef = useRef<FormApi<ITaxGroupSliderForm, Partial<ITaxGroupSliderForm>>>(null);
+    const sliderModalWidth = '30%';
 
     // special props
     const {
@@ -99,7 +96,7 @@ export const TaxGroupSlider = (props: ITaxGroupSliderProps): ReactElement => {
                             showModal,
                             submitting,
                             allTaxBrackets,
-                            onCreateTaxSetting,
+                            onCreateTaxBracket,
                         };
                         const modalFooterProps: IModalFooterProps = {
                             isPageOnStandby,

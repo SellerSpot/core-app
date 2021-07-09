@@ -24,7 +24,7 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
         sliderState.showSliderModal.set(false);
     };
     const onSubmit = async (values: IProductSliderForm) => {
-        console.log('🚀 ~ file: ProductSlider.tsx ~ line 25 ~ onSubmit ~ values', values);
+        console.log(values);
         await introduceDelay(4000);
     };
 

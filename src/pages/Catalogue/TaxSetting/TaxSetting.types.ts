@@ -3,8 +3,8 @@ import { ITaxBracketSliderProps } from 'components/Compounds/SliderModals/TaxBra
 import { ITaxGroupSliderProps } from 'components/Compounds/SliderModals/TaxGroupSlider/TaxGroupSlider.types';
 
 export interface ITaxSettingPageState {
+    allTaxBrackets: ITaxBracketData[];
     taxBracketSection: {
-        allTaxBrackets: ITaxBracketData[];
         isTableLoading: boolean;
         sliderModal: Pick<ITaxBracketSliderProps, 'showModal' | 'mode' | 'prefillData'>;
     };
@@ -12,5 +12,6 @@ export interface ITaxSettingPageState {
         allTaxGroups: ITaxGroupData[];
         isTableLoading: boolean;
         sliderModal: Pick<ITaxGroupSliderProps, 'showModal' | 'mode' | 'prefillData'>;
+        taxBracketSlider: Pick<ITaxBracketSliderProps, 'showModal' | 'mode' | 'prefillData'>;
     };
 }

@@ -1,34 +1,29 @@
-import { State } from '@hookstate/core';
+import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader.stories';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
+import { ITaxBracketData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { ITaxSettingPageState } from '../../TaxSetting.types';
 import { TaxBracketSliderBase } from './Components/TaxBracketSliderBase/TaxBracketSliderBase';
 import { TaxBracketTable } from './Components/TaxBracketTable/TaxBracketTable';
 import styles from './TaxBracketSection.module.scss';
-import { TaxBracketSectionService } from './TaxBracketSection.service';
 
-interface ITaxBracketSection {
+interface ITaxBracketSectionProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
+    getAllTaxBrackets: () => Promise<void>;
+    allTaxBrackets: ITaxBracketData[];
 }
 
 interface IPageHeaderComponentProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
+    getAllTaxBrackets: () => Promise<void>;
 }
 
 const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const { sectionState } = props;
-
-    // handlers
-    const getAllTaxBrackets = async () => {
-        sectionState.isTableLoading.set(true);
-        const allTaxBrackets = await TaxBracketSectionService.getAllTaxBracket();
-        sectionState.allTaxBrackets.set(allTaxBrackets);
-        sectionState.isTableLoading.set(false);
-    };
+    const { sectionState, getAllTaxBrackets } = props;
 
     // effects
     useEffect(() => {
@@ -66,16 +61,29 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     );
 };
 
-export const TaxBracketSection = (props: ITaxBracketSection): ReactElement => {
+export const TaxBracketSection = (props: ITaxBracketSectionProps): ReactElement => {
     // props
-    const { sectionState } = props;
+    const { sectionState: sectionStateOriginal, getAllTaxBrackets, allTaxBrackets } = props;
+
+    // state
+    const sectionState = useState(sectionStateOriginal);
 
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent sectionState={sectionState} />
-            <TaxBracketTable sectionState={sectionState} />
-            <TaxBracketSliderBase sectionState={sectionState} />
+            <PageHeaderComponent
+                sectionState={sectionState}
+                getAllTaxBrackets={getAllTaxBrackets}
+            />
+            <TaxBracketTable
+                sectionState={sectionState}
+                getAllTaxBrackets={getAllTaxBrackets}
+                allTaxBrackets={allTaxBrackets}
+            />
+            <TaxBracketSliderBase
+                sectionState={sectionState}
+                getAllTaxBrackets={getAllTaxBrackets}
+            />
         </div>
     );
 };

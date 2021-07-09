@@ -6,34 +6,42 @@ export class TaxBracketSliderBaseService {
     static createNewTaxBracket = async (
         values: ITaxBracketSliderForm,
     ): Promise<ITaxBracketData> => {
+        // props
         const { name, rate } = values;
+        // compile data
         const requestData: ICreateTaxBracketRequest = {
             name,
             rate: +rate,
         };
+        // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxBracket(
             requestData,
         );
+        // conditional
         if (status) {
+            // return
             return data;
         }
+        // return
         return null;
     };
 
-    static editTaxBracket = async (props: {
-        name: string;
-        rate: number;
-        id: string;
-    }): Promise<ITaxBracketData> => {
-        const { name, id, rate } = props;
+    static editTaxBracket = async (values: ITaxBracketData): Promise<ITaxBracketData> => {
+        // props
+        const { name, id, rate } = values;
+
+        // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxBracket({
             name,
-            rate,
+            rate: +rate,
             id,
         });
+        // conditional
         if (status) {
+            // return
             return data;
         }
+        // return
         return null;
     };
 }

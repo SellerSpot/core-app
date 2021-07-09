@@ -2,35 +2,34 @@ import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import { ITaxGroupSliderProps } from 'components/Compounds/SliderModals/TaxGroupSlider/TaxGroupSlider.types';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
+import { ITaxBracketData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { ITaxSettingPageState } from '../../TaxSetting.types';
 import { TaxGroupSliderBase } from './Components/TaxGroupSliderBase/TaxGroupSliderBase';
 import { TaxGroupTable } from './Components/TaxGroupTable/TaxGroupTable';
 import styles from './TaxGroupSection.module.scss';
+import { TaxGroupSectionService } from './TaxGroupSection.service';
 
 interface ITaxGroupSectionProps {
-    allTaxBrackets: ITaxSettingPageState['allTaxBrackets'];
-}
-
-interface IComponentState {
-    taxGroupSlider: Pick<ITaxGroupSliderProps, 'showModal' | 'prefillData' | 'mode'>;
+    sectionState: State<ITaxSettingPageState['taxGroupSection']>;
+    getAllTaxBrackets: () => Promise<void>;
+    allTaxBrackets: ITaxBracketData[];
 }
 
 interface IPageHeaderComponentProps {
-    taxGroupSlider: State<Pick<ITaxGroupSliderProps, 'showModal' | 'prefillData' | 'mode'>>;
+    sectionState: State<ITaxSettingPageState['taxGroupSection']>;
 }
 
 const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const { taxGroupSlider } = props;
+    const { sectionState } = props;
 
     // components
     const NewTaxBracketButton = () => {
         // handlers
         const handleOnClick = async () => {
-            taxGroupSlider.merge({
+            sectionState.sliderModal.merge({
                 mode: 'create',
                 prefillData: null,
                 showModal: true,
@@ -59,25 +58,35 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
 
 export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
     // props
-    const { allTaxBrackets } = props;
+    const { sectionState: sectionStateOriginal, getAllTaxBrackets, allTaxBrackets } = props;
 
     // state
-    const componentState = useState<IComponentState>({
-        taxGroupSlider: {
-            showModal: false,
-            prefillData: null,
-            mode: 'create',
-        },
-    });
+    const sectionState = useState(sectionStateOriginal);
+
+    // handlers
+    const getAllTaxGroups = async () => {
+        // request
+        const allTaxGroups = await TaxGroupSectionService.getAllTaxGroup();
+        // state update
+        sectionState.allTaxGroups.set(allTaxGroups);
+        sectionState.isTableLoading.set(false);
+    };
+
+    // effects
+    useEffect(() => {
+        getAllTaxGroups();
+    }, []);
 
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent taxGroupSlider={componentState.taxGroupSlider} />
-            <TaxGroupTable />
+            <PageHeaderComponent sectionState={sectionState} />
+            <TaxGroupTable sectionState={sectionState} getAllTaxGroups={getAllTaxGroups} />
             <TaxGroupSliderBase
+                sectionState={sectionState}
+                getAllTaxGroups={getAllTaxGroups}
+                getAllTaxBrackets={getAllTaxBrackets}
                 allTaxBrackets={allTaxBrackets}
-                taxGroupSlider={componentState.taxGroupSlider}
             />
         </div>
     );

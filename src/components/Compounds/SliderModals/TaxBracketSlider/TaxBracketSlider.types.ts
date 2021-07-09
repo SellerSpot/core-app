@@ -1,5 +1,6 @@
 import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
+import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
 
 interface IPrefillData {
@@ -21,6 +22,7 @@ export interface ITaxBracketSliderModalOnClose {
 
 export interface ITaxBracketSliderProps {
     showModal: boolean;
+    formRef: React.MutableRefObject<FormApi<ITaxBracketSliderForm, Partial<ITaxBracketSliderForm>>>;
     onSubmit: (props: ITaxBracketSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxBracketSliderModalOnClose) => void;
     mode: 'edit' | 'create';

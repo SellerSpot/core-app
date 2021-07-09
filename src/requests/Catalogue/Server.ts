@@ -276,11 +276,12 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     },
     editTaxBracket: async (data) => {
         await introduceDelay(1000);
-        const { name, id } = data;
+        const { name, id, rate } = data;
         let updatedData: ITaxBracketData = null;
         state.taxBrackets.set((state) => {
             const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state[requiredIndex].name = name;
+            state[requiredIndex].rate = rate;
             updatedData = state[requiredIndex] as ITaxBracketData;
             return state;
         });

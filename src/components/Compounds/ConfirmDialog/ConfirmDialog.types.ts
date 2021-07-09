@@ -7,6 +7,7 @@ import {
 
 export interface IConfirmDialogState {
     show: boolean;
+    isLoading: boolean;
     props: IConfirmDialogProps;
     resolve: (result: boolean) => void;
     reject: () => void;
@@ -14,6 +15,8 @@ export interface IConfirmDialogState {
 
 export interface IConfirmDialogStateActions {
     confirm: (props: IConfirmDialogProps) => Promise<boolean>;
+    closeDialog: () => void;
+    setLoading: (props: { isLoading: boolean }) => void;
 }
 
 export interface IConfirmDialogProps {

@@ -3,6 +3,7 @@ import { ISelectOption, ISliderModalProps } from '@sellerspot/universal-componen
 import { IOnClickEvents } from 'typings/common.types';
 import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
 import { ITaxBracketSliderProps } from '../TaxBracketSlider/TaxBracketSlider.types';
+import { FormApi } from 'final-form';
 
 export interface ITaxGroupSliderModalOnSubmit {
     values: ITaxGroupSliderForm;
@@ -17,10 +18,11 @@ export interface ITaxGroupSliderModalOnClose {
 
 export interface ITaxGroupSliderProps {
     showModal: boolean;
+    formRef: React.MutableRefObject<FormApi<ITaxGroupSliderForm, Partial<ITaxGroupSliderForm>>>;
     isPageOnStandby: boolean;
     onSubmit: (props: ITaxGroupSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxGroupSliderModalOnClose) => void;
-    onCreateTaxSetting: (value: string) => void;
+    onCreateTaxBracket: (value: string) => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
     allTaxBrackets: ITaxBracketData[];

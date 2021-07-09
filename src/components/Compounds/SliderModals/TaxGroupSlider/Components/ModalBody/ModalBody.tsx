@@ -19,7 +19,7 @@ import styles from './ModalBody.module.scss';
 export type IModalBodyProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
     Pick<
         ITaxGroupSliderProps,
-        'showModal' | 'allTaxBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'
+        'showModal' | 'allTaxBrackets' | 'onCreateTaxBracket' | 'isPageOnStandby'
     >;
 
 interface ITaxGroupNameFieldProps {
@@ -29,7 +29,7 @@ interface ITaxGroupNameFieldProps {
 }
 
 type ITaxGroupSelectProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
-    Pick<ITaxGroupSliderProps, 'allTaxBrackets' | 'onCreateTaxSetting' | 'isPageOnStandby'>;
+    Pick<ITaxGroupSliderProps, 'allTaxBrackets' | 'onCreateTaxBracket' | 'isPageOnStandby'>;
 
 const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     // props
@@ -72,7 +72,7 @@ const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
 
 const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
     // props
-    const { submitting, allTaxBrackets, onCreateTaxSetting, isPageOnStandby } = props;
+    const { submitting, allTaxBrackets, onCreateTaxBracket, isPageOnStandby } = props;
     const fieldName: keyof ITaxGroupSliderForm = 'bracket';
 
     // compute
@@ -110,7 +110,7 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
                         formatCreateLabel={getFormatCreateLabel}
                         onChange={onChange}
                         options={allOptions}
-                        onCreateOption={onCreateTaxSetting}
+                        onCreateOption={onCreateTaxBracket}
                         isMulti
                     />
                 );
@@ -121,7 +121,7 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { showModal, submitting, allTaxBrackets, onCreateTaxSetting, isPageOnStandby } = props;
+    const { showModal, submitting, allTaxBrackets, onCreateTaxBracket, isPageOnStandby } = props;
 
     // compiling data
     const taxGroupNameFieldProps: ITaxGroupNameFieldProps = {
@@ -132,7 +132,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
     const taxGroupSelectProps: ITaxGroupSelectProps = {
         allTaxBrackets,
         isPageOnStandby,
-        onCreateTaxSetting,
+        onCreateTaxBracket,
         submitting,
     };
 
