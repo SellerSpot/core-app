@@ -25,7 +25,6 @@ import {
     IGetAllTaxBracketResponse,
     IGetAllTaxGroupResponse,
     IResponse,
-    ISearchTaxBracketResponse,
     IStockUnitData,
     ITaxBracketData,
     ITaxGroupData,
@@ -70,7 +69,6 @@ interface ICatalogueServer {
     ) => Promise<IEditStockUnitResponse>;
     // taxBracket
     getAllTaxBracket: () => Promise<IGetAllTaxBracketResponse>;
-    searchTaxBracket: (searchQuery: string) => Promise<ISearchTaxBracketResponse>;
     createNewTaxBracket: (data: ICreateTaxBracketRequest) => Promise<ICreateTaxBracketResponse>;
     deleteTaxBracket: (id: string) => Promise<IResponse>;
     editTaxBracket: (
@@ -225,25 +223,6 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
         return {
             status: true,
             data: allTaxBrackets,
-        };
-    },
-    searchTaxBracket: async (searchQuery: string) => {
-        await introduceDelay(1000);
-        const allTaxBrackets = state.taxBrackets.get();
-        const searchResults: ITaxBracketData[] = [];
-        allTaxBrackets.map((bracket) => {
-            const { id, name, rate } = bracket;
-            if (name.toLocaleLowerCase().startsWith(searchQuery.toLocaleLowerCase())) {
-                searchResults.push({
-                    id,
-                    name,
-                    rate,
-                });
-            }
-        });
-        return {
-            status: true,
-            data: searchResults,
         };
     },
     createNewTaxBracket: async (data) => {
