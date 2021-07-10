@@ -69,10 +69,10 @@ export class BrandTableService {
         const EmptyStatePrimaryCallToAction = () => {
             // handlers
             const handleOnClick = () => {
-                pageState.slider.merge({
-                    isEditMode: false,
+                pageState.sliderModal.merge({
+                    mode: 'edit',
                     prefillData: null,
-                    showSliderModal: true,
+                    showModal: true,
                 });
             };
 
