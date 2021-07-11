@@ -72,7 +72,7 @@ export const Brand = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <BrandTable pageState={pageState} getAllBrand={getAllBrand} />
-            <BrandSliderBase pageState={pageState} getAllBrand={getAllBrand} />
+            <BrandSliderBase sliderState={pageState.sliderModal} getAllBrand={getAllBrand} />
         </div>
     );
 };
