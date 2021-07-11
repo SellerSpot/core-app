@@ -25,7 +25,6 @@ import {
     IGetAllTaxBracketResponse,
     IGetAllTaxGroupResponse,
     IResponse,
-    ISearchTaxBracketResponse,
     IStockUnitData,
     ITaxBracketData,
     ITaxGroupData,
@@ -70,7 +69,6 @@ interface ICatalogueServer {
     ) => Promise<IEditStockUnitResponse>;
     // taxBracket
     getAllTaxBracket: () => Promise<IGetAllTaxBracketResponse>;
-    searchTaxBracket: (searchQuery: string) => Promise<ISearchTaxBracketResponse>;
     createNewTaxBracket: (data: ICreateTaxBracketRequest) => Promise<ICreateTaxBracketResponse>;
     deleteTaxBracket: (id: string) => Promise<IResponse>;
     editTaxBracket: (
@@ -227,25 +225,6 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
             data: allTaxBrackets,
         };
     },
-    searchTaxBracket: async (searchQuery: string) => {
-        await introduceDelay(1000);
-        const allTaxBrackets = state.taxBrackets.get();
-        const searchResults: ITaxBracketData[] = [];
-        allTaxBrackets.map((bracket) => {
-            const { id, name, rate } = bracket;
-            if (name.toLocaleLowerCase().startsWith(searchQuery.toLocaleLowerCase())) {
-                searchResults.push({
-                    id,
-                    name,
-                    rate,
-                });
-            }
-        });
-        return {
-            status: true,
-            data: searchResults,
-        };
-    },
     createNewTaxBracket: async (data) => {
         await introduceDelay(1000);
         const newTaxBracket: ITaxBracketData = {
@@ -276,11 +255,12 @@ const catalogueServer = (state: State<Partial<ICatalogueServerDBState>>): ICatal
     },
     editTaxBracket: async (data) => {
         await introduceDelay(1000);
-        const { name, id } = data;
+        const { name, id, rate } = data;
         let updatedData: ITaxBracketData = null;
         state.taxBrackets.set((state) => {
             const requiredIndex = state.findIndex((taxBracket) => taxBracket.id === id);
             state[requiredIndex].name = name;
+            state[requiredIndex].rate = rate;
             updatedData = state[requiredIndex] as ITaxBracketData;
             return state;
         });

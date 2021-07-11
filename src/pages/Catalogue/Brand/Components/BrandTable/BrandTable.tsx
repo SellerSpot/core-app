@@ -105,10 +105,10 @@ export const BrandTable = (props: {
     };
     const editItemClickHandler = (brandData: IBrandData) => async () => {
         // state update
-        pageState.slider.merge({
+        pageState.sliderModal.merge({
             prefillData: brandData,
-            showSliderModal: true,
-            isEditMode: true,
+            showModal: true,
+            mode: 'edit',
         });
     };
 

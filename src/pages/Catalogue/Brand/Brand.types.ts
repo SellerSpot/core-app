@@ -1,8 +1,8 @@
 import { IBrandData } from '@sellerspot/universal-types';
-import { IBrandSliderState } from './Components/BrandSlider/BrandSlider.types';
+import { IBrandSliderProps } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider.types';
 
 export interface IBrandPageState {
     brands: IBrandData[];
     isBrandTableLoading: boolean;
-    slider: IBrandSliderState;
+    sliderModal: Pick<IBrandSliderProps, 'showModal' | 'prefillData' | 'mode'>;
 }

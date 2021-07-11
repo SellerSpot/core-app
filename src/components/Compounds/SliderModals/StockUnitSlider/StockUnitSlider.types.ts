@@ -9,37 +9,36 @@ interface IPrefillData {
     rate: number;
 }
 
-export interface ITaxBracketSliderModalOnSubmit {
-    values: ITaxBracketSliderForm;
+export interface IStockUnitSliderModalOnSubmit {
+    values: IStockUnitSliderForm;
 }
 
-export interface ITaxBracketSliderModalOnClose {
+export interface IStockUnitSliderModalOnClose {
     submitting: boolean;
     dirty: boolean;
     source: 'close' | 'back' | 'button' | 'backdrop';
     event: IOnClickEvents['div'] | IOnClickEvents['button'];
 }
 
-export interface ITaxBracketSliderProps {
+export interface IStockUnitSliderProps {
     showModal: boolean;
-    formRef: React.MutableRefObject<FormApi<ITaxBracketSliderForm, Partial<ITaxBracketSliderForm>>>;
-    onSubmit: (props: ITaxBracketSliderModalOnSubmit) => Promise<void>;
-    onClose: (props: ITaxBracketSliderModalOnClose) => void;
+    formRef: React.MutableRefObject<FormApi<IStockUnitSliderForm, Partial<IStockUnitSliderForm>>>;
+    onSubmit: (props: IStockUnitSliderModalOnSubmit) => Promise<void>;
+    onClose: (props: IStockUnitSliderModalOnClose) => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
 }
 
-export interface ITaxBracketSliderForm {
+export interface IStockUnitSliderForm {
     name: string;
-    rate: number;
 }
 
-export interface ITaxBracketSliderModalDynamicValues {
+export interface IStockUnitSliderModalDynamicValues {
     sliderModalProps: Pick<ISliderModalProps, 'width' | 'type' | 'showBackdrop'>;
     closeButtonType: 'back' | 'close';
     modalTitle: string;
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
-    initialFormValues: ITaxBracketSliderForm;
+    initialFormValues: IStockUnitSliderForm;
 }

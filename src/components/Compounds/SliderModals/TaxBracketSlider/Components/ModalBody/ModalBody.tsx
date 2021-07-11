@@ -7,7 +7,7 @@ import {
 } from '../../TaxBracketSlider.types';
 import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
-import { TaxBracketSliderService } from '../../TaxBracket.service';
+import { TaxBracketSliderService } from '../../TaxBracketSlider.service';
 
 export type IModalBodyProps = Pick<ITaxBracketSliderModalOnClose, 'submitting'> &
     Pick<ITaxBracketSliderProps, 'showModal'>;

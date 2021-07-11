@@ -1,9 +1,4 @@
 import Icon from '@iconify/react';
-import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
-import React from 'react';
-import { requests } from 'requests/requests';
-import { ICONS } from 'utilities/utilities';
-import styles from './TaxGroupTable.module.scss';
 import {
     IconButton,
     IIconButtonProps,
@@ -13,6 +8,11 @@ import {
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
+import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import React from 'react';
+import { requests } from 'requests/requests';
+import { ICONS } from 'utilities/utilities';
+import styles from './TaxGroupTable.module.scss';
 
 interface IGetTablePropsProps {
     allTaxBrackets: ITaxGroupData[];
@@ -22,14 +22,6 @@ interface IGetTablePropsProps {
 }
 
 export class TaxGroupTableService {
-    static getAllTaxGroup = async (): Promise<ITaxGroupData[]> => {
-        const { data, status } = await requests.catalogue.taxSettingsRequest.getAllTaxGroup();
-        if (status) {
-            return data;
-        }
-        return [];
-    };
-
     static getTableProps = (props: IGetTablePropsProps): ITableProps<ITaxGroupData> => {
         // props
         const { allTaxBrackets, isTableLoading, deleteItemClickHandler, editItemClickHandler } =
@@ -48,7 +40,6 @@ export class TaxGroupTableService {
             // draw
             return (
                 <div className={styles.rowActions}>
-                    <span className={styles.link}>View Product</span>
                     <div className={styles.minActions}>
                         <ToolTip content="Edit">
                             <div>
@@ -98,7 +89,11 @@ export class TaxGroupTableService {
                 size: 'small',
             };
 
-            return <Table {...tableProps} />;
+            return (
+                <div className={styles.innerTableWrapper}>
+                    <Table {...tableProps} />
+                </div>
+            );
         };
 
         // draw
@@ -116,12 +111,11 @@ export class TaxGroupTableService {
                     dataKey: 'name',
                     columnName: 'Bracket Name',
                     align: 'left',
-                    width: '65%',
                 },
                 {
                     columnName: 'Actions',
                     align: 'center',
-                    width: '198px',
+                    width: '100px',
                     customRenderer: actionsCustomRenderer,
                 },
             ],
@@ -129,8 +123,12 @@ export class TaxGroupTableService {
         };
     };
 
-    static deleteTaxGroup = async (taxGroupId: string): Promise<boolean> => {
+    static deleteTaxGroup = async (props: { taxGroupId: string }): Promise<boolean> => {
+        // props
+        const { taxGroupId } = props;
+        // request
         const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxGroup(taxGroupId);
+        // return
         return status;
     };
 }
