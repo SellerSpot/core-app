@@ -1,10 +1,16 @@
-import { State } from '@hookstate/core';
-import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
+import {
+    IBrandSliderForm,
+    IBrandSliderModalOnClose,
+    IBrandSliderProps,
+} from '../../BrandSlider.types';
+import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
 import { BrandSliderService } from '../../BrandSlider.service';
-import { IBrandSliderState, IBrandSliderForm } from '../../BrandSlider.types';
-import styles from './ModalBody.module.scss';
+
+export type IModalBodyProps = Pick<IBrandSliderModalOnClose, 'submitting'> &
+    Pick<IBrandSliderProps, 'showModal'>;
 
 const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     // props
@@ -30,7 +36,7 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     return (
         <InputField
             {...input}
-            value={value}
+            value={value as string}
             type="text"
             disabled={submitting}
             name={undefined}
@@ -38,28 +44,22 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
             fullWidth
             size="medium"
             theme={specialInputFieldProps.theme}
-            label="Brand Name"
+            label="Bracket Name"
             helperMessage={helperMessage}
-            placeHolder="Brand Name"
+            placeHolder="Bracket Name"
         />
     );
 };
 
-export const ModalBody = (props: {
-    sliderState: State<IBrandSliderState>;
-    submitting: boolean;
-}): ReactElement => {
+export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { sliderState, submitting } = props;
+    const { showModal, submitting } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <BrandNameField
-                    autoFocus={sliderState.showSliderModal.get()}
-                    submitting={submitting}
-                />
+                <BrandNameField autoFocus={showModal} submitting={submitting} />
             </div>
         </SliderModalBody>
     );

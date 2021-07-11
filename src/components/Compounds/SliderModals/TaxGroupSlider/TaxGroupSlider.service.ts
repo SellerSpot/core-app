@@ -1,3 +1,4 @@
+import { State } from '@hookstate/core';
 import {
     ICreatableSelectProps,
     IInputFieldProps,
@@ -8,19 +9,33 @@ import {
     ITaxBracketData,
     ITaxGroupData,
 } from '@sellerspot/universal-types';
+import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
+    IHandleOnCloseTaxBracketSliderModalProps,
+    TaxBracketSliderService,
+} from '../TaxBracketSlider/TaxBracketSlider.service';
+import {
     ITaxGroupSliderForm,
     ITaxGroupSliderModalDynamicValues,
+    ITaxGroupSliderModalOnClose,
     ITaxGroupSliderProps,
 } from './TaxGroupSlider.types';
 
 type TGetDynamicProps = Pick<ITaxGroupSliderProps, 'level' | 'mode' | 'prefillData'> & {
     width: string | number;
 };
+export interface IHandleOnCloseTaxGroupSliderModalProps {
+    onCloseProps: ITaxGroupSliderModalOnClose;
+    sliderState: {
+        showModal: State<ITaxGroupSliderProps['showModal']>;
+    };
+    taxBracketSlider: IHandleOnCloseTaxBracketSliderModalProps;
+}
 
 export class TaxGroupSliderService {
     static convertTaxBracketDataToISelectOption = (
@@ -47,7 +62,7 @@ export class TaxGroupSliderService {
         };
         let closeButtonType: ITaxGroupSliderModalDynamicValues['closeButtonType'] = 'close';
         let modalTitle = 'Create new tax Group';
-        let modalFooterPrimaryButtonLabel = 'CREATE TAX Group';
+        let modalFooterPrimaryButtonLabel = 'CREATE TAX GROUP';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         let initialFormValues: ITaxGroupSliderForm = {
             name: '',
@@ -67,7 +82,7 @@ export class TaxGroupSliderService {
         }
 
         // modalTitle
-        if (mode === 'edit') modalTitle = 'Edit tax Group';
+        if (mode === 'edit') modalTitle = 'Edit tax group';
 
         // modalFooterPrimaryButtonLabel
         if (mode === 'edit') modalFooterPrimaryButtonLabel = 'SAVE CHANGES';
@@ -212,5 +227,52 @@ export class TaxGroupSliderService {
             return data;
         }
         return null;
+    };
+
+    static handleOnCloseTaxGroupSliderModal = async (
+        props: IHandleOnCloseTaxGroupSliderModalProps,
+    ): Promise<void> => {
+        // props
+        const { onCloseProps, sliderState, taxBracketSlider } = props;
+        const { dirty, event, submitting } = onCloseProps;
+
+        // confirm dialog actions
+        const { closeDialog, confirm } = accessConfirmDialog();
+
+        // stop propagation
+        event?.stopPropagation();
+        event?.preventDefault();
+
+        // compile data
+        const dialogProps: IConfirmDialogProps = {
+            title: 'Are you sure?',
+            content: 'You will lose all data entered for the tax group',
+            theme: 'warning',
+            primaryButtonProps: {
+                label: 'CLOSE',
+                theme: 'danger',
+            },
+            secondaryButtonProps: {
+                label: 'CANCEL',
+                theme: 'primary',
+            },
+        };
+
+        // logic
+        if (!submitting) {
+            if (taxBracketSlider.sliderState.showModal.get()) {
+                await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal(taxBracketSlider);
+            } else {
+                if (dirty) {
+                    const confirmResult = await confirm(dialogProps);
+                    closeDialog();
+                    if (confirmResult) {
+                        sliderState.showModal.set(false);
+                    }
+                } else {
+                    sliderState.showModal.set(false);
+                }
+            }
+        }
     };
 }

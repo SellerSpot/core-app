@@ -9,11 +9,11 @@ import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { TaxBracketSliderService } from './TaxBracketSlider.service';
-import styles from './TaxBracketSlider.module.scss';
-import { ITaxBracketSliderForm, ITaxBracketSliderProps } from './TaxBracketSlider.types';
+import { StockUnitSliderService } from './StockUnitSlider.service';
+import styles from './StockUnitSlider.module.scss';
+import { IStockUnitSliderForm, IStockUnitSliderProps } from './StockUnitSlider.types';
 
-export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement => {
+export const StockUnitSlider = (props: IStockUnitSliderProps): ReactElement => {
     // props
     const {
         mode = 'create',
@@ -34,7 +34,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = TaxBracketSliderService.getDynamicProps({
+    } = StockUnitSliderService.getDynamicProps({
         level,
         mode,
         prefillData,
@@ -42,7 +42,7 @@ export const TaxBracketSlider = (props: ITaxBracketSliderProps): ReactElement =>
     });
 
     // handlers
-    const onSubmitHandler = async (values: ITaxBracketSliderForm) => {
+    const onSubmitHandler = async (values: IStockUnitSliderForm) => {
         await onSubmit({ values });
     };
     const onBackdropClickHandler: ISliderModalProps['onBackdropClick'] = (event) => {

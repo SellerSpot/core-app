@@ -7,7 +7,7 @@ import { ICONS } from 'utilities/utilities';
 import styles from './Brand.module.scss';
 import { BrandService } from './Brand.service';
 import { IBrandPageState } from './Brand.types';
-import { BrandSlider } from './Components/BrandSlider/BrandSlider';
+import { BrandSliderBase } from './Components/BrandSliderBase/BrandSliderBase';
 import { BrandTable } from './Components/BrandTable/BrandTable';
 
 const PageHeaderComponent = (props: { pageState: State<IBrandPageState> }) => {
@@ -18,10 +18,10 @@ const PageHeaderComponent = (props: { pageState: State<IBrandPageState> }) => {
     const NewBrandButton = () => {
         // handlers
         const onClickHandler: TOnNodeClickHandler<HTMLButtonElement> = () => {
-            pageState.slider.merge({
-                isEditMode: false,
+            pageState.sliderModal.merge({
+                mode: 'create',
                 prefillData: null,
-                showSliderModal: true,
+                showModal: true,
             });
         };
 
@@ -45,11 +45,11 @@ export const Brand = (): ReactElement => {
     // state
     const pageState = useState<IBrandPageState>({
         brands: [],
-        isBrandTableLoading: false,
-        slider: {
+        isBrandTableLoading: true,
+        sliderModal: {
             prefillData: null,
-            showSliderModal: false,
-            isEditMode: false,
+            showModal: false,
+            mode: 'create',
         },
     });
 
@@ -64,7 +64,6 @@ export const Brand = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        pageState.isBrandTableLoading.set(true);
         getAllBrand();
     }, []);
 
@@ -73,7 +72,7 @@ export const Brand = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <BrandTable pageState={pageState} getAllBrand={getAllBrand} />
-            <BrandSlider sliderState={pageState.slider} getAllBrand={getAllBrand} />
+            <BrandSliderBase pageState={pageState} getAllBrand={getAllBrand} />
         </div>
     );
 };

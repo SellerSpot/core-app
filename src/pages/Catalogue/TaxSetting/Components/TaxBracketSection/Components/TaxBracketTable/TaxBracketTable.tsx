@@ -1,46 +1,60 @@
-import { State, useState } from '@hookstate/core';
-import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
-import React, { ReactElement, useEffect } from 'react';
+import { State } from '@hookstate/core';
 import { Table } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
+import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
+import React, { ReactElement } from 'react';
 import { TaxBracketTableService } from './TaxBracketTable.service';
 
 interface ITaxBracketTableProps {
-    pageState: State<ITaxSettingPageState>;
+    sectionState: State<ITaxSettingPageState['taxBracketSection']>;
+    getAllTaxBrackets: () => Promise<void>;
+    allTaxBrackets: ITaxBracketData[];
 }
 
 export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
     // props
-    const { pageState } = props;
+    const { sectionState, getAllTaxBrackets, allTaxBrackets } = props;
 
-    // state
-    const isLoading = useState(false);
+    // hooks
+    const confirmDialog = useConfirmDialog();
 
     // handlers
-    const getAllTaxBrackets = async () => {
-        isLoading.set(true);
-        const allTaxBrackets = await TaxBracketTableService.getAllTaxBracket();
-        pageState.allBrackets.set(allTaxBrackets);
-        isLoading.set(false);
-    };
     const editItemClickHandler = (taxBracketData: ITaxBracketData) => async () => {
-        console.log(taxBracketData);
+        sectionState.sliderModal.merge({
+            mode: 'edit',
+            prefillData: taxBracketData,
+            showModal: true,
+        });
     };
     const deleteItemClickHandler = (taxBracketData: ITaxBracketData) => async () => {
-        console.log(taxBracketData);
+        const confirmResponse = await confirmDialog.confirm({
+            title: 'Are you sure?',
+            content: `This action will delete tax bracket "${taxBracketData.name}" from your catalogue`,
+            primaryButtonProps: {
+                label: 'Delete Tax Bracket',
+                theme: 'danger',
+            },
+            secondaryButtonProps: {
+                label: 'Cancel',
+                theme: 'primary',
+            },
+        });
+        if (confirmResponse) {
+            confirmDialog.setLoading({ isLoading: true });
+            await TaxBracketTableService.deleteTaxBracket({ taxBracketId: taxBracketData.id });
+            await getAllTaxBrackets();
+            confirmDialog.setLoading({ isLoading: true });
+        }
+        confirmDialog.closeDialog();
     };
-
-    // effects
-    useEffect(() => {
-        getAllTaxBrackets();
-    }, []);
 
     // compile table data
     const tableProps = TaxBracketTableService.getTableProps({
-        allTaxBrackets: pageState.allBrackets.get(),
+        allTaxBrackets,
         deleteItemClickHandler,
         editItemClickHandler,
-        isTableLoading: isLoading.get(),
+        isTableLoading: sectionState.isTableLoading.get(),
     });
 
     return <Table {...tableProps} />;

@@ -6,28 +6,19 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
-import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React from 'react';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
 import styles from './TaxBracketTable.module.scss';
 
 interface IGetTableProps {
-    allTaxBrackets: ITaxSettingPageState['allBrackets'];
+    allTaxBrackets: ITaxBracketData[];
     isTableLoading: boolean;
     editItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
     deleteItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
 }
 
 export class TaxBracketTableService {
-    static getAllTaxBracket = async (): Promise<ITaxBracketData[]> => {
-        const { data, status } = await requests.catalogue.taxSettingsRequest.getAllTaxBracket();
-        if (status) {
-            return data;
-        }
-        return [];
-    };
-
     static getTableProps = (props: IGetTableProps): ITableProps<ITaxBracketData> => {
         // props
         const { allTaxBrackets, isTableLoading, deleteItemClickHandler, editItemClickHandler } =
@@ -52,7 +43,6 @@ export class TaxBracketTableService {
             // draw
             return (
                 <div className={styles.rowActions}>
-                    <span className={styles.link}>View Products</span>
                     <div className={styles.minActions}>
                         <ToolTip content="Edit">
                             <div>
@@ -105,14 +95,16 @@ export class TaxBracketTableService {
                 {
                     columnName: 'Actions',
                     align: 'center',
-                    width: '198px',
+                    width: '100px',
                     customRenderer: actionsCustomRenderer,
                 },
             ],
         };
     };
 
-    static deleteTaxBracket = async (taxBracketId: string): Promise<boolean> => {
+    static deleteTaxBracket = async (props: { taxBracketId: string }): Promise<boolean> => {
+        // props
+        const { taxBracketId } = props;
         const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxBracket(
             taxBracketId,
         );

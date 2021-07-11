@@ -1,51 +1,56 @@
 import { State } from '@hookstate/core';
-import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { TaxBracketSlider } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider';
+import { TaxBracketSliderService } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.service';
 import { ITaxBracketSliderProps } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.types';
-import React, { ReactElement } from 'react';
+import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
+import React, { ReactElement, useRef } from 'react';
+import { TaxBracketSliderBaseService } from './TaxBracketSliderBase.service';
 
 interface ITaxBracketSliderBaseProps {
-    sliderState: State<Pick<ITaxBracketSliderProps, 'showModal' | 'prefillData' | 'mode'>>;
+    sectionState: State<ITaxSettingPageState['taxBracketSection']>;
+    getAllTaxBrackets: () => Promise<void>;
 }
 
 export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sectionState, getAllTaxBrackets } = props;
 
-    // hooks
-    const confirmDialog = useConfirmDialog();
+    // refs
+    const taxBracketSliderFormRef: ITaxBracketSliderProps['formRef'] = useRef(null);
 
     // handlers
     const onCloseHandler: ITaxBracketSliderProps['onClose'] = async (props) => {
-        // props
-        const { dirty, submitting } = props;
-
-        // compute
-        if (dirty || submitting) {
-            const dialogResponse = await confirmDialog.confirm({
-                title: 'Are you sure?',
-                content: 'All data you entered will be lost',
-                theme: 'warning',
-            });
-            if (dialogResponse) {
-                sliderState.showModal.set(false);
-            }
-        } else {
-            sliderState.showModal.set(false);
-        }
+        await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
+            onCloseProps: props,
+            sliderState: {
+                showModal: sectionState.sliderModal.showModal,
+            },
+        });
     };
-    const onSubmitHandler: ITaxBracketSliderProps['onSubmit'] = async () => {
-        console.log('OnSubmit called');
+    const onSubmitHandler: ITaxBracketSliderProps['onSubmit'] = async ({ values }) => {
+        if (sectionState.sliderModal.mode.get() === 'create') {
+            await TaxBracketSliderBaseService.createNewTaxBracket(values);
+        } else {
+            await TaxBracketSliderBaseService.editTaxBracket({
+                id: sectionState.sliderModal.prefillData.id.get(),
+                ...values,
+            });
+        }
+        await getAllTaxBrackets();
+        sectionState.sliderModal.merge({
+            showModal: false,
+        });
     };
 
     //compile data
     const taxBracketSliderProps: ITaxBracketSliderProps = {
-        level: 1,
-        mode: sliderState.mode.get(),
+        showModal: sectionState.sliderModal.showModal.get(),
+        formRef: taxBracketSliderFormRef,
+        mode: sectionState.sliderModal.mode.get(),
+        prefillData: sectionState.sliderModal.prefillData.get(),
         onClose: onCloseHandler,
         onSubmit: onSubmitHandler,
-        showModal: sliderState.showModal.get(),
-        prefillData: sliderState.prefillData.get(),
+        level: 1,
     };
 
     // draw
