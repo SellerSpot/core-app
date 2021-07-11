@@ -40,7 +40,7 @@ export const PluginStore = (): ReactElement => {
         const currentPlugin = plugins[pluginIndex].get();
         if (isInstalled) {
             // perform launch sequence
-            history.push(PLUGIN_ROUTES[currentPlugin.id as keyof typeof PLUGIN_ROUTES]);
+            history.push(PLUGIN_ROUTES[currentPlugin.uniqueName as keyof typeof PLUGIN_ROUTES]);
         } else {
             // perform install sequence - trigger installation flow by passing in history state install:true along with push
             history.push(getPluginUrl(currentPlugin.id), {

@@ -84,7 +84,7 @@ export const ViewPlugin = (): ReactElement => {
     };
 
     const onLaunchClickHandler = () => {
-        history.push(PLUGIN_ROUTES[plugin.value.id as keyof typeof PLUGIN_ROUTES]);
+        history.push(PLUGIN_ROUTES[plugin.value.uniqueName as keyof typeof PLUGIN_ROUTES]);
     };
 
     // effects
