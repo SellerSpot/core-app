@@ -3,7 +3,9 @@ import { ITaxBracketData } from '../../../../.yalc/@sellerspot/universal-types/d
 
 export class TaxSettingService {
     static getAllTaxBracket = async (): Promise<ITaxBracketData[]> => {
+        // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.getAllTaxBracket();
+        // action
         if (status) {
             return data;
         }

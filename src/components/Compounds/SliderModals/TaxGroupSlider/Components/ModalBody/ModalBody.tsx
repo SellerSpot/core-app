@@ -76,7 +76,9 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
     const fieldName: keyof ITaxGroupSliderForm = 'bracket';
 
     // compute
-    const allOptions = TaxGroupSliderService.convertTaxBracketDataToISelectOption(allTaxBrackets);
+    const allOptions = TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+        brackets: allTaxBrackets,
+    });
     const getFormatCreateLabel: ICreatableSelectProps['formatCreateLabel'] = (value) => {
         return `Create a new tax Group "${value}"`;
     };

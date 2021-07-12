@@ -4,7 +4,7 @@ import { Button } from '@sellerspot/universal-components';
 import React, { ReactElement, useEffect } from 'react';
 import { PageHeader } from '../../../components/Compounds/PageHeader/PageHeader';
 import { ICONS } from '../../../utilities/utilities';
-import { StockUnitSlider } from './Components/StockUnitSlider/StockUnitSlider';
+import { StockUnitSliderBase } from './Components/StockUnitSliderBase/StockUnitSliderBase';
 import { StockUnitTable } from './Components/StockUnitTable/StockUnitTable';
 import styles from './StockUnit.module.scss';
 import { StockUnitService } from './StockUnit.service';
@@ -18,10 +18,10 @@ const PageHeaderComponent = (props: { pageState: State<IStockUnitPageState> }) =
     const NewStockUnitButton = () => {
         // handlers
         const onClickHandler = () => {
-            pageState.slider.merge({
-                isEditMode: false,
+            pageState.sliderModal.merge({
+                mode: 'create',
                 prefillData: null,
-                showSliderModal: true,
+                showModal: true,
             });
         };
         // draw
@@ -49,11 +49,11 @@ export const StockUnit = (): ReactElement => {
     // state
     const pageState = useState<IStockUnitPageState>({
         stockUnits: [],
-        isStockUnitTableLoading: false,
-        slider: {
-            isEditMode: false,
+        isStockUnitTableLoading: true,
+        sliderModal: {
+            mode: 'create',
             prefillData: null,
-            showSliderModal: false,
+            showModal: false,
         },
     });
 
@@ -68,7 +68,6 @@ export const StockUnit = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        pageState.isStockUnitTableLoading.set(true);
         getAllStockUnit();
     }, []);
 
@@ -77,7 +76,10 @@ export const StockUnit = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <StockUnitTable pageState={pageState} getAllStockUnit={getAllStockUnit} />
-            <StockUnitSlider getAllStockUnit={getAllStockUnit} sliderState={pageState.slider} />
+            <StockUnitSliderBase
+                sliderState={pageState.sliderModal}
+                getAllStockUnit={getAllStockUnit}
+            />
         </div>
     );
 };

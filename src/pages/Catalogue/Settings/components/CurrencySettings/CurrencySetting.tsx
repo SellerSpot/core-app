@@ -57,43 +57,45 @@ export const CurrencySetting = (): ReactElement => {
 
     // draw
     return (
-        <Loader isLoading={loading.get()} wrapperDivClassName={styles.wrapper} loaderType="shimmer">
-            {!loading.get() && (
-                <Card
-                    className={{
-                        cardWrapper: styles.cardWrapper,
-                        contentWrapper: styles.contentWrapper,
-                    }}
-                    content={
-                        <div className={styles.content}>
-                            <div className={styles.contentLHS}>
-                                <h4>Store Currency</h4>
-                                <p>Please select the currency to use across your store</p>
+        <Loader isLoading={loading.get()} loaderType="shimmer">
+            <div className={styles.wrapper}>
+                {!loading.get() && (
+                    <Card
+                        className={{
+                            cardWrapper: styles.cardWrapper,
+                            contentWrapper: styles.contentWrapper,
+                        }}
+                        content={
+                            <div className={styles.content}>
+                                <div className={styles.contentLHS}>
+                                    <h4>Store Currency</h4>
+                                    <p>Please select the currency to use across your store</p>
+                                </div>
+                                <div className={styles.saveNotifier}>
+                                    {isSaving.get() && (
+                                        <>
+                                            <CircularProgress size={'12px'} theme="auto" />
+                                            <div>saving</div>
+                                        </>
+                                    )}
+                                </div>
+                                <div className={styles.selectOptionWrapper}>
+                                    <Select
+                                        options={getFormattedOptions()}
+                                        onChange={(currency: ISelectOption) =>
+                                            onSelectChangeHandler(currency.value)
+                                        }
+                                        value={getFormattedCurrency(tenantDetails?.storeCurrency)}
+                                        isDisabled={isSaving.get()}
+                                        label="Currency"
+                                        isMulti={false}
+                                    />
+                                </div>
                             </div>
-                            <div className={styles.saveNotifier}>
-                                {isSaving.get() && (
-                                    <>
-                                        <CircularProgress size={'12px'} theme="auto" />
-                                        <div>saving</div>
-                                    </>
-                                )}
-                            </div>
-                            <div className={styles.selectOptionWrapper}>
-                                <Select
-                                    options={getFormattedOptions()}
-                                    onChange={(currency: ISelectOption) =>
-                                        onSelectChangeHandler(currency.value)
-                                    }
-                                    value={getFormattedCurrency(tenantDetails?.storeCurrency)}
-                                    isDisabled={isSaving.get()}
-                                    label="Currency"
-                                    isMulti={false}
-                                />
-                            </div>
-                        </div>
-                    }
-                />
-            )}
+                        }
+                    />
+                )}
+            </div>
         </Loader>
     );
 };

@@ -1,5 +1,7 @@
+import { State } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
+    Button,
     IconButton,
     IIconButtonProps,
     ITableCollapsedCustomRenderer,
@@ -9,6 +11,7 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React from 'react';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
@@ -17,6 +20,7 @@ import styles from './TaxGroupTable.module.scss';
 interface IGetTablePropsProps {
     allTaxBrackets: ITaxGroupData[];
     isTableLoading: boolean;
+    taxGroupSliderState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
     editItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
     deleteItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
 }
@@ -24,8 +28,13 @@ interface IGetTablePropsProps {
 export class TaxGroupTableService {
     static getTableProps = (props: IGetTablePropsProps): ITableProps<ITaxGroupData> => {
         // props
-        const { allTaxBrackets, isTableLoading, deleteItemClickHandler, editItemClickHandler } =
-            props;
+        const {
+            allTaxBrackets,
+            isTableLoading,
+            deleteItemClickHandler,
+            editItemClickHandler,
+            taxGroupSliderState,
+        } = props;
 
         const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
             // props
@@ -95,6 +104,27 @@ export class TaxGroupTableService {
                 </div>
             );
         };
+        const EmptyStatePrimaryCallToAction = () => {
+            // handlers
+            const handleOnClick = () => {
+                taxGroupSliderState.merge({
+                    mode: 'create',
+                    prefillData: null,
+                    showModal: true,
+                });
+            };
+
+            return (
+                <Button
+                    label="NEW TAX GROUP"
+                    theme="primary"
+                    size="small"
+                    onClick={handleOnClick}
+                    variant="contained"
+                    startIcon={<Icon icon={ICONS.outlineAdd} />}
+                />
+            );
+        };
 
         // draw
         return {
@@ -120,6 +150,8 @@ export class TaxGroupTableService {
                 },
             ],
             collapsedContentRenderer,
+            emptyStateMessage: 'You have not added any groups yet',
+            emptyStatePrimaryCallToAction: <EmptyStatePrimaryCallToAction />,
         };
     };
 
@@ -128,7 +160,7 @@ export class TaxGroupTableService {
         const { taxGroupId } = props;
         // request
         const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxGroup(taxGroupId);
-        // return
+        // action
         return status;
     };
 }

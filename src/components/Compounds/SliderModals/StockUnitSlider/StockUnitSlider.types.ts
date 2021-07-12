@@ -6,7 +6,6 @@ import { IOnClickEvents } from 'typings/common.types';
 interface IPrefillData {
     name: string;
     id: string;
-    rate: number;
 }
 
 export interface IStockUnitSliderModalOnSubmit {

@@ -3,7 +3,9 @@ import { ITaxGroupData } from '../../../../../../.yalc/@sellerspot/universal-typ
 
 export class TaxGroupSectionService {
     static getAllTaxGroup = async (): Promise<ITaxGroupData[]> => {
+        // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.getAllTaxGroup();
+        // action
         if (status) {
             return data;
         }

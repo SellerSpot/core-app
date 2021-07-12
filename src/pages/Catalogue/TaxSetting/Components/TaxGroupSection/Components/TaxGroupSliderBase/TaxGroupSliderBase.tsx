@@ -13,14 +13,21 @@ import { TaxGroupSliderBaseService } from './TaxGroupSliderBase.service';
 
 interface ITaxGroupSliderBaseProps {
     allTaxBrackets: ITaxBracketData[];
-    sectionState: State<ITaxSettingPageState['taxGroupSection']>;
+    taxBracketSliderState: State<ITaxSettingPageState['taxGroupSection']['taxBracketSlider']>;
+    taxGroupSliderState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
     getAllTaxGroups: () => Promise<void>;
     getAllTaxBrackets: () => Promise<void>;
 }
 
 export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElement => {
     // props
-    const { sectionState, getAllTaxGroups, allTaxBrackets, getAllTaxBrackets } = props;
+    const {
+        getAllTaxGroups,
+        allTaxBrackets,
+        getAllTaxBrackets,
+        taxBracketSliderState,
+        taxGroupSliderState,
+    } = props;
 
     // refs
     const taxBracketSliderFormRef: ITaxBracketSliderProps['formRef'] = useRef(null);
@@ -28,7 +35,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
 
     // handlers
     const handleOnCreateTaxBracket: ITaxGroupSliderProps['onCreateTaxBracket'] = (value) => {
-        sectionState.taxBracketSlider.merge({
+        taxBracketSliderState.merge({
             mode: 'create',
             prefillData: {
                 id: null,
@@ -42,7 +49,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
             onCloseProps: props,
             sliderState: {
-                showModal: sectionState.taxBracketSlider.showModal,
+                showModal: taxBracketSliderState.showModal,
             },
         });
     };
@@ -53,7 +60,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         // compute
         await TaxGroupSliderService.handleOnCloseTaxGroupSliderModal({
             onCloseProps: props,
-            sliderState: sectionState.sliderModal,
+            sliderState: taxGroupSliderState,
             taxBracketSlider: {
                 onCloseProps: {
                     dirty: taxBracketSliderFormState?.dirty,
@@ -62,22 +69,22 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
                     source: 'backdrop',
                 },
                 sliderState: {
-                    showModal: sectionState.taxBracketSlider?.showModal,
+                    showModal: taxBracketSliderState.showModal,
                 },
             },
         });
     };
     const onSubmitTaxGroupSlider: ITaxGroupSliderProps['onSubmit'] = async ({ values }) => {
-        if (sectionState.sliderModal.mode.get() === 'create') {
+        if (taxGroupSliderState.mode.get() === 'create') {
             await TaxGroupSliderBaseService.createTaxGroup(values);
         } else {
             await TaxGroupSliderBaseService.editTaxGroup({
                 bracket: values.bracket,
-                id: sectionState.sliderModal.prefillData.get()['id'],
+                id: taxGroupSliderState.prefillData.get()['id'],
                 name: values.name,
             });
         }
-        sectionState.sliderModal.showModal.set(false);
+        taxGroupSliderState.showModal.set(false);
         getAllTaxGroups();
     };
     const onSubmitTaxBracketSlider: ITaxBracketSliderProps['onSubmit'] = async ({ values }) => {
@@ -88,35 +95,33 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         const existingBracketsInTaxGroupSliderForm =
             taxGroupSliderFormRef.current.getFieldState('bracket').value;
         const newBracketToISelectOption =
-            TaxGroupSliderService.convertTaxBracketDataToISelectOption([createdBracket]);
+            TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+                brackets: [createdBracket],
+            });
         existingBracketsInTaxGroupSliderForm.push(newBracketToISelectOption[0]);
         taxGroupSliderFormRef.current.change('bracket', existingBracketsInTaxGroupSliderForm);
 
         // closing bracket slider
-        sectionState.taxBracketSlider.showModal.set(false);
+        taxBracketSliderState.showModal.set(false);
         getAllTaxBrackets();
     };
 
-    // useEffect(() => {
-    //     console.log();
-    // }, [allTaxBrackets]);
-
     // compile data
     const taxBracketSliderProps: ITaxBracketSliderProps = {
-        showModal: sectionState.taxBracketSlider.showModal.get(),
-        mode: sectionState.taxBracketSlider.mode.get(),
-        prefillData: sectionState.taxBracketSlider.prefillData.get(),
+        showModal: taxBracketSliderState.showModal.get(),
+        mode: taxBracketSliderState.mode.get(),
+        prefillData: taxBracketSliderState.prefillData.get(),
         onClose: handleOnCloseTaxBracketSlider,
         onSubmit: onSubmitTaxBracketSlider,
         formRef: taxBracketSliderFormRef,
         level: 2,
     };
     const taxGroupSliderProps: ITaxGroupSliderProps = {
-        showModal: sectionState.sliderModal.showModal.get(),
+        showModal: taxGroupSliderState.showModal.get(),
         formRef: taxGroupSliderFormRef,
-        mode: sectionState.sliderModal.mode.get(),
-        isPageOnStandby: sectionState.taxBracketSlider.showModal.get(),
-        prefillData: sectionState.sliderModal.prefillData.get(),
+        mode: taxGroupSliderState.mode.get(),
+        isPageOnStandby: false,
+        prefillData: taxGroupSliderState.prefillData.get(),
         onClose: handleOnCloseTaxGroupSlider,
         onCreateTaxBracket: handleOnCreateTaxBracket,
         onSubmit: onSubmitTaxGroupSlider,
