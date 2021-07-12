@@ -7,13 +7,13 @@ import React, { ReactElement, useRef } from 'react';
 import { TaxBracketSliderBaseService } from './TaxBracketSliderBase.service';
 
 interface ITaxBracketSliderBaseProps {
-    sectionState: State<ITaxSettingPageState['taxBracketSection']>;
+    sliderState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
     getAllTaxBrackets: () => Promise<void>;
 }
 
 export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactElement => {
     // props
-    const { sectionState, getAllTaxBrackets } = props;
+    const { sliderState, getAllTaxBrackets } = props;
 
     // refs
     const taxBracketSliderFormRef: ITaxBracketSliderProps['formRef'] = useRef(null);
@@ -23,31 +23,31 @@ export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactEl
         await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
             onCloseProps: props,
             sliderState: {
-                showModal: sectionState.sliderModal.showModal,
+                showModal: sliderState.showModal,
             },
         });
     };
     const onSubmitHandler: ITaxBracketSliderProps['onSubmit'] = async ({ values }) => {
-        if (sectionState.sliderModal.mode.get() === 'create') {
+        if (sliderState.mode.get() === 'create') {
             await TaxBracketSliderBaseService.createNewTaxBracket(values);
         } else {
             await TaxBracketSliderBaseService.editTaxBracket({
-                id: sectionState.sliderModal.prefillData.id.get(),
+                id: sliderState.prefillData.id.get(),
                 ...values,
             });
         }
         await getAllTaxBrackets();
-        sectionState.sliderModal.merge({
+        sliderState.merge({
             showModal: false,
         });
     };
 
     //compile data
     const taxBracketSliderProps: ITaxBracketSliderProps = {
-        showModal: sectionState.sliderModal.showModal.get(),
+        showModal: sliderState.showModal.get(),
         formRef: taxBracketSliderFormRef,
-        mode: sectionState.sliderModal.mode.get(),
-        prefillData: sectionState.sliderModal.prefillData.get(),
+        mode: sliderState.mode.get(),
+        prefillData: sliderState.prefillData.get(),
         onClose: onCloseHandler,
         onSubmit: onSubmitHandler,
         level: 1,

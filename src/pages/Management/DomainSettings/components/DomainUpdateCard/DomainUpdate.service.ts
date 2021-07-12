@@ -35,6 +35,7 @@ export default class DomainUpdateCardService {
             if (value === currentDomain) {
                 throw new Error('SAME_AS_CURRENT');
             } else {
+                // request
                 const response =
                     await requests.management.domainSettingsRequest.checkDomainAvailability(value);
                 if (!response?.status) {

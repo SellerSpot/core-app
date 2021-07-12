@@ -55,6 +55,7 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
         deleteItemClickHandler,
         editItemClickHandler,
         isTableLoading: sectionState.isTableLoading.get(),
+        taxBracketSliderState: sectionState.sliderModal,
     });
 
     return <Table {...tableProps} />;

@@ -19,7 +19,7 @@ const PageHeaderComponent = (props: { pageState: State<IStockUnitPageState> }) =
         // handlers
         const onClickHandler = () => {
             pageState.sliderModal.merge({
-                mode: 'edit',
+                mode: 'create',
                 prefillData: null,
                 showModal: true,
             });
@@ -76,7 +76,10 @@ export const StockUnit = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <StockUnitTable pageState={pageState} getAllStockUnit={getAllStockUnit} />
-            <StockUnitSliderBase sliderState={pageState.sliderModal} />
+            <StockUnitSliderBase
+                sliderState={pageState.sliderModal}
+                getAllStockUnit={getAllStockUnit}
+            />
         </div>
     );
 };

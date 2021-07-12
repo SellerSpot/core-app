@@ -1,114 +1,60 @@
-import { State, useState } from '@hookstate/core';
-import {
-    Alert,
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    DialogLayoutWrapper,
-    showNotify,
-    Table,
-} from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
+import { State } from '@hookstate/core';
+import { Table } from '@sellerspot/universal-components';
 import { IStockUnitData } from '@sellerspot/universal-types';
+import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+import React, { ReactElement } from 'react';
 import { IStockUnitPageState } from '../../StockUnit.types';
 import { StockUnitTableService } from './StockUnitTable.service';
 
-interface IDialogState {
-    showDialog: boolean;
-    stockUnitName: string;
-    stockUnitId: string;
-}
-
-const DialogComponent = (props: {
-    dialogState: State<IDialogState>;
-    getAllStockUnit: () => Promise<void>;
-}) => {
-    // props
-    const { dialogState, getAllStockUnit } = props;
-
-    // state
-    const isLoading = useState(false);
-
-    // handlers
-    const handlePrimaryButtonOnClick = async () => {
-        isLoading.set(true);
-        // request
-        const result = await StockUnitTableService.deleteStockUnit(dialogState.stockUnitId.get());
-        // compute
-        if (result) {
-            await getAllStockUnit();
-            showNotify(`'${dialogState.stockUnitName.get()}' stock unit deleted successfully!`, {
-                theme: 'success',
-            });
-        }
-        isLoading.set(false);
-        dialogState.showDialog.set(false);
-    };
-    const handleSecondaryButtonOnClick = () => dialogState.showDialog.set(false);
-
-    // draw
-    return (
-        <Dialog showDialog={dialogState.showDialog.get()}>
-            <DialogLayoutWrapper>
-                <DialogHeader title={'Are you sure?'} />
-                <DialogBody>
-                    <Alert type="error">{`This action will delete stock unit '${dialogState.stockUnitName.get()}'`}</Alert>
-                </DialogBody>
-                <DialogFooter>
-                    <Button
-                        variant="outlined"
-                        theme="primary"
-                        disabled={isLoading.get()}
-                        label={'CANCEL'}
-                        onClick={handleSecondaryButtonOnClick}
-                    />
-                    <Button
-                        variant="contained"
-                        theme="danger"
-                        isLoading={isLoading.get()}
-                        label={'DELETE STOCK UNIT'}
-                        onClick={handlePrimaryButtonOnClick}
-                    />
-                </DialogFooter>
-            </DialogLayoutWrapper>
-        </Dialog>
-    );
-};
-
-export const StockUnitTable = (props: {
+interface IStockUnitTableProps {
     pageState: State<IStockUnitPageState>;
     getAllStockUnit: () => Promise<void>;
-}): ReactElement => {
+}
+
+export const StockUnitTable = (props: IStockUnitTableProps): ReactElement => {
     // props
     const { pageState, getAllStockUnit } = props;
 
-    // state
-    const dialogState = useState<IDialogState>({
-        showDialog: false,
-        stockUnitId: '',
-        stockUnitName: '',
-    });
+    // hooks
+    const { confirm, closeDialog, setLoading } = useConfirmDialog();
 
     // handlers
     const deleteItemClickHandler = (stockUnitData: IStockUnitData) => async () => {
         // props
         const { id, name } = stockUnitData;
 
-        // state update
-        dialogState.merge({
-            stockUnitName: name,
-            stockUnitId: id,
-            showDialog: true,
+        // confirm
+        const confirmResult = await confirm({
+            title: 'Are you sure?',
+            content: `This will permanently delete the stock unit "${name}"`,
+            theme: 'warning',
+            primaryButtonProps: {
+                theme: 'danger',
+                label: 'DELETE',
+            },
+            secondaryButtonProps: {
+                theme: 'primary',
+                label: 'CANCEL',
+            },
         });
+
+        // actions
+        if (confirmResult) {
+            setLoading({ isLoading: true });
+            const result = await StockUnitTableService.deleteStockUnit(id);
+            if (result) {
+                await getAllStockUnit();
+                setLoading({ isLoading: false });
+            }
+        }
+        closeDialog();
     };
     const editItemClickHandler = (stockUnitData: IStockUnitData) => async () => {
         // state update
-        pageState.slider.merge({
+        pageState.sliderModal.merge({
             prefillData: stockUnitData,
-            showSliderModal: true,
-            isEditMode: true,
+            showModal: true,
+            mode: 'edit',
         });
     };
 
@@ -120,10 +66,5 @@ export const StockUnitTable = (props: {
     });
 
     // draw
-    return (
-        <>
-            <Table {...tableProps} />
-            <DialogComponent dialogState={dialogState} getAllStockUnit={getAllStockUnit} />
-        </>
-    );
+    return <Table {...tableProps} />;
 };

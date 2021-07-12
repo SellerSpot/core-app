@@ -1,4 +1,4 @@
-import { ICreateTaxBracketRequest, ITaxBracketData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ITaxBracketSliderForm } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.types';
 import { requests } from 'requests/requests';
 
@@ -8,15 +8,12 @@ export class TaxBracketSliderBaseService {
     ): Promise<ITaxBracketData> => {
         // props
         const { name, rate } = values;
-        // compile data
-        const requestData: ICreateTaxBracketRequest = {
+
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxBracket({
             name,
             rate: +rate,
-        };
-        // request
-        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxBracket(
-            requestData,
-        );
+        });
         // conditional
         if (status) {
             // return

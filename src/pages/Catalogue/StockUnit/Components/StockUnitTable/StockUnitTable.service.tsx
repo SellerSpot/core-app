@@ -47,7 +47,6 @@ export class StockUnitTableService {
             // draw
             return (
                 <div className={styles.rowActions}>
-                    <span className={styles.link}>View Products</span>
                     {!rowData.isDefault && (
                         <div className={styles.minActions}>
                             <ToolTip content="Edit">
@@ -100,7 +99,7 @@ export class StockUnitTableService {
                 {
                     columnName: 'Actions',
                     align: 'center',
-                    width: '200px',
+                    width: '100px',
                     customRenderer: actionsCustomRenderer,
                 },
             ],
@@ -108,7 +107,9 @@ export class StockUnitTableService {
     };
 
     static deleteStockUnit = async (stockUnitId: string): Promise<boolean> => {
+        // request
         const { status } = await requests.catalogue.stockUnitRequest.deleteStockUnit(stockUnitId);
+        // action
         return status;
     };
 }

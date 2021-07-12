@@ -1,14 +1,16 @@
+import { IBrandData } from '@sellerspot/universal-types';
 import { IBrandSliderForm } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider.types';
 import { requests } from 'requests/requests';
-import { IBrandData, ICreateBrandRequest } from '@sellerspot/universal-types';
 
 export class BrandSliderBaseService {
     static createNewBrand = async (values: IBrandSliderForm): Promise<IBrandData> => {
+        // props
         const { name } = values;
-        const requestData: ICreateBrandRequest = {
-            name,
-        };
-        const { data, status } = await requests.catalogue.brandRequest.createNewBrand(requestData);
+
+        // request
+        const { data, status } = await requests.catalogue.brandRequest.createNewBrand({ name });
+
+        // action
         if (status) {
             return data;
         }
@@ -16,12 +18,13 @@ export class BrandSliderBaseService {
     };
 
     static editBrand = async (props: { name: string; id: string }): Promise<IBrandData> => {
+        // props
         const { name, id } = props;
-        const requestData = {
-            name,
-            id,
-        };
-        const { data, status } = await requests.catalogue.brandRequest.editBrand(requestData);
+
+        // request
+        const { data, status } = await requests.catalogue.brandRequest.editBrand({ id, name });
+
+        // actions
         if (status) {
             return data;
         }

@@ -1,5 +1,6 @@
 import { State } from '@hookstate/core';
 import { BrandSlider } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider';
+import { BrandSliderService } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider.service';
 import { IBrandSliderProps } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider.types';
 import React, { ReactElement, useRef } from 'react';
 import { IBrandPageState } from '../../Brand.types';
@@ -30,8 +31,13 @@ export const BrandSliderBase = (props: IBrandSliderBaseProps): ReactElement => {
         await getAllBrand();
         sliderState.showModal.set(false);
     };
-    const onCloseHandler: IBrandSliderProps['onClose'] = () => {
-        sliderState.showModal.set(false);
+    const onCloseHandler: IBrandSliderProps['onClose'] = (props) => {
+        BrandSliderService.handleOnCloseBrandSliderModal({
+            onCloseProps: props,
+            sliderState: {
+                showModal: sliderState.showModal,
+            },
+        });
     };
 
     // compile data

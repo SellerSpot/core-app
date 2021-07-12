@@ -70,7 +70,7 @@ export class BrandTableService {
             // handlers
             const handleOnClick = () => {
                 pageState.sliderModal.merge({
-                    mode: 'edit',
+                    mode: 'create',
                     prefillData: null,
                     showModal: true,
                 });
@@ -80,6 +80,7 @@ export class BrandTableService {
                 <Button
                     label="NEW BRAND"
                     theme="primary"
+                    size="small"
                     onClick={handleOnClick}
                     variant="contained"
                     startIcon={<Icon icon={ICONS.outlineAdd} />}
@@ -115,7 +116,9 @@ export class BrandTableService {
     };
 
     static deleteBrand = async (brandId: string): Promise<boolean> => {
+        // request
         const { status } = await requests.catalogue.brandRequest.deleteBrand(brandId);
+        // action
         return status;
     };
 }
