@@ -1,5 +1,6 @@
 import { isEqual } from 'lodash';
 import {
+    defaultGetNodeKey,
     find,
     getNodeAtPath,
     NodeData,
@@ -7,9 +8,9 @@ import {
     SearchData,
     TreeItem,
 } from 'react-sortable-tree';
+import { defaultGetNodeKey } from 'utilities/general';
 import * as yup from 'yup';
 
-const getNodeKey = ({ treeIndex }: { treeIndex: number }) => treeIndex;
 export class CategoryService {
     static canDropCategory = (props: {
         dropProps: OnDragPreviousAndNextLocation & NodeData;
@@ -57,7 +58,7 @@ export class CategoryService {
         const sameTitleNodes = find({
             treeData,
             searchQuery: `${currentNodeTitle}`,
-            getNodeKey,
+            getNodeKey: defaultGetNodeKey,
             searchMethod: CategoryService.sibilingCheckSearchMethod,
         });
         // invalidNode flag
@@ -91,7 +92,7 @@ export class CategoryService {
                     matchedNodeParentPath.pop();
                     // getting parent of matched node
                     const matchedNodeParent = getNodeAtPath({
-                        getNodeKey,
+                        getNodeKey: defaultGetNodeKey,
                         path: matchedNodeParentPath,
                         treeData,
                     }).node;
@@ -118,7 +119,7 @@ export class CategoryService {
         const sameTitleNodes = find({
             treeData,
             searchQuery: titleOfCurrentNode,
-            getNodeKey,
+            getNodeKey: defaultGetNodeKey,
             searchMethod: CategoryService.sibilingCheckSearchMethod,
         });
         // invalidNode flag

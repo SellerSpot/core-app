@@ -1,0 +1,9 @@
+.loaderSkeleton {
+    width: 300px;
+    margin: 20px;
+    @include flex(center, space-between);
+
+    .skeletonNode {
+        @include flex(center, flex-start, $gap: 0px);
+    }
+}

@@ -43,4 +43,3 @@ export interface ICategoryNodeDataStoreProps {
 
 export type TSetSortableTreeDataState = React.Dispatch<React.SetStateAction<TreeItem[]>>;
 export type TTitleInputFieldEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-export type TGetNodeKey = ({ treeIndex }: { treeIndex: number }) => number;

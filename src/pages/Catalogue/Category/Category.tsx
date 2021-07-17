@@ -7,7 +7,6 @@ import { ICONS } from 'utilities/utilities';
 import { PageHeader } from '../../../components/Compounds/PageHeader/PageHeader';
 import styles from './Category.module.scss';
 import { IUseCategoryStore } from './Category.types';
-import { CategoryView } from './Components/CategoryView/CategoryView';
 
 export { ICategoryProps } from './Category.types';
 
@@ -142,7 +141,7 @@ export const Category = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
-            <CategoryView pageState={pageState} />
+            {/* <CategoryView pageState={pageState} /> */}
         </div>
     );
 };
