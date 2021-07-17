@@ -7,7 +7,7 @@ import styles from './BillHolderControlPanel.module.scss';
 interface IBillHolderControlPanelProps {
     billScale: number;
     setBillScale: React.Dispatch<React.SetStateAction<number>>;
-    handlePrint: () => void;
+    handlePrint?: () => void;
 }
 
 export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): ReactElement => {
@@ -31,11 +31,13 @@ export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): Rea
                 />
                 <h5>{`${sliderValue}%`}</h5>
             </div>
-            <ToolTip content={'Print Bill'}>
-                <div className={styles.printIcon} onClick={handlePrint}>
-                    <Icon icon={ICONS.baselineLocalPrintshop} height={'25px'} />
-                </div>
-            </ToolTip>
+            {handlePrint && (
+                <ToolTip content={'Print Bill'}>
+                    <div className={styles.printIcon} onClick={handlePrint}>
+                        <Icon icon={ICONS.baselineLocalPrintshop} height={'25px'} />
+                    </div>
+                </ToolTip>
+            )}
         </div>
     );
 };

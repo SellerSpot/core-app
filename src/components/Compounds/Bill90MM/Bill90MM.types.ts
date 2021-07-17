@@ -22,7 +22,7 @@ interface IBill90MMData {
 }
 
 export interface IBill90MMProps {
-    billReference: React.RefObject<HTMLDivElement>;
     billData: IBill90MMData;
+    billReference?: React.RefObject<HTMLDivElement>;
     style?: CSSProperties;
 }

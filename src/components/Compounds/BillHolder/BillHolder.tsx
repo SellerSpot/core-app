@@ -1,16 +1,19 @@
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { CSSProperties } from '@material-ui/styles';
 import { inRange } from 'lodash';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { Bill90MM } from '../Bill90MM/Bill90MM';
+
 import styles from './BillHolder.module.scss';
 import { IBillHolderProps } from './BillHolder.types';
 import { BillHolderControlPanel } from './Components/BillHolderControlPanel/BillHolderControlPanel';
 
 export const BillHolder = (props: IBillHolderProps): ReactElement => {
-    const { billProps } = props;
+    const { children, enablePrint } = props;
 
-    const billReference = useRef<HTMLDivElement>(null);
+    // hooks
+    const zoomableContainerRef = useRef<HTMLDivElement>(null);
+
+    // state
     const [billScale, setBillScale] = useState(1);
     const [billMeasurements, setBillMeasurements] = useState({
         billHeight: 0,
@@ -18,8 +21,9 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
     });
     const { billHeight, billWidth } = billMeasurements;
 
+    // handlers
     const handlePrint = useReactToPrint({
-        content: () => billReference.current,
+        content: () => zoomableContainerRef.current,
     });
 
     const scaleUpBill = () => {
@@ -65,11 +69,12 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
 
     // used to get the height of bill
     useEffect(() => {
+        const firstChildElement = zoomableContainerRef.current?.firstChild as HTMLDivElement;
         setBillMeasurements({
-            billHeight: billReference.current?.clientHeight,
-            billWidth: billReference.current?.clientWidth,
+            billWidth: firstChildElement?.clientWidth,
+            billHeight: firstChildElement?.clientHeight,
         });
-    }, [billReference.current]);
+    }, [zoomableContainerRef.current]);
 
     const billWrapperStyle: CSSProperties = {
         width: billWidth * billScale,
@@ -85,13 +90,15 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
         <div className={styles.totalWrapper}>
             <div className={styles.billHolderWrapper}>
                 <div className={styles.billWrapper} style={billWrapperStyle}>
-                    <Bill90MM {...billProps} style={billStyle} billReference={billReference} />
+                    <div style={billStyle} ref={zoomableContainerRef}>
+                        {children}
+                    </div>
                 </div>
             </div>
             <BillHolderControlPanel
                 billScale={billScale}
                 setBillScale={setBillScale}
-                handlePrint={handlePrint}
+                handlePrint={enablePrint ? handlePrint : undefined}
             />
         </div>
     );

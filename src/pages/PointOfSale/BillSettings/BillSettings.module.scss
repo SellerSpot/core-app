@@ -1,0 +1,38 @@
+.wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    @include flex(center, flex-start, column, 15px);
+
+    .bodyWrapper {
+        display: grid;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+
+        gap: 20px;
+        grid-template-columns: 40% 1fr;
+
+        .settingSection {
+            display: grid;
+            overflow: hidden;
+            grid-template-rows: auto 1fr;
+
+            .defaultSettingSection {
+                width: 100%;
+            }
+            .aggregatedSettingSection {
+                overflow: auto;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .previewSection {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

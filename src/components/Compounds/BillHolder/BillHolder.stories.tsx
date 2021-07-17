@@ -2,54 +2,12 @@ import { CSSProperties } from '@material-ui/styles';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { numberFormatINRCurrency } from 'utilities/general';
-import { IBill90MMProps } from '../Bill90MM/Bill90MM';
+import { Bill90MM, IBill90MMProps } from '../Bill90MM/Bill90MM';
 import { BillHolder as BillHolderComponent } from './BillHolder';
 
 const args = {
     billData: {
         products: [
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
-            {
-                name: 'Sample Product asldkfj',
-                subTotal: numberFormatINRCurrency(24000),
-                quantity: 1,
-                stockUnit: 'kgs',
-                unitPrice: numberFormatINRCurrency(12),
-            },
             {
                 name: 'Sample Product asldkfj',
                 subTotal: numberFormatINRCurrency(24000),
@@ -104,7 +62,9 @@ const Template: Story = () => {
     };
     return (
         <div style={wrapperDivStyles}>
-            <BillHolderComponent billProps={args} billType={'90MM'} />
+            <BillHolderComponent>
+                <Bill90MM billData={args.billData} />
+            </BillHolderComponent>
         </div>
     );
 };

@@ -1,6 +1,14 @@
-import { IBill90MMProps } from '../Bill90MM/Bill90MM';
+import { ReactElement } from 'react';
 
 export interface IBillHolderProps {
-    billProps: IBill90MMProps;
-    billType: '90MM' | 'A4';
+    /**
+     * enable print
+     */
+    enablePrint?: boolean;
+    /**
+     * component to be zoomed
+     */
+    children?: ReactElement;
 }
+
+export type TBillType = '90MM' | 'A4';
