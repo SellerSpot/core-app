@@ -1,4 +1,4 @@
-import { IProductData } from 'requests/Catalogue/Server';
+import { IProductData } from '@sellerspot/universal-types';
 import { IProductSliderState } from './Components/ProductSlider/ProductSlider.types';
 
 export interface IProductPageState {
