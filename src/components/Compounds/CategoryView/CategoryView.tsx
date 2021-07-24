@@ -158,6 +158,8 @@ export const CategoryView = (props: ICategoryViewProps): ReactElement => {
         searchQuery,
         rowHeight: 80,
         treeData: treeData,
+        // will get error is virtualization is switched on (component bug)
+        isVirtualized: false,
         canDrop,
         onMoveNode,
         generateNodeProps,

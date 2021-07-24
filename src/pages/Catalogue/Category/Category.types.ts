@@ -1,45 +1,15 @@
-import { IColors } from '@sellerspot/universal-components';
-import { ExtendedNodeData, TreeItem } from 'react-sortable-tree';
-
-interface ICategory {
-    id: string;
-    title: string;
-    /**
-     * Used to help identified newly created nodes
-     */
-    createdNew?: boolean;
-    children?: ICategory[];
-}
+import { ICategorySliderProps } from 'components/Compounds/SliderModals/CategorySlider/CategorySlider.types';
+import { TreeItem } from 'react-sortable-tree';
+import { ICategoryData } from '@sellerspot/universal-types';
 
 export interface ICategoryProps {
-    categoriesData: ICategory[];
+    categoriesData: ICategoryData;
 }
 
-type TEditableNodeDetails = {
-    node: TreeItem;
-    path: string[];
-};
-
-export interface IUseCategoryStore {
+export interface ICategoryPageState {
     treeData: TreeItem[];
     searchQuery: string;
-    editableNodeDetails: TEditableNodeDetails;
     selectedNode: TreeItem;
-    toBeDeletedNode: TreeItem;
-    toBeAddedNodeDetails: TEditableNodeDetails;
+    isLoading: boolean;
+    sliderModal: Pick<ICategorySliderProps, 'showModal' | 'prefillData' | 'mode' | 'contextData'>;
 }
-
-export type TOpenPopperHandler = (props: { anchorEl: HTMLElement }) => void;
-export type IInputFieldOnChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-
-export interface ICategoryNodeDataStoreProps {
-    data: ExtendedNodeData;
-    isEditable: boolean;
-    isSelected: boolean;
-    isParentNode: boolean;
-    isToBeDeleted: boolean;
-    colors: IColors;
-}
-
-export type TSetSortableTreeDataState = React.Dispatch<React.SetStateAction<TreeItem[]>>;
-export type TTitleInputFieldEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;

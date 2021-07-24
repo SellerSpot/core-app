@@ -8,6 +8,10 @@ interface IPrefillData {
     id: string;
 }
 
+interface IContextData {
+    categoryId: string;
+}
+
 export interface ICategorySliderModalOnSubmit {
     values: ICategorySliderForm;
 }
@@ -27,6 +31,10 @@ export interface ICategorySliderProps {
     mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
+    /**
+     * Used to indicate the current category in focus (for onCreate and onEdit)
+     */
+    contextData?: IContextData;
 }
 
 export interface ICategorySliderForm {

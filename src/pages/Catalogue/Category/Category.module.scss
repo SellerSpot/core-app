@@ -8,34 +8,4 @@
     .searchField {
         width: 200px;
     }
-
-    .categoriesViewWrapper {
-        display: grid;
-        width: 100%;
-        height: 100%;
-        grid-template-rows: 50px 1fr;
-
-        .categoriesView {
-            overflow: auto;
-            width: 100%;
-            padding-bottom: 100px;
-            margin-top: 0px;
-
-            .categoryNameField {
-                width: 200px;
-                padding-bottom: 4px;
-            }
-            .controls {
-                @include flex(center, flex-start, $gap: 5px);
-            }
-        }
-    }
-}
-
-.categoryNameErrorWrapper {
-    padding: 5px 10px;
-    background-color: $dangerLight-color;
-    h6 {
-        color: $dangerDark-color;
-    }
 }
