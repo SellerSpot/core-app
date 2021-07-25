@@ -2,6 +2,11 @@ import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
+import { IBrandSliderProps } from '../BrandSlider/BrandSlider.types';
+import { ICategorySliderProps } from '../CategorySlider/CategorySlider.types';
+import { IStockUnitSliderProps } from '../StockUnitSlider/StockUnitSlider.types';
+import { ITaxBracketSliderProps } from '../TaxBracketSlider/TaxBracketSlider.types';
+import { ITaxGroupSliderProps } from '../TaxGroupSlider/TaxGroupSlider.types';
 
 interface IPrefillData {
     name: string;
@@ -28,6 +33,11 @@ export interface IProductSliderProps {
     mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
+    brandSliderProps: IBrandSliderProps;
+    categorySliderProps: ICategorySliderProps;
+    stockUnitSliderProps: IStockUnitSliderProps;
+    taxBracketSliderProps: ITaxBracketSliderProps;
+    taxGroupSliderProps: ITaxGroupSliderProps;
 }
 
 export interface IProductSliderForm {

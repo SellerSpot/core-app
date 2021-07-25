@@ -12,6 +12,11 @@ import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHe
 import { ProductSliderService } from './ProductSlider.service';
 import styles from './ProductSlider.module.scss';
 import { IProductSliderForm, IProductSliderProps } from './ProductSlider.types';
+import { BrandSlider } from '../BrandSlider/BrandSlider';
+import { CategorySlider } from '../CategorySlider/CategorySlider';
+import { StockUnitSlider } from '../StockUnitSlider/StockUnitSlider';
+import { TaxBracketSlider } from '../TaxBracketSlider/TaxBracketSlider';
+import { TaxGroupSlider } from '../TaxGroupSlider/TaxGroupSlider';
 
 export const ProductSlider = (props: IProductSliderProps): ReactElement => {
     // props
@@ -23,6 +28,11 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
         onSubmit,
         prefillData,
         formRef,
+        brandSliderProps,
+        categorySliderProps,
+        stockUnitSliderProps,
+        taxBracketSliderProps,
+        taxGroupSliderProps,
     } = props;
     const sliderModalWidth = '30%';
 
@@ -109,6 +119,11 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
                     );
                 }}
             </Form>
+            <BrandSlider {...brandSliderProps} />
+            <CategorySlider {...categorySliderProps} />
+            <StockUnitSlider {...stockUnitSliderProps} />
+            <TaxBracketSlider {...taxBracketSliderProps} />
+            <TaxGroupSlider {...taxGroupSliderProps} />
         </SliderModal>
     );
 };

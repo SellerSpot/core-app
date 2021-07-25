@@ -15,6 +15,11 @@ export const ProductSliderBase = (): ReactElement => {
         onSubmit: () => null,
         showModal: false,
         prefillData: null,
+        brandSliderProps: null,
+        categorySliderProps: null,
+        stockUnitSliderProps: null,
+        taxBracketSliderProps: null,
+        taxGroupSliderProps: null,
     };
 
     // draw
