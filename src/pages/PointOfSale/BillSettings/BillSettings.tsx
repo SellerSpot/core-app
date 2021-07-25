@@ -19,14 +19,24 @@ import { Bill90MMSettings } from './components/Bill90MMSettings';
 
 type TBillComponentMap = {
     [key in keyof typeof EBILL_SIZES]: {
-        BILL: (props?: unknown) => ReactElement;
+        BILL: (props?: unknown | { dimension: TDimension }) => ReactElement;
         SETTINGS: (props?: unknown) => ReactElement;
+        /**
+         * dimensions should be in px (approximate value is enough)
+         * it helps in  billPreview holder component for better viewing experience
+         */
+        dimension: {
+            width: number;
+            height?: number; // height might not be needed
+        };
     };
 };
 
+export type TDimension = { width: 793 };
+
 export const billSizeComponentMap: TBillComponentMap = {
-    BILL_A4: { BILL: BillA4, SETTINGS: BillA4Settings },
-    BILL_90MM: { BILL: Bill90MM, SETTINGS: Bill90MMSettings },
+    BILL_A4: { BILL: BillA4, SETTINGS: BillA4Settings, dimension: { width: 793 } },
+    BILL_90MM: { BILL: Bill90MM, SETTINGS: Bill90MMSettings, dimension: { width: 340 } },
 };
 
 const billOptions: ISelectOption<keyof typeof EBILL_SIZES>[] = [
@@ -87,7 +97,7 @@ const billTestData: IBill90MMProps = {
 export const BillSettings = (): ReactElement => {
     // state
     const billSettingsSwitchState = useState<keyof typeof EBILL_SIZES>(
-        getBillSizeByName('BILL_90MM'),
+        getBillSizeByName('BILL_A4'),
     );
 
     // handlers
@@ -102,6 +112,7 @@ export const BillSettings = (): ReactElement => {
     const CurrentBillComponent = billSizeComponentMap[billSettingsSwitchState.get()].BILL;
     const CurrentBillSettingsComponent =
         billSizeComponentMap[billSettingsSwitchState.get()].SETTINGS;
+    const currentBillDimension = billSizeComponentMap[billSettingsSwitchState.get()].dimension;
 
     return (
         <div className={styles.wrapper}>
@@ -151,7 +162,10 @@ export const BillSettings = (): ReactElement => {
                 </div>
                 <div className={styles.previewSection}>
                     <BillHolder>
-                        <CurrentBillComponent {...(billTestData as unknown)} />
+                        <CurrentBillComponent
+                            {...(billTestData as unknown)}
+                            {...({ dimension: currentBillDimension } as unknown)}
+                        />
                     </BillHolder>
                 </div>
             </div>
