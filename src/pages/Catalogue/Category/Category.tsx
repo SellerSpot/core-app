@@ -1,16 +1,17 @@
 import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button, IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-components';
-import { CategoryView, ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView';
 import { debounce } from 'lodash';
 import React, { ReactElement, useEffect } from 'react';
-import { TreeItem } from 'react-sortable-tree';
-import { introduceDelay, rawClone } from 'utilities/general';
+import { getNodeAtPath } from 'react-sortable-tree';
+import { rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import { PageHeader } from '../../../components/Compounds/PageHeader/PageHeader';
 import styles from './Category.module.scss';
+import { CategoryService } from './Category.service';
 import { ICategoryPageState } from './Category.types';
 import { CategorySliderModalBase } from './Components/CategorySliderModalBase/CategorySliderModalBase';
+import { CategoryViewBase } from './Components/CategoryViewBase/CategoryViewBase';
 
 export { ICategoryProps } from './Category.types';
 
@@ -20,11 +21,34 @@ const PageHeaderComponent = (props: { pageState: State<ICategoryPageState> }) =>
 
     // components
     const NewCategoryButton = () => {
+        // handler
+
+        const onClickHandler = () => {
+            // getting the root node (since the node needs sibling of the root)
+            const rootNode = getNodeAtPath({
+                getNodeKey: (data) => data.node.id,
+                path: [],
+                treeData: rawClone(pageState.treeData.get()),
+                ignoreCollapsed: false,
+            }).node;
+            pageState.sliderModal.set({
+                showModal: true,
+                prefillData: null,
+                contextData: {
+                    currentNode: null,
+                    parentNode: rootNode,
+                },
+                mode: 'create',
+            });
+        };
+
+        // draw
         return (
             <Button
                 label="NEW CATEGORY"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
+                onClick={onClickHandler}
                 theme="primary"
             />
         );
@@ -32,7 +56,7 @@ const PageHeaderComponent = (props: { pageState: State<ICategoryPageState> }) =>
     const SearchField = () => {
         // state
         const { searchQuery } = useState(pageState);
-        const localFieldValue = useState(searchQuery);
+        const localFieldValue = useState('');
 
         // handlers
         const pushSearchToTree = debounce((value: string) => {
@@ -91,103 +115,21 @@ export const Category = (): ReactElement => {
     // state
     const pageState = useState<ICategoryPageState>({
         treeData: [],
-        searchQuery: null,
+        searchQuery: '',
         selectedNode: null,
         isLoading: true,
         sliderModal: {
             showModal: false,
             prefillData: null,
+            contextData: null,
             mode: 'create',
         },
     });
 
-    // handlers
-    const onSelectNodeHandler: ICategoryViewProps['onSelectNodeCallback'] = (node) => () => {
-        pageState.selectedNode.set(node);
-    };
-    const canDropHandler: ICategoryViewProps['canDrop'] = (props) => {
-        // props
-        const { node, nextParent } = props;
-
-        // variables
-        const nextSiblings = nextParent?.children as TreeItem[];
-
-        // compute
-        if (!!nextSiblings) {
-            const doesHaveSiblingWithSameName = nextSiblings.some(
-                (sibling) => sibling.id !== node.id && sibling.title === node.title,
-            );
-            if (doesHaveSiblingWithSameName) {
-                return false;
-            }
-        }
-        return true;
-    };
-    const createCategoryHandler: ICategoryViewProps['createCategoryCallback'] = (props) => {
-        // props
-        const { id } = props;
-        // setting state
-        pageState.sliderModal.set({
-            showModal: true,
-            mode: 'create',
-            prefillData: null,
-            contextData: {
-                categoryId: id,
-            },
-        });
-    };
-    const deleteCategoryHandler: ICategoryViewProps['deleteCategoryCallback'] = () => {
-        console.log('Delete Category');
-    };
-    const editCategoryHandler: ICategoryViewProps['editCategoryCallback'] = () => {
-        console.log('Edit Category');
-    };
-    const onChangeHandler: ICategoryViewProps['onChangeCallback'] = (treeData) => {
-        pageState.treeData.set(treeData);
-    };
-    const onMoveNode: ICategoryViewProps['onMoveNode'] = () => {
-        console.log('OnMoveNode');
-    };
     const getAllCategories = async () => {
-        await introduceDelay(1000);
-        // const allCategories = await CategoryService.getAllCategories();
-
-        pageState.treeData.set([
-            {
-                id: 'redbull',
-                title: 'Red Bull',
-                children: [
-                    {
-                        id: 'alpine1',
-                        title: 'Alpine',
-                    },
-                ],
-            },
-            {
-                id: 'mclaren',
-                title: 'McLaren',
-            },
-            {
-                id: 'alpine',
-                title: 'Alpine',
-            },
-        ]);
+        const allCategories = await CategoryService.getAllCategories();
+        pageState.treeData.set(allCategories);
         pageState.isLoading.set(false);
-    };
-
-    // compiling data
-    const categoryViewProps: ICategoryViewProps = {
-        treeData: rawClone(pageState.treeData.get()),
-        isLoading: pageState.isLoading.get(),
-        selectedNode: rawClone(pageState.selectedNode.get()),
-        searchQuery: rawClone(pageState.searchQuery.get()),
-        onSelectNodeCallback: onSelectNodeHandler,
-        canDrop: canDropHandler,
-        createCategoryCallback: createCategoryHandler,
-        deleteCategoryCallback: deleteCategoryHandler,
-        editCategoryCallback: editCategoryHandler,
-        onChangeCallback: onChangeHandler,
-        onMoveNode: onMoveNode,
     };
 
     // effects
@@ -199,10 +141,10 @@ export const Category = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
-            <CategoryView {...categoryViewProps} />
+            <CategoryViewBase pageState={pageState} />
             <CategorySliderModalBase
+                treeData={pageState.treeData}
                 sliderState={pageState.sliderModal}
-                getAllCategories={getAllCategories}
             />
         </div>
     );

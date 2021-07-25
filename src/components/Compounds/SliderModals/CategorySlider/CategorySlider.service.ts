@@ -75,15 +75,22 @@ export class CategorySliderService {
         };
     };
 
-    static validationSchema: yup.SchemaOf<ICategorySliderForm> = yup.object({
-        name: yup.string().required('Category name is required'),
-    });
+    static validationSchema = (siblingNames: string[]): yup.SchemaOf<ICategorySliderForm> =>
+        yup.object({
+            name: yup
+                .string()
+                .required('Category name is required')
+                .test({
+                    test: (value) => !siblingNames.includes(value.toLocaleLowerCase()),
+                    message: 'Category already exists at current level',
+                }),
+        });
 
     static validateField =
-        <T extends keyof ICategorySliderForm>(fieldName: T) =>
+        <T extends keyof ICategorySliderForm>(fieldName: T, siblingNames: string[]) =>
         (values: ICategorySliderForm[keyof ICategorySliderForm]): string => {
             const requiredSchema: yup.SchemaOf<ICategorySliderForm[T]> = yup.reach(
-                CategorySliderService.validationSchema,
+                CategorySliderService.validationSchema(siblingNames),
                 fieldName,
             );
             try {

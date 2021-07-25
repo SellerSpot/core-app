@@ -10,16 +10,24 @@ import { useField } from 'react-final-form';
 import { CategorySliderService } from '../../CategorySlider.service';
 
 export type IModalBodyProps = Pick<ICategorySliderModalOnClose, 'submitting'> &
-    Pick<ICategorySliderProps, 'showModal'>;
+    Pick<ICategorySliderProps, 'showModal' | 'onSelectCategory'> & {
+        currentNodeSiblings: string[];
+    };
 
-const CategoryNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
+interface ICategoryNameFieldProps {
+    autoFocus: boolean;
+    submitting: boolean;
+    currentNodeSiblings: string[];
+}
+
+const CategoryNameField = (props: ICategoryNameFieldProps) => {
     // props
-    const { autoFocus, submitting } = props;
+    const { autoFocus, submitting, currentNodeSiblings } = props;
     const fieldName: keyof ICategorySliderForm = 'name';
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: CategorySliderService.validateField(fieldName),
+        validate: CategorySliderService.validateField(fieldName, currentNodeSiblings),
         validateFields: [],
     });
     const { value } = input;
@@ -53,13 +61,17 @@ const CategoryNameField = (props: { autoFocus: boolean; submitting: boolean }) =
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { showModal, submitting } = props;
+    const { showModal, submitting, currentNodeSiblings } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <CategoryNameField autoFocus={showModal} submitting={submitting} />
+                <CategoryNameField
+                    autoFocus={showModal}
+                    submitting={submitting}
+                    currentNodeSiblings={currentNodeSiblings}
+                />
             </div>
         </SliderModalBody>
     );

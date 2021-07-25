@@ -77,6 +77,7 @@ const Template: Story<ICategoryViewProps> = () => {
         selectedNode: rawClone(componentState.selectedNode.get()),
         isLoading: false,
         searchQuery: '',
+        canDragNodes: true,
         createCategoryCallback: () => void 0,
         deleteCategoryCallback: () => void 0,
         editCategoryCallback: () => void 0,

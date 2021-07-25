@@ -1,15 +1,16 @@
 import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
+import { TreeItem } from 'react-sortable-tree';
 import { IOnClickEvents } from 'typings/common.types';
 
 interface IPrefillData {
     name: string;
-    id: string;
 }
 
 interface IContextData {
-    categoryId: string;
+    currentNode: TreeItem;
+    parentNode?: TreeItem;
 }
 
 export interface ICategorySliderModalOnSubmit {
@@ -27,14 +28,15 @@ export interface ICategorySliderProps {
     showModal: boolean;
     formRef: React.MutableRefObject<FormApi<ICategorySliderForm, Partial<ICategorySliderForm>>>;
     onSubmit: (props: ICategorySliderModalOnSubmit) => Promise<void>;
+    onSelectCategory?: (props: TreeItem) => void;
     onClose: (props: ICategorySliderModalOnClose) => void;
-    mode: 'edit' | 'create';
+    mode: 'edit' | 'create' | 'select';
     level: 1 | 2;
     prefillData?: IPrefillData;
     /**
      * Used to indicate the current category in focus (for onCreate and onEdit)
      */
-    contextData?: IContextData;
+    contextData: IContextData;
 }
 
 export interface ICategorySliderForm {

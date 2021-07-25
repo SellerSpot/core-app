@@ -1,6 +1,7 @@
 import { useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { IconButton, IIconButtonProps, ToolTip } from '@sellerspot/universal-components';
+import { intersection } from 'lodash';
 import React, { CSSProperties, ReactElement, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import SortableTree, { ReactSortableTreeProps } from 'react-sortable-tree';
@@ -20,6 +21,7 @@ export const CategoryView = (props: ICategoryViewProps): ReactElement => {
         selectedNode,
         searchQuery,
         isLoading,
+        canDragNodes,
         onMoveNode,
         canDrop,
         createCategoryCallback,
@@ -124,26 +126,34 @@ export const CategoryView = (props: ICategoryViewProps): ReactElement => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const onClickNodeHandler = (event: any) => {
             // making sure the click is from the node and not the + icon
-            const eventClass = event?.target?.className;
-            const isNodeClicked =
-                eventClass === 'rst__rowContents' ||
-                eventClass === 'nodeTitle' ||
-                eventClass === 'rst__rowLabel';
-            if (isNodeClicked) {
-                onSelectNodeCallback(node)(event);
+            const eventClass: string = event?.target?.className;
+
+            // clicks that should be recognized
+            const whitelistedTouchTargets = [
+                'rst__rowContents',
+                'nodeTitle',
+                'rst__rowLabel',
+                'rst__rowContentsDragDisabled',
+            ];
+            const shouldInvokeCallback =
+                intersection(whitelistedTouchTargets, eventClass.split(' ')).length > 0;
+            if (shouldInvokeCallback) {
+                onSelectNodeCallback?.(node)(event);
             }
         };
 
         // draw
         return {
-            title: <h5>{nodeTitle}</h5>,
+            title: <h5 className="nodeTitle">{nodeTitle}</h5>,
             onClick: onClickNodeHandler,
             buttons: [
-                <div key="buttons" className={styles.controls}>
-                    <CreateCategoryButton />
-                    <EditCategoryButton />
-                    <DeleteCategoryButton />
-                </div>,
+                canDragNodes && (
+                    <div key="buttons" className={styles.controls}>
+                        <CreateCategoryButton />
+                        <EditCategoryButton />
+                        <DeleteCategoryButton />
+                    </div>
+                ),
             ],
             style: CategoryViewService.getNodeStyle({
                 colorTheme,
@@ -158,6 +168,7 @@ export const CategoryView = (props: ICategoryViewProps): ReactElement => {
         searchQuery,
         rowHeight: 80,
         treeData: treeData,
+        canDrag: canDragNodes,
         // will get error is virtualization is switched on (component bug)
         isVirtualized: false,
         canDrop,

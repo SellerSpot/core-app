@@ -47,7 +47,6 @@ export class CategoryViewService {
             borderStyle: 'solid',
             cursor: 'default',
             borderColor: 'transparent',
-            transition: 'border-color 0.2s ease',
         };
         if (isSelected) {
             defaultNodeStyle = {
