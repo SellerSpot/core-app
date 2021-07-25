@@ -1,34 +1,46 @@
 import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button, IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-components';
-import { debounce } from 'lodash';
-import React, { ReactElement } from 'react';
+import { debounce, isEmpty } from 'lodash';
+import React, { ReactElement, useEffect } from 'react';
+import { getNodeAtPath } from 'react-sortable-tree';
+import { rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import { PageHeader } from '../../../components/Compounds/PageHeader/PageHeader';
 import styles from './Category.module.scss';
-import { IUseCategoryStore } from './Category.types';
-import { CategoryView } from './Components/CategoryView/CategoryView';
+import { CategoryService } from './Category.service';
+import { ICategoryPageState } from './Category.types';
+import { CategorySliderModalBase } from './Components/CategorySliderModalBase/CategorySliderModalBase';
+import { CategoryViewBase } from './Components/CategoryViewBase/CategoryViewBase';
+import { NoCategoryView } from './Components/NoCategoryView/NoCategoryView';
 
 export { ICategoryProps } from './Category.types';
 
-const PageHeaderComponent = (props: { pageState: State<IUseCategoryStore> }) => {
+interface IPageHeaderComponentProps {
+    searchQueryState: State<ICategoryPageState['searchQuery']>;
+    createRootCategoryCallback: () => void;
+}
+
+const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const { pageState } = props;
+    const { searchQueryState, createRootCategoryCallback } = props;
 
     // components
     const NewCategoryButton = () => {
+        // draw
         return (
             <Button
-                label={'NEW CATEGORY'}
+                label="NEW CATEGORY"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
+                onClick={createRootCategoryCallback}
                 theme="primary"
             />
         );
     };
     const SearchField = () => {
         // state
-        const { searchQuery } = useState(pageState);
+        const searchQuery = useState(searchQueryState);
         const localFieldValue = useState('');
 
         // handlers
@@ -86,63 +98,66 @@ const PageHeaderComponent = (props: { pageState: State<IUseCategoryStore> }) => 
 
 export const Category = (): ReactElement => {
     // state
-    const pageState = useState<IUseCategoryStore>({
-        treeData: [
-            {
-                id: 'incididunt',
-                title: 'Shirts',
-                children: [
-                    {
-                        id: 'exd',
-                        title: 'T-Shirt',
-                    },
-                    {
-                        id: 'in',
-                        title: 'Formals',
-                    },
-                    {
-                        id: 'nullafa',
-                        title: 'Casuals',
-                    },
-                ],
-            },
-            {
-                id: 'cupidatat',
-                title: 'Shoes',
-                children: [
-                    {
-                        id: 'nostrud',
-                        title: 'Casuals',
-                        children: [
-                            {
-                                id: 'nulla',
-                                title: 'Lace',
-                            },
-                            {
-                                id: 'irure',
-                                title: 'Velcro',
-                            },
-                        ],
-                    },
-                    {
-                        id: 'ex',
-                        title: 'Office',
-                    },
-                ],
-            },
-        ],
-        searchQuery: null,
-        editableNodeDetails: null,
+    const pageState = useState<ICategoryPageState>({
+        treeData: [],
+        searchQuery: '',
         selectedNode: null,
-        toBeDeletedNode: null,
-        toBeAddedNodeDetails: null,
+        isLoading: true,
+        sliderModal: {
+            showModal: false,
+            prefillData: null,
+            contextData: null,
+            mode: 'create',
+        },
     });
+
+    const getAllCategories = async () => {
+        const allCategories = await CategoryService.getAllCategories();
+        pageState.treeData.set(allCategories);
+        pageState.isLoading.set(false);
+    };
+
+    // effects
+    useEffect(() => {
+        getAllCategories();
+    }, []);
+
+    // handlers
+    const createRootCategoryHandler = () => {
+        // getting the root node (since the node needs sibling of the root)
+        const rootNode = getNodeAtPath({
+            getNodeKey: (data) => data.node.id,
+            path: [],
+            treeData: rawClone(pageState.treeData.get()),
+            ignoreCollapsed: false,
+        }).node;
+        pageState.sliderModal.set({
+            showModal: true,
+            prefillData: null,
+            contextData: {
+                currentNode: null,
+                parentNode: rootNode,
+            },
+            mode: 'create',
+        });
+    };
 
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent pageState={pageState} />
-            <CategoryView pageState={pageState} />
+            <PageHeaderComponent
+                searchQueryState={pageState.searchQuery}
+                createRootCategoryCallback={createRootCategoryHandler}
+            />
+            {isEmpty(pageState.treeData.get()) && !pageState.isLoading.get() ? (
+                <NoCategoryView createRootCategoryCallback={createRootCategoryHandler} />
+            ) : (
+                <CategoryViewBase pageState={pageState} />
+            )}
+            <CategorySliderModalBase
+                treeData={pageState.treeData}
+                sliderState={pageState.sliderModal}
+            />
         </div>
     );
 };
