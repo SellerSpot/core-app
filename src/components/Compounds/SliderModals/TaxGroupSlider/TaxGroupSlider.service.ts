@@ -111,10 +111,11 @@ export class TaxGroupSliderService {
         };
     };
 
-    private static ISelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
-        label: yup.string(),
-        value: yup.string(),
-    });
+    private static ISelectOptionValidationSchema: yup.SchemaOf<Omit<ISelectOption, 'key'>> =
+        yup.object({
+            label: yup.string(),
+            value: yup.string(),
+        });
 
     private static validationSchema: yup.SchemaOf<ITaxGroupSliderForm> = yup.object({
         name: yup.string().required('Tax Group name is required'),

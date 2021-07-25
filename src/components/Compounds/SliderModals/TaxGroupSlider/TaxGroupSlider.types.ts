@@ -30,7 +30,9 @@ export interface ITaxGroupSliderProps {
     prefillData?: ITaxGroupData;
 }
 
-export type ITaxGroupSliderForm = Pick<ITaxGroupData, 'name'> & { bracket: ISelectOption[] };
+export type ITaxGroupSliderForm = Pick<ITaxGroupData, 'name'> & {
+    bracket: Omit<ISelectOption, 'key'>[];
+};
 
 export interface ITaxGroupSliderModalDynamicValues {
     sliderModalProps: Pick<ISliderModalProps, 'width' | 'type' | 'showBackdrop'>;

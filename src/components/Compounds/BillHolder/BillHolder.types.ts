@@ -10,5 +10,3 @@ export interface IBillHolderProps {
      */
     children?: ReactElement;
 }
-
-export type TBillType = '90MM' | 'A4';
