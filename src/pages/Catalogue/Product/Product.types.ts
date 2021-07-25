@@ -1,7 +1,8 @@
 import { IProductData } from '@sellerspot/universal-types';
-import { IProductSliderState } from './Components/ProductSlider/ProductSlider.types';
+import { IProductSliderProps } from 'components/Compounds/SliderModals/ProductSlider/ProductSlider.types';
 
 export interface IProductPageState {
-    products: IProductData[];
-    slider: IProductSliderState;
+    allProducts: IProductData[];
+    isLoading: boolean;
+    sliderModal: Pick<IProductSliderProps, 'showModal' | 'mode' | 'prefillData'>;
 }

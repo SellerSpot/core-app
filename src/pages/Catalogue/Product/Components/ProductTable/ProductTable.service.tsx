@@ -21,7 +21,7 @@ export class ProductTableService {
 
         // draw
         return {
-            data: pageState.products.get(),
+            data: pageState.allProducts.get(),
             shape: [
                 {
                     columnName: 'S.No',

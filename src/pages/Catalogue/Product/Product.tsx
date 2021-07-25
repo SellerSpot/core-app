@@ -4,26 +4,26 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { ProductSlider } from './Components/ProductSlider/ProductSlider';
+import { ProductSliderBase } from './Components/ProductSliderBase/ProductSliderBase';
 import { ProductTable } from './Components/ProductTable/ProductTable';
 import styles from './Product.module.scss';
 import { IProductPageState } from './Product.types';
 
 const PageHeaderComponent = (props: { pageState: State<IProductPageState> }) => {
     // props
-    const { pageState } = props;
+    const {} = props;
 
     // components
     const NewProductButton = () => {
         // handlers
         const handleOnClick = () => {
-            pageState.slider.showSliderModal.set(true);
+            console.log('Clicked');
         };
 
         // draw
         return (
             <Button
-                label="NEW PRODUCT"
+                label="ADD PRODUCT"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
                 theme="primary"
@@ -39,10 +39,11 @@ const PageHeaderComponent = (props: { pageState: State<IProductPageState> }) => 
 export const Product = (): ReactElement => {
     // state
     const pageState = useState<IProductPageState>({
-        products: [],
-        slider: {
-            showSliderModal: false,
-            isEditMode: false,
+        allProducts: [],
+        isLoading: true,
+        sliderModal: {
+            showModal: false,
+            mode: 'create',
         },
     });
 
@@ -50,7 +51,7 @@ export const Product = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent pageState={pageState} />
             <ProductTable pageState={pageState} />
-            <ProductSlider sliderState={pageState.slider} />
+            <ProductSliderBase />
         </div>
     );
 };

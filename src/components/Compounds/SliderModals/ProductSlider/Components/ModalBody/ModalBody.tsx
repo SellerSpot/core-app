@@ -1,14 +1,20 @@
-import { State } from '@hookstate/core';
-import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
+import {
+    IProductSliderForm,
+    IProductSliderModalOnClose,
+    IProductSliderProps,
+} from '../../ProductSlider.types';
+import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
 import { ProductSliderService } from '../../ProductSlider.service';
-import { IProductSliderForm, IProductSliderState } from '../../ProductSlider.types';
-import styles from './ModalBody.module.scss';
 
-const ProductNameField = (props: { autoFocus: boolean }) => {
+export type IModalBodyProps = Pick<IProductSliderModalOnClose, 'submitting'> &
+    Pick<IProductSliderProps, 'showModal'>;
+
+const ProductNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
     // props
-    const { autoFocus } = props;
+    const { autoFocus, submitting } = props;
     const fieldName: keyof IProductSliderForm = 'name';
 
     // hooks
@@ -30,21 +36,25 @@ const ProductNameField = (props: { autoFocus: boolean }) => {
     return (
         <InputField
             {...input}
-            value={value.name}
+            value={value as string}
             type="text"
+            disabled={submitting}
             name={undefined}
             autoFocus={autoFocus}
             fullWidth
+            size="medium"
             theme={specialInputFieldProps.theme}
-            label="Product Name"
+            label="Bracket Name"
             helperMessage={helperMessage}
+            placeHolder="Bracket Name"
         />
     );
 };
 
-const BarcodeField = () => {
+const ProductRateField = (props: { submitting: boolean }) => {
     // props
-    const fieldName: keyof IProductSliderForm = 'barcode';
+    const { submitting } = props;
+    const fieldName: keyof IProductSliderForm = 'rate';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -65,27 +75,32 @@ const BarcodeField = () => {
     return (
         <InputField
             {...input}
-            value={value.name}
-            type="text"
+            value={value as string}
+            type="number"
+            disabled={submitting}
             name={undefined}
+            maxNumericValue={100}
+            minNumericValue={0}
             fullWidth
+            size="medium"
             theme={specialInputFieldProps.theme}
-            label="Barcode"
+            label="Bracket Rate"
             helperMessage={helperMessage}
+            placeHolder="Bracket Rate"
         />
     );
 };
 
-export const ModalBody = (props: { sliderState: State<IProductSliderState> }): ReactElement => {
+export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { showModal, submitting } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <ProductNameField autoFocus={sliderState.showSliderModal.get()} />
-                <BarcodeField />
+                <ProductNameField autoFocus={showModal} submitting={submitting} />
+                <ProductRateField submitting={submitting} />
             </div>
         </SliderModalBody>
     );
