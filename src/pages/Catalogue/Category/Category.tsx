@@ -1,7 +1,7 @@
 import { State, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button, IconButton, IInputFieldProps, InputField } from '@sellerspot/universal-components';
-import { debounce } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import React, { ReactElement, useEffect } from 'react';
 import { getNodeAtPath } from 'react-sortable-tree';
 import { rawClone } from 'utilities/general';
@@ -12,50 +12,35 @@ import { CategoryService } from './Category.service';
 import { ICategoryPageState } from './Category.types';
 import { CategorySliderModalBase } from './Components/CategorySliderModalBase/CategorySliderModalBase';
 import { CategoryViewBase } from './Components/CategoryViewBase/CategoryViewBase';
+import { NoCategoryView } from './Components/NoCategoryView/NoCategoryView';
 
 export { ICategoryProps } from './Category.types';
 
-const PageHeaderComponent = (props: { pageState: State<ICategoryPageState> }) => {
+interface IPageHeaderComponentProps {
+    searchQueryState: State<ICategoryPageState['searchQuery']>;
+    createRootCategoryCallback: () => void;
+}
+
+const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const { pageState } = props;
+    const { searchQueryState, createRootCategoryCallback } = props;
 
     // components
     const NewCategoryButton = () => {
-        // handler
-
-        const onClickHandler = () => {
-            // getting the root node (since the node needs sibling of the root)
-            const rootNode = getNodeAtPath({
-                getNodeKey: (data) => data.node.id,
-                path: [],
-                treeData: rawClone(pageState.treeData.get()),
-                ignoreCollapsed: false,
-            }).node;
-            pageState.sliderModal.set({
-                showModal: true,
-                prefillData: null,
-                contextData: {
-                    currentNode: null,
-                    parentNode: rootNode,
-                },
-                mode: 'create',
-            });
-        };
-
         // draw
         return (
             <Button
                 label="NEW CATEGORY"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
-                onClick={onClickHandler}
+                onClick={createRootCategoryCallback}
                 theme="primary"
             />
         );
     };
     const SearchField = () => {
         // state
-        const { searchQuery } = useState(pageState);
+        const searchQuery = useState(searchQueryState);
         const localFieldValue = useState('');
 
         // handlers
@@ -137,11 +122,38 @@ export const Category = (): ReactElement => {
         getAllCategories();
     }, []);
 
+    // handlers
+    const createRootCategoryHandler = () => {
+        // getting the root node (since the node needs sibling of the root)
+        const rootNode = getNodeAtPath({
+            getNodeKey: (data) => data.node.id,
+            path: [],
+            treeData: rawClone(pageState.treeData.get()),
+            ignoreCollapsed: false,
+        }).node;
+        pageState.sliderModal.set({
+            showModal: true,
+            prefillData: null,
+            contextData: {
+                currentNode: null,
+                parentNode: rootNode,
+            },
+            mode: 'create',
+        });
+    };
+
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent pageState={pageState} />
-            <CategoryViewBase pageState={pageState} />
+            <PageHeaderComponent
+                searchQueryState={pageState.searchQuery}
+                createRootCategoryCallback={createRootCategoryHandler}
+            />
+            {isEmpty(pageState.treeData.get()) && !pageState.isLoading.get() ? (
+                <NoCategoryView createRootCategoryCallback={createRootCategoryHandler} />
+            ) : (
+                <CategoryViewBase pageState={pageState} />
+            )}
             <CategorySliderModalBase
                 treeData={pageState.treeData}
                 sliderState={pageState.sliderModal}
