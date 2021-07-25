@@ -11,12 +11,12 @@ interface IBill90MMProducts {
 
 interface IBill90MMData {
     storeName: string;
+    storeAddress: string;
     saleTotal: string;
     saleDiscount: string;
     saleSubTotal: string;
     saleTotalTax: string;
     saleTotalTaxPercentage: number;
-    headerMessage?: string;
     footerMessage?: string;
     products: IBill90MMProducts[];
 }

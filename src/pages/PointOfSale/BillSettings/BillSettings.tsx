@@ -90,7 +90,8 @@ const billTestData: IBill90MMProps = {
         storeName: 'Sreenithi Margin Free',
         saleTotal: numberFormatINRCurrency(250000),
         footerMessage: 'Sample Footer Message',
-        headerMessage: 'Sample Header Message',
+        storeAddress: `12 A, New Raja Colony, Bheemanagar, Balajinagar, Trichy 1
+        0431 2411562 / +91 8903307270`,
     },
 };
 
