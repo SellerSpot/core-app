@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styles from './BillA4.module.scss';
 
 import { IBillA4Props } from './BillA4.types';
+import { BillA4Footer } from './Components/BillA4Footer/BillA4Footer';
 import { BillA4Header } from './Components/BillA4Header/BillA4Header';
 import { BillA4PurchaseInvoice } from './Components/BillA4PurchaseInvoice/BillA4PurchaseInvoice';
 import { BillA4Summary } from './Components/BillA4Summary/BillA4Summary';
@@ -23,6 +24,7 @@ export const BillA4 = (props: IBillA4Props): ReactElement => {
             <BillA4TaxSplitup />
             <PageBreak />
             <BillA4TermsAndSignature />
+            <BillA4Footer message="Sample footer message" />
         </div>
     );
 };

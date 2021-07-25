@@ -15,6 +15,7 @@ export const Bill90MMSettings = (): ReactElement => {
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <h5>Header options</h5>
+                <CheckBox label="Header message" />
                 <InputField
                     multiline={true}
                     fullWidth

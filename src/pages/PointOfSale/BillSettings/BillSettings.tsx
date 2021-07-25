@@ -135,6 +135,7 @@ export const BillSettings = (): ReactElement => {
                             label="Default Bill Size"
                             options={billOptions}
                             defaultValue={billOptions[0]}
+                            isClearable={false}
                         />
                     </div>
                     <div className={styles.aggregatedSettingSection}>
