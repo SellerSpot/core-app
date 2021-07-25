@@ -66,21 +66,7 @@
                     padding: 10px 10px 60px 0;
                     gap: 10px;
 
-                    &::-webkit-scrollbar {
-                        visibility: hidden;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        visibility: hidden;
-                    }
-
-                    &:hover {
-                        &::-webkit-scrollbar {
-                            visibility: visible;
-                        }
-                        &::-webkit-scrollbar-thumb {
-                            visibility: visible;
-                        }
-                    }
+                    @include scrollBarOnHover();
 
                     .currentBillSettingsGroup {
                         display: flex;
