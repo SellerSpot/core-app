@@ -4,11 +4,7 @@ import {
     IInputFieldProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
-import {
-    ICreateTaxGroupRequest,
-    ITaxBracketData,
-    ITaxGroupData,
-} from '@sellerspot/universal-types';
+import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
@@ -37,10 +33,23 @@ export interface IHandleOnCloseTaxGroupSliderModalProps {
     taxBracketSlider: IHandleOnCloseTaxBracketSliderModalProps;
 }
 
+interface IConvertTaxBracketDataToISelectOptionProps {
+    brackets: ITaxBracketData[];
+}
+
+interface IEditTaxBracketProps {
+    name: string;
+    id: string;
+    bracket: string[];
+}
+
 export class TaxGroupSliderService {
     static convertTaxBracketDataToISelectOption = (
-        brackets: ITaxBracketData[],
+        props: IConvertTaxBracketDataToISelectOptionProps,
     ): ISelectOption[] => {
+        // props
+        const { brackets } = props;
+
         return brackets.map((bracket) => {
             // props
             const { name, rate, id } = bracket;
@@ -94,9 +103,9 @@ export class TaxGroupSliderService {
         if (mode === 'edit') {
             initialFormValues = {
                 name: prefillData?.name,
-                bracket: TaxGroupSliderService.convertTaxBracketDataToISelectOption(
-                    prefillData?.bracket,
-                ),
+                bracket: TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+                    brackets: prefillData?.bracket,
+                }),
             };
         }
 
@@ -199,31 +208,34 @@ export class TaxGroupSliderService {
     };
 
     static createNewTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+        // props
         const { name, bracket } = values;
-        const requestData: ICreateTaxGroupRequest = {
+
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
             name,
             bracket: bracket.map((bracket) => bracket.value),
-        };
-        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup(
-            requestData,
-        );
+        });
+
+        // actions
         if (status) {
             return data;
         }
         return null;
     };
 
-    static editTaxGroup = async (props: {
-        name: string;
-        id: string;
-        bracket: string[];
-    }): Promise<ITaxGroupData> => {
+    static edi̥tTaxGroup = async (props: IEditTaxBracketProps): Promise<ITaxGroupData> => {
+        // props
         const { name, id, bracket } = props;
+
+        // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup({
             name,
             id,
             bracket,
         });
+
+        // actions
         if (status) {
             return data;
         }

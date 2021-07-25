@@ -65,9 +65,8 @@ export const RecentlyUsedPluginsSection = (): ReactElement => {
             <Loader
                 isLoading={isLoading.get()}
                 loaderType="shimmer"
-                wrapperDivClassName={pluginStoreStyles.cardsWrapper}
                 skeleton={
-                    <>
+                    <div className={pluginStoreStyles.cardsWrapper}>
                         {times(3).map((key) => (
                             <Skeleton
                                 key={key}
@@ -77,28 +76,31 @@ export const RecentlyUsedPluginsSection = (): ReactElement => {
                                 variant={'rect'}
                             />
                         ))}
-                    </>
+                    </div>
                 }
             >
-                {!isLoading.get() &&
-                    tenantDetails?.installedPlugins?.map((plugin, key) => {
-                        const { shortDescription, icon, id, uniqueName, image, name } =
-                            plugin.plugin;
-                        return (
-                            <PluginCard
-                                key={id}
-                                isInstalled={true}
-                                image={
-                                    image || PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
-                                }
-                                name={name}
-                                icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
-                                description={shortDescription}
-                                installOrLaunchCallBack={launchCallBackHandler(key)}
-                                exploreCallBack={exploreCallBackHandler(key)}
-                            />
-                        );
-                    })}
+                <div className={pluginStoreStyles.cardsWrapper}>
+                    {!isLoading.get() &&
+                        tenantDetails?.installedPlugins?.map((plugin, key) => {
+                            const { shortDescription, icon, id, uniqueName, image, name } =
+                                plugin.plugin;
+                            return (
+                                <PluginCard
+                                    key={id}
+                                    isInstalled={true}
+                                    image={
+                                        image ||
+                                        PLUGIN_IMAGES[uniqueName as keyof typeof PLUGIN_IMAGES]
+                                    }
+                                    name={name}
+                                    icon={ICONS.PLUGIN_ICONS[icon as keyof typeof EPLUGINS]}
+                                    description={shortDescription}
+                                    installOrLaunchCallBack={launchCallBackHandler(key)}
+                                    exploreCallBack={exploreCallBackHandler(key)}
+                                />
+                            );
+                        })}
+                </div>
             </Loader>
         </div>
     );

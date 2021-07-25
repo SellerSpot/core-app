@@ -19,6 +19,14 @@
     border-radius: 3px !important;
 }
 
+.rst__expandButton {
+    box-shadow: 0 0 0 2px $foregroundSecondary-color !important;
+}
+
+.rst__collapseButton {
+    box-shadow: 0 0 0 2px $foregroundSecondary-color !important;
+}
+
 .rst__tree {
     background-color: transparent !important;
     // &::before {

@@ -1,11 +1,14 @@
+import { State } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
+    Button,
     IconButton,
     ITableProps,
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ITaxBracketData } from '@sellerspot/universal-types';
+import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React from 'react';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
@@ -14,6 +17,7 @@ import styles from './TaxBracketTable.module.scss';
 interface IGetTableProps {
     allTaxBrackets: ITaxBracketData[];
     isTableLoading: boolean;
+    taxBracketSliderState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
     editItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
     deleteItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
 }
@@ -21,8 +25,13 @@ interface IGetTableProps {
 export class TaxBracketTableService {
     static getTableProps = (props: IGetTableProps): ITableProps<ITaxBracketData> => {
         // props
-        const { allTaxBrackets, isTableLoading, deleteItemClickHandler, editItemClickHandler } =
-            props;
+        const {
+            allTaxBrackets,
+            isTableLoading,
+            deleteItemClickHandler,
+            editItemClickHandler,
+            taxBracketSliderState,
+        } = props;
 
         // custom renderes
         const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
@@ -68,6 +77,27 @@ export class TaxBracketTableService {
                 </div>
             );
         };
+        const EmptyStatePrimaryCallToAction = () => {
+            // handlers
+            const handleOnClick = () => {
+                taxBracketSliderState.merge({
+                    mode: 'create',
+                    prefillData: null,
+                    showModal: true,
+                });
+            };
+
+            return (
+                <Button
+                    label="NEW TAX BRACKET"
+                    theme="primary"
+                    size="small"
+                    onClick={handleOnClick}
+                    variant="contained"
+                    startIcon={<Icon icon={ICONS.outlineAdd} />}
+                />
+            );
+        };
 
         // return
         return {
@@ -99,15 +129,19 @@ export class TaxBracketTableService {
                     customRenderer: actionsCustomRenderer,
                 },
             ],
+            emptyStateMessage: 'You have not added any brackets yet',
+            emptyStatePrimaryCallToAction: <EmptyStatePrimaryCallToAction />,
         };
     };
 
     static deleteTaxBracket = async (props: { taxBracketId: string }): Promise<boolean> => {
         // props
         const { taxBracketId } = props;
+        // request
         const { status } = await requests.catalogue.taxSettingsRequest.deleteTaxBracket(
             taxBracketId,
         );
+        // action
         return status;
     };
 }
