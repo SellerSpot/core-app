@@ -1,4 +1,4 @@
-import { State, useState } from '@hookstate/core';
+import { useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
@@ -9,17 +9,16 @@ import { ProductTable } from './Components/ProductTable/ProductTable';
 import styles from './Product.module.scss';
 import { IProductPageState } from './Product.types';
 
-const PageHeaderComponent = (props: { pageState: State<IProductPageState> }) => {
+interface IPageHeaderComponentProps {
+    addProductHandler: () => void;
+}
+
+const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const {} = props;
+    const { addProductHandler } = props;
 
     // components
     const NewProductButton = () => {
-        // handlers
-        const handleOnClick = () => {
-            console.log('Clicked');
-        };
-
         // draw
         return (
             <Button
@@ -27,7 +26,7 @@ const PageHeaderComponent = (props: { pageState: State<IProductPageState> }) => 
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 variant="contained"
                 theme="primary"
-                onClick={handleOnClick}
+                onClick={addProductHandler}
             />
         );
     };
@@ -44,14 +43,48 @@ export const Product = (): ReactElement => {
         sliderModal: {
             showModal: false,
             mode: 'create',
+            brandSliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+            categorySliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+            stockUnitSliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+            taxBracketSliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
+            taxGroupSliderModal: {
+                showModal: false,
+                mode: 'create',
+                prefillData: null,
+            },
         },
     });
 
+    // handlers
+    const addProductHandler = () => {
+        pageState.sliderModal.merge({
+            showModal: true,
+            mode: 'create',
+            prefillData: null,
+        });
+    };
+
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent pageState={pageState} />
+            <PageHeaderComponent addProductHandler={addProductHandler} />
             <ProductTable pageState={pageState} />
-            <ProductSliderBase />
+            <ProductSliderBase sliderState={pageState.sliderModal} />
         </div>
     );
 };
