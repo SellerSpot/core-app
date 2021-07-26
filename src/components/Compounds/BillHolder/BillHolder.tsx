@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'r
 import { CSSProperties } from '@material-ui/styles';
 import { clamp } from 'lodash';
 import { useReactToPrint } from 'react-to-print';
+import { useWindowSize } from '@sellerspot/universal-components';
 
 import styles from './BillHolder.module.scss';
 import { IBillHolderProps } from './BillHolder.types';
@@ -13,6 +14,7 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
     // hooks
     const targetContainerRef = useRef<HTMLDivElement>(null);
     const zoomableWrapperRef = useRef<HTMLDivElement>(null);
+    const dimension = useWindowSize();
 
     // state
     const [billScale, setBillScale] = useState(1);
@@ -78,7 +80,7 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
     // used to get the height of bill / triggers when children changes
     useEffect(() => {
         setMeasurementsAndScaling();
-    }, [targetContainerRef.current, zoomableWrapperRef.current, children]);
+    }, [targetContainerRef.current, zoomableWrapperRef.current, children, dimension]);
 
     // styles
     const billWrapperStyle: CSSProperties = {

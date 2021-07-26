@@ -37,9 +37,9 @@ Bill90MM.args = {
         saleTotalTax: numberFormatINRCurrency(25),
         saleTotalTaxPercentage: 13,
         storeName: 'Sreenithi Margin Free',
+        storeAddress: 'Store address',
         saleTotal: numberFormatINRCurrency(250000),
         footerMessage: 'Sample Footer Message',
-        headerMessage: 'Sample Header Message',
     },
 } as IBill90MMProps;
 
