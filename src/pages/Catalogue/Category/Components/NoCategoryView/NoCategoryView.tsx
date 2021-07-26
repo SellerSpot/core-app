@@ -21,6 +21,7 @@ export const NoCategoryView = (props: INoCategoryViewProps): ReactElement => {
             <Button
                 onClick={createRootCategoryCallback}
                 label="NEW CATEGORY"
+                size="small"
                 variant="contained"
                 theme="primary"
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
