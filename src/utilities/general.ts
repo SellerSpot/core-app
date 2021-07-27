@@ -1,3 +1,5 @@
+import { FieldMetaState } from 'react-final-form';
+
 /**
  * used to compute the x percent of y
  * @param values x: percent; y: percentOf
@@ -61,4 +63,15 @@ export const redirectTo = (
 
 export const rawClone = <T = unknown>(data: unknown): T => {
     return JSON.parse(JSON.stringify(data));
+};
+
+// used to decide if the inputfield has to show error helpermessage or not
+export const showErrorHelperMessage = (meta: FieldMetaState<unknown>): boolean => {
+    // props
+    const { error, submitError, touched, dirty, submitFailed } = meta;
+    // decide
+    if ((error || submitError) && touched && (dirty || submitFailed)) {
+        return true;
+    }
+    return false;
 };

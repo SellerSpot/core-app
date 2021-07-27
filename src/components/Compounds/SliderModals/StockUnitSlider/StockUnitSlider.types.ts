@@ -2,11 +2,9 @@ import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
+import { IStockUnitData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 
-interface IPrefillData {
-    name: string;
-    id: string;
-}
+type IPrefillData = Pick<IStockUnitData, 'id' | 'name' | 'unit'>;
 
 export interface IStockUnitSliderModalOnSubmit {
     values: IStockUnitSliderForm;
@@ -29,9 +27,7 @@ export interface IStockUnitSliderProps {
     prefillData?: IPrefillData;
 }
 
-export interface IStockUnitSliderForm {
-    name: string;
-}
+export type IStockUnitSliderForm = Pick<IStockUnitData, 'name' | 'unit'>;
 
 export interface IStockUnitSliderModalDynamicValues {
     sliderModalProps: Pick<ISliderModalProps, 'width' | 'type' | 'showBackdrop'>;

@@ -3,6 +3,7 @@ import { IInputFieldProps } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -36,6 +37,7 @@ export class StockUnitSliderService {
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         let initialFormValues: IStockUnitSliderForm = {
             name: '',
+            unit: '',
         };
 
         // sliderModalProps
@@ -62,6 +64,7 @@ export class StockUnitSliderService {
         // initialFormValues
         initialFormValues = {
             name: prefillData?.name,
+            unit: prefillData?.unit,
         };
 
         // return
@@ -76,7 +79,8 @@ export class StockUnitSliderService {
     };
 
     static validationSchema: yup.SchemaOf<IStockUnitSliderForm> = yup.object({
-        name: yup.string().required('Stock Unit name is required'),
+        name: yup.string().required('Name is required'),
+        unit: yup.string().required('Unit is required'),
     });
 
     static validateField =
@@ -101,7 +105,7 @@ export class StockUnitSliderService {
         theme: IInputFieldProps['theme'];
     } => {
         // props
-        const { error, submitError, dirtySinceLastSubmit, dirty } = meta;
+        const { error, submitError } = meta;
         let { enabled, content, type }: IInputFieldProps['helperMessage'] = {
             enabled: false,
             content: 'No Content',
@@ -110,7 +114,7 @@ export class StockUnitSliderService {
         let theme: IInputFieldProps['theme'] = 'primary';
 
         // compute
-        if ((error || submitError) && (dirty || dirtySinceLastSubmit)) {
+        if (showErrorHelperMessage(meta)) {
             type = 'error';
             content = error || submitError;
             enabled = true;

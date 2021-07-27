@@ -3,6 +3,7 @@ import { Table } from '@sellerspot/universal-components';
 import { IStockUnitData } from '@sellerspot/universal-types';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import React, { ReactElement } from 'react';
+import { rawClone } from 'utilities/general';
 import { IStockUnitPageState } from '../../StockUnit.types';
 import { StockUnitTableService } from './StockUnitTable.service';
 
@@ -52,7 +53,7 @@ export const StockUnitTable = (props: IStockUnitTableProps): ReactElement => {
     const editItemClickHandler = (stockUnitData: IStockUnitData) => async () => {
         // state update
         pageState.sliderModal.merge({
-            prefillData: stockUnitData,
+            prefillData: rawClone(stockUnitData),
             showModal: true,
             mode: 'edit',
         });

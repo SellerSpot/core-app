@@ -44,7 +44,7 @@ export default class StockUnitRequest extends BaseRequest {
         return <IEditStockUnitResponse>await this.request({
             url: ROUTES.CATALOGUE.STOCK_UNIT.EDIT.replace(':id', data.id),
             method: 'PUT',
-            payload: <IEditStockUnitRequest>{ name: data.name },
+            payload: <IEditStockUnitRequest>{ name: data.name, unit: data.unit },
         });
     };
 }

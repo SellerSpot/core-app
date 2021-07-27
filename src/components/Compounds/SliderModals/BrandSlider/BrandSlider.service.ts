@@ -3,6 +3,7 @@ import { IInputFieldProps } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -101,16 +102,15 @@ export class BrandSliderService {
         theme: IInputFieldProps['theme'];
     } => {
         // props
-        const { error, submitError, dirtySinceLastSubmit, dirty } = meta;
+        const { error, submitError } = meta;
         let { enabled, content, type }: IInputFieldProps['helperMessage'] = {
             enabled: false,
             content: 'No Content',
             type: 'success',
         };
         let theme: IInputFieldProps['theme'] = 'primary';
-
         // compute
-        if ((error || submitError) && (dirty || dirtySinceLastSubmit)) {
+        if (showErrorHelperMessage(meta)) {
             type = 'error';
             content = error || submitError;
             enabled = true;

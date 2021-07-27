@@ -3,5 +3,5 @@
     height: 100%;
     padding-top: 10px;
 
-    @include flex(center, flex-start, column, 10px);
+    @include flex(center, flex-start, column, 5px);
 }

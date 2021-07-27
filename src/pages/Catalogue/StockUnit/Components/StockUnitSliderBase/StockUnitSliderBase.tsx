@@ -29,17 +29,18 @@ export const StockUnitSliderBase = (props: IStockUnitSliderBaseProps): ReactElem
     };
     const onSubmitHandler: IStockUnitSliderProps['onSubmit'] = async ({ values }) => {
         // values
-        const { name } = values;
-
+        const { name, unit } = values;
         // compute
         if (sliderState.mode.get() === 'create') {
             await StockUnitSliderBaseService.createNewStockUnit({
                 name,
+                unit,
             });
         } else {
             await StockUnitSliderBaseService.editStockUnit({
                 id: sliderState.prefillData.id.get(),
                 name,
+                unit,
             });
         }
 

@@ -9,6 +9,7 @@ import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmD
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
+import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -156,7 +157,7 @@ export class TaxGroupSliderService {
         theme: IInputFieldProps['theme'];
     } => {
         // props
-        const { error, submitError, touched } = meta;
+        const { error, submitError } = meta;
         let { enabled, content, type }: IInputFieldProps['helperMessage'] = {
             enabled: false,
             content: 'No Content',
@@ -165,7 +166,7 @@ export class TaxGroupSliderService {
         let theme: IInputFieldProps['theme'] = 'primary';
 
         // compute
-        if ((error || submitError) && touched) {
+        if (showErrorHelperMessage(meta)) {
             type = 'error';
             content = error || submitError;
             enabled = true;
