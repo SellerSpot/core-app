@@ -4,7 +4,7 @@ import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
 import { IStockUnitData } from '@sellerspot/universal-types';
 
-type IPrefillData = Pick<IStockUnitData, 'id' | 'name' | 'unit'>;
+type IPrefillData = Partial<Pick<IStockUnitData, 'id' | 'name' | 'unit'>>;
 
 export interface IStockUnitSliderModalOnSubmit {
     values: IStockUnitSliderForm;

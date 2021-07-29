@@ -5,7 +5,7 @@ import { IOnClickEvents } from 'typings/common.types';
 
 interface IPrefillData {
     name: string;
-    id: string;
+    id?: string;
 }
 
 export interface IBrandSliderModalOnSubmit {

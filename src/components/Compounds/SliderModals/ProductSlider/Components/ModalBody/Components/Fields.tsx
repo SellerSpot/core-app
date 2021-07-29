@@ -15,6 +15,7 @@ import { ICONS } from 'utilities/utilities';
 import { ProductSliderService } from '../../../ProductSlider.service';
 import { IProductSliderForm, IProductSliderProps } from '../../../ProductSlider.types';
 import styles from './Fields.module.scss';
+import { ProductSliderFieldsService } from './Fields.service';
 
 interface ICommonProps {
     submitting: boolean;
@@ -233,19 +234,7 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
         const searchResults = await StockUnitService.searchStockUnit(query);
         // draw
         return searchResults.map((stockUnit) => {
-            // component
-            const stockUnitSelectLabel = (
-                <div className={styles.stockUnitSelectLabel}>
-                    <p>{stockUnit.name}</p>
-                    <p>
-                        <b>{stockUnit.unit}</b>
-                    </p>
-                </div>
-            );
-            return {
-                label: stockUnitSelectLabel,
-                value: stockUnit.id,
-            };
+            return ProductSliderFieldsService.formatStockUnitDataForSelectComponent(stockUnit);
         });
     };
 
@@ -256,7 +245,7 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
             label="Stock Unit"
             value={value as ISelectOption}
             isDisabled={submitting}
-            formatCreateLabel={(inputValue) => `Create brand "${inputValue}"`}
+            formatCreateLabel={(inputValue) => `Create stock unit "${inputValue}"`}
             helperMessage={{
                 enabled: helperMessage.enabled,
                 content: helperMessage.content,

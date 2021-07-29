@@ -26,6 +26,7 @@ export const CategorySlider = (props: ICategorySliderProps): ReactElement => {
         prefillData,
         contextData,
         formRef,
+        categoryViewProps,
     } = props;
     const sliderModalWidth = '30%';
 
@@ -137,6 +138,8 @@ export const CategorySlider = (props: ICategorySliderProps): ReactElement => {
                         submitting,
                     };
                     const modalBodyProps: IModalBodyProps = {
+                        mode,
+                        categoryViewProps,
                         showModal,
                         submitting,
                         currentNodeSiblings: currentNodeSiblings.get(),
