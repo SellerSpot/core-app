@@ -26,6 +26,9 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
         showModal,
         onClose,
         onSubmit,
+        onCreateBrand,
+        onCreateStockUnit,
+        onInvokeCategoryChoice,
         prefillData,
         formRef,
         brandSliderProps,
@@ -34,7 +37,7 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
         taxBracketSliderProps,
         taxGroupSliderProps,
     } = props;
-    const sliderModalWidth = '30%';
+    const sliderModalWidth = '35%';
 
     // special props
     const {
@@ -99,6 +102,9 @@ export const ProductSlider = (props: IProductSliderProps): ReactElement => {
                     const modalBodyProps: IModalBodyProps = {
                         showModal,
                         submitting,
+                        onCreateBrand,
+                        onCreateStockUnit,
+                        onInvokeCategoryChoice,
                     };
                     const modalFooterProps: IModalFooterProps = {
                         dirty,

@@ -5,10 +5,12 @@ export class BrandService {
     static getAllBrand = async (): Promise<IBrandData[]> => {
         // reqesting
         const { status, data } = await requests.catalogue.brandRequest.getAllBrand();
-        if (status) {
-            return data;
-        } else {
-            return [];
-        }
+        return status ? data : [];
+    };
+
+    static searchBrand = async (query: string): Promise<IBrandData[]> => {
+        // requesting
+        const { status, data } = await requests.catalogue.brandRequest.searchBrand(query);
+        return status ? data : [];
     };
 }

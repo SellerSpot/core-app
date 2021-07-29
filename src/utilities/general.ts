@@ -1,4 +1,6 @@
 import { FieldMetaState } from 'react-final-form';
+import * as yup from 'yup';
+import { ISelectOption } from '../../.yalc/@sellerspot/universal-components/dist';
 
 /**
  * used to compute the x percent of y
@@ -75,3 +77,9 @@ export const showErrorHelperMessage = (meta: FieldMetaState<unknown>): boolean =
     }
     return false;
 };
+
+// used to validate ReactSlect fields
+export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
+    label: yup.string(),
+    value: yup.string(),
+});

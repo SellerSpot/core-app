@@ -1,0 +1,8 @@
+.buttonWrapper {
+    margin-bottom: 22px;
+}
+
+.stockUnitSelectLabel {
+    width: 100%;
+    @include flex(center, space-between);
+}

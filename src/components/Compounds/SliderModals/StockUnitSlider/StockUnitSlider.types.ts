@@ -2,7 +2,7 @@ import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
-import { IStockUnitData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
+import { IStockUnitData } from '@sellerspot/universal-types';
 
 type IPrefillData = Pick<IStockUnitData, 'id' | 'name' | 'unit'>;
 

@@ -1,9 +1,13 @@
 import { State } from '@hookstate/core';
-import { IInputFieldProps } from '@sellerspot/universal-components';
+import {
+    IAsyncCreatableSelectProps,
+    IInputFieldProps,
+    ISelectOption,
+} from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
-import { showErrorHelperMessage } from 'utilities/general';
+import { SelectOptionValidationSchema, showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -32,12 +36,16 @@ export class ProductSliderService {
             type: 'fixed',
         };
         let closeButtonType: IProductSliderModalDynamicValues['closeButtonType'] = 'close';
-        let modalTitle = 'Create new tax bracket';
-        let modalFooterPrimaryButtonLabel = 'CREATE TAX BRACKET';
+        let modalTitle = 'Create new product';
+        let modalFooterPrimaryButtonLabel = 'CREATE PRODUCT';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         let initialFormValues: IProductSliderForm = {
             name: '',
-            rate: 0,
+            barcode: '',
+            description: '',
+            brand: null,
+            category: '',
+            stockUnit: null,
         };
 
         // sliderModalProps
@@ -53,7 +61,7 @@ export class ProductSliderService {
         }
 
         // modalTitle
-        if (mode === 'edit') modalTitle = 'Edit tax bracket';
+        if (mode === 'edit') modalTitle = 'Edit product';
 
         // modalFooterPrimaryButtonLabel
         if (mode === 'edit') modalFooterPrimaryButtonLabel = 'SAVE CHANGES';
@@ -63,8 +71,7 @@ export class ProductSliderService {
 
         // initialFormValues
         initialFormValues = {
-            name: prefillData?.name,
-            rate: prefillData?.rate,
+            ...prefillData,
         };
 
         // return
@@ -79,17 +86,17 @@ export class ProductSliderService {
     };
 
     static validationSchema: yup.SchemaOf<IProductSliderForm> = yup.object({
-        name: yup.string().required('Bracket name is required'),
-        rate: yup
-            .number()
-            .required('Bracket rate is required')
-            .min(0, 'Bracket rate cannot be below 0')
-            .max(100, 'Bracket rate cannot be above 100'),
+        name: yup.string().required('Product name is required'),
+        barcode: yup.string(),
+        description: yup.string(),
+        brand: SelectOptionValidationSchema,
+        category: yup.string(),
+        stockUnit: SelectOptionValidationSchema,
     });
 
     static validateField =
         <T extends keyof IProductSliderForm>(fieldName: T) =>
-        (values: IProductSliderForm[keyof IProductSliderForm]): string => {
+        (values: IProductSliderForm[keyof IProductSliderForm]): string | ISelectOption => {
             const requiredSchema: yup.SchemaOf<IProductSliderForm[T]> = yup.reach(
                 ProductSliderService.validationSchema,
                 fieldName,
@@ -131,6 +138,31 @@ export class ProductSliderService {
             content,
             type,
             theme,
+        };
+    };
+
+    static getSpecialSelectFieldProps = (
+        meta: FieldMetaState<IProductSliderForm>,
+    ): IAsyncCreatableSelectProps['helperMessage'] => {
+        // props
+        const { error, submitError, touched } = meta;
+        let { enabled, content, type }: IAsyncCreatableSelectProps['helperMessage'] = {
+            enabled: false,
+            content: 'No Content',
+            type: 'message',
+        };
+        // compute
+        if ((error || submitError) && touched) {
+            type = 'error';
+            content = error || submitError;
+            enabled = true;
+        }
+
+        // return
+        return {
+            enabled,
+            content,
+            type,
         };
     };
 

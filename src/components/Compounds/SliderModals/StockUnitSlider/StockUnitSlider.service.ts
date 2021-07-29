@@ -63,8 +63,7 @@ export class StockUnitSliderService {
 
         // initialFormValues
         initialFormValues = {
-            name: prefillData?.name,
-            unit: prefillData?.unit,
+            ...prefillData,
         };
 
         // return

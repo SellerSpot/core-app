@@ -1,5 +1,5 @@
 import { IconifyIcon } from '@iconify/react';
-import { ISliderModalProps } from '@sellerspot/universal-components';
+import { ISelectOption, ISliderModalProps } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from 'typings/common.types';
 import { IBrandSliderProps } from '../BrandSlider/BrandSlider.types';
@@ -8,11 +8,18 @@ import { IStockUnitSliderProps } from '../StockUnitSlider/StockUnitSlider.types'
 import { ITaxBracketSliderProps } from '../TaxBracketSlider/TaxBracketSlider.types';
 import { ITaxGroupSliderProps } from '../TaxGroupSlider/TaxGroupSlider.types';
 
-interface IPrefillData {
+export interface IProductSliderForm {
     name: string;
-    id: string;
-    rate: number;
+    barcode: string;
+    description: string;
+    brand: ISelectOption;
+    category: string;
+    stockUnit: ISelectOption;
 }
+
+type IPrefillData = IProductSliderForm & {
+    id: string;
+};
 
 export interface IProductSliderModalOnSubmit {
     values: IProductSliderForm;
@@ -30,6 +37,9 @@ export interface IProductSliderProps {
     formRef: React.MutableRefObject<FormApi<IProductSliderForm, Partial<IProductSliderForm>>>;
     onSubmit: (props: IProductSliderModalOnSubmit) => Promise<void>;
     onClose: (props: IProductSliderModalOnClose) => void;
+    onCreateBrand: (name: string) => void;
+    onCreateStockUnit: (name: string) => void;
+    onInvokeCategoryChoice: () => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
@@ -38,11 +48,6 @@ export interface IProductSliderProps {
     stockUnitSliderProps: IStockUnitSliderProps;
     taxBracketSliderProps: ITaxBracketSliderProps;
     taxGroupSliderProps: ITaxGroupSliderProps;
-}
-
-export interface IProductSliderForm {
-    name: string;
-    rate: number;
 }
 
 export interface IProductSliderModalDynamicValues {

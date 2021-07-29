@@ -5,6 +5,7 @@ import {
     IEditStockUnitRequest,
     IEditStockUnitResponse,
     IGetAllStockUnitResponse,
+    ISearchStockUnitResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
@@ -17,6 +18,13 @@ export default class StockUnitRequest extends BaseRequest {
     getAllStockUnit = async (): Promise<IGetAllStockUnitResponse> => {
         return <IGetAllStockUnitResponse>await this.request({
             url: ROUTES.CATALOGUE.STOCK_UNIT.GET_ALL,
+            method: 'GET',
+        });
+    };
+
+    searchStockUnit = async (query: string): Promise<ISearchStockUnitResponse> => {
+        return <ISearchStockUnitResponse>await this.request({
+            url: `${ROUTES.CATALOGUE.STOCK_UNIT.SEARCH}?query=${query}`,
             method: 'GET',
         });
     };
