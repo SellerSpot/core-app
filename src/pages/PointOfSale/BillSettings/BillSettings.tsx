@@ -10,13 +10,13 @@ import {
 import { EBILL_SIZES, getBillSizeByName } from '@sellerspot/universal-types';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './BillSettings.module.scss';
-// import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
+import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
 import { BillA4 } from 'components/Compounds/BillA4/BillA4';
 import { Bill90MM } from 'components/Compounds/Bill90MM/Bill90MM';
 import { useState } from '@hookstate/core';
 import { BillA4Settings } from './components/BillA4Settings';
 import { Bill90MMSettings } from './components/Bill90MMSettings';
-import { IBillSettings, TBillComponentMap } from './BillSettings.types';
+import { IBillBaseChildProps, IBillSettings, TBillComponentMap } from './BillSettings.types';
 import { BillSettingsService } from './BillSettings.service';
 import { isEqual, times } from 'lodash';
 import { rawClone } from 'utilities/general';
@@ -110,8 +110,8 @@ export const BillSettings = (): ReactElement => {
     // draw
     const currentBillName = billSettingsSwitchState.get();
     const CurrentBillSettingsComponent = billSizeComponentMap[currentBillName].SETTINGS;
-    // const CurrentBillComponent = billSizeComponentMap[currentBillName].BILL;
-    // const currentBillDimension = billSizeComponentMap[currentBillName].dimension;
+    const CurrentBillComponent = billSizeComponentMap[currentBillName].BILL;
+    const currentBillDimension = billSizeComponentMap[currentBillName].dimension;
     // current bill State, which will be passed to corresponding billSeettings and bill components
     const currentBillSettingsState = billSettingsState?.bills?.[currentBillName];
 
@@ -193,15 +193,16 @@ export const BillSettings = (): ReactElement => {
                         <Skeleton width="100%" height="100%" />
                     ) : (
                         <>
-                            {/* <BillHolder>
-                            <CurrentBillComponent
-                                // do not remove, it is used for resize / switch scaling inside BillHolder component
-                                {...({
-                                    dimension: currentBillDimension,
-                                    state: currentBillSettingsState,
-                                } as unknown)}
+                            <BillHolder>
+                                <CurrentBillComponent
+                                    // do not remove, it is used for resize / switch scaling inside BillHolder component
+                                    {...({
+                                        settings: rawClone(currentBillSettingsState.get()),
+                                        data: BillSettingsService.dummyBillData,
+                                        dimension: currentBillDimension,
+                                    } as IBillBaseChildProps<unknown> as unknown)}
                                 />
-                        </BillHolder> */}
+                            </BillHolder>
                         </>
                     )}
                 </div>

@@ -1,10 +1,20 @@
 import { introduceDelay } from '@sellerspot/universal-components';
-import { IBillSettings, TBillDimensions } from './BillSettings.types';
+import { IBillData, IBillSettings, TBillDimensions } from './BillSettings.types';
 
 export class BillSettingsService {
     static billDimentsions: TBillDimensions = {
         BILL_A4: { width: 793 },
         BILL_90MM: { width: 340 },
+    };
+
+    static dummyBillData: IBillData = {
+        productCartInformation: [],
+        products: [],
+        totals: {
+            grandTotal: 0,
+            grandTotalDiscount: 0,
+            grandTotalTax: 0,
+        },
     };
 
     static fetchBillSettings = async (): Promise<IBillSettings> => {

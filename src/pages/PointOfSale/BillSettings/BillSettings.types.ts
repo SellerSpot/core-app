@@ -118,3 +118,12 @@ export type TBillComponentMap = {
 export type TBillDimensions = {
     [k in keyof typeof EBILL_SIZES]: Partial<IDimension>; // height is not needed, hence making it partial
 };
+
+// bill preview props
+export interface IBillBaseProps<T> {
+    data: IBillData;
+    settings: T;
+    dimension?: IDimension; // only used in BillSettings.tsx component for scaling layout
+}
+
+export type IBillBaseChildProps<T> = Omit<IBillBaseProps<T>, 'dimension'>;
