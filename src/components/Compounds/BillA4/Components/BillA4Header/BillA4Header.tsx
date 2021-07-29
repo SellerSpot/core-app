@@ -3,8 +3,9 @@ import styles from './BillA4Header.module.scss';
 import dummyLogo from '../../logo.png';
 import { BillA4HeaderInvoice } from './Components/BillA4HeaderInvoice';
 import { Image } from '@sellerspot/universal-components';
+import { IBillA4ChildProps } from '../../BillA4.types';
 
-export const BillA4Header = (): ReactElement => {
+export const BillA4Header = (props: IBillA4ChildProps): ReactElement => {
     return (
         <div className={styles.billHeader}>
             <div className={styles.storeDetailsWrapper}>

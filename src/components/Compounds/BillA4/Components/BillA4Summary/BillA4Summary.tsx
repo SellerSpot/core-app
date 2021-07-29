@@ -3,8 +3,9 @@ import styles from './BillA4Summary.module.scss';
 import mainStyles from '../../BillA4.module.scss';
 import cn from 'classnames';
 import { COMMON_SYMBOLS } from 'utilities/general';
+import { IBillA4ChildProps } from '../../BillA4.types';
 
-export const BillA4Summary = (): ReactElement => {
+export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
     return (
         <div className={mainStyles.advertisementAndGrandTotalWrapper}>
             <div className={styles.advertisementHolder}>Thanks for Shopping with us!</div>

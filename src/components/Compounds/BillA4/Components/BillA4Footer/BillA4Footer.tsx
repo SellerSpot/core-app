@@ -1,17 +1,15 @@
 import React, { ReactElement } from 'react';
+import { IBillA4ChildProps } from '../../BillA4.types';
 import styles from './BillA4Footer.module.scss';
 
-interface IBillA4FooterProps {
-    message: string;
-}
-
-export const BillA4Footer = (props: IBillA4FooterProps): ReactElement => {
-    const { message } = props;
+export const BillA4Footer = (props: IBillA4ChildProps): ReactElement => {
+    const { settings } = props;
+    const { show, value } = settings.footerMessage;
     return (
         <>
-            {message && (
+            {show && (
                 <div className={styles.wrapper}>
-                    <p>{message}</p>
+                    <p>{value}</p>
                 </div>
             )}
         </>

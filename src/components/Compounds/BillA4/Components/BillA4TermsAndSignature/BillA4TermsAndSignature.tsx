@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import styles from './BillA4TermsAndSignature.module.scss';
 import mainStyles from '../../BillA4.module.scss';
+import { IBillA4ChildProps } from '../../BillA4.types';
 
-export const BillA4TermsAndSignature = (): ReactElement => {
+export const BillA4TermsAndSignature = (props: IBillA4ChildProps): ReactElement => {
     return (
         <>
             <div className={mainStyles.advertisementAndGrandTotalWrapper}>

@@ -3,8 +3,9 @@ import styles from './BillA4TaxSplitup.module.scss';
 import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
+import { IBillA4ChildProps } from '../../BillA4.types';
 
-export const BillA4TaxSplitup = (): ReactElement => {
+export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
     return (
         <>
             <div className={mainStyles.billSubTitle}>

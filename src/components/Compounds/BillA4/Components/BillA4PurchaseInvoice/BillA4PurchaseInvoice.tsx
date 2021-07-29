@@ -4,8 +4,9 @@ import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
 import { COMMON_SYMBOLS } from 'utilities/general';
+import { IBillA4ChildProps } from '../../BillA4.types';
 
-export const BillA4PurchaseInvoice = (): ReactElement => {
+export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement => {
     return (
         <>
             <div className={mainStyles.billSubTitle}>PURCHASE INVOICE</div>

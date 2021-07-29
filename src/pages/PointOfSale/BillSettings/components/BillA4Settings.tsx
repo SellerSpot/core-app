@@ -1,49 +1,10 @@
 import React, { ReactElement } from 'react';
 import billSettingsStyle from '../BillSettings.module.scss';
 import { CheckBox, InputField } from '@sellerspot/universal-components';
+import { IBillA4Settings } from '../BillSettings.types';
+import { State, useState } from '@hookstate/core';
 
-interface IBillA4Settings {
-    storeDetails: {
-        name: string;
-        address: string;
-        // outlet integration needs to be done here
-    };
-    GSTNumber: {
-        show: boolean;
-        value: string;
-    };
-    purchaseInvoiceSection: {
-        show: boolean;
-        discountColumn: boolean;
-        taxColumn: boolean;
-        MRPColumn: boolean;
-    };
-    purchaseSummarySection: {
-        totalDiscount: boolean;
-        youSaved: boolean;
-    };
-    taxSplitUpSection: {
-        show: boolean;
-    };
-    remarkMessage: {
-        show: boolean;
-        value: string;
-    };
-    footerMessage: {
-        show: boolean;
-        value: string;
-    };
-    termsAndConditions: {
-        show: boolean;
-        value: string;
-    };
-    signature: {
-        authorised: boolean;
-        customer: boolean;
-    };
-}
-
-export const BillA4Settings = (props: { state: IBillA4Settings }): ReactElement => {
+export const BillA4Settings = (props: { state: State<IBillA4Settings> }): ReactElement => {
     const {
         storeDetails,
         GSTNumber,
@@ -54,22 +15,7 @@ export const BillA4Settings = (props: { state: IBillA4Settings }): ReactElement 
         termsAndConditions,
         signature,
         footerMessage,
-    } = props?.state ?? {
-        storeDetails: { address: '', name: '' },
-        GSTNumber: { show: false, value: '' },
-        purchaseInvoiceSection: {
-            show: false,
-            discountColumn: false,
-            taxColumn: false,
-            MRPColumn: false,
-        },
-        purchaseSummarySection: { totalDiscount: false, youSaved: false },
-        taxSplitUpSection: { show: false },
-        remarkMessage: { show: false, value: '' },
-        termsAndConditions: { show: false, value: '' },
-        signature: { authorised: false, customer: false },
-        footerMessage: { show: false, value: '' },
-    };
+    } = useState(props?.state);
 
     return (
         <>
@@ -79,7 +25,8 @@ export const BillA4Settings = (props: { state: IBillA4Settings }): ReactElement 
                     label="Store name"
                     fullWidth
                     disableHelperTextPlaceholderPadding
-                    value={storeDetails.name}
+                    value={storeDetails.name.get()}
+                    onChange={(e) => storeDetails.name.set(e.target.value)}
                 />
                 <InputField
                     label="Store address"
@@ -87,75 +34,141 @@ export const BillA4Settings = (props: { state: IBillA4Settings }): ReactElement 
                     fullWidth
                     disableHelperTextPlaceholderPadding
                     rows={3}
-                    value={storeDetails.address}
+                    value={storeDetails.address.get()}
+                    onChange={(e) => storeDetails.address.set(e.target.value)}
                 />
-                <CheckBox label={<h5>GST No</h5>} checked={GSTNumber.show} />
-                {GSTNumber.show && (
+                <CheckBox
+                    label={<h5>GST No</h5>}
+                    checked={GSTNumber.show.get()}
+                    onChange={() => GSTNumber.show.set(!GSTNumber.show.get())}
+                />
+                {GSTNumber.show.get() && (
                     <InputField
                         placeHolder="your GST No"
                         fullWidth
                         disableHelperTextPlaceholderPadding
-                        value={GSTNumber.value}
+                        value={GSTNumber.data.get()}
                     />
                 )}
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <h5>Purchase invoice section</h5>
-                <CheckBox label="Discount column" checked={purchaseInvoiceSection.discountColumn} />
-                <CheckBox label="Tax column" checked={purchaseInvoiceSection.taxColumn} />
-                <CheckBox label="MRP column" checked={purchaseInvoiceSection.MRPColumn} />
+                <CheckBox
+                    label="Discount column"
+                    checked={purchaseInvoiceSection.discountColumn.get()}
+                    onChange={() =>
+                        purchaseInvoiceSection.discountColumn.set(
+                            !purchaseInvoiceSection.discountColumn.get(),
+                        )
+                    }
+                />
+                <CheckBox
+                    label="Tax column"
+                    checked={purchaseInvoiceSection.taxColumn.get()}
+                    onChange={() =>
+                        purchaseInvoiceSection.taxColumn.set(
+                            !purchaseInvoiceSection.taxColumn.get(),
+                        )
+                    }
+                />
+                <CheckBox
+                    label="MRP column"
+                    checked={purchaseInvoiceSection.MRPColumn.get()}
+                    onChange={() =>
+                        purchaseInvoiceSection.MRPColumn.set(
+                            !purchaseInvoiceSection.MRPColumn.get(),
+                        )
+                    }
+                />
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <h5>Purchase summary section</h5>
-                <CheckBox label="Total discount" checked={purchaseSummarySection.totalDiscount} />
-                <CheckBox label="You saved" checked={purchaseSummarySection.youSaved} />
+                <CheckBox
+                    label="Total discount"
+                    checked={purchaseSummarySection.totalDiscount.get()}
+                    onChange={() =>
+                        purchaseSummarySection.totalDiscount.set(
+                            !purchaseSummarySection.totalDiscount.get(),
+                        )
+                    }
+                />
+                <CheckBox
+                    label="You saved"
+                    checked={purchaseSummarySection.youSaved.get()}
+                    onChange={() =>
+                        purchaseSummarySection.youSaved.set(!purchaseSummarySection.youSaved.get())
+                    }
+                />
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
-                <CheckBox label={<h5>Tax split up section</h5>} checked={taxSplitUpSection.show} />
+                <CheckBox
+                    label={<h5>Tax split up section</h5>}
+                    checked={taxSplitUpSection.show.get()}
+                    onChange={() => taxSplitUpSection.show.set(!taxSplitUpSection.show.get())}
+                />
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <h5>Special fields</h5>
-                <CheckBox label="Thank you / Remark message" checked={remarkMessage.show} />
-                {remarkMessage.show && (
+                <CheckBox
+                    label="Thank you / Remark message"
+                    checked={remarkMessage.show.get()}
+                    onChange={() => remarkMessage.show.set(!remarkMessage.show.get())}
+                />
+                {remarkMessage.show.get() && (
                     <InputField
                         multiline={true}
                         fullWidth
                         disableHelperTextPlaceholderPadding
                         placeHolder="Your thank you / remark message"
                         rows={3}
-                        value={remarkMessage.value}
+                        value={remarkMessage.data.get()}
+                        onChange={(e) => remarkMessage.data.set(e.target.value)}
                     />
                 )}
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
-                <CheckBox label={<h5>Terms and conditions</h5>} checked={termsAndConditions.show} />
-                {termsAndConditions.show && (
+                <CheckBox
+                    label={<h5>Terms and conditions</h5>}
+                    checked={termsAndConditions.show.get()}
+                    onChange={() => termsAndConditions.show.set(!termsAndConditions.show.get())}
+                />
+                {termsAndConditions.show.get() && (
                     <InputField
                         multiline={true}
                         fullWidth
                         disableHelperTextPlaceholderPadding
                         placeHolder="Terms and conditions"
                         rows={3}
-                        value={termsAndConditions.value}
+                        value={termsAndConditions.data.get()}
+                        onChange={(e) => termsAndConditions.data.set(e.target.value)}
                     />
                 )}
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
-                <CheckBox label={<h5>Footer message</h5>} checked={footerMessage.show} />
-                {footerMessage.show && (
+                <CheckBox
+                    label={<h5>Footer message</h5>}
+                    checked={footerMessage.show.get()}
+                    onChange={() => footerMessage.show.set(!footerMessage.show.get())}
+                />
+                {footerMessage.show.get() && (
                     <InputField
                         multiline={true}
                         fullWidth
                         disableHelperTextPlaceholderPadding
                         placeHolder="Your footer message"
                         rows={3}
-                        value={footerMessage.value}
+                        value={footerMessage.data.get()}
+                        onChange={(e) => footerMessage.data.set(e.target.value)}
                     />
                 )}
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <h5>Signature</h5>
-                <CheckBox label="Authorised signature" checked={signature.authorised} />
+                <CheckBox
+                    label="Authorised signature"
+                    checked={signature.authorised.get()}
+                    onChange={() => signature.authorised.set(!signature.authorised.get())}
+                />
             </div>
         </>
     );

@@ -1,0 +1,4 @@
+.savingNotifier {
+    color: $foregroundTertiary-color;
+    @include flex(center, center, $gap: 5px);
+}

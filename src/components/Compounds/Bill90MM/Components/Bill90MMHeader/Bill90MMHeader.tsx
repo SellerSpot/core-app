@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react';
-import { IBill90MMProps } from '../../Bill90MM';
+import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMHeader.module.scss';
 
-export const Bill90MMHeader = (props: { billData: IBill90MMProps['billData'] }): ReactElement => {
-    const { billData } = props;
-    const { saleTotal, storeAddress, storeName } = billData;
+export const Bill90MMHeader = (props: IBill90MMChildProps): ReactElement => {
+    const { data, settings } = props;
+    const { storeDetails } = settings;
+    const { name: storeName, address: storeAddress } = storeDetails;
+    const { grandTotal: saleTotal } = data.totals;
     return (
         <>
             <div className={styles.storeNameWrapper}>

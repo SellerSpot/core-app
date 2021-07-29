@@ -1,12 +1,9 @@
 import React, { ReactElement } from 'react';
-import { IBill90MMProps } from '../../Bill90MM.types';
+import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMSummary.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 
-export const Bill90MMSummary = (props: { billData: IBill90MMProps['billData'] }): ReactElement => {
-    const { billData } = props;
-    const { saleDiscount, saleSubTotal, saleTotal, saleTotalTax, saleTotalTaxPercentage } =
-        billData;
+export const Bill90MMSummary = (props: IBill90MMChildProps): ReactElement => {
     return (
         <>
             <div className={mainStyles.PageBreak} />

@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement } from 'react';
-import { IBill90MMProps } from '../../Bill90MM.types';
+import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMProductsListing.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 
-const ListingRow = (props: { product: IBill90MMProps['billData']['products'][0] }) => {
-    const { product } = props;
-    const { name, subTotal, quantity, stockUnit, unitPrice, discount } = product;
+const ListingRow = (
+    props: IBill90MMChildProps['data']['productCartInformation'][0],
+): ReactElement => {
     return (
         <>
             <div className={styles.productsListingTableBodyRow}>
@@ -30,11 +30,9 @@ const ListingRow = (props: { product: IBill90MMProps['billData']['products'][0] 
     );
 };
 
-export const Bill90MMProductsListing = (props: {
-    billData: IBill90MMProps['billData'];
-}): ReactElement => {
-    const { billData } = props;
-    const { products } = billData;
+export const Bill90MMProductsListing = (props: IBill90MMChildProps): ReactElement => {
+    const { data } = props;
+    const { products } = data;
     return (
         <div className={styles.productsListingWrapper}>
             <div className={styles.productsListingTableHeader}>
@@ -46,7 +44,7 @@ export const Bill90MMProductsListing = (props: {
                 {products.map((product, productIndex) => (
                     <Fragment key={productIndex}>
                         <div className={mainStyles.PageBreak} />
-                        <ListingRow product={product} />
+                        {/* <ListingRow product={product} /> */}
                     </Fragment>
                 ))}
             </div>

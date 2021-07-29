@@ -5,16 +5,15 @@ import { Bill90MMFooter } from './Components/Bill90MMFooter/Bill90MMFooter';
 import { Bill90MMHeader } from './Components/Bill90MMHeader/Bill90MMHeader';
 import { Bill90MMProductsListing } from './Components/Bill90MMProductsListing/Bill90MMProductsListing';
 import { Bill90MMSummary } from './Components/Bill90MMSummary/Bill90MMSummary';
-export { IBill90MMProps } from './Bill90MM.types';
 
 export const Bill90MM = (props: IBill90MMProps): ReactElement => {
-    const { billData, style, billReference } = props;
+    const { data, settings } = props;
     return (
-        <div ref={billReference} style={style} className={styles.billWrapper}>
-            <Bill90MMHeader billData={billData} />
-            <Bill90MMProductsListing billData={billData} />
-            <Bill90MMSummary billData={billData} />
-            <Bill90MMFooter billData={billData} />
+        <div className={styles.billWrapper}>
+            <Bill90MMHeader data={data} settings={settings} />
+            <Bill90MMProductsListing data={data} settings={settings} />
+            <Bill90MMSummary data={data} settings={settings} />
+            <Bill90MMFooter data={data} settings={settings} />
         </div>
     );
 };

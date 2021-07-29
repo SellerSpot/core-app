@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { IBill90MMProps } from '../../Bill90MM.types';
+import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMFooter.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 
-export const Bill90MMFooter = (props: { billData: IBill90MMProps['billData'] }): ReactElement => {
-    const { billData } = props;
-    const { footerMessage } = billData;
+export const Bill90MMFooter = (props: IBill90MMChildProps): ReactElement => {
+    const { settings } = props;
+    const { footerMessage } = settings;
     const dateTimeInformation = Date().split(' ');
     const month = dateTimeInformation[1];
     const date = dateTimeInformation[2];
@@ -18,9 +18,11 @@ export const Bill90MMFooter = (props: { billData: IBill90MMProps['billData'] }):
     return (
         <>
             <div className={mainStyles.PageBreak} />
-            <div className={styles.footerMessageWrapper}>
-                <p>{footerMessage}</p>
-            </div>
+            {footerMessage.show && (
+                <div className={styles.footerMessageWrapper}>
+                    <p>{footerMessage.value}</p>
+                </div>
+            )}
             <hr className={mainStyles.mainDivider} />
             <div className={styles.billFooterWrapper}>
                 <p>{`Date: ${month} ${date}, ${year} at ${time}`}</p>

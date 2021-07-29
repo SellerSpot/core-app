@@ -10,7 +10,7 @@
         @include flex(center, space-between);
 
         .actions {
-            @include flex(flex-start, center, $gap: 10px);
+            @include flex(center, center, $gap: 10px);
         }
     }
 }
