@@ -8,9 +8,10 @@ import {
 import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
 import { CategorySliderService } from '../../CategorySlider.service';
+import { CategoryView } from 'components/Compounds/CategoryView/CategoryView';
 
 export type IModalBodyProps = Pick<ICategorySliderModalOnClose, 'submitting'> &
-    Pick<ICategorySliderProps, 'showModal' | 'onSelectCategory'> & {
+    Pick<ICategorySliderProps, 'showModal' | 'mode' | 'categoryViewProps'> & {
         currentNodeSiblings: string[];
     };
 
@@ -61,17 +62,21 @@ const CategoryNameField = (props: ICategoryNameFieldProps) => {
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { showModal, submitting, currentNodeSiblings } = props;
+    const { showModal, submitting, currentNodeSiblings, mode, categoryViewProps } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <CategoryNameField
-                    autoFocus={showModal}
-                    submitting={submitting}
-                    currentNodeSiblings={currentNodeSiblings}
-                />
+                {mode === 'select' && !categoryViewProps ? (
+                    <CategoryView {...categoryViewProps} />
+                ) : (
+                    <CategoryNameField
+                        autoFocus={showModal}
+                        submitting={submitting}
+                        currentNodeSiblings={currentNodeSiblings}
+                    />
+                )}
             </div>
         </SliderModalBody>
     );

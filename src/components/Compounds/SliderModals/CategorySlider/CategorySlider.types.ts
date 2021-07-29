@@ -1,5 +1,6 @@
 import { IconifyIcon } from '@iconify/react';
 import { ISliderModalProps } from '@sellerspot/universal-components';
+import { ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView.types';
 import { FormApi } from 'final-form';
 import { TreeItem } from 'react-sortable-tree';
 import { IOnClickEvents } from 'typings/common.types';
@@ -28,7 +29,6 @@ export interface ICategorySliderProps {
     showModal: boolean;
     formRef: React.MutableRefObject<FormApi<ICategorySliderForm, Partial<ICategorySliderForm>>>;
     onSubmit: (props: ICategorySliderModalOnSubmit) => Promise<void>;
-    onSelectCategory?: (props: TreeItem) => void;
     onClose: (props: ICategorySliderModalOnClose) => void;
     mode: 'edit' | 'create' | 'select';
     level: 1 | 2;
@@ -37,6 +37,10 @@ export interface ICategorySliderProps {
      * Used to indicate the current category in focus (for onCreate and onEdit)
      */
     contextData: IContextData;
+    /**
+     * To help control the category select slider modal
+     */
+    categoryViewProps?: ICategoryViewProps;
 }
 
 export interface ICategorySliderForm {
