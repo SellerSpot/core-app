@@ -6,6 +6,7 @@ import {
     Select,
     showNotify,
     Skeleton,
+    ToolTip,
 } from '@sellerspot/universal-components';
 import { EBILL_SIZES, getBillSizeByName } from '@sellerspot/universal-types';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
@@ -123,7 +124,7 @@ export const BillSettings = (): ReactElement => {
                     isLoading.get() ? (
                         <Skeleton width="150px" height="50px" />
                     ) : (
-                        <span title={getSaveButtonTitle()}>
+                        <ToolTip content={getSaveButtonTitle()}>
                             <Button
                                 key="save-changes"
                                 label={isSaving.get() ? 'Saving' : 'Save Changes'}
@@ -133,7 +134,7 @@ export const BillSettings = (): ReactElement => {
                                 onClick={onSaveChangesHandler}
                                 disabled={!hasChanges || isSaving.get()}
                             />
-                        </span>
+                        </ToolTip>
                     ),
                 ]}
             />

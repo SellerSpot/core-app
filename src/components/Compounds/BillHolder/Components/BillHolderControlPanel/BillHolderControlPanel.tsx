@@ -1,17 +1,23 @@
-import Icon from '@iconify/react';
-import { Slider, ToolTip } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { Slider, ToolTip } from '@sellerspot/universal-components';
+import Icon from '@iconify/react';
+import cn from 'classnames';
 import { ICONS } from 'utilities/utilities';
+import commonStyles from '../../../../../styles/common.module.scss';
 import styles from './BillHolderControlPanel.module.scss';
 
 interface IBillHolderControlPanelProps {
     billScale: number;
     setBillScale: React.Dispatch<React.SetStateAction<number>>;
     handlePrint?: () => void;
+    resetToDefaultScale?: {
+        callBack: () => void;
+        hasReset: boolean;
+    };
 }
 
 export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): ReactElement => {
-    const { billScale, setBillScale, handlePrint } = props;
+    const { billScale, setBillScale, handlePrint, resetToDefaultScale } = props;
 
     const computeBillScaleFromPercentage = ({}, value: number) => {
         const billScaleValue = value / 100;
@@ -22,6 +28,18 @@ export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): Rea
 
     return (
         <div className={styles.controlsPanel}>
+            {resetToDefaultScale && (
+                <ToolTip content="Reset to default zoom">
+                    <div
+                        className={cn(styles.printIcon, {
+                            [commonStyles.contentDisabled]: !resetToDefaultScale.hasReset,
+                        })}
+                        onClick={resetToDefaultScale.callBack}
+                    >
+                        <Icon icon={ICONS.bxReset} height={'25px'} />
+                    </div>
+                </ToolTip>
+            )}
             <div className={styles.zoomControls}>
                 <Slider
                     min={30}
@@ -32,11 +50,11 @@ export const BillHolderControlPanel = (props: IBillHolderControlPanelProps): Rea
                 <h5>{`${sliderValue}%`}</h5>
             </div>
             {handlePrint && (
-                <ToolTip content={'Print Bill'}>
-                    <div className={styles.printIcon} onClick={handlePrint}>
+                <div className={styles.printIcon} onClick={handlePrint}>
+                    <ToolTip content="Print Bill">
                         <Icon icon={ICONS.baselineLocalPrintshop} height={'25px'} />
-                    </div>
-                </ToolTip>
+                    </ToolTip>
+                </div>
             )}
         </div>
     );

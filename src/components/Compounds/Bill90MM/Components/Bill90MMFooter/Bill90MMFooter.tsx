@@ -15,12 +15,13 @@ export const Bill90MMFooter = (props: IBill90MMChildProps): ReactElement => {
         minute: 'numeric',
         hour12: true,
     }).format(new Date());
+
     return (
         <>
             <div className={mainStyles.PageBreak} />
             {footerMessage.show && (
                 <div className={styles.footerMessageWrapper}>
-                    <p>{footerMessage.value}</p>
+                    <p>{footerMessage.data}</p>
                 </div>
             )}
             <hr className={mainStyles.mainDivider} />

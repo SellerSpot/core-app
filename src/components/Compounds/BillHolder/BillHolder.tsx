@@ -17,6 +17,7 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
     const dimension = useWindowSize();
 
     // state
+    const [defaultBillScale, setDefaultBillScale] = useState(1);
     const [billScale, setBillScale] = useState(1);
     const [billMeasurements, setBillMeasurements] = useState({
         billHeight: 0,
@@ -65,7 +66,13 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
             billWidth: firstChildElement?.clientWidth,
             billHeight: firstChildElement?.clientHeight,
         });
-        setBillScale(deriveInitialScale());
+        const initialScale = deriveInitialScale();
+        setDefaultBillScale(initialScale);
+        setBillScale(initialScale);
+    };
+
+    const resetToDefaultScaleHandler = () => {
+        setMeasurementsAndScaling();
     };
 
     // effects
@@ -107,6 +114,10 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
                     billScale={billScale}
                     setBillScale={setBillScale}
                     handlePrint={enablePrint ? handlePrint : undefined}
+                    resetToDefaultScale={{
+                        callBack: resetToDefaultScaleHandler,
+                        hasReset: defaultBillScale !== billScale,
+                    }}
                 />
             </div>
         </>

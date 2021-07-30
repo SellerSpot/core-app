@@ -7,7 +7,7 @@ import { BillA4PurchaseInvoice } from './Components/BillA4PurchaseInvoice/BillA4
 import { BillA4Summary } from './Components/BillA4Summary/BillA4Summary';
 import { BillA4TaxSplitup } from './Components/BillA4TaxSplitup/BillA4TaxSplitup';
 import { BillA4TermsAndSignature } from './Components/BillA4TermsAndSignature/BillA4TermsAndSignature';
-// import { BillA4Footer } from './Components/BillA4Footer/BillA4Footer';
+import { BillA4Footer } from './Components/BillA4Footer/BillA4Footer';
 
 const PageBreak = () => <div className={styles.PageBreak} />;
 
@@ -23,7 +23,7 @@ export const BillA4 = (props: IBillA4Props): ReactElement => {
             <BillA4TaxSplitup data={data} settings={settings} />
             <PageBreak />
             <BillA4TermsAndSignature data={data} settings={settings} />
-            {/* <BillA4Footer data={data} settings={settings} /> */}
+            <BillA4Footer data={data} settings={settings} />
         </div>
     );
 };

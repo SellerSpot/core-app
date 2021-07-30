@@ -9,11 +9,11 @@ export class BillSettingsService {
 
     static dummyBillData: IBillData = {
         productCartInformation: [],
-        products: [],
         totals: {
             grandTotal: 0,
             grandTotalDiscount: 0,
             grandTotalTax: 0,
+            grandTotalTaxPercentage: 0,
         },
     };
 
