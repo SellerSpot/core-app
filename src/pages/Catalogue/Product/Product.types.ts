@@ -6,6 +6,7 @@ import { ISelectCategorySliderModalProps } from 'components/Compounds/SliderModa
 import { IStockUnitSliderModalProps } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.types';
 import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { ITaxGroupSliderModalProps } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
+import { TreeItem } from 'react-sortable-tree';
 
 export interface IProductPageState {
     allProducts: IProductData[];
@@ -17,6 +18,7 @@ export interface IProductPageState {
                 ICategorySliderModalProps,
                 'showModal' | 'mode' | 'prefillData' | 'contextData'
             >;
+            treeData: TreeItem[];
         };
         stockUnitSliderModal: Pick<
             IStockUnitSliderModalProps,

@@ -2,11 +2,12 @@ import { useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
 import { ProductSliderBase } from './Components/ProductSliderBase/ProductSliderBase';
 import { ProductTable } from './Components/ProductTable/ProductTable';
 import styles from './Product.module.scss';
+import { ProductService } from './Product.service';
 import { IProductPageState } from './Product.types';
 
 interface IPageHeaderComponentProps {
@@ -49,6 +50,7 @@ export const Product = (): ReactElement => {
                 prefillData: null,
             },
             selectCategorySliderModal: {
+                treeData: [],
                 showModal: false,
                 categorySliderModal: {
                     showModal: false,
@@ -83,6 +85,15 @@ export const Product = (): ReactElement => {
             prefillData: null,
         });
     };
+    const getAllProducts = async () => {
+        const allProducts = await ProductService.getAllProducts();
+        pageState.allProducts.set(allProducts);
+    };
+
+    // effects
+    useEffect(() => {
+        getAllProducts();
+    }, []);
 
     return (
         <div className={styles.wrapper}>

@@ -1,11 +1,12 @@
-import { State } from '@hookstate/core';
+import { State, useState } from '@hookstate/core';
 import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
 import { ProductSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal';
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import { IProductPageState } from '../../Product.types';
 import BrandSubSliderModalData from './SubSliderModals/BrandSubSliderModalData';
 import SelectCategorySubSliderModalData from './SubSliderModals/SelectCategorySubSliderModalData';
 import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderModalData';
+import { CategoryService } from 'pages/Catalogue/Category/Category.service';
 
 interface IProductSliderBaseProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
@@ -14,6 +15,9 @@ interface IProductSliderBaseProps {
 export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement => {
     // props
     const { sliderModalState } = props;
+
+    // state
+    const localSliderModalState = useState(sliderModalState);
 
     // refs
     const productFormRef: IProductSliderModalProps['formRef'] = useRef(null);
@@ -27,28 +31,28 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     const brandSubSliderModalData = new BrandSubSliderModalData({
         brandFormRef,
         productFormRef,
-        sliderModalState,
+        sliderModalState: localSliderModalState,
     });
     const stockUnitSubSliderModalData = new StockUnitSubSliderModalData({
         productFormRef,
-        sliderModalState,
+        sliderModalState: localSliderModalState,
         stockUnitFormRef,
     });
     const selectCategorySubSliderModalData = new SelectCategorySubSliderModalData({
-        sliderModalState,
+        sliderModalState: localSliderModalState,
         categoryFormRef,
     });
 
     // product slider modalhandlers
     const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = () => {
-        sliderModalState.showModal.set(false);
+        localSliderModalState.showModal.set(false);
     };
 
     const productSliderModalProps: IProductSliderModalProps = {
-        showModal: sliderModalState.showModal.get(),
+        showModal: localSliderModalState.showModal.get(),
         formRef: productFormRef,
-        mode: sliderModalState.mode.get(),
-        prefillData: sliderModalState.prefillData.get(),
+        mode: localSliderModalState.mode.get(),
+        prefillData: localSliderModalState.prefillData.get(),
         level: 1,
         onClose: productSliderOnCloseHandler,
         onSubmit: () => null,
@@ -59,6 +63,20 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
         selectCategorySliderModalProps: selectCategorySubSliderModalData.getSliderModalProps(),
         stockUnitSliderModalProps: stockUnitSubSliderModalData.getSliderModalProps(),
     };
+
+    // handlers
+    const fetchCategoriesData = async () => {
+        const allCategories = await CategoryService.getAllCategories();
+        console.log('Fetched Data');
+        localSliderModalState.selectCategorySliderModal.treeData.set(allCategories);
+    };
+
+    // effects
+    useEffect(() => {
+        if (localSliderModalState.showModal.get()) {
+            fetchCategoriesData();
+        }
+    }, [localSliderModalState.showModal.get()]);
 
     // draw
     return <ProductSliderModal {...productSliderModalProps} />;
