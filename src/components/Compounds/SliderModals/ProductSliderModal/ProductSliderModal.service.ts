@@ -183,7 +183,7 @@ export class ProductSliderService {
         // compile data
         const dialogProps: IConfirmDialogProps = {
             title: 'Are you sure?',
-            content: 'You will lose all data entered for the tax bracket',
+            content: 'You will lose all data entered for the product',
             theme: 'warning',
             primaryButtonProps: {
                 label: 'CLOSE',

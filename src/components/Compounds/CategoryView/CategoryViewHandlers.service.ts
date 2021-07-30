@@ -7,7 +7,7 @@ import { requests } from 'requests/requests';
 import { rawClone } from 'utilities/general';
 import { IConfirmDialogStateActions } from '../ConfirmDialog/ConfirmDialog.types';
 
-export interface ISortableTreeNodeTracker {
+interface ISortableTreeNodeTracker {
     previousParent: TreeItem;
     nextParent: TreeItem;
 }
@@ -29,7 +29,6 @@ interface IDeleteCategoryProps {
 
 interface ICategoryViewHandlersServiceProps {
     treeDataState: State<TreeItem[]>;
-    sortableTreeNodeTracker: React.MutableRefObject<ISortableTreeNodeTracker>;
     sliderModalState: State<
         Pick<ICategorySliderModalProps, 'showModal' | 'prefillData' | 'mode' | 'contextData'>
     >;
@@ -38,16 +37,19 @@ interface ICategoryViewHandlersServiceProps {
 
 export class CategoryViewHandlersService {
     private treeDataState: ICategoryViewHandlersServiceProps['treeDataState'];
-    private sortableTreeNodeTracker: ICategoryViewHandlersServiceProps['sortableTreeNodeTracker'];
+    private sortableTreeNodeTracker: ISortableTreeNodeTracker;
     private sliderModalState: ICategoryViewHandlersServiceProps['sliderModalState'];
     private confirmHook: ICategoryViewHandlersServiceProps['confirmHook'];
 
     constructor(props: ICategoryViewHandlersServiceProps) {
-        const { sortableTreeNodeTracker, treeDataState, confirmHook, sliderModalState } = props;
+        const { treeDataState, confirmHook, sliderModalState } = props;
         this.treeDataState = treeDataState;
-        this.sortableTreeNodeTracker = sortableTreeNodeTracker;
         this.sliderModalState = sliderModalState;
         this.confirmHook = confirmHook;
+        this.sortableTreeNodeTracker = {
+            nextParent: null,
+            previousParent: null,
+        };
     }
 
     // requests
@@ -85,8 +87,8 @@ export class CategoryViewHandlersService {
         const { node, nextParent, prevParent } = props;
 
         // setting the movement tracker
-        this.sortableTreeNodeTracker.current.previousParent = prevParent;
-        this.sortableTreeNodeTracker.current.nextParent = nextParent;
+        this.sortableTreeNodeTracker.previousParent = prevParent;
+        this.sortableTreeNodeTracker.nextParent = nextParent;
 
         // variables
         const nextSiblings = nextParent?.children as TreeItem[];
@@ -107,6 +109,8 @@ export class CategoryViewHandlersService {
     deleteCategoryHandler: ICategoryViewProps['deleteCategoryCallback'] = async (props) => {
         // props
         const { id, title } = props;
+        const treeData = rawClone<TreeItem[]>(this.treeDataState && this.treeDataState.get());
+
         // getting confirmation
         const confirmResult = await this.confirmHook.confirm({
             title: 'Are you sure?',
@@ -129,19 +133,20 @@ export class CategoryViewHandlersService {
             // finding the node to remove (to get the path)
             const { path } = find({
                 getNodeKey: (data) => data.node.id,
-                treeData: rawClone(this.treeDataState.get()),
+                treeData,
                 searchMethod: (searchData) => searchData.node.id === searchData.searchQuery,
                 searchQuery: id,
             }).matches[0];
             // updating tree state
-            this.treeDataState.set(
-                removeNodeAtPath({
-                    getNodeKey: (data) => data.node.id,
-                    path,
-                    treeData: rawClone(this.treeDataState.get()),
-                    ignoreCollapsed: false,
-                }),
-            );
+            this.treeDataState &&
+                this.treeDataState.set(
+                    removeNodeAtPath({
+                        getNodeKey: (data) => data.node.id,
+                        path,
+                        treeData,
+                        ignoreCollapsed: false,
+                    }),
+                );
             this.confirmHook.setLoading({ isLoading: false });
         }
         this.confirmHook.closeDialog();
@@ -151,13 +156,14 @@ export class CategoryViewHandlersService {
     editCategoryHandler: ICategoryViewProps['editCategoryCallback'] = (currentNode) => {
         // props
         const { id } = currentNode;
+        const treeData = rawClone<TreeItem[]>(this.treeDataState && this.treeDataState.get());
 
         // finding the parent node (to find siblings when editing)
         // getting path of current node
         const requiredNodePath = find({
             getNodeKey: (data) => data.node.id,
             searchMethod: (searchData) => searchData.node.id === searchData.searchQuery,
-            treeData: rawClone(this.treeDataState.get()),
+            treeData,
             searchQuery: id,
         }).matches[0].path;
         // altering path
@@ -166,37 +172,38 @@ export class CategoryViewHandlersService {
         const parentNode = getNodeAtPath({
             getNodeKey: (data) => data.node.id,
             path: requiredNodePath,
-            treeData: rawClone(this.treeDataState.get()),
+            treeData,
             ignoreCollapsed: false,
         }).node;
 
         // setting state
-        this.sliderModalState.set({
-            showModal: true,
-            mode: 'edit',
-            prefillData: {
-                name: currentNode.title as string,
-            },
-            contextData: {
-                currentNode,
-                parentNode: parentNode,
-            },
-        });
+        this.sliderModalState &&
+            this.sliderModalState.set({
+                showModal: true,
+                mode: 'edit',
+                prefillData: {
+                    name: currentNode.title as string,
+                },
+                contextData: {
+                    currentNode,
+                    parentNode: parentNode,
+                },
+            });
     };
 
     // called everytime a node is in motion when dragging
     onMoveNode: ICategoryViewProps['onMoveNode'] = (props) => {
         // props
         const { node } = props;
-        const nextParentId = this.sortableTreeNodeTracker.current.nextParent?.id ?? null;
-        const previousParentId = this.sortableTreeNodeTracker.current.previousParent?.id ?? null;
+        const nextParentId = this.sortableTreeNodeTracker.nextParent?.id ?? null;
+        const previousParentId = this.sortableTreeNodeTracker.previousParent?.id ?? null;
         // deciding the type of movement
         if (nextParentId === previousParentId) {
             // making sure it is not a top level
             if (!!nextParentId) {
                 // getting children order
                 const childrenOrder: string[] = (
-                    this.sortableTreeNodeTracker.current.nextParent.children as TreeItem[]
+                    this.sortableTreeNodeTracker.nextParent.children as TreeItem[]
                 ).map((child) => child.id);
                 // updating server
                 this.editChildrenOrder({

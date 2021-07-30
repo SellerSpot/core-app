@@ -7,6 +7,12 @@ import BrandSubSliderModalData from './SubSliderModals/BrandSubSliderModalData';
 import SelectCategorySubSliderModalData from './SubSliderModals/SelectCategorySubSliderModalData';
 import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderModalData';
 import { CategoryService } from 'pages/Catalogue/Category/Category.service';
+import { CategoryViewHandlersService } from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
+import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+import { BrandSliderService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
+import { CategorySliderService } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.service';
+import { StockUnitSliderService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
+import { ProductSliderService } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.service';
 
 interface IProductSliderBaseProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
@@ -27,6 +33,16 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     const categoryFormRef: IProductSliderModalProps['selectCategorySliderModalProps']['categorySliderModalProps']['formRef'] =
         useRef(null);
 
+    // hooks
+    const confirmHook = useConfirmDialog();
+
+    // custom handlers
+    const categoryViewHandlersService = new CategoryViewHandlersService({
+        confirmHook,
+        sliderModalState: sliderModalState.selectCategorySliderModal.categorySliderModal,
+        treeDataState: sliderModalState.selectCategorySliderModal.treeData,
+    });
+
     // sub slider modalprops data
     const brandSubSliderModalData = new BrandSubSliderModalData({
         brandFormRef,
@@ -41,11 +57,73 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     const selectCategorySubSliderModalData = new SelectCategorySubSliderModalData({
         sliderModalState: localSliderModalState,
         categoryFormRef,
+        categoryViewHandlersService,
     });
 
     // product slider modalhandlers
-    const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = () => {
-        localSliderModalState.showModal.set(false);
+    const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = (props) => {
+        // props
+        const { source } = props;
+        // state
+        const brandSliderModalState = localSliderModalState.brandSliderModal;
+        const selectCategorySliderModalState = localSliderModalState.selectCategorySliderModal;
+        const categorySliderModalState = selectCategorySliderModalState.categorySliderModal;
+        const stockUntiSliderModalState = localSliderModalState.stockUnitSliderModal;
+        const productSliderModalState = localSliderModalState;
+
+        if (source === 'backdrop') {
+            if (brandSliderModalState.showModal.get()) {
+                const { dirty, submitting } = brandFormRef.current.getState();
+                BrandSliderService.handleOnCloseBrandSliderModal({
+                    onCloseProps: {
+                        dirty,
+                        submitting,
+                        event: null,
+                        source,
+                    },
+                    sliderModalState: brandSliderModalState,
+                });
+            } else if (selectCategorySliderModalState.showModal.get()) {
+                if (categorySliderModalState.showModal.get()) {
+                    const { dirty, submitting } = categoryFormRef.current.getState();
+                    CategorySliderService.handleOnCloseCategorySliderModal({
+                        onCloseProps: {
+                            dirty,
+                            event: null,
+                            source,
+                            submitting,
+                        },
+                        sliderModalState: categorySliderModalState,
+                    });
+                } else {
+                    selectCategorySliderModalState.showModal.set(false);
+                }
+            } else if (stockUntiSliderModalState.showModal.get()) {
+                const { dirty, submitting } = categoryFormRef.current.getState();
+                StockUnitSliderService.handleOnCloseStockUnitSliderModal({
+                    onCloseProps: {
+                        dirty,
+                        event: null,
+                        source,
+                        submitting,
+                    },
+                    sliderModalState: stockUntiSliderModalState,
+                });
+            } else {
+                const { dirty, submitting } = productFormRef.current.getState();
+                ProductSliderService.handleOnCloseProductSliderModal({
+                    onCloseProps: {
+                        dirty,
+                        event: null,
+                        source,
+                        submitting,
+                    },
+                    sliderModalState: productSliderModalState,
+                });
+            }
+        } else {
+            localSliderModalState.showModal.set(false);
+        }
     };
 
     const productSliderModalProps: IProductSliderModalProps = {
@@ -68,7 +146,6 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     // handlers
     const fetchCategoriesData = async () => {
         const allCategories = await CategoryService.getAllCategories();
-        console.log('Fetched Data');
         localSliderModalState.selectCategorySliderModal.treeData.set(allCategories);
     };
 
