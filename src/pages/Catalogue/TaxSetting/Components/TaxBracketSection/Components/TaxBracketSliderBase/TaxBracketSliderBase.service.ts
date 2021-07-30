@@ -1,5 +1,5 @@
 import { ITaxBracketData } from '@sellerspot/universal-types';
-import { ITaxBracketSliderForm } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.types';
+import { ITaxBracketSliderForm } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { requests } from 'requests/requests';
 
 export class TaxBracketSliderBaseService {

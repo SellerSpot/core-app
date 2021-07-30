@@ -1,5 +1,5 @@
 import { ITaxGroupData } from '@sellerspot/universal-types';
-import { ITaxGroupSliderForm } from 'components/Compounds/SliderModals/TaxGroupSlider/TaxGroupSlider.types';
+import { ITaxGroupSliderForm } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
 import { requests } from 'requests/requests';
 
 export class TaxGroupSliderBaseService {

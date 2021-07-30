@@ -48,10 +48,14 @@ export const Product = (): ReactElement => {
                 mode: 'create',
                 prefillData: null,
             },
-            categorySliderModal: {
+            selectCategorySliderModal: {
                 showModal: false,
-                mode: 'create',
-                prefillData: null,
+                categorySliderModal: {
+                    showModal: false,
+                    mode: 'create',
+                    prefillData: null,
+                    contextData: null,
+                },
             },
             stockUnitSliderModal: {
                 showModal: false,
@@ -84,7 +88,7 @@ export const Product = (): ReactElement => {
         <div className={styles.wrapper}>
             <PageHeaderComponent addProductHandler={addProductHandler} />
             <ProductTable pageState={pageState} />
-            <ProductSliderBase sliderState={pageState.sliderModal} />
+            <ProductSliderBase sliderModalState={pageState.sliderModal} />
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { IStockUnitData } from '@sellerspot/universal-types';
-import { IStockUnitSliderForm } from 'components/Compounds/SliderModals/StockUnitSlider/StockUnitSlider.types';
+import { IStockUnitSliderForm } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.types';
 import { requests } from 'requests/requests';
 
 type ICreateNewStockUnitProps = IStockUnitSliderForm;

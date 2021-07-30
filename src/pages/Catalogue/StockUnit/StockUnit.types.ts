@@ -1,8 +1,8 @@
 import { IStockUnitData } from '@sellerspot/universal-types';
-import { IStockUnitSliderProps } from 'components/Compounds/SliderModals/StockUnitSlider/StockUnitSlider.types';
+import { IStockUnitSliderModalProps } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.types';
 
 export interface IStockUnitPageState {
     stockUnits: IStockUnitData[];
     isStockUnitTableLoading: boolean;
-    sliderModal: Pick<IStockUnitSliderProps, 'showModal' | 'prefillData' | 'mode'>;
+    sliderModal: Pick<IStockUnitSliderModalProps, 'showModal' | 'prefillData' | 'mode'>;
 }

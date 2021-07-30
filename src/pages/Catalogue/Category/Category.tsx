@@ -156,7 +156,7 @@ export const Category = (): ReactElement => {
             )}
             <CategorySliderModalBase
                 treeData={pageState.treeData}
-                sliderState={pageState.sliderModal}
+                sliderModalState={pageState.sliderModal}
             />
         </div>
     );

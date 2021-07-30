@@ -1,4 +1,4 @@
-import { ICategorySliderProps } from 'components/Compounds/SliderModals/CategorySlider/CategorySlider.types';
+import { ICategorySliderModalProps } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.types';
 import { TreeItem } from 'react-sortable-tree';
 import { ICategoryData } from '@sellerspot/universal-types';
 
@@ -11,5 +11,8 @@ export interface ICategoryPageState {
     searchQuery: string;
     selectedNode: TreeItem;
     isLoading: boolean;
-    sliderModal: Pick<ICategorySliderProps, 'showModal' | 'prefillData' | 'mode' | 'contextData'>;
+    sliderModal: Pick<
+        ICategorySliderModalProps,
+        'showModal' | 'prefillData' | 'mode' | 'contextData'
+    >;
 }

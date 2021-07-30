@@ -17,7 +17,7 @@ import styles from './TaxBracketTable.module.scss';
 interface IGetTableProps {
     allTaxBrackets: ITaxBracketData[];
     isTableLoading: boolean;
-    taxBracketSliderState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
+    taxBracketSliderModalState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
     editItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
     deleteItemClickHandler: (taxBracketData: ITaxBracketData) => () => Promise<void>;
 }
@@ -30,7 +30,7 @@ export class TaxBracketTableService {
             isTableLoading,
             deleteItemClickHandler,
             editItemClickHandler,
-            taxBracketSliderState,
+            taxBracketSliderModalState,
         } = props;
 
         // custom renderes
@@ -80,7 +80,7 @@ export class TaxBracketTableService {
         const EmptyStatePrimaryCallToAction = () => {
             // handlers
             const handleOnClick = () => {
-                taxBracketSliderState.merge({
+                taxBracketSliderModalState.merge({
                     mode: 'create',
                     prefillData: null,
                     showModal: true,

@@ -1,7 +1,7 @@
 import { State } from '@hookstate/core';
-import { CategorySlider } from 'components/Compounds/SliderModals/CategorySlider/CategorySlider';
-import { CategorySliderService } from 'components/Compounds/SliderModals/CategorySlider/CategorySlider.service';
-import { ICategorySliderProps } from 'components/Compounds/SliderModals/CategorySlider/CategorySlider.types';
+import { CategorySliderModal } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider';
+import { CategorySliderService } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.service';
+import { ICategorySliderModalProps } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.types';
 import React, { ReactElement, useRef } from 'react';
 import {
     addNodeUnderParent,
@@ -16,32 +16,32 @@ import { CategorySliderModalBaseService } from './CategorySliderModalBase.servic
 
 interface ICategorySliderModalBaseProps {
     treeData: State<TreeItem[]>;
-    sliderState: State<ICategoryPageState['sliderModal']>;
+    sliderModalState: State<ICategoryPageState['sliderModal']>;
 }
 
 export const CategorySliderModalBase = (props: ICategorySliderModalBaseProps): ReactElement => {
     // props
-    const { treeData, sliderState } = props;
+    const { treeData, sliderModalState } = props;
 
     // refs
-    const categorySliderFormRef: ICategorySliderProps['formRef'] = useRef(null);
+    const categorySliderFormRef: ICategorySliderModalProps['formRef'] = useRef(null);
 
     // handler
-    const onCloseHandler: ICategorySliderProps['onClose'] = (onCloseProps) => {
+    const onCloseHandler: ICategorySliderModalProps['onClose'] = (onCloseProps) => {
         // props
         CategorySliderService.handleOnCloseCategorySliderModal({
             onCloseProps,
-            sliderState: {
-                showModal: sliderState.showModal,
+            sliderModalState: {
+                showModal: sliderModalState.showModal,
             },
         });
     };
-    const onSubmitHandler: ICategorySliderProps['onSubmit'] = async ({ values }) => {
+    const onSubmitHandler: ICategorySliderModalProps['onSubmit'] = async ({ values }) => {
         // values
         const { name } = values;
-        const currentNodeId = sliderState.contextData.currentNode.get()?.id ?? null;
+        const currentNodeId = sliderModalState.contextData.currentNode.get()?.id ?? null;
         // checking mode
-        if (sliderState.mode.get() === 'create') {
+        if (sliderModalState.mode.get() === 'create') {
             // calling service
             const createdNode = await CategorySliderModalBaseService.createCategory({
                 parentId: currentNodeId,
@@ -99,21 +99,21 @@ export const CategorySliderModalBase = (props: ICategorySliderModalBaseProps): R
                 }),
             );
         }
-        sliderState.showModal.set(false);
+        sliderModalState.showModal.set(false);
     };
 
     // compile data
-    const categorySliderProps: ICategorySliderProps = {
-        showModal: sliderState.showModal.get(),
+    const categorySliderModalProps: ICategorySliderModalProps = {
+        showModal: sliderModalState.showModal.get(),
         formRef: categorySliderFormRef,
         level: 1,
-        mode: sliderState.mode.get(),
-        prefillData: sliderState.prefillData.get(),
-        contextData: rawClone(sliderState.contextData.get()),
+        mode: sliderModalState.mode.get(),
+        prefillData: sliderModalState.prefillData.get(),
+        contextData: rawClone(sliderModalState.contextData.get()),
         onClose: onCloseHandler,
         onSubmit: onSubmitHandler,
     };
 
     // draw
-    return <CategorySlider {...categorySliderProps} />;
+    return <CategorySliderModal {...categorySliderModalProps} />;
 };

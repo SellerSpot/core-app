@@ -81,7 +81,7 @@ export const TaxBracketSection = (props: ITaxBracketSectionProps): ReactElement 
                 allTaxBrackets={allTaxBrackets}
             />
             <TaxBracketSliderBase
-                sliderState={sectionState.sliderModal}
+                sliderModalState={sectionState.sliderModal}
                 getAllTaxBrackets={getAllTaxBrackets}
             />
         </div>

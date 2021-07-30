@@ -77,7 +77,7 @@ export const StockUnit = (): ReactElement => {
             <PageHeaderComponent pageState={pageState} />
             <StockUnitTable pageState={pageState} getAllStockUnit={getAllStockUnit} />
             <StockUnitSliderBase
-                sliderState={pageState.sliderModal}
+                sliderModalState={pageState.sliderModal}
                 getAllStockUnit={getAllStockUnit}
             />
         </div>

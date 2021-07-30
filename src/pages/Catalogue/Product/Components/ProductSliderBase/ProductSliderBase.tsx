@@ -1,130 +1,65 @@
 import { State } from '@hookstate/core';
-import { ProductSliderFieldsService } from 'components/Compounds/SliderModals/ProductSlider/Components/ModalBody/Components/Fields.service';
-import { ProductSlider } from 'components/Compounds/SliderModals/ProductSlider/ProductSlider';
-import { IProductSliderProps } from 'components/Compounds/SliderModals/ProductSlider/ProductSlider.types';
-import { BrandSliderBaseService } from 'pages/Catalogue/Brand/Components/BrandSliderBase/BrandSliderBase.service';
-import { StockUnitSliderBaseService } from 'pages/Catalogue/StockUnit/Components/StockUnitSliderBase/StockUnitSliderBase.service';
+import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
+import { ProductSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal';
 import React, { ReactElement, useRef } from 'react';
 import { IProductPageState } from '../../Product.types';
+import BrandSubSliderModalData from './SubSliderModals/BrandSubSliderModalData';
+import SelectCategorySubSliderModalData from './SubSliderModals/SelectCategorySubSliderModalData';
+import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderModalData';
 
 interface IProductSliderBaseProps {
-    sliderState: State<IProductPageState['sliderModal']>;
+    sliderModalState: State<IProductPageState['sliderModal']>;
 }
 
 export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement => {
     // props
-    const { sliderState } = props;
+    const { sliderModalState } = props;
 
     // refs
-    const productFormRef: IProductSliderProps['formRef'] = useRef(null);
-    const brandFormRef: IProductSliderProps['brandSliderProps']['formRef'] = useRef(null);
-    const stockUnitFormRef: IProductSliderProps['stockUnitSliderProps']['formRef'] = useRef(null);
+    const productFormRef: IProductSliderModalProps['formRef'] = useRef(null);
+    const brandFormRef: IProductSliderModalProps['brandSliderModalProps']['formRef'] = useRef(null);
+    const stockUnitFormRef: IProductSliderModalProps['stockUnitSliderModalProps']['formRef'] =
+        useRef(null);
+    const categoryFormRef: IProductSliderModalProps['selectCategorySliderModalProps']['categorySliderModalProps']['formRef'] =
+        useRef(null);
 
-    // handlers
-    // product slider
-    const productSliderOnCloseHandler: IProductSliderProps['onClose'] = () => {
-        sliderState.showModal.set(false);
-    };
-    // brand slider
-    const onCreateBrandHandler: IProductSliderProps['onCreateBrand'] = async (value) => {
-        sliderState.brandSliderModal.set({
-            mode: 'create',
-            showModal: true,
-            prefillData: {
-                name: value,
-            },
-        });
-    };
-    const brandSliderOnCloseHandler: IProductSliderProps['brandSliderProps']['onClose'] = () => {
-        sliderState.brandSliderModal.showModal.set(false);
-    };
-    const brandSliderOnSubmitHandler: IProductSliderProps['brandSliderProps']['onSubmit'] = async ({
-        values,
-    }) => {
-        const newBrand = await BrandSliderBaseService.createNewBrand({
-            ...values,
-        });
-        if (!!newBrand) {
-            // updating form
-            productFormRef.current.change('brand', {
-                label: newBrand.name,
-                value: newBrand.id,
-            });
-        }
-        sliderState.brandSliderModal.showModal.set(false);
-    };
-    // stock unit slider handlers
-    const onCreateStockUnitHandler: IProductSliderProps['onCreateStockUnit'] = async (value) => {
-        sliderState.stockUnitSliderModal.set({
-            mode: 'create',
-            showModal: true,
-            prefillData: {
-                name: value,
-            },
-        });
-    };
-    const stockUnitSliderOnCloseHandler: IProductSliderProps['stockUnitSliderProps']['onClose'] =
-        () => {
-            sliderState.stockUnitSliderModal.showModal.set(false);
-        };
-    const stockUnitSliderOnSubmitHandler: IProductSliderProps['stockUnitSliderProps']['onSubmit'] =
-        async ({ values }) => {
-            const newStockUnit = await StockUnitSliderBaseService.createNewStockUnit({
-                ...values,
-            });
-            if (!!newStockUnit) {
-                const newSelectOption =
-                    ProductSliderFieldsService.formatStockUnitDataForSelectComponent(newStockUnit);
-                // updating form
-                productFormRef.current.change('stockUnit', newSelectOption);
-            }
-            sliderState.stockUnitSliderModal.showModal.set(false);
-        };
+    // sub slider modalprops data
+    const brandSubSliderModalData = new BrandSubSliderModalData({
+        brandFormRef,
+        productFormRef,
+        sliderModalState,
+    });
+    const stockUnitSubSliderModalData = new StockUnitSubSliderModalData({
+        productFormRef,
+        sliderModalState,
+        stockUnitFormRef,
+    });
+    const selectCategorySubSliderModalData = new SelectCategorySubSliderModalData({
+        sliderModalState,
+        categoryFormRef,
+    });
 
-    // category handlers
-    const onInvokeCategoryChoiceHandler: IProductSliderProps['onInvokeCategoryChoice'] = () => {
-        console.log('Show CATAGORIES');
+    // product slider modalhandlers
+    const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = () => {
+        sliderModalState.showModal.set(false);
     };
 
-    // compiling data
-    const brandSliderProps: IProductSliderProps['brandSliderProps'] = {
-        formRef: brandFormRef,
-        level: 2,
-        mode: sliderState.brandSliderModal.mode.get(),
-        showModal: sliderState.brandSliderModal.showModal.get(),
-        prefillData: sliderState.brandSliderModal.prefillData.get(),
-        onClose: brandSliderOnCloseHandler,
-        onSubmit: brandSliderOnSubmitHandler,
-    };
-
-    const stockUnitSliderProps: IProductSliderProps['stockUnitSliderProps'] = {
-        formRef: stockUnitFormRef,
-        level: 2,
-        mode: sliderState.stockUnitSliderModal.mode.get(),
-        showModal: sliderState.stockUnitSliderModal.showModal.get(),
-        prefillData: sliderState.stockUnitSliderModal.prefillData.get(),
-        onClose: stockUnitSliderOnCloseHandler,
-        onSubmit: stockUnitSliderOnSubmitHandler,
-    };
-
-    const productSliderProps: IProductSliderProps = {
-        showModal: sliderState.showModal.get(),
+    const productSliderModalProps: IProductSliderModalProps = {
+        showModal: sliderModalState.showModal.get(),
         formRef: productFormRef,
-        mode: sliderState.mode.get(),
-        prefillData: sliderState.prefillData.get(),
+        mode: sliderModalState.mode.get(),
+        prefillData: sliderModalState.prefillData.get(),
         level: 1,
         onClose: productSliderOnCloseHandler,
         onSubmit: () => null,
-        onCreateBrand: onCreateBrandHandler,
-        onCreateStockUnit: onCreateStockUnitHandler,
-        onInvokeCategoryChoice: onInvokeCategoryChoiceHandler,
-        brandSliderProps: brandSliderProps,
-        categorySliderProps: null,
-        stockUnitSliderProps: stockUnitSliderProps,
-        taxBracketSliderProps: null,
-        taxGroupSliderProps: null,
+        onCreateBrand: brandSubSliderModalData.onCreateBrandHandler,
+        onCreateStockUnit: stockUnitSubSliderModalData.onCreateStockUnitHandler,
+        onInvokeCategoryChoice: selectCategorySubSliderModalData.onInvokeCategoryChoiceHandler,
+        brandSliderModalProps: brandSubSliderModalData.getSliderModalProps(),
+        selectCategorySliderModalProps: selectCategorySubSliderModalData.getSliderModalProps(),
+        stockUnitSliderModalProps: stockUnitSubSliderModalData.getSliderModalProps(),
     };
 
     // draw
-    return <ProductSlider {...productSliderProps} />;
+    return <ProductSliderModal {...productSliderModalProps} />;
 };

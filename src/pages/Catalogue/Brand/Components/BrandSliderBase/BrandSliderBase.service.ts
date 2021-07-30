@@ -1,5 +1,5 @@
 import { IBrandData } from '@sellerspot/universal-types';
-import { IBrandSliderForm } from 'components/Compounds/SliderModals/BrandSlider/BrandSlider.types';
+import { IBrandSliderForm } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.types';
 import { requests } from 'requests/requests';
 
 export class BrandSliderBaseService {

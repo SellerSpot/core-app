@@ -1,59 +1,59 @@
 import { State } from '@hookstate/core';
-import { StockUnitSlider } from 'components/Compounds/SliderModals/StockUnitSlider/StockUnitSlider';
-import { StockUnitSliderService } from 'components/Compounds/SliderModals/StockUnitSlider/StockUnitSlider.service';
-import { IStockUnitSliderProps } from 'components/Compounds/SliderModals/StockUnitSlider/StockUnitSlider.types';
+import { StockUnitSliderModal } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal';
+import { StockUnitSliderService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
+import { IStockUnitSliderModalProps } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.types';
 import React, { ReactElement, useRef } from 'react';
 import { IStockUnitPageState } from '../../StockUnit.types';
 import { StockUnitSliderBaseService } from './StockUnitSliderBase.service';
 
 interface IStockUnitSliderBaseProps {
-    sliderState: State<IStockUnitPageState['sliderModal']>;
+    sliderModalState: State<IStockUnitPageState['sliderModal']>;
     getAllStockUnit: () => Promise<void>;
 }
 
 export const StockUnitSliderBase = (props: IStockUnitSliderBaseProps): ReactElement => {
     // props
-    const { sliderState, getAllStockUnit } = props;
+    const { sliderModalState, getAllStockUnit } = props;
 
     // refs
-    const stockUnitSliderFormRef: IStockUnitSliderProps['formRef'] = useRef(null);
+    const stockUnitSliderFormRef: IStockUnitSliderModalProps['formRef'] = useRef(null);
 
     // handlers
-    const onCloseHander: IStockUnitSliderProps['onClose'] = async (props) => {
+    const onCloseHander: IStockUnitSliderModalProps['onClose'] = async (props) => {
         await StockUnitSliderService.handleOnCloseStockUnitSliderModal({
             onCloseProps: props,
-            sliderState: {
-                showModal: sliderState.showModal,
+            sliderModalState: {
+                showModal: sliderModalState.showModal,
             },
         });
     };
-    const onSubmitHandler: IStockUnitSliderProps['onSubmit'] = async ({ values }) => {
+    const onSubmitHandler: IStockUnitSliderModalProps['onSubmit'] = async ({ values }) => {
         // values
         const { name, unit } = values;
         // compute
-        if (sliderState.mode.get() === 'create') {
+        if (sliderModalState.mode.get() === 'create') {
             await StockUnitSliderBaseService.createNewStockUnit({
                 name,
                 unit,
             });
         } else {
             await StockUnitSliderBaseService.editStockUnit({
-                id: sliderState.prefillData.id.get(),
+                id: sliderModalState.prefillData.id.get(),
                 name,
                 unit,
             });
         }
 
         // finishing up
-        sliderState.showModal.set(false);
+        sliderModalState.showModal.set(false);
         getAllStockUnit();
     };
 
     // compiling data
-    const stockUnitSliderProps: IStockUnitSliderProps = {
-        showModal: sliderState.showModal.get(),
-        prefillData: sliderState.prefillData.get(),
-        mode: sliderState.mode.get(),
+    const stockUnitSliderModalProps: IStockUnitSliderModalProps = {
+        showModal: sliderModalState.showModal.get(),
+        prefillData: sliderModalState.prefillData.get(),
+        mode: sliderModalState.mode.get(),
         level: 1,
         formRef: stockUnitSliderFormRef,
         onClose: onCloseHander,
@@ -61,5 +61,5 @@ export const StockUnitSliderBase = (props: IStockUnitSliderBaseProps): ReactElem
     };
 
     // draw
-    return <StockUnitSlider {...stockUnitSliderProps} />;
+    return <StockUnitSliderModal {...stockUnitSliderModalProps} />;
 };

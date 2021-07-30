@@ -68,7 +68,7 @@ export const TaxGroupTable = (props: ITaxGroupTableProps): ReactElement => {
         deleteItemClickHandler,
         editItemClickHandler,
         isTableLoading: sectionState.isTableLoading.get(),
-        taxGroupSliderState: sectionState.sliderModal,
+        taxGroupSliderModalState: sectionState.sliderModal,
     });
 
     // draw
