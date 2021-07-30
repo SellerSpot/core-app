@@ -16,6 +16,7 @@
         border: 1px solid rgba(128, 128, 128, 0.3);
         font-size: 11px;
         line-height: 20px;
+        white-space: pre-wrap; // makes \n \t and other spaces visible
 
         .termsAreaTitle {
             h6 {

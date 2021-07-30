@@ -146,9 +146,15 @@ export const BillSettings = (): ReactElement => {
                             <Select
                                 label="Default Bill Size"
                                 options={billOptions}
-                                defaultValue={billOptions.find(
-                                    (billOption) => billOption.key === currentBillName,
+                                value={billOptions.find(
+                                    (billOption) =>
+                                        billOption.key === billSettingsState.defaultBill.get(),
                                 )}
+                                onChange={(option: ISelectOption) =>
+                                    billSettingsState.defaultBill.set(
+                                        option.key as keyof typeof EBILL_SIZES,
+                                    )
+                                }
                                 isClearable={false}
                             />
                         )}
