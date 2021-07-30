@@ -1,6 +1,7 @@
 import { State } from '@hookstate/core';
 import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
 import { IProductPageState } from 'pages/Catalogue/Product/Product.types';
+import { rawClone } from 'utilities/general';
 
 interface ISelectCategorySubSliderModalDataProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
@@ -17,15 +18,25 @@ export default class SelectCategorySubSliderModalData {
         this.categoryFormRef = categoryFormRef;
     }
 
-    onInvokeCategoryChoiceHandler: IProductSliderModalProps['onInvokeCategoryChoice'] = () => {
-        console.log('Show CATAGORIES');
-    };
+    onInvokeSelectCategoryChoiceHandler: IProductSliderModalProps['onInvokeCategoryChoice'] =
+        () => {
+            this.sliderModalState.selectCategorySliderModal.showModal.set(true);
+        };
+
+    private selectCategorySliderModalOnCloseHander: IProductSliderModalProps['selectCategorySliderModalProps']['onClose'] =
+        () => {
+            this.sliderModalState.selectCategorySliderModal.showModal.set(false);
+        };
 
     getSliderModalProps = (): IProductSliderModalProps['selectCategorySliderModalProps'] => {
+        // state
+        const { selectCategorySliderModal } = this.sliderModalState.get();
+        const { categorySliderModal } = selectCategorySliderModal;
+
         return {
             level: 2,
-            showModal: this.sliderModalState.selectCategorySliderModal.showModal.get(),
-            onClose: null,
+            showModal: selectCategorySliderModal.showModal,
+            onClose: this.selectCategorySliderModalOnCloseHander,
             onSubmit: null,
             categoryViewProps: {
                 canDragNodes: null,
@@ -38,10 +49,19 @@ export default class SelectCategorySubSliderModalData {
                 onMoveNode: null,
                 searchQuery: null,
                 selectedNode: null,
-                treeData: null,
+                treeData: rawClone(selectCategorySliderModal.treeData),
                 onSelectNodeCallback: null,
             },
-            categorySliderModalProps: null,
+            categorySliderModalProps: {
+                contextData: categorySliderModal.contextData,
+                formRef: null,
+                level: 2,
+                mode: categorySliderModal.mode,
+                onClose: null,
+                onSubmit: null,
+                showModal: categorySliderModal.showModal,
+                prefillData: categorySliderModal.prefillData,
+            },
         };
     };
 }

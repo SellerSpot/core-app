@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import {
     ISliderModalProps,
     SliderModal,
+    SliderModalLayoutWrapper,
 } from '../../../../../.yalc/@sellerspot/universal-components/dist';
 import { CategorySliderModal } from '../CategorySliderModal/CategorySlider';
 import { ModalBody } from './Components/ModalBody/ModalBody';
@@ -36,9 +37,11 @@ export const SelectCategorySliderModal = (props: ISelectCategorySliderModalProps
             type={type}
             width={width}
         >
-            <ModalHeader closeButtonType={closeButtonType} onClose={onClose} />
-            <ModalBody categoryViewProps={categoryViewProps} />
-            <ModalFooter onClose={onClose} onSubmit={onSubmit} />
+            <SliderModalLayoutWrapper>
+                <ModalHeader closeButtonType={closeButtonType} onClose={onClose} />
+                <ModalBody categoryViewProps={categoryViewProps} />
+                <ModalFooter onClose={onClose} onSubmit={onSubmit} />
+            </SliderModalLayoutWrapper>
             <CategorySliderModal {...categorySliderModalProps} />
         </SliderModal>
     );

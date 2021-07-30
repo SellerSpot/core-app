@@ -58,7 +58,8 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
         onSubmit: () => null,
         onCreateBrand: brandSubSliderModalData.onCreateBrandHandler,
         onCreateStockUnit: stockUnitSubSliderModalData.onCreateStockUnitHandler,
-        onInvokeCategoryChoice: selectCategorySubSliderModalData.onInvokeCategoryChoiceHandler,
+        onInvokeCategoryChoice:
+            selectCategorySubSliderModalData.onInvokeSelectCategoryChoiceHandler,
         brandSliderModalProps: brandSubSliderModalData.getSliderModalProps(),
         selectCategorySliderModalProps: selectCategorySubSliderModalData.getSliderModalProps(),
         stockUnitSliderModalProps: stockUnitSubSliderModalData.getSliderModalProps(),
