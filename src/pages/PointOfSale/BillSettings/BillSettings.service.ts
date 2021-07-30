@@ -18,6 +18,7 @@ export class BillSettingsService {
     };
 
     static fetchBillSettings = async (): Promise<IBillSettings> => {
+        await introduceDelay(2000);
         return {
             defaultBill: 'BILL_A4',
             bills: {
