@@ -1,10 +1,9 @@
-import { IBill90MMSettings, IBillData } from 'pages/PointOfSale/BillSettings/BillSettings.types';
-export interface IBill90MMProps {
-    settings: IBill90MMSettings;
-    data: IBillData;
-}
+import {
+    IBill90MMSettings,
+    IBillBaseChildProps,
+    IBillBaseProps,
+} from 'pages/PointOfSale/BillSettings/BillSettings.types';
 
-export interface IBill90MMChildProps {
-    data: IBillData;
-    settings: IBill90MMSettings;
-}
+export type IBill90MMProps = IBillBaseProps<IBill90MMSettings>;
+
+export type IBill90MMChildProps = IBillBaseChildProps<IBill90MMSettings>;

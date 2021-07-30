@@ -1,6 +1,5 @@
 import { State } from '@hookstate/core';
 import { ReactElement } from 'react';
-import { IProductSchema } from 'typings/temp.types';
 import { IDimension } from '../../../../.yalc/@sellerspot/universal-components/dist';
 import { EBILL_SIZES } from '../../../../.yalc/@sellerspot/universal-types/dist';
 
@@ -56,8 +55,14 @@ export interface IBill90MMSettings {
     };
 }
 
+export interface IProductTax {
+    taxBracketName: string;
+    taxPercent: number;
+    // computed tax amount for the current item
+    taxValue: number;
+}
+
 export interface IBillData {
-    products: IProductSchema[];
     /**
      * Holds the cart related information for the products in the same index position
      */
@@ -70,22 +75,19 @@ export interface IBillData {
         discountValue: number;
         totalDiscountValue: number;
         subTotalAfterDiscounts: number;
-        taxes: {
-            taxBracketName: string;
-            taxPercent: number;
-            // computed tax amount for the current item
-            taxValue: number;
-        }[];
+        taxes: IProductTax[];
         // total tax for single instance of the item
         taxSum: number;
         totalTax: number;
-        total: number; // total of the item - doubt
+        total: number; // total of the item - before applying discount - doubt
         grandTotal: number; // grand total of the item
+        stockUnit: string;
     }[];
     totals: {
         grandTotal: number;
         grandTotalTax: number;
         grandTotalDiscount: number;
+        grandTotalTaxPercentage: number;
     };
 }
 

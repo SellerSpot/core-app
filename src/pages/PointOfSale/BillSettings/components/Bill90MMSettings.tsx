@@ -25,7 +25,7 @@ export const Bill90MMSettings = (props: { state: State<IBill90MMSettings> }): Re
                     disableHelperTextPlaceholderPadding
                     rows={3}
                     value={storeDetails.address.get()}
-                    onChange={(e) => storeDetails.name.set(e.target.value)}
+                    onChange={(e) => storeDetails.address.set(e.target.value)}
                 />
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>

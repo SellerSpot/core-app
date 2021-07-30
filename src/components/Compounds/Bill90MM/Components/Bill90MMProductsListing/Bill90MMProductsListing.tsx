@@ -3,25 +3,28 @@ import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMProductsListing.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 
-const ListingRow = (
-    props: IBill90MMChildProps['data']['productCartInformation'][0],
-): ReactElement => {
+const ListingRow = (props: {
+    data: IBill90MMChildProps['data']['productCartInformation'][0];
+    settings: IBill90MMChildProps['settings'];
+}): ReactElement => {
+    const { data } = props;
+    const { name, quantity, price, stockUnit, total, discountValue, totalDiscountValue } = data;
     return (
         <>
             <div className={styles.productsListingTableBodyRow}>
                 <div className={styles.primaryDetails}>
                     <p className={styles.productName}>{name}</p>
-                    <p className={styles.productPrice}>{subTotal}</p>
+                    <p className={styles.productPrice}>{total}</p>
                 </div>
                 {quantity > 1 ? (
                     <p
                         className={styles.multiQuantityDetail}
-                    >{`(${quantity} ${stockUnit} @ ${unitPrice})`}</p>
+                    >{`(${quantity} ${stockUnit} @ ${price})`}</p>
                 ) : null}
-                {!!discount ? (
+                {!!discountValue ? (
                     <div className={styles.discountDetail}>
                         <p>Discount</p>
-                        <p>{discount}</p>
+                        <p>{totalDiscountValue}</p>
                     </div>
                 ) : null}
             </div>
@@ -31,8 +34,8 @@ const ListingRow = (
 };
 
 export const Bill90MMProductsListing = (props: IBill90MMChildProps): ReactElement => {
-    const { data } = props;
-    const { products } = data;
+    const { data, settings } = props;
+    const { productCartInformation = [] } = data;
     return (
         <div className={styles.productsListingWrapper}>
             <div className={styles.productsListingTableHeader}>
@@ -41,10 +44,10 @@ export const Bill90MMProductsListing = (props: IBill90MMChildProps): ReactElemen
             </div>
             <hr className={mainStyles.mainDivider} />
             <div className={styles.productsListingTableBodyWrapper}>
-                {products.map((product, productIndex) => (
+                {productCartInformation.map((product, productIndex) => (
                     <Fragment key={productIndex}>
                         <div className={mainStyles.PageBreak} />
-                        {/* <ListingRow product={product} /> */}
+                        <ListingRow data={product} settings={settings} />
                     </Fragment>
                 ))}
             </div>
