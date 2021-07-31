@@ -1,5 +1,6 @@
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
+import { BillSettings } from 'pages/PointOfSale/BillSettings/BillSettings';
 import React, { ReactElement } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
@@ -23,7 +24,7 @@ export const PointOfSale = (): ReactElement => {
                         <h6>Inventory Products</h6>
                     </Route>
                     <Route exact path={ROUTES.POINT_OF_SALE__BILL_SETTINGS}>
-                        <h6>Bill Settings</h6>
+                        <BillSettings />
                     </Route>
                     <Route>
                         <Redirect to={ROUTES.POINT_OF_SALE__SALES__NEW_SALE} />

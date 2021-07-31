@@ -2,17 +2,19 @@
     position: absolute;
     right: 10px;
     bottom: 10px;
+    display: grid;
+    overflow: hidden;
     width: 280px;
-    padding: 10px 30px;
-    padding-right: 20px;
+    align-items: center;
+    padding: 10px;
     background-color: $backgroundPrimary-color;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 gray;
-
-    @include flex(center, space-between, $gap: 10px);
+    gap: 10px;
+    grid-template-columns: auto 1fr auto;
 
     .zoomControls {
-        width: 250px;
+        width: 100%;
         @include flex(center, flex-start, $gap: 10px);
     }
 

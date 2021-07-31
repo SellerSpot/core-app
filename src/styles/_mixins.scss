@@ -32,6 +32,24 @@
     }
 }
 
+@mixin scrollBarOnHover {
+    &::-webkit-scrollbar {
+        visibility: hidden;
+    }
+    &::-webkit-scrollbar-thumb {
+        visibility: hidden;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            visibility: visible;
+        }
+        &::-webkit-scrollbar-thumb {
+            visibility: visible;
+        }
+    }
+}
+
 @mixin for-phone-only() {
     @media (max-width: 599px) {
         @content;

@@ -1,19 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import {
-    Card,
-    showNotify,
-    CircularProgress,
-    Select,
-    ISelectOption,
-} from '@sellerspot/universal-components';
-
+import { Card, ISelectOption, Select, showNotify } from '@sellerspot/universal-components';
 import { IErrorResponse, IStoreCurrency } from '@sellerspot/universal-types';
-import styles from './CurrencySetting.module.scss';
 import { Loader } from 'components/Atoms/Loader/Loader';
-import CurrencySettingService from './CurrentSetting.service';
+import { SavingNotifier } from 'components/Atoms/SavingNotifier/SavingNotifier';
+import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { tenantSelector } from 'store/models/app';
+import styles from './CurrencySetting.module.scss';
+import CurrencySettingService from './CurrentSetting.service';
 
 export const CurrencySetting = (): ReactElement => {
     // hooks
@@ -76,13 +70,8 @@ export const CurrencySetting = (): ReactElement => {
                                     <h4>Store Currency</h4>
                                     <p>Please select the currency to use across your store</p>
                                 </div>
-                                <div className={styles.saveNotifier}>
-                                    {isSaving.get() && (
-                                        <>
-                                            <CircularProgress size={'12px'} theme="auto" />
-                                            <div>saving</div>
-                                        </>
-                                    )}
+                                <div className={styles.savingNotifierWrapper}>
+                                    <SavingNotifier isSaving={isSaving.get()} />
                                 </div>
                                 <div className={styles.selectOptionWrapper}>
                                     <Select

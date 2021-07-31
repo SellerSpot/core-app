@@ -11,17 +11,17 @@
 
     .storeDetailsWrapper {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
 
         .storeLogo {
-            width: 60px;
-            height: auto;
+            width: auto !important;
+            height: 100px !important;
             filter: grayscale(100%);
         }
 
         .storeDetails {
-            max-width: 250px;
+            width: 200px;
             margin-left: 20px;
         }
 
@@ -38,6 +38,7 @@
             h6 {
                 color: black;
                 font-weight: 400;
+                white-space: pre-wrap; // makes \n \t and other spaces visible
             }
         }
     }

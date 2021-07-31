@@ -17,10 +17,8 @@
                     @include flex(flex-start, $direction: column, $gap: 4px);
                 }
 
-                .saveNotifier {
+                .savingNotifierWrapper {
                     margin-left: auto;
-                    color: $foregroundTertiary-color;
-                    @include flex(center, center, $gap: 5px);
                 }
 
                 .selectOptionWrapper {

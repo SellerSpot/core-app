@@ -9,3 +9,8 @@
 .textAlignLeft {
     text-align: left;
 }
+
+.contentDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

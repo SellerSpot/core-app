@@ -1,13 +1,18 @@
+import { IBillA4ChildProps } from 'components/Compounds/BillA4/BillA4.types';
 import React, { ReactElement } from 'react';
 import styles from '../BillA4Header.module.scss';
 
-export const BillA4HeaderInvoice = (): ReactElement => {
+export const BillA4HeaderInvoice = (props: IBillA4ChildProps): ReactElement => {
+    const { settings } = props;
+    const { GSTNumber } = settings;
     return (
         <div className={styles.billInvoiceDetailsWrapper}>
-            <div className={styles.billInvoiceDetails}>
-                <div className={styles.billInvoiceDetailsTitleHolder}>GST No:</div>
-                <div className={styles.billInvoiceDetailsValueHolder}>22AAAAA0000A1Z5</div>
-            </div>
+            {GSTNumber.show && (
+                <div className={styles.billInvoiceDetails}>
+                    <div className={styles.billInvoiceDetailsTitleHolder}>GST No:</div>
+                    <div className={styles.billInvoiceDetailsValueHolder}>{GSTNumber.data}</div>
+                </div>
+            )}
             <div className={styles.billInvoiceDetails}>
                 <div className={styles.billInvoiceDetailsTitleHolder}>Invoice Date:</div>
                 <div className={styles.billInvoiceDetailsValueHolder}>10/11/2020</div>
