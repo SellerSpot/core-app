@@ -88,6 +88,12 @@ export class StockUnitTableService {
                 },
                 {
                     columnName: 'Unit',
+                    dataKey: 'unit',
+                    width: '80px',
+                    align: 'center',
+                },
+                {
+                    columnName: 'Name',
                     dataKey: 'name',
                 },
                 {

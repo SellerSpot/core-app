@@ -4,7 +4,7 @@ import { Button, IconButton, IInputFieldProps, InputField } from '@sellerspot/un
 import { debounce, isEmpty } from 'lodash';
 import React, { ReactElement, useEffect } from 'react';
 import { getNodeAtPath } from 'react-sortable-tree';
-import { rawClone } from 'utilities/general';
+import { getNodeKey, rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import { PageHeader } from '../../../components/Compounds/PageHeader/PageHeader';
 import styles from './Category.module.scss';
@@ -126,7 +126,7 @@ export const Category = (): ReactElement => {
     const createRootCategoryHandler = () => {
         // getting the root node (since the node needs sibling of the root)
         const rootNode = getNodeAtPath({
-            getNodeKey: (data) => data.node.id,
+            getNodeKey,
             path: [],
             treeData: rawClone(pageState.treeData.get()),
             ignoreCollapsed: false,
@@ -155,8 +155,8 @@ export const Category = (): ReactElement => {
                 <CategoryViewBase pageState={pageState} />
             )}
             <CategorySliderModalBase
-                treeData={pageState.treeData}
-                sliderState={pageState.sliderModal}
+                treeDataState={pageState.treeData}
+                sliderModalState={pageState.sliderModal}
             />
         </div>
     );

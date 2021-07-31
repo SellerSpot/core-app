@@ -1,3 +1,8 @@
+import { FieldMetaState } from 'react-final-form';
+import { TreeIndex, TreeNode } from 'react-sortable-tree';
+import * as yup from 'yup';
+import { ISelectOption } from '../../.yalc/@sellerspot/universal-components/dist';
+
 /**
  * used to compute the x percent of y
  * @param values x: percent; y: percentOf
@@ -62,3 +67,26 @@ export const redirectTo = (
 export const rawClone = <T = unknown>(data: unknown): T => {
     return JSON.parse(JSON.stringify(data));
 };
+
+// used to decide if the inputfield has to show error helpermessage or not
+export const showErrorHelperMessage = (meta: FieldMetaState<unknown>): boolean => {
+    // props
+    const { error, submitError, touched, dirty, submitFailed } = meta;
+    // decide
+    if ((error || submitError) && touched && (dirty || submitFailed)) {
+        return true;
+    }
+    return false;
+};
+
+// used to validate ReactSlect fields
+export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
+    label: yup.string(),
+    value: yup.string(),
+    labelToShow: yup.mixed().optional(),
+    key: yup.mixed().optional(),
+});
+
+// used to the get the key property for a node
+// in react-sortable-tree
+export const getNodeKey = (data: TreeIndex & TreeNode): string => data.node.id;

@@ -1,58 +1,57 @@
 import { State } from '@hookstate/core';
-import { TaxBracketSlider } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider';
-import { TaxBracketSliderService } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.service';
-import { ITaxBracketSliderProps } from 'components/Compounds/SliderModals/TaxBracketSlider/TaxBracketSlider.types';
+import { TaxBracketSliderModal } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal';
+import { TaxBracketSliderModalService } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.service';
+import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React, { ReactElement, useRef } from 'react';
-import { TaxBracketSliderBaseService } from './TaxBracketSliderBase.service';
 
 interface ITaxBracketSliderBaseProps {
-    sliderState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
-    getAllTaxBrackets: () => Promise<void>;
+    sliderModalState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
+    getAllTaxBracket: () => Promise<void>;
 }
 
 export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactElement => {
     // props
-    const { sliderState, getAllTaxBrackets } = props;
+    const { sliderModalState, getAllTaxBracket } = props;
 
     // refs
-    const taxBracketSliderFormRef: ITaxBracketSliderProps['formRef'] = useRef(null);
+    const taxBracketSliderFormRef: ITaxBracketSliderModalProps['formRef'] = useRef(null);
 
     // handlers
-    const onCloseHandler: ITaxBracketSliderProps['onClose'] = async (props) => {
-        await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
+    const onCloseHandler: ITaxBracketSliderModalProps['onClose'] = async (props) => {
+        await TaxBracketSliderModalService.handleOnCloseTaxBracketSliderModal({
             onCloseProps: props,
-            sliderState: {
-                showModal: sliderState.showModal,
+            sliderModalState: {
+                showModal: sliderModalState.showModal,
             },
         });
     };
-    const onSubmitHandler: ITaxBracketSliderProps['onSubmit'] = async ({ values }) => {
-        if (sliderState.mode.get() === 'create') {
-            await TaxBracketSliderBaseService.createNewTaxBracket(values);
+    const onSubmitHandler: ITaxBracketSliderModalProps['onSubmit'] = async ({ values }) => {
+        if (sliderModalState.mode.get() === 'create') {
+            await TaxBracketSliderModalService.createNewTaxBracket(values);
         } else {
-            await TaxBracketSliderBaseService.editTaxBracket({
-                id: sliderState.prefillData.id.get(),
+            await TaxBracketSliderModalService.editTaxBracket({
+                id: sliderModalState.prefillData.id.get(),
                 ...values,
             });
         }
-        await getAllTaxBrackets();
-        sliderState.merge({
+        await getAllTaxBracket();
+        sliderModalState.merge({
             showModal: false,
         });
     };
 
     //compile data
-    const taxBracketSliderProps: ITaxBracketSliderProps = {
-        showModal: sliderState.showModal.get(),
+    const taxBracketSliderModalProps: ITaxBracketSliderModalProps = {
+        showModal: sliderModalState.showModal.get(),
         formRef: taxBracketSliderFormRef,
-        mode: sliderState.mode.get(),
-        prefillData: sliderState.prefillData.get(),
+        mode: sliderModalState.mode.get(),
+        prefillData: sliderModalState.prefillData.get(),
         onClose: onCloseHandler,
         onSubmit: onSubmitHandler,
         level: 1,
     };
 
     // draw
-    return <TaxBracketSlider {...taxBracketSliderProps} />;
+    return <TaxBracketSliderModal {...taxBracketSliderModalProps} />;
 };

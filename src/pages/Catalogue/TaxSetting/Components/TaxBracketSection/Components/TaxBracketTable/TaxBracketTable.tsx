@@ -8,13 +8,13 @@ import { TaxBracketTableService } from './TaxBracketTable.service';
 
 interface ITaxBracketTableProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
     allTaxBrackets: ITaxBracketData[];
 }
 
 export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
     // props
-    const { sectionState, getAllTaxBrackets, allTaxBrackets } = props;
+    const { sectionState, getAllTaxBracket, allTaxBrackets } = props;
 
     // hooks
     const confirmDialog = useConfirmDialog();
@@ -43,7 +43,7 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
         if (confirmResponse) {
             confirmDialog.setLoading({ isLoading: true });
             await TaxBracketTableService.deleteTaxBracket({ taxBracketId: taxBracketData.id });
-            await getAllTaxBrackets();
+            await getAllTaxBracket();
             confirmDialog.setLoading({ isLoading: true });
         }
         confirmDialog.closeDialog();
@@ -55,7 +55,7 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
         deleteItemClickHandler,
         editItemClickHandler,
         isTableLoading: sectionState.isTableLoading.get(),
-        taxBracketSliderState: sectionState.sliderModal,
+        taxBracketSliderModalState: sectionState.sliderModal,
     });
 
     return <Table {...tableProps} />;

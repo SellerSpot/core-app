@@ -13,7 +13,7 @@ import { TaxGroupSectionService } from './TaxGroupSection.service';
 
 interface ITaxGroupSectionProps {
     sectionState: State<ITaxSettingPageState['taxGroupSection']>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
     allTaxBrackets: ITaxBracketData[];
 }
 
@@ -58,7 +58,7 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
 
 export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
     // props
-    const { sectionState: sectionStateOriginal, getAllTaxBrackets, allTaxBrackets } = props;
+    const { sectionState: sectionStateOriginal, getAllTaxBracket, allTaxBrackets } = props;
 
     // state
     const sectionState = useState(sectionStateOriginal);
@@ -83,10 +83,10 @@ export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
             <PageHeaderComponent sectionState={sectionState} />
             <TaxGroupTable sectionState={sectionState} getAllTaxGroups={getAllTaxGroups} />
             <TaxGroupSliderBase
-                taxBracketSliderState={sectionState.taxBracketSlider}
-                taxGroupSliderState={sectionState.sliderModal}
-                getAllTaxGroups={getAllTaxGroups}
-                getAllTaxBrackets={getAllTaxBrackets}
+                taxBracketSliderModalState={sectionState.taxBracketSliderModal}
+                taxGroupSliderModalState={sectionState.sliderModal}
+                getAllTaxGroup={getAllTaxGroups}
+                getAllTaxBracket={getAllTaxBracket}
                 allTaxBrackets={allTaxBrackets}
             />
         </div>

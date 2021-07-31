@@ -20,7 +20,7 @@ import styles from './TaxGroupTable.module.scss';
 interface IGetTablePropsProps {
     allTaxBrackets: ITaxGroupData[];
     isTableLoading: boolean;
-    taxGroupSliderState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
+    taxGroupSliderModalState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
     editItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
     deleteItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
 }
@@ -33,7 +33,7 @@ export class TaxGroupTableService {
             isTableLoading,
             deleteItemClickHandler,
             editItemClickHandler,
-            taxGroupSliderState,
+            taxGroupSliderModalState,
         } = props;
 
         const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
@@ -107,7 +107,7 @@ export class TaxGroupTableService {
         const EmptyStatePrimaryCallToAction = () => {
             // handlers
             const handleOnClick = () => {
-                taxGroupSliderState.merge({
+                taxGroupSliderModalState.merge({
                     mode: 'create',
                     prefillData: null,
                     showModal: true,

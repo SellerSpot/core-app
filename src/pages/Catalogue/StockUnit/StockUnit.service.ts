@@ -11,4 +11,9 @@ export class StockUnitService {
         }
         return [];
     };
+    static searchStockUnit = async (query: string): Promise<IStockUnitData[]> => {
+        // requesting
+        const { status, data } = await requests.catalogue.stockUnitRequest.searchStockUnit(query);
+        return status ? data : [];
+    };
 }

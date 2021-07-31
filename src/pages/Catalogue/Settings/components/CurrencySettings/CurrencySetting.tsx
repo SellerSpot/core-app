@@ -1,15 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { Card, showNotify, Select } from '@sellerspot/universal-components';
-
+import { Card, ISelectOption, Select, showNotify } from '@sellerspot/universal-components';
 import { IErrorResponse, IStoreCurrency } from '@sellerspot/universal-types';
-import styles from './CurrencySetting.module.scss';
-import { ISelectOption } from 'typings/common.types';
 import { Loader } from 'components/Atoms/Loader/Loader';
-import CurrencySettingService from './CurrentSetting.service';
+import { SavingNotifier } from 'components/Atoms/SavingNotifier/SavingNotifier';
+import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { tenantSelector } from 'store/models/app';
-import { SavingNotifier } from 'components/Atoms/SavingNotifier/SavingNotifier';
+import styles from './CurrencySetting.module.scss';
+import CurrencySettingService from './CurrentSetting.service';
 
 export const CurrencySetting = (): ReactElement => {
     // hooks
@@ -21,12 +19,12 @@ export const CurrencySetting = (): ReactElement => {
     const isSaving = useState<boolean>(false);
 
     // handlers
-    const getFormattedCurrency = (currency: IStoreCurrency): ISelectOption<string> => ({
+    const getFormattedCurrency = (currency: IStoreCurrency): ISelectOption => ({
         label: `${currency.code} (${currency.symbol})`,
         value: JSON.stringify(currency),
     });
 
-    const getFormattedOptions = (): ISelectOption<string>[] =>
+    const getFormattedOptions = (): ISelectOption[] =>
         currencies.map((currency) => getFormattedCurrency(currency.get()));
 
     const onSelectChangeHandler = async (currencyString: string) => {

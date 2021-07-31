@@ -5,6 +5,7 @@ import {
     IEditBrandRequest,
     IEditBrandResponse,
     IGetAllBrandResponse,
+    ISearchBrandResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
@@ -17,6 +18,13 @@ export default class BrandRequest extends BaseRequest {
     getAllBrand = async (): Promise<IGetAllBrandResponse> => {
         return <IGetAllBrandResponse>await this.request({
             url: ROUTES.CATALOGUE.BRAND.GET_ALL,
+            method: 'GET',
+        });
+    };
+
+    searchBrand = async (query: string): Promise<ISearchBrandResponse> => {
+        return <ISearchBrandResponse>await this.request({
+            url: `${ROUTES.CATALOGUE.BRAND.SEARCH}?query=${query}`,
             method: 'GET',
         });
     };
