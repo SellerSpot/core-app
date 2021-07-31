@@ -13,32 +13,35 @@ import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
 import { ProductSliderModalService } from '../../../ProductSliderModal.service';
-import { IProductSliderForm, IProductSliderModalProps } from '../../../ProductSliderModal.types';
+import {
+    IProductSliderModalForm,
+    IProductSliderModalProps,
+} from '../../../ProductSliderModal.types';
 import styles from './Fields.module.scss';
-import { ProductSliderFieldsService } from './Fields.service';
+import { ProductSliderModalFieldsService } from './Fields.service';
 
 interface ICommonProps {
     submitting: boolean;
 }
-
 type IProductNameFieldProps = ICommonProps & {
     autoFocus: boolean;
 };
-
 type IBarcodeFieldProps = ICommonProps;
-
 type IDescriptionFieldProps = ICommonProps;
-
 type IBrandFieldProps = Pick<IProductSliderModalProps, 'onCreateBrand'> & ICommonProps;
-
 type IStockUnitFieldProps = Pick<IProductSliderModalProps, 'onCreateStockUnit'> & ICommonProps;
-
-type ICategoryFieldProps = Pick<IProductSliderModalProps, 'onInvokeCategoryChoice'> & ICommonProps;
+type ICategorySelectButtonProps = Pick<IProductSliderModalProps, 'onInvokeCategoryChoice'> &
+    ICommonProps;
+type ISelectedCategoryViewProps = Pick<
+    IProductSliderModalProps,
+    'selectedCategory' | 'onInvokeCategoryChoice' | 'treeData' | 'onCancelCategoryChoice'
+> &
+    ICommonProps;
 
 const ProductNameField = (props: IProductNameFieldProps): ReactElement => {
     // props
     const { autoFocus, submitting } = props;
-    const fieldName: keyof IProductSliderForm = 'name';
+    const fieldName: keyof IProductSliderModalForm = 'name';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -77,7 +80,7 @@ const ProductNameField = (props: IProductNameFieldProps): ReactElement => {
 const BarcodeField = (props: IBarcodeFieldProps): ReactElement => {
     // props
     const { submitting } = props;
-    const fieldName: keyof IProductSliderForm = 'barcode';
+    const fieldName: keyof IProductSliderModalForm = 'barcode';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -117,7 +120,7 @@ const BarcodeField = (props: IBarcodeFieldProps): ReactElement => {
 const DescriptionField = (props: IDescriptionFieldProps): ReactElement => {
     // props
     const { submitting } = props;
-    const fieldName: keyof IProductSliderForm = 'description';
+    const fieldName: keyof IProductSliderModalForm = 'description';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -159,7 +162,7 @@ const DescriptionField = (props: IDescriptionFieldProps): ReactElement => {
 const BrandField = (props: IBrandFieldProps): ReactElement => {
     // props
     const { submitting, onCreateBrand } = props;
-    const fieldName: keyof IProductSliderForm = 'brand';
+    const fieldName: keyof IProductSliderModalForm = 'brand';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -183,10 +186,7 @@ const BrandField = (props: IBrandFieldProps): ReactElement => {
         // getting search results
         const searchResults = await BrandService.searchBrand(query);
         return searchResults.map((brand) => {
-            return {
-                label: brand.name,
-                value: brand.id,
-            };
+            return ProductSliderModalFieldsService.formatBrandDataForSelectComponent(brand);
         });
     };
 
@@ -213,7 +213,7 @@ const BrandField = (props: IBrandFieldProps): ReactElement => {
 const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
     // props
     const { submitting, onCreateStockUnit } = props;
-    const fieldName: keyof IProductSliderForm = 'stockUnit';
+    const fieldName: keyof IProductSliderModalForm = 'stockUnit';
 
     // hooks
     const { input, meta } = useField(fieldName, {
@@ -238,7 +238,7 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
         const searchResults = await StockUnitService.searchStockUnit(query);
         // draw
         return searchResults.map((stockUnit) => {
-            return ProductSliderFieldsService.formatStockUnitDataForSelectComponent(stockUnit);
+            return ProductSliderModalFieldsService.formatStockUnitDataForSelectComponent(stockUnit);
         });
     };
 
@@ -262,7 +262,7 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
     );
 };
 
-const CategorySelectButton = (props: ICategoryFieldProps): ReactElement => {
+const CategorySelectButton = (props: ICategorySelectButtonProps): ReactElement => {
     // props
     const { submitting, onInvokeCategoryChoice } = props;
 
@@ -284,6 +284,64 @@ const CategorySelectButton = (props: ICategoryFieldProps): ReactElement => {
     );
 };
 
+const SelectedCategoryView = (props: ISelectedCategoryViewProps): ReactElement => {
+    // props
+    const {
+        selectedCategory,
+        treeData,
+        onInvokeCategoryChoice,
+        submitting,
+        onCancelCategoryChoice,
+    } = props;
+
+    const ancestry = ProductSliderModalFieldsService.constructCategoryAncestry({
+        category: selectedCategory,
+        treeData,
+    });
+
+    // draw
+    return (
+        <div className={styles.selectedCategoryView}>
+            <h4>Category</h4>
+            <div className={styles.ancestryWrapper}>
+                {ancestry.map((category, index) => {
+                    if (category === selectedCategory.title) {
+                        return (
+                            <span key={index}>
+                                <b>{category}</b>
+                            </span>
+                        );
+                    } else {
+                        return <span key={index}>{`${category} > `}</span>;
+                    }
+                })}
+            </div>
+            <div className={styles.selectedCategoryViewButtonsWrapper}>
+                <Button
+                    onClick={onCancelCategoryChoice}
+                    label="CANCEL"
+                    theme="danger"
+                    size="large"
+                    variant="outlined"
+                    fullWidth
+                    startIcon={<Icon icon={ICONS.close} />}
+                    disabled={submitting}
+                />
+                <Button
+                    onClick={onInvokeCategoryChoice}
+                    label="CHANGE CATEGORY"
+                    theme="primary"
+                    size="large"
+                    variant="contained"
+                    fullWidth
+                    startIcon={<Icon icon={ICONS.bxCategoryAlt} />}
+                    disabled={submitting}
+                />
+            </div>
+        </div>
+    );
+};
+
 export default {
     ProductNameField,
     BarcodeField,
@@ -291,4 +349,5 @@ export default {
     BrandField,
     CategorySelectButton,
     StockUnitField,
+    SelectedCategoryView,
 };

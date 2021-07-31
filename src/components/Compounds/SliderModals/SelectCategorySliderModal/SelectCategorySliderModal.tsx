@@ -13,8 +13,15 @@ import { SelectCategorySliderModalService } from './SelectCategorySliderModal.se
 
 export const SelectCategorySliderModal = (props: ISelectCategorySliderModalProps): ReactElement => {
     // props
-    const { categoryViewProps, onClose, onSubmit, showModal, level, categorySliderModalProps } =
-        props;
+    const {
+        categoryViewProps,
+        onClose,
+        onSubmit,
+        showModal,
+        level,
+        categorySliderModalProps,
+        onSearch,
+    } = props;
 
     // compute
     const { type, width, closeButtonType } = SelectCategorySliderModalService.getDynamicProps({
@@ -39,7 +46,7 @@ export const SelectCategorySliderModal = (props: ISelectCategorySliderModalProps
         >
             <SliderModalLayoutWrapper>
                 <ModalHeader closeButtonType={closeButtonType} onClose={onClose} />
-                <ModalBody categoryViewProps={categoryViewProps} />
+                <ModalBody onSearch={onSearch} categoryViewProps={categoryViewProps} />
                 <ModalFooter onClose={onClose} onSubmit={onSubmit} />
             </SliderModalLayoutWrapper>
             <CategorySliderModal {...categorySliderModalProps} />

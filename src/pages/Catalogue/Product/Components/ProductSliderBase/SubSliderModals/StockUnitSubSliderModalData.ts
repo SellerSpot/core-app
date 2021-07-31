@@ -1,5 +1,5 @@
 import { State } from '@hookstate/core';
-import { ProductSliderFieldsService } from 'components/Compounds/SliderModals/ProductSliderModal/Components/ModalBody/Components/Fields.service';
+import { ProductSliderModalFieldsService } from 'components/Compounds/SliderModals/ProductSliderModal/Components/ModalBody/Components/Fields.service';
 import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
 import { StockUnitSliderModalService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
 import { IProductPageState } from 'pages/Catalogue/Product/Product.types';
@@ -42,7 +42,9 @@ export default class StockUnitSubSliderModalData {
             });
             if (!!newStockUnit) {
                 const newSelectOption =
-                    ProductSliderFieldsService.formatStockUnitDataForSelectComponent(newStockUnit);
+                    ProductSliderModalFieldsService.formatStockUnitDataForSelectComponent(
+                        newStockUnit,
+                    );
                 // updating form
                 this.productFormRef.current.change('stockUnit', newSelectOption);
             }

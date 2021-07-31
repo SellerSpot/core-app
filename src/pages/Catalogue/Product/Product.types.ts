@@ -18,6 +18,8 @@ export interface IProductPageState {
                 ICategorySliderModalProps,
                 'showModal' | 'mode' | 'prefillData' | 'contextData'
             >;
+            selectedCategory: TreeItem;
+            searchQuery: string;
             treeData: TreeItem[];
         };
         stockUnitSliderModal: Pick<

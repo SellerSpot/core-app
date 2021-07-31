@@ -7,6 +7,7 @@ import {
     ISearchProductResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
+import { omit } from 'lodash';
 import BaseRequest from 'requests/BaseRequest';
 
 export default class ProductRequest extends BaseRequest {
@@ -49,7 +50,7 @@ export default class ProductRequest extends BaseRequest {
             url: ROUTES.CATALOGUE.PRODUCT.EDIT.replace(':id', data.id),
             method: 'PUT',
             payload: <IEditProductRequest>{
-                name: data.name,
+                ...omit(data, ['id']),
             },
         });
     };

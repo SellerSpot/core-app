@@ -51,6 +51,8 @@ export const Product = (): ReactElement => {
             },
             selectCategorySliderModal: {
                 treeData: [],
+                selectedCategory: null,
+                searchQuery: '',
                 showModal: false,
                 categorySliderModal: {
                     showModal: false,
@@ -85,21 +87,24 @@ export const Product = (): ReactElement => {
             prefillData: null,
         });
     };
-    const getAllProducts = async () => {
+    const getAllProduct = async () => {
         const allProducts = await ProductService.getAllProducts();
         pageState.allProducts.set(allProducts);
     };
 
     // effects
     useEffect(() => {
-        getAllProducts();
+        getAllProduct();
     }, []);
 
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent addProductHandler={addProductHandler} />
-            <ProductTable pageState={pageState} />
-            <ProductSliderBase sliderModalState={pageState.sliderModal} />
+            <ProductTable pageState={pageState} getAllProduct={getAllProduct} />
+            <ProductSliderBase
+                sliderModalState={pageState.sliderModal}
+                getAllProduct={getAllProduct}
+            />
         </div>
     );
 };

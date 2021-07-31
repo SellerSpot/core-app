@@ -7,12 +7,14 @@ import {
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import { SelectOptionValidationSchema, showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
+import { IProductData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 import {
-    IProductSliderForm,
     IProductSliderModalDynamicValues,
+    IProductSliderModalForm,
     IProductSliderModalOnClose,
     IProductSliderModalProps,
 } from './ProductSliderModal.types';
@@ -39,7 +41,7 @@ export class ProductSliderModalService {
         let modalTitle = 'Create new product';
         let modalFooterPrimaryButtonLabel = 'CREATE PRODUCT';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
-        let initialFormValues: IProductSliderForm = {
+        let initialFormValues: IProductSliderModalForm = {
             name: '',
             barcode: '',
             description: '',
@@ -70,9 +72,11 @@ export class ProductSliderModalService {
         if (mode === 'edit') modalFooterPrimaryButtonIcon = ICONS.check;
 
         // initialFormValues
-        initialFormValues = {
-            ...prefillData,
-        };
+        if (prefillData) {
+            initialFormValues = {
+                ...prefillData,
+            };
+        }
 
         // return
         return {
@@ -85,7 +89,7 @@ export class ProductSliderModalService {
         };
     };
 
-    static validationSchema: yup.SchemaOf<IProductSliderForm> = yup.object({
+    static validationSchema: yup.SchemaOf<IProductSliderModalForm> = yup.object({
         name: yup.string().required('Product name is required'),
         barcode: yup.string(),
         description: yup.string(),
@@ -95,9 +99,11 @@ export class ProductSliderModalService {
     });
 
     static validateField =
-        <T extends keyof IProductSliderForm>(fieldName: T) =>
-        (values: IProductSliderForm[keyof IProductSliderForm]): string | ISelectOption => {
-            const requiredSchema: yup.SchemaOf<IProductSliderForm[T]> = yup.reach(
+        <T extends keyof IProductSliderModalForm>(fieldName: T) =>
+        (
+            values: IProductSliderModalForm[keyof IProductSliderModalForm],
+        ): string | ISelectOption => {
+            const requiredSchema: yup.SchemaOf<IProductSliderModalForm[T]> = yup.reach(
                 ProductSliderModalService.validationSchema,
                 fieldName,
             );
@@ -111,7 +117,7 @@ export class ProductSliderModalService {
         };
 
     static getSpecialInputFieldProps = (
-        meta: FieldMetaState<IProductSliderForm[keyof IProductSliderForm]>,
+        meta: FieldMetaState<IProductSliderModalForm[keyof IProductSliderModalForm]>,
     ): IInputFieldProps['helperMessage'] & {
         theme: IInputFieldProps['theme'];
     } => {
@@ -142,7 +148,7 @@ export class ProductSliderModalService {
     };
 
     static getSpecialSelectFieldProps = (
-        meta: FieldMetaState<IProductSliderForm>,
+        meta: FieldMetaState<IProductSliderModalForm>,
     ): IAsyncCreatableSelectProps['helperMessage'] => {
         // props
         const { error, submitError, touched } = meta;
@@ -207,5 +213,45 @@ export class ProductSliderModalService {
                 sliderModalState.showModal.set(false);
             }
         }
+    };
+
+    // requests
+    static createNewProduct = async (values: IProductSliderModalForm): Promise<IProductData> => {
+        // props
+        const { name, barcode, brand, category, description, stockUnit } = values;
+        // request
+        const { data, status } = await requests.catalogue.productRequest.createNewProduct({
+            name,
+            barcode,
+            description,
+            category,
+            brand: brand?.value,
+            stockUnit: stockUnit?.value,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
+    };
+
+    static editProduct = async (
+        props: IProductSliderModalForm & { id: string },
+    ): Promise<IProductData> => {
+        // props
+        const { name, barcode, brand, category, description, stockUnit, id } = props;
+        // request
+        const { data, status } = await requests.catalogue.productRequest.editProduct({
+            id,
+            name,
+            barcode,
+            description,
+            category,
+            brand: brand?.value,
+            stockUnit: stockUnit?.value,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
     };
 }

@@ -13,6 +13,7 @@ export interface ISelectCategorySliderModalProps {
     onClose: (props: ISelectCategorySliderModalOnClose) => void;
     level: 1 | 2;
     onSubmit: () => void;
+    onSearch: (query: string) => void;
     categoryViewProps: ICategoryViewProps;
     categorySliderModalProps: ICategorySliderModalProps;
 }

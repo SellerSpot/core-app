@@ -5,7 +5,6 @@ import {
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { rawClone } from 'utilities/general';
 import { BrandSliderModal } from '../BrandSliderModal/BrandSliderModal';
 import { SelectCategorySliderModal } from '../SelectCategorySliderModal/SelectCategorySliderModal';
 import { StockUnitSliderModal } from '../StockUnitSliderModal/StockUnitSliderModal';
@@ -14,7 +13,7 @@ import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFo
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import styles from './ProductSliderModal.module.scss';
 import { ProductSliderModalService } from './ProductSliderModal.service';
-import { IProductSliderForm, IProductSliderModalProps } from './ProductSliderModal.types';
+import { IProductSliderModalForm, IProductSliderModalProps } from './ProductSliderModal.types';
 
 export const ProductSliderModal = (props: IProductSliderModalProps): ReactElement => {
     // props
@@ -27,8 +26,11 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         onCreateBrand,
         onCreateStockUnit,
         onInvokeCategoryChoice,
+        onCancelCategoryChoice,
         prefillData,
+        treeData,
         formRef,
+        selectedCategory,
         brandSliderModalProps,
         selectCategorySliderModalProps,
         stockUnitSliderModalProps,
@@ -51,7 +53,7 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
     });
 
     // handlers
-    const onSubmitHandler = async (values: IProductSliderForm) => {
+    const onSubmitHandler = async (values: IProductSliderModalForm) => {
         await onSubmit({ values });
     };
     const onBackdropClickHandler: ISliderModalProps['onBackdropClick'] = (event) => {
@@ -77,7 +79,8 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         >
             <Form
                 onSubmit={onSubmitHandler}
-                initialValues={rawClone(initialFormValues)}
+                initialValues={initialFormValues}
+                keepDirtyOnReinitialize
                 subscription={{
                     submitting: true,
                     dirty: true,
@@ -98,9 +101,12 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
                     const modalBodyProps: IModalBodyProps = {
                         showModal,
                         submitting,
+                        onCancelCategoryChoice,
                         onCreateBrand,
+                        treeData,
                         onCreateStockUnit,
                         onInvokeCategoryChoice,
+                        selectedCategory,
                     };
                     const modalFooterProps: IModalFooterProps = {
                         dirty,

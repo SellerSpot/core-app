@@ -4,7 +4,7 @@ import { ProductSliderModal } from 'components/Compounds/SliderModals/ProductSli
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { IProductPageState } from '../../Product.types';
 import BrandSubSliderModalData from './SubSliderModals/BrandSubSliderModalData';
-import SelectCategorySubSliderModalData from './SubSliderModals/SelectCategorySubSliderModalData';
+import SelectCategorySubSliderModalData from './SubSliderModals/SelectCategorySubSliderModalData/SelectCategorySubSliderModalData';
 import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderModalData';
 import { CategoryService } from 'pages/Catalogue/Category/Category.service';
 import { CategoryViewHandlersService } from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
@@ -13,25 +13,32 @@ import { BrandSliderModalService } from 'components/Compounds/SliderModals/Brand
 import { CategorySliderModalService } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySliderModal.service';
 import { StockUnitSliderModalService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
 import { ProductSliderModalService } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.service';
+import { rawClone } from 'utilities/general';
 
 interface IProductSliderBaseProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
+    getAllProduct: () => void;
 }
+
+type IBrandSubSliderModalProps = IProductSliderModalProps['brandSliderModalProps'];
+type IStockUnitSubSliderModalProps = IProductSliderModalProps['stockUnitSliderModalProps'];
+type ISelectCategorySubSliderModalProps =
+    IProductSliderModalProps['selectCategorySliderModalProps'];
+type ICategorySubSubSliderModalProps =
+    ISelectCategorySubSliderModalProps['categorySliderModalProps'];
 
 export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement => {
     // props
-    const { sliderModalState } = props;
+    const { sliderModalState, getAllProduct } = props;
 
     // state
     const localSliderModalState = useState(sliderModalState);
 
     // refs
     const productFormRef: IProductSliderModalProps['formRef'] = useRef(null);
-    const brandFormRef: IProductSliderModalProps['brandSliderModalProps']['formRef'] = useRef(null);
-    const stockUnitFormRef: IProductSliderModalProps['stockUnitSliderModalProps']['formRef'] =
-        useRef(null);
-    const categoryFormRef: IProductSliderModalProps['selectCategorySliderModalProps']['categorySliderModalProps']['formRef'] =
-        useRef(null);
+    const brandFormRef: IBrandSubSliderModalProps['formRef'] = useRef(null);
+    const stockUnitFormRef: IStockUnitSubSliderModalProps['formRef'] = useRef(null);
+    const categoryFormRef: ICategorySubSubSliderModalProps['formRef'] = useRef(null);
 
     // hooks
     const confirmHook = useConfirmDialog();
@@ -39,8 +46,8 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     // custom handlers
     const categoryViewHandlersService = new CategoryViewHandlersService({
         confirmHook,
-        sliderModalState: sliderModalState.selectCategorySliderModal.categorySliderModal,
-        treeDataState: sliderModalState.selectCategorySliderModal.treeData,
+        sliderModalState: localSliderModalState.selectCategorySliderModal.categorySliderModal,
+        treeDataState: localSliderModalState.selectCategorySliderModal.treeData,
     });
 
     // sub slider modalprops data
@@ -63,7 +70,7 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
     // product slider modalhandlers
     const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = (props) => {
         // props
-        const { source } = props;
+        const { source, event } = props;
         // state
         const brandSliderModalState = localSliderModalState.brandSliderModal;
         const selectCategorySliderModalState = localSliderModalState.selectCategorySliderModal;
@@ -96,7 +103,10 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
                         sliderModalState: categorySliderModalState,
                     });
                 } else {
-                    selectCategorySliderModalState.showModal.set(false);
+                    selectCategorySubSliderModalData.onCloseHandler({
+                        event,
+                        source,
+                    });
                 }
             } else if (stockUntiSliderModalState.showModal.get()) {
                 const { dirty, submitting } = categoryFormRef.current.getState();
@@ -125,19 +135,55 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
             localSliderModalState.showModal.set(false);
         }
     };
+    const onCancelCategoryChoiceHandler = () => {
+        localSliderModalState.selectCategorySliderModal.selectedCategory.set(null);
+    };
+    const onSubmitHandler: IProductSliderModalProps['onSubmit'] = async ({ values }) => {
+        // values
+        const { barcode, brand, description, name, stockUnit } = values;
+        if (localSliderModalState.mode.get() === 'create') {
+            await ProductSliderModalService.createNewProduct({
+                name,
+                barcode,
+                description,
+                brand: brand,
+                category:
+                    localSliderModalState.selectCategorySliderModal.selectedCategory.get()?.id,
+                stockUnit: stockUnit,
+            });
+        } else {
+            await ProductSliderModalService.editProduct({
+                id: localSliderModalState.prefillData.id.get(),
+                name,
+                barcode,
+                description,
+                brand: brand,
+                category:
+                    localSliderModalState.selectCategorySliderModal.selectedCategory.get()?.id,
+                stockUnit: stockUnit,
+            });
+        }
+        getAllProduct();
+        localSliderModalState.showModal.set(false);
+    };
 
     const productSliderModalProps: IProductSliderModalProps = {
         showModal: localSliderModalState.showModal.get(),
         formRef: productFormRef,
         mode: localSliderModalState.mode.get(),
         prefillData: localSliderModalState.prefillData.get(),
+        selectedCategory: rawClone(
+            localSliderModalState.selectCategorySliderModal.selectedCategory.get(),
+        ),
+        treeData: rawClone(localSliderModalState.selectCategorySliderModal.treeData.get()),
         level: 1,
         onClose: productSliderOnCloseHandler,
-        onSubmit: () => null,
+        onSubmit: onSubmitHandler,
         onCreateBrand: brandSubSliderModalData.onCreateBrandHandler,
         onCreateStockUnit: stockUnitSubSliderModalData.onCreateStockUnitHandler,
         onInvokeCategoryChoice:
             selectCategorySubSliderModalData.onInvokeSelectCategoryChoiceHandler,
+        onCancelCategoryChoice: onCancelCategoryChoiceHandler,
         brandSliderModalProps: brandSubSliderModalData.getSliderModalProps(),
         selectCategorySliderModalProps: selectCategorySubSliderModalData.getSliderModalProps(),
         stockUnitSliderModalProps: stockUnitSubSliderModalData.getSliderModalProps(),
