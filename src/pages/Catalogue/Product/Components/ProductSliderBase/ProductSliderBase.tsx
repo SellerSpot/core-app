@@ -9,10 +9,10 @@ import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderMod
 import { CategoryService } from 'pages/Catalogue/Category/Category.service';
 import { CategoryViewHandlersService } from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
-import { BrandSliderService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
-import { CategorySliderService } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.service';
-import { StockUnitSliderService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
-import { ProductSliderService } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.service';
+import { BrandSliderModalService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
+import { CategorySliderModalService } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySliderModal.service';
+import { StockUnitSliderModalService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
+import { ProductSliderModalService } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.service';
 
 interface IProductSliderBaseProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
@@ -74,7 +74,7 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
         if (source === 'backdrop') {
             if (brandSliderModalState.showModal.get()) {
                 const { dirty, submitting } = brandFormRef.current.getState();
-                BrandSliderService.handleOnCloseBrandSliderModal({
+                BrandSliderModalService.handleOnCloseBrandSliderModal({
                     onCloseProps: {
                         dirty,
                         submitting,
@@ -86,7 +86,7 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
             } else if (selectCategorySliderModalState.showModal.get()) {
                 if (categorySliderModalState.showModal.get()) {
                     const { dirty, submitting } = categoryFormRef.current.getState();
-                    CategorySliderService.handleOnCloseCategorySliderModal({
+                    CategorySliderModalService.handleOnCloseCategorySliderModal({
                         onCloseProps: {
                             dirty,
                             event: null,
@@ -100,7 +100,7 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
                 }
             } else if (stockUntiSliderModalState.showModal.get()) {
                 const { dirty, submitting } = categoryFormRef.current.getState();
-                StockUnitSliderService.handleOnCloseStockUnitSliderModal({
+                StockUnitSliderModalService.handleOnCloseStockUnitSliderModal({
                     onCloseProps: {
                         dirty,
                         event: null,
@@ -111,7 +111,7 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
                 });
             } else {
                 const { dirty, submitting } = productFormRef.current.getState();
-                ProductSliderService.handleOnCloseProductSliderModal({
+                ProductSliderModalService.handleOnCloseProductSliderModal({
                     onCloseProps: {
                         dirty,
                         event: null,

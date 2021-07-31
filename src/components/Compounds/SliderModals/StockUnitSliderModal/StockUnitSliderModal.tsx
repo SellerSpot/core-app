@@ -9,7 +9,7 @@ import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { StockUnitSliderService } from './StockUnitSliderModal.service';
+import { StockUnitSliderModalService } from './StockUnitSliderModal.service';
 import styles from './StockUnitSliderModal.module.scss';
 import { IStockUnitSliderForm, IStockUnitSliderModalProps } from './StockUnitSliderModal.types';
 
@@ -34,7 +34,7 @@ export const StockUnitSliderModal = (props: IStockUnitSliderModalProps): ReactEl
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = StockUnitSliderService.getDynamicProps({
+    } = StockUnitSliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

@@ -1,26 +1,25 @@
 import { State } from '@hookstate/core';
 import { TaxBracketSliderModal } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal';
-import { TaxBracketSliderService } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.service';
+import { TaxBracketSliderModalService } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.service';
 import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React, { ReactElement, useRef } from 'react';
-import { TaxBracketSliderBaseService } from './TaxBracketSliderBase.service';
 
 interface ITaxBracketSliderBaseProps {
     sliderModalState: State<ITaxSettingPageState['taxBracketSection']['sliderModal']>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
 }
 
 export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactElement => {
     // props
-    const { sliderModalState, getAllTaxBrackets } = props;
+    const { sliderModalState, getAllTaxBracket } = props;
 
     // refs
     const taxBracketSliderFormRef: ITaxBracketSliderModalProps['formRef'] = useRef(null);
 
     // handlers
     const onCloseHandler: ITaxBracketSliderModalProps['onClose'] = async (props) => {
-        await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
+        await TaxBracketSliderModalService.handleOnCloseTaxBracketSliderModal({
             onCloseProps: props,
             sliderModalState: {
                 showModal: sliderModalState.showModal,
@@ -29,14 +28,14 @@ export const TaxBracketSliderBase = (props: ITaxBracketSliderBaseProps): ReactEl
     };
     const onSubmitHandler: ITaxBracketSliderModalProps['onSubmit'] = async ({ values }) => {
         if (sliderModalState.mode.get() === 'create') {
-            await TaxBracketSliderBaseService.createNewTaxBracket(values);
+            await TaxBracketSliderModalService.createNewTaxBracket(values);
         } else {
-            await TaxBracketSliderBaseService.editTaxBracket({
+            await TaxBracketSliderModalService.editTaxBracket({
                 id: sliderModalState.prefillData.id.get(),
                 ...values,
             });
         }
-        await getAllTaxBrackets();
+        await getAllTaxBracket();
         sliderModalState.merge({
             showModal: false,
         });

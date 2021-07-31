@@ -9,8 +9,8 @@ import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { TaxBracketSliderService } from './TaxBracketSliderModal.service';
 import styles from './TaxBracketSliderModal.module.scss';
+import { TaxBracketSliderModalService } from './TaxBracketSliderModal.service';
 import { ITaxBracketSliderForm, ITaxBracketSliderModalProps } from './TaxBracketSliderModal.types';
 
 export const TaxBracketSliderModal = (props: ITaxBracketSliderModalProps): ReactElement => {
@@ -34,7 +34,7 @@ export const TaxBracketSliderModal = (props: ITaxBracketSliderModalProps): React
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = TaxBracketSliderService.getDynamicProps({
+    } = TaxBracketSliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

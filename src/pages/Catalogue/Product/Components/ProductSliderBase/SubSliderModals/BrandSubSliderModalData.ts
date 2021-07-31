@@ -1,6 +1,6 @@
 import { State } from '@hookstate/core';
+import { BrandSliderModalService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
 import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
-import { BrandSliderBaseService } from 'pages/Catalogue/Brand/Components/BrandSliderBase/BrandSliderBase.service';
 import { IProductPageState } from 'pages/Catalogue/Product/Product.types';
 
 interface IBrandSubSliderModalDataProps {
@@ -37,7 +37,7 @@ export default class BrandSubSliderModalData {
         };
     private brandSliderOnSubmitHandler: IProductSliderModalProps['brandSliderModalProps']['onSubmit'] =
         async ({ values }) => {
-            const newBrand = await BrandSliderBaseService.createNewBrand({
+            const newBrand = await BrandSliderModalService.createNewBrand({
                 ...values,
             });
             if (!!newBrand) {

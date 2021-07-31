@@ -1,10 +1,9 @@
 import { State } from '@hookstate/core';
 import { StockUnitSliderModal } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal';
-import { StockUnitSliderService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
+import { StockUnitSliderModalService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
 import { IStockUnitSliderModalProps } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.types';
 import React, { ReactElement, useRef } from 'react';
 import { IStockUnitPageState } from '../../StockUnit.types';
-import { StockUnitSliderBaseService } from './StockUnitSliderBase.service';
 
 interface IStockUnitSliderBaseProps {
     sliderModalState: State<IStockUnitPageState['sliderModal']>;
@@ -20,7 +19,7 @@ export const StockUnitSliderBase = (props: IStockUnitSliderBaseProps): ReactElem
 
     // handlers
     const onCloseHander: IStockUnitSliderModalProps['onClose'] = async (props) => {
-        await StockUnitSliderService.handleOnCloseStockUnitSliderModal({
+        await StockUnitSliderModalService.handleOnCloseStockUnitSliderModal({
             onCloseProps: props,
             sliderModalState: {
                 showModal: sliderModalState.showModal,
@@ -32,12 +31,12 @@ export const StockUnitSliderBase = (props: IStockUnitSliderBaseProps): ReactElem
         const { name, unit } = values;
         // compute
         if (sliderModalState.mode.get() === 'create') {
-            await StockUnitSliderBaseService.createNewStockUnit({
+            await StockUnitSliderModalService.createNewStockUnit({
                 name,
                 unit,
             });
         } else {
-            await StockUnitSliderBaseService.editStockUnit({
+            await StockUnitSliderModalService.editStockUnit({
                 id: sliderModalState.prefillData.id.get(),
                 name,
                 unit,

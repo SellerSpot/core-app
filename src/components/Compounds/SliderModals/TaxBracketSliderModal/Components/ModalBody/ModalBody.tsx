@@ -7,7 +7,7 @@ import {
 } from '../../TaxBracketSliderModal.types';
 import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
-import { TaxBracketSliderService } from '../../TaxBracketSliderModal.service';
+import { TaxBracketSliderModalService } from '../../TaxBracketSliderModal.service';
 
 export type IModalBodyProps = Pick<ITaxBracketSliderModalOnClose, 'submitting'> &
     Pick<ITaxBracketSliderModalProps, 'showModal'>;
@@ -19,13 +19,13 @@ const TaxBracketNameField = (props: { autoFocus: boolean; submitting: boolean })
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: TaxBracketSliderService.validateField(fieldName),
+        validate: TaxBracketSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = TaxBracketSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = TaxBracketSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -58,13 +58,13 @@ const TaxBracketRateField = (props: { submitting: boolean }) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: TaxBracketSliderService.validateField(fieldName),
+        validate: TaxBracketSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = TaxBracketSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = TaxBracketSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,

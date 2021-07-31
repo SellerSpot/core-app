@@ -4,7 +4,7 @@ import {
     ICategorySliderModalDynamicValues,
     ICategorySliderModalOnClose,
     ICategorySliderModalProps,
-} from '../../CategorySlider.types';
+} from '../../CategorySliderModal.types';
 
 export type IModalHeaderProps = Pick<ICategorySliderModalOnClose, 'dirty' | 'submitting'> & {
     closeButtonType: ICategorySliderModalDynamicValues['closeButtonType'];

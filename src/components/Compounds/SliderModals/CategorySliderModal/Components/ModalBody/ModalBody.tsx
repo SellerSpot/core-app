@@ -1,12 +1,12 @@
 import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
-import { CategorySliderService } from '../../CategorySlider.service';
+import { CategorySliderModalService } from '../../CategorySliderModal.service';
 import {
     ICategorySliderForm,
     ICategorySliderModalOnClose,
     ICategorySliderModalProps,
-} from '../../CategorySlider.types';
+} from '../../CategorySliderModal.types';
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = Pick<ICategorySliderModalOnClose, 'submitting'> &
@@ -27,13 +27,13 @@ const CategoryNameField = (props: ICategoryNameFieldProps) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: CategorySliderService.validateField(fieldName, currentNodeSiblings),
+        validate: CategorySliderModalService.validateField(fieldName, currentNodeSiblings),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = CategorySliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = CategorySliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,

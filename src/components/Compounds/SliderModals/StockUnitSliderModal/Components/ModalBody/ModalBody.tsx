@@ -7,7 +7,7 @@ import {
 } from '../../StockUnitSliderModal.types';
 import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
-import { StockUnitSliderService } from '../../StockUnitSliderModal.service';
+import { StockUnitSliderModalService } from '../../StockUnitSliderModal.service';
 
 export type IModalBodyProps = Pick<IStockUnitSliderModalOnClose, 'submitting'> &
     Pick<IStockUnitSliderModalProps, 'showModal'>;
@@ -28,13 +28,13 @@ const NameField = (props: INameFieldProps) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: StockUnitSliderService.validateField(fieldName),
+        validate: StockUnitSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = StockUnitSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = StockUnitSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -67,13 +67,13 @@ const UnitField = (props: IUnitFieldProps) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: StockUnitSliderService.validateField(fieldName),
+        validate: StockUnitSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = StockUnitSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = StockUnitSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,

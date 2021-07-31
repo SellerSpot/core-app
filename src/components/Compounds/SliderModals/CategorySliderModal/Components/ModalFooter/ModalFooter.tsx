@@ -4,7 +4,7 @@ import {
     ICategorySliderModalDynamicValues,
     ICategorySliderModalOnClose,
     ICategorySliderModalProps,
-} from '../../CategorySlider.types';
+} from '../../CategorySliderModal.types';
 import Icon from '@iconify/react';
 
 export type IModalFooterProps = Pick<ICategorySliderModalOnClose, 'dirty' | 'submitting'> &

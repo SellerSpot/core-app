@@ -12,6 +12,9 @@ export interface ITaxSettingPageState {
         allTaxGroups: ITaxGroupData[];
         isTableLoading: boolean;
         sliderModal: Pick<ITaxGroupSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
-        taxBracketSlider: Pick<ITaxBracketSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
+        taxBracketSliderModal: Pick<
+            ITaxBracketSliderModalProps,
+            'showModal' | 'mode' | 'prefillData'
+        >;
     };
 }

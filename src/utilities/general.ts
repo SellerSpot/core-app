@@ -1,4 +1,5 @@
 import { FieldMetaState } from 'react-final-form';
+import { TreeIndex, TreeNode } from 'react-sortable-tree';
 import * as yup from 'yup';
 import { ISelectOption } from '../../.yalc/@sellerspot/universal-components/dist';
 
@@ -84,3 +85,7 @@ export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.obj
     value: yup.string(),
     labelToShow: yup.mixed().optional(),
 });
+
+// used to the get the key property for a node
+// in react-sortable-tree
+export const getNodeKey = (data: TreeIndex & TreeNode): string => data.node.id;

@@ -3,9 +3,11 @@ import { IInputFieldProps } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
+import { IBrandData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 import {
     IBrandSliderForm,
     IBrandSliderModalDynamicValues,
@@ -22,7 +24,7 @@ export interface IHandleOnCloseBrandSliderModalProps {
         showModal: State<IBrandSliderModalProps['showModal']>;
     };
 }
-export class BrandSliderService {
+export class BrandSliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): IBrandSliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
@@ -84,7 +86,7 @@ export class BrandSliderService {
         <T extends keyof IBrandSliderForm>(fieldName: T) =>
         (values: IBrandSliderForm[keyof IBrandSliderForm]): string => {
             const requiredSchema: yup.SchemaOf<IBrandSliderForm[T]> = yup.reach(
-                BrandSliderService.validationSchema,
+                BrandSliderModalService.validationSchema,
                 fieldName,
             );
             try {
@@ -161,11 +163,40 @@ export class BrandSliderService {
                 const confirmResult = await confirm(dialogProps);
                 closeDialog();
                 if (confirmResult) {
-                    sliderModalState.showModal.set(false);
+                    sliderModalState.showModal && sliderModalState.showModal.set(false);
                 }
             } else {
-                sliderModalState.showModal.set(false);
+                sliderModalState.showModal && sliderModalState.showModal.set(false);
             }
         }
+    };
+
+    // requests
+    static createNewBrand = async (values: IBrandSliderForm): Promise<IBrandData> => {
+        // props
+        const { name } = values;
+
+        // request
+        const { data, status } = await requests.catalogue.brandRequest.createNewBrand({ name });
+
+        // action
+        if (status) {
+            return data;
+        }
+        return null;
+    };
+
+    static editBrand = async (props: { name: string; id: string }): Promise<IBrandData> => {
+        // props
+        const { name, id } = props;
+
+        // request
+        const { data, status } = await requests.catalogue.brandRequest.editBrand({ id, name });
+
+        // actions
+        if (status) {
+            return data;
+        }
+        return null;
     };
 }

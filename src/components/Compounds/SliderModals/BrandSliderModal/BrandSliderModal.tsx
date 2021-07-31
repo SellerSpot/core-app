@@ -9,7 +9,7 @@ import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { BrandSliderService } from './BrandSliderModal.service';
+import { BrandSliderModalService } from './BrandSliderModal.service';
 import styles from './BrandSliderModal.module.scss';
 import { IBrandSliderForm, IBrandSliderModalProps } from './BrandSliderModal.types';
 
@@ -34,7 +34,7 @@ export const BrandSliderModal = (props: IBrandSliderModalProps): ReactElement =>
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = BrandSliderService.getDynamicProps({
+    } = BrandSliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

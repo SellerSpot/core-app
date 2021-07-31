@@ -13,7 +13,7 @@ import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import styles from './ProductSliderModal.module.scss';
-import { ProductSliderService } from './ProductSliderModal.service';
+import { ProductSliderModalService } from './ProductSliderModal.service';
 import { IProductSliderForm, IProductSliderModalProps } from './ProductSliderModal.types';
 
 export const ProductSliderModal = (props: IProductSliderModalProps): ReactElement => {
@@ -43,7 +43,7 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = ProductSliderService.getDynamicProps({
+    } = ProductSliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

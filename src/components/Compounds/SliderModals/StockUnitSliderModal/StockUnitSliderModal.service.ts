@@ -3,9 +3,11 @@ import { IInputFieldProps } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
+import { IStockUnitData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 import {
     IStockUnitSliderForm,
     IStockUnitSliderModalDynamicValues,
@@ -22,7 +24,12 @@ export interface IHandleOnCloseStockUnitSliderModalProps {
         showModal: State<IStockUnitSliderModalProps['showModal']>;
     };
 }
-export class StockUnitSliderService {
+
+type ICreateNewStockUnitProps = IStockUnitSliderForm;
+
+type IEditStockUnitProps = Pick<IStockUnitData, 'id' | 'name' | 'unit'>;
+
+export class StockUnitSliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): IStockUnitSliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
@@ -87,7 +94,7 @@ export class StockUnitSliderService {
         <T extends keyof IStockUnitSliderForm>(fieldName: T) =>
         (values: IStockUnitSliderForm[keyof IStockUnitSliderForm]): string => {
             const requiredSchema: yup.SchemaOf<IStockUnitSliderForm[T]> = yup.reach(
-                StockUnitSliderService.validationSchema,
+                StockUnitSliderModalService.validationSchema,
                 fieldName,
             );
             try {
@@ -171,5 +178,37 @@ export class StockUnitSliderService {
                 sliderModalState.showModal.set(false);
             }
         }
+    };
+
+    // requests
+    static createNewStockUnit = async (
+        props: ICreateNewStockUnitProps,
+    ): Promise<IStockUnitData> => {
+        // props
+        const { name, unit } = props;
+        // request
+        const { data, status } = await requests.catalogue.stockUnitRequest.createNewStockUnit({
+            name,
+            unit,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
+    };
+
+    static editStockUnit = async (props: IEditStockUnitProps): Promise<IStockUnitData> => {
+        // props
+        const { name, id, unit } = props;
+        // request
+        const { data, status } = await requests.catalogue.stockUnitRequest.editStockUnit({
+            name,
+            id,
+            unit,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
     };
 }

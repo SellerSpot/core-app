@@ -1,8 +1,8 @@
 import { State } from '@hookstate/core';
 import { ProductSliderFieldsService } from 'components/Compounds/SliderModals/ProductSliderModal/Components/ModalBody/Components/Fields.service';
 import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
+import { StockUnitSliderModalService } from 'components/Compounds/SliderModals/StockUnitSliderModal/StockUnitSliderModal.service';
 import { IProductPageState } from 'pages/Catalogue/Product/Product.types';
-import { StockUnitSliderBaseService } from 'pages/Catalogue/StockUnit/Components/StockUnitSliderBase/StockUnitSliderBase.service';
 
 interface IStockUnitSubSliderModalDataProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
@@ -37,7 +37,7 @@ export default class StockUnitSubSliderModalData {
         };
     private stockUnitSliderOnSubmitHandler: IProductSliderModalProps['stockUnitSliderModalProps']['onSubmit'] =
         async ({ values }) => {
-            const newStockUnit = await StockUnitSliderBaseService.createNewStockUnit({
+            const newStockUnit = await StockUnitSliderModalService.createNewStockUnit({
                 ...values,
             });
             if (!!newStockUnit) {

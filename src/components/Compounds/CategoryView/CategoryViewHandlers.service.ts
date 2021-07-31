@@ -1,10 +1,10 @@
 import { State } from '@hookstate/core';
 import { ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView.types';
-import { ICategorySliderModalProps } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySlider.types';
+import { ICategorySliderModalProps } from 'components/Compounds/SliderModals/CategorySliderModal/CategorySliderModal.types';
 import { uniq } from 'lodash';
 import { find, getNodeAtPath, removeNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { requests } from 'requests/requests';
-import { rawClone } from 'utilities/general';
+import { getNodeKey, rawClone } from 'utilities/general';
 import { IConfirmDialogStateActions } from '../ConfirmDialog/ConfirmDialog.types';
 
 interface ISortableTreeNodeTracker {
@@ -132,7 +132,7 @@ export class CategoryViewHandlersService {
             });
             // finding the node to remove (to get the path)
             const { path } = find({
-                getNodeKey: (data) => data.node.id,
+                getNodeKey,
                 treeData,
                 searchMethod: (searchData) => searchData.node.id === searchData.searchQuery,
                 searchQuery: id,
@@ -141,7 +141,7 @@ export class CategoryViewHandlersService {
             this.treeDataState &&
                 this.treeDataState.set(
                     removeNodeAtPath({
-                        getNodeKey: (data) => data.node.id,
+                        getNodeKey,
                         path,
                         treeData,
                         ignoreCollapsed: false,
@@ -161,7 +161,7 @@ export class CategoryViewHandlersService {
         // finding the parent node (to find siblings when editing)
         // getting path of current node
         const requiredNodePath = find({
-            getNodeKey: (data) => data.node.id,
+            getNodeKey,
             searchMethod: (searchData) => searchData.node.id === searchData.searchQuery,
             treeData,
             searchQuery: id,
@@ -170,7 +170,7 @@ export class CategoryViewHandlersService {
         requiredNodePath.pop();
         // getting parent node using modified path
         const parentNode = getNodeAtPath({
-            getNodeKey: (data) => data.node.id,
+            getNodeKey,
             path: requiredNodePath,
             treeData,
             ignoreCollapsed: false,

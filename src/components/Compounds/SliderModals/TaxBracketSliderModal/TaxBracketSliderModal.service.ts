@@ -3,9 +3,11 @@ import { IInputFieldProps } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
+import { requests } from 'requests/requests';
 import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
+import { ITaxBracketData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 import {
     ITaxBracketSliderForm,
     ITaxBracketSliderModalDynamicValues,
@@ -22,7 +24,7 @@ export interface IHandleOnCloseTaxBracketSliderModalProps {
         showModal: State<ITaxBracketSliderModalProps['showModal']>;
     };
 }
-export class TaxBracketSliderService {
+export class TaxBracketSliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): ITaxBracketSliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
@@ -91,7 +93,7 @@ export class TaxBracketSliderService {
         <T extends keyof ITaxBracketSliderForm>(fieldName: T) =>
         (values: ITaxBracketSliderForm[keyof ITaxBracketSliderForm]): string => {
             const requiredSchema: yup.SchemaOf<ITaxBracketSliderForm[T]> = yup.reach(
-                TaxBracketSliderService.validationSchema,
+                TaxBracketSliderModalService.validationSchema,
                 fieldName,
             );
             try {
@@ -169,11 +171,43 @@ export class TaxBracketSliderService {
                 const confirmResult = await confirm(dialogProps);
                 closeDialog();
                 if (confirmResult) {
-                    sliderModalState.showModal.set(false);
+                    sliderModalState && sliderModalState.showModal.set(false);
                 }
             } else {
-                sliderModalState.showModal.set(false);
+                sliderModalState && sliderModalState.showModal.set(false);
             }
         }
+    };
+
+    // requests
+    static createNewTaxBracket = async (
+        values: ITaxBracketSliderForm,
+    ): Promise<ITaxBracketData> => {
+        // props
+        const { name, rate } = values;
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxBracket({
+            name,
+            rate: +rate,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
+    };
+
+    static editTaxBracket = async (values: ITaxBracketData): Promise<ITaxBracketData> => {
+        // props
+        const { name, id, rate } = values;
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxBracket({
+            name,
+            rate: +rate,
+            id,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
     };
 }

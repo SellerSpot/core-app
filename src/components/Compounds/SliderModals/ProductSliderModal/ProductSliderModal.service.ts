@@ -26,7 +26,7 @@ export interface IHandleOnCloseProductSliderModalProps {
         showModal: State<IProductSliderModalProps['showModal']>;
     };
 }
-export class ProductSliderService {
+export class ProductSliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): IProductSliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
@@ -98,7 +98,7 @@ export class ProductSliderService {
         <T extends keyof IProductSliderForm>(fieldName: T) =>
         (values: IProductSliderForm[keyof IProductSliderForm]): string | ISelectOption => {
             const requiredSchema: yup.SchemaOf<IProductSliderForm[T]> = yup.reach(
-                ProductSliderService.validationSchema,
+                ProductSliderModalService.validationSchema,
                 fieldName,
             );
             try {

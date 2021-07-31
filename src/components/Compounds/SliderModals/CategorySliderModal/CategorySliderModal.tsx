@@ -9,9 +9,9 @@ import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
-import { CategorySliderService } from './CategorySlider.service';
-import styles from './CategorySlider.module.scss';
-import { ICategorySliderForm, ICategorySliderModalProps } from './CategorySlider.types';
+import { CategorySliderModalService } from './CategorySliderModal.service';
+import styles from './CategorySliderModal.module.scss';
+import { ICategorySliderForm, ICategorySliderModalProps } from './CategorySliderModal.types';
 import { useState } from '@hookstate/core';
 import { TreeItem } from 'react-sortable-tree';
 
@@ -40,7 +40,7 @@ export const CategorySliderModal = (props: ICategorySliderModalProps): ReactElem
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = CategorySliderService.getDynamicProps({
+    } = CategorySliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

@@ -7,7 +7,7 @@ import {
 } from '../../BrandSliderModal.types';
 import styles from './ModalBody.module.scss';
 import { useField } from 'react-final-form';
-import { BrandSliderService } from '../../BrandSliderModal.service';
+import { BrandSliderModalService } from '../../BrandSliderModal.service';
 
 export type IModalBodyProps = Pick<IBrandSliderModalOnClose, 'submitting'> &
     Pick<IBrandSliderModalProps, 'showModal'>;
@@ -19,13 +19,13 @@ const BrandNameField = (props: { autoFocus: boolean; submitting: boolean }) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: BrandSliderService.validateField(fieldName),
+        validate: BrandSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = BrandSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = BrandSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,

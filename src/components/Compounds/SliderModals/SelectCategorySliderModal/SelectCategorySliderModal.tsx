@@ -4,7 +4,7 @@ import {
     SliderModal,
     SliderModalLayoutWrapper,
 } from '../../../../../.yalc/@sellerspot/universal-components/dist';
-import { CategorySliderModal } from '../CategorySliderModal/CategorySlider';
+import { CategorySliderModal } from '../CategorySliderModal/CategorySliderModal';
 import { ModalBody } from './Components/ModalBody/ModalBody';
 import { ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { ModalHeader } from './Components/ModalHeader/ModalHeader';

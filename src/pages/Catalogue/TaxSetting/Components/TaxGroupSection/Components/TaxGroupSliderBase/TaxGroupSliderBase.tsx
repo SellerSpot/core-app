@@ -1,30 +1,30 @@
 import { State } from '@hookstate/core';
 import { ITaxBracketData } from '@sellerspot/universal-types';
-import { TaxBracketSliderService } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.service';
+import { TaxBracketSliderModalService } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.service';
 import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { TaxGroupSliderModal } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal';
-import { TaxGroupSliderService } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.service';
+import { TaxGroupSliderModalService } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.service';
 import { ITaxGroupSliderModalProps } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React, { ReactElement, useRef } from 'react';
 import { rawClone } from 'utilities/general';
-import { TaxBracketSliderBaseService } from '../../../TaxBracketSection/Components/TaxBracketSliderBase/TaxBracketSliderBase.service';
-import { TaxGroupSliderBaseService } from './TaxGroupSliderBase.service';
 
 interface ITaxGroupSliderBaseProps {
     allTaxBrackets: ITaxBracketData[];
-    taxBracketSliderModalState: State<ITaxSettingPageState['taxGroupSection']['taxBracketSlider']>;
+    taxBracketSliderModalState: State<
+        ITaxSettingPageState['taxGroupSection']['taxBracketSliderModal']
+    >;
     taxGroupSliderModalState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
-    getAllTaxGroups: () => Promise<void>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxGroup: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
 }
 
 export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElement => {
     // props
     const {
-        getAllTaxGroups,
+        getAllTaxGroup,
         allTaxBrackets,
-        getAllTaxBrackets,
+        getAllTaxBracket,
         taxBracketSliderModalState,
         taxGroupSliderModalState,
     } = props;
@@ -46,7 +46,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         });
     };
     const handleOnCloseTaxBracketSlider: ITaxBracketSliderModalProps['onClose'] = async (props) => {
-        await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal({
+        await TaxBracketSliderModalService.handleOnCloseTaxBracketSliderModal({
             onCloseProps: props,
             sliderModalState: {
                 showModal: taxBracketSliderModalState.showModal,
@@ -58,7 +58,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
         const taxBracketSliderFormState = taxBracketSliderFormRef.current?.getState();
 
         // compute
-        await TaxGroupSliderService.handleOnCloseTaxGroupSliderModal({
+        await TaxGroupSliderModalService.handleOnCloseTaxGroupSliderModal({
             onCloseProps: props,
             sliderModalState: taxGroupSliderModalState,
             taxBracketSliderModal: {
@@ -76,28 +76,28 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
     };
     const onSubmitTaxGroupSlider: ITaxGroupSliderModalProps['onSubmit'] = async ({ values }) => {
         if (taxGroupSliderModalState.mode.get() === 'create') {
-            await TaxGroupSliderBaseService.createTaxGroup(values);
+            await TaxGroupSliderModalService.createTaxGroup(values);
         } else {
-            await TaxGroupSliderBaseService.editTaxGroup({
+            await TaxGroupSliderModalService.editTaxGroup({
                 bracket: values.bracket,
                 id: taxGroupSliderModalState.prefillData.get()['id'],
                 name: values.name,
             });
         }
         taxGroupSliderModalState.showModal.set(false);
-        getAllTaxGroups();
+        getAllTaxGroup();
     };
     const onSubmitTaxBracketSlider: ITaxBracketSliderModalProps['onSubmit'] = async ({
         values,
     }) => {
         // requesting
-        const createdBracket = await TaxBracketSliderBaseService.createNewTaxBracket(values);
+        const createdBracket = await TaxBracketSliderModalService.createNewTaxBracket(values);
 
         // updating form
         const existingBracketsInTaxGroupSliderForm =
             taxGroupSliderFormRef.current.getFieldState('bracket').value;
         const newBracketToISelectOption =
-            TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+            TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
                 brackets: [createdBracket],
             });
         existingBracketsInTaxGroupSliderForm.push(newBracketToISelectOption[0]);
@@ -105,7 +105,7 @@ export const TaxGroupSliderBase = (props: ITaxGroupSliderBaseProps): ReactElemen
 
         // closing bracket slider
         taxBracketSliderModalState.showModal.set(false);
-        getAllTaxBrackets();
+        getAllTaxBracket();
     };
 
     // compile data

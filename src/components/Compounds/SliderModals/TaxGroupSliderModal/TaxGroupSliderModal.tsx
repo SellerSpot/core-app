@@ -10,7 +10,7 @@ import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import styles from './TaxGroupSliderModal.module.scss';
-import { TaxGroupSliderService } from './TaxGroupSliderModal.service';
+import { TaxGroupSliderModalService } from './TaxGroupSliderModal.service';
 import { ITaxGroupSliderForm, ITaxGroupSliderModalProps } from './TaxGroupSliderModal.types';
 
 export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElement => {
@@ -38,7 +38,7 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
         modalFooterPrimaryButtonIcon,
         modalFooterPrimaryButtonLabel,
         initialFormValues,
-    } = TaxGroupSliderService.getDynamicProps({
+    } = TaxGroupSliderModalService.getDynamicProps({
         level,
         mode,
         prefillData,

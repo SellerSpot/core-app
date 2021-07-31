@@ -12,7 +12,7 @@ import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
 import { ICONS } from 'utilities/utilities';
-import { ProductSliderService } from '../../../ProductSliderModal.service';
+import { ProductSliderModalService } from '../../../ProductSliderModal.service';
 import { IProductSliderForm, IProductSliderModalProps } from '../../../ProductSliderModal.types';
 import styles from './Fields.module.scss';
 import { ProductSliderFieldsService } from './Fields.service';
@@ -42,13 +42,13 @@ const ProductNameField = (props: IProductNameFieldProps): ReactElement => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: ProductSliderService.validateField(fieldName),
+        validate: ProductSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = ProductSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = ProductSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -81,13 +81,13 @@ const BarcodeField = (props: IBarcodeFieldProps): ReactElement => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: ProductSliderService.validateField(fieldName),
+        validate: ProductSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = ProductSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = ProductSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -121,13 +121,13 @@ const DescriptionField = (props: IDescriptionFieldProps): ReactElement => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: ProductSliderService.validateField(fieldName),
+        validate: ProductSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = ProductSliderService.getSpecialInputFieldProps(meta);
+    const specialInputFieldProps = ProductSliderModalService.getSpecialInputFieldProps(meta);
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -163,13 +163,15 @@ const BrandField = (props: IBrandFieldProps): ReactElement => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: ProductSliderService.validateField(fieldName),
+        validate: ProductSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value, onChange } = input;
 
     // compute
-    const specialInputFieldProps = ProductSliderService.getSpecialSelectFieldProps(meta as string);
+    const specialInputFieldProps = ProductSliderModalService.getSpecialSelectFieldProps(
+        meta as string,
+    );
     const helperMessage: IAsyncCreatableSelectProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -215,13 +217,15 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: ProductSliderService.validateField(fieldName),
+        validate: ProductSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value, onChange } = input;
 
     // compute
-    const specialInputFieldProps = ProductSliderService.getSpecialSelectFieldProps(meta as string);
+    const specialInputFieldProps = ProductSliderModalService.getSpecialSelectFieldProps(
+        meta as string,
+    );
     const helperMessage: IAsyncCreatableSelectProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,

@@ -11,7 +11,7 @@ import {
     ICategorySliderModalDynamicValues,
     ICategorySliderModalOnClose,
     ICategorySliderModalProps,
-} from './CategorySlider.types';
+} from './CategorySliderModal.types';
 
 type TGetDynamicProps = Pick<ICategorySliderModalProps, 'level' | 'mode' | 'prefillData'> & {
     width: string | number;
@@ -22,7 +22,8 @@ export interface IHandleOnCloseCategorySliderModalProps {
         showModal: State<ICategorySliderModalProps['showModal']>;
     };
 }
-export class CategorySliderService {
+
+export class CategorySliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): ICategorySliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
@@ -91,7 +92,7 @@ export class CategorySliderService {
         <T extends keyof ICategorySliderForm>(fieldName: T, siblingNames: string[]) =>
         (values: ICategorySliderForm[keyof ICategorySliderForm]): string => {
             const requiredSchema: yup.SchemaOf<ICategorySliderForm[T]> = yup.reach(
-                CategorySliderService.validationSchema(siblingNames),
+                CategorySliderModalService.validationSchema(siblingNames),
                 fieldName,
             );
             try {
@@ -169,10 +170,10 @@ export class CategorySliderService {
                 const confirmResult = await confirm(dialogProps);
                 closeDialog();
                 if (confirmResult) {
-                    sliderModalState.showModal.set(false);
+                    sliderModalState && sliderModalState.showModal.set(false);
                 }
             } else {
-                sliderModalState.showModal.set(false);
+                sliderModalState && sliderModalState.showModal.set(false);
             }
         }
     };

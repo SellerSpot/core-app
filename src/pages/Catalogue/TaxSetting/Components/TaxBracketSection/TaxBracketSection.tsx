@@ -12,22 +12,22 @@ import styles from './TaxBracketSection.module.scss';
 
 interface ITaxBracketSectionProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
     allTaxBrackets: ITaxBracketData[];
 }
 
 interface IPageHeaderComponentProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
-    getAllTaxBrackets: () => Promise<void>;
+    getAllTaxBracket: () => Promise<void>;
 }
 
 const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
     // props
-    const { sectionState, getAllTaxBrackets } = props;
+    const { sectionState, getAllTaxBracket } = props;
 
     // effects
     useEffect(() => {
-        getAllTaxBrackets();
+        getAllTaxBracket();
     }, []);
 
     // components
@@ -63,7 +63,7 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
 
 export const TaxBracketSection = (props: ITaxBracketSectionProps): ReactElement => {
     // props
-    const { sectionState: sectionStateOriginal, getAllTaxBrackets, allTaxBrackets } = props;
+    const { sectionState: sectionStateOriginal, getAllTaxBracket, allTaxBrackets } = props;
 
     // state
     const sectionState = useState(sectionStateOriginal);
@@ -71,18 +71,15 @@ export const TaxBracketSection = (props: ITaxBracketSectionProps): ReactElement 
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent
-                sectionState={sectionState}
-                getAllTaxBrackets={getAllTaxBrackets}
-            />
+            <PageHeaderComponent sectionState={sectionState} getAllTaxBracket={getAllTaxBracket} />
             <TaxBracketTable
                 sectionState={sectionState}
-                getAllTaxBrackets={getAllTaxBrackets}
+                getAllTaxBracket={getAllTaxBracket}
                 allTaxBrackets={allTaxBrackets}
             />
             <TaxBracketSliderBase
                 sliderModalState={sectionState.sliderModal}
-                getAllTaxBrackets={getAllTaxBrackets}
+                getAllTaxBracket={getAllTaxBracket}
             />
         </div>
     );

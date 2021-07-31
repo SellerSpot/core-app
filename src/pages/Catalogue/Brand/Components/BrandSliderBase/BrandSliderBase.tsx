@@ -1,10 +1,9 @@
 import { State } from '@hookstate/core';
 import { BrandSliderModal } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal';
-import { BrandSliderService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
+import { BrandSliderModalService } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.service';
 import { IBrandSliderModalProps } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.types';
 import React, { ReactElement, useRef } from 'react';
 import { IBrandPageState } from '../../Brand.types';
-import { BrandSliderBaseService } from './BrandSliderBase.service';
 
 interface IBrandSliderBaseProps {
     sliderModalState: State<IBrandPageState['sliderModal']>;
@@ -21,9 +20,9 @@ export const BrandSliderBase = (props: IBrandSliderBaseProps): ReactElement => {
     // handlers
     const onSubmitHandler: IBrandSliderModalProps['onSubmit'] = async ({ values }) => {
         if (sliderModalState.mode.get() === 'create') {
-            await BrandSliderBaseService.createNewBrand(values);
+            await BrandSliderModalService.createNewBrand(values);
         } else {
-            await BrandSliderBaseService.editBrand({
+            await BrandSliderModalService.editBrand({
                 id: sliderModalState.prefillData.id.get(),
                 name: values.name,
             });
@@ -32,7 +31,7 @@ export const BrandSliderBase = (props: IBrandSliderBaseProps): ReactElement => {
         sliderModalState.showModal.set(false);
     };
     const onCloseHandler: IBrandSliderModalProps['onClose'] = (props) => {
-        BrandSliderService.handleOnCloseBrandSliderModal({
+        BrandSliderModalService.handleOnCloseBrandSliderModal({
             onCloseProps: props,
             sliderModalState: {
                 showModal: sliderModalState.showModal,

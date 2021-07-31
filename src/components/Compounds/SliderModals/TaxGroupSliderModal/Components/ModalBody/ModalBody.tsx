@@ -8,7 +8,7 @@ import {
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Field, useField } from 'react-final-form';
-import { TaxGroupSliderService } from '../../TaxGroupSliderModal.service';
+import { TaxGroupSliderModalService } from '../../TaxGroupSliderModal.service';
 import {
     ITaxGroupSliderForm,
     ITaxGroupSliderModalOnClose,
@@ -38,13 +38,15 @@ const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
 
     // hooks
     const { input, meta } = useField(fieldName, {
-        validate: TaxGroupSliderService.validateField(fieldName),
+        validate: TaxGroupSliderModalService.validateField(fieldName),
         validateFields: [],
     });
     const { value } = input;
 
     // compute
-    const specialInputFieldProps = TaxGroupSliderService.getSpecialInputFieldProps(meta as string);
+    const specialInputFieldProps = TaxGroupSliderModalService.getSpecialInputFieldProps(
+        meta as string,
+    );
     const helperMessage: IInputFieldProps['helperMessage'] = {
         enabled: specialInputFieldProps.enabled,
         content: specialInputFieldProps.content,
@@ -76,7 +78,7 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
     const fieldName: keyof ITaxGroupSliderForm = 'bracket';
 
     // compute
-    const allOptions = TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+    const allOptions = TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
         brackets: allTaxBrackets,
     });
     const getFormatCreateLabel: ICreatableSelectProps['formatCreateLabel'] = (value) => {
@@ -85,15 +87,14 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
 
     // draw
     return (
-        <Field name={fieldName} validate={TaxGroupSliderService.validateField(fieldName)}>
+        <Field name={fieldName} validate={TaxGroupSliderModalService.validateField(fieldName)}>
             {({ input, meta }) => {
                 // props
                 const { value, onChange } = input;
 
                 // compute
-                const specialInputFieldProps = TaxGroupSliderService.getSpecialSelectFieldProps(
-                    meta as string,
-                );
+                const specialInputFieldProps =
+                    TaxGroupSliderModalService.getSpecialSelectFieldProps(meta as string);
                 const helperMessage: ICreatableSelectProps['helperMessage'] = {
                     enabled: specialInputFieldProps.enabled,
                     content: specialInputFieldProps.content,

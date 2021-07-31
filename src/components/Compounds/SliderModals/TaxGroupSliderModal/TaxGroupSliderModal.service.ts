@@ -14,7 +14,7 @@ import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
     IHandleOnCloseTaxBracketSliderModalProps,
-    TaxBracketSliderService,
+    TaxBracketSliderModalService,
 } from '../TaxBracketSliderModal/TaxBracketSliderModal.service';
 import {
     ITaxGroupSliderForm,
@@ -44,7 +44,7 @@ interface IEditTaxBracketProps {
     bracket: string[];
 }
 
-export class TaxGroupSliderService {
+export class TaxGroupSliderModalService {
     static convertTaxBracketDataToISelectOption = (
         props: IConvertTaxBracketDataToISelectOptionProps,
     ): ISelectOption[] => {
@@ -104,7 +104,7 @@ export class TaxGroupSliderService {
         if (mode === 'edit') {
             initialFormValues = {
                 name: prefillData?.name,
-                bracket: TaxGroupSliderService.convertTaxBracketDataToISelectOption({
+                bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
                     brackets: prefillData?.bracket,
                 }),
             };
@@ -131,7 +131,7 @@ export class TaxGroupSliderService {
         name: yup.string().required('Tax Group name is required'),
         bracket: yup
             .array()
-            .of(TaxGroupSliderService.ISelectOptionValidationSchema)
+            .of(TaxGroupSliderModalService.ISelectOptionValidationSchema)
             .min(1, 'Please choose atleast one tax bracket for the tax group')
             .required('Please select the tax brackets for this tax group'),
     });
@@ -140,7 +140,7 @@ export class TaxGroupSliderService {
         (fieldName: keyof ITaxGroupSliderForm) =>
         (values: ITaxGroupSliderForm[typeof fieldName]): string => {
             const requiredSchema: yup.SchemaOf<ITaxGroupSliderForm[typeof fieldName]> = yup.reach(
-                TaxGroupSliderService.validationSchema,
+                TaxGroupSliderModalService.validationSchema,
                 fieldName,
             );
             try {
@@ -275,7 +275,7 @@ export class TaxGroupSliderService {
         // logic
         if (!submitting) {
             if (taxBracketSliderModal.sliderModalState.showModal.get()) {
-                await TaxBracketSliderService.handleOnCloseTaxBracketSliderModal(
+                await TaxBracketSliderModalService.handleOnCloseTaxBracketSliderModal(
                     taxBracketSliderModal,
                 );
             } else {
@@ -283,12 +283,41 @@ export class TaxGroupSliderService {
                     const confirmResult = await confirm(dialogProps);
                     closeDialog();
                     if (confirmResult) {
-                        sliderModalState.showModal.set(false);
+                        sliderModalState && sliderModalState.showModal.set(false);
                     }
                 } else {
-                    sliderModalState.showModal.set(false);
+                    sliderModalState && sliderModalState.showModal.set(false);
                 }
             }
         }
+    };
+
+    static createTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+        // props
+        const { bracket, name } = values;
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
+            name: name,
+            bracket: bracket.map((bracket) => bracket.value),
+        });
+        if (status) {
+            return data;
+        }
+        return null;
+    };
+
+    static editTaxGroup = async (
+        values: ITaxGroupSliderForm & { id: string },
+    ): Promise<ITaxGroupData> => {
+        // request
+        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup({
+            name: values.name,
+            bracket: values.bracket.map((bracket) => bracket.value),
+            id: values.id,
+        });
+        if (status) {
+            return data;
+        }
+        return null;
     };
 }

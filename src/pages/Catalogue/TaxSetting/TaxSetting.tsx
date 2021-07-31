@@ -27,7 +27,7 @@ export const TaxSetting = (): ReactElement => {
                 mode: 'create',
                 prefillData: null,
             },
-            taxBracketSlider: {
+            taxBracketSliderModal: {
                 showModal: false,
                 mode: 'create',
                 prefillData: null,
@@ -36,7 +36,7 @@ export const TaxSetting = (): ReactElement => {
     });
 
     // handlers
-    const getAllTaxBrackets = async () => {
+    const getAllTaxBracket = async () => {
         // request
         const allTaxBrackets = await TaxSettingService.getAllTaxBracket();
         // state update
@@ -52,14 +52,14 @@ export const TaxSetting = (): ReactElement => {
             <div className={styles.taxBracketSection}>
                 <TaxBracketSection
                     sectionState={pageState.taxBracketSection}
-                    getAllTaxBrackets={getAllTaxBrackets}
+                    getAllTaxBracket={getAllTaxBracket}
                     allTaxBrackets={rawClone(pageState.allTaxBrackets.get())}
                 />
             </div>
             <div className={styles.taxGroupSection}>
                 <TaxGroupSection
                     sectionState={pageState.taxGroupSection}
-                    getAllTaxBrackets={getAllTaxBrackets}
+                    getAllTaxBracket={getAllTaxBracket}
                     allTaxBrackets={rawClone(pageState.allTaxBrackets.get())}
                 />
             </div>

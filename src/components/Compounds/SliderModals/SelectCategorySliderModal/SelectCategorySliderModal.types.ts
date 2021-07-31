@@ -1,7 +1,7 @@
 import { ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView.types';
 import { IOnClickEvents } from 'typings/common.types';
 import { ISliderModalProps } from '../../../../../.yalc/@sellerspot/universal-components/dist';
-import { ICategorySliderModalProps } from '../CategorySliderModal/CategorySlider.types';
+import { ICategorySliderModalProps } from '../CategorySliderModal/CategorySliderModal.types';
 
 export interface ISelectCategorySliderModalOnClose {
     source: 'close' | 'back' | 'button' | 'backdrop';
