@@ -8,7 +8,7 @@ import {
     Skeleton,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { EBILL_SIZES, getBillSizeByName } from '@sellerspot/universal-types';
+import { EBILL_SIZES, getBillSizeByName, IBillSettings } from '@sellerspot/universal-types';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './BillSettings.module.scss';
 import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
@@ -17,7 +17,7 @@ import { Bill90MM } from 'components/Compounds/Bill90MM/Bill90MM';
 import { useState } from '@hookstate/core';
 import { BillA4Settings } from './components/BillA4Settings';
 import { Bill90MMSettings } from './components/Bill90MMSettings';
-import { IBillBaseChildProps, IBillSettings, TBillComponentMap } from './BillSettings.types';
+import { IBillBaseChildProps, TBillComponentMap } from './BillSettings.types';
 import { BillSettingsService } from './BillSettings.service';
 import { isEqual, times } from 'lodash';
 import { rawClone } from 'utilities/general';

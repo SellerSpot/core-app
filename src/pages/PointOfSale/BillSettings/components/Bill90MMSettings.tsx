@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import billSettingsStyle from '../BillSettings.module.scss';
-import { CheckBox, InputField } from '@sellerspot/universal-components';
-import { IBill90MMSettings } from '../BillSettings.types';
 import { State, useState } from '@hookstate/core';
+import { CheckBox, InputField } from '@sellerspot/universal-components';
+import { IBill90MMSettings } from '@sellerspot/universal-types';
+import billSettingsStyle from '../BillSettings.module.scss';
 
 export const Bill90MMSettings = (props: { state: State<IBill90MMSettings> }): ReactElement => {
     const { storeDetails, footerMessage } = useState(props?.state);

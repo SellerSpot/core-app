@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import billSettingsStyle from '../BillSettings.module.scss';
-import { CheckBox, InputField } from '@sellerspot/universal-components';
-import { IBillA4Settings } from '../BillSettings.types';
 import { State, useState } from '@hookstate/core';
+import { CheckBox, InputField } from '@sellerspot/universal-components';
+import { IBillA4Settings } from '@sellerspot/universal-types';
+import billSettingsStyle from '../BillSettings.module.scss';
 
 export const BillA4Settings = (props: { state: State<IBillA4Settings> }): ReactElement => {
     const {

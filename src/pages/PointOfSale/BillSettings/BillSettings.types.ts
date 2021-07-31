@@ -1,59 +1,7 @@
 import { State } from '@hookstate/core';
 import { ReactElement } from 'react';
-import { IDimension } from '../../../../.yalc/@sellerspot/universal-components/dist';
-import { EBILL_SIZES } from '../../../../.yalc/@sellerspot/universal-types/dist';
-
-export interface IBillA4Settings {
-    storeDetails: {
-        name: string;
-        address: string;
-    };
-    GSTNumber: {
-        show: boolean;
-        data: string;
-    };
-    purchaseInvoiceSection: {
-        show: boolean;
-        discountColumn: boolean;
-        taxColumn: boolean;
-        MRPColumn: boolean;
-    };
-    purchaseSummarySection: {
-        totalDiscount: boolean;
-        youSaved: boolean;
-    };
-    taxSplitUpSection: {
-        show: boolean;
-    };
-    remarkMessage: {
-        show: boolean;
-        data: string;
-    };
-    footerMessage: {
-        show: boolean;
-        data: string;
-    };
-    termsAndConditions: {
-        show: boolean;
-        data: string;
-    };
-    signature: {
-        authorised: boolean;
-        customer: boolean;
-    };
-}
-
-export interface IBill90MMSettings {
-    storeDetails: {
-        name: string;
-        address: string;
-        // outlet integration needs to be done here
-    };
-    footerMessage: {
-        show: boolean;
-        data: string;
-    };
-}
+import { IDimension } from '@sellerspot/universal-components';
+import { EBILL_SIZES } from '@sellerspot/universal-types';
 
 export interface IProductTax {
     taxBracketName: string;
@@ -96,14 +44,6 @@ export type TBills = {
 };
 
 export type TBILL_SIZE_NAMES = EBILL_SIZES;
-
-export interface IBillSettings {
-    bills: {
-        [EBILL_SIZES.BILL_A4]: IBillA4Settings;
-        [EBILL_SIZES.BILL_90MM]: IBill90MMSettings;
-    };
-    defaultBill: keyof typeof EBILL_SIZES;
-}
 
 export type TBillComponentMap = {
     [key in keyof typeof EBILL_SIZES]: {
