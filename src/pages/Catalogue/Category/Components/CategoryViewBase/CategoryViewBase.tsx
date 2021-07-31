@@ -1,11 +1,8 @@
 import { State, useState } from '@hookstate/core';
 import { CategoryView, ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView';
-import {
-    CategoryViewHandlersService,
-    ISortableTreeNodeTracker,
-} from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
+import { CategoryViewHandlersService } from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement } from 'react';
 import { rawClone } from 'utilities/general';
 import { ICategoryPageState } from '../../Category.types';
 
@@ -23,11 +20,6 @@ export const CategoryViewBase = (props: ICategoryViewBaseProps): ReactElement =>
     // hooks
     const confirmHook = useConfirmDialog();
 
-    const sortableTreeNodeTracker = useRef<ISortableTreeNodeTracker>({
-        nextParent: null,
-        previousParent: null,
-    });
-
     // handlers
     const {
         canDropHandler,
@@ -38,7 +30,6 @@ export const CategoryViewBase = (props: ICategoryViewBaseProps): ReactElement =>
         onMoveNode,
     } = new CategoryViewHandlersService({
         sliderModalState: pageState.sliderModal,
-        sortableTreeNodeTracker,
         treeDataState: pageState.treeData,
         confirmHook,
     });
