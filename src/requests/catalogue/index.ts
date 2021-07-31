@@ -1,9 +1,9 @@
-import BrandRequest from './BrandRequest';
 import StockUnitRequest from './StockUnitRequest';
 import TaxSettingsRequest from './TaxSettingsRequest';
 import SettingsRequest from './SettingsRequest';
 import CategoryRequest from './CategoryRequest';
 import ProductRequest from './ProductRequest';
+import BrandRequest from './BrandRequest';
 
 export const settingsRequest = new SettingsRequest();
 export const brandRequest = new BrandRequest();

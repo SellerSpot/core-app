@@ -84,6 +84,7 @@ export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.obj
     label: yup.string(),
     value: yup.string(),
     labelToShow: yup.mixed().optional(),
+    key: yup.mixed().optional(),
 });
 
 // used to the get the key property for a node

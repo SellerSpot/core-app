@@ -125,6 +125,7 @@ export class TaxGroupSliderModalService {
         label: yup.string(),
         value: yup.string(),
         labelToShow: yup.mixed().optional(),
+        key: yup.mixed().optional(),
     });
 
     private static validationSchema: yup.SchemaOf<ITaxGroupSliderForm> = yup.object({

@@ -19,6 +19,7 @@ interface IProductTableServiceProps {
     editItemClickHandler: (productData: IProductData) => () => void;
     deleteItemClickHandler: (productData: IProductData) => () => void;
 }
+
 export class ProductTableService {
     static getTableProps = (props: IProductTableServiceProps): ITableProps<IProductData> => {
         // props
@@ -35,17 +36,17 @@ export class ProductTableService {
         const brandCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.brand.name;
+            return rowData.brand?.name;
         };
         const stockUnitCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.stockUnit.unit;
+            return rowData.stockUnit?.unit;
         };
         const categoryCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.category.title;
+            return rowData.category?.title;
         };
         const actionsCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
