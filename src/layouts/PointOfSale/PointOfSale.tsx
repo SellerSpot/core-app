@@ -1,9 +1,12 @@
+import React, { ReactElement } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { PageWithMenu } from 'components/Atoms/PageWithMenu/PageWithMenu';
 import { ROUTES } from 'config/routes';
 import { BillSettings } from 'pages/PointOfSale/BillSettings/BillSettings';
-import React, { ReactElement } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { NewSale } from 'pages/PointOfSale/NewSale/NewSale';
+import { SalesHistory } from 'pages/PointOfSale/SalesHistory/SalesHistory';
 import { SubMenuManager } from './Components/SubMenuManager/SubMenuManager';
+
 import styles from './PointOfSale.module.scss';
 
 export const PointOfSale = (): ReactElement => {
@@ -15,10 +18,10 @@ export const PointOfSale = (): ReactElement => {
             <div className={styles.pageWrapper}>
                 <Switch>
                     <Route exact path={ROUTES.POINT_OF_SALE__SALES__NEW_SALE}>
-                        <h6>New Sale</h6>
+                        <NewSale />
                     </Route>
                     <Route exact path={ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY}>
-                        <h6>Sales History</h6>
+                        <SalesHistory />
                     </Route>
                     <Route exact path={ROUTES.POINT_OF_SALE__INVENTORY__PRODUCTS}>
                         <h6>Inventory Products</h6>

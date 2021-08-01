@@ -5,9 +5,10 @@ import { Button } from '@sellerspot/universal-components';
 import { ICONS } from 'utilities/utilities';
 import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
-import styles from './NewSale.module.scss';
+import styles from './SalesHistory.module.scss';
+import { SalesHistoryTable } from './components/SalesHistoryTable/SalesHistoryTable';
 
-export const NewSale = (): ReactElement => {
+export const SalesHistory = (): ReactElement => {
     // hooks
     const history = useHistory();
 
@@ -17,19 +18,21 @@ export const NewSale = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeader
-                title="New Sale"
+                title="Sales History"
                 actions={[
                     <Button
-                        key="sales-history"
-                        label={'SALES HISTORY'}
+                        key="new-sale"
+                        label={'NEW SALE'}
                         variant="contained"
                         theme="primary"
-                        startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
+                        startIcon={<Icon icon={ICONS.outlineAdd} />}
                         onClick={onNewSaleClickHandler}
                     />,
                 ]}
             />
-            <div className={styles.contentWrapper}></div>
+            <div className={styles.contentWrapper}>
+                <SalesHistoryTable />
+            </div>
         </div>
     );
 };

@@ -11,6 +11,7 @@ export { default as outlineRemove } from '@iconify/icons-ic/outline-remove';
 export { default as baselineEdit } from '@iconify/icons-ic/baseline-edit';
 export { default as baselinePersonPin } from '@iconify/icons-ic/baseline-person-pin';
 export { default as baselineSettings } from '@iconify/icons-ic/baseline-settings';
+export { default as baselineBackupRestore } from '@iconify/icons-ic/baseline-settings-backup-restore';
 export { default as outlineSearch } from '@iconify/icons-ic/outline-search';
 export { default as outlineAdd } from '@iconify/icons-ic/outline-add';
 export { default as baselineLocalPrintshop } from '@iconify/icons-ic/baseline-local-printshop';
