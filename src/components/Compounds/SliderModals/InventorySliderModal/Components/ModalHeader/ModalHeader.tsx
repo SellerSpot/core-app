@@ -1,6 +1,14 @@
 import React, { ReactElement } from 'react';
+import { SliderModalHeader } from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
 
-export const ModalHeader = (): ReactElement => {
+interface IModalHeaderProps {
+    sample: string;
+}
+
+export const ModalHeader = (props: IModalHeaderProps): ReactElement => {
+    // props
+    const {} = props;
+
     // draw
-    return <div>Modal Header</div>;
+    return <SliderModalHeader title="Hi there" />;
 };

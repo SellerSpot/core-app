@@ -1,6 +1,14 @@
 import React, { ReactElement } from 'react';
+import { SliderModalFooter } from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
 
-export const ModalFooter = (): ReactElement => {
+interface IModalFooterProps {
+    sample: string;
+}
+
+export const ModalFooter = (props: IModalFooterProps): ReactElement => {
+    // props
+    const {} = props;
+
     // draw
-    return <div>Modal Footer</div>;
+    return <SliderModalFooter>Footer</SliderModalFooter>;
 };

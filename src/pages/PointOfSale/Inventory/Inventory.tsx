@@ -7,8 +7,16 @@ import { Button } from '../../../../.yalc/@sellerspot/universal-components/dist'
 import { useState } from '@hookstate/core';
 import { IInventoryPageState } from './Inventory.types';
 import { InventoryTable } from './Components/InventoryTable/InventoryTable';
+import { InventorySliderModalBase } from './Components/InventorySliderModalBase/InventorySliderModalBase';
 
-const PageHeaderComponent = () => {
+interface IPageHeaderComponentProps {
+    addToInventoryCallback: () => void;
+}
+
+const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
+    // props
+    const { addToInventoryCallback } = props;
+
     // actions
     const AddToInventoryButton = () => {
         // draw
@@ -18,6 +26,7 @@ const PageHeaderComponent = () => {
                 startIcon={<Icon icon={ICONS.outlineAdd} />}
                 theme="primary"
                 variant="contained"
+                onClick={addToInventoryCallback}
             />
         );
     };
@@ -35,13 +44,28 @@ export const Inventory = (): ReactElement => {
     // state
     const pageState = useState<IInventoryPageState>({
         inventory: [],
+        sliderModal: {
+            showModal: false,
+            mode: 'create',
+            prefillData: null,
+        },
     });
+
+    // handlers
+    const addToInventoryHandler = () => {
+        pageState.sliderModal.merge({
+            showModal: true,
+            mode: 'create',
+            prefillData: null,
+        });
+    };
 
     // draw
     return (
         <div className={styles.wrapper}>
-            <PageHeaderComponent />
+            <PageHeaderComponent addToInventoryCallback={addToInventoryHandler} />
             <InventoryTable inventory={pageState.inventory.get()} />
+            <InventorySliderModalBase sliderModalState={pageState.sliderModal} />
         </div>
     );
 };
