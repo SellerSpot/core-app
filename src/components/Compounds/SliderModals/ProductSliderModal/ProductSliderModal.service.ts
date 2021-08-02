@@ -1,8 +1,10 @@
 import { State } from '@hookstate/core';
+import { IconifyIcon } from '@iconify/react';
 import {
     IAsyncCreatableSelectProps,
     IInputFieldProps,
     ISelectOption,
+    ISliderModalProps,
 } from '@sellerspot/universal-components';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
@@ -13,7 +15,6 @@ import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import { IProductData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
 import {
-    IProductSliderModalDynamicValues,
     IProductSliderModalForm,
     IProductSliderModalOnClose,
     IProductSliderModalProps,
@@ -28,13 +29,23 @@ export interface IHandleOnCloseProductSliderModalProps {
         showModal: State<IProductSliderModalProps['showModal']>;
     };
 }
+
+export interface IProductSliderModalDynamicValues {
+    sliderModalProps: Pick<ISliderModalProps, 'width' | 'type' | 'showBackdrop'>;
+    closeButtonType: 'back' | 'close';
+    modalTitle: string;
+    modalFooterPrimaryButtonLabel: string;
+    modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
+    initialFormValues: IProductSliderModalForm;
+}
+
 export class ProductSliderModalService {
     static getDynamicProps = (props: TGetDynamicProps): IProductSliderModalDynamicValues => {
         // props
         const { level, width, mode, prefillData } = props;
-        const sliderModalProps: IProductSliderModalDynamicValues['sliderModalProps'] = {
+        const sliderModalDynamicProps: IProductSliderModalDynamicValues['sliderModalProps'] = {
             showBackdrop: true,
-            width: width,
+            width,
             type: 'fixed',
         };
         let closeButtonType: IProductSliderModalDynamicValues['closeButtonType'] = 'close';
@@ -52,9 +63,9 @@ export class ProductSliderModalService {
 
         // sliderModalProps
         if (level === 2) {
-            sliderModalProps.width = '100%';
-            sliderModalProps.showBackdrop = false;
-            sliderModalProps.type = 'absolute';
+            sliderModalDynamicProps.width = '100%';
+            sliderModalDynamicProps.showBackdrop = false;
+            sliderModalDynamicProps.type = 'absolute';
         }
 
         // closeButtonType
@@ -80,7 +91,7 @@ export class ProductSliderModalService {
 
         // return
         return {
-            sliderModalProps,
+            sliderModalProps: sliderModalDynamicProps,
             closeButtonType,
             modalTitle,
             modalFooterPrimaryButtonLabel,

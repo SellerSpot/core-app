@@ -1,5 +1,4 @@
-import { IconifyIcon } from '@iconify/react';
-import { ISelectOption, ISliderModalProps } from '@sellerspot/universal-components';
+import { ISelectOption } from '@sellerspot/universal-components';
 import { FormApi } from 'final-form';
 import { TreeItem } from 'react-sortable-tree';
 import { IOnClickEvents } from 'typings/common.types';
@@ -51,13 +50,4 @@ export interface IProductSliderModalProps {
     brandSliderModalProps: IBrandSliderModalProps;
     selectCategorySliderModalProps: ISelectCategorySliderModalProps;
     stockUnitSliderModalProps: IStockUnitSliderModalProps;
-}
-
-export interface IProductSliderModalDynamicValues {
-    sliderModalProps: Pick<ISliderModalProps, 'width' | 'type' | 'showBackdrop'>;
-    closeButtonType: 'back' | 'close';
-    modalTitle: string;
-    modalFooterPrimaryButtonLabel: string;
-    modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
-    initialFormValues: IProductSliderModalForm;
 }

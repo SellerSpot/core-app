@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { ISliderModalHeaderProps, SliderModalHeader } from '@sellerspot/universal-components';
 import {
-    IProductSliderModalDynamicValues,
     IProductSliderModalOnClose,
     IProductSliderModalProps,
 } from '../../ProductSliderModal.types';
+import { IProductSliderModalDynamicValues } from '../../ProductSliderModal.service';
 
 export type IModalHeaderProps = Pick<IProductSliderModalOnClose, 'dirty' | 'submitting'> & {
     closeButtonType: IProductSliderModalDynamicValues['closeButtonType'];
