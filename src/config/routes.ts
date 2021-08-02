@@ -22,7 +22,6 @@ const POINT_OF_SALE = {
     POINT_OF_SALE__SALES__NEW_SALE: '/pos/sales/newsale',
     POINT_OF_SALE__SALES__SALES_HISTORY: '/pos/sales/saleshistory',
     POINT_OF_SALE__INVENTORY: '/pos/inventory',
-    POINT_OF_SALE__INVENTORY__PRODUCTS: '/pos/inventory/products',
     POINT_OF_SALE__BILL_SETTINGS: '/pos/billsettings',
 };
 

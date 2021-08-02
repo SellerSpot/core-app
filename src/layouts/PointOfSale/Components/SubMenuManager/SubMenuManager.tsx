@@ -27,13 +27,7 @@ export const SubMenuManager = (): ReactElement => {
             icon: ICONS.bxBox,
             title: 'Inventory',
             routeKey: 'POINT_OF_SALE__INVENTORY',
-            childTiles: [
-                {
-                    title: 'Products',
-                    redirectRoute: ROUTES.POINT_OF_SALE__INVENTORY__PRODUCTS,
-                    routeKey: 'POINT_OF_SALE__INVENTORY__PRODUCTS',
-                },
-            ],
+            redirectRoute: ROUTES.POINT_OF_SALE__INVENTORY,
         },
         {
             icon: ICONS.bxReceipt,
