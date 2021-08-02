@@ -17,6 +17,7 @@ import { SalesHistoryService } from '../../SalesHistory.service';
 import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import { ROUTES } from 'config/routes';
+import { SaleHistoryExpandedView } from '../SaleHistoryExpandedView/SaleHistoryExpandedView';
 
 // for using fromNow api we need relativeTime plugin to be extended
 dayjs.extend(relativeTime);
@@ -102,7 +103,7 @@ export const SalesHistoryTable = (): ReactElement => {
 
     const collapsedContentRenderer: ITableCollapsedCustomRenderer<ISaleData> = (props) => {
         const { rowData } = props;
-        return <>{JSON.stringify(rowData, null, 3)}</>;
+        return <SaleHistoryExpandedView rowData={rowData} />;
     };
 
     const tableProps: ITableProps<ISaleData> = {
