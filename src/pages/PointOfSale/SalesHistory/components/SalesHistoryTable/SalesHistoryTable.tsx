@@ -18,6 +18,7 @@ import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import { ROUTES } from 'config/routes';
 import { SaleHistoryExpandedView } from '../SaleHistoryExpandedView/SaleHistoryExpandedView';
+import { capitalize } from 'lodash';
 
 // for using fromNow api we need relativeTime plugin to be extended
 dayjs.extend(relativeTime);
@@ -82,7 +83,7 @@ export const SalesHistoryTable = (): ReactElement => {
         // props
         const { rowData } = props;
         // draw
-        return <span style={{ textTransform: 'capitalize' }}>{rowData.status}</span>; // later we'll be having  a link to the customer, which displays chart for the particular customer
+        return capitalize(rowData.status); // later we'll be having  a link to the customer, which displays chart for the particular customer
     };
 
     const emptyTableCTA = () => {
