@@ -12,7 +12,7 @@ export const NewSale = (): ReactElement => {
     const history = useHistory();
 
     // handlers
-    const onNewSaleClickHandler = () => history.push(ROUTES.POINT_OF_SALE__SALES__NEW_SALE);
+    const onNewSaleClickHandler = () => history.push(ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY);
 
     return (
         <div className={styles.wrapper}>
