@@ -71,9 +71,9 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     return (
                         <form className={styles.form} onSubmit={handleSubmit} noValidate>
                             <SliderModalLayoutWrapper>
-                                <ModalHeader />
+                                <ModalHeader sample={''} />
                                 <ModalBody {...modalBodyProps} />
-                                <ModalFooter />
+                                <ModalFooter sample={''} />
                             </SliderModalLayoutWrapper>
                         </form>
                     );
