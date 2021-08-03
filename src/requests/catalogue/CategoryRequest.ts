@@ -1,4 +1,5 @@
 import {
+    ICommonResourcePathParam,
     ICreateCategoryRequest,
     ICreateCategoryResponse,
     IEditCategoryChildrenOrderRequest,
@@ -11,6 +12,7 @@ import {
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
+import { IEditChildrenOrderPathParam } from '../../../.yalc/@sellerspot/universal-types/dist/catalogue/category/routes';
 
 export default class CategoryRequest extends BaseRequest {
     constructor() {
@@ -25,64 +27,79 @@ export default class CategoryRequest extends BaseRequest {
     };
 
     createNewCategory = async (
-        values: ICreateCategoryRequest,
+        payload: ICreateCategoryRequest,
     ): Promise<ICreateCategoryResponse> => {
         return <ICreateCategoryResponse>await this.request({
             url: ROUTES.CATALOGUE.CATEGORY.CREATE,
             method: 'POST',
-            payload: <ICreateCategoryRequest>values,
+            payload,
         });
     };
 
     editCategory = async (
         values: IEditCategoryRequest & { categoryId: string },
     ): Promise<IEditCategoryResponse> => {
-        // values
         const { categoryId, title } = values;
+        const payload: IEditCategoryRequest = {
+            title,
+        };
+        const param: ICommonResourcePathParam = {
+            id: categoryId,
+        };
         return <ICreateCategoryResponse>await this.request({
-            url: ROUTES.CATALOGUE.CATEGORY.EDIT.replace(':id', categoryId),
+            url: ROUTES.CATALOGUE.CATEGORY.EDIT,
             method: 'PUT',
-            payload: <IEditCategoryRequest>{
-                title,
-            },
+            payload,
+            param,
         });
     };
 
     editChildrenOrder = async (
         values: IEditCategoryChildrenOrderRequest & { parentId: string },
     ): Promise<IEditCategoryChildrenOrderResponse> => {
-        // values
         const { childrenOrder, parentId } = values;
+        const param: IEditChildrenOrderPathParam = {
+            parentId,
+        };
+        const payload: IEditCategoryChildrenOrderRequest = {
+            childrenOrder,
+        };
         return <IEditCategoryChildrenOrderResponse>await this.request({
-            url: ROUTES.CATALOGUE.CATEGORY.EDIT_CHILDREN_ORDER.replace(':parentid', parentId),
+            url: ROUTES.CATALOGUE.CATEGORY.EDIT_CHILDREN_ORDER,
             method: 'PUT',
-            payload: <IEditCategoryChildrenOrderRequest>{
-                childrenOrder,
-            },
+            payload,
+            param,
         });
     };
 
     editCategoryPosition = async (
         values: IEditCategoryPositionRequest & { categoryId: string },
     ): Promise<IEditCategoryPositionResponse> => {
-        // values
         const { categoryId, newParentId, oldParentId } = values;
+        const param: ICommonResourcePathParam = {
+            id: categoryId,
+        };
+        const payload: IEditCategoryPositionRequest = {
+            newParentId,
+            oldParentId,
+        };
         return <IEditCategoryPositionResponse>await this.request({
-            url: ROUTES.CATALOGUE.CATEGORY.EDIT_POSITION.replace(':id', categoryId),
+            url: ROUTES.CATALOGUE.CATEGORY.EDIT_POSITION,
             method: 'PUT',
-            payload: <IEditCategoryPositionRequest>{
-                newParentId,
-                oldParentId,
-            },
+            payload,
+            param,
         });
     };
 
     deleteCategory = async (values: { categoryId: string }): Promise<void> => {
-        // values
         const { categoryId } = values;
+        const param: ICommonResourcePathParam = {
+            id: categoryId,
+        };
         await this.request({
-            url: ROUTES.CATALOGUE.CATEGORY.DELETE.replace(':id', categoryId),
+            url: ROUTES.CATALOGUE.CATEGORY.DELETE,
             method: 'DELETE',
+            param,
         });
     };
 }

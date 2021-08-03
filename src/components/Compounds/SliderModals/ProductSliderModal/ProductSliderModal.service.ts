@@ -251,8 +251,7 @@ export class ProductSliderModalService {
         // props
         const { name, barcode, brand, category, description, stockUnit, id } = props;
         // request
-        const { data, status } = await requests.catalogue.productRequest.editProduct({
-            id,
+        const { data, status } = await requests.catalogue.productRequest.editProduct(id, {
             name,
             barcode,
             description,

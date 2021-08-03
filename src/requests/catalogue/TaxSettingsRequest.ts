@@ -1,4 +1,5 @@
 import {
+    ICommonResourcePathParam,
     ICreateTaxBracketRequest,
     ICreateTaxBracketResponse,
     ICreateTaxGroupRequest,
@@ -29,31 +30,34 @@ export default class TaxSettingsRequest extends BaseRequest {
     };
 
     createNewTaxBracket = async (
-        values: ICreateTaxBracketRequest,
+        payload: ICreateTaxBracketRequest,
     ): Promise<ICreateTaxBracketResponse> => {
         return <ICreateTaxBracketResponse>await this.request({
             url: ROUTES.CATALOGUE.TAX_BRACKET.CREATE_BRACKET,
             method: 'POST',
-            payload: <ICreateTaxBracketRequest>values,
+            payload,
         });
     };
 
     deleteTaxBracket = async (taxBracketId: string): Promise<IResponse> => {
+        const param: ICommonResourcePathParam = { id: taxBracketId };
         return <IDeleteTaxBracketResponse>await this.request({
-            url: ROUTES.CATALOGUE.TAX_BRACKET.DELETE_BRACKET.replace(':id', taxBracketId),
+            url: ROUTES.CATALOGUE.TAX_BRACKET.DELETE_BRACKET,
             method: 'DELETE',
+            param,
         });
     };
 
-    editTaxBracket = async (data: {
-        name: string;
-        rate: number;
-        id: string;
-    }): Promise<IEditTaxBracketResponse> => {
+    editTaxBracket = async (
+        id: string,
+        payload: IEditTaxBracketRequest,
+    ): Promise<IEditTaxBracketResponse> => {
+        const param: ICommonResourcePathParam = { id };
         return <IEditTaxBracketResponse>await this.request({
-            url: ROUTES.CATALOGUE.TAX_BRACKET.EDIT_BRACKET.replace(':id', data.id),
+            url: ROUTES.CATALOGUE.TAX_BRACKET.EDIT_BRACKET,
             method: 'PUT',
-            payload: <IEditTaxBracketRequest>{ name: data.name },
+            payload,
+            param,
         });
     };
 
@@ -65,31 +69,34 @@ export default class TaxSettingsRequest extends BaseRequest {
     };
 
     createNewTaxGroup = async (
-        values: ICreateTaxGroupRequest,
+        payload: ICreateTaxGroupRequest,
     ): Promise<ICreateTaxGroupResponse> => {
         return <ICreateTaxGroupResponse>await this.request({
             url: ROUTES.CATALOGUE.TAX_BRACKET.CREATE_GROUP,
             method: 'POST',
-            payload: <ICreateTaxGroupRequest>values,
+            payload,
         });
     };
 
     deleteTaxGroup = async (taxGroupId: string): Promise<IDeleteTaxGroupResponse> => {
+        const param: ICommonResourcePathParam = { id: taxGroupId };
         return <IDeleteTaxGroupResponse>await this.request({
-            url: ROUTES.CATALOGUE.TAX_BRACKET.DELETE_GROUP.replace(':id', taxGroupId),
+            url: ROUTES.CATALOGUE.TAX_BRACKET.DELETE_GROUP,
             method: 'DELETE',
+            param,
         });
     };
 
-    editTaxGroup = async (data: {
-        name: string;
-        bracket: string[];
-        id: string;
-    }): Promise<IEditTaxGroupResponse> => {
+    editTaxGroup = async (
+        id: string,
+        payload: IEditTaxGroupRequest,
+    ): Promise<IEditTaxGroupResponse> => {
+        const param: ICommonResourcePathParam = { id };
         return <IEditTaxGroupResponse>await this.request({
-            url: ROUTES.CATALOGUE.TAX_BRACKET.EDIT_GROUP.replace(':id', data.id),
+            url: ROUTES.CATALOGUE.TAX_BRACKET.EDIT_GROUP,
             method: 'PUT',
-            payload: <IEditTaxGroupRequest>{ name: data.name },
+            payload,
+            param,
         });
     };
 }

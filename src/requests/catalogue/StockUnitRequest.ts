@@ -1,10 +1,12 @@
 import {
+    ICommonResourcePathParam,
     ICreateStockUnitRequest,
     ICreateStockUnitResponse,
     IDeleteStockUnitResponse,
     IEditStockUnitRequest,
     IEditStockUnitResponse,
     IGetAllStockUnitResponse,
+    ISearchResourceQueryParam,
     ISearchStockUnitResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
@@ -22,37 +24,48 @@ export default class StockUnitRequest extends BaseRequest {
         });
     };
 
-    searchStockUnit = async (query: string): Promise<ISearchStockUnitResponse> => {
+    searchStockUnit = async (queryString: string): Promise<ISearchStockUnitResponse> => {
+        const query: ISearchResourceQueryParam = { query: queryString };
         return <ISearchStockUnitResponse>await this.request({
-            url: `${ROUTES.CATALOGUE.STOCK_UNIT.SEARCH}?query=${query}`,
+            url: ROUTES.CATALOGUE.STOCK_UNIT.SEARCH,
             method: 'GET',
+            query,
         });
     };
 
     createNewStockUnit = async (
-        values: ICreateStockUnitRequest,
+        payload: ICreateStockUnitRequest,
     ): Promise<ICreateStockUnitResponse> => {
         return <ICreateStockUnitResponse>await this.request({
             url: ROUTES.CATALOGUE.STOCK_UNIT.CREATE,
             method: 'POST',
-            payload: <ICreateStockUnitRequest>values,
+            payload,
         });
     };
 
     deleteStockUnit = async (stockUnitId: string): Promise<IDeleteStockUnitResponse> => {
+        const param: ICommonResourcePathParam = {
+            id: stockUnitId,
+        };
         return <IDeleteStockUnitResponse>await this.request({
-            url: ROUTES.CATALOGUE.STOCK_UNIT.DELETE.replace(':id', stockUnitId),
+            url: ROUTES.CATALOGUE.STOCK_UNIT.DELETE,
             method: 'DELETE',
+            param,
         });
     };
 
     editStockUnit = async (
-        data: IEditStockUnitRequest & { id: string },
+        id: string,
+        payload: IEditStockUnitRequest,
     ): Promise<IEditStockUnitResponse> => {
+        const param: ICommonResourcePathParam = {
+            id,
+        };
         return <IEditStockUnitResponse>await this.request({
-            url: ROUTES.CATALOGUE.STOCK_UNIT.EDIT.replace(':id', data.id),
+            url: ROUTES.CATALOGUE.STOCK_UNIT.EDIT,
             method: 'PUT',
-            payload: <IEditStockUnitRequest>{ name: data.name, unit: data.unit },
+            payload,
+            param,
         });
     };
 }

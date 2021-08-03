@@ -1,5 +1,6 @@
 import {
     ICheckDomainAvailabilityResponse,
+    ICheckDomainAvailablityRequestQuery,
     IDomainUpdateRequest,
     IDomainUpdateResponse,
     ROUTES,
@@ -13,15 +14,19 @@ export default class DomainSettingsRequest extends BaseRequest {
     }
 
     async checkDomainAvailability(domainName: string): Promise<ICheckDomainAvailabilityResponse> {
+        const query: ICheckDomainAvailablityRequestQuery = {
+            domain: domainName,
+        };
         return await this.request({
-            url: `${ROUTES.AUTH.DOMAIN.CHECK_DOMAIN_AVAILABILITY}?domain=${domainName}`,
+            url: ROUTES.AUTH.DOMAIN.CHECK_DOMAIN_AVAILABILITY,
             method: 'GET',
+            query,
         });
     }
 
     async updateDomain(domain: string): Promise<IDomainUpdateResponse> {
         return <IDomainUpdateResponse>await this.request({
-            url: `${ROUTES.CORE.DOMAIN.UPDATE_DOMAIN}`,
+            url: ROUTES.CORE.DOMAIN.UPDATE_DOMAIN,
             method: 'PUT',
             payload: <IDomainUpdateRequest>{ domain },
             service: 'CORE',

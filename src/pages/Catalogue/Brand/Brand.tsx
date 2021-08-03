@@ -38,7 +38,7 @@ const PageHeaderComponent = (props: { pageState: State<IBrandPageState> }) => {
     };
 
     // draw
-    return <PageHeader title={'Brands'} actions={[<NewBrandButton key={'newBrandButton'} />]} />;
+    return <PageHeader title="Brands" actions={[<NewBrandButton key="newBrandButton" />]} />;
 };
 
 export const Brand = (): ReactElement => {

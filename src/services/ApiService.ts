@@ -10,13 +10,24 @@ import { CONFIG } from 'config/config';
 import { showNotify } from '@sellerspot/universal-components';
 
 export interface IApiServiceProps {
-    token: string;
+    token?: string;
 }
 
 export interface IRequestPayload {
     url: string;
     method: keyof typeof REQUEST_METHOD;
+    /**
+     * if a request has a body pass it via payload
+     */
     payload?: unknown;
+    /**
+     * pass the param body object, request library will auto place the properties where ever it needs to be
+     */
+    param?: unknown;
+    /**
+     * pass the query body object, request library will auto place the properties where ever it needs to be
+     */
+    query?: unknown;
     /**
      * pass service to override default scoped service of the class
      */
@@ -26,20 +37,20 @@ export interface IRequestPayload {
 export default class ApiService {
     private axios: AxiosInstance;
 
-    constructor(props: IApiServiceProps) {
+    constructor(props?: IApiServiceProps) {
         this.initiateService(props);
     }
 
-    public initiateService = async (props: IApiServiceProps): Promise<void> => {
+    public initiateService = async (props?: IApiServiceProps): Promise<void> => {
         const { SERVER_URL } = CONFIG;
-        if (props)
-            this.axios = Axios.create({
-                baseURL: SERVER_URL,
-                headers: {
-                    // AUTHORIZATION: `Bearer ${props.token}`,
-                },
-                withCredentials: true, // set true to attach cookie along with all requests
-            });
+        const {} = props;
+        this.axios = Axios.create({
+            baseURL: SERVER_URL,
+            headers: {
+                // AUTHORIZATION: `Bearer ${props?.token}`,
+            },
+            withCredentials: true, // set true to attach cookie along with all requests
+        });
     };
 
     public async request(requestPayload: IRequestPayload): Promise<IResponse> {

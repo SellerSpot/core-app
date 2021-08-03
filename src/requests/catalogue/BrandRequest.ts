@@ -1,4 +1,5 @@
 import {
+    ICommonResourcePathParam,
     ICreateBrandRequest,
     ICreateBrandResponse,
     IDeleteBrandResponse,
@@ -6,6 +7,7 @@ import {
     IEditBrandResponse,
     IGetAllBrandResponse,
     ISearchBrandResponse,
+    ISearchResourceQueryParam,
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
@@ -22,10 +24,14 @@ export default class BrandRequest extends BaseRequest {
         });
     };
 
-    searchBrand = async (query: string): Promise<ISearchBrandResponse> => {
+    searchBrand = async (queryString: string): Promise<ISearchBrandResponse> => {
+        const query: ISearchResourceQueryParam = {
+            query: queryString,
+        };
         return <ISearchBrandResponse>await this.request({
-            url: `${ROUTES.CATALOGUE.BRAND.SEARCH}?query=${query}`,
+            url: ROUTES.CATALOGUE.BRAND.SEARCH,
             method: 'GET',
+            query,
         });
     };
 
@@ -38,18 +44,21 @@ export default class BrandRequest extends BaseRequest {
     };
 
     deleteBrand = async (brandId: string): Promise<IDeleteBrandResponse> => {
+        const param: ICommonResourcePathParam = { id: brandId };
         return <ICreateBrandResponse>await this.request({
-            url: ROUTES.CATALOGUE.BRAND.DELETE.replace(':id', brandId),
+            url: ROUTES.CATALOGUE.BRAND.DELETE,
             method: 'DELETE',
+            param,
         });
     };
     editBrand = async (data: IEditBrandRequest & { id: string }): Promise<IEditBrandResponse> => {
+        const payload: IEditBrandRequest = {
+            name: data.name,
+        };
         return <ICreateBrandResponse>await this.request({
             url: ROUTES.CATALOGUE.BRAND.EDIT.replace(':id', data.id),
             method: 'PUT',
-            payload: <IEditBrandRequest>{
-                name: data.name,
-            },
+            payload,
         });
     };
 }

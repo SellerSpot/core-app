@@ -1,4 +1,5 @@
 import {
+    ICommonResourcePathParam,
     ICreateProductRequest,
     ICreateProductResponse,
     IEditProductRequest,
@@ -7,8 +8,8 @@ import {
     ISearchProductResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
-import { omit } from 'lodash';
 import BaseRequest from 'requests/BaseRequest';
+import { IProductSearchPathParam } from '../../../.yalc/@sellerspot/universal-types/dist/catalogue/product/routes';
 
 export default class ProductRequest extends BaseRequest {
     constructor() {
@@ -22,36 +23,46 @@ export default class ProductRequest extends BaseRequest {
         });
     };
 
-    searchProduct = async (query: string): Promise<ISearchProductResponse> => {
+    searchProduct = async (queryString: string): Promise<ISearchProductResponse> => {
+        // change interface name
+        const query: IProductSearchPathParam = {
+            query: queryString,
+        };
         return <ISearchProductResponse>await this.request({
-            url: `${ROUTES.CATALOGUE.PRODUCT.SEARCH}?query=${query}`,
+            url: ROUTES.CATALOGUE.PRODUCT.SEARCH,
             method: 'GET',
+            query,
         });
     };
 
-    createNewProduct = async (values: ICreateProductRequest): Promise<ICreateProductResponse> => {
+    createNewProduct = async (payload: ICreateProductRequest): Promise<ICreateProductResponse> => {
         return <ICreateProductResponse>await this.request({
             url: ROUTES.CATALOGUE.PRODUCT.CREATE,
             method: 'POST',
-            payload: values,
+            payload,
         });
     };
 
-    deleteProduct = async (ProductId: string): Promise<void> => {
+    deleteProduct = async (productId: string): Promise<void> => {
+        const param: ICommonResourcePathParam = {
+            id: productId,
+        };
         await this.request({
-            url: ROUTES.CATALOGUE.PRODUCT.DELETE.replace(':id', ProductId),
+            url: ROUTES.CATALOGUE.PRODUCT.DELETE,
             method: 'DELETE',
+            param,
         });
     };
     editProduct = async (
-        data: IEditProductRequest & { id: string },
+        productId: string,
+        payload: IEditProductRequest,
     ): Promise<IEditProductResponse> => {
-        return <ICreateProductResponse>await this.request({
-            url: ROUTES.CATALOGUE.PRODUCT.EDIT.replace(':id', data.id),
+        const param: ICommonResourcePathParam = { id: productId };
+        return <IEditProductResponse>await this.request({
+            url: ROUTES.CATALOGUE.PRODUCT.EDIT,
             method: 'PUT',
-            payload: <IEditProductRequest>{
-                ...omit(data, ['id']),
-            },
+            payload,
+            param,
         });
     };
 }
