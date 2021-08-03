@@ -19,8 +19,8 @@ export default class BaseRequest {
     }
 
     private getUrl(requestPayload: IRequestPayload): string {
-        const { service, url, paramBody, queryBody } = requestPayload;
-        const resultRoute = this.getParams(url, paramBody).concat(this.getQueryParams(queryBody));
+        const { service, url, param, query } = requestPayload;
+        const resultRoute = this.getParams(url, param).concat(this.getQueryParams(query));
         return this.getServiceEndPoint(service).concat(resultRoute);
     }
 

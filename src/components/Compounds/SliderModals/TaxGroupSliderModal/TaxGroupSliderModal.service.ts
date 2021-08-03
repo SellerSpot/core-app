@@ -231,9 +231,8 @@ export class TaxGroupSliderModalService {
         const { name, id, bracket } = props;
 
         // request
-        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup({
+        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(id, {
             name,
-            id,
             bracket,
         });
 
@@ -311,11 +310,13 @@ export class TaxGroupSliderModalService {
         values: ITaxGroupSliderForm & { id: string },
     ): Promise<ITaxGroupData> => {
         // request
-        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup({
-            name: values.name,
-            bracket: values.bracket.map((bracket) => bracket.value),
-            id: values.id,
-        });
+        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(
+            values.id,
+            {
+                name: values.name,
+                bracket: values.bracket.map((bracket) => bracket.value),
+            },
+        );
         if (status) {
             return data;
         }

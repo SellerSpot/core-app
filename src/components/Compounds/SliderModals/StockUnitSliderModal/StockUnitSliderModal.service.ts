@@ -201,9 +201,8 @@ export class StockUnitSliderModalService {
         // props
         const { name, id, unit } = props;
         // request
-        const { data, status } = await requests.catalogue.stockUnitRequest.editStockUnit({
+        const { data, status } = await requests.catalogue.stockUnitRequest.editStockUnit(id, {
             name,
-            id,
             unit,
         });
         if (status) {

@@ -200,10 +200,9 @@ export class TaxBracketSliderModalService {
         // props
         const { name, id, rate } = values;
         // request
-        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxBracket({
+        const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxBracket(id, {
             name,
             rate: +rate,
-            id,
         });
         if (status) {
             return data;

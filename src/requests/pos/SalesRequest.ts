@@ -18,7 +18,7 @@ export default class BillSettingRequest extends BaseRequest {
         return <IGetBillSettingsResponse>await this.request({
             url: ROUTES.POS.SALES.GET_ALL,
             method: 'GET',
-            queryBody: query,
+            query: query,
         });
     };
 }
