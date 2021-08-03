@@ -16,7 +16,18 @@ export interface IApiServiceProps {
 export interface IRequestPayload {
     url: string;
     method: keyof typeof REQUEST_METHOD;
+    /**
+     * if a request has a body pass it via payload
+     */
     payload?: unknown;
+    /**
+     * pass the param body object, request library will auto place the properties where ever it needs to be
+     */
+    paramBody?: unknown;
+    /**
+     * pass the query body object, request library will auto place the properties where ever it needs to be
+     */
+    queryBody?: unknown;
     /**
      * pass service to override default scoped service of the class
      */
