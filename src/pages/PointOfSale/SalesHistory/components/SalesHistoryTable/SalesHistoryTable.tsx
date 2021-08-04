@@ -42,7 +42,7 @@ export const SalesHistoryTable = (): ReactElement => {
             })
             .catch((error) => {
                 isError.set(true);
-                showNotify(error?.message ?? 'Something went wrong! try again later.');
+                showNotify(error?.message);
             });
     }, []);
 
