@@ -3,7 +3,7 @@ import { Table } from '@sellerspot/universal-components';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { ProductSliderModalFieldsService } from 'components/Compounds/SliderModals/ProductSliderModal/Components/ModalBody/Components/Fields.service';
 import React, { ReactElement } from 'react';
-import { IProductData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { IProductData } from '@sellerspot/universal-types';
 import { IProductPageState } from '../../Product.types';
 import { ProductTableService } from './ProductTable.service';
 

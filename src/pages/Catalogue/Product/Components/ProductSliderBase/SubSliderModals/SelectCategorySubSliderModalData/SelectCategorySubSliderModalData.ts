@@ -4,7 +4,7 @@ import { IProductSliderModalProps } from 'components/Compounds/SliderModals/Prod
 import { SelectCategorySliderModalService } from 'components/Compounds/SliderModals/SelectCategorySliderModal/SelectCategorySliderModal.service';
 import { IProductPageState } from 'pages/Catalogue/Product/Product.types';
 import { rawClone } from 'utilities/general';
-import { showNotify } from '../../../../../../../../.yalc/@sellerspot/universal-components/dist';
+import { showNotify } from '@sellerspot/universal-components';
 import { CategorySubSubSliderModalData } from './SubSliderModals/CategorySubSubSliderModalData';
 
 type ICurrentModalProps = IProductSliderModalProps['selectCategorySliderModalProps'];

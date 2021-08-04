@@ -4,7 +4,7 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader.stories';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { ITaxBracketData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ITaxSettingPageState } from '../../TaxSetting.types';
 import { TaxBracketSliderBase } from './Components/TaxBracketSliderBase/TaxBracketSliderBase';
 import { TaxBracketTable } from './Components/TaxBracketTable/TaxBracketTable';

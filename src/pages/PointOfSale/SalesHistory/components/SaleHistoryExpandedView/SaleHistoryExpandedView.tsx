@@ -6,7 +6,7 @@ import {
     ITableProps,
     Table,
     TTableCellCustomRenderer,
-} from '../../../../../../.yalc/@sellerspot/universal-components/dist';
+} from '@sellerspot/universal-components';
 
 export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactElement => {
     // props

@@ -1,5 +1,5 @@
 import { requests } from 'requests/requests';
-import { ITaxGroupData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { ITaxGroupData } from '@sellerspot/universal-types';
 
 export class TaxGroupSectionService {
     static getAllTaxGroup = async (): Promise<ITaxGroupData[]> => {

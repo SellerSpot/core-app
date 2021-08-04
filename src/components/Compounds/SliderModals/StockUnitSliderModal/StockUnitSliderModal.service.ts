@@ -7,7 +7,7 @@ import { requests } from 'requests/requests';
 import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
-import { IStockUnitData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
+import { IStockUnitData } from '@sellerspot/universal-types';
 import {
     IStockUnitSliderForm,
     IStockUnitSliderModalDynamicValues,

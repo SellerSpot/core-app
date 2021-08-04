@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { TreeItem } from 'react-sortable-tree';
-import { colorThemes, IColorThemes } from '../../../../.yalc/@sellerspot/universal-components/dist';
+import { colorThemes, IColorThemes } from '@sellerspot/universal-components';
 
 interface IGetNodeStyleProps {
     colorTheme: keyof IColorThemes;

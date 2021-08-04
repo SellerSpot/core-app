@@ -1,7 +1,7 @@
 import { FieldMetaState } from 'react-final-form';
 import { TreeIndex, TreeNode } from 'react-sortable-tree';
 import * as yup from 'yup';
-import { ISelectOption } from '../../.yalc/@sellerspot/universal-components/dist';
+import { ISelectOption } from '@sellerspot/universal-components';
 
 /**
  * used to compute the x percent of y
