@@ -1,4 +1,4 @@
-import { ICartTableProduct } from 'components/Compounds/CartTable/CartTable.types';
+import { ICartTableProduct } from 'pages/PointOfSale/NewSale/components/CartTable/CartTable.types';
 import { createSlice, PayloadAction, Selector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 

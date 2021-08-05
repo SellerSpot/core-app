@@ -15,11 +15,11 @@ import Icon from '@iconify/react';
 
 const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
     const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
-    const { productName, quantity, discountPercent, unitPrice, stockUnit } = product;
+    const { quantity, discountPercent, unitPrice, stockUnit } = product;
 
     return (
         <form onSubmit={handleSubmit} className={styles.collapsedDiv} noValidate>
-            <div className={styles.productName}>
+            {/* <div className={styles.productName}>
                 <Field
                     name={'productName'}
                     validate={(value) =>
@@ -48,7 +48,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                         );
                     }}
                 </Field>
-            </div>
+            </div> */}
             <div className={styles.propertyRow}>
                 <Field
                     name={'quantity'}

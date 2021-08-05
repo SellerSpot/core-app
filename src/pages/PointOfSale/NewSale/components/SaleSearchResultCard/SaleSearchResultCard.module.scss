@@ -1,13 +1,18 @@
 .cardWrapper {
-    width: 543px;
+    width: 100%;
     height: 65px;
-    box-shadow: $cardBoxShadow;
+
+    cursor: pointer;
+
+    user-select: none;
+
     @include flex(center, space-between);
+
     .productMeta {
         @include flex(center, flex-start, $gap: 10px);
 
         .icon {
-            height: 65px;
+            width: 50px;
         }
 
         .title {
@@ -20,8 +25,10 @@
             text-overflow: ellipsis;
         }
     }
+
     .productPrice {
         min-width: 130px;
+
         @include flex(center, center);
     }
 }

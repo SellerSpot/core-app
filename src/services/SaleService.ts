@@ -1,4 +1,4 @@
-import { ITaxBracket } from 'components/Compounds/CartTable/CartTable.types';
+import { ITaxBracket } from 'pages/PointOfSale/NewSale/components/CartTable/CartTable.types';
 import { xPercentofY } from 'utilities/general';
 
 export default class SaleService {

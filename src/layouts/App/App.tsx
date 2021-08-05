@@ -9,7 +9,6 @@ import '../../styles/core.scss';
 import styles from './app.module.scss';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { CommonProvider } from './components/CommonProvider/CommonProvider';
-import { Dialogs } from './components/GlobalComponents/Dialogs';
 import TenantProvider from './components/TenantProvider/TenantProvider';
 import ThemeProvider from './components/ThemeProvider/ThemeProvider';
 
@@ -36,7 +35,6 @@ export const App = (): ReactElement => {
                                 </AuthProvider>
                             </Route>
                         </Switch>
-                        <Dialogs />
                     </TenantProvider>
                 </CommonProvider>
             </ThemeProvider>

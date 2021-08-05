@@ -12,6 +12,7 @@ import { saleService } from 'services/services';
 import { cartSelector } from 'store/models/cart';
 import { numberFormatINRCurrency } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
+import { useTheme } from '../../../../../customHooks/useTheme';
 import { ICartTableProduct } from './CartTable.types';
 import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 
@@ -19,12 +20,11 @@ export default function CartTable(): ReactElement {
     // state
     const { productsData } = useSelector(cartSelector);
 
+    // hooks
+    const { colors } = useTheme();
+
     // compute
-    const SNoField: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
-        const { rowIndex } = props;
-        return rowIndex + 1;
-    };
-    const CustomRenderComponent: ITableCollapsedCustomRenderer<ICartTableProduct> = (props) => {
+    const collapsedContentRenderer: ITableCollapsedCustomRenderer<ICartTableProduct> = (props) => {
         const { rowData, rowIndex, toggleRowExpansion } = props;
         return (
             <CartTableCollapsedContent
@@ -34,6 +34,31 @@ export default function CartTable(): ReactElement {
             />
         );
     };
+
+    const SNoField: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+        const { rowIndex } = props;
+        return rowIndex + 1;
+    };
+
+    const subTotalRenderer: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+        const { rowData } = props;
+        const { discountPercent, quantity, taxBrackets, unitPrice } = rowData;
+        return numberFormatINRCurrency(
+            saleService.computeProductSubTotal({
+                discountPercent,
+                quantity,
+                taxBrackets,
+                unitPrice,
+            }),
+        );
+    };
+
+    const pricePerUnitRenderer: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+        const { rowData } = props;
+        const { unitPrice } = rowData;
+        return numberFormatINRCurrency(unitPrice);
+    };
+
     const Action: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
         const {} = props;
         return (
@@ -47,16 +72,17 @@ export default function CartTable(): ReactElement {
     const tableProps: ITableProps<ICartTableProduct> = {
         data: productsData,
         shape: [
+            // 5% left for expand row down arrow
             {
                 columnName: 'S.No',
                 width: '5%',
-                align: 'left',
+                align: 'center',
                 customRenderer: SNoField,
             },
             {
                 dataKey: 'productName',
                 columnName: 'Product',
-                width: '55%',
+                width: '40%',
                 align: 'left',
             },
             {
@@ -66,21 +92,16 @@ export default function CartTable(): ReactElement {
                 align: 'right',
             },
             {
-                columnName: 'Sub-Total',
-                width: '25%',
+                columnName: 'Price \n /unit',
+                width: '20%',
                 align: 'right',
-                customRenderer: (props) => {
-                    const { rowData } = props;
-                    const { discountPercent, quantity, taxBrackets, unitPrice } = rowData;
-                    return numberFormatINRCurrency(
-                        saleService.computeProductSubTotal({
-                            discountPercent,
-                            quantity,
-                            taxBrackets,
-                            unitPrice,
-                        }),
-                    );
-                },
+                customRenderer: pricePerUnitRenderer,
+            },
+            {
+                columnName: 'Total',
+                width: '20%',
+                align: 'right',
+                customRenderer: subTotalRenderer,
             },
             {
                 columnName: '',
@@ -89,7 +110,15 @@ export default function CartTable(): ReactElement {
                 customRenderer: Action,
             },
         ],
-        collapsedContentRenderer: CustomRenderComponent,
+        collapsedContentRenderer,
+        style: {
+            tableWrapper: {
+                backgroundColor: colors.backgroundPrimary,
+            },
+            headerRow: {
+                backgroundColor: colors.backgroundPrimary,
+            },
+        },
     };
 
     return <Table {...tableProps} />;
