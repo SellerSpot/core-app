@@ -7,7 +7,7 @@ import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './NewSale.module.scss';
 import SaleSearchResultCard from './components/SaleSearchResultCard/SaleSearchResultCard';
-import { LogoImage } from 'assets/images/images';
+import { NoImagePlaceholder } from 'assets/images/images';
 import CartTable from './components/CartTable/CartTable';
 import { CheckoutSaleSummaryView } from './components/CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 
@@ -47,13 +47,13 @@ export const NewSale = (): ReactElement => {
                     />
                     <div className={styles.searchResultSecitonWrapper}>
                         <SaleSearchResultCard
-                            productImage={LogoImage}
+                            productImage={NoImagePlaceholder}
                             productName={'Tomato'}
                             stockUnit={'kg'}
                             unitPrice={20}
                         />
                         <SaleSearchResultCard
-                            productImage={LogoImage}
+                            productImage={NoImagePlaceholder}
                             productName={'Tomato'}
                             stockUnit={'kg'}
                             unitPrice={20}
