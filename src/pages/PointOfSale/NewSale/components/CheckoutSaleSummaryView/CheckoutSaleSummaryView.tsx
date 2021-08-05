@@ -42,9 +42,8 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                     <h5>Paid</h5>
                     <div className={styles.paidField}>
                         <InputField
-                            prefix={<h6>₹</h6>}
+                            prefix="₹"
                             type="number"
-                            autoFocus
                             direction="rtl"
                             disableHelperTextPlaceholderPadding
                             onChange={handlePaidOnChange}
