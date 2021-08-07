@@ -1,14 +1,13 @@
+import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 import React, { ReactElement } from 'react';
-import { SliderModalHeader } from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
+import { SliderModalHeader } from '@sellerspot/universal-components';
 
-interface IModalHeaderProps {
-    sample: string;
-}
+export type IModalHeaderProps = Pick<IInventorySliderModalDynamicValues, 'modalTitle'>;
 
 export const ModalHeader = (props: IModalHeaderProps): ReactElement => {
     // props
-    const {} = props;
+    const { modalTitle } = props;
 
     // draw
-    return <SliderModalHeader title="Hi there" />;
+    return <SliderModalHeader title={modalTitle} />;
 };

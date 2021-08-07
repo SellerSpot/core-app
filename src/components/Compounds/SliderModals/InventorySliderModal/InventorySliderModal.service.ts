@@ -7,7 +7,7 @@ import {
 
 type IGetDynamicProps = Pick<IInventorySliderModalProps, 'mode' | 'prefillData'>;
 
-interface IInventorySliderModalDynamicValues {
+export interface IInventorySliderModalDynamicValues {
     modalTitle: string;
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
@@ -21,12 +21,7 @@ export class InventorySliderModalService {
         let modalTitle = 'Add product to inventory';
         let modalFooterPrimaryButtonLabel = 'ADD PRODUCT';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
-        let initialFormValues: IInventorySliderModalForm = {
-            currentStock: 0,
-            markup: 0,
-            mrp: 0,
-            supplyPrice: 0,
-        };
+        let initialFormValues: IInventorySliderModalForm = [];
 
         // initialFormValues
         if (prefillData) {

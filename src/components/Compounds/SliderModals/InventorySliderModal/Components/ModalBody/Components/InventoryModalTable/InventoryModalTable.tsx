@@ -1,4 +1,3 @@
-import { State } from '@hookstate/core';
 import { ITableProps, Table } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { IInventoryData } from '@sellerspot/universal-types';
@@ -9,18 +8,21 @@ import {
     OutletCustomRenderer,
     StockCustomRenderer,
 } from './Components/CustomRenderers';
+import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
+import { useState } from '@hookstate/core';
 
-interface IInventoryModalTableProps {
-    inventoryData: State<IInventoryData[]>;
-}
+type IInventoryModalTableProps = Pick<IInventorySliderModalProps, 'prefillData'>;
 
 export const InventoryModalTable = (props: IInventoryModalTableProps): ReactElement => {
     // props
-    const { inventoryData } = props;
+    const { prefillData } = props;
+
+    // state to help edit values
+    const tableState = useState<IInventoryData[]>(prefillData);
 
     // table props
     const tableProps: ITableProps<IInventoryData> = {
-        data: inventoryData.get(),
+        data: prefillData,
         stickyHeader: true,
         shape: [
             {
@@ -32,22 +34,22 @@ export const InventoryModalTable = (props: IInventoryModalTableProps): ReactElem
             {
                 columnName: 'Stock',
                 align: 'center',
-                customRenderer: StockCustomRenderer(inventoryData),
+                customRenderer: StockCustomRenderer(tableState),
             },
             {
                 columnName: 'Landing Cost',
                 align: 'center',
-                customRenderer: LandingCostCustomRenderer(inventoryData),
+                customRenderer: LandingCostCustomRenderer(tableState),
             },
             {
                 columnName: 'Markup',
                 align: 'center',
-                customRenderer: MarkupCustomRenderer(inventoryData),
+                customRenderer: MarkupCustomRenderer(tableState),
             },
             {
                 columnName: 'M.R.P',
                 align: 'center',
-                customRenderer: MRPCustomRenderer(inventoryData),
+                customRenderer: MRPCustomRenderer(tableState),
             },
         ],
     };

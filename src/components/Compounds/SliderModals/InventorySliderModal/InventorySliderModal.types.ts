@@ -1,13 +1,9 @@
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from '../../../../typings/common.types';
+import { IInventoryData } from '@sellerspot/universal-types';
 import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderModal.types';
 
-export interface IInventorySliderModalForm {
-    currentStock: number;
-    supplyPrice: number;
-    markup: number;
-    mrp: number;
-}
+export type IInventorySliderModalForm = IInventoryData[];
 
 export interface IInventorySliderModalOnSubmit {
     values: IInventorySliderModalForm;
@@ -20,7 +16,7 @@ export interface IInventorySliderModalOnClose {
     event: IOnClickEvents['div'] | IOnClickEvents['button'];
 }
 
-export type IPrefillData = IInventorySliderModalForm & {
+type IPrefillData = IInventorySliderModalForm & {
     id: string;
 };
 

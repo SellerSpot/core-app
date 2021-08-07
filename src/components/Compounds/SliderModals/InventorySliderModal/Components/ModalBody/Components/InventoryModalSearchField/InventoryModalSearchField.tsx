@@ -5,7 +5,12 @@ import styles from './InventoryModalSearchField.module.scss';
 export const InventoryModalSearchField = (): ReactElement => {
     // handlers
     const loadOptionsHandler: IAsyncCreatableSelectProps['loadOptions'] = async () => {
-        return [];
+        return [
+            {
+                label: 'Product 1',
+                value: 'asdfasdfasdfasdf',
+            },
+        ];
     };
 
     // draw

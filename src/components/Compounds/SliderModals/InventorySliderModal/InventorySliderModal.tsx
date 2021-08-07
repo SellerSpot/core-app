@@ -4,11 +4,11 @@ import {
     ISliderModalProps,
     SliderModal,
     SliderModalLayoutWrapper,
-} from '../../../../../.yalc/@sellerspot/universal-components/dist';
+} from '@sellerspot/universal-components';
 import { ProductSliderModal } from '../ProductSliderModal/ProductSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { ModalFooter } from './Components/ModalFooter/ModalFooter';
-import { ModalHeader } from './Components/ModalHeader/ModalHeader';
+import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import { InventorySliderModalService } from './InventorySliderModal.service';
 import styles from './InventorySliderModal.module.scss';
 import {
@@ -36,7 +36,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
     };
 
     // dynamic props
-    const { initialFormValues } = InventorySliderModalService.getDynamicProps({
+    const { initialFormValues, modalTitle } = InventorySliderModalService.getDynamicProps({
         mode,
         prefillData,
     });
@@ -46,7 +46,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
         <SliderModal
             showModal={showModal}
             type="fixed"
-            width="50%"
+            width="720px"
             onBackdropClick={onBackdropClickHandler}
         >
             <Form
@@ -63,15 +63,19 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     formRef.current = form;
 
                     // modal component props
+                    const modalHeaderProps: IModalHeaderProps = {
+                        modalTitle,
+                    };
                     const modalBodyProps: IModalBodyProps = {
                         submitting,
+                        prefillData,
                     };
 
                     // draw
                     return (
                         <form className={styles.form} onSubmit={handleSubmit} noValidate>
                             <SliderModalLayoutWrapper>
-                                <ModalHeader sample={''} />
+                                <ModalHeader {...modalHeaderProps} />
                                 <ModalBody {...modalBodyProps} />
                                 <ModalFooter sample={''} />
                             </SliderModalLayoutWrapper>
