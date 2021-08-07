@@ -1,6 +1,9 @@
 .cardWrapper {
     width: 100%;
     height: 65px;
+    padding: 0px 10px 0px 5px;
+    background-color: $backgroundTertiary-color;
+    border-radius: 5px;
 
     cursor: pointer;
 
@@ -8,27 +11,36 @@
 
     @include flex(center, space-between);
 
+    &:hover {
+        background-color: $backgroundQuarternary-color;
+    }
+
     .productMeta {
-        @include flex(center, flex-start, $gap: 10px);
+        display: grid;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        gap: 10px;
+        grid-template-columns: auto 1fr auto;
 
         .icon {
             width: 50px;
+            height: 50px;
         }
 
         .title {
             display: -webkit-box;
             overflow: hidden;
+            width: 100%;
             max-width: 100%;
             -webkit-box-orient: vertical;
             color: $foregroundPrimary-color;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             text-overflow: ellipsis;
         }
-    }
 
-    .productPrice {
-        min-width: 130px;
-
-        @include flex(center, center);
+        .productPrice {
+            width: auto;
+        }
     }
 }

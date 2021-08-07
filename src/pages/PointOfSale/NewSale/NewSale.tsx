@@ -7,7 +7,6 @@ import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './NewSale.module.scss';
 import SaleSearchResultCard from './components/SaleSearchResultCard/SaleSearchResultCard';
-import { NoImagePlaceholder } from 'assets/images/images';
 import CartTable from './components/CartTable/CartTable';
 import { CheckoutSaleSummaryView } from './components/CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 
@@ -47,13 +46,13 @@ export const NewSale = (): ReactElement => {
                     />
                     <div className={styles.searchResultSecitonWrapper}>
                         <SaleSearchResultCard
-                            productImage={NoImagePlaceholder}
+                            productImage={undefined}
                             productName={'Tomato'}
                             stockUnit={'kg'}
                             unitPrice={20}
                         />
                         <SaleSearchResultCard
-                            productImage={NoImagePlaceholder}
+                            productImage={undefined}
                             productName={'Tomato'}
                             stockUnit={'kg'}
                             unitPrice={20}
@@ -63,31 +62,44 @@ export const NewSale = (): ReactElement => {
                 <div className={styles.cartSectionWrapper}>
                     <div className={styles.cartActionsWrapper}>
                         <Button
-                            key="sales-history"
                             label="Retrieve sale"
                             variant="contained"
-                            theme="primary"
+                            theme="light"
                             fullWidth={true}
                             startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
                             onClick={onNewSaleClickHandler}
+                            disableElevation
+                            size={'large'}
                         />
                         <Button
-                            key="sales-history"
                             label="Park sale"
                             fullWidth={true}
                             variant="contained"
-                            theme="primary"
-                            startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
+                            theme="light"
+                            startIcon={<Icon icon={ICONS.roundRestore} />}
                             onClick={onNewSaleClickHandler}
+                            disableElevation
+                            size={'large'}
                         />
                         <Button
-                            key="sales-history"
-                            label="More actions"
+                            label="Quote sale"
                             fullWidth={true}
                             variant="contained"
-                            theme="primary"
-                            startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
+                            theme="light"
+                            startIcon={<Icon icon={ICONS.requestQuote} />}
                             onClick={onNewSaleClickHandler}
+                            disableElevation
+                            size={'large'}
+                        />
+                        <Button
+                            label="Discard sale"
+                            fullWidth={true}
+                            variant="contained"
+                            theme="light"
+                            startIcon={<Icon icon={ICONS.bxReset} />}
+                            onClick={onNewSaleClickHandler}
+                            disableElevation
+                            size={'large'}
                         />
                     </div>
                     <div className={styles.cartTableWrapper}>
@@ -95,10 +107,10 @@ export const NewSale = (): ReactElement => {
                     </div>
                     <CheckoutSaleSummaryView
                         grandTotal={0}
-                        completeSaleCallback={undefined}
                         subTotal={0}
                         totalDiscount={0}
                         totalTaxes={0}
+                        viewMode={'cart'}
                     />
                 </div>
             </div>

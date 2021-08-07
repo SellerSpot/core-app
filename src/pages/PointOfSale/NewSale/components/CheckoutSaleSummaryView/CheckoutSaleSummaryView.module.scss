@@ -6,7 +6,7 @@
         padding-bottom: 8px;
 
         .cardContent {
-            @include flex(flex-start, flex-start, column, 10px);
+            @include flex(flex-start, flex-start, column, 15px);
 
             .contentRow {
                 width: 100%;
@@ -20,6 +20,21 @@
                     width: 30%;
                 }
             }
+        }
+    }
+
+    .actionButton {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 15px 0;
+
+        &.checkoutButton {
+            justify-content: space-between;
+        }
+
+        &.cartButton {
+            justify-content: center;
         }
     }
 }
