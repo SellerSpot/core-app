@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
-import { ITableProps, Table } from '../../../../../../.yalc/@sellerspot/universal-components/dist';
-import { IInventoryData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { ITableProps, Table } from '@sellerspot/universal-components';
+import { IInventoryData } from '@sellerspot/universal-types';
 import {
+    ActionsCustomRenderer,
     ActiveCustomRenderer,
     CategoryCustomRenderer,
     MRPCustomRenderer,
@@ -17,6 +18,14 @@ interface IInventoryTableProps {
 export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
     // props
     const { inventory } = props;
+
+    // handlers
+    const editItemClickHandler = () => () => {
+        console.log('Edit Clicked');
+    };
+    const deleteItemClickHandler = () => () => {
+        console.log('Delete Clicked');
+    };
 
     // table props
     const tableProps: ITableProps = {
@@ -56,6 +65,15 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
                 align: 'center',
                 width: '120px',
                 customRenderer: ActiveCustomRenderer,
+            },
+            {
+                columnName: 'Actions',
+                align: 'center',
+                width: '100px',
+                customRenderer: ActionsCustomRenderer({
+                    deleteItemClickHandler,
+                    editItemClickHandler,
+                }),
             },
         ],
     };

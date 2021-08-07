@@ -46,7 +46,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
         <SliderModal
             showModal={showModal}
             type="fixed"
-            width="40%"
+            width="50%"
             onBackdropClick={onBackdropClickHandler}
         >
             <Form
