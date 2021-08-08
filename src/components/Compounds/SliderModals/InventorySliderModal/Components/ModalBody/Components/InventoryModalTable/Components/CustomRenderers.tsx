@@ -1,125 +1,121 @@
-import { State, useState } from '@hookstate/core';
-import {
-    IInputFieldProps,
-    InputField,
-    TTableCellCustomRenderer,
-} from '@sellerspot/universal-components';
-import { IInventoryData } from '@sellerspot/universal-types';
+import { InputField, TTableCellCustomRenderer } from '@sellerspot/universal-components';
+import { IOutletData } from '@sellerspot/universal-types';
 import React from 'react';
+import { useField } from 'react-final-form';
 
-type TCustomRenderer = TTableCellCustomRenderer<IInventoryData>;
+type TCustomRenderer = TTableCellCustomRenderer<IOutletData>;
 
 export const OutletCustomRenderer: TCustomRenderer = (props) => {
     // props
     const { rowData } = props;
     // draw
-    return rowData.outlet.name;
+    return rowData.name;
 };
 
-export const StockCustomRenderer = (state: State<IInventoryData[]>): TCustomRenderer =>
-    function StockCustom(props) {
-        // props
-        const { rowIndex } = props;
-        // state
-        const localState = useState(state);
-        // values
-        const value = `${localState[rowIndex].stock.get()}`;
-        // handlers
-        const onChangeHandler: IInputFieldProps['onChange'] = (event) => {
-            localState[rowIndex].stock.set(+event.target.value);
-        };
-        // draw
-        return (
-            <InputField
-                fullWidth
-                size="small"
-                theme="primary"
-                value={value}
-                direction={'rtl'}
-                disableHelperTextPlaceholderPadding
-                onChange={onChangeHandler}
-                type="number"
-            />
-        );
-    };
+export const StockCustomRenderer: TCustomRenderer = (props) => {
+    // props
+    const { rowData } = props;
+    const fieldName = `${rowData.id}.stock`;
 
-export const LandingCostCustomRenderer = (state: State<IInventoryData[]>): TCustomRenderer =>
-    function LandingCost(props) {
-        // props
-        const { rowIndex } = props;
-        // state
-        const localState = useState(state);
-        // values
-        const value = `${localState[rowIndex].landingCost.get()}`;
-        // handlers
-        const onChangeHandler: IInputFieldProps['onChange'] = (event) => {
-            localState[rowIndex].landingCost.set(+event.target.value);
-        };
-        // draw
-        return (
-            <InputField
-                fullWidth
-                size="small"
-                theme="primary"
-                value={value}
-                direction={'rtl'}
-                disableHelperTextPlaceholderPadding
-                onChange={onChangeHandler}
-                type="number"
-            />
-        );
-    };
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
 
-export const MarkupCustomRenderer = (state: State<IInventoryData[]>): TCustomRenderer =>
-    function Markup(props) {
-        // props
-        const { rowIndex } = props;
-        // state
-        const localState = useState(state);
-        // values
-        const value = `${localState[rowIndex].landingCost.get()}`;
-        // handlers
-        const onChangeHandler: IInputFieldProps['onChange'] = (event) => {
-            localState[rowIndex].markup.set(+event.target.value);
-        };
-        // draw
-        return (
-            <InputField
-                fullWidth
-                size="small"
-                theme="primary"
-                value={value}
-                direction={'rtl'}
-                disableHelperTextPlaceholderPadding
-                onChange={onChangeHandler}
-                type="number"
-            />
-        );
-    };
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            value={value as string}
+            fullWidth
+            size="small"
+            theme="primary"
+            direction={'rtl'}
+            disableHelperTextPlaceholderPadding
+            type="number"
+        />
+    );
+};
 
-export const MRPCustomRenderer = (state: State<IInventoryData[]>): TCustomRenderer =>
-    function MRP(props) {
-        // props
-        const { rowIndex } = props;
-        // state
-        const localState = useState(state);
-        // values
-        const value = `${localState[rowIndex].mrp.get()}`;
-        // handlers
-        const onChangeHandler: IInputFieldProps['onChange'] = (event) => {
-            localState[rowIndex].mrp.set(+event.target.value);
-        };
-        // draw
-        return (
-            <InputField
-                fullWidth
-                size="small"
-                theme="primary"
-                value={value}
-                direction={'rtl'}
-                disableHelperTextPlaceholderPadding
-                onChange={onChangeHandler}
-                type="number"
-            />
-        );
-    };
+export const LandingCostCustomRenderer: TCustomRenderer = (props) => {
+    // props
+    const { rowData } = props;
+    const fieldName = `${rowData.id}.landingCost`;
+
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
+
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            value={value as string}
+            fullWidth
+            size="small"
+            theme="primary"
+            direction={'rtl'}
+            disableHelperTextPlaceholderPadding
+            type="number"
+        />
+    );
+};
+
+export const MarkupCustomRenderer: TCustomRenderer = (props) => {
+    // props
+    const { rowData } = props;
+    const fieldName = `${rowData.id}.markup`;
+
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
+
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            fullWidth
+            size="small"
+            theme="primary"
+            value={value as string}
+            direction={'rtl'}
+            disableHelperTextPlaceholderPadding
+            type="number"
+        />
+    );
+};
+
+export const MRPCustomRenderer: TCustomRenderer = (props) => {
+    // props
+    const { rowData } = props;
+    const fieldName = `${rowData.id}.markup`;
+
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
+
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            fullWidth
+            size="small"
+            theme="primary"
+            value={value as string}
+            direction={'rtl'}
+            disableHelperTextPlaceholderPadding
+            type="number"
+        />
+    );
+};

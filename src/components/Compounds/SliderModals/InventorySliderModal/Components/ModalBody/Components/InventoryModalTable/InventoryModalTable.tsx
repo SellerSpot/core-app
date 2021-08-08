@@ -1,6 +1,6 @@
 import { ITableProps, Table } from '@sellerspot/universal-components';
+import { IOutletData } from '@sellerspot/universal-types';
 import React, { ReactElement } from 'react';
-import { IInventoryData } from '@sellerspot/universal-types';
 import {
     LandingCostCustomRenderer,
     MarkupCustomRenderer,
@@ -8,21 +8,18 @@ import {
     OutletCustomRenderer,
     StockCustomRenderer,
 } from './Components/CustomRenderers';
-import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
-import { useState } from '@hookstate/core';
 
-type IInventoryModalTableProps = Pick<IInventorySliderModalProps, 'prefillData'>;
+interface IInventoryModalTableProps {
+    allOutlets: IOutletData[];
+}
 
 export const InventoryModalTable = (props: IInventoryModalTableProps): ReactElement => {
     // props
-    const { prefillData } = props;
-
-    // state to help edit values
-    const tableState = useState<IInventoryData[]>(prefillData);
+    const { allOutlets } = props;
 
     // table props
-    const tableProps: ITableProps<IInventoryData> = {
-        data: prefillData,
+    const tableProps: ITableProps<IOutletData> = {
+        data: allOutlets,
         stickyHeader: true,
         shape: [
             {
@@ -34,22 +31,22 @@ export const InventoryModalTable = (props: IInventoryModalTableProps): ReactElem
             {
                 columnName: 'Stock',
                 align: 'center',
-                customRenderer: StockCustomRenderer(tableState),
+                customRenderer: StockCustomRenderer,
             },
             {
                 columnName: 'Landing Cost',
                 align: 'center',
-                customRenderer: LandingCostCustomRenderer(tableState),
+                customRenderer: LandingCostCustomRenderer,
             },
             {
                 columnName: 'Markup',
                 align: 'center',
-                customRenderer: MarkupCustomRenderer(tableState),
+                customRenderer: MarkupCustomRenderer,
             },
             {
                 columnName: 'M.R.P',
                 align: 'center',
-                customRenderer: MRPCustomRenderer(tableState),
+                customRenderer: MRPCustomRenderer,
             },
         ],
     };

@@ -3,7 +3,14 @@ import { IOnClickEvents } from '../../../../typings/common.types';
 import { IInventoryData } from '@sellerspot/universal-types';
 import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderModal.types';
 
-export type IInventorySliderModalForm = IInventoryData[];
+export type IInventorySliderModalForm = {
+    [key: string]: Pick<
+        IInventoryData,
+        'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock'
+    >;
+} & {
+    taxSettingId: string;
+};
 
 export interface IInventorySliderModalOnSubmit {
     values: IInventorySliderModalForm;
