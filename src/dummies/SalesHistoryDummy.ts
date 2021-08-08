@@ -5,8 +5,8 @@ import {
     ISaleData,
 } from '@sellerspot/universal-types';
 
-export class salesHistoryDummy {
-    public static getSalesData(): ISaleData[] {
+export default class SalesHistoryDummy {
+    static getSalesData(): ISaleData[] {
         return [
             {
                 id: 'YWw7c2RrZg==YWw7c2RrZg==YWw7c2RrZg==',

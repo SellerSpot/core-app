@@ -3,7 +3,7 @@
     height: 100%;
 
     .cardContentWrapper {
-        padding-bottom: 8px;
+        padding: 0px 0px 0px 0px;
 
         .cardContent {
             @include flex(flex-start, flex-start, column, 15px);
@@ -27,7 +27,7 @@
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 15px 0;
+        padding: 10px 0;
 
         &.checkoutButton {
             justify-content: space-between;

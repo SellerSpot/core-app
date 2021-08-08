@@ -4,5 +4,5 @@ export interface ICheckoutSaleSummaryViewProps {
     totalTaxes: number;
     totalDiscount: number;
     grandTotal: number;
-    completeSaleCallback?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    proceedCallback?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

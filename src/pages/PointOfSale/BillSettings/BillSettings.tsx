@@ -21,6 +21,7 @@ import { IBillBaseChildProps, TBillComponentMap } from './BillSettings.types';
 import { BillSettingsService } from './BillSettings.service';
 import { isEqual, times } from 'lodash';
 import { rawClone } from 'utilities/general';
+import { Dummies } from 'dummies/Dummies';
 
 export const billSizeComponentMap: TBillComponentMap = {
     BILL_A4: {
@@ -34,11 +35,6 @@ export const billSizeComponentMap: TBillComponentMap = {
         dimension: BillSettingsService.billDimentsions.BILL_90MM,
     },
 };
-
-export const billOptions: ISelectOption<keyof typeof EBILL_SIZES>[] = [
-    { key: 'BILL_A4', label: 'A4', value: 'a4id' },
-    { key: 'BILL_90MM', label: '90mm', value: '90mmid' },
-];
 
 export const BillSettings = (): ReactElement => {
     // state
@@ -146,8 +142,8 @@ export const BillSettings = (): ReactElement => {
                         ) : (
                             <Select
                                 label="Default Bill Size"
-                                options={billOptions}
-                                value={billOptions.find(
+                                options={BillSettingsService.billOptions}
+                                value={BillSettingsService.billOptions.find(
                                     (billOption) =>
                                         billOption.key === billSettingsState.defaultBill.get(),
                                 )}
@@ -166,7 +162,7 @@ export const BillSettings = (): ReactElement => {
                                 <Skeleton width="100%" height="50px" />
                             ) : (
                                 <div className={styles.billSwitcherContainer}>
-                                    {billOptions.map((billOption) => (
+                                    {BillSettingsService.billOptions.map((billOption) => (
                                         <h5
                                             title={`Change settings for ${billOption.label}`}
                                             key={billOption.key}
@@ -205,7 +201,7 @@ export const BillSettings = (): ReactElement => {
                                     // do not remove, it is used for resize / switch scaling inside BillHolder component
                                     {...({
                                         settings: rawClone(currentBillSettingsState.get()),
-                                        data: BillSettingsService.dummyBillData,
+                                        data: Dummies.billSettings.getBillData(),
                                         dimension: currentBillDimension,
                                     } as IBillBaseChildProps<unknown> as unknown)}
                                 />

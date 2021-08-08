@@ -7,8 +7,7 @@ import { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
-    const { completeSaleCallback, grandTotal, subTotal, totalDiscount, totalTaxes, viewMode } =
-        props;
+    const { proceedCallback, grandTotal, subTotal, totalDiscount, totalTaxes, viewMode } = props;
 
     const Content = (): ReactElement => {
         const [paidAmount, setPaidAmount] = useState(0);
@@ -43,7 +42,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                 {viewMode === 'checkout' && (
                     <>
                         <div className={styles.contentRow}>
-                            <h5>Paid</h5>
+                            <h4>Paid</h4>
                             <div className={styles.paidField}>
                                 <InputField
                                     prefix="₹"
@@ -69,22 +68,29 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
 
     const Action = () => {
         return (
-            <>
-                {viewMode === 'cart' && (
-                    <Button
-                        fullWidth
-                        label={
-                            <div className={cn(styles.actionButton, styles.checkoutButton)}>
+            <Button
+                fullWidth
+                label={
+                    <div
+                        className={cn(styles.actionButton, {
+                            [styles.checkoutButton]: viewMode === 'cart',
+                            [styles.cartButton]: viewMode === 'checkout',
+                        })}
+                    >
+                        {viewMode === 'cart' ? (
+                            <>
                                 <h2>PAY</h2>
                                 <h2>{numberFormatINRCurrency(grandTotal)}</h2>
-                            </div>
-                        }
-                        variant="contained"
-                        theme="primary"
-                        onClick={completeSaleCallback}
-                    />
-                )}
-            </>
+                            </>
+                        ) : (
+                            <h2>COMPLETE SALE</h2>
+                        )}
+                    </div>
+                }
+                variant="contained"
+                theme="primary"
+                onClick={proceedCallback}
+            />
         );
     };
 
@@ -96,6 +102,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
             }}
             content={<Content />}
             actions={<Action />}
+            inBuiltPadding={false}
         />
     );
 };

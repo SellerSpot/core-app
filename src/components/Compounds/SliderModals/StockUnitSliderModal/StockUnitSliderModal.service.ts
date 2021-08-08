@@ -47,26 +47,26 @@ export class StockUnitSliderModalService {
             unit: '',
         };
 
-        // sliderModalProps
         if (level === 2) {
+            // sliderModalProps
             sliderModalProps.width = '100%';
             sliderModalProps.showBackdrop = false;
             sliderModalProps.type = 'absolute';
-        }
 
-        // closeButtonType
-        if (level === 2) {
             closeButtonType = 'back';
+            // closeButtonType
         }
 
-        // modalTitle
-        if (mode === 'edit') modalTitle = 'Edit stock unit';
+        if (mode === 'edit') {
+            // modalTitle
+            modalTitle = 'Edit stock unit';
 
-        // modalFooterPrimaryButtonLabel
-        if (mode === 'edit') modalFooterPrimaryButtonLabel = 'SAVE CHANGES';
+            // modalFooterPrimaryButtonLabel
+            modalFooterPrimaryButtonLabel = 'SAVE CHANGES';
 
-        // modalFooterPrimaryButtonIcon
-        if (mode === 'edit') modalFooterPrimaryButtonIcon = ICONS.check;
+            // modalFooterPrimaryButtonIcon
+            modalFooterPrimaryButtonIcon = ICONS.check;
+        }
 
         // initialFormValues
         initialFormValues = {

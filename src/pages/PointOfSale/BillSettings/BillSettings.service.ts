@@ -1,7 +1,7 @@
-import { introduceDelay } from '@sellerspot/universal-components';
-import { IBillSettings } from '@sellerspot/universal-types';
+import { introduceDelay, ISelectOption } from '@sellerspot/universal-components';
+import { EBILL_SIZES, IBillSettings } from '@sellerspot/universal-types';
 import { requests } from 'requests/requests';
-import { IBillData, TBillDimensions } from './BillSettings.types';
+import { TBillDimensions } from './BillSettings.types';
 
 export class BillSettingsService {
     static billDimentsions: TBillDimensions = {
@@ -9,15 +9,10 @@ export class BillSettingsService {
         BILL_90MM: { width: 340 },
     };
 
-    static dummyBillData: IBillData = {
-        productCartInformation: [],
-        totals: {
-            grandTotal: 0,
-            grandTotalDiscount: 0,
-            grandTotalTax: 0,
-            grandTotalTaxPercentage: 0,
-        },
-    };
+    static billOptions: ISelectOption<keyof typeof EBILL_SIZES>[] = [
+        { key: 'BILL_A4', label: 'A4', value: 'a4id' },
+        { key: 'BILL_90MM', label: '90mm', value: '90mmid' },
+    ];
 
     static fetchBillSettings = async (): Promise<IBillSettings> => {
         await introduceDelay(2000);

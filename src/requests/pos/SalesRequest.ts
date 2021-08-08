@@ -23,7 +23,7 @@ export default class SalesRequest extends BaseRequest {
         return <T>{
             status: true,
             data: {
-                salesHistory: Dummies.getSalesData(),
+                salesHistory: Dummies.salesHistory.getSalesData(),
             },
         };
         return <T>await this.request({

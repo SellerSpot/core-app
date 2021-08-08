@@ -65,7 +65,7 @@ export type TBillDimensions = {
 export interface IBillBaseProps<T> {
     data: IBillData;
     settings: T;
-    dimension?: IDimension; // only used in BillSettings.tsx component for scaling layout
+    dimension?: Partial<IDimension>; // only used in BillSettings.tsx component for scaling layout
 }
 
 export type IBillBaseChildProps<T> = Omit<IBillBaseProps<T>, 'dimension'>;

@@ -1,3 +1,7 @@
-import { salesHistoryDummy } from './salesHistory';
+import SalesHistoryDummy from './SalesHistoryDummy';
+import BillSettingsDummy from './BillSettingsDummy';
 
-export class Dummies extends salesHistoryDummy {}
+export class Dummies {
+    static salesHistory = SalesHistoryDummy;
+    static billSettings = BillSettingsDummy;
+}
