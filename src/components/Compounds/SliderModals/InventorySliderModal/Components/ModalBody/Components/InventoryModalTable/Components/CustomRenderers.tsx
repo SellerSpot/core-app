@@ -1,4 +1,9 @@
-import { InputField, TTableCellCustomRenderer } from '@sellerspot/universal-components';
+import {
+    AsyncCreatableSelect,
+    InputField,
+    ISelectOption,
+    TTableCellCustomRenderer,
+} from '@sellerspot/universal-components';
 import { IOutletData } from '@sellerspot/universal-types';
 import React from 'react';
 import { useField } from 'react-final-form';
@@ -116,6 +121,34 @@ export const MRPCustomRenderer: TCustomRenderer = (props) => {
             direction={'rtl'}
             disableHelperTextPlaceholderPadding
             type="number"
+        />
+    );
+};
+
+export const TaxSettingCustomRenderer: TCustomRenderer = (props) => {
+    // props
+    const { rowData } = props;
+    const fieldName = `${rowData.id}.taxSetting`;
+
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value, onChange } = input;
+    console.log(value);
+
+    // handlers
+    const loadOptionsHandler = async (): Promise<ISelectOption[]> => {
+        return [];
+    };
+
+    // draw
+    return (
+        <AsyncCreatableSelect
+            loadOptions={loadOptionsHandler}
+            value={value}
+            disableHelperTextPlaceholderPadding
+            onChange={onChange}
         />
     );
 };

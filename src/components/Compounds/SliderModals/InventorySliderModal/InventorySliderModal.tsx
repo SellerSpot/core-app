@@ -75,7 +75,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
         <SliderModal
             showModal={showModal}
             type="fixed"
-            width="720px"
+            width="820px"
             onBackdropClick={onBackdropClickHandler}
         >
             {localState.modalLoading.get() ? (

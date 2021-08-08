@@ -45,9 +45,9 @@ export class InventorySliderModalService {
                 stock: 0,
                 landingCost: 0,
                 markup: 0,
+                taxSetting: null,
             };
         });
-        initialFormValues.taxSettingId = '';
 
         // modalTitle
         if (mode === 'edit') modalTitle = 'Edit product in inventory';

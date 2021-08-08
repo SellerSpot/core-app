@@ -7,6 +7,7 @@ import {
     MRPCustomRenderer,
     OutletCustomRenderer,
     StockCustomRenderer,
+    TaxSettingCustomRenderer,
 } from './Components/CustomRenderers';
 
 interface IInventoryModalTableProps {
@@ -47,6 +48,12 @@ export const InventoryModalTable = (props: IInventoryModalTableProps): ReactElem
                 columnName: 'M.R.P',
                 align: 'center',
                 customRenderer: MRPCustomRenderer,
+            },
+            {
+                columnName: 'Tax Setting',
+                align: 'center',
+                width: '200px',
+                customRenderer: TaxSettingCustomRenderer,
             },
         ],
     };

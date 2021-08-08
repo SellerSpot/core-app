@@ -6,10 +6,8 @@ import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderMod
 export type IInventorySliderModalForm = {
     [key: string]: Pick<
         IInventoryData,
-        'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock'
+        'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock' | 'taxSetting'
     >;
-} & {
-    taxSettingId: string;
 };
 
 export interface IInventorySliderModalOnSubmit {

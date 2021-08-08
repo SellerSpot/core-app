@@ -23,7 +23,6 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
                 <div className={styles.tableWrapper}>
                     <InventoryModalTable allOutlets={localState.dynamicProps.allOutlets.get()} />
                 </div>
-                {/* <InventoryModalTaxSettingSelect /> */}
             </div>
         </SliderModalBody>
     );
