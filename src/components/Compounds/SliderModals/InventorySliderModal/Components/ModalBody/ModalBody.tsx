@@ -1,7 +1,7 @@
 import { State } from '@hookstate/core';
 import { SliderModalBody } from '@sellerspot/universal-components';
+import { ExpandingPanels } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/ExpandingPanels/ExpandingPanels';
 import { InventoryModalSearchField } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/InventoryModalSearchField/InventoryModalSearchField';
-import { InventoryModalTable } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/InventoryModalTable/InventoryModalTable';
 import { IInventorySliderModalLocalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import React, { ReactElement } from 'react';
 import styles from './ModalBody.module.scss';
@@ -20,9 +20,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
         <SliderModalBody>
             <div className={styles.modalBody}>
                 <InventoryModalSearchField selectedProductState={localState.selectedProduct} />
-                <div className={styles.tableWrapper}>
-                    <InventoryModalTable allOutlets={localState.dynamicProps.allOutlets.get()} />
-                </div>
+                <ExpandingPanels allOutlets={localState.dynamicProps.allOutlets.get()} />
             </div>
         </SliderModalBody>
     );

@@ -1,0 +1,16 @@
+.wrapper {
+    width: 100%;
+    height: 40px;
+    @include flex(center, space-between, $gap: 8px);
+
+    .summaryText {
+        @include flex(center, flex-start, $gap: 8px);
+        .iconWrapper {
+            height: 16px;
+        }
+    }
+
+    .summaryIconWrapper {
+        @include flex(center, center);
+    }
+}
