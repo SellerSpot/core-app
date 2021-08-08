@@ -1,12 +1,12 @@
-import { InputField } from '@sellerspot/universal-components';
+import { AsyncCreatableSelect, InputField, ISelectOption } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
 
-interface IStockFieldProps {
+interface ICommonFieldProps {
     outletId: string;
 }
 
-export const StockField = (props: IStockFieldProps): ReactElement => {
+export const StockField = (props: ICommonFieldProps): ReactElement => {
     // props
     const { outletId } = props;
 
@@ -25,120 +25,116 @@ export const StockField = (props: IStockFieldProps): ReactElement => {
             name={null}
             value={value as string}
             fullWidth
-            size="small"
+            label={'Stock'}
             theme="primary"
             direction={'rtl'}
-            disableHelperTextPlaceholderPadding
             type="number"
         />
     );
 };
 
-// export const LandingCostCustomRenderer = () => {
-//     // props
-//     const { rowData } = props;
-//     const fieldName = `${rowData.id}.landingCost`;
+export const LandingCostCustomRenderer = (props: ICommonFieldProps): ReactElement => {
+    // props
+    const { outletId } = props;
+    const fieldName = `${outletId}.landingCost`;
 
-//     // hooks
-//     const { input } = useField(fieldName, {
-//         validateFields: [],
-//     });
-//     const { value } = input;
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
 
-//     // draw
-//     return (
-//         <InputField
-//             {...input}
-//             name={null}
-//             value={value as string}
-//             fullWidth
-//             size="small"
-//             theme="primary"
-//             direction={'rtl'}
-//             disableHelperTextPlaceholderPadding
-//             type="number"
-//         />
-//     );
-// };
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            value={value as string}
+            fullWidth
+            label={'Landing Cost'}
+            theme="primary"
+            direction={'rtl'}
+            type="number"
+        />
+    );
+};
 
-// export const MarkupCustomRenderer = () => {
-//     // props
-//     const { rowData } = props;
-//     const fieldName = `${rowData.id}.markup`;
+export const MarkupCustomRenderer = (props: ICommonFieldProps): ReactElement => {
+    // props
+    const { outletId } = props;
+    const fieldName = `${outletId}.markup`;
 
-//     // hooks
-//     const { input } = useField(fieldName, {
-//         validateFields: [],
-//     });
-//     const { value } = input;
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
 
-//     // draw
-//     return (
-//         <InputField
-//             {...input}
-//             name={null}
-//             fullWidth
-//             size="small"
-//             theme="primary"
-//             value={value as string}
-//             direction={'rtl'}
-//             disableHelperTextPlaceholderPadding
-//             type="number"
-//         />
-//     );
-// };
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            fullWidth
+            label={'Markup'}
+            theme="primary"
+            value={value as string}
+            direction={'rtl'}
+            type="number"
+        />
+    );
+};
 
-// export const MRPCustomRenderer = () => {
-//     // props
-//     const { rowData } = props;
-//     const fieldName = `${rowData.id}.markup`;
+export const MRPCustomRenderer = (props: ICommonFieldProps): ReactElement => {
+    // props
+    const { outletId } = props;
+    const fieldName = `${outletId}.markup`;
 
-//     // hooks
-//     const { input } = useField(fieldName, {
-//         validateFields: [],
-//     });
-//     const { value } = input;
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value } = input;
 
-//     // draw
-//     return (
-//         <InputField
-//             {...input}
-//             name={null}
-//             fullWidth
-//             size="small"
-//             theme="primary"
-//             value={value as string}
-//             direction={'rtl'}
-//             disableHelperTextPlaceholderPadding
-//             type="number"
-//         />
-//     );
-// };
+    // draw
+    return (
+        <InputField
+            {...input}
+            name={null}
+            fullWidth
+            label={'MRP'}
+            theme="primary"
+            value={value as string}
+            direction={'rtl'}
+            type="number"
+        />
+    );
+};
 
-// export const TaxSettingCustomRenderer = () => {
-//     // props
-//     const { rowData } = props;
-//     const fieldName = `${rowData.id}.taxSetting`;
+export const TaxSettingCustomRenderer = (props: ICommonFieldProps): ReactElement => {
+    // props
+    const { outletId } = props;
+    const fieldName = `${outletId}.taxSetting`;
 
-//     // hooks
-//     const { input } = useField(fieldName, {
-//         validateFields: [],
-//     });
-//     const { value, onChange } = input;
-//     console.log(value);
+    // hooks
+    const { input } = useField(fieldName, {
+        validateFields: [],
+    });
+    const { value, onChange } = input;
+    console.log(value);
 
-//     // handlers
-//     const loadOptionsHandler = async (): Promise<ISelectOption[]> => {
-//         return [];
-//     };
+    // handlers
+    const loadOptionsHandler = async (): Promise<ISelectOption[]> => {
+        return [];
+    };
 
-//     // draw
-//     return (
-//         <AsyncCreatableSelect
-//             loadOptions={loadOptionsHandler}
-//             value={value}
-//             disableHelperTextPlaceholderPadding
-//             onChange={onChange}
-//         />
-//     );
-// };
+    // draw
+    return (
+        <AsyncCreatableSelect
+            loadOptions={loadOptionsHandler}
+            value={value}
+            label="Tax Setting"
+            onChange={onChange}
+        />
+    );
+};

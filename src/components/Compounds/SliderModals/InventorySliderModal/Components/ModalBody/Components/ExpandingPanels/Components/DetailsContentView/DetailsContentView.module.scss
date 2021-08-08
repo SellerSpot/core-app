@@ -1,4 +1,13 @@
 .wrapper {
     width: 100%;
-    height: 200px;
+
+    .costGroup {
+        width: 100%;
+        @include flex(center, space-between, $gap: 10px);
+    }
+
+    .randomGroup {
+        width: 100%;
+        @include flex(center, space-between, $gap: 10px);
+    }
 }

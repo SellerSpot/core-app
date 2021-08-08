@@ -33,7 +33,7 @@ const Panel = (props: IPanelProps) => {
                 summaryContent: (
                     <SummaryContentView isPanelExpandedState={isPanelExpanded} outlet={outlet} />
                 ),
-                detailsContent: <DetailsContentView />,
+                detailsContent: <DetailsContentView outlet={outlet} />,
             }}
         />
     );
