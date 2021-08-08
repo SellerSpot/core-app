@@ -11,16 +11,19 @@ import CartTable from './components/CartTable/CartTable';
 import { CheckoutSaleSummaryView } from './components/CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import { CheckoutSliderModal } from './components/CheckoutSliderModal/CheckoutSliderModal';
 import { useState } from '@hookstate/core';
+import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/ParkedSalesSliderModal';
 
 export const NewSale = (): ReactElement => {
     // state
-    const checkoutModal = useState(true);
+    const checkoutModal = useState(false);
+    const parkedSalesModal = useState(false);
 
     // hooks
     const history = useHistory();
 
     // handlers
     const onNewSaleClickHandler = () => history.push(ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY);
+    const onRetrieveSaleClickHandler = () => parkedSalesModal.set(true);
 
     return (
         <>
@@ -73,7 +76,7 @@ export const NewSale = (): ReactElement => {
                                 theme="light"
                                 fullWidth={true}
                                 startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
-                                onClick={onNewSaleClickHandler}
+                                onClick={onRetrieveSaleClickHandler}
                                 disableElevation
                                 size="large"
                                 whiteSpaceNoWrap
@@ -130,6 +133,7 @@ export const NewSale = (): ReactElement => {
             </div>
             {/* checkout slider modal */}
             <CheckoutSliderModal checkoutModal={checkoutModal} />
+            <ParkedSalesSliderModal parkedSalesModal={parkedSalesModal} />
         </>
     );
 };
