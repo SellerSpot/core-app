@@ -33,7 +33,7 @@ export const ProductCustomRenderer: TTableCellCustomRenderer<IInventoryData> = (
 export const CategoryCustomRenderer: TTableCellCustomRenderer<IInventoryData> = (props) => {
     // props
     const { rowData } = props;
-    const { category } = rowData.product;
+    const { category } = rowData.product.reference;
     // draw
     return category.title;
 };

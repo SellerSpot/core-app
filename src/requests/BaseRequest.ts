@@ -46,19 +46,17 @@ export default class BaseRequest {
         const payload = payloadRef as TQueryPayload;
         if (!isObject(payload)) return '';
         const payloadKeys = Object.keys(payload);
-        return payloadKeys.reduce((result, current, index) => {
+        let resultString = '';
+        payloadKeys.map((payloadKey, index) => {
             if (index === 0) {
-                result = result.concat('?');
+                resultString += '?';
             } else {
-                result = result.concat('&');
+                resultString = '&';
             }
-
-            if (payload[current] !== undefined) {
-                result = result.concat(current);
-                result = result.concat('=');
-                result = result.concat(<string>payload[current]);
+            if (payload[payloadKey]) {
+                resultString += `${payloadKey}=${<string>payload[payloadKey]}`;
             }
-            return result;
         });
+        return resultString;
     }
 }
