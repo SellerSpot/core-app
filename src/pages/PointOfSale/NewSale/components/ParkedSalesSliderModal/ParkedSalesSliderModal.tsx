@@ -4,8 +4,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {
     Button,
+    IconButton,
     ITableCollapsedCustomRenderer,
     ITableProps,
+    numberFormatINRCurrency,
     showNotify,
     SliderModal,
     SliderModalBody,
@@ -21,8 +23,7 @@ import { SalesHistoryService } from '../../../SalesHistory/SalesHistory.service'
 import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import { ROUTES } from 'config/routes';
-import { SaleHistoryExpandedView } from '../../../SalesHistory/components/SaleHistoryExpandedView/SaleHistoryExpandedView';
-import { capitalize } from 'lodash';
+import { ParkedSaleExpandedView } from './components/ParkedSaleExpandedView/ParkedSaleExpandedView';
 import styles from './ParkedSalesSliderModal.module.scss';
 
 // for using fromNow api we need relativeTime plugin to be extended
@@ -63,6 +64,19 @@ export const ParkedSalesSliderModal = (props: IParkedSalesModalProps): ReactElem
         parkedSalesModal.set(false);
     };
 
+    const retrieveSaleHandler = (saleData: ISaleData) => () => {
+        // set the parked sale slider to false
+        // tell the server that we are retrieving the sale
+        // fill the newSale slider with the sale data
+        console.log(saleData);
+    };
+
+    const deleteRetrievedSaleHandler = (saleData: ISaleData) => () => {
+        // set the parked sale slider to false
+        // tell the server that we are deleting the retrieved sale
+        console.log(saleData);
+    };
+
     // render helpers
     const serialNumberRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
         // props
@@ -91,14 +105,30 @@ export const ParkedSalesSliderModal = (props: IParkedSalesModalProps): ReactElem
         // props
         const { rowData } = props;
         // draw
-        return rowData.payment.grandTotal; // later we'll be having  a link to the customer, which displays chart for the particular customer
+        return numberFormatINRCurrency(rowData.payment.grandTotal); // later we'll be having  a link to the customer, which displays chart for the particular customer
     };
 
-    const saleStatusRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
+    const actionsRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
         // props
         const { rowData } = props;
         // draw
-        return capitalize(rowData.status); // later we'll be having  a link to the customer, which displays chart for the particular customer
+        return (
+            <div className={styles.mainTableActionsWrapper}>
+                <Button
+                    startIcon={<Icon icon={ICONS.baselineBackupRestore} />}
+                    label="Retrieve"
+                    variant="contained"
+                    theme="primary"
+                    size="small"
+                    onClick={retrieveSaleHandler(rowData)}
+                />
+                <IconButton
+                    theme={'danger'}
+                    icon={<Icon icon={ICONS.outlineDeleteOutline} />}
+                    onClick={deleteRetrievedSaleHandler(rowData)}
+                />
+            </div>
+        );
     };
 
     const emptyTableCTA = () => {
@@ -119,14 +149,20 @@ export const ParkedSalesSliderModal = (props: IParkedSalesModalProps): ReactElem
 
     const collapsedContentRenderer: ITableCollapsedCustomRenderer<ISaleData> = (props) => {
         const { rowData } = props;
-        return <SaleHistoryExpandedView rowData={rowData} />;
+        return (
+            <ParkedSaleExpandedView
+                rowData={rowData}
+                onDeleteSaleClickHandler={deleteRetrievedSaleHandler(rowData)}
+                onRetrieveSaleClickHandler={retrieveSaleHandler(rowData)}
+            />
+        );
     };
 
     const tableProps: ITableProps<ISaleData> = {
         stickyHeader: true,
         uniqueKey: 'id',
         isLoading: isLoading.get(),
-        emptyStateMessage: 'No Sales History found',
+        emptyStateMessage: 'No parked sales History found',
         emptyStatePrimaryCallToAction: emptyTableCTA(),
         data: rawClone(saleData.get()),
         shape: [
@@ -162,11 +198,11 @@ export const ParkedSalesSliderModal = (props: IParkedSalesModalProps): ReactElem
                 customRenderer: saleTotalRenderer,
             },
             {
-                columnName: 'Status',
+                columnName: 'Actions',
                 align: 'center',
                 width: '20%',
-                dataKey: 'status',
-                customRenderer: saleStatusRenderer,
+                customRenderer: actionsRenderer,
+                blockClickEventBubbling: true,
             },
         ],
         collapsedContentRenderer,

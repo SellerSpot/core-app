@@ -4,6 +4,13 @@
     height: 100%;
     padding: 10px 20px;
 
+    .mainTableActionsWrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
     .rowActions {
         width: 100%;
         @include flex(center, flex-end, $gap: 20px);

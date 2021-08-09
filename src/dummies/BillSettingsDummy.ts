@@ -1,5 +1,5 @@
 import { IBillData } from 'pages/PointOfSale/BillSettings/BillSettings.types';
-import { IBillSettings } from '../../.yalc/@sellerspot/universal-types/dist';
+import { IBillSettings } from '@sellerspot/universal-types';
 
 export default class BillSettingsDummy {
     static getBillData(): IBillData {

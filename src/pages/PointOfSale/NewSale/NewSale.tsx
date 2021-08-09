@@ -16,7 +16,7 @@ import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/Park
 export const NewSale = (): ReactElement => {
     // state
     const checkoutModal = useState(false);
-    const parkedSalesModal = useState(false);
+    const parkedSalesModal = useState(true);
 
     // hooks
     const history = useHistory();

@@ -17,7 +17,7 @@ import { SalesHistoryService } from '../../SalesHistory.service';
 import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import { ROUTES } from 'config/routes';
-import { SaleHistoryExpandedView } from '../SaleHistoryExpandedView/SaleHistoryExpandedView';
+import { SaleHistoryExpandedView } from './components/SaleHistoryExpandedView/SaleHistoryExpandedView';
 import { capitalize } from 'lodash';
 
 // for using fromNow api we need relativeTime plugin to be extended
