@@ -1,14 +1,17 @@
 import * as yup from 'yup';
-import { store } from 'store/store';
-import { updateCartProduct } from 'store/models/cart';
-import { ICartTableFormValue, ICartTableProduct } from './CartTable.types';
+import { ICartTableFormValues } from './CartTable.types';
+import { ICartDetails } from '@sellerspot/universal-types';
+import { isEqual } from 'lodash';
 
 export class CartTableService {
     // gets the initial values for collapsed form
-    public static collapsedFormGetInitialValues = (
-        product: ICartTableProduct,
-    ): ICartTableFormValue => {
-        const { productName, discountPercent, quantity, unitPrice } = product;
+    public static collapsedFormGetInitialValues = (product: ICartDetails): ICartTableFormValues => {
+        const {
+            product: { name: productName },
+            productDiscount: { discount: discountPercent },
+            quantity,
+            unitPrice,
+        } = product;
         return {
             productName,
             discountPercent,
@@ -19,17 +22,11 @@ export class CartTableService {
 
     // checks if the values inside collapsed form has changed
     public static collapsedFormHasValuesChanged = (props: {
-        values: ICartTableFormValue;
-        product: ICartTableProduct;
+        originalvalues: ICartTableFormValues;
+        changedValues: ICartTableFormValues;
     }): boolean => {
-        const { product, values } = props;
-        const { discountPercent, productName, quantity, unitPrice } = product;
-        if (
-            values.discountPercent !== discountPercent ||
-            values.productName !== productName ||
-            values.quantity !== quantity ||
-            values.unitPrice !== unitPrice
-        ) {
+        const { originalvalues, changedValues } = props;
+        if (!isEqual(originalvalues, changedValues)) {
             return false;
         }
         return true;
@@ -38,18 +35,19 @@ export class CartTableService {
     // validation schema for the collapsed form
     private static collapsedFormValidationSchema = yup.object().shape({
         productName: yup.string().required('Product name is required'),
-        quantity: yup.number().required('Quantity is required'),
+        quantity: yup.number().min(1).required('Quantity is required'),
         unitPrice: yup.number().required('Unit Price is required'),
         discountPercent: yup.number().required('Discount is required'),
     });
 
     // handles collapsed form validation
     public static validateCollapsedField = (
-        values: ICartTableFormValue,
-        fieldPath: keyof ICartTableProduct,
+        values: ICartTableFormValues,
+        fieldPath: keyof ICartTableFormValues,
     ): string => {
         // getting the right schema to use for validation
         const requiredSchema = yup.reach(CartTableService.collapsedFormValidationSchema, fieldPath);
+        console.log(values);
         try {
             requiredSchema.validateSync(values, {
                 abortEarly: false,
@@ -63,29 +61,14 @@ export class CartTableService {
 
     // handles collapsed form submission
     public static handleCollapsedFormSubmission = (props: {
-        values: ICartTableFormValue;
-        product: ICartTableProduct;
+        values: ICartTableFormValues;
+        product: ICartDetails;
         toggleRowExpansion: (rowIndex: number) => void;
         productIndex: number;
     }): void => {
-        const { product, productIndex, toggleRowExpansion, values } = props;
-        const { discountPercent, productName, quantity, unitPrice } = values;
-        const { stockUnit, taxBrackets } = product;
+        const { productIndex, toggleRowExpansion, values } = props;
         // compiling product information
-        const productData: ICartTableProduct = {
-            stockUnit,
-            taxBrackets,
-            discountPercent,
-            productName,
-            quantity,
-            unitPrice,
-        };
-        store.dispatch(
-            updateCartProduct({
-                productData,
-                productIndex,
-            }),
-        );
+        console.log(values);
         toggleRowExpansion(productIndex);
     };
 }

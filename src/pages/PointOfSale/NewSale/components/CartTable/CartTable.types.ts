@@ -1,41 +1,27 @@
-import { AnyObject } from 'final-form';
+import { State } from '@hookstate/core';
+import { ICartDetails } from '@sellerspot/universal-types';
 
-// interface for tax bracket structure in products
-export interface ITaxBracket {
-    bracketName: string;
-    bracketRate: number;
-}
-
-// interface for the products in the Cart Table
-export interface ICartTableProduct {
-    quantity: number;
-    stockUnit: string;
-    productName: string;
-    unitPrice: number;
-    discountPercent: number;
-    taxBrackets: ITaxBracket[];
-}
-
-// interface for the different fields in the Cart Table forms
-export interface ICartTableFormValue {
-    productName: string;
-    quantity: number;
-    unitPrice: number;
-    discountPercent: number;
+export interface ICartTableProps {
+    cartData: State<ICartDetails[]>;
 }
 
 // interface for the props passed to Collapsed Content in Cart Table
+export interface ICartTableFormValues {
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+    discountPercent: number;
+}
 export interface ICartTableCollapsedProps {
-    product: ICartTableProduct;
-    toggleRowExpansion: (rowIndex: number) => void;
+    product: State<ICartDetails>;
+    toggleRowExpansion: (productIndex: number) => void;
     productIndex: number;
 }
 
 // interface for the props passed to Cart Table Collapsed Form
-export interface ICartTableCollapsedFormProps extends ICartTableCollapsedProps {
-    handleSubmit: (
-        event?: Partial<
-            Pick<React.SyntheticEvent<Element, Event>, 'preventDefault' | 'stopPropagation'>
-        >,
-    ) => Promise<AnyObject>;
+export interface ICartTableCollapsedFormProps {
+    product: State<ICartDetails>;
+    formValues: ICartTableFormValues;
+    handleSubmit: () => void;
+    handleCancel: () => void;
 }

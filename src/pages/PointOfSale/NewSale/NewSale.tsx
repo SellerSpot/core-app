@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '@iconify/react';
-import { Button, InputField } from '@sellerspot/universal-components';
+import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import { ICONS } from 'utilities/utilities';
 import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
@@ -12,11 +12,16 @@ import { CheckoutSaleSummaryView } from './components/CheckoutSaleSummaryView/Ch
 import { CheckoutSliderModal } from './components/CheckoutSliderModal/CheckoutSliderModal';
 import { useState } from '@hookstate/core';
 import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/ParkedSalesSliderModal';
+import { IProductData, ISaleData } from '@sellerspot/universal-types';
+import { NewSaleService } from './NewSale.service';
 
 export const NewSale = (): ReactElement => {
     // state
     const checkoutModal = useState(false);
-    const parkedSalesModal = useState(true);
+    const parkedSalesModal = useState(false);
+    const searchQuery = useState('');
+    const searchResult = useState<IProductData[]>([]);
+    const saleData = useState<ISaleData>(NewSaleService.getInitialSaleDataState());
 
     // hooks
     const history = useHistory();
@@ -24,6 +29,10 @@ export const NewSale = (): ReactElement => {
     // handlers
     const onNewSaleClickHandler = () => history.push(ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY);
     const onRetrieveSaleClickHandler = () => parkedSalesModal.set(true);
+    const onSearchInitaiteClickHandler = () => parkedSalesModal.set(true);
+    const searchFieldOnChangeHandler: IInputFieldProps['onChange'] = (event) => {
+        searchQuery.set(event.target.value);
+    };
 
     return (
         <>
@@ -52,21 +61,42 @@ export const NewSale = (): ReactElement => {
                             fullWidth={true}
                             disableHelperTextPlaceholderPadding={true}
                             suffix={<Icon icon={ICONS.outlineSearch} />}
+                            onChange={searchFieldOnChangeHandler}
                         />
-                        <div className={styles.searchResultSecitonWrapper}>
-                            <SaleSearchResultCard
-                                productImage={undefined}
-                                productName={'Tomato'}
-                                stockUnit={'kg'}
-                                unitPrice={20}
-                            />
-                            <SaleSearchResultCard
-                                productImage={undefined}
-                                productName={'Tomato'}
-                                stockUnit={'kg'}
-                                unitPrice={20}
-                            />
-                        </div>
+                        {/* search initiate info block */}
+                        {searchQuery.get().length === 0 && searchResult.get().length === 0 && (
+                            <div className={styles.searchInitiateInfoHolder}>
+                                <Icon
+                                    icon={ICONS.outlineSearch}
+                                    className={styles.searchInitiateSearchIconHolder}
+                                />
+                                <h5>Search / scan for products</h5>
+                                <Button
+                                    label="Search"
+                                    theme="light"
+                                    size="large"
+                                    variant="contained"
+                                    onClick={onSearchInitaiteClickHandler}
+                                />
+                            </div>
+                        )}
+                        {/* search results block */}
+                        {searchResult.get().length > 0 && (
+                            <div className={styles.searchResultSecitonWrapper}>
+                                <SaleSearchResultCard
+                                    productImage={undefined}
+                                    productName={'Tomato'}
+                                    stockUnit={'kg'}
+                                    unitPrice={20}
+                                />
+                                <SaleSearchResultCard
+                                    productImage={undefined}
+                                    productName={'Tomato'}
+                                    stockUnit={'kg'}
+                                    unitPrice={20}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className={styles.cartSectionWrapper}>
                         <div className={styles.cartActionsWrapper}>
@@ -116,14 +146,14 @@ export const NewSale = (): ReactElement => {
                             />
                         </div>
                         <div className={styles.cartTableWrapper}>
-                            <CartTable />
+                            <CartTable cartData={saleData.cart} />
                         </div>
                         <div className={styles.cartSummaryWrapper}>
                             <CheckoutSaleSummaryView
-                                grandTotal={0}
-                                subTotal={0}
-                                totalDiscount={0}
-                                totalTaxes={0}
+                                grandTotal={saleData.payment.grandTotal.get()}
+                                subTotal={saleData.payment.subTotal.get()}
+                                totalDiscount={saleData.payment.totalDiscount.get()}
+                                totalTaxes={saleData.payment.totalTax.get()}
                                 viewMode="cart"
                                 proceedCallback={() => checkoutModal.set(true)}
                             />

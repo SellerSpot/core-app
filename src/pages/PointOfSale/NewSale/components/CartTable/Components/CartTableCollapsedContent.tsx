@@ -1,57 +1,33 @@
 import { ICONS } from 'utilities/utilities';
-import { numberFormatINRCurrency } from 'utilities/general';
+import { numberFormatINRCurrency, rawClone } from 'utilities/general';
 import { Field, Form, FormSpy } from 'react-final-form';
 import React, { ReactElement } from 'react';
 import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import {
     ICartTableCollapsedFormProps,
     ICartTableCollapsedProps,
-    ICartTableFormValue,
+    ICartTableFormValues,
 } from '../CartTable.types';
 import { CartTableService } from '../CartTable.service';
 import styles from '../CartTable.module.scss';
 import { saleService } from 'services/services';
 import Icon from '@iconify/react';
+import { ICartDetails } from '@sellerspot/universal-types';
 
 const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
-    const { product, productIndex, toggleRowExpansion, handleSubmit } = props;
-    const { quantity, discountPercent, unitPrice, stockUnit } = product;
+    const { formValues, product, handleCancel, handleSubmit } = props;
+    const { quantity, unitPrice } = formValues;
+    const {
+        stockUnit: { name: stockUnit },
+        productDiscount,
+    } = product.get();
 
     return (
         <form onSubmit={handleSubmit} className={styles.collapsedDiv} noValidate>
-            {/* <div className={styles.productName}>
-                <Field
-                    name={'productName'}
-                    validate={(value) =>
-                        CartTableService.validateCollapsedField(value, 'productName')
-                    }
-                >
-                    {({ input, meta }) => {
-                        const { onChange, value } = input;
-                        const { error } = meta;
-                        const helperMessage: IInputFieldProps['helperMessage'] = {
-                            enabled: error ? true : false,
-                            content: error,
-                            type: 'error',
-                        };
-                        return (
-                            <InputField
-                                label={'Product Name'}
-                                fullWidth
-                                theme="primary"
-                                placeHolder={productName}
-                                value={value}
-                                helperMessage={helperMessage}
-                                selectTextOnFocus
-                                onChange={onChange}
-                            />
-                        );
-                    }}
-                </Field>
-            </div> */}
             <div className={styles.propertyRow}>
                 <Field
-                    name={'quantity'}
+                    name="quantity"
+                    type="number"
                     validate={(value) => CartTableService.validateCollapsedField(value, 'quantity')}
                 >
                     {({ input, meta }) => {
@@ -64,22 +40,25 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                         };
                         return (
                             <InputField
-                                label={'Quantity'}
                                 type="number"
-                                minNumericValue={0}
+                                label="Quantity"
+                                minNumericValue={1}
                                 selectTextOnFocus
                                 placeHolder={`${quantity}`}
                                 theme="primary"
                                 suffix={<h6>{stockUnit}</h6>}
                                 value={value}
                                 helperMessage={helperMessage}
-                                onChange={onChange}
+                                onChange={(e) => {
+                                    console.log(typeof e.target.value, e.target.value);
+                                    onChange(e);
+                                }}
                             />
                         );
                     }}
                 </Field>
                 <Field
-                    name={'unitPrice'}
+                    name="unitPrice"
                     validate={(value) =>
                         CartTableService.validateCollapsedField(value, 'unitPrice')
                     }
@@ -109,7 +88,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                     }}
                 </Field>
                 <Field
-                    name={'discountPercent'}
+                    name="discountPercent"
                     validate={(value) =>
                         CartTableService.validateCollapsedField(value, 'discountPercent')
                     }
@@ -122,9 +101,9 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                             content:
                                 error ??
                                 `- ${numberFormatINRCurrency(
-                                    saleService.computeDiscountUsingPercentage({
+                                    saleService.computeDiscount({
                                         unitPrice,
-                                        discountPercent: value,
+                                        discount: productDiscount,
                                     }),
                                 )}`,
                             type: error ? 'error' : 'success',
@@ -134,7 +113,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 label={'Discount (%)'}
                                 suffix={<h6>%</h6>}
                                 type="number"
-                                placeHolder={`${discountPercent}`}
+                                placeHolder={`${productDiscount.discount}`}
                                 maxNumericValue={100}
                                 minNumericValue={0}
                                 selectTextOnFocus
@@ -148,22 +127,17 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                 </Field>
             </div>
             <div className={styles.collapsedDivActions}>
-                <Button
-                    theme="danger"
-                    variant="outlined"
-                    label={'CANCEL'}
-                    onClick={() => toggleRowExpansion(productIndex)}
-                />
+                <Button theme="danger" variant="outlined" label={'CANCEL'} onClick={handleCancel} />
                 <FormSpy subscription={{ values: true }}>
                     {(values) => {
-                        const formValues = values.values as ICartTableFormValue;
+                        const changedValues = values.values as ICartTableFormValues;
                         return (
                             <Button
                                 theme="primary"
                                 type="submit"
                                 disabled={CartTableService.collapsedFormHasValuesChanged({
-                                    values: formValues,
-                                    product,
+                                    originalvalues: formValues,
+                                    changedValues,
                                 })}
                                 variant="contained"
                                 label={'UPDATE'}
@@ -179,30 +153,40 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
 
 export const CartTableCollapsedContent = (props: ICartTableCollapsedProps): ReactElement => {
     const { product, productIndex, toggleRowExpansion } = props;
+    const rawClonedProduct = rawClone<ICartDetails>(product.get());
 
-    // pushing form data into global store
-    const handleFormSubmission = (values: ICartTableFormValue) => {
+    // handlers
+    // pushing the changes to the product state on completion
+    const handleFormSubmission = (values: ICartTableFormValues) => {
+        console.log(values);
         CartTableService.handleCollapsedFormSubmission({
-            product,
+            product: rawClonedProduct,
             productIndex,
             toggleRowExpansion,
             values,
         });
     };
+    const handleCancel = () => {
+        toggleRowExpansion(productIndex);
+    };
 
+    // compute
+    const initialFormValues = CartTableService.collapsedFormGetInitialValues(rawClonedProduct);
+
+    // draw
     return (
         <div className={styles.collapsedDiv}>
             <Form
-                initialValues={CartTableService.collapsedFormGetInitialValues(product)}
+                initialValues={CartTableService.collapsedFormGetInitialValues(rawClonedProduct)}
                 onSubmit={handleFormSubmission}
                 subscription={{}}
             >
                 {({ handleSubmit }) => (
                     <CartTableCollapsedForm
                         product={product}
-                        productIndex={productIndex}
-                        toggleRowExpansion={toggleRowExpansion}
+                        formValues={initialFormValues}
                         handleSubmit={handleSubmit}
+                        handleCancel={handleCancel}
                     />
                 )}
             </Form>

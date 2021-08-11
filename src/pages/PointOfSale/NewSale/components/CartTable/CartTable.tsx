@@ -1,65 +1,81 @@
 import Icon from '@iconify/react';
 import {
+    Button,
     IconButton,
     ITableCollapsedCustomRenderer,
     ITableProps,
     Table,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
+import { ICartDetails } from '@sellerspot/universal-types';
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { saleService } from 'services/services';
-import { cartSelector } from 'store/models/cart';
-import { numberFormatINRCurrency } from 'utilities/general';
+import { numberFormatINRCurrency, rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import { useTheme } from '../../../../../customHooks/useTheme';
-import { ICartTableProduct } from './CartTable.types';
+import { ICartTableProps } from './CartTable.types';
 import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 
-export default function CartTable(): ReactElement {
-    // state
-    const { productsData } = useSelector(cartSelector);
+const CartTable = (props: ICartTableProps): ReactElement => {
+    // props
+    const { cartData } = props;
+
+    console.log(rawClone(cartData.get()));
 
     // hooks
     const { colors } = useTheme();
 
-    // compute
-    const collapsedContentRenderer: ITableCollapsedCustomRenderer<ICartTableProduct> = (props) => {
-        const { rowData, rowIndex, toggleRowExpansion } = props;
+    // hanlders
+    const searchFieldFocusHandler = () => {
+        // handler search field focus
+    };
+
+    // renderer helpers
+    const collapsedContentRenderer: ITableCollapsedCustomRenderer<ICartDetails> = (props) => {
+        const { rowIndex, toggleRowExpansion } = props;
         return (
             <CartTableCollapsedContent
-                product={rowData}
+                product={cartData[rowIndex]}
                 productIndex={rowIndex}
                 toggleRowExpansion={toggleRowExpansion}
             />
         );
     };
 
-    const SNoField: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+    const SNoField: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowIndex } = props;
         return rowIndex + 1;
     };
 
-    const subTotalRenderer: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+    const productNameRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        const { discountPercent, quantity, taxBrackets, unitPrice } = rowData;
+        const {
+            product: { name },
+        } = rowData;
+        return name;
+    };
+
+    const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
+        const { rowData } = props;
+        const { quantity, taxBracket, unitPrice, productDiscount } = rowData;
+
         return numberFormatINRCurrency(
             saleService.computeProductSubTotal({
-                discountPercent,
+                discount: productDiscount,
                 quantity,
-                taxBrackets,
+                taxBracket,
                 unitPrice,
             }),
         );
     };
 
-    const pricePerUnitRenderer: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+    const pricePerUnitRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
         const { unitPrice } = rowData;
         return numberFormatINRCurrency(unitPrice);
     };
 
-    const Action: TTableCellCustomRenderer<ICartTableProduct> = (props) => {
+    const Action: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const {} = props;
         return (
             <IconButton
@@ -69,8 +85,27 @@ export default function CartTable(): ReactElement {
             />
         );
     };
-    const tableProps: ITableProps<ICartTableProduct> = {
-        data: productsData,
+
+    const emptyTableCTA = () => {
+        // handlers
+        const onClickHandler = () => searchFieldFocusHandler();
+
+        return (
+            <Button
+                label="Search"
+                theme="primary"
+                size="small"
+                onClick={onClickHandler}
+                variant="contained"
+                startIcon={<Icon icon={ICONS.outlineSearch} />}
+            />
+        );
+    };
+
+    const tableProps: ITableProps<ICartDetails> = {
+        data: rawClone(cartData.get()),
+        emptyStateMessage: 'Search / scan and add products to the cart',
+        emptyStatePrimaryCallToAction: emptyTableCTA(),
         shape: [
             // 5% left for expand row down arrow
             {
@@ -80,10 +115,10 @@ export default function CartTable(): ReactElement {
                 customRenderer: SNoField,
             },
             {
-                dataKey: 'productName',
                 columnName: 'Product',
                 width: '40%',
                 align: 'left',
+                customRenderer: productNameRenderer,
             },
             {
                 dataKey: 'quantity',
@@ -122,4 +157,6 @@ export default function CartTable(): ReactElement {
     };
 
     return <Table {...tableProps} />;
-}
+};
+
+export default CartTable;
