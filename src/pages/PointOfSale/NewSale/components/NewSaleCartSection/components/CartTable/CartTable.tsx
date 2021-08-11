@@ -12,7 +12,7 @@ import React, { ReactElement } from 'react';
 import { saleService } from 'services/services';
 import { numberFormatINRCurrency, rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
-import { useTheme } from '../../../../../customHooks/useTheme';
+import { useTheme } from '../../../../../../../customHooks/useTheme';
 import { ICartTableProps } from './CartTable.types';
 import { CartTableCollapsedContent } from './Components/CartTableCollapsedContent';
 
