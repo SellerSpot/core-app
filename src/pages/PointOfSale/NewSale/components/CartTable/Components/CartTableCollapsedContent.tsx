@@ -160,7 +160,7 @@ export const CartTableCollapsedContent = (props: ICartTableCollapsedProps): Reac
     const handleFormSubmission = (values: ICartTableFormValues) => {
         console.log(values);
         CartTableService.handleCollapsedFormSubmission({
-            product: rawClonedProduct,
+            product,
             productIndex,
             toggleRowExpansion,
             values,

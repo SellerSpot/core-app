@@ -1,7 +1,8 @@
 import * as yup from 'yup';
 import { ICartTableFormValues } from './CartTable.types';
-import { ICartDetails } from '@sellerspot/universal-types';
+import { EDiscountTypes, ICartDetails } from '@sellerspot/universal-types';
 import { isEqual } from 'lodash';
+import { State } from '@hookstate/core';
 
 export class CartTableService {
     // gets the initial values for collapsed form
@@ -26,7 +27,13 @@ export class CartTableService {
         changedValues: ICartTableFormValues;
     }): boolean => {
         const { originalvalues, changedValues } = props;
-        if (!isEqual(originalvalues, changedValues)) {
+        const modifiedValues: ICartTableFormValues = {
+            productName: changedValues.productName,
+            discountPercent: +changedValues.discountPercent,
+            quantity: +changedValues.quantity,
+            unitPrice: +changedValues.unitPrice,
+        };
+        if (!isEqual(originalvalues, modifiedValues)) {
             return false;
         }
         return true;
@@ -61,14 +68,29 @@ export class CartTableService {
 
     // handles collapsed form submission
     public static handleCollapsedFormSubmission = (props: {
+        product: State<ICartDetails>;
         values: ICartTableFormValues;
-        product: ICartDetails;
         toggleRowExpansion: (rowIndex: number) => void;
         productIndex: number;
     }): void => {
-        const { productIndex, toggleRowExpansion, values } = props;
+        const { product, productIndex, toggleRowExpansion, values } = props;
         // compiling product information
-        console.log(values);
+        const modifiedValues: ICartTableFormValues = {
+            productName: values.productName,
+            discountPercent: +values.discountPercent,
+            quantity: +values.quantity,
+            unitPrice: +values.unitPrice,
+        };
+        // updating the product
+        product.batch((state) => {
+            state.product.name.set(modifiedValues.productName);
+            state.productDiscount.set({
+                discount: modifiedValues.discountPercent,
+                discountType: EDiscountTypes.PERCENT,
+            });
+            state.quantity.set(modifiedValues.quantity);
+            state.unitPrice.set(modifiedValues.unitPrice);
+        });
         toggleRowExpansion(productIndex);
     };
 }
