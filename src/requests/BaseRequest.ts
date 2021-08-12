@@ -32,12 +32,12 @@ export default class BaseRequest {
     }
 
     private getParams(route: string, payloadRef: unknown): string {
-        const resultRoute = route;
+        let resultRoute = route;
         const payload = payloadRef as TQueryPayload;
         if (!isObject(payload)) return resultRoute;
         const payloadKeys = Object.keys(payload);
         payloadKeys.forEach((paramKey) => {
-            resultRoute.replace(`:${paramKey}`, <string>payload[paramKey]);
+            resultRoute = resultRoute.replace(`:${paramKey}`, <string>payload[paramKey]);
         });
         return resultRoute;
     }
@@ -46,19 +46,17 @@ export default class BaseRequest {
         const payload = payloadRef as TQueryPayload;
         if (!isObject(payload)) return '';
         const payloadKeys = Object.keys(payload);
-        return payloadKeys.reduce((result, current, index) => {
+        let resultString = '';
+        payloadKeys.map((payloadKey, index) => {
             if (index === 0) {
-                result.concat('?');
+                resultString += '?';
             } else {
-                result.concat('&');
+                resultString = '&';
             }
-
-            if (payload[current] !== undefined) {
-                result.concat(current);
-                result.concat('=');
-                result.concat(<string>payload[current]);
+            if (payload[payloadKey]) {
+                resultString += `${payloadKey}=${<string>payload[payloadKey]}`;
             }
-            return result;
         });
+        return resultString;
     }
 }

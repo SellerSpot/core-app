@@ -20,3 +20,4 @@ export { default as outlineAdd } from '@iconify/icons-ic/outline-add';
 export { default as baselineLocalPrintshop } from '@iconify/icons-ic/baseline-local-printshop';
 export { default as outlineChecklist } from '@iconify/icons-ic/outline-checklist';
 export { default as outlineListAlt } from '@iconify/icons-ic/outline-list-alt';
+export { default as outlineInfo } from '@iconify/icons-ic/outline-info';
