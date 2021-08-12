@@ -45,7 +45,7 @@ export class InventorySliderModalService {
                 stock: 0,
                 landingCost: 0,
                 markup: 0,
-                taxSetting: null,
+                taxBracket: null,
             };
         });
 

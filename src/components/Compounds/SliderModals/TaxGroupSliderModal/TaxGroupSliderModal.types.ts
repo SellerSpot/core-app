@@ -1,7 +1,7 @@
 import { IconifyIcon } from '@iconify/react';
 import { ISelectOption, ISliderModalProps } from '@sellerspot/universal-components';
 import { IOnClickEvents } from 'typings/common.types';
-import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ITaxBracketSliderModalProps } from '../TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { FormApi } from 'final-form';
 
@@ -27,10 +27,10 @@ export interface ITaxGroupSliderModalProps {
     level: 1 | 2;
     allTaxBrackets: ITaxBracketData[];
     taxBracketSliderModalProps?: ITaxBracketSliderModalProps;
-    prefillData?: ITaxGroupData;
+    prefillData?: ITaxBracketData;
 }
 
-export type ITaxGroupSliderForm = Pick<ITaxGroupData, 'name'> & {
+export type ITaxGroupSliderForm = Pick<ITaxBracketData, 'name'> & {
     bracket: Omit<ISelectOption, 'key'>[];
 };
 

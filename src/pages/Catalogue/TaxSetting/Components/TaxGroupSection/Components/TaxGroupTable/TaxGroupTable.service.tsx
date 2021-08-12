@@ -10,7 +10,7 @@ import {
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
-import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React from 'react';
 import { requests } from 'requests/requests';
@@ -18,15 +18,15 @@ import { ICONS } from 'utilities/utilities';
 import styles from './TaxGroupTable.module.scss';
 
 interface IGetTablePropsProps {
-    allTaxBrackets: ITaxGroupData[];
+    allTaxBrackets: ITaxBracketData[];
     isTableLoading: boolean;
     taxGroupSliderModalState: State<ITaxSettingPageState['taxGroupSection']['sliderModal']>;
-    editItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
-    deleteItemClickHandler: (taxGroupData: ITaxGroupData) => IIconButtonProps['onClick'];
+    editItemClickHandler: (taxGroupData: ITaxBracketData) => IIconButtonProps['onClick'];
+    deleteItemClickHandler: (taxGroupData: ITaxBracketData) => IIconButtonProps['onClick'];
 }
 
 export class TaxGroupTableService {
-    static getTableProps = (props: IGetTablePropsProps): ITableProps<ITaxGroupData> => {
+    static getTableProps = (props: IGetTablePropsProps): ITableProps<ITaxBracketData> => {
         // props
         const {
             allTaxBrackets,
@@ -36,13 +36,13 @@ export class TaxGroupTableService {
             taxGroupSliderModalState,
         } = props;
 
-        const snoCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
+        const snoCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const { rowIndex } = props;
             // draw
             return rowIndex + 1;
         };
-        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxGroupData> = (props) => {
+        const actionsCustomRenderer: TTableCellCustomRenderer<ITaxBracketData> = (props) => {
             // props
             const { rowData } = props;
 
@@ -74,13 +74,15 @@ export class TaxGroupTableService {
                 </div>
             );
         };
-        const collapsedContentRenderer: ITableCollapsedCustomRenderer<ITaxGroupData> = (props) => {
+        const collapsedContentRenderer: ITableCollapsedCustomRenderer<ITaxBracketData> = (
+            props,
+        ) => {
             // props
             const { rowData } = props;
-            const { bracket } = rowData;
+            const { group } = rowData;
 
             const tableProps: ITableProps<ITaxBracketData> = {
-                data: bracket as ITaxBracketData[],
+                data: group as ITaxBracketData[],
                 shape: [
                     {
                         dataKey: 'name',

@@ -1,6 +1,6 @@
 import { State } from '@hookstate/core';
 import { IButtonProps, Table } from '@sellerspot/universal-components';
-import { ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React, { ReactElement } from 'react';
@@ -20,7 +20,7 @@ export const TaxGroupTable = (props: ITaxGroupTableProps): ReactElement => {
 
     // handlers
     const editItemClickHandler =
-        (taxGroupData: ITaxGroupData): IButtonProps['onClick'] =>
+        (taxGroupData: ITaxBracketData): IButtonProps['onClick'] =>
         async (event) => {
             // stop propagation
             event.stopPropagation();
@@ -32,7 +32,7 @@ export const TaxGroupTable = (props: ITaxGroupTableProps): ReactElement => {
             });
         };
     const deleteItemClickHandler =
-        (taxGroupData: ITaxGroupData): IButtonProps['onClick'] =>
+        (taxGroupData: ITaxBracketData): IButtonProps['onClick'] =>
         async (event) => {
             // stop propagation
             event.stopPropagation();

@@ -1,6 +1,10 @@
 import { xPercentofY } from 'utilities/general';
-import { EDiscountTypes, IDiscount, ITaxBracket } from '@sellerspot/universal-types';
-import { isArray } from 'lodash';
+import {
+    EDiscountTypes,
+    IDiscount,
+    ISaleTaxBracket,
+    ITaxBracketData,
+} from '@sellerspot/universal-types';
 
 export default class SaleService {
     /**
@@ -33,25 +37,17 @@ export default class SaleService {
      * @returns number (the total tax value for the product)
      */
     public computeTaxValue = (props: {
-        taxBracket: ITaxBracket;
+        taxBracket: ITaxBracketData | ISaleTaxBracket;
         unitPrice: number;
         quantity: number;
     }): number => {
         const { quantity, taxBracket, unitPrice } = props;
-        const { rate, group: taxGroup } = taxBracket;
-        // need to integrate for the tax group
-        let totalTaxRate = 0;
-        if (isArray(taxGroup)) {
-            totalTaxRate = taxGroup.reduce(
-                (totalRate, currentTaxNode) => totalRate + currentTaxNode.rate,
-                0,
-            );
-        } else {
-            totalTaxRate = rate;
-        }
+        const { rate } = taxBracket;
+        // for tax groups, server will send the calulated tax rate at the hierarchy level 0 itself,
+        // no need to iterate over group and calculate final rate
         return (
             xPercentofY({
-                x: totalTaxRate,
+                x: rate,
                 y: unitPrice,
             }) * quantity
         );
@@ -66,7 +62,7 @@ export default class SaleService {
         unitPrice: number;
         quantity: number;
         discount: IDiscount;
-        taxBracket: ITaxBracket;
+        taxBracket: ITaxBracketData | ISaleTaxBracket;
     }): number => {
         const { discount, quantity, taxBracket, unitPrice } = props;
 
