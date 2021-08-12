@@ -10,12 +10,14 @@ export class InventoryModalSearchFieldService {
     private static convertSearchResultToISelect = (
         inventoryItems: IInventoryData[],
     ): ISelectOption[] => {
-        return inventoryItems.map((inventoryItem) => {
-            return {
-                label: inventoryItem.product.name,
-                value: inventoryItem.product.reference.id,
-            };
-        });
+        console.log(inventoryItems);
+        // return inventoryItems.map((inventoryItem) => {
+        //     return {
+        //         label: inventoryItem.product.name,
+        //         value: inventoryItem.product.reference.id,
+        //     };
+        // });
+        return [];
     };
 
     static searchInventory = async (props: ISearchInventoryProps): Promise<ISelectOption[]> => {

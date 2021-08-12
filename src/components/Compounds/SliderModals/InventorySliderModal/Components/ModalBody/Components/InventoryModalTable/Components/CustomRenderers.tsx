@@ -144,11 +144,6 @@ export const TaxSettingCustomRenderer: TCustomRenderer = (props) => {
 
     // draw
     return (
-        <AsyncCreatableSelect
-            loadOptions={loadOptionsHandler}
-            value={value}
-            disableHelperTextPlaceholderPadding
-            onChange={onChange}
-        />
+        <AsyncCreatableSelect loadOptions={loadOptionsHandler} value={value} onChange={onChange} />
     );
 };

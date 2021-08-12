@@ -80,7 +80,7 @@ export class TaxGroupTableService {
             const { bracket } = rowData;
 
             const tableProps: ITableProps<ITaxBracketData> = {
-                data: bracket,
+                data: bracket as ITaxBracketData[],
                 shape: [
                     {
                         dataKey: 'name',

@@ -5,7 +5,7 @@ import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderMod
 
 export type IInventorySliderModalForm = {
     [key: string]: Pick<
-        IInventoryData,
+        IInventoryData['configurations'][0],
         'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock' | 'taxSetting'
     >;
 };

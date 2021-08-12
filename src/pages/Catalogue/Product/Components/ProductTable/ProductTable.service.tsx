@@ -7,7 +7,12 @@ import {
     ToolTip,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
-import { IProductData } from '@sellerspot/universal-types';
+import {
+    IBrandData,
+    ICategoryData,
+    IProductData,
+    IStockUnitData,
+} from '@sellerspot/universal-types';
 import React from 'react';
 import { requests } from 'requests/requests';
 import { ICONS } from 'utilities/utilities';
@@ -36,17 +41,17 @@ export class ProductTableService {
         const brandCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.brand?.name;
+            return (rowData.brand as IBrandData)?.name;
         };
         const stockUnitCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.stockUnit?.unit;
+            return (rowData.stockUnit as IStockUnitData)?.unit;
         };
         const categoryCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
             const { rowData } = props;
-            return rowData.category?.title;
+            return (rowData.category as ICategoryData)?.title;
         };
         const actionsCustomRenderer: TTableCellCustomRenderer<IProductData> = (props) => {
             // props
