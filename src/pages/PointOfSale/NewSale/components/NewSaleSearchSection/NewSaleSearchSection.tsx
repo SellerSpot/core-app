@@ -1,11 +1,12 @@
 import { State, useState } from '@hookstate/core';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { Button, IInputFieldProps, InputField } from '@sellerspot/universal-components';
+import { Button, IInputFieldProps, InputField, Skeleton } from '@sellerspot/universal-components';
 import { IProductData, ISaleData } from '@sellerspot/universal-types';
 import styles from './NewSaleSearchSection.module.scss';
 import Icon from '@iconify/react';
 import SaleSearchResultCard from './components/SaleSearchResultCard/SaleSearchResultCard';
+import { times } from 'lodash';
 
 interface INewSaleSearchSectionProps {
     saleData: State<ISaleData>;
@@ -15,14 +16,16 @@ export const NewSaleSearchSection = (props: INewSaleSearchSectionProps): ReactEl
     // props
     const {} = props;
 
+    // hooks
+    const searchFieldRef = useRef<HTMLInputElement>(null);
+
     // state
-    const searchQuery = useState('');
-    const searchResult = useState<IProductData[]>([]);
+    const searchQuery = useState('sfd');
+    const isSearching = useState(false);
+    const searchResults = useState<IProductData[]>([]);
 
     // handlers
-    const onSearchInitaiteClickHandler = () => {
-        // search logic
-    };
+    const onSearchInitaiteClickHandler = () => searchFieldRef.current.focus();
 
     const searchFieldOnChangeHandler: IInputFieldProps['onChange'] = (event) => {
         searchQuery.set(event.target.value);
@@ -31,6 +34,7 @@ export const NewSaleSearchSection = (props: INewSaleSearchSectionProps): ReactEl
     return (
         <div className={styles.searchSectionWrapper}>
             <InputField
+                ref={searchFieldRef}
                 autoFocus={true}
                 label="Search for producst"
                 placeHolder="Start typing or scaning"
@@ -42,7 +46,7 @@ export const NewSaleSearchSection = (props: INewSaleSearchSectionProps): ReactEl
                 onChange={searchFieldOnChangeHandler}
             />
             {/* search initiate info block */}
-            {searchQuery.get().length === 0 && searchResult.get().length === 0 && (
+            {searchQuery.get().length === 0 && searchResults.get().length === 0 && (
                 <div className={styles.searchInitiateInfoHolder}>
                     <Icon
                         icon={ICONS.outlineSearch}
@@ -58,23 +62,43 @@ export const NewSaleSearchSection = (props: INewSaleSearchSectionProps): ReactEl
                     />
                 </div>
             )}
-            {/* search results block */}
-            {searchResult.get().length > 0 && (
+            {/* search loader block */}
+            {isSearching.get() && (
                 <div className={styles.searchResultSecitonWrapper}>
-                    <SaleSearchResultCard
-                        productImage={undefined}
-                        productName={'Tomato'}
-                        stockUnit={'kg'}
-                        unitPrice={20}
-                    />
-                    <SaleSearchResultCard
-                        productImage={undefined}
-                        productName={'Tomato'}
-                        stockUnit={'kg'}
-                        unitPrice={20}
-                    />
+                    {times(3).map((key) => (
+                        <Skeleton key={key} animation="pulse">
+                            <SaleSearchResultCard
+                                productImage={undefined}
+                                productName={null}
+                                stockUnit={null}
+                                unitPrice={null}
+                            />
+                        </Skeleton>
+                    ))}
                 </div>
             )}
+            {/* search results block */}
+            {searchResults.get().length > 0 && (
+                <div className={styles.searchResultSecitonWrapper}>
+                    {searchResults.map((searchResult) => (
+                        <SaleSearchResultCard
+                            key={searchResult.id.get()}
+                            productImage={undefined}
+                            productName={'Tomato'}
+                            stockUnit={'kg'}
+                            unitPrice={20}
+                        />
+                    ))}
+                </div>
+            )}
+            {/* no results found block */}
+            {isSearching.get() === false &&
+                searchQuery.get().length > 0 &&
+                searchResults.get().length === 0 && (
+                    <div className={styles.searchResultSecitonWrapper}>
+                        <h5>No results found</h5>
+                    </div>
+                )}
         </div>
     );
 };
