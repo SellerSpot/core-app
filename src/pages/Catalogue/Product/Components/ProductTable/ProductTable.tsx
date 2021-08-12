@@ -3,7 +3,12 @@ import { Table } from '@sellerspot/universal-components';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { ProductSliderModalFieldsService } from 'components/Compounds/SliderModals/ProductSliderModal/Components/ModalBody/Components/Fields.service';
 import React, { ReactElement } from 'react';
-import { IProductData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import {
+    IBrandData,
+    ICategoryData,
+    IProductData,
+    IStockUnitData,
+} from '../../../../../../.yalc/@sellerspot/universal-types/dist';
 import { IProductPageState } from '../../Product.types';
 import { ProductTableService } from './ProductTable.service';
 
@@ -24,7 +29,7 @@ export const ProductTable = (props: IProductTableProps): ReactElement => {
         // product data
         const { id, name, barcode, brand, category, description, stockUnit } = productData;
         pageState.sliderModal.selectCategorySliderModal.selectedCategory.merge({
-            ...category,
+            ...(category as ICategoryData),
         });
         pageState.sliderModal.merge({
             mode: 'edit',
@@ -33,12 +38,13 @@ export const ProductTable = (props: IProductTableProps): ReactElement => {
                 name,
                 description,
                 barcode,
-                stockUnit:
-                    ProductSliderModalFieldsService.formatStockUnitDataForSelectComponent(
-                        stockUnit,
-                    ),
-                category: category.id,
-                brand: ProductSliderModalFieldsService.formatBrandDataForSelectComponent(brand),
+                stockUnit: ProductSliderModalFieldsService.formatStockUnitDataForSelectComponent(
+                    stockUnit as IStockUnitData,
+                ),
+                category: (category as ICategoryData).id,
+                brand: ProductSliderModalFieldsService.formatBrandDataForSelectComponent(
+                    brand as IBrandData,
+                ),
             },
             showModal: true,
         });

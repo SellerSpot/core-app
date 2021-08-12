@@ -105,7 +105,7 @@ export class TaxGroupSliderModalService {
             initialFormValues = {
                 name: prefillData?.name,
                 bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
-                    brackets: prefillData?.bracket,
+                    brackets: prefillData?.bracket as ITaxBracketData[],
                 }),
             };
         }

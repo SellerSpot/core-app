@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Button, IButtonProps, SliderModalFooter } from '@sellerspot/universal-components';
 import {
-    IProductSliderModalDynamicValues,
     IProductSliderModalOnClose,
     IProductSliderModalProps,
 } from '../../ProductSliderModal.types';
 import Icon from '@iconify/react';
+import { IProductSliderModalDynamicValues } from '../../ProductSliderModal.service';
 
 export type IModalFooterProps = Pick<IProductSliderModalOnClose, 'dirty' | 'submitting'> &
     Pick<IProductSliderModalProps, 'onClose'> &
