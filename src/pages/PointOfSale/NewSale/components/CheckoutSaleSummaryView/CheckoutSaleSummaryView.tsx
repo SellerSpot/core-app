@@ -1,25 +1,33 @@
 import { Button, Card, InputField } from '@sellerspot/universal-components';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cn from 'classnames';
 import { numberFormatINRCurrency } from 'utilities/general';
 import styles from './CheckoutSaleSummaryView.module.scss';
 import { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
+import { newSaleState } from '../../NewSale';
+import { useState } from '@hookstate/core';
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
-    const { proceedCallback, grandTotal, subTotal, totalDiscount, totalTaxes, viewMode } = props;
+    // props
+    const { proceedCallback, viewMode } = props;
 
+    // state
+    const payment = useState(newSaleState.saleData.payment);
+    const { amountPaid, grandTotal, subTotal, totalDiscount, totalTax } = payment.get();
+
+    // renderer helpers
     const Content = (): ReactElement => {
-        const [paidAmount, setPaidAmount] = useState(0);
+        const paidAmount = useState(0);
 
         const handlePaidOnChange = (
             event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
         ) => {
-            setPaidAmount(+event.target.value);
+            paidAmount.set(+event.target.value);
         };
 
-        const paidValue = paidAmount + '';
-        const balance = paidAmount - grandTotal > 0 ? paidAmount - grandTotal : 0;
+        const paidValue = paidAmount.get() + '';
+        const balance = amountPaid - grandTotal > 0 ? amountPaid - grandTotal : 0;
 
         return (
             <div className={styles.cardContent}>
@@ -29,7 +37,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total taxes</h6>
-                    <h6>{numberFormatINRCurrency(totalTaxes)}</h6>
+                    <h6>{numberFormatINRCurrency(totalTax)}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total discount</h6>

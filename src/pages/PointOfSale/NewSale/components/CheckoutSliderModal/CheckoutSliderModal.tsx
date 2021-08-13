@@ -14,19 +14,21 @@ import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
 import { BillA4 } from 'components/Compounds/BillA4/BillA4';
 import { Dummies } from 'dummies/Dummies';
 import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings.service';
-import { State } from '@hookstate/core';
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
+import { useState } from '@hookstate/core';
+import { newSaleState } from '../../NewSale';
 
-interface ICheckoutSliderModalProps {
-    checkoutModal: State<boolean>;
-}
-
-export const CheckoutSliderModal = (props: ICheckoutSliderModalProps): ReactElement => {
-    const { checkoutModal } = props;
+export const CheckoutSliderModal = (): ReactElement => {
+    const checkoutModal = useState(newSaleState.modals.checkout);
 
     const modalGoBackHandler = () => {
         // go back logic
         checkoutModal.set(false);
+    };
+
+    const onCheckoutClickHandler = () => {
+        // once checkout completed, go back to cart view, after clearing the cart state
+        modalGoBackHandler();
     };
     return (
         <SliderModal showModal={checkoutModal.get()} type={'fixed'} width={'70%'}>
@@ -102,6 +104,7 @@ export const CheckoutSliderModal = (props: ICheckoutSliderModalProps): ReactElem
                                                     theme="primary"
                                                     disableHelperTextPlaceholderPadding
                                                     fullWidth
+                                                    autoFocus={true}
                                                 />
                                                 <InputField
                                                     type="text"
@@ -166,12 +169,8 @@ export const CheckoutSliderModal = (props: ICheckoutSliderModalProps): ReactElem
                                     </div>
                                 </div>
                                 <CheckoutSaleSummaryView
-                                    grandTotal={0}
-                                    subTotal={0}
-                                    totalDiscount={0}
-                                    totalTaxes={0}
                                     viewMode="checkout"
-                                    proceedCallback={() => checkoutModal.set(false)}
+                                    proceedCallback={onCheckoutClickHandler}
                                 />
                             </div>
                         </div>

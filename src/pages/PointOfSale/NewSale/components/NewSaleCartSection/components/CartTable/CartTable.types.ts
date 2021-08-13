@@ -2,7 +2,6 @@ import { State } from '@hookstate/core';
 import { ICartDetails } from '@sellerspot/universal-types';
 
 export interface ICartTableProps {
-    cartData: State<ICartDetails[]>;
     searchFieldFocusTriggerer: () => void;
 }
 

@@ -7,22 +7,16 @@ import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './NewSale.module.scss';
 import { CheckoutSliderModal } from './components/CheckoutSliderModal/CheckoutSliderModal';
-import { useState } from '@hookstate/core';
+import { createState } from '@hookstate/core';
 import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/ParkedSalesSliderModal';
-import { ISaleData } from '@sellerspot/universal-types';
 import { NewSaleService } from './NewSale.service';
 import { NewSaleSearchSection } from './components/NewSaleSearchSection/NewSaleSearchSection';
 import { NewSaleCartSection } from './components/NewSaleCartSection/NewSaleCartSection';
-import { INewSaleModals } from './NewSale.types';
+import { INewSaleState } from './NewSale.types';
+
+export const newSaleState = createState<INewSaleState>(NewSaleService.getNewSaleInitialState());
 
 export const NewSale = (): ReactElement => {
-    // state
-    const modals = useState<INewSaleModals>({
-        checkout: false,
-        parkedSales: false,
-    } as INewSaleModals);
-    const saleData = useState<ISaleData>(NewSaleService.getInitialSaleDataState());
-
     // hooks
     const history = useHistory();
     const searchFieldRef = useRef<HTMLDivElement>(null);
@@ -52,17 +46,13 @@ export const NewSale = (): ReactElement => {
                     ]}
                 />
                 <div className={styles.contentWrapper}>
-                    <NewSaleSearchSection saleData={saleData} ref={searchFieldRef} />
-                    <NewSaleCartSection
-                        saleData={saleData}
-                        modals={modals}
-                        searchFieldFocusTriggerer={searchFieldFocusTriggerer}
-                    />
+                    <NewSaleSearchSection ref={searchFieldRef} />
+                    <NewSaleCartSection searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
                 </div>
             </div>
             {/* modals */}
-            <CheckoutSliderModal checkoutModal={modals.checkout} />
-            <ParkedSalesSliderModal parkedSalesModal={modals.parkedSales} />
+            <CheckoutSliderModal />
+            <ParkedSalesSliderModal />
         </>
     );
 };

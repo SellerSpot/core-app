@@ -16,7 +16,7 @@ export class NewSaleSearchSectionService {
             if (searchQuery.length === 0) {
                 throw new Error('Invalid query');
             }
-            await introduceDelay(1000);
+            await introduceDelay(500);
             return { passedQuery: searchQuery, results: Dummies.newSale.getInventoryProducts() };
         } catch (error) {
             return { passedQuery: searchQuery, results: [] };

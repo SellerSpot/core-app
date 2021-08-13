@@ -54,7 +54,6 @@ export class CartTableService {
     ): string => {
         // getting the right schema to use for validation
         const requiredSchema = yup.reach(CartTableService.collapsedFormValidationSchema, fieldPath);
-        console.log(values);
         try {
             requiredSchema.validateSync(values, {
                 abortEarly: false,

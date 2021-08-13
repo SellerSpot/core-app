@@ -23,7 +23,7 @@ export default class SaleService {
         if (discountType === EDiscountTypes.VALUE) {
             totalDiscount = discount <= unitPrice ? discount : unitPrice;
         } else {
-            xPercentofY({
+            totalDiscount = xPercentofY({
                 x: discount,
                 y: unitPrice,
             });

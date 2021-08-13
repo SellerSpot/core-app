@@ -17,7 +17,7 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ISaleData } from '@sellerspot/universal-types';
-import { State, useState } from '@hookstate/core';
+import { useState } from '@hookstate/core';
 import { rawClone } from 'utilities/general';
 import { SalesHistoryService } from '../../../SalesHistory/SalesHistory.service';
 import { ICONS } from 'utilities/utilities';
@@ -25,17 +25,15 @@ import Icon from '@iconify/react';
 import { ROUTES } from 'config/routes';
 import { ParkedSaleExpandedView } from './components/ParkedSaleExpandedView/ParkedSaleExpandedView';
 import styles from './ParkedSalesSliderModal.module.scss';
+import { newSaleState } from '../../NewSale';
 
 // for using fromNow api we need relativeTime plugin to be extended
 dayjs.extend(relativeTime);
 
-interface IParkedSalesModalProps {
-    parkedSalesModal: State<boolean>;
-}
-
-export const ParkedSalesSliderModal = (props: IParkedSalesModalProps): ReactElement => {
+export const ParkedSalesSliderModal = (): ReactElement => {
     // props
-    const { parkedSalesModal } = props;
+    const parkedSalesModal = useState(newSaleState.modals.parkedSales);
+
     // state
     const isLoading = useState(true);
     const isError = useState(false);

@@ -1,3 +1,4 @@
+import { useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
     Button,
@@ -8,6 +9,8 @@ import {
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 import { ICartDetails } from '@sellerspot/universal-types';
+import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
+import { NewSaleService } from 'pages/PointOfSale/NewSale/NewSale.service';
 import React, { ReactElement } from 'react';
 import { saleService } from 'services/services';
 import { numberFormatINRCurrency, rawClone } from 'utilities/general';
@@ -18,7 +21,10 @@ import { CartTableCollapsedContent } from './Components/CartTableCollapsedConten
 
 const CartTable = (props: ICartTableProps): ReactElement => {
     // props
-    const { cartData, searchFieldFocusTriggerer } = props;
+    const { searchFieldFocusTriggerer } = props;
+
+    // state
+    const cartData = useState(newSaleState.saleData.cart);
 
     // hooks
     const { colors } = useTheme();
@@ -52,11 +58,11 @@ const CartTable = (props: ICartTableProps): ReactElement => {
 
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        const { quantity, taxBracket, unitPrice, productDiscount } = rowData;
+        const { quantity, taxBracket, unitPrice, productDiscount: discount } = rowData;
 
         return numberFormatINRCurrency(
             saleService.computeProductSubTotal({
-                discount: productDiscount,
+                discount,
                 quantity,
                 taxBracket,
                 unitPrice,
@@ -71,12 +77,16 @@ const CartTable = (props: ICartTableProps): ReactElement => {
     };
 
     const Action: TTableCellCustomRenderer<ICartDetails> = (props) => {
-        const {} = props;
+        const { rowIndex } = props;
+        const onRemoveProductHandler = () => {
+            NewSaleService.removeProductFromCart(rowIndex, cartData);
+        };
         return (
             <IconButton
                 icon={<Icon icon={ICONS.outlineDeleteOutline} />}
                 theme="danger"
                 size="small"
+                onClick={onRemoveProductHandler}
             />
         );
     };
@@ -122,7 +132,7 @@ const CartTable = (props: ICartTableProps): ReactElement => {
                 align: 'right',
             },
             {
-                columnName: 'Price \n /unit',
+                columnName: 'Unit price',
                 width: '20%',
                 align: 'right',
                 customRenderer: pricePerUnitRenderer,
@@ -134,9 +144,9 @@ const CartTable = (props: ICartTableProps): ReactElement => {
                 customRenderer: subTotalRenderer,
             },
             {
-                columnName: '',
+                columnName: ``,
                 width: '5%',
-                align: 'right',
+                align: 'center',
                 customRenderer: Action,
             },
         ],

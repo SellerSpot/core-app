@@ -9,8 +9,26 @@ import {
     IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
+import { rawClone } from 'utilities/general';
+import { newSaleState } from './NewSale';
+import { INewSaleState } from './NewSale.types';
 
 export class NewSaleService {
+    static getNewSaleInitialState = (): INewSaleState => {
+        return {
+            modals: {
+                checkout: false,
+                parkedSales: false,
+            },
+            saleData: NewSaleService.getInitialSaleDataState(),
+            search: {
+                query: '',
+                results: [],
+                searching: false,
+            },
+        };
+    };
+
     static getInitialSaleDataState = (): ISaleData => {
         return {
             cart: [],
@@ -44,12 +62,9 @@ export class NewSaleService {
         };
     };
 
-    static addProductToTheCart = (
-        saleData: State<ISaleData>,
-        productToBeAdded: IInventoryData,
-        outletId: string,
-    ): void => {
-        const cartData = saleData.cart.get();
+    static addProductToCart = (productToBeAdded: IInventoryData, outletId: string): void => {
+        const saleData = newSaleState.saleData;
+        const cartData = rawClone<ICartDetails[]>(saleData.cart.get());
         const productIndex = cartData.findIndex(
             (product) => productToBeAdded.id === product.product.reference,
         );
@@ -95,5 +110,18 @@ export class NewSaleService {
             cartData.push(newCartProduct);
         }
         saleData.cart.set(cartData);
+    };
+
+    static removeProductFromCart = (
+        cartProductIndex: number,
+        cart: State<ICartDetails[]>,
+    ): void => {
+        const cartData = rawClone<ICartDetails[]>(cart.get());
+        cartData.splice(cartProductIndex, 1); // deletes the cart product
+        cart.set(cartData);
+    };
+
+    static resetSale = (): void => {
+        newSaleState.set(NewSaleService.getNewSaleInitialState());
     };
 }

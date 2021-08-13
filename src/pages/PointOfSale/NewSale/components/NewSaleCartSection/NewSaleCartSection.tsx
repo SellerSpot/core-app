@@ -5,28 +5,39 @@ import { Button } from '@sellerspot/universal-components';
 import CartTable from './components/CartTable/CartTable';
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import styles from './NewSaleCartSection.module.scss';
-import { State } from '@hookstate/core';
-import { ISaleData } from '@sellerspot/universal-types';
-import { INewSaleModals } from '../../NewSale.types';
+import { NewSaleService } from '../../NewSale.service';
+import { newSaleState } from '../../NewSale';
+import { useState } from '@hookstate/core';
 
 interface INewSaleCartSectionProps {
-    saleData: State<ISaleData>;
-    modals: State<INewSaleModals>;
     searchFieldFocusTriggerer: () => void;
 }
 
 export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElement => {
     // props
-    const { modals, saleData, searchFieldFocusTriggerer } = props;
+    const { searchFieldFocusTriggerer } = props;
 
     // state
+    const modals = useState(newSaleState.modals);
 
     // handlers
-    const onRetrieveSaleClickHandler = () => modals.parkedSales.set(true);
-    const onNewSaleClickHandler = () => {
+    const onRetrieveSaleClickHandler = () => {
+        // retreive the earlier parked sale
+        modals.parkedSales.set(true);
+    };
+    const onParkSaleClickHanlder = () => {
+        // park the current sale for later use
+    };
+    const onQuoteSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
     };
+    const onDiscardSaleClickHanlder = () => {
+        // reset the cart table state, get confirmations from the user before clearing
+        NewSaleService.resetSale();
+        searchFieldFocusTriggerer();
+    };
     const onCheckoutClickHandler = () => {
+        // only open checkout modal, if cart has something in it
         modals.checkout.set(true);
     };
 
@@ -50,7 +61,7 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
                     variant="contained"
                     theme="light"
                     startIcon={<Icon icon={ICONS.roundRestore} />}
-                    onClick={onNewSaleClickHandler}
+                    onClick={onParkSaleClickHanlder}
                     disableElevation
                     size="large"
                     whiteSpaceNoWrap
@@ -61,7 +72,7 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
                     variant="contained"
                     theme="light"
                     startIcon={<Icon icon={ICONS.requestQuote} />}
-                    onClick={onNewSaleClickHandler}
+                    onClick={onQuoteSaleClickHanlder}
                     disableElevation
                     size="large"
                     whiteSpaceNoWrap
@@ -72,27 +83,17 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
                     variant="contained"
                     theme="light"
                     startIcon={<Icon icon={ICONS.bxReset} />}
-                    onClick={onNewSaleClickHandler}
+                    onClick={onDiscardSaleClickHanlder}
                     disableElevation
                     size="large"
                     whiteSpaceNoWrap
                 />
             </div>
             <div className={styles.cartTableWrapper}>
-                <CartTable
-                    cartData={saleData.cart}
-                    searchFieldFocusTriggerer={searchFieldFocusTriggerer}
-                />
+                <CartTable searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
             </div>
             <div className={styles.cartSummaryWrapper}>
-                <CheckoutSaleSummaryView
-                    grandTotal={saleData.payment.grandTotal.get()}
-                    subTotal={saleData.payment.subTotal.get()}
-                    totalDiscount={saleData.payment.totalDiscount.get()}
-                    totalTaxes={saleData.payment.totalTax.get()}
-                    viewMode="cart"
-                    proceedCallback={onCheckoutClickHandler}
-                />
+                <CheckoutSaleSummaryView viewMode="cart" proceedCallback={onCheckoutClickHandler} />
             </div>
         </div>
     );
