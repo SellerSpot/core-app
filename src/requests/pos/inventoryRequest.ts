@@ -19,6 +19,7 @@ export default class InventoryRequest extends BaseRequest {
             url: ROUTES.POS.INVENTORY.SEARCH,
             method: 'GET',
             query: { query },
+            param: { outletid: '' },
         });
     };
 }

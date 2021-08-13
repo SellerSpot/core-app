@@ -135,7 +135,6 @@ export const TaxSettingCustomRenderer: TCustomRenderer = (props) => {
         validateFields: [],
     });
     const { value, onChange } = input;
-    console.log(value);
 
     // handlers
     const loadOptionsHandler = async (): Promise<ISelectOption[]> => {
