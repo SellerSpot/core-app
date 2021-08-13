@@ -3,6 +3,7 @@ import { ICartDetails } from '@sellerspot/universal-types';
 
 export interface ICartTableProps {
     cartData: State<ICartDetails[]>;
+    searchFieldFocusTriggerer: () => void;
 }
 
 // interface for the props passed to Collapsed Content in Cart Table

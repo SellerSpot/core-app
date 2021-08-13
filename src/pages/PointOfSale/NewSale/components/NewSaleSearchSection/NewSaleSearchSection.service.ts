@@ -3,15 +3,23 @@ import { IInventoryData } from '@sellerspot/universal-types';
 import { Dummies } from 'dummies/Dummies';
 
 export class NewSaleSearchSectionService {
-    static searchInventoryProducts = async (searchQuery: string): Promise<IInventoryData[]> => {
+    static searchInventoryProducts = async (
+        searchQuery: string,
+    ): Promise<{
+        /**
+         * used to manage the race conditions // later we'll implement the abort controller
+         */
+        passedQuery: string;
+        results: IInventoryData[];
+    }> => {
         try {
             if (searchQuery.length === 0) {
                 throw new Error('Invalid query');
             }
             await introduceDelay(1000);
-            return Dummies.newSale.getInventoryProducts();
+            return { passedQuery: searchQuery, results: Dummies.newSale.getInventoryProducts() };
         } catch (error) {
-            return [];
+            return { passedQuery: searchQuery, results: [] };
         }
     };
 }

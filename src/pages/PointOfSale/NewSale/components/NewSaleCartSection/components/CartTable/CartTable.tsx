@@ -18,17 +18,12 @@ import { CartTableCollapsedContent } from './Components/CartTableCollapsedConten
 
 const CartTable = (props: ICartTableProps): ReactElement => {
     // props
-    const { cartData } = props;
-
-    console.log(rawClone(cartData.get()));
+    const { cartData, searchFieldFocusTriggerer } = props;
 
     // hooks
     const { colors } = useTheme();
 
     // hanlders
-    const searchFieldFocusHandler = () => {
-        // handler search field focus
-    };
 
     // renderer helpers
     const collapsedContentRenderer: ITableCollapsedCustomRenderer<ICartDetails> = (props) => {
@@ -88,7 +83,7 @@ const CartTable = (props: ICartTableProps): ReactElement => {
 
     const emptyTableCTA = () => {
         // handlers
-        const onClickHandler = () => searchFieldFocusHandler();
+        const onClickHandler = () => searchFieldFocusTriggerer();
 
         return (
             <Button

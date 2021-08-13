@@ -12,11 +12,12 @@ import { INewSaleModals } from '../../NewSale.types';
 interface INewSaleCartSectionProps {
     saleData: State<ISaleData>;
     modals: State<INewSaleModals>;
+    searchFieldFocusTriggerer: () => void;
 }
 
 export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElement => {
     // props
-    const { modals, saleData } = props;
+    const { modals, saleData, searchFieldFocusTriggerer } = props;
 
     // state
 
@@ -78,7 +79,10 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
                 />
             </div>
             <div className={styles.cartTableWrapper}>
-                <CartTable cartData={saleData.cart} />
+                <CartTable
+                    cartData={saleData.cart}
+                    searchFieldFocusTriggerer={searchFieldFocusTriggerer}
+                />
             </div>
             <div className={styles.cartSummaryWrapper}>
                 <CheckoutSaleSummaryView

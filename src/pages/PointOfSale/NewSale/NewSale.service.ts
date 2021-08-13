@@ -1,6 +1,7 @@
 import { State } from '@hookstate/core';
 import {
     EDiscountTypes,
+    EPaymentMethods,
     ICartDetails,
     IInventoryData,
     ISaleData,
@@ -8,12 +9,11 @@ import {
     IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
-import { Dummies } from 'dummies/Dummies';
 
 export class NewSaleService {
     static getInitialSaleDataState = (): ISaleData => {
         return {
-            cart: Dummies.salesHistory.getSalesData()[0].cart,
+            cart: [],
             customer: {
                 name: null,
                 reference: null,
@@ -23,7 +23,7 @@ export class NewSaleService {
                 reference: null,
             },
             payment: {
-                method: null,
+                method: EPaymentMethods.CASH,
                 amountPaid: 0,
                 balanceGiven: 0,
                 grandTotal: 0,
@@ -31,6 +31,7 @@ export class NewSaleService {
                 totalDiscount: 0,
                 totalTax: 0,
             },
+            // special discount - overall discount
             saleDiscount: {
                 discountType: EDiscountTypes.PERCENT,
                 discount: 0,

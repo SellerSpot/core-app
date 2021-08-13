@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
@@ -25,10 +25,15 @@ export const NewSale = (): ReactElement => {
 
     // hooks
     const history = useHistory();
+    const searchFieldRef = useRef<HTMLDivElement>(null);
 
     // handlers
     const onSalesHistoryClickHanlder = () =>
         history.push(ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY);
+
+    const searchFieldFocusTriggerer = () => {
+        searchFieldRef.current.focus();
+    };
 
     return (
         <>
@@ -47,8 +52,12 @@ export const NewSale = (): ReactElement => {
                     ]}
                 />
                 <div className={styles.contentWrapper}>
-                    <NewSaleSearchSection saleData={saleData} />
-                    <NewSaleCartSection saleData={saleData} modals={modals} />
+                    <NewSaleSearchSection saleData={saleData} ref={searchFieldRef} />
+                    <NewSaleCartSection
+                        saleData={saleData}
+                        modals={modals}
+                        searchFieldFocusTriggerer={searchFieldFocusTriggerer}
+                    />
                 </div>
             </div>
             {/* modals */}
