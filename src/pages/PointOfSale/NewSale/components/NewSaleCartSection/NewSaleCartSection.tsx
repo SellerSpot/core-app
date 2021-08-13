@@ -27,9 +27,11 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
     };
     const onParkSaleClickHanlder = () => {
         // park the current sale for later use
+        NewSaleService.parkSaleInitater();
     };
     const onQuoteSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
+        NewSaleService.quoteSaleInitiator();
     };
     const onDiscardSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
@@ -38,7 +40,7 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
     };
     const onCheckoutClickHandler = () => {
         // only open checkout modal, if cart has something in it
-        modals.checkout.set(true);
+        NewSaleService.checkoutSaleInitiator();
     };
 
     return (

@@ -64,7 +64,7 @@ export const redirectTo = (
     }
 };
 
-export const rawClone = <T = unknown>(data: unknown): T => {
+export const rawClone = <T = unknown>(data: T): T => {
     return JSON.parse(JSON.stringify(data));
 };
 

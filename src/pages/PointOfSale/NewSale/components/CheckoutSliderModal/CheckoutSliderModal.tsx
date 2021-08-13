@@ -17,10 +17,14 @@ import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import { useState } from '@hookstate/core';
 import { newSaleState } from '../../NewSale';
+import { ESaleStatus } from '@sellerspot/universal-types';
 
 export const CheckoutSliderModal = (): ReactElement => {
+    // state
     const checkoutModal = useState(newSaleState.modals.checkout);
+    const saleData = useState(newSaleState.saleData);
 
+    // handlers
     const modalGoBackHandler = () => {
         // go back logic
         checkoutModal.set(false);
@@ -30,12 +34,33 @@ export const CheckoutSliderModal = (): ReactElement => {
         // once checkout completed, go back to cart view, after clearing the cart state
         modalGoBackHandler();
     };
+
+    const getSliderTitle = () => {
+        let sliderTitle = '';
+        // get the title based on the current state
+        switch (saleData.status.get()) {
+            case ESaleStatus.PARKED:
+                sliderTitle = 'Park sale';
+                break;
+            case ESaleStatus.QUOTED:
+                sliderTitle = 'Quote sale';
+                break;
+            default:
+                sliderTitle = 'Checkout sale';
+            // CHECKOUT FLOW
+        }
+        return sliderTitle;
+    };
+
+    // draw
     return (
-        <SliderModal showModal={checkoutModal.get()} type={'fixed'} width={'70%'}>
+        <SliderModal showModal={checkoutModal.get()} type="fixed" width="70%">
             <SliderModalLayoutWrapper>
                 <SliderModalHeader
                     modalGoBackCallback={modalGoBackHandler}
                     modalGoBackText="Go back to cart"
+                    title={getSliderTitle()}
+                    titlePlacement="center"
                 />
                 <SliderModalBody>
                     <div className={styles.bodyWrapper}>

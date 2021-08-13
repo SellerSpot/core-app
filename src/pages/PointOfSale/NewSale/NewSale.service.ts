@@ -1,6 +1,7 @@
 import {
     EDiscountTypes,
     EPaymentMethods,
+    ESaleStatus,
     ICartDetails,
     IInventoryData,
     ISaleData,
@@ -8,8 +9,10 @@ import {
     IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
+import { Dummies } from 'dummies/Dummies';
 import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
+import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
 import { newSaleState } from './NewSale';
 import { INewSaleState } from './NewSale.types';
 
@@ -17,7 +20,7 @@ export class NewSaleService {
     static getNewSaleInitialState = (): INewSaleState => {
         return {
             modals: {
-                checkout: false,
+                checkout: true,
                 parkedSales: false,
             },
             saleData: NewSaleService.getInitialSaleDataState(),
@@ -31,7 +34,7 @@ export class NewSaleService {
 
     static getInitialSaleDataState = (): ISaleData => {
         return {
-            cart: [],
+            cart: Dummies.salesHistory.getSalesData()[0].cart,
             customer: {
                 name: null,
                 reference: null,
@@ -121,6 +124,42 @@ export class NewSaleService {
 
     static resetSale = (): void => {
         newSaleState.set(NewSaleService.getNewSaleInitialState());
+    };
+
+    static parkSaleInitater = (): void => {
+        if (newSaleState.saleData.cart.get().length > 0) {
+            newSaleState.batch((state) => {
+                state.saleData.status.set(ESaleStatus.PARKED);
+                state.modals.checkout.set(true);
+            });
+        } else {
+            // throw some error stating that, the cart is empty
+            showNotify('The cart is empty');
+        }
+    };
+
+    static quoteSaleInitiator = (): void => {
+        if (newSaleState.saleData.cart.get().length > 0) {
+            newSaleState.batch((state) => {
+                state.saleData.status.set(ESaleStatus.QUOTED);
+                state.modals.checkout.set(true);
+            });
+        } else {
+            // throw some error stating that, the cart is empty
+            showNotify('The cart is empty');
+        }
+    };
+
+    static checkoutSaleInitiator = (): void => {
+        if (newSaleState.saleData.cart.get().length > 0) {
+            newSaleState.batch((state) => {
+                state.saleData.status.set(null); // null tells that the sale is not yet completed and yet to be checked out
+                state.modals.checkout.set(true);
+            });
+        } else {
+            // throw some error stating that, the cart is empty
+            showNotify('The cart is empty');
+        }
     };
 
     static computeSalePayment = (): void => {
