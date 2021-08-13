@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ITableProps, Table } from '@sellerspot/universal-components';
-import { IInventoryData } from '@sellerspot/universal-types';
+import { IButtonProps, ITableProps, Table } from '@sellerspot/universal-components';
+import { IInventoryData, ITaxSettingData } from '@sellerspot/universal-types';
 import {
     ActionsCustomRenderer,
     CustomCollapsedContentRenderer,
@@ -9,26 +9,55 @@ import {
     StockAvailableCustomRenderer,
 } from './Components/CustomRenderers';
 import { rawClone } from 'utilities/general';
+import { IInventoryPageState } from 'pages/PointOfSale/Inventory/Inventory.types';
+import { State } from '@hookstate/core';
+import { IInventorySliderModalForm } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 
 interface IInventoryTableProps {
-    inventoryProducts: IInventoryData[];
+    pageState: State<IInventoryPageState>;
 }
 
 export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
     // props
-    const { inventoryProducts } = props;
+    const { pageState } = props;
 
     // handlers
-    const editItemClickHandler = () => () => {
-        console.log('Edit Clicked');
-    };
-    const deleteItemClickHandler = () => () => {
+    const editItemClickHandler =
+        (rowData: IInventoryData): IButtonProps['onClick'] =>
+        (event) => {
+            event.stopPropagation();
+            const outlets = Object.keys(rowData.configurations);
+            const prefillData: IInventorySliderModalForm = {};
+            outlets.map((outletId) => {
+                prefillData[outletId] = {
+                    ...rowData.configurations[outletId],
+                    taxSetting: {
+                        label: (rowData.configurations[outletId].taxSetting as ITaxSettingData)
+                            .name,
+                        value: (rowData.configurations[outletId].taxSetting as ITaxSettingData).id,
+                    },
+                };
+            });
+            pageState.sliderModal.merge({
+                mode: 'edit',
+                showModal: true,
+                prefillData: {
+                    prefillData,
+                    product: {
+                        label: rowData.name,
+                        value: rowData.id,
+                    },
+                },
+            });
+        };
+    const deleteItemClickHandler = (): IButtonProps['onClick'] => (event) => {
+        event.stopPropagation();
         console.log('Delete Clicked');
     };
 
     // table props
     const tableProps: ITableProps<IInventoryData> = {
-        data: rawClone(inventoryProducts),
+        data: rawClone(pageState.products.get()),
         multiRowExpansion: true,
         shape: [
             {
@@ -58,7 +87,10 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
                 }),
             },
         ],
-        collapsedContentRenderer: CustomCollapsedContentRenderer,
+        collapsedContentRenderer: CustomCollapsedContentRenderer({
+            deleteItemClickHandler,
+            editItemClickHandler,
+        }),
     };
 
     // draw

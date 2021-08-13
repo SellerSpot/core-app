@@ -80,7 +80,7 @@ export const Inventory = (): ReactElement => {
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent addToInventoryCallback={addToInventoryHandler} />
-            <InventoryTable inventoryProducts={pageState.products.get()} />
+            <InventoryTable pageState={pageState} />
             <InventorySliderModalBase sliderModalState={pageState.sliderModal} />
         </div>
     );

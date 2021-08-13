@@ -1,12 +1,16 @@
 import { FormApi } from 'final-form';
 import { IOnClickEvents } from '../../../../typings/common.types';
-import { IInventoryData, IOutletData } from '@sellerspot/universal-types';
+import { IInventoryData, IOutletData, ITaxSettingData } from '@sellerspot/universal-types';
 import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderModal.types';
+import { ISelectOption } from '@sellerspot/universal-components';
+import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 
 export type IInventorySliderModalFormFields = Pick<
     IInventoryData['configurations'][0],
-    'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock' | 'taxSetting'
->;
+    'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock'
+> & {
+    taxSetting: ISelectOption<ITaxSettingData>;
+};
 
 export type IInventorySliderModalForm = {
     [key: string]: IInventorySliderModalFormFields;
@@ -23,7 +27,10 @@ export interface IInventorySliderModalOnClose {
     event: IOnClickEvents['div'] | IOnClickEvents['button'];
 }
 
-type IPrefillData = IInventorySliderModalForm;
+type IPrefillData = {
+    product: IInventorySliderModalDynamicValues['searchField']['selectedProduct'];
+    prefillData: IInventorySliderModalForm;
+};
 
 export interface IInventorySliderModalProps {
     showModal: boolean;

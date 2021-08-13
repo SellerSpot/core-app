@@ -1,12 +1,11 @@
-import { useState } from '@hookstate/core';
 import {
-    ISelectOption,
     ISliderModalProps,
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
+import { rawClone } from 'utilities/general';
 import { ProductSliderModal } from '../ProductSliderModal/ProductSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { ModalFooter } from './Components/ModalFooter/ModalFooter';
@@ -18,11 +17,8 @@ import {
     IInventorySliderModalProps,
 } from './InventorySliderModal.types';
 
-interface ISearchInventorySelectMeta {
+export interface ISearchInventorySelectMeta {
     type: 'inventoryProduct' | 'catalogueProduct';
-}
-export interface IInventorySliderModalState {
-    selectedProduct: ISelectOption<ISearchInventorySelectMeta>;
 }
 
 export const InventorySliderModal = (props: IInventorySliderModalProps): ReactElement => {
@@ -37,11 +33,6 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
         showModal,
         allOutlets,
     } = props;
-
-    // state
-    const state = useState<IInventorySliderModalState>({
-        selectedProduct: null,
-    });
 
     // handlers
     const onBackdropClickHandler: ISliderModalProps['onBackdropClick'] = (event) => {
@@ -91,7 +82,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     };
                     const modalBodyProps: IModalBodyProps = {
                         submitting,
-                        state,
+                        searchFieldProps: rawClone(allDynamicProps.searchField),
                         allOutlets,
                     };
 

@@ -1,6 +1,6 @@
 import { ISelectOption } from '@sellerspot/universal-components';
 import { ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
-import { IInventorySliderModalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 import { isEmpty } from 'lodash';
 import { requests } from 'requests/requests';
 
@@ -8,7 +8,7 @@ interface ISearchInventoryProps {
     query: string;
 }
 
-type ISelectMeta = IInventorySliderModalState['selectedProduct']['meta'];
+type ISelectMeta = IInventorySliderModalDynamicValues['searchField']['selectedProduct']['meta'];
 
 export class InventoryModalSearchFieldService {
     static convertSearchResultToISelect = (
