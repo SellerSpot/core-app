@@ -31,7 +31,7 @@ export interface ITaxGroupSliderModalProps {
 }
 
 export type ITaxGroupSliderForm = Pick<ITaxGroupData, 'name'> & {
-    bracket: Omit<ISelectOption, 'key'>[];
+    bracket: Omit<ISelectOption, 'meta'>[];
 };
 
 export interface ITaxGroupSliderModalDynamicValues {

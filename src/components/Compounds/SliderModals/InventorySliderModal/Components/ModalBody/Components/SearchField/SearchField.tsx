@@ -1,25 +1,23 @@
-import { State, useState } from '@hookstate/core';
+import { State } from '@hookstate/core';
 import {
     AsyncCreatableSelect,
     IAsyncCreatableSelectProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
 import { InventoryModalSearchFieldService } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField.service';
-import { IInventorySliderModalLocalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IInventorySliderModalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import React, { ReactElement } from 'react';
 import styles from './SearchField.module.scss';
 
 interface IInventoryModalSearchFieldProps {
-    selectedProductState: State<IInventorySliderModalLocalState['selectedProduct']>;
+    selectedProductState: State<IInventorySliderModalState['selectedProduct']>;
 }
+
+type ISelectMeta = IInventorySliderModalState['selectedProduct']['meta'];
 
 export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps): ReactElement => {
     // props
-    const {} = props;
-    // state
-    // should the creatable prompt be "create new product"
-    // or "add product to inventory"
-    const creatableActionType = useState<'createProduct' | 'addToInventory' | null>(null);
+    const { selectedProductState } = props;
     // handlers
     const loadOptionsHandler: IAsyncCreatableSelectProps['loadOptions'] = async (query) => {
         // sending request
@@ -36,14 +34,15 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
         }
     };
     const onChangeHandler: IAsyncCreatableSelectProps['onChange'] = (option) => {
-        console.log((option as ISelectOption).label);
+        const currentOption = option as ISelectOption<ISelectMeta>;
+        if (currentOption.meta.type === 'inventoryProduct') {
+            selectedProductState.set(currentOption);
+        } else if (currentOption.meta.type === 'catalogueProduct') {
+            console.log('Add A Product to inventory');
+        }
     };
     const onCreateOptionHandler: IAsyncCreatableSelectProps['onCreateOption'] = (option) => {
-        if (creatableActionType.get() === 'createProduct') {
-            console.log('Create Product ', option);
-        } else if (creatableActionType.get() === 'addToInventory') {
-            console.log('Add Product to inventory ', option);
-        }
+        console.log('Create Product ', option);
     };
     const formatCreateLabelHandler: IAsyncCreatableSelectProps['formatCreateLabel'] = (
         inputValue,
@@ -58,6 +57,7 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
                 autoFocus
                 label="Search for Products"
                 loadOptions={loadOptionsHandler}
+                value={selectedProductState.get()}
                 formatCreateLabel={formatCreateLabelHandler}
                 onCreateOption={onCreateOptionHandler}
                 onChange={onChangeHandler}

@@ -49,6 +49,7 @@ export const Inventory = (): ReactElement => {
             showModal: false,
             mode: 'create',
             prefillData: null,
+            allOutlets: [],
         },
     });
 
@@ -60,21 +61,26 @@ export const Inventory = (): ReactElement => {
             prefillData: null,
         });
     };
-    const getAllProducts = async () => {
+    const getAllInventoryProducts = async () => {
         const allProducts = await InventoryService.getAllProducts();
         pageState.products.set(allProducts);
+    };
+    const getAllOutlets = async () => {
+        const allOutlets = await InventoryService.getAllOutlets();
+        pageState.sliderModal.allOutlets.set(allOutlets);
     };
 
     // effects
     useEffect(() => {
-        getAllProducts();
+        getAllInventoryProducts();
+        getAllOutlets();
     }, []);
 
     // draw
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent addToInventoryCallback={addToInventoryHandler} />
-            <InventoryTable inventory={pageState.products.get()} />
+            <InventoryTable inventoryProducts={pageState.products.get()} />
             <InventorySliderModalBase sliderModalState={pageState.sliderModal} />
         </div>
     );

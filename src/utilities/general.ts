@@ -83,8 +83,7 @@ export const showErrorHelperMessage = (meta: FieldMetaState<unknown>): boolean =
 export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
     label: yup.string(),
     value: yup.string(),
-    labelToShow: yup.mixed().optional(),
-    key: yup.mixed().optional(),
+    meta: yup.mixed().optional(),
 });
 
 // used to the get the key property for a node

@@ -1,5 +1,6 @@
 import { ISelectOption } from '@sellerspot/universal-components';
 import { ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
+import { IInventorySliderModalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { isEmpty } from 'lodash';
 import { requests } from 'requests/requests';
 
@@ -7,27 +8,39 @@ interface ISearchInventoryProps {
     query: string;
 }
 
+type ISelectMeta = IInventorySliderModalState['selectedProduct']['meta'];
+
 export class InventoryModalSearchFieldService {
     static convertSearchResultToISelect = (
         items: ISearchInventoryProductsResponse['data']['products'],
-    ): ISelectOption[] => {
+    ): ISelectOption<ISelectMeta>[] => {
         const { catalogueProducts, inventoryProducts } = items;
-        let options: ISelectOption[] = [];
+        let options: ISelectOption<ISelectMeta>[] = [];
+        // adding products from inventory first
         if (!isEmpty(inventoryProducts)) {
-            const inventoryOptions: ISelectOption[] = inventoryProducts.map((inventoryItem) => {
-                return {
-                    label: inventoryItem.name,
-                    value: inventoryItem.id,
-                };
-            });
+            const inventoryOptions = inventoryProducts.map<ISelectOption<ISelectMeta>>(
+                (inventoryItem) => {
+                    return {
+                        label: inventoryItem.name,
+                        value: inventoryItem.id,
+                        meta: {
+                            type: 'inventoryProduct',
+                        },
+                    };
+                },
+            );
             options = options.concat(inventoryOptions);
         }
+        // adding products from catalogue
         if (!isEmpty(catalogueProducts)) {
-            const catalogueProductsOptions: ISelectOption[] = catalogueProducts.map(
+            const catalogueProductsOptions = catalogueProducts.map<ISelectOption<ISelectMeta>>(
                 (catalogueProductItem) => {
                     return {
                         label: `Add product "${catalogueProductItem.name}" to inventory`,
                         value: catalogueProductItem.id,
+                        meta: {
+                            type: 'catalogueProduct',
+                        },
                     };
                 },
             );

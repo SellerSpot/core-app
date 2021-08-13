@@ -1,43 +1,29 @@
 import { IconifyIcon } from '@iconify/react';
-import { requests } from 'requests/requests';
 import { ICONS } from '../../../../utilities/utilities';
-import { IOutletData } from '@sellerspot/universal-types';
 import {
     IInventorySliderModalForm,
     IInventorySliderModalProps,
 } from './InventorySliderModal.types';
 
-type IGetDynamicProps = Pick<IInventorySliderModalProps, 'mode' | 'prefillData'>;
+type IGetDynamicProps = Pick<IInventorySliderModalProps, 'mode' | 'prefillData' | 'allOutlets'>;
 
 export interface IInventorySliderModalDynamicValues {
     modalTitle: string;
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
     initialFormValues: Partial<IInventorySliderModalForm>;
-    allOutlets: IOutletData[];
 }
 
 export class InventorySliderModalService {
-    static getAllOutlets = async (): Promise<IOutletData[]> => {
-        const { data, status } = await requests.catalogue.outletRequest.getAllOutlet();
-        if (status) {
-            return data;
-        }
-        return [];
-    };
-
-    static getDynamicProps = async (
-        props: IGetDynamicProps,
-    ): Promise<IInventorySliderModalDynamicValues> => {
+    static getDynamicProps = (props: IGetDynamicProps): IInventorySliderModalDynamicValues => {
         // props
-        const { mode } = props;
+        const { mode, allOutlets } = props;
         let modalTitle = 'Add product to inventory';
         let modalFooterPrimaryButtonLabel = 'ADD PRODUCT';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         const initialFormValues: Partial<IInventorySliderModalForm> = {};
 
         // initialFormValues
-        const allOutlets = await InventorySliderModalService.getAllOutlets();
         allOutlets.map((outlet) => {
             initialFormValues[outlet.id] = {
                 mrp: 0,
@@ -64,7 +50,6 @@ export class InventorySliderModalService {
             modalFooterPrimaryButtonIcon,
             modalFooterPrimaryButtonLabel,
             modalTitle,
-            allOutlets,
         };
     };
 }

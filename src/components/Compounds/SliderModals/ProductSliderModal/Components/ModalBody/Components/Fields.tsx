@@ -17,6 +17,7 @@ import {
     IProductSliderModalForm,
     IProductSliderModalProps,
 } from '../../../ProductSliderModal.types';
+import { IStockUnitData } from '@sellerspot/universal-types';
 import styles from './Fields.module.scss';
 import { ProductSliderModalFieldsService } from './Fields.service';
 
@@ -242,6 +243,18 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
         });
     };
 
+    const formatOptionLabelHandler: IAsyncCreatableSelectProps['formatOptionLabel'] = (option) => {
+        const currOption = option as ISelectOption<IStockUnitData>;
+        return (
+            <div className={styles.stockUnitSelectLabel}>
+                <p>{currOption.meta.name}</p>
+                <p>
+                    <b>{`  [${currOption.meta.unit}]`}</b>
+                </p>
+            </div>
+        );
+    };
+
     // draw
     return (
         <AsyncCreatableSelect
@@ -250,6 +263,7 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
             value={value as ISelectOption}
             isDisabled={submitting}
             formatCreateLabel={(inputValue) => `Create stock unit "${inputValue}"`}
+            formatOptionLabel={formatOptionLabelHandler}
             helperMessage={{
                 enabled: helperMessage.enabled,
                 content: helperMessage.content,

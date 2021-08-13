@@ -9,7 +9,7 @@ import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmD
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
-import { showErrorHelperMessage } from 'utilities/general';
+import { SelectOptionValidationSchema, showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -121,18 +121,11 @@ export class TaxGroupSliderModalService {
         };
     };
 
-    private static ISelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
-        label: yup.string(),
-        value: yup.string(),
-        labelToShow: yup.mixed().optional(),
-        key: yup.mixed().optional(),
-    });
-
     private static validationSchema: yup.SchemaOf<ITaxGroupSliderForm> = yup.object({
         name: yup.string().required('Tax Group name is required'),
         bracket: yup
             .array()
-            .of(TaxGroupSliderModalService.ISelectOptionValidationSchema)
+            .of(SelectOptionValidationSchema)
             .min(1, 'Please choose atleast one tax bracket for the tax group')
             .required('Please select the tax brackets for this tax group'),
     });

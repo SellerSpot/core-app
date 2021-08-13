@@ -1,7 +1,5 @@
-import React from 'react';
 import { ISelectOption } from '@sellerspot/universal-components';
 import { IBrandData, IStockUnitData } from '@sellerspot/universal-types';
-import styles from './Fields.module.scss';
 import { find, getNodeAtPath, TreeItem } from 'react-sortable-tree';
 import { getNodeKey } from 'utilities/general';
 
@@ -17,20 +15,13 @@ export class ProductSliderModalFieldsService {
         };
     };
 
-    static formatStockUnitDataForSelectComponent = (stockUnit: IStockUnitData): ISelectOption => {
-        // component
-        const stockUnitSelectLabel = (
-            <div className={styles.stockUnitSelectLabel}>
-                <p>{stockUnit.name}</p>
-                <p>
-                    <b>{`  [${stockUnit.unit}]`}</b>
-                </p>
-            </div>
-        );
+    static formatStockUnitDataForSelectComponent = (
+        stockUnit: IStockUnitData,
+    ): ISelectOption<IStockUnitData> => {
         return {
-            labelToShow: stockUnitSelectLabel,
             label: stockUnit.name,
             value: stockUnit.id,
+            meta: stockUnit,
         };
     };
 

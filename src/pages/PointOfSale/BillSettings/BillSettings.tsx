@@ -36,8 +36,8 @@ export const billSizeComponentMap: TBillComponentMap = {
 };
 
 export const billOptions: ISelectOption<keyof typeof EBILL_SIZES>[] = [
-    { key: 'BILL_A4', label: 'A4', value: 'a4id' },
-    { key: 'BILL_90MM', label: '90mm', value: '90mmid' },
+    { meta: 'BILL_A4', label: 'A4', value: 'a4id' },
+    { meta: 'BILL_90MM', label: '90mm', value: '90mmid' },
 ];
 
 export const BillSettings = (): ReactElement => {
@@ -149,11 +149,11 @@ export const BillSettings = (): ReactElement => {
                                 options={billOptions}
                                 value={billOptions.find(
                                     (billOption) =>
-                                        billOption.key === billSettingsState.defaultBill.get(),
+                                        billOption.meta === billSettingsState.defaultBill.get(),
                                 )}
                                 onChange={(option: ISelectOption) =>
                                     billSettingsState.defaultBill.set(
-                                        option.key as keyof typeof EBILL_SIZES,
+                                        option.meta as keyof typeof EBILL_SIZES,
                                     )
                                 }
                                 isClearable={false}
@@ -169,13 +169,15 @@ export const BillSettings = (): ReactElement => {
                                     {billOptions.map((billOption) => (
                                         <h5
                                             title={`Change settings for ${billOption.label}`}
-                                            key={billOption.key}
+                                            key={billOption.meta}
                                             className={cn(styles.billSwitch, {
                                                 [styles.billSwitchActive]:
-                                                    billOption.key ===
+                                                    billOption.meta ===
                                                     billSettingsSwitchState.get(),
                                             })}
-                                            onClick={onBillSettingViewChangeHandler(billOption.key)}
+                                            onClick={onBillSettingViewChangeHandler(
+                                                billOption.meta,
+                                            )}
                                         >
                                             {billOption.label}
                                         </h5>

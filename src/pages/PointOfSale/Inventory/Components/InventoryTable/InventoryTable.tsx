@@ -1,72 +1,64 @@
 import React, { ReactElement } from 'react';
 import { ITableProps, Table } from '@sellerspot/universal-components';
 import { IInventoryData } from '@sellerspot/universal-types';
+import {
+    ActionsCustomRenderer,
+    CustomCollapsedContentRenderer,
+    ProductCustomRenderer,
+    SnoCustomRenderer,
+    StockAvailableCustomRenderer,
+} from './Components/CustomRenderers';
+import { rawClone } from 'utilities/general';
 
 interface IInventoryTableProps {
-    inventory: IInventoryData[];
+    inventoryProducts: IInventoryData[];
 }
 
 export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
     // props
-    const { inventory } = props;
+    const { inventoryProducts } = props;
 
-    // // handlers
-    // const editItemClickHandler = () => () => {
-    //     console.log('Edit Clicked');
-    // };
-    // const deleteItemClickHandler = () => () => {
-    //     console.log('Delete Clicked');
-    // };
+    // handlers
+    const editItemClickHandler = () => () => {
+        console.log('Edit Clicked');
+    };
+    const deleteItemClickHandler = () => () => {
+        console.log('Delete Clicked');
+    };
 
     // table props
-    const tableProps: ITableProps = {
-        data: inventory,
+    const tableProps: ITableProps<IInventoryData> = {
+        data: rawClone(inventoryProducts),
+        multiRowExpansion: true,
         shape: [
             {
                 columnName: 'S.No',
                 align: 'center',
                 width: '60px',
-                // customRenderer: SnoCustomRenderer,
+                customRenderer: SnoCustomRenderer,
             },
             {
                 columnName: 'Product',
                 align: 'left',
-                // customRenderer: ProductCustomRenderer,
-            },
-            {
-                columnName: 'Category',
-                width: '120px',
-                align: 'center',
-                // customRenderer: CategoryCustomRenderer,
+                customRenderer: ProductCustomRenderer,
             },
             {
                 columnName: 'Stock',
                 align: 'center',
-                width: '120px',
-                // customRenderer: StockAvailableCustomRenderer,
-            },
-            {
-                columnName: 'MRP',
-                align: 'center',
-                width: '120px',
-                // customRenderer: MRPCustomRenderer,
-            },
-            {
-                columnName: 'Active',
-                align: 'center',
-                width: '120px',
-                // customRenderer: ActiveCustomRenderer,
+                width: '100px',
+                customRenderer: StockAvailableCustomRenderer,
             },
             {
                 columnName: 'Actions',
                 align: 'center',
                 width: '100px',
-                // customRenderer: ActionsCustomRenderer({
-                //     deleteItemClickHandler,
-                //     editItemClickHandler,
-                // }),
+                customRenderer: ActionsCustomRenderer({
+                    deleteItemClickHandler,
+                    editItemClickHandler,
+                }),
             },
         ],
+        collapsedContentRenderer: CustomCollapsedContentRenderer,
     };
 
     // draw
