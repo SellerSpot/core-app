@@ -58,26 +58,37 @@ export default class SaleService {
      * @param props
      * @returns number (sub-total for the product)
      */
-    public computeProductSubTotal = (props: {
+    public computeProductTotals = (props: {
         unitPrice: number;
         quantity: number;
         discount: IDiscount;
         taxBracket: ITaxBracketData | ISaleTaxBracket;
-    }): number => {
+    }): {
+        totalDiscount: number;
+        unitPriceAfterDiscount: number;
+        totalTax: number;
+        grandTotal: number;
+    } => {
         const { discount, quantity, taxBracket, unitPrice } = props;
 
-        const unitPriceAfterDiscount =
-            props.unitPrice -
-            this.computeDiscount({
-                discount,
-                unitPrice,
-            });
+        const totalDiscount = this.computeDiscount({
+            discount,
+            unitPrice,
+        });
+
+        const unitPriceAfterDiscount = props.unitPrice - totalDiscount;
 
         const totalTax = this.computeTaxValue({
             quantity,
             taxBracket,
             unitPrice: unitPriceAfterDiscount,
         });
-        return unitPriceAfterDiscount * quantity + totalTax;
+        const grandTotal = unitPriceAfterDiscount * quantity + totalTax;
+        return {
+            grandTotal,
+            totalDiscount,
+            totalTax,
+            unitPriceAfterDiscount,
+        };
     };
 }

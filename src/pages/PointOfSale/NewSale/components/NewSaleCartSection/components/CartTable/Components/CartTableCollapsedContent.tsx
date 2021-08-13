@@ -159,10 +159,9 @@ export const CartTableCollapsedContent = (props: ICartTableCollapsedProps): Reac
     // pushing the changes to the product state on completion
     const handleFormSubmission = (values: ICartTableFormValues) => {
         CartTableService.handleCollapsedFormSubmission({
-            product,
-            productIndex,
-            toggleRowExpansion,
+            cartItemIndex: productIndex,
             values,
+            toggleRowExpansion,
         });
     };
     const handleCancel = () => {

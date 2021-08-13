@@ -53,7 +53,6 @@ export const TaxGroupTable = (props: ITaxGroupTableProps): ReactElement => {
             if (confirmResult) {
                 confirmDialog.setLoading({ isLoading: true });
                 await TaxGroupTableService.deleteTaxGroup({ taxGroupId: taxGroupData.id });
-                debugger;
                 confirmDialog.setLoading({ isLoading: false });
                 getAllTaxGroups();
                 confirmDialog.closeDialog();

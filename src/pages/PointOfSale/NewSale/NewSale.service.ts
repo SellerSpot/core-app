@@ -1,4 +1,3 @@
-import { State } from '@hookstate/core';
 import {
     EDiscountTypes,
     EPaymentMethods,
@@ -9,6 +8,7 @@ import {
     IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
+import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
 import { newSaleState } from './NewSale';
 import { INewSaleState } from './NewSale.types';
@@ -112,16 +112,46 @@ export class NewSaleService {
         saleData.cart.set(cartData);
     };
 
-    static removeProductFromCart = (
-        cartProductIndex: number,
-        cart: State<ICartDetails[]>,
-    ): void => {
+    static removeProductFromCart = (cartProductIndex: number): void => {
+        const cart = newSaleState.saleData.cart;
         const cartData = rawClone<ICartDetails[]>(cart.get());
         cartData.splice(cartProductIndex, 1); // deletes the cart product
-        cart.set(cartData);
+        newSaleState.saleData.cart.set(cartData);
     };
 
     static resetSale = (): void => {
         newSaleState.set(NewSaleService.getNewSaleInitialState());
+    };
+
+    static computeSalePayment = (): void => {
+        const { cart, payment } = rawClone<ISaleData>(newSaleState.saleData.get());
+
+        const { productsDiscount, productsTotal, produtctsTax } = cart.reduce(
+            (acc, curr) => {
+                const { grandTotal, totalDiscount, totalTax } = saleService.computeProductTotals({
+                    discount: curr.productDiscount,
+                    quantity: curr.quantity,
+                    taxBracket: curr.taxBracket,
+                    unitPrice: curr.unitPrice,
+                });
+                acc.productsTotal += grandTotal;
+                acc.produtctsTax += totalTax;
+                acc.productsDiscount += totalDiscount;
+                return acc;
+            },
+            { productsTotal: 0, productsDiscount: 0, produtctsTax: 0 },
+        );
+
+        // applying special discount (common discount) -> applied through checkout page on final bill
+        // const totalDiscount =
+        //     saleDiscount.discountType === EDiscountTypes.PERCENT
+        //         ? (productsTotal * saleDiscount.discount) / 100
+        //         : saleDiscount.discount;
+
+        payment.grandTotal = productsTotal;
+        payment.totalDiscount = productsDiscount;
+        payment.totalTax = produtctsTax;
+
+        newSaleState.saleData.payment.set(payment);
     };
 }

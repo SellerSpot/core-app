@@ -2,7 +2,8 @@ import * as yup from 'yup';
 import { ICartTableFormValues } from './CartTable.types';
 import { EDiscountTypes, ICartDetails } from '@sellerspot/universal-types';
 import { isEqual } from 'lodash';
-import { State } from '@hookstate/core';
+import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
+import { rawClone } from 'utilities/general';
 
 export class CartTableService {
     // gets the initial values for collapsed form
@@ -67,29 +68,24 @@ export class CartTableService {
 
     // handles collapsed form submission
     public static handleCollapsedFormSubmission = (props: {
-        product: State<ICartDetails>;
         values: ICartTableFormValues;
+        cartItemIndex: number;
         toggleRowExpansion: (rowIndex: number) => void;
-        productIndex: number;
     }): void => {
-        const { product, productIndex, toggleRowExpansion, values } = props;
-        // compiling product information
-        const modifiedValues: ICartTableFormValues = {
-            productName: values.productName,
-            discountPercent: +values.discountPercent,
-            quantity: +values.quantity,
-            unitPrice: +values.unitPrice,
-        };
+        const { cartItemIndex, values, toggleRowExpansion } = props;
+        const cart = rawClone<ICartDetails[]>(newSaleState.saleData.cart.get());
+
         // updating the product
-        product.batch((state) => {
-            state.product.name.set(modifiedValues.productName);
-            state.productDiscount.set({
-                discount: modifiedValues.discountPercent,
-                discountType: EDiscountTypes.PERCENT,
-            });
-            state.quantity.set(modifiedValues.quantity);
-            state.unitPrice.set(modifiedValues.unitPrice);
-        });
-        toggleRowExpansion(productIndex);
+        cart[cartItemIndex].product.name = values.productName;
+        cart[cartItemIndex].productDiscount = {
+            discount: +values.discountPercent,
+            discountType: EDiscountTypes.PERCENT,
+        };
+        cart[cartItemIndex].quantity = +values.quantity;
+        cart[cartItemIndex].unitPrice = +values.unitPrice;
+
+        newSaleState.saleData.cart.set(cart);
+
+        toggleRowExpansion(cartItemIndex);
     };
 }

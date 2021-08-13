@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
@@ -7,7 +7,7 @@ import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './NewSale.module.scss';
 import { CheckoutSliderModal } from './components/CheckoutSliderModal/CheckoutSliderModal';
-import { createState } from '@hookstate/core';
+import { createState, useState } from '@hookstate/core';
 import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/ParkedSalesSliderModal';
 import { NewSaleService } from './NewSale.service';
 import { NewSaleSearchSection } from './components/NewSaleSearchSection/NewSaleSearchSection';
@@ -21,6 +21,9 @@ export const NewSale = (): ReactElement => {
     const history = useHistory();
     const searchFieldRef = useRef<HTMLDivElement>(null);
 
+    // state
+    const saleData = useState(newSaleState.saleData);
+
     // handlers
     const onSalesHistoryClickHanlder = () =>
         history.push(ROUTES.POINT_OF_SALE__SALES__SALES_HISTORY);
@@ -28,6 +31,11 @@ export const NewSale = (): ReactElement => {
     const searchFieldFocusTriggerer = () => {
         searchFieldRef.current.focus();
     };
+
+    // effects
+    useEffect(() => {
+        NewSaleService.computeSalePayment();
+    }, [saleData.cart.value]);
 
     return (
         <>

@@ -61,12 +61,12 @@ const CartTable = (props: ICartTableProps): ReactElement => {
         const { quantity, taxBracket, unitPrice, productDiscount: discount } = rowData;
 
         return numberFormatINRCurrency(
-            saleService.computeProductSubTotal({
+            saleService.computeProductTotals({
                 discount,
                 quantity,
                 taxBracket,
                 unitPrice,
-            }),
+            }).grandTotal,
         );
     };
 
@@ -79,7 +79,7 @@ const CartTable = (props: ICartTableProps): ReactElement => {
     const Action: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowIndex } = props;
         const onRemoveProductHandler = () => {
-            NewSaleService.removeProductFromCart(rowIndex, cartData);
+            NewSaleService.removeProductFromCart(rowIndex);
         };
         return (
             <IconButton
