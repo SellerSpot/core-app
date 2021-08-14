@@ -14,6 +14,7 @@ export default class SalesHistoryDummy {
                     name: 'Developer',
                     reference: '123456789',
                 },
+                taxSplitUps: [],
                 user: {
                     name: 'Developer',
                     reference: '123456789',

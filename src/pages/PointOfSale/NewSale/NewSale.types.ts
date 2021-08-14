@@ -16,11 +16,3 @@ export interface INewSaleState {
     saleData: ISaleData;
     modals: INewSaleModals;
 }
-
-export interface ITaxSplitUp {
-    name: string;
-    rate: number;
-    taxableValue: number;
-    taxAmount: number;
-    itemsSerialNo: number[];
-}

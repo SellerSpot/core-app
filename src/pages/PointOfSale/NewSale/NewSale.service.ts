@@ -8,13 +8,14 @@ import {
     ISaleTaxBracket,
     IStockUnitData,
     ITaxBracketData,
+    ITaxSplitUp,
 } from '@sellerspot/universal-types';
 import { Dummies } from 'dummies/Dummies';
 import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
 import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
 import { newSaleState } from './NewSale';
-import { INewSaleState, ITaxSplitUp } from './NewSale.types';
+import { INewSaleState } from './NewSale.types';
 
 export class NewSaleService {
     static getNewSaleInitialState = (): INewSaleState => {
@@ -43,6 +44,7 @@ export class NewSaleService {
                 name: null,
                 reference: null,
             },
+            taxSplitUps: null,
             payment: {
                 method: EPaymentMethods.CASH,
                 amountPaid: 0,
@@ -217,10 +219,11 @@ export class NewSaleService {
         newSaleState.saleData.batch((state) => {
             state.payment.set(payment);
             state.cart.set(cart);
+            state.taxSplitUps.set(NewSaleService.getTaxSplitups(cart));
         });
     };
 
-    static getTaxSplitups = (cart: ICartDetails[]): Map<string, ITaxSplitUp> => {
+    static getTaxSplitups = (cart: ICartDetails[]): ITaxSplitUp[] => {
         const taxSplitUps = new Map<string, ITaxSplitUp>();
 
         cart.forEach(({ taxBracket, quantity, productDiscount, sellingPrice }, key) => {
@@ -240,11 +243,11 @@ export class NewSaleService {
                             rate: currentTaxBracket.rate,
                             taxableValue: taxableAmount,
                             taxAmount: totalTax,
-                            itemsSerialNo: [key],
+                            cartItemsSerialNumber: [key],
                         });
                     } else {
                         taxSplitUp.taxAmount += taxableAmount;
-                        taxSplitUp.itemsSerialNo.push(key);
+                        taxSplitUp.cartItemsSerialNumber.push(key);
                     }
                 });
             } else {
@@ -261,15 +264,15 @@ export class NewSaleService {
                         rate: taxBracket.rate,
                         taxableValue: taxableAmount,
                         taxAmount: totalTax,
-                        itemsSerialNo: [key],
+                        cartItemsSerialNumber: [key],
                     });
                 } else {
                     taxSplitUp.taxAmount += taxableAmount;
-                    taxSplitUp.itemsSerialNo.push(key);
+                    taxSplitUp.cartItemsSerialNumber.push(key);
                 }
             }
         });
 
-        return taxSplitUps;
+        return [...taxSplitUps.values()];
     };
 }

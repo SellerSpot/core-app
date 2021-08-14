@@ -4,7 +4,6 @@ import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
 import { IBillA4ChildProps } from '../../BillA4.types';
-import { NewSaleService } from 'pages/PointOfSale/NewSale/NewSale.service';
 
 export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
     // props
@@ -12,11 +11,10 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
         settings: { taxSplitUpSection },
         data,
     } = props;
-    const { payment, cart } = data;
+    const { payment, taxSplitUps } = data;
     const { totalTax } = payment;
 
     // computer
-    const taxSplitUps = NewSaleService.getTaxSplitups(cart);
 
     return (
         <>
@@ -60,7 +58,7 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                     </h6>
                                 </div>
                                 <div className={cn(commonStyles.textAlignLeft)}>
-                                    <h6>{taxSplitUp.itemsSerialNo.join(', ')}</h6>
+                                    <h6>{taxSplitUp.cartItemsSerialNumber.join(', ')}</h6>
                                 </div>
                                 <div className={cn(commonStyles.textAlignRight)}>
                                     <h6>{taxSplitUp.taxableValue}</h6>

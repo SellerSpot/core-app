@@ -1,5 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { NewSaleService } from './NewSale.service';
+import { createState, useState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { ICONS } from 'utilities/utilities';
@@ -7,9 +9,7 @@ import { ROUTES } from 'config/routes';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './NewSale.module.scss';
 import { CheckoutSliderModal } from './components/CheckoutSliderModal/CheckoutSliderModal';
-import { createState, useState } from '@hookstate/core';
 import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/ParkedSalesSliderModal';
-import { NewSaleService } from './NewSale.service';
 import { NewSaleSearchSection } from './components/NewSaleSearchSection/NewSaleSearchSection';
 import { NewSaleCartSection } from './components/NewSaleCartSection/NewSaleCartSection';
 import { INewSaleState } from './NewSale.types';
