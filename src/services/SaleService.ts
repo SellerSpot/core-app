@@ -12,20 +12,20 @@ export default class SaleService {
      * @param props unitprice & discount
      * @returns the discount amount
      */
-    public computeDiscount = (props: { unitPrice: number; discount: IDiscount }): number => {
+    public computeDiscount = (props: { sellingPrice: number; discount: IDiscount }): number => {
         const {
             discount: { discount, discountType },
-            unitPrice,
+            sellingPrice,
         } = props;
 
         let totalDiscount = 0;
 
         if (discountType === EDiscountTypes.VALUE) {
-            totalDiscount = discount <= unitPrice ? discount : unitPrice;
+            totalDiscount = discount <= sellingPrice ? discount : sellingPrice;
         } else {
             totalDiscount = xPercentofY({
                 x: discount,
-                y: unitPrice,
+                y: sellingPrice,
             });
         }
         return totalDiscount;
@@ -59,7 +59,7 @@ export default class SaleService {
      * @returns number (sub-total for the product)
      */
     public computeProductTotals = (props: {
-        unitPrice: number;
+        sellingPrice: number;
         quantity: number;
         discount: IDiscount;
         taxBracket: ITaxBracketData | ISaleTaxBracket;
@@ -70,14 +70,14 @@ export default class SaleService {
         grandTotal: number;
         taxableAmount: number;
     } => {
-        const { discount, quantity, taxBracket, unitPrice } = props;
+        const { discount, quantity, taxBracket, sellingPrice } = props;
 
         const totalDiscount = this.computeDiscount({
             discount,
-            unitPrice,
+            sellingPrice,
         });
 
-        const unitPriceAfterDiscount = props.unitPrice - totalDiscount;
+        const unitPriceAfterDiscount = props.sellingPrice - totalDiscount;
 
         const totalTax = this.computeTaxValue({
             quantity,

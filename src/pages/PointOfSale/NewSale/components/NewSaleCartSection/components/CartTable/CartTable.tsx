@@ -58,22 +58,22 @@ const CartTable = (props: ICartTableProps): ReactElement => {
 
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        const { quantity, taxBracket, unitPrice, productDiscount: discount } = rowData;
+        const { quantity, taxBracket, sellingPrice, productDiscount: discount } = rowData;
 
         return numberFormatINRCurrency(
             saleService.computeProductTotals({
                 discount,
                 quantity,
                 taxBracket,
-                unitPrice,
+                sellingPrice,
             }).grandTotal,
         );
     };
 
     const pricePerUnitRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        const { unitPrice } = rowData;
-        return numberFormatINRCurrency(unitPrice);
+        const { sellingPrice } = rowData;
+        return numberFormatINRCurrency(sellingPrice);
     };
 
     const Action: TTableCellCustomRenderer<ICartDetails> = (props) => {

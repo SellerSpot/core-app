@@ -53,7 +53,12 @@ export default class SalesHistoryDummy {
                             name: 'kg',
                             reference: '123456789',
                         },
-                        unitPrice: 10.0,
+                        sellingPrice: 10.0,
+                        grandTotal: 10.0,
+                        landingCost: 5.0,
+                        mrp: 20,
+                        totalDiscount: 0,
+                        totalTax: 0,
                         taxBracket: {
                             name: 'Tax Bracket 1',
                             rate: 0,

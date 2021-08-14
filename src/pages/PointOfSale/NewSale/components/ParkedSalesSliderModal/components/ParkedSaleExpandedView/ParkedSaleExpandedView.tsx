@@ -40,19 +40,19 @@ export const ParkedSaleExpandedView = (props: IParkedSaleExpandedViewProps): Rea
     };
     const taxAmountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return numberFormatINRCurrency(rowData.taxBracket.rate); // handle tax rate
+        return numberFormatINRCurrency(rowData.totalTax); // handle tax rate
     };
     const unitPriceRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return numberFormatINRCurrency(rowData.unitPrice);
+        return numberFormatINRCurrency(rowData.sellingPrice);
     };
     const discountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return numberFormatINRCurrency(rowData.productDiscount.discount); // handle discount type
+        return numberFormatINRCurrency(rowData.totalDiscount); // handle discount type
     };
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return numberFormatINRCurrency(rowData.quantity * rowData.unitPrice); // add tax and reduce discount
+        return numberFormatINRCurrency(rowData.grandTotal); // add tax and reduce discount
     };
 
     const tableProps: ITableProps<ICartDetails> = {

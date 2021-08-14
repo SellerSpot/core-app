@@ -3,24 +3,28 @@ import styles from './BillA4PurchaseInvoice.module.scss';
 import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
-import { COMMON_SYMBOLS } from 'utilities/general';
 import { IBillA4ChildProps } from '../../BillA4.types';
 import { CSSProperties } from 'react';
 
 export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement => {
+    // props
     const {
         settings: { purchaseInvoiceSection },
+        data,
     } = props;
     const { MRPColumn, discountColumn, taxColumn } = purchaseInvoiceSection;
+    const { cart } = data;
+
+    // compute
     const totalRepeatedColumn = 6;
-    const columnToDisableCount = [MRPColumn, discountColumn, taxColumn].reduce(
+    const columnsToDisableCount = [MRPColumn, discountColumn, taxColumn].reduce(
         (result, current) => {
             if (!current) return result + 1;
             return result;
         },
         0,
     );
-    const totalRepeatativeColumnToShow = totalRepeatedColumn - columnToDisableCount;
+    const totalRepeatativeColumnToShow = totalRepeatedColumn - columnsToDisableCount;
     const tableGridStyle: CSSProperties = {
         gridTemplateColumns: `30px 2fr repeat(${totalRepeatativeColumnToShow}, 1fr)`,
     };
@@ -48,52 +52,48 @@ export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement =>
                     {taxColumn && <div className={cn(commonStyles.textAlignRight)}>Tax</div>}
                     <div className={cn(commonStyles.textAlignRight)}>Total</div>
                 </div>
-                <div
-                    className={cn(
-                        mainStyles.billTableNode,
-                        styles.purchaseInvoiceTable,
-                        mainStyles.billTableNodeContent,
-                    )}
-                    style={tableGridStyle}
-                >
-                    <div className={cn(commonStyles.textAlignCenter)}>
-                        <h6>1</h6>
-                    </div>
-                    <div className={cn(commonStyles.textAlignLeft)}>
-                        {/* {saleData.products[i].name} */}
-                        <h6>Sample Data</h6>
-                    </div>
-                    <div className={cn(commonStyles.textAlignRight)}>
-                        {/* {saleData.productCartInformation[i].itemQuantity} */}
-                        <h6>20</h6>
-                    </div>
-                    {MRPColumn && (
-                        <div className={cn(commonStyles.textAlignRight)}>
-                            {/* {`${COMMON_SYMBOLS.RUPEE_SYMBOL}${saleData.products[i].mrpPrice}`} */}
-                            <h6>{`${COMMON_SYMBOLS.RUPEE_SYMBOL}${232}`}</h6>
+                {cart.map((cartItem, key) => (
+                    <div
+                        key={key}
+                        className={cn(
+                            mainStyles.billTableNode,
+                            styles.purchaseInvoiceTable,
+                            mainStyles.billTableNodeContent,
+                        )}
+                        style={tableGridStyle}
+                    >
+                        <div className={cn(commonStyles.textAlignCenter)}>
+                            <h6>{key}</h6>
                         </div>
-                    )}
-                    <div className={cn(commonStyles.textAlignRight)}>
-                        {/* {`${COMMON_SYMBOLS.RUPEE_SYMBOL}${saleData.products[i].sellingPrice}`} */}
-                        <h6>{`${COMMON_SYMBOLS.RUPEE_SYMBOL}${200}`}</h6>
-                    </div>
-                    {discountColumn && (
-                        <div className={cn(commonStyles.textAlignRight)}>
-                            {/* {`${COMMON_SYMBOLS.RUPEE_SYMBOL}${saleData.productCartInformation[i].totalDiscountValue} @ ${saleData.productCartInformation[i].itemDiscountPercent}`} */}
-                            <h6>{`${COMMON_SYMBOLS.RUPEE_SYMBOL}${123} @ ${12}`}</h6>
+                        <div className={cn(commonStyles.textAlignLeft)}>
+                            <h6>{cartItem.product.name}</h6>
                         </div>
-                    )}
-                    {taxColumn && (
                         <div className={cn(commonStyles.textAlignRight)}>
-                            {/* {`${COMMON_SYMBOLS.RUPEE_SYMBOL}${saleData.productCartInformation[i].totalTax}`} */}
-                            <h6>{`${COMMON_SYMBOLS.RUPEE_SYMBOL}${123}`}</h6>
+                            <h6>{cartItem.quantity}</h6>
                         </div>
-                    )}
-                    <div className={cn(commonStyles.textAlignRight)}>
-                        {/* {`${COMMON_SYMBOLS.RUPEE_SYMBOL}${saleData.productCartInformation[i].itemTotal}`} */}
-                        <h6>{`${COMMON_SYMBOLS.RUPEE_SYMBOL}${1231}`}</h6>
+                        {MRPColumn && (
+                            <div className={cn(commonStyles.textAlignRight)}>
+                                <h6>{cartItem.mrp}</h6>
+                            </div>
+                        )}
+                        <div className={cn(commonStyles.textAlignRight)}>
+                            <h6>{cartItem.sellingPrice}</h6>
+                        </div>
+                        {discountColumn && (
+                            <div className={cn(commonStyles.textAlignRight)}>
+                                <h6>{cartItem.totalDiscount}</h6>
+                            </div>
+                        )}
+                        {taxColumn && (
+                            <div className={cn(commonStyles.textAlignRight)}>
+                                <h6>{cartItem.totalTax}</h6>
+                            </div>
+                        )}
+                        <div className={cn(commonStyles.textAlignRight)}>
+                            <h6>{cartItem.grandTotal}</h6>
+                        </div>
                     </div>
-                </div>
+                ))}
             </div>
         </>
     );

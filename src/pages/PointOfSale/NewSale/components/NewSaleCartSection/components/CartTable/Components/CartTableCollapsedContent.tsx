@@ -102,7 +102,7 @@ const CartTableCollapsedForm = (props: ICartTableCollapsedFormProps) => {
                                 error ??
                                 `- ${numberFormatINRCurrency(
                                     saleService.computeDiscount({
-                                        unitPrice,
+                                        sellingPrice: unitPrice,
                                         discount: productDiscount,
                                     }),
                                 )}`,

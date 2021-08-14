@@ -4,6 +4,7 @@ import { EDiscountTypes, ICartDetails } from '@sellerspot/universal-types';
 import { isEqual } from 'lodash';
 import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
 import { rawClone } from 'utilities/general';
+import { NewSaleService } from 'pages/PointOfSale/NewSale/NewSale.service';
 
 export class CartTableService {
     // gets the initial values for collapsed form
@@ -12,13 +13,13 @@ export class CartTableService {
             product: { name: productName },
             productDiscount: { discount: discountPercent },
             quantity,
-            unitPrice,
+            sellingPrice,
         } = product;
         return {
             productName,
             discountPercent,
             quantity,
-            unitPrice,
+            unitPrice: sellingPrice,
         };
     };
 
@@ -74,15 +75,17 @@ export class CartTableService {
     }): void => {
         const { cartItemIndex, values, toggleRowExpansion } = props;
         const cart = rawClone<ICartDetails[]>(newSaleState.saleData.cart.get());
+        const currentCartItem = cart[cartItemIndex];
 
         // updating the product
-        cart[cartItemIndex].product.name = values.productName;
-        cart[cartItemIndex].productDiscount = {
+        currentCartItem.product.name = values.productName;
+        currentCartItem.productDiscount = {
             discount: +values.discountPercent,
             discountType: EDiscountTypes.PERCENT,
         };
-        cart[cartItemIndex].quantity = +values.quantity;
-        cart[cartItemIndex].unitPrice = +values.unitPrice;
+        currentCartItem.quantity = +values.quantity;
+        currentCartItem.sellingPrice = +values.unitPrice;
+        NewSaleService.computeAndSetProductTotals(currentCartItem);
 
         newSaleState.saleData.cart.set(cart);
 

@@ -3,7 +3,6 @@ import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMProductsListing.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 import { ICartDetails } from '@sellerspot/universal-types';
-import { saleService } from 'services/services';
 
 const ListingRow = (props: {
     data: ICartDetails;
@@ -13,17 +12,12 @@ const ListingRow = (props: {
     const {
         product: { name },
         quantity,
-        productDiscount: discount,
-        unitPrice,
-        taxBracket,
+        sellingPrice,
         stockUnit,
+        grandTotal,
+        totalDiscount,
+        totalTax,
     } = data;
-    const { grandTotal, totalDiscount, totalTax } = saleService.computeProductTotals({
-        discount,
-        quantity,
-        taxBracket,
-        unitPrice,
-    });
     return (
         <>
             <div className={styles.productsListingTableBodyRow}>
@@ -33,7 +27,7 @@ const ListingRow = (props: {
                 </div>
                 <p
                     className={styles.multiQuantityDetail}
-                >{`(${quantity} ${stockUnit} @ ${unitPrice})`}</p>
+                >{`(${quantity} ${stockUnit} @ ${sellingPrice})`}</p>
                 <div className={styles.discountDetail}>
                     <p>Discount</p>
                     <p>{totalDiscount}</p>

@@ -48,15 +48,15 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
     };
     const taxAmountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return rowData.totalTax;
     };
     const discountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return rowData.totalDiscount;
     };
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return rowData.grandTotal;
     };
 
     const tableProps: ITableProps<ICartDetails> = {
@@ -78,7 +78,7 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                 columnName: 'Unit price',
                 align: 'right',
                 width: '15%',
-                dataKey: 'unitPrice',
+                dataKey: 'sellingPrice',
             },
             {
                 columnName: 'Quantity',

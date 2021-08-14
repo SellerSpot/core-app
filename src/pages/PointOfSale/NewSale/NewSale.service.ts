@@ -68,23 +68,30 @@ export class NewSaleService {
     static addProductToCart = (productToBeAdded: IInventoryData, outletId: string): void => {
         const saleData = newSaleState.saleData;
         const cartData = rawClone<ICartDetails[]>(saleData.cart.get());
-        const productIndex = cartData.findIndex(
+        const cartItemIndex = cartData.findIndex(
             (product) => productToBeAdded.id === product.product.reference,
         );
-        // if productIndex found increase the quantity by 1 else add an new product entry in the cart
-        if (productIndex > -1) {
-            cartData[productIndex].quantity += 1;
+        // if cartItemIndex found increase the quantity by 1 else add an new product entry in the cart
+        if (cartItemIndex > -1) {
+            const currentCartItem = cartData[cartItemIndex];
+            currentCartItem.quantity += 1;
+            NewSaleService.computeAndSetProductTotals(currentCartItem); // computes and mutates the total
         } else {
             const currentOutlet = productToBeAdded.outlets[outletId];
             const currentTaxBracket = <ITaxBracketData>currentOutlet.taxBracket;
             const currentStockUnit = <IStockUnitData>productToBeAdded.stockUnit;
-            const newCartProduct: ICartDetails = {
+            const newCartItem: ICartDetails = {
                 product: {
                     name: productToBeAdded.name,
                     reference: productToBeAdded.id,
                 },
                 quantity: 1,
-                unitPrice: currentOutlet.sellingPrice,
+                sellingPrice: currentOutlet.sellingPrice,
+                grandTotal: currentOutlet.sellingPrice,
+                landingCost: currentOutlet.landingCost,
+                mrp: currentOutlet.mrp,
+                totalDiscount: 0, // computable values will be computed atlast using computeAndSetProductTotals function
+                totalTax: 0,
                 productDiscount: {
                     discount: 0,
                     discountType: EDiscountTypes.PERCENT,
@@ -110,9 +117,30 @@ export class NewSaleService {
                     ),
                 },
             };
-            cartData.push(newCartProduct);
+            NewSaleService.computeAndSetProductTotals(newCartItem); // computes and mutates the total
+            cartData.push(newCartItem);
         }
         saleData.cart.set(cartData);
+    };
+
+    /**
+     * this function will mutate the passed in cartItem and set the required totals
+     */
+    static computeAndSetProductTotals = (
+        cartItem: ICartDetails,
+        returnCartItem?: boolean,
+    ): void | ICartDetails => {
+        const { grandTotal, totalDiscount, totalTax } = saleService.computeProductTotals({
+            discount: cartItem.productDiscount,
+            quantity: cartItem.quantity,
+            sellingPrice: cartItem.sellingPrice,
+            taxBracket: cartItem.taxBracket,
+        });
+
+        cartItem.grandTotal = grandTotal;
+        cartItem.totalTax = totalTax;
+        cartItem.totalDiscount = totalDiscount;
+        if (returnCartItem) return cartItem;
     };
 
     static removeProductFromCart = (cartProductIndex: number): void => {
@@ -166,38 +194,36 @@ export class NewSaleService {
         const { cart, payment } = rawClone<ISaleData>(newSaleState.saleData.get());
 
         const { productsDiscount, productsTotal, produtctsTax } = cart.reduce(
-            (acc, curr) => {
-                const { grandTotal, totalDiscount, totalTax } = saleService.computeProductTotals({
-                    discount: curr.productDiscount,
-                    quantity: curr.quantity,
-                    taxBracket: curr.taxBracket,
-                    unitPrice: curr.unitPrice,
-                });
-                acc.productsTotal += grandTotal;
-                acc.produtctsTax += totalTax;
-                acc.productsDiscount += totalDiscount;
-                return acc;
+            (accumlator, currrentCartItem) => {
+                const { grandTotal, totalDiscount, totalTax } =
+                    NewSaleService.computeAndSetProductTotals(
+                        currrentCartItem,
+                        true,
+                    ) as ICartDetails;
+
+                accumlator.productsTotal += grandTotal;
+                accumlator.produtctsTax += totalTax;
+                accumlator.productsDiscount += totalDiscount;
+
+                return accumlator;
             },
             { productsTotal: 0, productsDiscount: 0, produtctsTax: 0 },
         );
-
-        // applying special discount (common discount) -> applied through checkout page on final bill
-        // const totalDiscount =
-        //     saleDiscount.discountType === EDiscountTypes.PERCENT
-        //         ? (productsTotal * saleDiscount.discount) / 100
-        //         : saleDiscount.discount;
 
         payment.grandTotal = productsTotal;
         payment.totalDiscount = productsDiscount;
         payment.totalTax = produtctsTax;
 
-        newSaleState.saleData.payment.set(payment);
+        newSaleState.saleData.batch((state) => {
+            state.payment.set(payment);
+            state.cart.set(cart);
+        });
     };
 
     static getTaxSplitups = (cart: ICartDetails[]): Map<string, ITaxSplitUp> => {
         const taxSplitUps = new Map<string, ITaxSplitUp>();
 
-        cart.forEach(({ taxBracket, quantity, productDiscount, unitPrice }, key) => {
+        cart.forEach(({ taxBracket, quantity, productDiscount, sellingPrice }, key) => {
             if (taxBracket.group) {
                 const taxGroup: ISaleTaxBracket[] = taxBracket.group;
                 taxGroup.forEach((currentTaxBracket) => {
@@ -205,7 +231,7 @@ export class NewSaleService {
                         discount: productDiscount,
                         quantity,
                         taxBracket: currentTaxBracket,
-                        unitPrice,
+                        sellingPrice,
                     });
                     const taxSplitUp = taxSplitUps.get(currentTaxBracket.name);
                     if (!taxSplitUp) {
@@ -226,7 +252,7 @@ export class NewSaleService {
                     discount: productDiscount,
                     quantity,
                     taxBracket,
-                    unitPrice,
+                    sellingPrice,
                 });
                 const taxSplitUp = taxSplitUps.get(taxBracket.name);
                 if (!taxSplitUp) {
