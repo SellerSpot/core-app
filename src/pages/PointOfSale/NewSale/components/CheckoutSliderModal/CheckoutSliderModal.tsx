@@ -17,7 +17,8 @@ import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import { useState } from '@hookstate/core';
 import { newSaleState } from '../../NewSale';
-import { ESaleStatus } from '@sellerspot/universal-types';
+import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
+import { rawClone } from 'utilities/general';
 
 export const CheckoutSliderModal = (): ReactElement => {
     // state
@@ -35,22 +36,10 @@ export const CheckoutSliderModal = (): ReactElement => {
         modalGoBackHandler();
     };
 
-    const getSliderTitle = () => {
-        let sliderTitle = '';
-        // get the title based on the current state
-        switch (saleData.status.get()) {
-            case ESaleStatus.PARKED:
-                sliderTitle = 'Park sale';
-                break;
-            case ESaleStatus.QUOTED:
-                sliderTitle = 'Quote sale';
-                break;
-            default:
-                sliderTitle = 'Checkout sale';
-            // CHECKOUT FLOW
-        }
-        return sliderTitle;
-    };
+    // compute
+    const { sliderTitle, summaryViewMode } = CheckoutSliderModalService.getComputedViewMode();
+
+    const rawNewSaleData = rawClone(saleData.get());
 
     // draw
     return (
@@ -59,7 +48,7 @@ export const CheckoutSliderModal = (): ReactElement => {
                 <SliderModalHeader
                     modalGoBackCallback={modalGoBackHandler}
                     modalGoBackText="Go back to cart"
-                    title={getSliderTitle()}
+                    title={sliderTitle}
                     titlePlacement="center"
                 />
                 <SliderModalBody>
@@ -67,8 +56,8 @@ export const CheckoutSliderModal = (): ReactElement => {
                         <div className={styles.billSectionWrapper}>
                             <BillHolder>
                                 <BillA4
+                                    data={rawNewSaleData}
                                     settings={Dummies.billSettings.getBillSettings().bills.BILL_A4}
-                                    data={Dummies.billSettings.getBillData()}
                                     dimension={BillSettingsService.billDimentsions.BILL_A4}
                                 />
                             </BillHolder>
@@ -185,16 +174,10 @@ export const CheckoutSliderModal = (): ReactElement => {
                                             theme="auto"
                                             disableElevation
                                         />
-                                        <Button
-                                            label="DUE"
-                                            variant="contained"
-                                            theme="auto"
-                                            disableElevation
-                                        />
                                     </div>
                                 </div>
                                 <CheckoutSaleSummaryView
-                                    viewMode="checkout"
+                                    viewMode={summaryViewMode}
                                     proceedCallback={onCheckoutClickHandler}
                                 />
                             </div>

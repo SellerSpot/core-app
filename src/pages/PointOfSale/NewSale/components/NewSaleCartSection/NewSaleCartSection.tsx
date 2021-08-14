@@ -25,19 +25,23 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
         // retreive the earlier parked sale
         modals.parkedSales.set(true);
     };
+
     const onParkSaleClickHanlder = () => {
         // park the current sale for later use
         NewSaleService.parkSaleInitater();
     };
+
     const onQuoteSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
         NewSaleService.quoteSaleInitiator();
     };
+
     const onDiscardSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
         NewSaleService.resetSale();
         searchFieldFocusTriggerer();
     };
+
     const onCheckoutClickHandler = () => {
         // only open checkout modal, if cart has something in it
         NewSaleService.checkoutSaleInitiator();
@@ -95,7 +99,10 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
                 <CartTable searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
             </div>
             <div className={styles.cartSummaryWrapper}>
-                <CheckoutSaleSummaryView viewMode="cart" proceedCallback={onCheckoutClickHandler} />
+                <CheckoutSaleSummaryView
+                    viewMode={'cart'}
+                    proceedCallback={onCheckoutClickHandler}
+                />
             </div>
         </div>
     );

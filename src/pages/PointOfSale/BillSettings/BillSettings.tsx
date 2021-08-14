@@ -200,8 +200,8 @@ export const BillSettings = (): ReactElement => {
                                 <CurrentBillComponent
                                     // do not remove, it is used for resize / switch scaling inside BillHolder component
                                     {...({
+                                        data: Dummies.salesHistory.getSalesData()[0],
                                         settings: rawClone(currentBillSettingsState.get()),
-                                        data: Dummies.billSettings.getBillData(),
                                         dimension: currentBillDimension,
                                     } as IBillBaseChildProps<unknown> as unknown)}
                                 />

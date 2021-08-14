@@ -14,7 +14,7 @@ import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
 import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
 import { newSaleState } from './NewSale';
-import { INewSaleState } from './NewSale.types';
+import { INewSaleState, ITaxSplitUp } from './NewSale.types';
 
 export class NewSaleService {
     static getNewSaleInitialState = (): INewSaleState => {
@@ -192,5 +192,58 @@ export class NewSaleService {
         payment.totalTax = produtctsTax;
 
         newSaleState.saleData.payment.set(payment);
+    };
+
+    static getTaxSplitups = (cart: ICartDetails[]): Map<string, ITaxSplitUp> => {
+        const taxSplitUps = new Map<string, ITaxSplitUp>();
+
+        cart.forEach(({ taxBracket, quantity, productDiscount, unitPrice }, key) => {
+            if (taxBracket.group) {
+                const taxGroup: ISaleTaxBracket[] = taxBracket.group;
+                taxGroup.forEach((currentTaxBracket) => {
+                    const { taxableAmount, totalTax } = saleService.computeProductTotals({
+                        discount: productDiscount,
+                        quantity,
+                        taxBracket: currentTaxBracket,
+                        unitPrice,
+                    });
+                    const taxSplitUp = taxSplitUps.get(currentTaxBracket.name);
+                    if (!taxSplitUp) {
+                        taxSplitUps.set(currentTaxBracket.name, {
+                            name: currentTaxBracket.name,
+                            rate: currentTaxBracket.rate,
+                            taxableValue: taxableAmount,
+                            taxAmount: totalTax,
+                            itemsSerialNo: [key],
+                        });
+                    } else {
+                        taxSplitUp.taxAmount += taxableAmount;
+                        taxSplitUp.itemsSerialNo.push(key);
+                    }
+                });
+            } else {
+                const { taxableAmount, totalTax } = saleService.computeProductTotals({
+                    discount: productDiscount,
+                    quantity,
+                    taxBracket,
+                    unitPrice,
+                });
+                const taxSplitUp = taxSplitUps.get(taxBracket.name);
+                if (!taxSplitUp) {
+                    taxSplitUps.set(taxBracket.name, {
+                        name: taxBracket.name,
+                        rate: taxBracket.rate,
+                        taxableValue: taxableAmount,
+                        taxAmount: totalTax,
+                        itemsSerialNo: [key],
+                    });
+                } else {
+                    taxSplitUp.taxAmount += taxableAmount;
+                    taxSplitUp.itemsSerialNo.push(key);
+                }
+            }
+        });
+
+        return taxSplitUps;
     };
 }

@@ -79,21 +79,29 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
             <Button
                 fullWidth
                 label={
-                    <div
-                        className={cn(styles.actionButton, {
-                            [styles.checkoutButton]: viewMode === 'cart',
-                            [styles.cartButton]: viewMode === 'checkout',
-                        })}
-                    >
-                        {viewMode === 'cart' ? (
-                            <>
+                    <>
+                        {viewMode === 'cart' && (
+                            <div className={cn(styles.actionButton, styles.checkoutButton)}>
                                 <h2>PAY</h2>
                                 <h2>{numberFormatINRCurrency(grandTotal)}</h2>
-                            </>
-                        ) : (
-                            <h2>COMPLETE SALE</h2>
+                            </div>
                         )}
-                    </div>
+                        {viewMode === 'checkout' && (
+                            <div className={cn(styles.actionButton, styles.cartButton)}>
+                                <h2>COMPLETE SALE</h2>
+                            </div>
+                        )}
+                        {viewMode === 'park' && (
+                            <div className={cn(styles.actionButton, styles.cartButton)}>
+                                <h2>PARK SALE</h2>
+                            </div>
+                        )}
+                        {viewMode === 'quote' && (
+                            <div className={cn(styles.actionButton, styles.cartButton)}>
+                                <h2>QUOTE SALE</h2>
+                            </div>
+                        )}
+                    </>
                 }
                 variant="contained"
                 theme="primary"

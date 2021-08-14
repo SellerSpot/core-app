@@ -68,6 +68,7 @@ export default class SaleService {
         unitPriceAfterDiscount: number;
         totalTax: number;
         grandTotal: number;
+        taxableAmount: number;
     } => {
         const { discount, quantity, taxBracket, unitPrice } = props;
 
@@ -84,10 +85,13 @@ export default class SaleService {
             unitPrice: unitPriceAfterDiscount,
         });
         const grandTotal = unitPriceAfterDiscount * quantity + totalTax;
+        const taxableAmount = grandTotal - totalTax;
+
         return {
             grandTotal,
             totalDiscount,
             totalTax,
+            taxableAmount,
             unitPriceAfterDiscount,
         };
     };

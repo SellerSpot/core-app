@@ -2,31 +2,46 @@ import React, { Fragment, ReactElement } from 'react';
 import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMProductsListing.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
+import { ICartDetails } from '@sellerspot/universal-types';
+import { saleService } from 'services/services';
 
 const ListingRow = (props: {
-    data: IBill90MMChildProps['data']['productCartInformation'][0];
+    data: ICartDetails;
     settings: IBill90MMChildProps['settings'];
 }): ReactElement => {
     const { data } = props;
-    const { name, quantity, price, stockUnit, total, discountValue, totalDiscountValue } = data;
+    const {
+        product: { name },
+        quantity,
+        productDiscount: discount,
+        unitPrice,
+        taxBracket,
+        stockUnit,
+    } = data;
+    const { grandTotal, totalDiscount, totalTax } = saleService.computeProductTotals({
+        discount,
+        quantity,
+        taxBracket,
+        unitPrice,
+    });
     return (
         <>
             <div className={styles.productsListingTableBodyRow}>
                 <div className={styles.primaryDetails}>
                     <p className={styles.productName}>{name}</p>
-                    <p className={styles.productPrice}>{total}</p>
+                    <p className={styles.productPrice}>{grandTotal}</p>
                 </div>
-                {quantity > 1 ? (
-                    <p
-                        className={styles.multiQuantityDetail}
-                    >{`(${quantity} ${stockUnit} @ ${price})`}</p>
-                ) : null}
-                {!!discountValue ? (
-                    <div className={styles.discountDetail}>
-                        <p>Discount</p>
-                        <p>{totalDiscountValue}</p>
-                    </div>
-                ) : null}
+                <p
+                    className={styles.multiQuantityDetail}
+                >{`(${quantity} ${stockUnit} @ ${unitPrice})`}</p>
+                <div className={styles.discountDetail}>
+                    <p>Discount</p>
+                    <p>{totalDiscount}</p>
+                </div>
+                <div className={styles.discountDetail}>
+                    <p>Tax</p>
+                    <p>{totalTax}</p>
+                </div>
             </div>
             <hr className={styles.rowDivider} />
         </>
@@ -35,7 +50,7 @@ const ListingRow = (props: {
 
 export const Bill90MMProductsListing = (props: IBill90MMChildProps): ReactElement => {
     const { data, settings } = props;
-    const { productCartInformation = [] } = data;
+    const { cart } = data;
     return (
         <div className={styles.productsListingWrapper}>
             <div className={styles.productsListingTableHeader}>
@@ -44,7 +59,7 @@ export const Bill90MMProductsListing = (props: IBill90MMChildProps): ReactElemen
             </div>
             <hr className={mainStyles.mainDivider} />
             <div className={styles.productsListingTableBodyWrapper}>
-                {productCartInformation.map((product, productIndex) => (
+                {cart.map((product, productIndex) => (
                     <Fragment key={productIndex}>
                         <div className={mainStyles.PageBreak} />
                         <ListingRow data={product} settings={settings} />

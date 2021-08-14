@@ -1,18 +1,6 @@
-import { IBillData } from 'pages/PointOfSale/BillSettings/BillSettings.types';
 import { IBillSettings } from '@sellerspot/universal-types';
 
 export default class BillSettingsDummy {
-    static getBillData(): IBillData {
-        return {
-            productCartInformation: [],
-            totals: {
-                grandTotal: 0,
-                grandTotalDiscount: 0,
-                grandTotalTax: 0,
-                grandTotalTaxPercentage: 0,
-            },
-        };
-    }
     static getBillSettings(): IBillSettings {
         return {
             defaultBill: 'BILL_A4',
