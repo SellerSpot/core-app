@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMHeader.module.scss';
 
@@ -17,7 +18,7 @@ export const Bill90MMHeader = (props: IBill90MMChildProps): ReactElement => {
             </div>
             <div className={styles.totalHeaderWrapper}>
                 <p className={styles.totalHeaderTitle}>TOTAL</p>
-                <p className={styles.totalHeaderValue}>{grandTotal}</p>
+                <p className={styles.totalHeaderValue}>{numberFormatINRCurrency(grandTotal)}</p>
             </div>
         </>
     );

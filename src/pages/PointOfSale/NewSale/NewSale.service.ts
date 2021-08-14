@@ -14,6 +14,7 @@ import { Dummies } from 'dummies/Dummies';
 import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
 import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
+import { ICartTableFormValues } from './components/NewSaleCartSection/components/CartTable/CartTable.types';
 import { newSaleState } from './NewSale';
 import { INewSaleState } from './NewSale.types';
 
@@ -44,7 +45,7 @@ export class NewSaleService {
                 name: null,
                 reference: null,
             },
-            taxSplitUps: null,
+            taxSplitUps: [],
             payment: {
                 method: EPaymentMethods.CASH,
                 amountPaid: 0,
@@ -77,7 +78,6 @@ export class NewSaleService {
         if (cartItemIndex > -1) {
             const currentCartItem = cartData[cartItemIndex];
             currentCartItem.quantity += 1;
-            NewSaleService.computeAndSetProductTotals(currentCartItem); // computes and mutates the total
         } else {
             const currentOutlet = productToBeAdded.outlets[outletId];
             const currentTaxBracket = <ITaxBracketData>currentOutlet.taxBracket;
@@ -119,10 +119,10 @@ export class NewSaleService {
                     ),
                 },
             };
-            NewSaleService.computeAndSetProductTotals(newCartItem); // computes and mutates the total
             cartData.push(newCartItem);
         }
         saleData.cart.set(cartData);
+        NewSaleService.computeSalePayment(); // asynchronusly compute totals
     };
 
     /**
@@ -150,6 +150,7 @@ export class NewSaleService {
         const cartData = rawClone<ICartDetails[]>(cart.get());
         cartData.splice(cartProductIndex, 1); // deletes the cart product
         newSaleState.saleData.cart.set(cartData);
+        NewSaleService.computeSalePayment(); // asynchronusly compute totals
     };
 
     static resetSale = (): void => {
@@ -192,7 +193,7 @@ export class NewSaleService {
         }
     };
 
-    static computeSalePayment = (): void => {
+    static computeSalePayment = async (): Promise<void> => {
         const { cart, payment } = rawClone<ISaleData>(newSaleState.saleData.get());
 
         const { productsDiscount, productsTotal, produtctsTax } = cart.reduce(
@@ -243,11 +244,11 @@ export class NewSaleService {
                             rate: currentTaxBracket.rate,
                             taxableValue: taxableAmount,
                             taxAmount: totalTax,
-                            cartItemsSerialNumber: [key],
+                            cartItemsSerialNumber: [key + 1],
                         });
                     } else {
                         taxSplitUp.taxAmount += taxableAmount;
-                        taxSplitUp.cartItemsSerialNumber.push(key);
+                        taxSplitUp.cartItemsSerialNumber.push(key + 1);
                     }
                 });
             } else {
@@ -264,15 +265,34 @@ export class NewSaleService {
                         rate: taxBracket.rate,
                         taxableValue: taxableAmount,
                         taxAmount: totalTax,
-                        cartItemsSerialNumber: [key],
+                        cartItemsSerialNumber: [key + 1],
                     });
                 } else {
                     taxSplitUp.taxAmount += taxableAmount;
-                    taxSplitUp.cartItemsSerialNumber.push(key);
+                    taxSplitUp.cartItemsSerialNumber.push(key + 1);
                 }
             }
         });
 
         return [...taxSplitUps.values()];
+    };
+
+    static handleOnCartItemValueChange = (
+        cartItemIndex: number,
+        values: ICartTableFormValues,
+    ): void => {
+        const cart = rawClone<ICartDetails[]>(newSaleState.saleData.cart.get());
+        const currentCartItem = cart[cartItemIndex];
+
+        // updating the product
+        currentCartItem.product.name = values.productName;
+        currentCartItem.productDiscount = {
+            discount: +values.discountPercent,
+            discountType: EDiscountTypes.PERCENT,
+        };
+        currentCartItem.quantity = +values.quantity;
+        currentCartItem.sellingPrice = +values.unitPrice;
+        newSaleState.saleData.cart.set(cart);
+        NewSaleService.computeSalePayment(); // asynchronusly compute totals
     };
 }

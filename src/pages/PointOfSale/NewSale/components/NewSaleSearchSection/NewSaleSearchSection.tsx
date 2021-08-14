@@ -28,6 +28,11 @@ export const NewSaleSearchSectionComponent = (
         ref.current = searchFieldRef.current;
     }, [searchFieldRef]);
 
+    useEffect(() => {
+        // on mount, if search field has any previous query, fetch the results using that old query
+        fetchSearchResults(search.query.get());
+    }, []);
+
     // handlers
     const onSearchInitaiteClickHandler = () => searchFieldRef.current.focus();
 

@@ -4,6 +4,7 @@ import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
 import { IBillA4ChildProps } from '../../BillA4.types';
+import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 
 export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
     // props
@@ -13,8 +14,6 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
     } = props;
     const { payment, taxSplitUps } = data;
     const { totalTax } = payment;
-
-    // computer
 
     return (
         <>
@@ -43,7 +42,7 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                 <h6>Tax Amount</h6>
                             </div>
                         </div>
-                        {taxSplitUps.forEach((taxSplitUp, key) => (
+                        {taxSplitUps.map((taxSplitUp, key) => (
                             <div
                                 key={key}
                                 className={cn(
@@ -61,10 +60,10 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                     <h6>{taxSplitUp.cartItemsSerialNumber.join(', ')}</h6>
                                 </div>
                                 <div className={cn(commonStyles.textAlignRight)}>
-                                    <h6>{taxSplitUp.taxableValue}</h6>
+                                    <h6>{numberFormatINRCurrency(taxSplitUp.taxableValue)}</h6>
                                 </div>
                                 <div className={cn(commonStyles.textAlignRight)}>
-                                    <h6>{taxSplitUp.taxAmount}</h6>
+                                    <h6>{numberFormatINRCurrency(taxSplitUp.taxAmount)}</h6>
                                 </div>
                             </div>
                         ))}
@@ -79,7 +78,7 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                     <h6>Total Tax</h6>
                                 </div>
                                 <div className={mainStyles.grandTotalValue}>
-                                    <h6>{totalTax}</h6>
+                                    <h6>{numberFormatINRCurrency(totalTax)}</h6>
                                 </div>
                             </div>
                         </div>

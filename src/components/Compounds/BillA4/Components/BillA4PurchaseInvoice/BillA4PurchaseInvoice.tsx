@@ -5,6 +5,7 @@ import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
 import { IBillA4ChildProps } from '../../BillA4.types';
 import { CSSProperties } from 'react';
+import { numberFormatINRCurrency } from 'utilities/general';
 
 export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement => {
     // props
@@ -63,7 +64,7 @@ export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement =>
                         style={tableGridStyle}
                     >
                         <div className={cn(commonStyles.textAlignCenter)}>
-                            <h6>{key}</h6>
+                            <h6>{key + 1}</h6>
                         </div>
                         <div className={cn(commonStyles.textAlignLeft)}>
                             <h6>{cartItem.product.name}</h6>
@@ -73,24 +74,24 @@ export const BillA4PurchaseInvoice = (props: IBillA4ChildProps): ReactElement =>
                         </div>
                         {MRPColumn && (
                             <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>{cartItem.mrp}</h6>
+                                <h6>{numberFormatINRCurrency(cartItem.mrp)}</h6>
                             </div>
                         )}
                         <div className={cn(commonStyles.textAlignRight)}>
-                            <h6>{cartItem.sellingPrice}</h6>
+                            <h6>{numberFormatINRCurrency(cartItem.sellingPrice)}</h6>
                         </div>
                         {discountColumn && (
                             <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>{cartItem.totalDiscount}</h6>
+                                <h6>{numberFormatINRCurrency(cartItem.totalDiscount)}</h6>
                             </div>
                         )}
                         {taxColumn && (
                             <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>{cartItem.totalTax}</h6>
+                                <h6>{numberFormatINRCurrency(cartItem.totalTax)}</h6>
                             </div>
                         )}
                         <div className={cn(commonStyles.textAlignRight)}>
-                            <h6>{cartItem.grandTotal}</h6>
+                            <h6>{numberFormatINRCurrency(cartItem.grandTotal)}</h6>
                         </div>
                     </div>
                 ))}

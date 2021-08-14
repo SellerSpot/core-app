@@ -3,6 +3,7 @@ import { IBill90MMChildProps } from '../../Bill90MM.types';
 import styles from './Bill90MMProductsListing.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 import { ICartDetails } from '@sellerspot/universal-types';
+import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 
 const ListingRow = (props: {
     data: ICartDetails;
@@ -23,18 +24,18 @@ const ListingRow = (props: {
             <div className={styles.productsListingTableBodyRow}>
                 <div className={styles.primaryDetails}>
                     <p className={styles.productName}>{name}</p>
-                    <p className={styles.productPrice}>{grandTotal}</p>
+                    <p className={styles.productPrice}>{numberFormatINRCurrency(grandTotal)}</p>
                 </div>
                 <p
                     className={styles.multiQuantityDetail}
                 >{`(${quantity} ${stockUnit} @ ${sellingPrice})`}</p>
                 <div className={styles.discountDetail}>
                     <p>Discount</p>
-                    <p>{totalDiscount}</p>
+                    <p>{numberFormatINRCurrency(totalDiscount)}</p>
                 </div>
                 <div className={styles.discountDetail}>
                     <p>Tax</p>
-                    <p>{totalTax}</p>
+                    <p>{numberFormatINRCurrency(totalTax)}</p>
                 </div>
             </div>
             <hr className={styles.rowDivider} />

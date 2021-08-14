@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { NewSaleService } from './NewSale.service';
-import { createState, useState } from '@hookstate/core';
+import { createState } from '@hookstate/core';
 import Icon from '@iconify/react';
 import { Button } from '@sellerspot/universal-components';
 import { ICONS } from 'utilities/utilities';
@@ -21,8 +21,10 @@ export const NewSale = (): ReactElement => {
     const history = useHistory();
     const searchFieldRef = useRef<HTMLDivElement>(null);
 
-    // state
-    const saleData = useState(newSaleState.saleData);
+    // effects
+    useEffect(() => {
+        NewSaleService.computeSalePayment(); // onMount, if any previous state exists asynchronusly trigger sale payment totals update
+    }, []);
 
     // handlers
     const onSalesHistoryClickHanlder = () =>
@@ -31,11 +33,6 @@ export const NewSale = (): ReactElement => {
     const searchFieldFocusTriggerer = () => {
         searchFieldRef.current.focus();
     };
-
-    // effects
-    useEffect(() => {
-        NewSaleService.computeSalePayment();
-    }, [saleData.cart.value]);
 
     return (
         <>

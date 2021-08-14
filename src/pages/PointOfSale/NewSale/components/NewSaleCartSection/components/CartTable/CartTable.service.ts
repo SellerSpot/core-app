@@ -1,9 +1,7 @@
 import * as yup from 'yup';
 import { ICartTableFormValues } from './CartTable.types';
-import { EDiscountTypes, ICartDetails } from '@sellerspot/universal-types';
+import { ICartDetails } from '@sellerspot/universal-types';
 import { isEqual } from 'lodash';
-import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
-import { rawClone } from 'utilities/general';
 import { NewSaleService } from 'pages/PointOfSale/NewSale/NewSale.service';
 
 export class CartTableService {
@@ -74,21 +72,7 @@ export class CartTableService {
         toggleRowExpansion: (rowIndex: number) => void;
     }): void => {
         const { cartItemIndex, values, toggleRowExpansion } = props;
-        const cart = rawClone<ICartDetails[]>(newSaleState.saleData.cart.get());
-        const currentCartItem = cart[cartItemIndex];
-
-        // updating the product
-        currentCartItem.product.name = values.productName;
-        currentCartItem.productDiscount = {
-            discount: +values.discountPercent,
-            discountType: EDiscountTypes.PERCENT,
-        };
-        currentCartItem.quantity = +values.quantity;
-        currentCartItem.sellingPrice = +values.unitPrice;
-        NewSaleService.computeAndSetProductTotals(currentCartItem);
-
-        newSaleState.saleData.cart.set(cart);
-
+        NewSaleService.handleOnCartItemValueChange(cartItemIndex, values);
         toggleRowExpansion(cartItemIndex);
     };
 }

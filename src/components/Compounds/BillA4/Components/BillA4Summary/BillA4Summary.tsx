@@ -3,6 +3,7 @@ import styles from './BillA4Summary.module.scss';
 import mainStyles from '../../BillA4.module.scss';
 import cn from 'classnames';
 import { IBillA4ChildProps } from '../../BillA4.types';
+import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 
 export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
     const {
@@ -27,7 +28,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                             <h6>Total Discount</h6>
                         </div>
                         <div className={mainStyles.grandTotalValue}>
-                            <h6>{totalDiscount}</h6>
+                            <h6>{numberFormatINRCurrency(totalDiscount)}</h6>
                         </div>
                     </div>
                 )}
@@ -36,7 +37,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                         <h6>Total Tax</h6>
                     </div>
                     <div className={mainStyles.grandTotalValue}>
-                        <h6>{totalTax}</h6>
+                        <h6>{numberFormatINRCurrency(totalTax)}</h6>
                     </div>
                 </div>
                 <div className={cn(mainStyles.grandTotalHolder, styles.grandTotalLarge)}>
@@ -44,7 +45,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                         <h6>Invoice Total</h6>
                     </div>
                     <div className={mainStyles.grandTotalValue}>
-                        <h6>{grandTotal}</h6>
+                        <h6>{numberFormatINRCurrency(grandTotal)}</h6>
                     </div>
                 </div>
                 <div className={mainStyles.grandTotalHolder}>
@@ -52,7 +53,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                         <h6>Paid</h6>
                     </div>
                     <div className={mainStyles.grandTotalValue}>
-                        <h6>{amountPaid}</h6>
+                        <h6>{numberFormatINRCurrency(amountPaid)}</h6>
                     </div>
                 </div>
                 <div className={mainStyles.grandTotalHolder}>
@@ -60,7 +61,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                         <h6>Balance</h6>
                     </div>
                     <div className={mainStyles.grandTotalValue}>
-                        <h6>{balanceGiven}</h6>
+                        <h6>{numberFormatINRCurrency(balanceGiven)}</h6>
                     </div>
                 </div>
                 {isYouSavedEnabled && (
@@ -69,7 +70,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
                             <h6>You Saved</h6>
                         </div>
                         <div className={mainStyles.grandTotalValue}>
-                            <h6>{totalDiscount}</h6>
+                            <h6>{numberFormatINRCurrency(totalDiscount)}</h6>
                         </div>
                     </div>
                 )}
