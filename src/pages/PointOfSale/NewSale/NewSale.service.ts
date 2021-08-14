@@ -33,6 +33,13 @@ export class NewSaleService {
                 searching: false,
             },
             billSettings: Dummies.billSettings.getBillSettings(),
+            customer: {
+                isAnonymous: false,
+                address: '',
+                email: '',
+                mobile: '',
+                name: '',
+            },
         };
     };
 

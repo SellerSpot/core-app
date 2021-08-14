@@ -8,6 +8,7 @@ import { newSaleState } from '../../NewSale';
 import { useState } from '@hookstate/core';
 import { EPaymentMethods } from '@sellerspot/universal-types';
 import { useRef } from 'react';
+import { isObject } from 'lodash';
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
@@ -18,13 +19,14 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
     const amountPaidRef = useRef<HTMLInputElement>(null);
 
     // state
-    const payment = useState(newSaleState.saleData.payment);
+    const saleData = useState(newSaleState.saleData);
+    const { amountPaid, balanceGiven, grandTotal, method, subTotal, totalDiscount, totalTax } =
+        saleData.payment.get();
 
     // handlers
     const paidOnChangeHandler: IInputFieldProps['onChange'] = (event) => {
         const amountPaid = +event.target.value;
-        const grandTotal = payment.grandTotal.get();
-        payment.batch((state) => {
+        saleData.payment.batch((state) => {
             state.amountPaid.set(amountPaid);
             state.balanceGiven.set(amountPaid - grandTotal > 0 ? amountPaid - grandTotal : 0);
         });
@@ -36,21 +38,21 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
             <div className={styles.cardContent}>
                 <div className={styles.contentRow}>
                     <h6>Sub-total</h6>
-                    <h6>{numberFormatINRCurrency(payment.subTotal.get())}</h6>
+                    <h6>{numberFormatINRCurrency(subTotal)}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total taxes</h6>
-                    <h6>{numberFormatINRCurrency(payment.totalTax.get())}</h6>
+                    <h6>{numberFormatINRCurrency(totalTax)}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total discount</h6>
-                    <h6>{numberFormatINRCurrency(payment.totalDiscount.get())}</h6>
+                    <h6>{numberFormatINRCurrency(totalDiscount)}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h3>Grand total</h3>
-                    <h3>{numberFormatINRCurrency(payment.grandTotal.get())}</h3>
+                    <h3>{numberFormatINRCurrency(grandTotal)}</h3>
                 </div>
-                {viewMode === 'checkout' && payment.method.get() === EPaymentMethods.CASH && (
+                {viewMode === 'checkout' && method === EPaymentMethods.CASH && (
                     <>
                         <div className={styles.contentRow}>
                             <h4>Paid</h4>
@@ -64,14 +66,14 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                                     minNumericValue={0}
                                     disableHelperTextPlaceholderPadding
                                     onChange={paidOnChangeHandler}
-                                    value={payment.amountPaid.get() + ''}
+                                    value={amountPaid + ''}
                                 />
                             </div>
                         </div>
                         <div className={styles.contentRow}>
                             <h5 className={styles.balanceText}>Balance</h5>
                             <h5 className={styles.balanceText}>
-                                {numberFormatINRCurrency(payment.balanceGiven.get())}
+                                {numberFormatINRCurrency(balanceGiven)}
                             </h5>
                         </div>
                     </>
@@ -83,24 +85,35 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
     const Action = () => {
         // handlers
         const checkIsDisabled = () => {
+            let isDisabled = false;
             if (viewMode === 'checkout') {
-                const { method, amountPaid, grandTotal } = payment.get();
+                const customer = newSaleState.customer.get();
                 // check if customer details entered in case of non anonymous entry
-                if (method === EPaymentMethods.CASH) {
+                if (!customer.isAnonymous) {
+                    if (
+                        !(
+                            isObject(saleData.customer.reference.get()) ||
+                            (saleData.customer.reference.get() as string)?.length > 0
+                        )
+                    ) {
+                        // for advanced validatoin check the mobile number here as well as on inputField onChange
+                        isDisabled = true;
+                    }
+                } else if (method === EPaymentMethods.CASH) {
                     if (amountPaid < grandTotal) {
-                        return true;
+                        isDisabled = true;
                     }
                 }
             } else if (viewMode === 'cart') {
                 if (newSaleState.saleData.cart.length <= 0) {
-                    return true;
+                    isDisabled = true;
                 }
             } else if (viewMode === 'park') {
                 // ask customer details
             } else if (viewMode === 'quote') {
                 // if customer details - on , and customer details not entered disable button
             }
-            return false;
+            return isDisabled;
         };
 
         return (
@@ -111,7 +124,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                         {viewMode === 'cart' && (
                             <div className={cn(styles.actionButton, styles.checkoutButton)}>
                                 <h2>PAY</h2>
-                                <h2>{numberFormatINRCurrency(payment.grandTotal.get())}</h2>
+                                <h2>{numberFormatINRCurrency(grandTotal)}</h2>
                             </div>
                         )}
                         {viewMode === 'checkout' && (

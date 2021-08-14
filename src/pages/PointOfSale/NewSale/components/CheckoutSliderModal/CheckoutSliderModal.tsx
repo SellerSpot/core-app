@@ -27,6 +27,7 @@ export const CheckoutSliderModal = (): ReactElement => {
     const checkoutModal = useState(newSaleState.modals.checkout);
     const saleData = useState(newSaleState.saleData);
     const billSettings = useState(newSaleState.billSettings);
+    const customer = useState(newSaleState.customer);
 
     // globals
     const paymentMethods: EPaymentMethods[] = [EPaymentMethods.CASH, EPaymentMethods.CARD];
@@ -52,6 +53,10 @@ export const CheckoutSliderModal = (): ReactElement => {
 
     const onPaymentModeClickHanlder = (method: EPaymentMethods) => () => {
         saleData.payment.method.set(method);
+    };
+
+    const onCustomerSwitchHandler = () => {
+        customer.isAnonymous.set(!customer.isAnonymous.get());
     };
 
     // compute
@@ -112,57 +117,61 @@ export const CheckoutSliderModal = (): ReactElement => {
                                 <div className={styles.settingsGroup}>
                                     <div className={styles.horizontalSplit}>
                                         <h4>Customer details</h4>
-                                        <Switch checked={true} />
+                                        <Switch
+                                            checked={!customer.isAnonymous.get()}
+                                            onChange={onCustomerSwitchHandler}
+                                        />
                                     </div>
-                                    <div className={styles.horizontalSectionSplit}>
-                                        <div className={styles.horizontalSection}>
-                                            <div className={styles.settingsGroup}>
-                                                <InputField
-                                                    type="number"
-                                                    label="Mobile"
-                                                    required
-                                                    placeHolder="9670xxxx2"
-                                                    theme="primary"
-                                                    disableHelperTextPlaceholderPadding
-                                                    fullWidth
-                                                    autoFocus={true}
-                                                />
-                                                <InputField
-                                                    type="text"
-                                                    label="Name"
-                                                    required
-                                                    placeHolder="John Doe"
-                                                    theme="primary"
-                                                    disableHelperTextPlaceholderPadding
-                                                    fullWidth
-                                                />
-                                                <InputField
-                                                    type="email"
-                                                    label="Email ID"
-                                                    placeHolder="john@gmail.com"
-                                                    theme="primary"
-                                                    disableHelperTextPlaceholderPadding
-                                                    fullWidth
-                                                />
+                                    {!customer.isAnonymous.get() && (
+                                        <div className={styles.horizontalSectionSplit}>
+                                            <div className={styles.horizontalSection}>
+                                                <div className={styles.settingsGroup}>
+                                                    <InputField
+                                                        type="number"
+                                                        label="Mobile"
+                                                        required
+                                                        placeHolder="9670xxxx2"
+                                                        theme="primary"
+                                                        disableHelperTextPlaceholderPadding
+                                                        fullWidth
+                                                        autoFocus={true}
+                                                    />
+                                                    <InputField
+                                                        type="text"
+                                                        label="Name"
+                                                        placeHolder="John Doe"
+                                                        theme="primary"
+                                                        disableHelperTextPlaceholderPadding
+                                                        fullWidth
+                                                    />
+                                                    <InputField
+                                                        type="email"
+                                                        label="Email ID"
+                                                        placeHolder="john@gmail.com"
+                                                        theme="primary"
+                                                        disableHelperTextPlaceholderPadding
+                                                        fullWidth
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={styles.horizontalSection}>
+                                                <div className={styles.settingsGroup}>
+                                                    <InputField
+                                                        type="text"
+                                                        label="Address"
+                                                        placeHolder={
+                                                            '69, K.K Nagar,\nwest street,\nTrichy - 620017'
+                                                        }
+                                                        multiline
+                                                        rows={3}
+                                                        theme="primary"
+                                                        disableHelperTextPlaceholderPadding
+                                                        fullWidth
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className={styles.horizontalSection}>
-                                            <div className={styles.settingsGroup}>
-                                                <InputField
-                                                    type="text"
-                                                    label="Address"
-                                                    placeHolder={
-                                                        '69, K.K Nagar,\nwest street,\nTrichy - 620017'
-                                                    }
-                                                    multiline
-                                                    rows={3}
-                                                    theme="primary"
-                                                    disableHelperTextPlaceholderPadding
-                                                    fullWidth
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                             <div className={styles.checkoutWrapper}>
