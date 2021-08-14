@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
 import {
     Button,
+    IInputFieldProps,
     InputField,
+    ISelectOption,
     Select,
     SliderModal,
     SliderModalBody,
@@ -11,19 +13,20 @@ import {
 } from '@sellerspot/universal-components';
 import styles from './CheckoutSliderModal.module.scss';
 import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
-import { BillA4 } from 'components/Compounds/BillA4/BillA4';
-import { Dummies } from 'dummies/Dummies';
 import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings.service';
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import { useState } from '@hookstate/core';
 import { newSaleState } from '../../NewSale';
 import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
 import { rawClone } from 'utilities/general';
+import { EBILL_SIZES } from '@sellerspot/universal-types';
+import { billSizeComponentMap } from 'pages/PointOfSale/BillSettings/BillSettings';
 
 export const CheckoutSliderModal = (): ReactElement => {
     // state
     const checkoutModal = useState(newSaleState.modals.checkout);
     const saleData = useState(newSaleState.saleData);
+    const billSettings = useState(newSaleState.billSettings);
 
     // handlers
     const modalGoBackHandler = () => {
@@ -36,10 +39,21 @@ export const CheckoutSliderModal = (): ReactElement => {
         modalGoBackHandler();
     };
 
+    const onBillTypeChangeHandler = (option: ISelectOption<EBILL_SIZES>) => {
+        saleData.billSettings.size.set(option.key);
+    };
+
+    const onBillSettingsRemarkMessageChangeHandler: IInputFieldProps['onChange'] = (event) => {
+        saleData.billSettings.remarkMessage.set(event.target.value);
+    };
+
     // compute
     const { sliderTitle, summaryViewMode } = CheckoutSliderModalService.getComputedViewMode();
 
-    const rawNewSaleData = rawClone(saleData.get());
+    const currentBillName = saleData.billSettings.size.get();
+    const CurrentBillComponent = billSizeComponentMap[currentBillName].BILL;
+    const currentBillDimension = billSizeComponentMap[currentBillName].dimension;
+    const currentBillSettingsState = billSettings?.bills?.[currentBillName];
 
     // draw
     return (
@@ -55,10 +69,10 @@ export const CheckoutSliderModal = (): ReactElement => {
                     <div className={styles.bodyWrapper}>
                         <div className={styles.billSectionWrapper}>
                             <BillHolder>
-                                <BillA4
-                                    data={rawNewSaleData}
-                                    settings={Dummies.billSettings.getBillSettings().bills.BILL_A4}
-                                    dimension={BillSettingsService.billDimentsions.BILL_A4}
+                                <CurrentBillComponent
+                                    data={rawClone(saleData.get())}
+                                    settings={rawClone(currentBillSettingsState.get())}
+                                    dimension={currentBillDimension}
                                 />
                             </BillHolder>
                         </div>
@@ -69,38 +83,24 @@ export const CheckoutSliderModal = (): ReactElement => {
                                     <Select
                                         label="Bill Size"
                                         options={BillSettingsService.billOptions}
-                                        value={BillSettingsService.billOptions[0]}
+                                        value={BillSettingsService.billOptions.find(
+                                            (billOption) => billOption.key === currentBillName,
+                                        )}
+                                        onChange={onBillTypeChangeHandler}
                                         isClearable={false}
                                     />
-                                    <div className={styles.horizontalSectionSplit}>
-                                        <div className={styles.horizontalSection}>
-                                            <InputField
-                                                type="text"
-                                                label="Remark message"
-                                                placeHolder={'Remark message / thank you'}
-                                                multiline
-                                                rows={2}
-                                                theme="primary"
-                                                disableHelperTextPlaceholderPadding
-                                                fullWidth
-                                            />
-                                            <div className={styles.settingsGroup}></div>
-                                        </div>
-                                        <div className={styles.horizontalSection}>
-                                            <div className={styles.settingsGroup}>
-                                                <InputField
-                                                    type="text"
-                                                    label="Footer message"
-                                                    placeHolder={'Footer message'}
-                                                    multiline
-                                                    rows={2}
-                                                    theme="primary"
-                                                    disableHelperTextPlaceholderPadding
-                                                    fullWidth
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <InputField
+                                        type="text"
+                                        label="Remark message"
+                                        placeHolder={'Remark message / thank you'}
+                                        multiline
+                                        rows={2}
+                                        theme="primary"
+                                        disableHelperTextPlaceholderPadding
+                                        fullWidth
+                                        value={saleData.billSettings.remarkMessage.get()}
+                                        onChange={onBillSettingsRemarkMessageChangeHandler}
+                                    />
                                 </div>
                                 <div className={styles.settingsGroup}>
                                     <div className={styles.horizontalSplit}>

@@ -13,6 +13,8 @@ import { ParkedSalesSliderModal } from './components/ParkedSalesSliderModal/Park
 import { NewSaleSearchSection } from './components/NewSaleSearchSection/NewSaleSearchSection';
 import { NewSaleCartSection } from './components/NewSaleCartSection/NewSaleCartSection';
 import { INewSaleState } from './NewSale.types';
+import { BillSettingsService } from '../BillSettings/BillSettings.service';
+import { EBILL_SIZES } from '@sellerspot/universal-types';
 
 export const newSaleState = createState<INewSaleState>(NewSaleService.getNewSaleInitialState());
 
@@ -23,6 +25,16 @@ export const NewSale = (): ReactElement => {
 
     // effects
     useEffect(() => {
+        // fetch billsettings and set on newSaleState
+        BillSettingsService.fetchBillSettings().then((billSettings) => {
+            newSaleState.batch((state) => {
+                state.billSettings.set(billSettings);
+                state.saleData.billSettings.set({
+                    size: billSettings.defaultBill as EBILL_SIZES,
+                    remarkMessage: billSettings.bills[billSettings.defaultBill].remarkMessage.data,
+                });
+            });
+        });
         NewSaleService.computeSalePayment(); // onMount, if any previous state exists asynchronusly trigger sale payment totals update
     }, []);
 

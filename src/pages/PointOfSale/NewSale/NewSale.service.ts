@@ -1,4 +1,5 @@
 import {
+    EBILL_SIZES,
     EDiscountTypes,
     EPaymentMethods,
     ESaleStatus,
@@ -31,12 +32,17 @@ export class NewSaleService {
                 results: [],
                 searching: false,
             },
+            billSettings: Dummies.billSettings.getBillSettings(),
         };
     };
 
     static getInitialSaleDataState = (): ISaleData => {
         return {
             cart: Dummies.salesHistory.getSalesData()[0].cart,
+            billSettings: {
+                size: EBILL_SIZES.BILL_A4,
+                remarkMessage: '',
+            },
             customer: {
                 name: null,
                 reference: null,

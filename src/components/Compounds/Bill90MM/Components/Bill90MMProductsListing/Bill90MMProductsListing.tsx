@@ -28,7 +28,7 @@ const ListingRow = (props: {
                 </div>
                 <p
                     className={styles.multiQuantityDetail}
-                >{`(${quantity} ${stockUnit} @ ${sellingPrice})`}</p>
+                >{`(${quantity} ${stockUnit.name} @ ${sellingPrice})`}</p>
                 <div className={styles.discountDetail}>
                     <p>Discount</p>
                     <p>{numberFormatINRCurrency(totalDiscount)}</p>

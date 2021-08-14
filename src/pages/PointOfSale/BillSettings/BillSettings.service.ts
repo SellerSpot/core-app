@@ -15,14 +15,14 @@ export class BillSettingsService {
     ];
 
     static fetchBillSettings = async (): Promise<IBillSettings> => {
-        await introduceDelay(2000);
+        await introduceDelay(500);
         const billSettingsResponse = await requests.pos.billSettingsRequest.getBillSettings();
         if (billSettingsResponse.status) return billSettingsResponse.data;
         else throw new Error(billSettingsResponse.error.message ?? billSettingsResponse.error.key);
     };
 
     static updateBillSettings = async (billSettings: IBillSettings): Promise<IBillSettings> => {
-        await introduceDelay(2000);
+        await introduceDelay(500);
         const billSettingsResponse = await requests.pos.billSettingsRequest.updateBillSettings({
             billSettings,
         });

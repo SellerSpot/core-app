@@ -8,7 +8,7 @@ import {
     Skeleton,
     ToolTip,
 } from '@sellerspot/universal-components';
-import { EBILL_SIZES, getBillSizeByName, IBillSettings } from '@sellerspot/universal-types';
+import { EBILL_SIZES, IBillSettings } from '@sellerspot/universal-types';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import styles from './BillSettings.module.scss';
 import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
@@ -17,7 +17,7 @@ import { Bill90MM } from 'components/Compounds/Bill90MM/Bill90MM';
 import { useState } from '@hookstate/core';
 import { BillA4Settings } from './components/BillA4Settings';
 import { Bill90MMSettings } from './components/Bill90MMSettings';
-import { IBillBaseChildProps, TBillComponentMap } from './BillSettings.types';
+import { TBillComponentMap } from './BillSettings.types';
 import { BillSettingsService } from './BillSettings.service';
 import { isEqual, times } from 'lodash';
 import { rawClone } from 'utilities/general';
@@ -44,9 +44,7 @@ export const BillSettings = (): ReactElement => {
     const billSettingsStateInitial = useState<IBillSettings>(null);
     const billSettingsState = useState<IBillSettings>(null);
 
-    const billSettingsSwitchState = useState<keyof typeof EBILL_SIZES>(
-        getBillSizeByName('BILL_A4'),
-    );
+    const billSettingsSwitchState = useState<EBILL_SIZES>(EBILL_SIZES.BILL_A4);
 
     // handlers
     const onSaveChangesHandler = (): void => {
@@ -65,7 +63,7 @@ export const BillSettings = (): ReactElement => {
                 });
         }
     };
-    const onBillSettingViewChangeHandler = (key: keyof typeof EBILL_SIZES) => () => {
+    const onBillSettingViewChangeHandler = (key: EBILL_SIZES) => () => {
         billSettingsSwitchState.set(key);
     };
     // check if the bill settings have changed
@@ -148,9 +146,7 @@ export const BillSettings = (): ReactElement => {
                                         billOption.key === billSettingsState.defaultBill.get(),
                                 )}
                                 onChange={(option: ISelectOption) =>
-                                    billSettingsState.defaultBill.set(
-                                        option.key as keyof typeof EBILL_SIZES,
-                                    )
+                                    billSettingsState.defaultBill.set(option.key as EBILL_SIZES)
                                 }
                                 isClearable={false}
                             />
@@ -171,7 +167,9 @@ export const BillSettings = (): ReactElement => {
                                                     billOption.key ===
                                                     billSettingsSwitchState.get(),
                                             })}
-                                            onClick={onBillSettingViewChangeHandler(billOption.key)}
+                                            onClick={onBillSettingViewChangeHandler(
+                                                billOption.key as EBILL_SIZES,
+                                            )}
                                         >
                                             {billOption.label}
                                         </h5>
@@ -198,12 +196,10 @@ export const BillSettings = (): ReactElement => {
                         <>
                             <BillHolder>
                                 <CurrentBillComponent
-                                    // do not remove, it is used for resize / switch scaling inside BillHolder component
-                                    {...({
-                                        data: Dummies.salesHistory.getSalesData()[0],
-                                        settings: rawClone(currentBillSettingsState.get()),
-                                        dimension: currentBillDimension,
-                                    } as IBillBaseChildProps<unknown> as unknown)}
+                                    // do not remove dimension, it is used for resize / switch scaling inside BillHolder component
+                                    data={Dummies.salesHistory.getSalesData()[0]}
+                                    settings={rawClone(currentBillSettingsState.get())}
+                                    dimension={currentBillDimension}
                                 />
                             </BillHolder>
                         </>

@@ -1,4 +1,5 @@
 import {
+    EBILL_SIZES,
     EDiscountTypes,
     EPaymentMethods,
     ESaleStatus,
@@ -13,6 +14,10 @@ export default class SalesHistoryDummy {
                 customer: {
                     name: 'Developer',
                     reference: '123456789',
+                },
+                billSettings: {
+                    size: EBILL_SIZES.BILL_A4,
+                    remarkMessage: undefined,
                 },
                 taxSplitUps: [],
                 user: {

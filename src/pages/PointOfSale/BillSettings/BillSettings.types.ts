@@ -11,7 +11,7 @@ export type TBILL_SIZE_NAMES = EBILL_SIZES;
 
 export type TBillComponentMap = {
     [key in keyof typeof EBILL_SIZES]: {
-        BILL: <T>(props?: unknown | { state: State<T>; dimension: IDimension }) => ReactElement;
+        BILL: (props: IBillBaseProps<unknown>) => ReactElement;
         SETTINGS: <T>(props?: unknown | { state: State<T> }) => ReactElement;
         /**
          * dimensions should be in px (approximate data is enough)
@@ -22,7 +22,7 @@ export type TBillComponentMap = {
 };
 
 export type TBillDimensions = {
-    [k in keyof typeof EBILL_SIZES]: Partial<IDimension>; // height is not needed, hence making it partial
+    [k in EBILL_SIZES]: Partial<IDimension>; // height is not needed, hence making it partial
 };
 
 // bill preview props

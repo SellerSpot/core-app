@@ -8,18 +8,18 @@ import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
     const {
         settings: { purchaseSummarySection, remarkMessage },
-        data,
+        data: { payment, billSettings: dataBillSettings },
     } = props;
+
     const { totalDiscount: isTotalDiscountEnabled, youSaved: isYouSavedEnabled } =
         purchaseSummarySection;
-    const { grandTotal, totalTax, totalDiscount, amountPaid, balanceGiven } = data.payment;
 
-    // youSaved logic yet to be calculated
+    const { grandTotal, totalTax, totalDiscount, amountPaid, balanceGiven } = payment;
 
     return (
         <div className={mainStyles.advertisementAndGrandTotalWrapper}>
             <div className={styles.advertisementHolder}>
-                {remarkMessage.show && remarkMessage.data}
+                {remarkMessage.show && (dataBillSettings.remarkMessage ?? remarkMessage.data)}
             </div>
             <div className={mainStyles.grandTotalWrapper}>
                 {isTotalDiscountEnabled && (

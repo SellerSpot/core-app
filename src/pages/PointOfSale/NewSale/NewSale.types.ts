@@ -1,4 +1,4 @@
-import { IInventoryData, ISaleData } from '@sellerspot/universal-types';
+import { IBillSettings, IInventoryData, ISaleData } from '@sellerspot/universal-types';
 
 export interface INewSaleModals {
     checkout: boolean;
@@ -15,4 +15,5 @@ export interface INewSaleState {
     search: ISearchState;
     saleData: ISaleData;
     modals: INewSaleModals;
+    billSettings: IBillSettings;
 }

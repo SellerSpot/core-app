@@ -1,9 +1,9 @@
-import { IBillSettings } from '@sellerspot/universal-types';
+import { EBILL_SIZES, IBillSettings } from '@sellerspot/universal-types';
 
 export default class BillSettingsDummy {
     static getBillSettings(): IBillSettings {
         return {
-            defaultBill: 'BILL_A4',
+            defaultBill: EBILL_SIZES.BILL_90MM,
             bills: {
                 BILL_A4: {
                     storeDetails: {
@@ -49,7 +49,7 @@ export default class BillSettingsDummy {
                         name: 'Developer Store',
                         address: 'No 69, Develper Store,\nChennai\n621211\n8489455901',
                     },
-                    footerMessage: {
+                    remarkMessage: {
                         show: true,
                         data: 'This is a footer message',
                     },

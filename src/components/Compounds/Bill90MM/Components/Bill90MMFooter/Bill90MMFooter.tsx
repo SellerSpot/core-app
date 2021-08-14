@@ -4,8 +4,11 @@ import styles from './Bill90MMFooter.module.scss';
 import mainStyles from '../../Bill90MM.module.scss';
 
 export const Bill90MMFooter = (props: IBill90MMChildProps): ReactElement => {
-    const { settings } = props;
-    const { footerMessage } = settings;
+    const {
+        settings,
+        data: { billSettings },
+    } = props;
+    const { remarkMessage } = settings;
     const dateTimeInformation = Date().split(' ');
     const month = dateTimeInformation[1];
     const date = dateTimeInformation[2];
@@ -19,9 +22,9 @@ export const Bill90MMFooter = (props: IBill90MMChildProps): ReactElement => {
     return (
         <>
             <div className={mainStyles.PageBreak} />
-            {footerMessage.show && (
+            {remarkMessage.show && (
                 <div className={styles.footerMessageWrapper}>
-                    <p>{footerMessage.data}</p>
+                    <p>{billSettings.remarkMessage ?? remarkMessage.data}</p>
                 </div>
             )}
             <hr className={mainStyles.mainDivider} />
