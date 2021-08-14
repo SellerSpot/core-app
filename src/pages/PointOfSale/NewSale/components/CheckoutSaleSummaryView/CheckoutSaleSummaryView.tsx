@@ -1,4 +1,4 @@
-import { Button, Card, InputField } from '@sellerspot/universal-components';
+import { Button, Card, IInputFieldProps, InputField } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import cn from 'classnames';
 import { numberFormatINRCurrency } from 'utilities/general';
@@ -6,66 +6,72 @@ import styles from './CheckoutSaleSummaryView.module.scss';
 import { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 import { newSaleState } from '../../NewSale';
 import { useState } from '@hookstate/core';
+import { EPaymentMethods } from '@sellerspot/universal-types';
+import { useRef } from 'react';
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
     // props
     const { proceedCallback, viewMode } = props;
 
+    // hooks
+    const amountPaidRef = useRef<HTMLInputElement>(null);
+
     // state
     const payment = useState(newSaleState.saleData.payment);
-    const { amountPaid, grandTotal, subTotal, totalDiscount, totalTax } = payment.get();
+
+    // handlers
+    const paidOnChangeHandler: IInputFieldProps['onChange'] = (event) => {
+        const amountPaid = +event.target.value;
+        const grandTotal = payment.grandTotal.get();
+        payment.batch((state) => {
+            state.amountPaid.set(amountPaid);
+            state.balanceGiven.set(amountPaid - grandTotal > 0 ? amountPaid - grandTotal : 0);
+        });
+    };
 
     // renderer helpers
     const Content = (): ReactElement => {
-        const paidAmount = useState(0);
-
-        const handlePaidOnChange = (
-            event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        ) => {
-            paidAmount.set(+event.target.value);
-        };
-
-        const paidValue = paidAmount.get() + '';
-        const balance = amountPaid - grandTotal > 0 ? amountPaid - grandTotal : 0;
-
         return (
             <div className={styles.cardContent}>
                 <div className={styles.contentRow}>
                     <h6>Sub-total</h6>
-                    <h6>{numberFormatINRCurrency(subTotal)}</h6>
+                    <h6>{numberFormatINRCurrency(payment.subTotal.get())}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total taxes</h6>
-                    <h6>{numberFormatINRCurrency(totalTax)}</h6>
+                    <h6>{numberFormatINRCurrency(payment.totalTax.get())}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h6>Total discount</h6>
-                    <h6>{numberFormatINRCurrency(totalDiscount)}</h6>
+                    <h6>{numberFormatINRCurrency(payment.totalDiscount.get())}</h6>
                 </div>
                 <div className={styles.contentRow}>
                     <h3>Grand total</h3>
-                    <h3>{numberFormatINRCurrency(grandTotal)}</h3>
+                    <h3>{numberFormatINRCurrency(payment.grandTotal.get())}</h3>
                 </div>
-                {viewMode === 'checkout' && (
+                {viewMode === 'checkout' && payment.method.get() === EPaymentMethods.CASH && (
                     <>
                         <div className={styles.contentRow}>
                             <h4>Paid</h4>
                             <div className={styles.paidField}>
                                 <InputField
+                                    ref={amountPaidRef}
                                     prefix="₹"
                                     type="number"
                                     direction="rtl"
+                                    theme="primary"
+                                    minNumericValue={0}
                                     disableHelperTextPlaceholderPadding
-                                    onChange={handlePaidOnChange}
-                                    value={paidValue}
+                                    onChange={paidOnChangeHandler}
+                                    value={payment.amountPaid.get() + ''}
                                 />
                             </div>
                         </div>
                         <div className={styles.contentRow}>
                             <h5 className={styles.balanceText}>Balance</h5>
                             <h5 className={styles.balanceText}>
-                                {numberFormatINRCurrency(balance)}
+                                {numberFormatINRCurrency(payment.balanceGiven.get())}
                             </h5>
                         </div>
                     </>
@@ -75,6 +81,28 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
     };
 
     const Action = () => {
+        // handlers
+        const checkIsDisabled = () => {
+            if (viewMode === 'checkout') {
+                const { method, amountPaid, grandTotal } = payment.get();
+                // check if customer details entered in case of non anonymous entry
+                if (method === EPaymentMethods.CASH) {
+                    if (amountPaid < grandTotal) {
+                        return true;
+                    }
+                }
+            } else if (viewMode === 'cart') {
+                if (newSaleState.saleData.cart.length <= 0) {
+                    return true;
+                }
+            } else if (viewMode === 'park') {
+                // ask customer details
+            } else if (viewMode === 'quote') {
+                // if customer details - on , and customer details not entered disable button
+            }
+            return false;
+        };
+
         return (
             <Button
                 fullWidth
@@ -83,7 +111,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                         {viewMode === 'cart' && (
                             <div className={cn(styles.actionButton, styles.checkoutButton)}>
                                 <h2>PAY</h2>
-                                <h2>{numberFormatINRCurrency(grandTotal)}</h2>
+                                <h2>{numberFormatINRCurrency(payment.grandTotal.get())}</h2>
                             </div>
                         )}
                         {viewMode === 'checkout' && (
@@ -106,6 +134,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                 variant="contained"
                 theme="primary"
                 onClick={proceedCallback}
+                disabled={checkIsDisabled()}
             />
         );
     };
@@ -116,8 +145,8 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                 cardWrapper: styles.cardWrapper,
                 contentWrapper: styles.cardContentWrapper,
             }}
-            content={<Content />}
-            actions={<Action />}
+            content={Content()} // called without constructor method - reason - will cause re initialize on evey change
+            actions={Action()}
             inBuiltPadding={false}
         />
     );

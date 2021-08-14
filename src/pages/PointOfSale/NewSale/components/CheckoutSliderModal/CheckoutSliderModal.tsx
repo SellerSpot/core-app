@@ -19,7 +19,7 @@ import { useState } from '@hookstate/core';
 import { newSaleState } from '../../NewSale';
 import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
 import { rawClone } from 'utilities/general';
-import { EBILL_SIZES } from '@sellerspot/universal-types';
+import { EBILL_SIZES, EPaymentMethods } from '@sellerspot/universal-types';
 import { billSizeComponentMap } from 'pages/PointOfSale/BillSettings/BillSettings';
 
 export const CheckoutSliderModal = (): ReactElement => {
@@ -27,6 +27,9 @@ export const CheckoutSliderModal = (): ReactElement => {
     const checkoutModal = useState(newSaleState.modals.checkout);
     const saleData = useState(newSaleState.saleData);
     const billSettings = useState(newSaleState.billSettings);
+
+    // globals
+    const paymentMethods: EPaymentMethods[] = [EPaymentMethods.CASH, EPaymentMethods.CARD];
 
     // handlers
     const modalGoBackHandler = () => {
@@ -45,6 +48,10 @@ export const CheckoutSliderModal = (): ReactElement => {
 
     const onBillSettingsRemarkMessageChangeHandler: IInputFieldProps['onChange'] = (event) => {
         saleData.billSettings.remarkMessage.set(event.target.value);
+    };
+
+    const onPaymentModeClickHanlder = (method: EPaymentMethods) => () => {
+        saleData.payment.method.set(method);
     };
 
     // compute
@@ -162,18 +169,20 @@ export const CheckoutSliderModal = (): ReactElement => {
                                 <div className={styles.settingsGroup}>
                                     <h4>Payment mode</h4>
                                     <div className={styles.paymentModesWrapper}>
-                                        <Button
-                                            label="CASH"
-                                            variant="contained"
-                                            theme="primary"
-                                            disableElevation
-                                        />
-                                        <Button
-                                            label="CARD"
-                                            variant="contained"
-                                            theme="auto"
-                                            disableElevation
-                                        />
+                                        {paymentMethods.map((paymentMethod) => (
+                                            <Button
+                                                key={paymentMethod}
+                                                label={paymentMethod}
+                                                variant="contained"
+                                                theme={
+                                                    saleData.payment.method.get() === paymentMethod
+                                                        ? 'primary'
+                                                        : 'auto'
+                                                }
+                                                disableElevation
+                                                onClick={onPaymentModeClickHanlder(paymentMethod)}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                                 <CheckoutSaleSummaryView
