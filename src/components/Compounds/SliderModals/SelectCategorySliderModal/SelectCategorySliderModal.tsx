@@ -3,7 +3,7 @@ import {
     ISliderModalProps,
     SliderModal,
     SliderModalLayoutWrapper,
-} from '../../../../../.yalc/@sellerspot/universal-components/dist';
+} from '@sellerspot/universal-components/dist';
 import { CategorySliderModal } from '../CategorySliderModal/CategorySliderModal';
 import { ModalBody } from './Components/ModalBody/ModalBody';
 import { ModalFooter } from './Components/ModalFooter/ModalFooter';

@@ -4,6 +4,11 @@
     padding: 20px 0;
     @include flex(flex-start, flex-start, column, 8px);
 
+    .outletsHeading {
+        width: 100%;
+        @include flex(center, space-between);
+    }
+
     .expandableCard {
         width: 100%;
     }

@@ -7,7 +7,7 @@ import React, { ReactElement } from 'react';
 import styles from './ExpandingPanels.module.scss';
 
 interface IExpandingPanelsProps {
-    allOutlets: IOutletData[];
+    outletsToShow: IOutletData[];
 }
 
 interface IPanelProps {
@@ -41,13 +41,15 @@ const Panel = (props: IPanelProps) => {
 
 export const ExpandingPanels = (props: IExpandingPanelsProps): ReactElement => {
     // props
-    const { allOutlets } = props;
+    const { outletsToShow } = props;
 
     // draw
     return (
         <div className={styles.wrapper}>
-            <h4>Outlets</h4>
-            {allOutlets.map((outlet, index) => {
+            <div className={styles.outletsHeading}>
+                <h4>Outlets</h4>
+            </div>
+            {outletsToShow.map((outlet, index) => {
                 // draw
                 return <Panel key={index} outlet={outlet} />;
             })}

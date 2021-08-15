@@ -1,8 +1,8 @@
 import { requests } from 'requests/requests';
-import { ITaxGroupData } from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 
 export class TaxGroupSectionService {
-    static getAllTaxGroup = async (): Promise<ITaxGroupData[]> => {
+    static getAllTaxGroup = async (): Promise<ITaxBracketData[]> => {
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.getAllTaxGroup();
         // action

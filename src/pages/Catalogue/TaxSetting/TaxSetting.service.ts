@@ -1,5 +1,5 @@
 import { requests } from 'requests/requests';
-import { ITaxBracketData } from '../../../../.yalc/@sellerspot/universal-types/dist';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 
 export class TaxSettingService {
     static getAllTaxBracket = async (): Promise<ITaxBracketData[]> => {

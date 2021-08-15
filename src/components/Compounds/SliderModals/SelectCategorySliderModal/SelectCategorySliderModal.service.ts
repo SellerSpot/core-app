@@ -2,7 +2,7 @@ import { State } from '@hookstate/core';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { TreeItem } from 'react-sortable-tree';
-import { ISliderModalProps } from '../../../../../.yalc/@sellerspot/universal-components/dist';
+import { ISliderModalProps } from '@sellerspot/universal-components/dist';
 import {
     ISelectCategorySliderModalDynamicProps,
     ISelectCategorySliderModalOnClose,

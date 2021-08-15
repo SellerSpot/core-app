@@ -1,53 +1,77 @@
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { IconifyIcon } from '@iconify/react';
-import { requests } from 'requests/requests';
+import { ISelectOption } from '@sellerspot/universal-components';
+import { IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
 import { ICONS } from '../../../../utilities/utilities';
-import { IOutletData } from '@sellerspot/universal-types';
 import {
     IInventorySliderModalForm,
     IInventorySliderModalProps,
 } from './InventorySliderModal.types';
 
-type IGetDynamicProps = Pick<IInventorySliderModalProps, 'mode' | 'prefillData'>;
+type IGetDynamicProps = Pick<IInventorySliderModalProps, 'mode' | 'prefillData' | 'allOutlets'>;
 
 export interface IInventorySliderModalDynamicValues {
     modalTitle: string;
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
     initialFormValues: Partial<IInventorySliderModalForm>;
-    allOutlets: IOutletData[];
+    searchField: {
+        disabled: boolean;
+        selectedProduct: ISelectOption<ISearchInventorySelectMeta>;
+    };
+    outletsToShow: IOutletData[];
 }
 
 export class InventorySliderModalService {
-    static getAllOutlets = async (): Promise<IOutletData[]> => {
-        const { data, status } = await requests.catalogue.outletRequest.getAllOutlet();
-        if (status) {
-            return data;
-        }
-        return [];
-    };
-
-    static getDynamicProps = async (
-        props: IGetDynamicProps,
-    ): Promise<IInventorySliderModalDynamicValues> => {
+    static getDynamicProps = (props: IGetDynamicProps): IInventorySliderModalDynamicValues => {
         // props
-        const { mode } = props;
+        const { mode, allOutlets, prefillData } = props;
         let modalTitle = 'Add product to inventory';
-        let modalFooterPrimaryButtonLabel = 'ADD PRODUCT';
+        let modalFooterPrimaryButtonLabel = 'ADD PRODUCT TO INVENTORY';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         const initialFormValues: Partial<IInventorySliderModalForm> = {};
+        let searchFieldProps: IInventorySliderModalDynamicValues['searchField'] = {
+            disabled: false,
+            selectedProduct: null,
+        };
+        let outletsToShow: IInventorySliderModalDynamicValues['outletsToShow'] = allOutlets;
 
         // initialFormValues
-        const allOutlets = await InventorySliderModalService.getAllOutlets();
-        allOutlets.map((outlet) => {
-            initialFormValues[outlet.id] = {
-                mrp: 0,
-                sellingPrice: 0,
-                stock: 0,
-                landingCost: 0,
-                markup: 0,
-                taxSetting: null,
+        if (!prefillData) {
+            allOutlets.map((outlet) => {
+                initialFormValues[outlet.id] = {
+                    mrp: 0,
+                    sellingPrice: 0,
+                    stock: 0,
+                    landingCost: 0,
+                    markup: 0,
+                    taxSetting: null,
+                };
+            });
+        } else {
+            outletsToShow = [];
+            const outlets = Object.keys(prefillData['prefillData']);
+            outlets.map((outletId) => {
+                initialFormValues[outletId] = {
+                    landingCost: prefillData['prefillData'][outletId].landingCost,
+                    markup: prefillData['prefillData'][outletId].markup,
+                    mrp: prefillData['prefillData'][outletId].mrp,
+                    sellingPrice: prefillData['prefillData'][outletId].sellingPrice,
+                    stock: prefillData['prefillData'][outletId].stock,
+                    taxSetting: {
+                        label: (prefillData['prefillData'][outletId].taxBracket as ITaxBracketData)
+                            .name,
+                        value: (prefillData['prefillData'][outletId].taxBracket as ITaxBracketData)
+                            .id,
+                    },
+                };
+                outletsToShow.push(prefillData['prefillData'][outletId].outlet as IOutletData);
+            });
+            searchFieldProps = {
+                disabled: true,
+                selectedProduct: prefillData.product,
             };
-        });
+        }
 
         // modalTitle
         if (mode === 'edit') modalTitle = 'Edit product in inventory';
@@ -64,7 +88,8 @@ export class InventorySliderModalService {
             modalFooterPrimaryButtonIcon,
             modalFooterPrimaryButtonLabel,
             modalTitle,
-            allOutlets,
+            searchField: searchFieldProps,
+            outletsToShow,
         };
     };
 }

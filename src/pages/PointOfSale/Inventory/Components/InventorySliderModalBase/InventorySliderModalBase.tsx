@@ -1,8 +1,8 @@
-import React, { ReactElement, useRef } from 'react';
-import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 import { State, useState } from '@hookstate/core';
-import { IInventoryPageState } from '../../Inventory.types';
 import { InventorySliderModal } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
+import React, { ReactElement, useRef } from 'react';
+import { IInventoryPageState } from '../../Inventory.types';
 
 interface IInventorySliderModalBaseProps {
     sliderModalState: State<IInventoryPageState['sliderModal']>;
@@ -31,6 +31,7 @@ export const InventorySliderModalBase = (props: IInventorySliderModalBaseProps):
         mode: localSliderModalState.mode.get(),
         prefillData: localSliderModalState.prefillData.get(),
         showModal: localSliderModalState.showModal.get(),
+        allOutlets: localSliderModalState.allOutlets.get(),
         productSliderModalProps: null,
         onClose: onCloseHandler,
         onCreateProduct: null,

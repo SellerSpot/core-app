@@ -1,26 +1,27 @@
-import { State } from '@hookstate/core';
 import { SliderModalBody } from '@sellerspot/universal-components';
+import { IOutletData } from '@sellerspot/universal-types';
 import { ExpandingPanels } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/ExpandingPanels/ExpandingPanels';
-import { InventoryModalSearchField } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/InventoryModalSearchField/InventoryModalSearchField';
-import { IInventorySliderModalLocalState } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { InventoryModalSearchField } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField';
+import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 import React, { ReactElement } from 'react';
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = {
+    outletsToShow: IOutletData[];
     submitting: boolean;
-    localState: State<IInventorySliderModalLocalState>;
+    searchFieldProps: IInventorySliderModalDynamicValues['searchField'];
 };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { localState } = props;
+    const { outletsToShow, searchFieldProps } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
-                <InventoryModalSearchField selectedProductState={localState.selectedProduct} />
-                <ExpandingPanels allOutlets={localState.dynamicProps.allOutlets.get()} />
+                <InventoryModalSearchField searchFieldProps={searchFieldProps} />
+                <ExpandingPanels outletsToShow={outletsToShow} />
             </div>
         </SliderModalBody>
     );

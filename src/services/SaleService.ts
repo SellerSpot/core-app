@@ -1,65 +1,98 @@
-import { ITaxBracket } from 'components/Compounds/CartTable/CartTable.types';
 import { xPercentofY } from 'utilities/general';
+import {
+    EDiscountTypes,
+    IDiscount,
+    ISaleTaxBracket,
+    ITaxBracketData,
+} from '@sellerspot/universal-types';
 
 export default class SaleService {
     /**
      * used to compute the discount for a product (percentage method)
-     * @param values unitprice & discount
-     * @returns number (discounted unit price)
+     * @param props unitprice & discount
+     * @returns the discount amount
      */
-    public computeDiscountUsingPercentage = (values: {
-        unitPrice: number;
-        discountPercent: number;
-    }): number => {
-        return xPercentofY({
-            x: values.discountPercent,
-            y: values.unitPrice,
-        });
+    public computeDiscount = (props: { sellingPrice: number; discount: IDiscount }): number => {
+        const {
+            discount: { discount, discountType },
+            sellingPrice,
+        } = props;
+
+        let totalDiscount = 0;
+
+        if (discountType === EDiscountTypes.VALUE) {
+            totalDiscount = discount <= sellingPrice ? discount : sellingPrice;
+        } else {
+            totalDiscount = xPercentofY({
+                x: discount,
+                y: sellingPrice,
+            });
+        }
+        return totalDiscount;
     };
 
     /**
      * used to compute the total tax value for a product
-     * @param values taxBrackets[] & unitPrice (after discount) & quantity
+     * @param props taxBrackets[] & unitPrice (after discount) & quantity
      * @returns number (the total tax value for the product)
      */
-    public computeTaxValue = (values: {
-        taxBrackets: ITaxBracket[];
+    public computeTaxValue = (props: {
+        taxBracket: ITaxBracketData | ISaleTaxBracket;
         unitPrice: number;
         quantity: number;
     }): number => {
-        let taxValue = 0;
-        for (const bracket of values.taxBrackets) {
-            taxValue +=
-                xPercentofY({
-                    x: bracket.bracketRate,
-                    y: values.unitPrice,
-                }) * values.quantity;
-        }
-        return taxValue;
+        const { quantity, taxBracket, unitPrice } = props;
+        const { rate } = taxBracket;
+        // for tax groups, server will send the calulated tax rate at the hierarchy level 0 itself,
+        // no need to iterate over group and calculate final rate
+        return (
+            xPercentofY({
+                x: rate,
+                y: unitPrice,
+            }) * quantity
+        );
     };
 
     /**
      * used to compute the subtotal for a product
-     * @param values
+     * @param props
      * @returns number (sub-total for the product)
      */
-    public computeProductSubTotal = (values: {
-        unitPrice: number;
+    public computeProductTotals = (props: {
+        sellingPrice: number;
         quantity: number;
-        discountPercent: number;
-        taxBrackets: ITaxBracket[];
-    }): number => {
-        const unitPriceAfterDiscount =
-            values.unitPrice -
-            this.computeDiscountUsingPercentage({
-                discountPercent: values.discountPercent,
-                unitPrice: values.unitPrice,
-            });
-        const taxValueforProduct = this.computeTaxValue({
-            quantity: values.quantity,
-            taxBrackets: values.taxBrackets,
+        discount: IDiscount;
+        taxBracket: ITaxBracketData | ISaleTaxBracket;
+    }): {
+        totalDiscount: number;
+        unitPriceAfterDiscount: number;
+        totalTax: number;
+        grandTotal: number;
+        taxableAmount: number;
+    } => {
+        const { discount, quantity, taxBracket, sellingPrice } = props;
+
+        const totalDiscount = this.computeDiscount({
+            discount,
+            sellingPrice,
+        });
+
+        const unitPriceAfterDiscount = props.sellingPrice - totalDiscount;
+
+        const totalTax = this.computeTaxValue({
+            quantity,
+            taxBracket,
             unitPrice: unitPriceAfterDiscount,
         });
-        return unitPriceAfterDiscount * values.quantity + taxValueforProduct;
+        const grandTotal = unitPriceAfterDiscount * quantity + totalTax;
+        const taxableAmount = grandTotal - totalTax;
+
+        return {
+            grandTotal,
+            totalDiscount,
+            totalTax,
+            taxableAmount,
+            unitPriceAfterDiscount,
+        };
     };
 }

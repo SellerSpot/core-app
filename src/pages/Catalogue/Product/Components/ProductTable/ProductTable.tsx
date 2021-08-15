@@ -8,7 +8,7 @@ import {
     ICategoryData,
     IProductData,
     IStockUnitData,
-} from '../../../../../../.yalc/@sellerspot/universal-types/dist';
+} from '@sellerspot/universal-types';
 import { IProductPageState } from '../../Product.types';
 import { ProductTableService } from './ProductTable.service';
 

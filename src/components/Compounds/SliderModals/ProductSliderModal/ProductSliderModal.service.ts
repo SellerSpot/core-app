@@ -13,7 +13,7 @@ import { requests } from 'requests/requests';
 import { SelectOptionValidationSchema, showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
-import { IProductData } from '../../../../../.yalc/@sellerspot/universal-types/dist';
+import { IProductData } from '@sellerspot/universal-types';
 import {
     IProductSliderModalForm,
     IProductSliderModalOnClose,

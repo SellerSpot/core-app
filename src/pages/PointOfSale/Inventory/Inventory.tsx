@@ -45,10 +45,12 @@ export const Inventory = (): ReactElement => {
     // state
     const pageState = useState<IInventoryPageState>({
         products: [],
+        tableIsLoading: true,
         sliderModal: {
             showModal: false,
             mode: 'create',
             prefillData: null,
+            allOutlets: [],
         },
     });
 
@@ -60,21 +62,30 @@ export const Inventory = (): ReactElement => {
             prefillData: null,
         });
     };
-    const getAllProducts = async () => {
+    const getAllInventoryProducts = async () => {
         const allProducts = await InventoryService.getAllProducts();
         pageState.products.set(allProducts);
+        pageState.tableIsLoading.set(false);
+    };
+    const getAllOutlets = async () => {
+        const allOutlets = await InventoryService.getAllOutlets();
+        pageState.sliderModal.allOutlets.set(allOutlets);
     };
 
     // effects
     useEffect(() => {
-        getAllProducts();
+        getAllInventoryProducts();
+        getAllOutlets();
     }, []);
 
     // draw
     return (
         <div className={styles.wrapper}>
             <PageHeaderComponent addToInventoryCallback={addToInventoryHandler} />
-            <InventoryTable inventory={pageState.products.get()} />
+            <InventoryTable
+                pageState={pageState}
+                getAllInventoryProducts={getAllInventoryProducts}
+            />
             <InventorySliderModalBase sliderModalState={pageState.sliderModal} />
         </div>
     );

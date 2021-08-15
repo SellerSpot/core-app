@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { Configuration, DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { getEnvironmentVariables } from './src/config/dotenv';
@@ -109,6 +110,7 @@ const webpackConfiguration = (env: {
             ],
         },
         plugins: [
+            new CleanWebpackPlugin(),
             new DefinePlugin(envVariables), // setting environment variables
             new HtmlWebpackPlugin({
                 inject: true,

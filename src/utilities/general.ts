@@ -1,7 +1,7 @@
 import { FieldMetaState } from 'react-final-form';
 import { TreeIndex, TreeNode } from 'react-sortable-tree';
 import * as yup from 'yup';
-import { ISelectOption } from '../../.yalc/@sellerspot/universal-components/dist';
+import { ISelectOption } from '@sellerspot/universal-components';
 
 /**
  * used to compute the x percent of y
@@ -64,7 +64,7 @@ export const redirectTo = (
     }
 };
 
-export const rawClone = <T = unknown>(data: unknown): T => {
+export const rawClone = <T = unknown>(data: T): T => {
     return JSON.parse(JSON.stringify(data));
 };
 
@@ -83,8 +83,7 @@ export const showErrorHelperMessage = (meta: FieldMetaState<unknown>): boolean =
 export const SelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
     label: yup.string(),
     value: yup.string(),
-    labelToShow: yup.mixed().optional(),
-    key: yup.mixed().optional(),
+    meta: yup.mixed().optional(),
 });
 
 // used to the get the key property for a node

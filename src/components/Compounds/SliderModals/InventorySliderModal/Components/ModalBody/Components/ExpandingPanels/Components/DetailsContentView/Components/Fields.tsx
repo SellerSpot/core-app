@@ -121,7 +121,6 @@ export const TaxSettingCustomRenderer = (props: ICommonFieldProps): ReactElement
         validateFields: [],
     });
     const { value, onChange } = input;
-    console.log(value);
 
     // handlers
     const loadOptionsHandler = async (): Promise<ISelectOption[]> => {

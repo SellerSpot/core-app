@@ -1,10 +1,8 @@
-import { ThemeProvider as UniversalThemeProvider } from '@sellerspot/universal-components';
-import { colorThemes, fontSizeThemes } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import 'react-sortable-tree/style.css';
+import { ThemeProvider as UniversalThemeProvider } from '@sellerspot/universal-components';
 import { TReactChildren } from 'typings/common.types';
-import { themeSelector } from '../../../../store/models/theme';
+import { useTheme } from '../../../../customHooks/useTheme';
 import '../../../../styles/core.scss';
 
 export interface IThemeProviderProps {
@@ -16,15 +14,11 @@ export default function ThemeProvider(props: IThemeProviderProps): ReactElement 
     const { children } = props;
 
     // state
-    const { colorTheme, fontSizeTheme } = useSelector(themeSelector);
-
-    // compute
-    const currentColors = colorThemes[colorTheme];
-    const currentFontSizes = fontSizeThemes[fontSizeTheme];
+    const { colors, fontSizes } = useTheme();
 
     // draw
     return (
-        <UniversalThemeProvider colors={currentColors} fontSizes={currentFontSizes}>
+        <UniversalThemeProvider colors={colors} fontSizes={fontSizes}>
             {children}
         </UniversalThemeProvider>
     );

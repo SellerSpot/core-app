@@ -1,17 +1,17 @@
+import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
+import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
+import React, { ReactElement } from 'react';
+import { useField } from 'react-final-form';
+import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import {
     AsyncCreatableSelect,
     Button,
     IAsyncCreatableSelectProps,
     IInputFieldProps,
-    InputField,
     ISelectOption,
+    InputField,
 } from '@sellerspot/universal-components';
-import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
-import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
-import React, { ReactElement } from 'react';
-import { useField } from 'react-final-form';
-import { ICONS } from 'utilities/utilities';
 import { ProductSliderModalService } from '../../../ProductSliderModal.service';
 import {
     IProductSliderModalForm,
@@ -241,6 +241,18 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
             return ProductSliderModalFieldsService.formatStockUnitDataForSelectComponent(stockUnit);
         });
     };
+
+    // const formatOptionLabelHandler: IAsyncCreatableSelectProps['formatOptionLabel'] = (option) => {
+    //     const currOption = option as ISelectOption<IStockUnitData>;
+    //     return (
+    //         <div className={styles.stockUnitSelectLabel}>
+    //             <p>{currOption.meta.name}</p>
+    //             <p>
+    //                 <b>{`  [${currOption.meta.unit}]`}</b>
+    //             </p>
+    //         </div>
+    //     );
+    // };
 
     // draw
     return (

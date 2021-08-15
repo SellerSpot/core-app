@@ -1,11 +1,14 @@
+import React from 'react';
+import { requests } from 'requests/requests';
+import { ICONS } from 'utilities/utilities';
 import { State } from '@hookstate/core';
 import Icon from '@iconify/react';
 import {
     Button,
-    IconButton,
     ITableProps,
-    ToolTip,
+    IconButton,
     TTableCellCustomRenderer,
+    ToolTip,
 } from '@sellerspot/universal-components';
 import {
     IBrandData,
@@ -13,9 +16,6 @@ import {
     IProductData,
     IStockUnitData,
 } from '@sellerspot/universal-types';
-import React from 'react';
-import { requests } from 'requests/requests';
-import { ICONS } from 'utilities/utilities';
 import { IProductPageState } from '../../Product.types';
 import styles from './ProductTable.module.scss';
 

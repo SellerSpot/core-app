@@ -4,12 +4,12 @@ import {
     IInputFieldProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
-import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
 import { requests } from 'requests/requests';
-import { showErrorHelperMessage } from 'utilities/general';
+import { SelectOptionValidationSchema, showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
@@ -105,7 +105,7 @@ export class TaxGroupSliderModalService {
             initialFormValues = {
                 name: prefillData?.name,
                 bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
-                    brackets: prefillData?.bracket as ITaxBracketData[],
+                    brackets: prefillData?.group as ITaxBracketData[],
                 }),
             };
         }
@@ -121,18 +121,11 @@ export class TaxGroupSliderModalService {
         };
     };
 
-    private static ISelectOptionValidationSchema: yup.SchemaOf<ISelectOption> = yup.object({
-        label: yup.string(),
-        value: yup.string(),
-        labelToShow: yup.mixed().optional(),
-        key: yup.mixed().optional(),
-    });
-
     private static validationSchema: yup.SchemaOf<ITaxGroupSliderForm> = yup.object({
         name: yup.string().required('Tax Group name is required'),
         bracket: yup
             .array()
-            .of(TaxGroupSliderModalService.ISelectOptionValidationSchema)
+            .of(SelectOptionValidationSchema)
             .min(1, 'Please choose atleast one tax bracket for the tax group')
             .required('Please select the tax brackets for this tax group'),
     });
@@ -209,14 +202,14 @@ export class TaxGroupSliderModalService {
         };
     };
 
-    static createNewTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+    static createNewTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxBracketData> => {
         // props
         const { name, bracket } = values;
 
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
             name,
-            bracket: bracket.map((bracket) => bracket.value),
+            group: bracket.map((bracket) => bracket.value),
         });
 
         // actions
@@ -226,14 +219,14 @@ export class TaxGroupSliderModalService {
         return null;
     };
 
-    static edi̥tTaxGroup = async (props: IEditTaxBracketProps): Promise<ITaxGroupData> => {
+    static edi̥tTaxGroup = async (props: IEditTaxBracketProps): Promise<ITaxBracketData> => {
         // props
         const { name, id, bracket } = props;
 
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(id, {
             name,
-            bracket,
+            group: bracket,
         });
 
         // actions
@@ -292,13 +285,13 @@ export class TaxGroupSliderModalService {
         }
     };
 
-    static createTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+    static createTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxBracketData> => {
         // props
         const { bracket, name } = values;
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
             name: name,
-            bracket: bracket.map((bracket) => bracket.value),
+            group: bracket.map((bracket) => bracket.value),
         });
         if (status) {
             return data;
@@ -308,13 +301,13 @@ export class TaxGroupSliderModalService {
 
     static editTaxGroup = async (
         values: ITaxGroupSliderForm & { id: string },
-    ): Promise<ITaxGroupData> => {
+    ): Promise<ITaxBracketData> => {
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(
             values.id,
             {
                 name: values.name,
-                bracket: values.bracket.map((bracket) => bracket.value),
+                group: values.bracket.map((bracket) => bracket.value),
             },
         );
         if (status) {

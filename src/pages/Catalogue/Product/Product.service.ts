@@ -1,5 +1,5 @@
 import { requests } from 'requests/requests';
-import { IProductData } from '../../../../.yalc/@sellerspot/universal-types/dist';
+import { IProductData } from '@sellerspot/universal-types';
 
 export class ProductService {
     static getAllProducts = async (): Promise<IProductData[]> => {
