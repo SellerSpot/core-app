@@ -1,4 +1,4 @@
-import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { isEmpty } from 'lodash';
 import { requests } from 'requests/requests';
 import { ISelectOption } from '@sellerspot/universal-components';
@@ -8,42 +8,40 @@ interface ISearchInventoryProps {
     query: string;
 }
 
-type ISelectMeta = IInventorySliderModalDynamicValues['searchField']['selectedProduct']['meta'];
-
 export class InventoryModalSearchFieldService {
     static convertSearchResultToISelect = (
         items: ISearchInventoryProductsResponse['data']['products'],
-    ): ISelectOption<ISelectMeta>[] => {
+    ): ISelectOption<ISearchInventorySelectMeta>[] => {
         const { catalogueProducts, inventoryProducts } = items;
-        let options: ISelectOption<ISelectMeta>[] = [];
+        let options: ISelectOption<ISearchInventorySelectMeta>[] = [];
         // adding products from inventory first
         if (!isEmpty(inventoryProducts)) {
-            const inventoryOptions = inventoryProducts.map<ISelectOption<ISelectMeta>>(
-                (inventoryItem) => {
-                    return {
-                        label: inventoryItem.name,
-                        value: inventoryItem.id,
-                        meta: {
-                            type: 'inventoryProduct',
-                        },
-                    };
-                },
-            );
+            const inventoryOptions = inventoryProducts.map<
+                ISelectOption<ISearchInventorySelectMeta>
+            >((inventoryItem) => {
+                return {
+                    label: inventoryItem.name,
+                    value: inventoryItem.id,
+                    meta: {
+                        type: 'inventoryProduct',
+                    },
+                };
+            });
             options = options.concat(inventoryOptions);
         }
         // adding products from catalogue
         if (!isEmpty(catalogueProducts)) {
-            const catalogueProductsOptions = catalogueProducts.map<ISelectOption<ISelectMeta>>(
-                (catalogueProductItem) => {
-                    return {
-                        label: `Add product "${catalogueProductItem.name}" to inventory`,
-                        value: catalogueProductItem.id,
-                        meta: {
-                            type: 'catalogueProduct',
-                        },
-                    };
-                },
-            );
+            const catalogueProductsOptions = catalogueProducts.map<
+                ISelectOption<ISearchInventorySelectMeta>
+            >((catalogueProductItem) => {
+                return {
+                    label: `Add product "${catalogueProductItem.name}" to inventory`,
+                    value: catalogueProductItem.id,
+                    meta: {
+                        type: 'catalogueProduct',
+                    },
+                };
+            });
             options = options.concat(catalogueProductsOptions);
         }
         return options;
