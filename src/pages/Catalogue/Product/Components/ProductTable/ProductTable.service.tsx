@@ -121,12 +121,11 @@ export class ProductTableService {
                 {
                     dataKey: 'name',
                     columnName: 'Product',
-                    width: '40%',
                 },
                 {
                     dataKey: 'brand',
                     columnName: 'Brand',
-                    align: 'center',
+                    align: 'left',
                     customRenderer: brandCustomRenderer,
                 },
                 {
@@ -137,12 +136,13 @@ export class ProductTableService {
                 {
                     dataKey: 'category',
                     columnName: 'Category',
-                    align: 'center',
+                    align: 'left',
                     customRenderer: categoryCustomRenderer,
                 },
                 {
                     dataKey: 'stockUnit',
-                    align: 'center',
+                    align: 'left',
+                    width: '12%',
                     columnName: 'Stock Unit',
                     customRenderer: stockUnitCustomRenderer,
                 },
