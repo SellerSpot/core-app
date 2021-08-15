@@ -16,6 +16,7 @@ import {
     ICategoryData,
     IInventoryData,
     IOutletData,
+    IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
 import React from 'react';
@@ -55,7 +56,7 @@ export const StockAvailableCustomRenderer: TTableCellCustomRenderer<IInventoryDa
     });
 
     // draw
-    return stockValue;
+    return `${stockValue} ${(rowData.stockUnit as IStockUnitData).unit}`;
 };
 
 export const ActionsCustomRenderer = (
@@ -100,16 +101,16 @@ export const CustomCollapsedContentRenderer = (
 ): ITableCollapsedCustomRenderer<IInventoryData> =>
     function CustomCollapsedContentRendererFun(props) {
         // props
-        const { rowData } = props;
+        const { rowData: collapsedRowData } = props;
         const { deleteItemClickHandler, editItemClickHandler } = extraProps;
-        const productName = rowData.name;
-        const categoryName = (rowData.category as ICategoryData).title;
-        const brand = (rowData.brand as IBrandData).name;
-        const tags = rowData.tags.join(',');
-        const description = rowData.description;
-        const outlets = Object.keys(rowData.configurations);
+        const productName = collapsedRowData.name;
+        const categoryName = (collapsedRowData.category as ICategoryData).title;
+        const brand = (collapsedRowData.brand as IBrandData).name;
+        const tags = collapsedRowData.tags.join(',');
+        const description = collapsedRowData.description;
+        const outlets = Object.keys(collapsedRowData.configurations);
         const tableData: IOutletTableData[] = outlets.map((outletId) => {
-            return rowData.configurations[outletId];
+            return collapsedRowData.configurations[outletId];
         });
 
         // outlet data props
@@ -124,6 +125,14 @@ export const CustomCollapsedContentRenderer = (
                     customRenderer: (props) => {
                         const { rowData } = props;
                         return (rowData.outlet as IOutletData).name;
+                    },
+                },
+                {
+                    columnName: `Stock (${(collapsedRowData.stockUnit as IStockUnitData).unit})`,
+                    align: 'center',
+                    customRenderer: (props) => {
+                        const { rowData } = props;
+                        return `${rowData.stock}`;
                     },
                 },
                 {
@@ -221,7 +230,7 @@ export const CustomCollapsedContentRenderer = (
                             startIcon={<Icon icon={ICONS.baselineEdit} height={20} />}
                             variant="contained"
                             theme="primary"
-                            onClick={editItemClickHandler(rowData)}
+                            onClick={editItemClickHandler(collapsedRowData)}
                         />
                         <Button
                             label={'Delete Product'}
@@ -229,7 +238,7 @@ export const CustomCollapsedContentRenderer = (
                             startIcon={<Icon icon={ICONS.outlineDeleteOutline} height={20} />}
                             variant="outlined"
                             theme="danger"
-                            onClick={deleteItemClickHandler(rowData)}
+                            onClick={deleteItemClickHandler(collapsedRowData)}
                         />
                     </div>
                 </div>

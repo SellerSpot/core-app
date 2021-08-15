@@ -1,6 +1,11 @@
-import React, { ReactElement } from 'react';
+import { State } from '@hookstate/core';
 import { IButtonProps, ITableProps, Table } from '@sellerspot/universal-components';
-import { IInventoryData, ITaxSettingData } from '@sellerspot/universal-types';
+import { IInventoryData } from '@sellerspot/universal-types';
+import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
+import { InventoryTableService } from 'pages/PointOfSale/Inventory/Components/InventoryTable/InventoryTable.service';
+import { IInventoryPageState } from 'pages/PointOfSale/Inventory/Inventory.types';
+import React, { ReactElement } from 'react';
+import { rawClone } from 'utilities/general';
 import {
     ActionsCustomRenderer,
     CustomCollapsedContentRenderer,
@@ -8,18 +13,18 @@ import {
     SnoCustomRenderer,
     StockAvailableCustomRenderer,
 } from './Components/CustomRenderers';
-import { rawClone } from 'utilities/general';
-import { IInventoryPageState } from 'pages/PointOfSale/Inventory/Inventory.types';
-import { State } from '@hookstate/core';
-import { IInventorySliderModalForm } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 
 interface IInventoryTableProps {
     pageState: State<IInventoryPageState>;
+    getAllInventoryProducts: () => Promise<void>;
 }
 
 export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
     // props
-    const { pageState } = props;
+    const { pageState, getAllInventoryProducts } = props;
+
+    // hooks
+    const confirm = useConfirmDialog();
 
     // handlers
     const editItemClickHandler =
@@ -27,22 +32,17 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
         (event) => {
             event.stopPropagation();
             const outlets = Object.keys(rowData.configurations);
-            const prefillData: IInventorySliderModalForm = {};
+            const prefillData: IInventoryData['configurations'] = {};
             outlets.map((outletId) => {
                 prefillData[outletId] = {
                     ...rowData.configurations[outletId],
-                    taxSetting: {
-                        label: (rowData.configurations[outletId].taxSetting as ITaxSettingData)
-                            .name,
-                        value: (rowData.configurations[outletId].taxSetting as ITaxSettingData).id,
-                    },
                 };
             });
             pageState.sliderModal.merge({
                 mode: 'edit',
                 showModal: true,
                 prefillData: {
-                    prefillData,
+                    prefillData: prefillData,
                     product: {
                         label: rowData.name,
                         value: rowData.id,
@@ -50,14 +50,36 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
                 },
             });
         };
-    const deleteItemClickHandler = (): IButtonProps['onClick'] => (event) => {
-        event.stopPropagation();
-        console.log('Delete Clicked');
-    };
+    const deleteItemClickHandler =
+        (rowData: IInventoryData): IButtonProps['onClick'] =>
+        async (event) => {
+            event.stopPropagation();
+            const confirmResult = await confirm.confirm({
+                title: 'Are you sure?',
+                primaryButtonProps: {
+                    label: 'Delete',
+                    theme: 'danger',
+                },
+                secondaryButtonProps: {
+                    label: 'Cancel',
+                    theme: 'primary',
+                },
+                content: `This will remove ${rowData.name} from all outlets`,
+                theme: 'warning',
+            });
+            if (confirmResult) {
+                confirm.setLoading({ isLoading: true });
+                await InventoryTableService.deleteProductFromAllOutlets(rowData.id);
+                await getAllInventoryProducts();
+                confirm.setLoading({ isLoading: false });
+            }
+            confirm.closeDialog();
+        };
 
     // table props
     const tableProps: ITableProps<IInventoryData> = {
         data: rawClone(pageState.products.get()),
+        isLoading: pageState.tableIsLoading.get(),
         multiRowExpansion: true,
         shape: [
             {
@@ -72,9 +94,9 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
                 customRenderer: ProductCustomRenderer,
             },
             {
-                columnName: 'Stock',
+                columnName: 'Total Stock',
                 align: 'center',
-                width: '100px',
+                width: '120px',
                 customRenderer: StockAvailableCustomRenderer,
             },
             {

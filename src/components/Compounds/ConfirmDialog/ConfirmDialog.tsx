@@ -87,7 +87,7 @@ export const ConfirmDialog = (): ReactElement => {
     };
     const handleDialogCloseCallback: IDialogHeaderProps['dialogCloseCallback'] = (event) => {
         state.resolve.get()(false);
-        dialogCloseCallback(event);
+        dialogCloseCallback?.(event);
     };
 
     // draw

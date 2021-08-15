@@ -37,10 +37,9 @@ export default class BaseRequest {
         if (!isObject(payload)) return resultRoute;
         const payloadKeys = Object.keys(payload);
         payloadKeys.forEach((paramKey) => {
-            resultRoute = resultRoute.replace(
-                `/:${paramKey}?` || `:${paramKey}`,
-                <string>payload[paramKey],
-            );
+            resultRoute = resultRoute
+                .replace(`/:${paramKey}?`, <string>payload[paramKey])
+                .replace(`:${paramKey}`, <string>payload[paramKey]);
         });
         return resultRoute;
     }

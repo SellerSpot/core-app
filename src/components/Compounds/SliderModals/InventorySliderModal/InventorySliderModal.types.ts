@@ -29,7 +29,7 @@ export interface IInventorySliderModalOnClose {
 
 type IPrefillData = {
     product: IInventorySliderModalDynamicValues['searchField']['selectedProduct'];
-    prefillData: IInventorySliderModalForm;
+    prefillData: IInventoryData['configurations'];
 };
 
 export interface IInventorySliderModalProps {

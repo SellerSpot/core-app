@@ -2,6 +2,8 @@ import { IconifyIcon } from '@iconify/react';
 import { ISelectOption } from '@sellerspot/universal-components';
 import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { ICONS } from '../../../../utilities/utilities';
+import { IOutletData } from '@sellerspot/universal-types';
+import { ITaxSettingData } from '@sellerspot/universal-types';
 import {
     IInventorySliderModalForm,
     IInventorySliderModalProps,
@@ -18,6 +20,7 @@ export interface IInventorySliderModalDynamicValues {
         disabled: boolean;
         selectedProduct: ISelectOption<ISearchInventorySelectMeta>;
     };
+    outletsToShow: IOutletData[];
 }
 
 export class InventorySliderModalService {
@@ -25,13 +28,14 @@ export class InventorySliderModalService {
         // props
         const { mode, allOutlets, prefillData } = props;
         let modalTitle = 'Add product to inventory';
-        let modalFooterPrimaryButtonLabel = 'ADD PRODUCT';
+        let modalFooterPrimaryButtonLabel = 'ADD PRODUCT TO INVENTORY';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         const initialFormValues: Partial<IInventorySliderModalForm> = {};
         let searchFieldProps: IInventorySliderModalDynamicValues['searchField'] = {
             disabled: false,
             selectedProduct: null,
         };
+        let outletsToShow: IInventorySliderModalDynamicValues['outletsToShow'] = allOutlets;
 
         // initialFormValues
         if (!prefillData) {
@@ -46,11 +50,23 @@ export class InventorySliderModalService {
                 };
             });
         } else {
-            const outlets = Object.keys(prefillData);
+            outletsToShow = [];
+            const outlets = Object.keys(prefillData['prefillData']);
             outlets.map((outletId) => {
                 initialFormValues[outletId] = {
-                    ...prefillData['prefillData'][outletId],
+                    landingCost: prefillData['prefillData'][outletId].landingCost,
+                    markup: prefillData['prefillData'][outletId].markup,
+                    mrp: prefillData['prefillData'][outletId].mrp,
+                    sellingPrice: prefillData['prefillData'][outletId].sellingPrice,
+                    stock: prefillData['prefillData'][outletId].stock,
+                    taxSetting: {
+                        label: (prefillData['prefillData'][outletId].taxSetting as ITaxSettingData)
+                            .name,
+                        value: (prefillData['prefillData'][outletId].taxSetting as ITaxSettingData)
+                            .id,
+                    },
                 };
+                outletsToShow.push(prefillData['prefillData'][outletId].outlet as IOutletData);
             });
             searchFieldProps = {
                 disabled: true,
@@ -74,6 +90,7 @@ export class InventorySliderModalService {
             modalFooterPrimaryButtonLabel,
             modalTitle,
             searchField: searchFieldProps,
+            outletsToShow,
         };
     };
 }

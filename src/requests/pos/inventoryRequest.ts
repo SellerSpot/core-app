@@ -22,4 +22,14 @@ export default class InventoryRequest extends BaseRequest {
             param: { outletid: '' },
         });
     };
+
+    deleteProductFromAllOutlets = async (
+        productId: string,
+    ): Promise<ISearchInventoryProductsResponse> => {
+        return <ISearchInventoryProductsResponse>await this.request({
+            url: ROUTES.POS.INVENTORY.DELETE,
+            method: 'DELETE',
+            param: { productid: productId, outletid: '' },
+        });
+    };
 }

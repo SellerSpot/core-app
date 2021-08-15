@@ -8,7 +8,7 @@ import { Form } from 'react-final-form';
 import { rawClone } from 'utilities/general';
 import { ProductSliderModal } from '../ProductSliderModal/ProductSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
-import { ModalFooter } from './Components/ModalFooter/ModalFooter';
+import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import styles from './InventorySliderModal.module.scss';
 import { InventorySliderModalService } from './InventorySliderModal.service';
@@ -72,7 +72,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     dirty: true,
                 }}
             >
-                {({ handleSubmit, submitting, form }) => {
+                {({ handleSubmit, submitting, form, dirty }) => {
                     // form reference to access for outside
                     formRef.current = form;
 
@@ -83,7 +83,15 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     const modalBodyProps: IModalBodyProps = {
                         submitting,
                         searchFieldProps: rawClone(allDynamicProps.searchField),
-                        allOutlets,
+                        outletsToShow: allDynamicProps.outletsToShow,
+                    };
+                    const modalFooterProps: IModalFooterProps = {
+                        dirty,
+                        onClose,
+                        modalFooterPrimaryButtonIcon: allDynamicProps.modalFooterPrimaryButtonIcon,
+                        modalFooterPrimaryButtonLabel:
+                            allDynamicProps.modalFooterPrimaryButtonLabel,
+                        submitting,
                     };
 
                     // draw
@@ -92,7 +100,7 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                             <SliderModalLayoutWrapper>
                                 <ModalHeader {...modalHeaderProps} />
                                 <ModalBody {...modalBodyProps} />
-                                <ModalFooter sample={''} />
+                                <ModalFooter {...modalFooterProps} />
                             </SliderModalLayoutWrapper>
                         </form>
                     );

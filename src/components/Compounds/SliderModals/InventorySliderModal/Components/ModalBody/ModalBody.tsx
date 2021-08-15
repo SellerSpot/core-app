@@ -7,21 +7,21 @@ import React, { ReactElement } from 'react';
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = {
-    allOutlets: IOutletData[];
+    outletsToShow: IOutletData[];
     submitting: boolean;
     searchFieldProps: IInventorySliderModalDynamicValues['searchField'];
 };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { allOutlets, searchFieldProps } = props;
+    const { outletsToShow, searchFieldProps } = props;
 
     // draw
     return (
         <SliderModalBody>
             <div className={styles.modalBody}>
                 <InventoryModalSearchField searchFieldProps={searchFieldProps} />
-                <ExpandingPanels allOutlets={allOutlets} />
+                <ExpandingPanels outletsToShow={outletsToShow} />
             </div>
         </SliderModalBody>
     );
