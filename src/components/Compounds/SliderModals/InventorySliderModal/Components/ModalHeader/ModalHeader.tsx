@@ -9,5 +9,5 @@ export const ModalHeader = (props: IModalHeaderProps): ReactElement => {
     const { modalTitle } = props;
 
     // draw
-    return <SliderModalHeader title={modalTitle} />;
+    return <SliderModalHeader title={modalTitle} modalCloseCallback={() => void 0} />;
 };

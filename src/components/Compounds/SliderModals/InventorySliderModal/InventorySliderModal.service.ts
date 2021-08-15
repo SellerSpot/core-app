@@ -1,6 +1,4 @@
-import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { IconifyIcon } from '@iconify/react';
-import { ISelectOption } from '@sellerspot/universal-components';
 import { IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
 import { ICONS } from '../../../../utilities/utilities';
 import {
@@ -15,10 +13,6 @@ export interface IInventorySliderModalDynamicValues {
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
     initialFormValues: Partial<IInventorySliderModalForm>;
-    searchField: {
-        disabled: boolean;
-        selectedProduct: ISelectOption<ISearchInventorySelectMeta>;
-    };
     outletsToShow: IOutletData[];
 }
 
@@ -30,10 +24,6 @@ export class InventorySliderModalService {
         let modalFooterPrimaryButtonLabel = 'ADD PRODUCT TO INVENTORY';
         let modalFooterPrimaryButtonIcon = ICONS.outlineAdd;
         const initialFormValues: Partial<IInventorySliderModalForm> = {};
-        let searchFieldProps: IInventorySliderModalDynamicValues['searchField'] = {
-            disabled: false,
-            selectedProduct: null,
-        };
         let outletsToShow: IInventorySliderModalDynamicValues['outletsToShow'] = allOutlets;
 
         // initialFormValues
@@ -67,10 +57,6 @@ export class InventorySliderModalService {
                 };
                 outletsToShow.push(prefillData['prefillData'][outletId].outlet as IOutletData);
             });
-            searchFieldProps = {
-                disabled: true,
-                selectedProduct: prefillData.product,
-            };
         }
 
         // modalTitle
@@ -88,7 +74,6 @@ export class InventorySliderModalService {
             modalFooterPrimaryButtonIcon,
             modalFooterPrimaryButtonLabel,
             modalTitle,
-            searchField: searchFieldProps,
             outletsToShow,
         };
     };

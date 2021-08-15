@@ -1,8 +1,12 @@
-import { ISliderModalProps, SliderModal } from '@sellerspot/universal-components';
+import { TaxBracketSliderModal } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal';
+import { TaxGroupSliderModal } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { rawClone } from 'utilities/general';
-import { SliderModalLayoutWrapper } from '@sellerspot/universal-components';
+import {
+    ISliderModalProps,
+    SliderModal,
+    SliderModalLayoutWrapper,
+} from '@sellerspot/universal-components';
 import { ProductSliderModal } from '../ProductSliderModal/ProductSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
@@ -25,10 +29,17 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
         mode,
         onClose,
         onSubmit,
+        onAddProductToInventory,
+        onCreateProduct,
+        onSelectInventoryProduct,
         prefillData,
+        taxBracketSliderModalProps,
+        taxGroupSliderModalProps,
+        isLoadingBody,
         productSliderModalProps,
         showModal,
         allOutlets,
+        searchValue,
     } = props;
 
     // handlers
@@ -79,8 +90,12 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                     };
                     const modalBodyProps: IModalBodyProps = {
                         submitting,
-                        searchFieldProps: rawClone(allDynamicProps.searchField),
+                        searchValue,
                         outletsToShow: allDynamicProps.outletsToShow,
+                        onAddProductToInventory,
+                        onCreateProduct,
+                        onSelectInventoryProduct,
+                        isLoadingBody,
                     };
                     const modalFooterProps: IModalFooterProps = {
                         dirty,
@@ -104,6 +119,8 @@ export const InventorySliderModal = (props: IInventorySliderModalProps): ReactEl
                 }}
             </Form>
             <ProductSliderModal {...productSliderModalProps} />
+            <TaxBracketSliderModal {...taxBracketSliderModalProps} />
+            <TaxGroupSliderModal {...taxGroupSliderModalProps} />
         </SliderModal>
     );
 };

@@ -1,5 +1,10 @@
 import BaseRequest from 'requests/BaseRequest';
-import { ISearchInventoryProductsResponse, ROUTES } from '@sellerspot/universal-types';
+import {
+    IAddProductToInventoryResponse,
+    IInventoryData,
+    ISearchInventoryProductsResponse,
+    ROUTES,
+} from '@sellerspot/universal-types';
 import { IGetAllInventoryProductResponse } from '@sellerspot/universal-types';
 
 export default class InventoryRequest extends BaseRequest {
@@ -20,6 +25,16 @@ export default class InventoryRequest extends BaseRequest {
             method: 'GET',
             query: { query },
             param: { outletid: '' },
+        });
+    };
+
+    addProductToInventory = async (
+        values: IInventoryData,
+    ): Promise<IAddProductToInventoryResponse> => {
+        return <IAddProductToInventoryResponse>await this.request({
+            url: ROUTES.POS.INVENTORY.CREATE,
+            method: 'POST',
+            payload: values,
         });
     };
 
