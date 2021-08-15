@@ -10,8 +10,8 @@ export class BillSettingsService {
     };
 
     static billOptions: ISelectOption<keyof typeof EBILL_SIZES>[] = [
-        { key: 'BILL_A4', label: 'A4', value: 'a4id' },
-        { key: 'BILL_90MM', label: '90mm', value: '90mmid' },
+        { meta: 'BILL_A4', label: 'A4', value: 'a4id' },
+        { meta: 'BILL_90MM', label: '90mm', value: '90mmid' },
     ];
 
     static fetchBillSettings = async (): Promise<IBillSettings> => {
