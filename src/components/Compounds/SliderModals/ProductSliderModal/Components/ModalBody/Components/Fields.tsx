@@ -1,23 +1,22 @@
+import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
+import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
+import React, { ReactElement } from 'react';
+import { useField } from 'react-final-form';
+import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import {
     AsyncCreatableSelect,
     Button,
     IAsyncCreatableSelectProps,
     IInputFieldProps,
-    InputField,
     ISelectOption,
+    InputField,
 } from '@sellerspot/universal-components';
-import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
-import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
-import React, { ReactElement } from 'react';
-import { useField } from 'react-final-form';
-import { ICONS } from 'utilities/utilities';
 import { ProductSliderModalService } from '../../../ProductSliderModal.service';
 import {
     IProductSliderModalForm,
     IProductSliderModalProps,
 } from '../../../ProductSliderModal.types';
-import { IStockUnitData } from '@sellerspot/universal-types';
 import styles from './Fields.module.scss';
 import { ProductSliderModalFieldsService } from './Fields.service';
 
@@ -243,17 +242,17 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
         });
     };
 
-    const formatOptionLabelHandler: IAsyncCreatableSelectProps['formatOptionLabel'] = (option) => {
-        const currOption = option as ISelectOption<IStockUnitData>;
-        return (
-            <div className={styles.stockUnitSelectLabel}>
-                <p>{currOption.meta.name}</p>
-                <p>
-                    <b>{`  [${currOption.meta.unit}]`}</b>
-                </p>
-            </div>
-        );
-    };
+    // const formatOptionLabelHandler: IAsyncCreatableSelectProps['formatOptionLabel'] = (option) => {
+    //     const currOption = option as ISelectOption<IStockUnitData>;
+    //     return (
+    //         <div className={styles.stockUnitSelectLabel}>
+    //             <p>{currOption.meta.name}</p>
+    //             <p>
+    //                 <b>{`  [${currOption.meta.unit}]`}</b>
+    //             </p>
+    //         </div>
+    //     );
+    // };
 
     // draw
     return (
@@ -263,7 +262,6 @@ const StockUnitField = (props: IStockUnitFieldProps): ReactElement => {
             value={value as ISelectOption}
             isDisabled={submitting}
             formatCreateLabel={(inputValue) => `Create stock unit "${inputValue}"`}
-            formatOptionLabel={formatOptionLabelHandler}
             helperMessage={{
                 enabled: helperMessage.enabled,
                 content: helperMessage.content,

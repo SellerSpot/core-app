@@ -1,15 +1,17 @@
+import React from 'react';
+import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import {
     Button,
     IButtonProps,
-    IconButton,
     ITableCollapsedCustomRenderer,
     ITableProps,
-    numberFormatINRCurrency,
+    IconButton,
     Switch,
+    TTableCellCustomRenderer,
     Table,
     ToolTip,
-    TTableCellCustomRenderer,
+    numberFormatINRCurrency,
 } from '@sellerspot/universal-components';
 import {
     IBrandData,
@@ -19,8 +21,6 @@ import {
     IStockUnitData,
     ITaxBracketData,
 } from '@sellerspot/universal-types';
-import React from 'react';
-import { ICONS } from 'utilities/utilities';
 import styles from './CustomRenderers.module.scss';
 
 interface IActionsCustomRenderer {
@@ -28,7 +28,7 @@ interface IActionsCustomRenderer {
     deleteItemClickHandler: (rowData: IInventoryData) => IButtonProps['onClick'];
 }
 
-type IOutletTableData = IInventoryData['configurations'][0];
+type IOutletTableData = IInventoryData['outlets'][0];
 
 export const SnoCustomRenderer: TTableCellCustomRenderer<IInventoryData> = (props) => {
     // props
@@ -48,11 +48,11 @@ export const StockAvailableCustomRenderer: TTableCellCustomRenderer<IInventoryDa
     // props
     const { rowData } = props;
     // getting all outlets for current product
-    const outlets = Object.keys(rowData.configurations);
+    const outlets = Object.keys(rowData.outlets);
     let stockValue = 0;
     // adding all outlet stock values
     outlets.map((outletId) => {
-        stockValue += rowData.configurations[outletId].stock;
+        stockValue += rowData.outlets[outletId].stock;
     });
 
     // draw
@@ -106,11 +106,10 @@ export const CustomCollapsedContentRenderer = (
         const productName = collapsedRowData.name;
         const categoryName = (collapsedRowData.category as ICategoryData).title;
         const brand = (collapsedRowData.brand as IBrandData).name;
-        const tags = collapsedRowData.tags.join(',');
         const description = collapsedRowData.description;
-        const outlets = Object.keys(collapsedRowData.configurations);
+        const outlets = Object.keys(collapsedRowData.outlets);
         const tableData: IOutletTableData[] = outlets.map((outletId) => {
-            return collapsedRowData.configurations[outletId];
+            return collapsedRowData.outlets[outletId];
         });
 
         // outlet data props
@@ -188,7 +187,7 @@ export const CustomCollapsedContentRenderer = (
                     align: 'center',
                     customRenderer: function ITrackCustomRenderer(props) {
                         const { rowData } = props;
-                        const taxRate = (rowData.taxSetting as ITaxBracketData).rate;
+                        const taxRate = (rowData.taxBracket as ITaxBracketData).rate;
                         return `${taxRate}%`;
                     },
                 },
@@ -212,10 +211,6 @@ export const CustomCollapsedContentRenderer = (
                             <div>
                                 <h6>Brand</h6>
                                 <p>{brand}</p>
-                            </div>
-                            <div>
-                                <h6>Tags</h6>
-                                <p>{tags}</p>
                             </div>
                         </div>
                         <div className={styles.metaDetailsSecondRow}>

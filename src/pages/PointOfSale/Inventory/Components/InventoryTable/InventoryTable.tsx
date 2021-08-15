@@ -31,11 +31,11 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
         (rowData: IInventoryData): IButtonProps['onClick'] =>
         (event) => {
             event.stopPropagation();
-            const outlets = Object.keys(rowData.configurations);
-            const prefillData: IInventoryData['configurations'] = {};
+            const outlets = Object.keys(rowData.outlets);
+            const prefillData: IInventoryData['outlets'] = {};
             outlets.map((outletId) => {
                 prefillData[outletId] = {
-                    ...rowData.configurations[outletId],
+                    ...rowData.outlets[outletId],
                 };
             });
             pageState.sliderModal.merge({

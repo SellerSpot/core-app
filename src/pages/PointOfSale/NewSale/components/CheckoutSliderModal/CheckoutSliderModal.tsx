@@ -1,9 +1,14 @@
+import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
+import { billSizeComponentMap } from 'pages/PointOfSale/BillSettings/BillSettings';
+import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings.service';
 import React, { ReactElement } from 'react';
+import { rawClone } from 'utilities/general';
+import { useState } from '@hookstate/core';
 import {
     Button,
     IInputFieldProps,
-    InputField,
     ISelectOption,
+    InputField,
     Select,
     SliderModal,
     SliderModalBody,
@@ -11,16 +16,11 @@ import {
     SliderModalLayoutWrapper,
     Switch,
 } from '@sellerspot/universal-components';
-import styles from './CheckoutSliderModal.module.scss';
-import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
-import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings.service';
-import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
-import { useState } from '@hookstate/core';
-import { newSaleState } from '../../NewSale';
-import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
-import { rawClone } from 'utilities/general';
 import { EBILL_SIZES, EPaymentMethods } from '@sellerspot/universal-types';
-import { billSizeComponentMap } from 'pages/PointOfSale/BillSettings/BillSettings';
+import { newSaleState } from '../../NewSale';
+import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
+import styles from './CheckoutSliderModal.module.scss';
+import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
 
 export const CheckoutSliderModal = (): ReactElement => {
     // state
@@ -44,7 +44,7 @@ export const CheckoutSliderModal = (): ReactElement => {
     };
 
     const onBillTypeChangeHandler = (option: ISelectOption<EBILL_SIZES>) => {
-        saleData.billSettings.size.set(option.key);
+        saleData.billSettings.size.set(option.meta);
     };
 
     const onBillSettingsRemarkMessageChangeHandler: IInputFieldProps['onChange'] = (event) => {
@@ -96,7 +96,7 @@ export const CheckoutSliderModal = (): ReactElement => {
                                         label="Bill Size"
                                         options={BillSettingsService.billOptions}
                                         value={BillSettingsService.billOptions.find(
-                                            (billOption) => billOption.key === currentBillName,
+                                            (billOption) => billOption.meta === currentBillName,
                                         )}
                                         onChange={onBillTypeChangeHandler}
                                         isClearable={false}

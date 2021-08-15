@@ -1,9 +1,8 @@
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { IconifyIcon } from '@iconify/react';
 import { ISelectOption } from '@sellerspot/universal-components';
-import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
 import { ICONS } from '../../../../utilities/utilities';
-import { IOutletData } from '@sellerspot/universal-types';
-import { ITaxSettingData } from '@sellerspot/universal-types';
 import {
     IInventorySliderModalForm,
     IInventorySliderModalProps,
@@ -60,9 +59,9 @@ export class InventorySliderModalService {
                     sellingPrice: prefillData['prefillData'][outletId].sellingPrice,
                     stock: prefillData['prefillData'][outletId].stock,
                     taxSetting: {
-                        label: (prefillData['prefillData'][outletId].taxSetting as ITaxSettingData)
+                        label: (prefillData['prefillData'][outletId].taxBracket as ITaxBracketData)
                             .name,
-                        value: (prefillData['prefillData'][outletId].taxSetting as ITaxSettingData)
+                        value: (prefillData['prefillData'][outletId].taxBracket as ITaxBracketData)
                             .id,
                     },
                 };

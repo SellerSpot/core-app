@@ -1,11 +1,8 @@
-import {
-    ISliderModalProps,
-    SliderModal,
-    SliderModalLayoutWrapper,
-} from '@sellerspot/universal-components';
+import { ISliderModalProps, SliderModal } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
 import { rawClone } from 'utilities/general';
+import { SliderModalLayoutWrapper } from '@sellerspot/universal-components';
 import { ProductSliderModal } from '../ProductSliderModal/ProductSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
