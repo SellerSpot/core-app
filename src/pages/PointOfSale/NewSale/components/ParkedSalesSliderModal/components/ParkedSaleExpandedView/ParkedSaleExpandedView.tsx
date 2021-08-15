@@ -1,21 +1,33 @@
 import React, { ReactElement } from 'react';
 import { ICartDetails, ISaleData } from '@sellerspot/universal-types';
-import styles from './SaleHistoryExpandedView.module.scss';
+import styles from './ParkedSaleExpandedView.module.scss';
 import {
     Button,
     ITableProps,
     Table,
     TTableCellCustomRenderer,
-} from '../../../../../../.yalc/@sellerspot/universal-components/dist';
+} from '@sellerspot/universal-components';
+import { numberFormatINRCurrency } from 'utilities/general';
 
-export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactElement => {
+interface IParkedSaleExpandedViewProps {
+    rowData: ISaleData;
+    onRetrieveSaleClickHandler: () => void;
+    onDeleteSaleClickHandler: () => void;
+}
+
+export const ParkedSaleExpandedView = (props: IParkedSaleExpandedViewProps): ReactElement => {
     // props
     const {
         rowData: {
             cart,
-            payment: { totalDiscount, totalTax, amountPaid, grandTotal, balanceGiven, subTotal },
+            payment: { totalDiscount, totalTax, grandTotal, subTotal },
+            customer: { name: customerName },
         },
+        onRetrieveSaleClickHandler,
+        onDeleteSaleClickHandler,
     } = props;
+
+    // handlers
 
     // table render helpers
     const serialNumberRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
@@ -28,15 +40,19 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
     };
     const taxAmountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return numberFormatINRCurrency(rowData.totalTax); // handle tax rate
+    };
+    const unitPriceRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
+        const { rowData } = props;
+        return numberFormatINRCurrency(rowData.sellingPrice);
     };
     const discountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return numberFormatINRCurrency(rowData.totalDiscount); // handle discount type
     };
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.unitPrice;
+        return numberFormatINRCurrency(rowData.grandTotal); // add tax and reduce discount
     };
 
     const tableProps: ITableProps<ICartDetails> = {
@@ -58,7 +74,7 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                 columnName: 'Unit price',
                 align: 'right',
                 width: '15%',
-                dataKey: 'unitPrice',
+                customRenderer: unitPriceRenderer,
             },
             {
                 columnName: 'Quantity',
@@ -98,32 +114,35 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                     <div className={styles.tableHolder}>
                         <Table {...tableProps} />
                     </div>
-                    <div className={styles.saleSummaryHolder}>
-                        <div className={styles.saleSummaryGroup}>
-                            <div>Sub-total</div>
-                            <div>{subTotal}</div>
+                    <div className={styles.summaryWrapper}>
+                        <div className={styles.secitonWrapper}>
+                            <h6>Customer details</h6>
+                            <div className={styles.customerDetailsHolder}>
+                                {
+                                    customerName
+                                    // give view more link and fetch customer details on demand on view more click and append in the same dom
+                                }
+                            </div>
                         </div>
-                        <div className={styles.saleSummaryGroup}>
-                            <div>Total tax</div>
-                            <div>{totalTax}</div>
-                        </div>
-                        <div className={styles.saleSummaryGroup}>
-                            <div>Total discount</div>
-                            <div>{totalDiscount}</div>
-                        </div>
-                        <div className={styles.summaryGroupHorizontalRule} />
-                        <div className={styles.saleSummaryGroup}>
-                            <h5>Grand total</h5>
-                            <h5>{grandTotal}</h5>
-                        </div>
-                        <div className={styles.summaryGroupHorizontalRule} />
-                        <div className={styles.saleSummaryGroup}>
-                            <div>Amount paid</div>
-                            <div>{amountPaid}</div>
-                        </div>
-                        <div className={styles.saleSummaryGroup}>
-                            <div>Balance</div>
-                            <div>{balanceGiven}</div>
+                        <div className={styles.salesTotalHolder}>
+                            <div className={styles.saleSummaryGroup}>
+                                <div>Sub-total</div>
+                                <div>{numberFormatINRCurrency(subTotal)}</div>
+                            </div>
+                            <div className={styles.saleSummaryGroup}>
+                                <div>Total tax</div>
+                                <div>{numberFormatINRCurrency(totalTax)}</div>
+                            </div>
+                            <div className={styles.saleSummaryGroup}>
+                                <div>Total discount</div>
+                                <div>{numberFormatINRCurrency(totalDiscount)}</div>
+                            </div>
+                            <div className={styles.summaryGroupHorizontalRule} />
+                            <div className={styles.saleSummaryGroup}>
+                                <h6>Grand total</h6>
+                                <h6>{numberFormatINRCurrency(grandTotal)}</h6>
+                            </div>
+                            <div className={styles.summaryGroupHorizontalRule} />
                         </div>
                     </div>
                 </div>
@@ -134,16 +153,17 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                     <Button
                         variant="contained"
                         theme="primary"
-                        label="Edit Sale"
+                        label="Retrieve Sale"
                         fullWidth={true}
+                        onClick={onRetrieveSaleClickHandler}
                     />
                     <Button
                         variant="outlined"
-                        theme="primary"
-                        label="Print Receipt"
+                        theme="danger"
+                        label="Delete Sale"
                         fullWidth={true}
+                        onClick={onDeleteSaleClickHandler}
                     />
-                    <Button variant="outlined" theme="danger" label="Void Sale" fullWidth={true} />
                 </div>
             </div>
         </div>

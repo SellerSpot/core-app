@@ -2,6 +2,7 @@ import { Notify } from '@sellerspot/universal-components';
 import { RouteWatcher } from 'components/Atoms/RouteWatcher/RouteWatcher';
 import React, { ReactElement } from 'react';
 import { TReactChildren } from 'typings/common.types';
+import { Dialogs } from '../GlobalComponents/Dialogs';
 
 interface ICommonProviderProps {
     children?: TReactChildren;
@@ -14,6 +15,7 @@ export const CommonProvider = (props: ICommonProviderProps): ReactElement => {
             <RouteWatcher />
             {children}
             <Notify />
+            <Dialogs />
         </>
     );
 };

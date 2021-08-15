@@ -1,11 +1,7 @@
 import Icon from '@iconify/react';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
-import {
-    Button,
-    IButtonProps,
-    SliderModalFooter,
-} from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
+import { Button, IButtonProps, SliderModalFooter } from '@sellerspot/universal-components';
 import { ISelectCategorySliderModalProps } from '../../SelectCategorySliderModal.types';
 
 type IModalFooterProps = Pick<ISelectCategorySliderModalProps, 'onClose' | 'onSubmit'>;

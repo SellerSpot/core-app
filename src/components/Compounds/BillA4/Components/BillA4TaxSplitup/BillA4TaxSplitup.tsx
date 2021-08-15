@@ -4,11 +4,17 @@ import mainStyles from '../../BillA4.module.scss';
 import commonStyles from '../../../../../styles/common.module.scss';
 import cn from 'classnames';
 import { IBillA4ChildProps } from '../../BillA4.types';
+import { numberFormatINRCurrency } from '@sellerspot/universal-components';
 
 export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
+    // props
     const {
         settings: { taxSplitUpSection },
+        data,
     } = props;
+    const { payment, taxSplitUps } = data;
+    const { totalTax } = payment;
+
     return (
         <>
             {taxSplitUpSection.show && (
@@ -36,46 +42,31 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                 <h6>Tax Amount</h6>
                             </div>
                         </div>
-                        <div
-                            className={cn(
-                                mainStyles.billTableNode,
-                                styles.taxSplitupTable,
-                                mainStyles.billTableNodeContent,
-                            )}
-                        >
-                            <div className={cn(commonStyles.textAlignLeft)}>
-                                <h6>CGST (5%)</h6>
+                        {taxSplitUps.map((taxSplitUp, key) => (
+                            <div
+                                key={key}
+                                className={cn(
+                                    mainStyles.billTableNode,
+                                    styles.taxSplitupTable,
+                                    mainStyles.billTableNodeContent,
+                                )}
+                            >
+                                <div className={cn(commonStyles.textAlignLeft)}>
+                                    <h6>
+                                        {taxSplitUp.name} {taxSplitUp.rate}%
+                                    </h6>
+                                </div>
+                                <div className={cn(commonStyles.textAlignLeft)}>
+                                    <h6>{taxSplitUp.cartItemsSerialNumber.join(', ')}</h6>
+                                </div>
+                                <div className={cn(commonStyles.textAlignRight)}>
+                                    <h6>{numberFormatINRCurrency(taxSplitUp.taxableValue)}</h6>
+                                </div>
+                                <div className={cn(commonStyles.textAlignRight)}>
+                                    <h6>{numberFormatINRCurrency(taxSplitUp.taxAmount)}</h6>
+                                </div>
                             </div>
-                            <div className={cn(commonStyles.textAlignLeft)}>
-                                <h6>1, 2</h6>
-                            </div>
-                            <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>₹ 12,186.00</h6>
-                            </div>
-                            <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>₹ 609.30</h6>
-                            </div>
-                        </div>
-                        <div
-                            className={cn(
-                                mainStyles.billTableNode,
-                                styles.taxSplitupTable,
-                                mainStyles.billTableNodeContent,
-                            )}
-                        >
-                            <div className={cn(commonStyles.textAlignLeft)}>
-                                <h6>CESS (1%)</h6>
-                            </div>
-                            <div className={cn(commonStyles.textAlignLeft)}>
-                                <h6>1</h6>
-                            </div>
-                            <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>₹ 10,800.00</h6>
-                            </div>
-                            <div className={cn(commonStyles.textAlignRight)}>
-                                <h6>₹ 108.30</h6>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                     <div className={mainStyles.advertisementAndGrandTotalWrapper}>
                         <div>
@@ -87,7 +78,7 @@ export const BillA4TaxSplitup = (props: IBillA4ChildProps): ReactElement => {
                                     <h6>Total Tax</h6>
                                 </div>
                                 <div className={mainStyles.grandTotalValue}>
-                                    <h6>₹ 717.30</h6>
+                                    <h6>{numberFormatINRCurrency(totalTax)}</h6>
                                 </div>
                             </div>
                         </div>

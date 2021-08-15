@@ -5,7 +5,7 @@ import { IBill90MMSettings } from '@sellerspot/universal-types';
 import billSettingsStyle from '../BillSettings.module.scss';
 
 export const Bill90MMSettings = (props: { state: State<IBill90MMSettings> }): ReactElement => {
-    const { storeDetails, footerMessage } = useState(props?.state);
+    const { storeDetails, remarkMessage } = useState(props?.state);
 
     return (
         <>
@@ -31,18 +31,18 @@ export const Bill90MMSettings = (props: { state: State<IBill90MMSettings> }): Re
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <CheckBox
                     label={<h5>Footer message</h5>}
-                    checked={footerMessage.show.get()}
-                    onChange={() => footerMessage.show.set(!footerMessage.show.get())}
+                    checked={remarkMessage.show.get()}
+                    onChange={() => remarkMessage.show.set(!remarkMessage.show.get())}
                 />
-                {footerMessage.show.get() && (
+                {remarkMessage.show.get() && (
                     <InputField
                         multiline={true}
                         fullWidth
                         disableHelperTextPlaceholderPadding
                         placeHolder="Your footer message"
                         rows={3}
-                        value={footerMessage.data.get()}
-                        onChange={(e) => footerMessage.data.set(e.target.value)}
+                        value={remarkMessage.data.get()}
+                        onChange={(e) => remarkMessage.data.set(e.target.value)}
                     />
                 )}
             </div>

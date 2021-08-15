@@ -23,7 +23,11 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
     const editItemClickHandler = (taxBracketData: ITaxBracketData) => async () => {
         sectionState.sliderModal.merge({
             mode: 'edit',
-            prefillData: taxBracketData,
+            prefillData: {
+                id: taxBracketData.id,
+                name: taxBracketData.name,
+                rate: taxBracketData.rate,
+            },
             showModal: true,
         });
     };

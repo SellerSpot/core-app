@@ -9,7 +9,7 @@ import {
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { IProductSearchPathParam } from '../../../.yalc/@sellerspot/universal-types/dist/catalogue/product/routes';
+import { IProductSearchPathParam } from '@sellerspot/universal-types';
 
 export default class ProductRequest extends BaseRequest {
     constructor() {

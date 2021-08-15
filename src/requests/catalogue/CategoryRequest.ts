@@ -12,7 +12,7 @@ import {
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
-import { IEditChildrenOrderPathParam } from '../../../.yalc/@sellerspot/universal-types/dist/catalogue/category/routes';
+import { IEditChildrenOrderPathParam } from '@sellerspot/universal-types';
 
 export default class CategoryRequest extends BaseRequest {
     constructor() {

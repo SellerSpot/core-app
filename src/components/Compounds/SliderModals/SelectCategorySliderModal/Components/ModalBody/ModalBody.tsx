@@ -2,11 +2,7 @@ import Icon from '@iconify/react';
 import { CategoryView } from 'components/Compounds/CategoryView/CategoryView';
 import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
-import {
-    IInputFieldProps,
-    InputField,
-    SliderModalBody,
-} from '../../../../../../../.yalc/@sellerspot/universal-components/dist';
+import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import { ISelectCategorySliderModalProps } from '../../SelectCategorySliderModal.types';
 import styles from './ModalBody.module.scss';
 

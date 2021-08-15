@@ -4,7 +4,7 @@ import {
     IInputFieldProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
-import { ITaxBracketData, ITaxGroupData } from '@sellerspot/universal-types';
+import { ITaxBracketData } from '@sellerspot/universal-types';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
 import { FieldMetaState } from 'react-final-form';
@@ -105,7 +105,7 @@ export class TaxGroupSliderModalService {
             initialFormValues = {
                 name: prefillData?.name,
                 bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
-                    brackets: prefillData?.bracket as ITaxBracketData[],
+                    brackets: prefillData?.group as ITaxBracketData[],
                 }),
             };
         }
@@ -202,14 +202,14 @@ export class TaxGroupSliderModalService {
         };
     };
 
-    static createNewTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+    static createNewTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxBracketData> => {
         // props
         const { name, bracket } = values;
 
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
             name,
-            bracket: bracket.map((bracket) => bracket.value),
+            group: bracket.map((bracket) => bracket.value),
         });
 
         // actions
@@ -219,14 +219,14 @@ export class TaxGroupSliderModalService {
         return null;
     };
 
-    static edi̥tTaxGroup = async (props: IEditTaxBracketProps): Promise<ITaxGroupData> => {
+    static edi̥tTaxGroup = async (props: IEditTaxBracketProps): Promise<ITaxBracketData> => {
         // props
         const { name, id, bracket } = props;
 
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(id, {
             name,
-            bracket,
+            group: bracket,
         });
 
         // actions
@@ -285,13 +285,13 @@ export class TaxGroupSliderModalService {
         }
     };
 
-    static createTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxGroupData> => {
+    static createTaxGroup = async (values: ITaxGroupSliderForm): Promise<ITaxBracketData> => {
         // props
         const { bracket, name } = values;
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.createNewTaxGroup({
             name: name,
-            bracket: bracket.map((bracket) => bracket.value),
+            group: bracket.map((bracket) => bracket.value),
         });
         if (status) {
             return data;
@@ -301,13 +301,13 @@ export class TaxGroupSliderModalService {
 
     static editTaxGroup = async (
         values: ITaxGroupSliderForm & { id: string },
-    ): Promise<ITaxGroupData> => {
+    ): Promise<ITaxBracketData> => {
         // request
         const { data, status } = await requests.catalogue.taxSettingsRequest.editTaxGroup(
             values.id,
             {
                 name: values.name,
-                bracket: values.bracket.map((bracket) => bracket.value),
+                group: values.bracket.map((bracket) => bracket.value),
             },
         );
         if (status) {

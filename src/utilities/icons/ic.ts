@@ -6,12 +6,15 @@ export { default as outlineKeyboardArrowDown } from '@iconify/icons-ic/outline-k
 export { default as outlineKeyboardArrowRight } from '@iconify/icons-ic/outline-keyboard-arrow-right';
 export { default as outlineKeyboardArrowLeft } from '@iconify/icons-ic/outline-keyboard-arrow-left';
 export { default as outlineLaunch } from '@iconify/icons-ic/outline-launch';
+export { default as outlineMorevert } from '@iconify/icons-ic/outline-more-vert';
+export { default as outlineMoreHoriz } from '@iconify/icons-ic/outline-more-horiz';
 export { default as notifications } from '@iconify/icons-ic/notifications';
 export { default as outlineRemove } from '@iconify/icons-ic/outline-remove';
 export { default as baselineEdit } from '@iconify/icons-ic/baseline-edit';
 export { default as baselinePersonPin } from '@iconify/icons-ic/baseline-person-pin';
 export { default as baselineSettings } from '@iconify/icons-ic/baseline-settings';
 export { default as baselineBackupRestore } from '@iconify/icons-ic/baseline-settings-backup-restore';
+export { default as roundRestore } from '@iconify/icons-ic/round-restore';
 export { default as outlineSearch } from '@iconify/icons-ic/outline-search';
 export { default as outlineAdd } from '@iconify/icons-ic/outline-add';
 export { default as baselineLocalPrintshop } from '@iconify/icons-ic/baseline-local-printshop';
