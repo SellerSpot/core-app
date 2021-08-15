@@ -1,11 +1,11 @@
-import Icon from '@iconify/react';
-import React, { ReactElement } from 'react';
-import { Button, IButtonProps, SliderModalFooter } from '@sellerspot/universal-components';
+import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 import {
     IInventorySliderModalOnClose,
     IInventorySliderModalProps,
 } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
-import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
+import React, { ReactElement } from 'react';
+import Icon from '@iconify/react';
+import { Button, IButtonProps, SliderModalFooter } from '@sellerspot/universal-components';
 
 export type IModalFooterProps = Pick<IInventorySliderModalOnClose, 'dirty' | 'submitting'> &
     Pick<IInventorySliderModalProps, 'onClose'> &
@@ -40,6 +40,7 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
             <Button
                 label="CANCEL"
                 theme="danger"
+                size="large"
                 variant="outlined"
                 disabled={submitting}
                 onClick={handleSecondaryButtonOnClick}
@@ -48,6 +49,7 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
                 label={modalFooterPrimaryButtonLabel}
                 theme="primary"
                 variant="contained"
+                size="large"
                 isLoading={submitting}
                 type="submit"
                 startIcon={<Icon icon={modalFooterPrimaryButtonIcon} />}

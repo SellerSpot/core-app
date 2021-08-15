@@ -1,4 +1,6 @@
-import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
+import { ITaxGroupSliderModalProps } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
 import { FormApi } from 'final-form';
 import { ISelectOption } from '@sellerspot/universal-components';
 import { IInventoryData, IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
@@ -28,7 +30,7 @@ export interface IInventorySliderModalOnClose {
 }
 
 type IPrefillData = {
-    product: IInventorySliderModalDynamicValues['searchField']['selectedProduct'];
+    product: IInventoryData;
     prefillData: IInventoryData['outlets'];
 };
 
@@ -40,8 +42,23 @@ export interface IInventorySliderModalProps {
     allOutlets: IOutletData[];
     mode: 'edit' | 'create';
     prefillData: IPrefillData;
+    isLoadingBody: boolean;
+    searchValue: ISelectOption<ISearchInventorySelectMeta>;
     onSubmit: (props: IInventorySliderModalOnSubmit) => Promise<void>;
     onClose: (props: IInventorySliderModalOnClose) => void;
-    onCreateProduct: (name: string) => void;
+    /**
+     * When a new catalogue product is created from the search field
+     */
+    onCreateProduct: (value: string) => void;
+    /**
+     * When a catalogue product is added to the inventory
+     */
+    onAddProductToInventory: (options: ISelectOption<ISearchInventorySelectMeta>) => void;
+    /**
+     * When an already existing inventory product is selected
+     */
+    onSelectInventoryProduct: (options: ISelectOption<ISearchInventorySelectMeta>) => void;
     productSliderModalProps: IProductSliderModalProps;
+    taxBracketSliderModalProps: ITaxBracketSliderModalProps;
+    taxGroupSliderModalProps: ITaxGroupSliderModalProps;
 }

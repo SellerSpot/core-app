@@ -1,11 +1,11 @@
-import { State } from '@hookstate/core';
-import { IButtonProps, ITableProps, Table } from '@sellerspot/universal-components';
-import { IInventoryData } from '@sellerspot/universal-types';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { InventoryTableService } from 'pages/PointOfSale/Inventory/Components/InventoryTable/InventoryTable.service';
 import { IInventoryPageState } from 'pages/PointOfSale/Inventory/Inventory.types';
 import React, { ReactElement } from 'react';
 import { rawClone } from 'utilities/general';
+import { State } from '@hookstate/core';
+import { IButtonProps, ITableProps, Table } from '@sellerspot/universal-components';
+import { IInventoryData } from '@sellerspot/universal-types';
 import {
     ActionsCustomRenderer,
     CustomCollapsedContentRenderer,
@@ -41,13 +41,13 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
             pageState.sliderModal.merge({
                 mode: 'edit',
                 showModal: true,
-                prefillData: {
-                    prefillData: prefillData,
-                    product: {
-                        label: rowData.name,
-                        value: rowData.id,
-                    },
-                },
+                // prefillData: {
+                //     prefillData: prefillData,
+                //     product: {
+                //         label: rowData.name,
+                //         value: rowData.id,
+                //     },
+                // },
             });
         };
     const deleteItemClickHandler =
