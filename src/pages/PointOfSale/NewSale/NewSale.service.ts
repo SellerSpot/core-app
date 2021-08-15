@@ -24,7 +24,7 @@ export class NewSaleService {
     static getNewSaleInitialState = (): INewSaleState => {
         return {
             modals: {
-                checkout: true,
+                checkout: false,
                 parkedSales: false,
             },
             saleData: NewSaleService.getInitialSaleDataState(),
