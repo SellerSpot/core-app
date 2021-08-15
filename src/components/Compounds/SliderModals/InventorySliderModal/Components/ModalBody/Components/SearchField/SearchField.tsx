@@ -1,25 +1,23 @@
-import { useState } from '@hookstate/core';
+import { InventoryModalSearchFieldService } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField.service';
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
+import React, { ReactElement } from 'react';
 import {
     AsyncCreatableSelect,
     IAsyncCreatableSelectProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
-import { InventoryModalSearchFieldService } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField.service';
-import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
-import React, { ReactElement } from 'react';
 import styles from './SearchField.module.scss';
 
-interface IInventoryModalSearchFieldProps {
-    searchFieldProps: IInventorySliderModalDynamicValues['searchField'];
-}
-
-type ISelectMeta = IInventorySliderModalDynamicValues['searchField']['selectedProduct']['meta'];
+export type IInventoryModalSearchFieldProps = Pick<
+    IInventorySliderModalProps,
+    'onAddProductToInventory' | 'onCreateProduct' | 'onSelectInventoryProduct' | 'searchValue'
+>;
 
 export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps): ReactElement => {
     // props
-    const { searchFieldProps } = props;
-    // state
-    const selectedOption = useState<ISelectOption<ISelectMeta>>(searchFieldProps.selectedProduct);
+    const { onAddProductToInventory, onCreateProduct, onSelectInventoryProduct, searchValue } =
+        props;
     // handlers
     const loadOptionsHandler: IAsyncCreatableSelectProps['loadOptions'] = async (query) => {
         // sending request
@@ -36,14 +34,12 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
         }
     };
     const onChangeHandler: IAsyncCreatableSelectProps['onChange'] = (option) => {
-        const currentOption = option as ISelectOption<ISelectMeta>;
+        const currentOption = option as ISelectOption<ISearchInventorySelectMeta>;
         if (currentOption.meta.type === 'inventoryProduct') {
+            onSelectInventoryProduct(currentOption);
         } else if (currentOption.meta.type === 'catalogueProduct') {
-            console.log('Add A Product to inventory');
+            onAddProductToInventory(currentOption);
         }
-    };
-    const onCreateOptionHandler: IAsyncCreatableSelectProps['onCreateOption'] = (option) => {
-        console.log('Create Product ', option);
     };
     const formatCreateLabelHandler: IAsyncCreatableSelectProps['formatCreateLabel'] = (
         inputValue,
@@ -56,12 +52,11 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
         <div className={styles.wrapper}>
             <AsyncCreatableSelect
                 autoFocus
-                isDisabled={searchFieldProps.disabled}
                 label="Search for Products"
                 loadOptions={loadOptionsHandler}
-                value={selectedOption.get()}
+                value={searchValue}
                 formatCreateLabel={formatCreateLabelHandler}
-                onCreateOption={onCreateOptionHandler}
+                onCreateOption={onCreateProduct}
                 onChange={onChangeHandler}
             />
         </div>

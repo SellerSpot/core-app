@@ -1,7 +1,7 @@
-import { State, useState } from '@hookstate/core';
 import { InventorySliderModal } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 import React, { ReactElement, useRef } from 'react';
+import { State, useState } from '@hookstate/core';
 import { IInventoryPageState } from '../../Inventory.types';
 
 interface IInventorySliderModalBaseProps {
@@ -32,10 +32,16 @@ export const InventorySliderModalBase = (props: IInventorySliderModalBaseProps):
         prefillData: localSliderModalState.prefillData.get(),
         showModal: localSliderModalState.showModal.get(),
         allOutlets: localSliderModalState.allOutlets.get(),
-        productSliderModalProps: null,
         onClose: onCloseHandler,
         onCreateProduct: null,
         onSubmit: null,
+        onAddProductToInventory: null,
+        isLoadingBody: false,
+        onSelectInventoryProduct: null,
+        searchValue: null,
+        productSliderModalProps: null,
+        taxBracketSliderModalProps: null,
+        taxGroupSliderModalProps: null,
     };
 
     // draw

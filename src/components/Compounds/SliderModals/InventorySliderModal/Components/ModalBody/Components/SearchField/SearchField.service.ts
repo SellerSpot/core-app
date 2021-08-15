@@ -1,8 +1,8 @@
-import { ISelectOption } from '@sellerspot/universal-components';
-import { ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
 import { IInventorySliderModalDynamicValues } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 import { isEmpty } from 'lodash';
 import { requests } from 'requests/requests';
+import { ISelectOption } from '@sellerspot/universal-components';
+import { ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
 
 interface ISearchInventoryProps {
     query: string;
