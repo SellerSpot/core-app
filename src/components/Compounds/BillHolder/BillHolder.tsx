@@ -1,20 +1,26 @@
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { CSSProperties } from '@material-ui/styles';
 import { clamp } from 'lodash';
 import { useReactToPrint } from 'react-to-print';
 import { useWindowSize } from '@sellerspot/universal-components';
 
 import styles from './BillHolder.module.scss';
-import { IBillHolderProps } from './BillHolder.types';
+import { IBillHolderProps, TBillHolderRef } from './BillHolder.types';
 import { BillHolderControlPanel } from './Components/BillHolderControlPanel/BillHolderControlPanel';
 
-export const BillHolder = (props: IBillHolderProps): ReactElement => {
+const BillHolderComponent = (props: IBillHolderProps, ref: TBillHolderRef): ReactElement => {
     const { children, enablePrint } = props;
 
     // hooks
     const targetContainerRef = useRef<HTMLDivElement>(null);
     const zoomableWrapperRef = useRef<HTMLDivElement>(null);
     const dimension = useWindowSize();
+    const handlePrint = useReactToPrint({
+        content: () => targetContainerRef.current,
+        onAfterPrint: () => {
+            // resolve promise
+        },
+    });
 
     // state
     const [defaultBillScale, setDefaultBillScale] = useState(1);
@@ -25,11 +31,26 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
     });
     const { billHeight, billWidth } = billMeasurements;
 
-    // handlers
-    const handlePrint = useReactToPrint({
-        content: () => targetContainerRef.current,
-    });
+    // effects
+    // used to detect scroll
+    useEffect(() => {
+        document.addEventListener('wheel', handleScroll, { passive: false });
+        return () => {
+            document.removeEventListener('wheel', handleScroll);
+        };
+    }, []);
 
+    // used to get the height of bill / triggers when children changes
+    useEffect(() => {
+        setMeasurementsAndScaling();
+    }, [targetContainerRef.current, zoomableWrapperRef.current, children, dimension]);
+
+    // on mount attach print reference to the parent
+    useEffect(() => {
+        if (ref?.current !== undefined) ref.current = { triggerPrint: handlePrint };
+    }, []);
+
+    // handlers
     const scale = (up: boolean) => {
         setBillScale((state) => {
             let newScale = state;
@@ -75,20 +96,6 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
         setMeasurementsAndScaling();
     };
 
-    // effects
-    // used to detect scroll
-    useEffect(() => {
-        document.addEventListener('wheel', handleScroll, { passive: false });
-        return () => {
-            document.removeEventListener('wheel', handleScroll);
-        };
-    }, []);
-
-    // used to get the height of bill / triggers when children changes
-    useEffect(() => {
-        setMeasurementsAndScaling();
-    }, [targetContainerRef.current, zoomableWrapperRef.current, children, dimension]);
-
     // styles
     const billWrapperStyle: CSSProperties = {
         width: billWidth * billScale,
@@ -123,3 +130,5 @@ export const BillHolder = (props: IBillHolderProps): ReactElement => {
         </>
     );
 };
+
+export const BillHolder = forwardRef(BillHolderComponent);

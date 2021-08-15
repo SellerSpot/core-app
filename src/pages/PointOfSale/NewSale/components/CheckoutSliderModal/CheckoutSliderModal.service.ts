@@ -19,6 +19,10 @@ export class CheckoutSliderModalService {
                 sliderTitle = 'Quote sale';
                 summaryViewMode = 'quote';
                 break;
+            case ESaleStatus.COMPLETED:
+                sliderTitle = 'Print Bill';
+                summaryViewMode = 'print';
+                break;
             default:
                 sliderTitle = 'Checkout sale';
                 summaryViewMode = 'checkout';

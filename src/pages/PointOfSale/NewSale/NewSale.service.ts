@@ -12,6 +12,7 @@ import {
     ITaxSplitUp,
 } from '@sellerspot/universal-types';
 import { Dummies } from 'dummies/Dummies';
+import { requests } from 'requests/requests';
 import { saleService } from 'services/services';
 import { rawClone } from 'utilities/general';
 import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
@@ -33,27 +34,29 @@ export class NewSaleService {
                 searching: false,
             },
             billSettings: Dummies.billSettings.getBillSettings(),
-            customer: {
-                isAnonymous: false,
-                address: '',
-                email: '',
-                mobile: '',
-                name: '',
-            },
+        };
+    };
+
+    static getCustomerInitialState = (): ISaleData['customer'] => {
+        return {
+            isAnonymous: false,
+            name: '',
+            billingAddress: '',
+            email: '',
+            mobile: '',
+            shippingAddress: '',
+            reference: '',
         };
     };
 
     static getInitialSaleDataState = (): ISaleData => {
         return {
-            cart: Dummies.salesHistory.getSalesData()[0].cart,
+            cart: [],
             billSettings: {
                 size: EBILL_SIZES.BILL_A4,
                 remarkMessage: '',
             },
-            customer: {
-                name: null,
-                reference: null,
-            },
+            customer: NewSaleService.getCustomerInitialState(),
             outlet: {
                 name: null,
                 reference: null,
@@ -307,5 +310,41 @@ export class NewSaleService {
         currentCartItem.sellingPrice = +values.unitPrice;
         newSaleState.saleData.cart.set(cart);
         NewSaleService.computeSalePayment(); // asynchronusly compute totals
+    };
+
+    static completeCheckout = async (): Promise<boolean> => {
+        const saleData = rawClone<ISaleData>(newSaleState.saleData.get());
+        // change the status of the sale
+        saleData.status = ESaleStatus.COMPLETED;
+        // once get success response from the server return back the saleData response,
+        // where we will get the invoice number and date,
+        // then trigger the print invoice flow if user clicks the print bill
+
+        const { data, status, error } = await requests.pos.salesRequest.createNewSale(saleData);
+        if (status) {
+            newSaleState.batch((state) => {
+                state.saleData.set(data);
+            });
+            return true;
+        } else {
+            throw error;
+        }
+    };
+
+    static completeParkSale = async (): Promise<boolean> => {
+        const saleData = rawClone<ISaleData>(newSaleState.saleData.get());
+        // change the status of the sale
+        saleData.status = ESaleStatus.PARKED;
+
+        // once get success response from the server return back the saleData response,
+        // where we will get the invoice number and date,
+        // then trigger the print invoice flow if user clicks the print bill
+
+        const { status, error } = await requests.pos.salesRequest.parkSale(saleData);
+        if (status) {
+            return true;
+        } else {
+            throw error;
+        }
     };
 }

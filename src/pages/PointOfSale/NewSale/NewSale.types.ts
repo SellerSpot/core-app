@@ -11,18 +11,9 @@ export interface ISearchState {
     results: IInventoryData[];
 }
 
-export interface INewSaleCustomer {
-    isAnonymous: boolean;
-    mobile: string;
-    name: string;
-    email: string;
-    address: string;
-}
-
 export interface INewSaleState {
     search: ISearchState;
     saleData: ISaleData;
     modals: INewSaleModals;
     billSettings: IBillSettings;
-    customer: INewSaleCustomer;
 }

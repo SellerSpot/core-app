@@ -18,6 +18,12 @@ export default class BillSettingsDummy {
                         show: true,
                         data: 'This is a footer message',
                     },
+                    taxInvoiceSection: {
+                        show: true,
+                        GSTNumber: true,
+                        billingAddress: true,
+                        shippingAddress: true,
+                    },
                     purchaseInvoiceSection: {
                         show: true,
                         MRPColumn: true,
@@ -33,7 +39,7 @@ export default class BillSettingsDummy {
                     },
                     remarkMessage: {
                         show: true,
-                        data: 'This is a remark message',
+                        data: 'No refund / exchange for all products',
                     },
                     termsAndConditions: {
                         show: true,

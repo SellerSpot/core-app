@@ -8,6 +8,7 @@ export const BillA4Settings = (props: { state: State<IBillA4Settings> }): ReactE
     const {
         storeDetails,
         GSTNumber,
+        taxInvoiceSection,
         purchaseInvoiceSection,
         purchaseSummarySection,
         taxSplitUpSection,
@@ -49,6 +50,42 @@ export const BillA4Settings = (props: { state: State<IBillA4Settings> }): ReactE
                         disableHelperTextPlaceholderPadding
                         value={GSTNumber.data.get()}
                     />
+                )}
+            </div>
+            <div className={billSettingsStyle.currentBillSettingsGroup}>
+                <CheckBox
+                    label={<h5>Tax invoice section</h5>}
+                    checked={taxInvoiceSection.show.get()}
+                    onChange={() => taxInvoiceSection.show.set(!taxInvoiceSection.show.get())}
+                />
+                {taxInvoiceSection.show.get() && (
+                    <>
+                        <CheckBox
+                            label="Customer GSTIN"
+                            checked={taxInvoiceSection.GSTNumber.get()}
+                            onChange={() =>
+                                taxInvoiceSection.GSTNumber.set(!taxInvoiceSection.GSTNumber.get())
+                            }
+                        />
+                        <CheckBox
+                            label="Billing address"
+                            checked={taxInvoiceSection.billingAddress.get()}
+                            onChange={() =>
+                                taxInvoiceSection.billingAddress.set(
+                                    !taxInvoiceSection.billingAddress.get(),
+                                )
+                            }
+                        />
+                        <CheckBox
+                            label="Shipping address"
+                            checked={taxInvoiceSection.shippingAddress.get()}
+                            onChange={() =>
+                                taxInvoiceSection.shippingAddress.set(
+                                    !taxInvoiceSection.shippingAddress.get(),
+                                )
+                            }
+                        />
+                    </>
                 )}
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>

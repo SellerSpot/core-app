@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { MutableRefObject, ReactElement } from 'react';
 
 export interface IBillHolderProps {
     /**
@@ -10,3 +10,9 @@ export interface IBillHolderProps {
      */
     children?: ReactElement;
 }
+
+export interface TBillHolderRefProps {
+    triggerPrint: () => void;
+}
+
+export type TBillHolderRef = MutableRefObject<TBillHolderRefProps>;

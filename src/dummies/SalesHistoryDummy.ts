@@ -11,9 +11,15 @@ export default class SalesHistoryDummy {
         return [
             {
                 id: 'YWw7c2RrZg==YWw7c2RrZg==YWw7c2RrZg==',
+                status: ESaleStatus.COMPLETED,
                 customer: {
                     name: 'Developer',
-                    reference: '123456789',
+                    email: 'dev@sellerspot.in',
+                    mobile: '8489455823',
+                    billingAddress: '69, k.k. Nagar\n, Trichy - 621211, \n India',
+                    shippingAddress: '69, k.k. Nagar\n, Trichy - 621211, \n India',
+                    reference: 'MTIzNDU2Nzg5',
+                    isAnonymous: false,
                 },
                 billSettings: {
                     size: EBILL_SIZES.BILL_A4,
@@ -24,7 +30,6 @@ export default class SalesHistoryDummy {
                     name: 'Developer',
                     reference: '123456789',
                 },
-                status: ESaleStatus.COMPLETED,
                 outlet: {
                     name: 'Default',
                     reference: '123456789',

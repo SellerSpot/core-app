@@ -30,7 +30,7 @@ export const Bill90MMSettings = (props: { state: State<IBill90MMSettings> }): Re
             </div>
             <div className={billSettingsStyle.currentBillSettingsGroup}>
                 <CheckBox
-                    label={<h5>Footer message</h5>}
+                    label={<h5>Remark message</h5>}
                     checked={remarkMessage.show.get()}
                     onChange={() => remarkMessage.show.set(!remarkMessage.show.get())}
                 />

@@ -1,36 +1,32 @@
-import { BillHolder } from 'components/Compounds/BillHolder/BillHolder';
-import { billSizeComponentMap } from 'pages/PointOfSale/BillSettings/BillSettings';
-import { BillSettingsService } from 'pages/PointOfSale/BillSettings/BillSettings.service';
 import React, { ReactElement } from 'react';
-import { rawClone } from 'utilities/general';
 import { useState } from '@hookstate/core';
 import {
-    Button,
-    IInputFieldProps,
-    ISelectOption,
-    InputField,
-    Select,
+    showNotify,
     SliderModal,
     SliderModalBody,
     SliderModalHeader,
     SliderModalLayoutWrapper,
-    Switch,
 } from '@sellerspot/universal-components';
-import { EBILL_SIZES, EPaymentMethods } from '@sellerspot/universal-types';
 import { newSaleState } from '../../NewSale';
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import styles from './CheckoutSliderModal.module.scss';
 import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
+import { CheckoutCustomerDetailsGroup } from './components/CheckoutCustomerDetailsGroup';
+import { CheckoutSliderBillPreview } from './components/CheckoutSliderBillPreview';
+import { CheckoutBillSettingsGroup } from './components/CheckoutBillSettingsGroup';
+import { CheckoutPaymentGroup } from './components/CheckoutPaymentGroup';
+import { NewSaleService } from '../../NewSale.service';
+import { useRef } from 'react';
+import { TBillHolderRefProps } from 'components/Compounds/BillHolder/BillHolder.types';
+import { ESaleStatus } from '@sellerspot/universal-types';
 
 export const CheckoutSliderModal = (): ReactElement => {
     // state
     const checkoutModal = useState(newSaleState.modals.checkout);
     const saleData = useState(newSaleState.saleData);
-    const billSettings = useState(newSaleState.billSettings);
-    const customer = useState(newSaleState.customer);
 
-    // globals
-    const paymentMethods: EPaymentMethods[] = [EPaymentMethods.CASH, EPaymentMethods.CARD];
+    // refs
+    const billHolderRef = useRef<TBillHolderRefProps>(null);
 
     // handlers
     const modalGoBackHandler = () => {
@@ -39,33 +35,47 @@ export const CheckoutSliderModal = (): ReactElement => {
     };
 
     const onCheckoutClickHandler = () => {
-        // once checkout completed, go back to cart view, after clearing the cart state
+        try {
+            // trigger the loader until the checkout process completion
+            NewSaleService.completeCheckout().then(() => {
+                showNotify('Checkout Complete!');
+            });
+        } catch (error) {
+            showNotify(error?.message ?? 'Something went wrong!');
+        }
+    };
+
+    const onParkSaleClickHandler = () => {
+        try {
+            // trigger the loader until the checkout process completion
+            NewSaleService.completeParkSale().then(() => {
+                showNotify('Sale has been parked!');
+                modalGoBackHandler();
+            });
+        } catch (error) {
+            showNotify(error?.message ?? 'Something went wrong!');
+        }
+    };
+
+    const onPrintBillClickHandler = () => {
+        billHolderRef.current.triggerPrint();
         modalGoBackHandler();
     };
 
-    const onBillTypeChangeHandler = (option: ISelectOption<EBILL_SIZES>) => {
-        saleData.billSettings.size.set(option.meta);
-    };
-
-    const onBillSettingsRemarkMessageChangeHandler: IInputFieldProps['onChange'] = (event) => {
-        saleData.billSettings.remarkMessage.set(event.target.value);
-    };
-
-    const onPaymentModeClickHanlder = (method: EPaymentMethods) => () => {
-        saleData.payment.method.set(method);
-    };
-
-    const onCustomerSwitchHandler = () => {
-        customer.isAnonymous.set(!customer.isAnonymous.get());
+    const getOnProceedClickHandler = () => {
+        switch (saleData.status.get()) {
+            case ESaleStatus.COMPLETED:
+            case ESaleStatus.QUOTED:
+                return onPrintBillClickHandler;
+            case ESaleStatus.PARKED:
+                return onParkSaleClickHandler;
+            default:
+                return onCheckoutClickHandler;
+        }
     };
 
     // compute
     const { sliderTitle, summaryViewMode } = CheckoutSliderModalService.getComputedViewMode();
-
-    const currentBillName = saleData.billSettings.size.get();
-    const CurrentBillComponent = billSizeComponentMap[currentBillName].BILL;
-    const currentBillDimension = billSizeComponentMap[currentBillName].dimension;
-    const currentBillSettingsState = billSettings?.bills?.[currentBillName];
 
     // draw
     return (
@@ -80,123 +90,18 @@ export const CheckoutSliderModal = (): ReactElement => {
                 <SliderModalBody>
                     <div className={styles.bodyWrapper}>
                         <div className={styles.billSectionWrapper}>
-                            <BillHolder>
-                                <CurrentBillComponent
-                                    data={rawClone(saleData.get())}
-                                    settings={rawClone(currentBillSettingsState.get())}
-                                    dimension={currentBillDimension}
-                                />
-                            </BillHolder>
+                            <CheckoutSliderBillPreview ref={billHolderRef} />
                         </div>
                         <div className={styles.actionsSectionWrapper}>
                             <div className={styles.actionSettingsWrapper}>
-                                <div className={styles.settingsGroup}>
-                                    <h4>Bill settings</h4>
-                                    <Select
-                                        label="Bill Size"
-                                        options={BillSettingsService.billOptions}
-                                        value={BillSettingsService.billOptions.find(
-                                            (billOption) => billOption.meta === currentBillName,
-                                        )}
-                                        onChange={onBillTypeChangeHandler}
-                                        isClearable={false}
-                                    />
-                                    <InputField
-                                        type="text"
-                                        label="Remark message"
-                                        placeHolder={'Remark message / thank you'}
-                                        multiline
-                                        rows={2}
-                                        theme="primary"
-                                        disableHelperTextPlaceholderPadding
-                                        fullWidth
-                                        value={saleData.billSettings.remarkMessage.get()}
-                                        onChange={onBillSettingsRemarkMessageChangeHandler}
-                                    />
-                                </div>
-                                <div className={styles.settingsGroup}>
-                                    <div className={styles.horizontalSplit}>
-                                        <h4>Customer details</h4>
-                                        <Switch
-                                            checked={!customer.isAnonymous.get()}
-                                            onChange={onCustomerSwitchHandler}
-                                        />
-                                    </div>
-                                    {!customer.isAnonymous.get() && (
-                                        <div className={styles.horizontalSectionSplit}>
-                                            <div className={styles.horizontalSection}>
-                                                <div className={styles.settingsGroup}>
-                                                    <InputField
-                                                        type="number"
-                                                        label="Mobile"
-                                                        required
-                                                        placeHolder="9670xxxx2"
-                                                        theme="primary"
-                                                        disableHelperTextPlaceholderPadding
-                                                        fullWidth
-                                                        autoFocus={true}
-                                                    />
-                                                    <InputField
-                                                        type="text"
-                                                        label="Name"
-                                                        placeHolder="John Doe"
-                                                        theme="primary"
-                                                        disableHelperTextPlaceholderPadding
-                                                        fullWidth
-                                                    />
-                                                    <InputField
-                                                        type="email"
-                                                        label="Email ID"
-                                                        placeHolder="john@gmail.com"
-                                                        theme="primary"
-                                                        disableHelperTextPlaceholderPadding
-                                                        fullWidth
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className={styles.horizontalSection}>
-                                                <div className={styles.settingsGroup}>
-                                                    <InputField
-                                                        type="text"
-                                                        label="Address"
-                                                        placeHolder={
-                                                            '69, K.K Nagar,\nwest street,\nTrichy - 620017'
-                                                        }
-                                                        multiline
-                                                        rows={3}
-                                                        theme="primary"
-                                                        disableHelperTextPlaceholderPadding
-                                                        fullWidth
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                <CheckoutBillSettingsGroup />
+                                <CheckoutCustomerDetailsGroup />
                             </div>
                             <div className={styles.checkoutWrapper}>
-                                <div className={styles.settingsGroup}>
-                                    <h4>Payment mode</h4>
-                                    <div className={styles.paymentModesWrapper}>
-                                        {paymentMethods.map((paymentMethod) => (
-                                            <Button
-                                                key={paymentMethod}
-                                                label={paymentMethod}
-                                                variant="contained"
-                                                theme={
-                                                    saleData.payment.method.get() === paymentMethod
-                                                        ? 'primary'
-                                                        : 'auto'
-                                                }
-                                                disableElevation
-                                                onClick={onPaymentModeClickHanlder(paymentMethod)}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
+                                <CheckoutPaymentGroup />
                                 <CheckoutSaleSummaryView
                                     viewMode={summaryViewMode}
-                                    proceedCallback={onCheckoutClickHandler}
+                                    proceedCallback={getOnProceedClickHandler()}
                                 />
                             </div>
                         </div>

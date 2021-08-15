@@ -8,7 +8,6 @@ import { newSaleState } from '../../NewSale';
 import { useState } from '@hookstate/core';
 import { EPaymentMethods } from '@sellerspot/universal-types';
 import { useRef } from 'react';
-import { isObject } from 'lodash';
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
@@ -87,19 +86,15 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
         const checkIsDisabled = () => {
             let isDisabled = false;
             if (viewMode === 'checkout') {
-                const customer = newSaleState.customer.get();
+                const customer = saleData.customer.get();
                 // check if customer details entered in case of non anonymous entry
                 if (!customer.isAnonymous) {
-                    if (
-                        !(
-                            isObject(saleData.customer.reference.get()) ||
-                            (saleData.customer.reference.get() as string)?.length > 0
-                        )
-                    ) {
+                    if (!(customer.mobile?.length && customer.name?.length)) {
                         // for advanced validatoin check the mobile number here as well as on inputField onChange
                         isDisabled = true;
                     }
-                } else if (method === EPaymentMethods.CASH) {
+                }
+                if (method === EPaymentMethods.CASH) {
                     if (amountPaid < grandTotal) {
                         isDisabled = true;
                     }
@@ -140,6 +135,11 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                         {viewMode === 'quote' && (
                             <div className={cn(styles.actionButton, styles.cartButton)}>
                                 <h2>QUOTE SALE</h2>
+                            </div>
+                        )}
+                        {viewMode === 'print' && (
+                            <div className={cn(styles.actionButton, styles.cartButton)}>
+                                <h2>Print SALE</h2>
                             </div>
                         )}
                     </>

@@ -2,7 +2,7 @@
     width: 100%;
     height: 65px;
     padding: 0px 10px 0px 5px;
-    background-color: $backgroundTertiary-color;
+    background-color: $backgroundPrimary-color;
     border-radius: 5px;
 
     cursor: pointer;
@@ -12,7 +12,7 @@
     @include flex(center, space-between);
 
     &:hover {
-        background-color: $backgroundQuarternary-color;
+        background-color: $backgroundSecondary-color;
     }
 
     .productMeta {

@@ -210,7 +210,12 @@ export const ParkedSalesSliderModal = (): ReactElement => {
     return (
         <SliderModal showModal={parkedSalesModal.get()} type={'fixed'} width={'70%'}>
             <SliderModalLayoutWrapper>
-                <SliderModalHeader modalGoBackCallback={modalGoBackHandler} title="Parked sales" />
+                <SliderModalHeader
+                    modalGoBackText="Go back to cart"
+                    modalGoBackCallback={modalGoBackHandler}
+                    title="Parked sales"
+                    titlePlacement="center"
+                />
                 <SliderModalBody>
                     <div className={styles.wrapper}>
                         <Table {...tableProps} />
