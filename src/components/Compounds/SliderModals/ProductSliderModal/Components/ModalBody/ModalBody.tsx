@@ -11,25 +11,26 @@ export type IModalBodyProps = Pick<IProductSliderModalOnClose, 'submitting'> &
     Pick<
         IProductSliderModalProps,
         | 'showModal'
-        | 'onCreateBrand'
         | 'onCreateStockUnit'
         | 'onInvokeCategoryChoice'
         | 'selectedCategory'
         | 'treeData'
         | 'onCancelCategoryChoice'
-    >;
+    > & {
+        onCreateBrand: (value: string) => void;
+    };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
     const {
         showModal,
         submitting,
-        onCreateBrand,
         onCreateStockUnit,
         selectedCategory,
         treeData,
         onCancelCategoryChoice,
         onInvokeCategoryChoice,
+        onCreateBrand,
     } = props;
 
     // draw
@@ -39,7 +40,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
                 <Fields.ProductNameField autoFocus={showModal} submitting={submitting} />
                 <Fields.BarcodeField submitting={submitting} />
                 <Fields.DescriptionField submitting={submitting} />
-                <Fields.BrandField onCreateBrand={onCreateBrand} submitting={submitting} />
+                <Fields.BrandField submitting={submitting} onCreateBrand={onCreateBrand} />
                 <Fields.StockUnitField
                     onCreateStockUnit={onCreateStockUnit}
                     submitting={submitting}

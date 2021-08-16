@@ -18,7 +18,7 @@ export const CategoryViewBase = (props: ICategoryViewBaseProps): ReactElement =>
     const pageState = useState(mainPageState);
 
     // hooks
-    const confirmHook = useConfirmDialog();
+    const confirmDialogHook = useConfirmDialog();
 
     // handlers
     const {
@@ -27,11 +27,11 @@ export const CategoryViewBase = (props: ICategoryViewBaseProps): ReactElement =>
         deleteCategoryHandler,
         onChangeHandler,
         editCategoryHandler,
-        onMoveNode,
+        onMoveNodeHandler,
     } = new CategoryViewHandlersService({
         sliderModalState: pageState.sliderModal,
         treeDataState: pageState.treeData,
-        confirmHook,
+        confirmDialogHook: confirmDialogHook,
     });
 
     // handlers
@@ -48,7 +48,7 @@ export const CategoryViewBase = (props: ICategoryViewBaseProps): ReactElement =>
         deleteCategoryCallback: deleteCategoryHandler,
         editCategoryCallback: editCategoryHandler,
         onChangeCallback: onChangeHandler,
-        onMoveNode: onMoveNode,
+        onMoveNode: onMoveNodeHandler,
     };
 
     // draw

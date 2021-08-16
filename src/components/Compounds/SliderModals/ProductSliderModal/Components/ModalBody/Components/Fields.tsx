@@ -28,7 +28,9 @@ type IProductNameFieldProps = ICommonProps & {
 };
 type IBarcodeFieldProps = ICommonProps;
 type IDescriptionFieldProps = ICommonProps;
-type IBrandFieldProps = Pick<IProductSliderModalProps, 'onCreateBrand'> & ICommonProps;
+type IBrandFieldProps = ICommonProps & {
+    onCreateBrand: (value: string) => void;
+};
 type IStockUnitFieldProps = Pick<IProductSliderModalProps, 'onCreateStockUnit'> & ICommonProps;
 type ICategorySelectButtonProps = Pick<IProductSliderModalProps, 'onInvokeCategoryChoice'> &
     ICommonProps;
@@ -198,13 +200,13 @@ const BrandField = (props: IBrandFieldProps): ReactElement => {
             value={value as ISelectOption}
             isDisabled={submitting}
             formatCreateLabel={(inputValue) => `Create brand "${inputValue}"`}
+            onCreateOption={onCreateBrand}
             helperMessage={{
                 enabled: helperMessage.enabled,
                 content: helperMessage.content,
                 type: helperMessage.type,
             }}
             placeholder={'Search for brand...'}
-            onCreateOption={onCreateBrand}
             onChange={onChange}
         />
     );
