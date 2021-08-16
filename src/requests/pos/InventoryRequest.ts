@@ -2,7 +2,9 @@ import BaseRequest from 'requests/BaseRequest';
 import {
     IAddProductToInventoryResponse,
     IInventoryData,
+    IInventoryResourcePathParam,
     ISearchInventoryProductsResponse,
+    ISearchResourceQueryParam,
     ROUTES,
 } from '@sellerspot/universal-types';
 import { IGetAllInventoryProductResponse } from '@sellerspot/universal-types';
@@ -19,12 +21,24 @@ export default class InventoryRequest extends BaseRequest {
         });
     };
 
-    searchProduct = async (query: string): Promise<ISearchInventoryProductsResponse> => {
+    searchProduct = async (
+        searchQuery: string,
+        /**
+         * if not passed it will fetch results from all outlets
+         */
+        outletid = '',
+    ): Promise<ISearchInventoryProductsResponse> => {
+        const query: ISearchResourceQueryParam = {
+            query: searchQuery,
+        };
+        const param: IInventoryResourcePathParam = {
+            outletid,
+        };
         return <ISearchInventoryProductsResponse>await this.request({
             url: ROUTES.POS.INVENTORY.SEARCH,
             method: 'GET',
-            query: { query },
-            param: { outletid: '' },
+            query,
+            param,
         });
     };
 
