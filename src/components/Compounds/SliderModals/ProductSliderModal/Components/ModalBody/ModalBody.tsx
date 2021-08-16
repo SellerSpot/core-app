@@ -1,5 +1,6 @@
 import { SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { TreeItem } from 'react-sortable-tree';
 import {
     IProductSliderModalOnClose,
     IProductSliderModalProps,
@@ -8,16 +9,13 @@ import Fields from './Components/Fields';
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = Pick<IProductSliderModalOnClose, 'submitting'> &
-    Pick<
-        IProductSliderModalProps,
-        | 'showModal'
-        | 'onInvokeCategoryChoice'
-        | 'selectedCategory'
-        | 'treeData'
-        | 'onCancelCategoryChoice'
-    > & {
+    Pick<IProductSliderModalProps, 'showModal'> & {
         onCreateBrand: (value: string) => void;
         onCreateStockUnit: (value: string) => void;
+        onInvokeCategoryChoice: () => void;
+        onCancelCategoryChoice: () => void;
+        selectedCategory: TreeItem;
+        treeData: TreeItem[];
     };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {

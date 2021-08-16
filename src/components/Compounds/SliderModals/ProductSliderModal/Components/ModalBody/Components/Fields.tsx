@@ -1,22 +1,20 @@
-import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
-import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
-import React, { ReactElement } from 'react';
-import { useField } from 'react-final-form';
-import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
 import {
     AsyncCreatableSelect,
     Button,
     IAsyncCreatableSelectProps,
     IInputFieldProps,
-    ISelectOption,
     InputField,
+    ISelectOption,
 } from '@sellerspot/universal-components';
+import { BrandService } from 'pages/Catalogue/Brand/Brand.service';
+import { StockUnitService } from 'pages/Catalogue/StockUnit/StockUnit.service';
+import React, { ReactElement } from 'react';
+import { useField } from 'react-final-form';
+import { TreeItem } from 'react-sortable-tree';
+import { ICONS } from 'utilities/utilities';
 import { ProductSliderModalService } from '../../../ProductSliderModal.service';
-import {
-    IProductSliderModalForm,
-    IProductSliderModalProps,
-} from '../../../ProductSliderModal.types';
+import { IProductSliderModalForm } from '../../../ProductSliderModal.types';
 import styles from './Fields.module.scss';
 import { ProductSliderModalFieldsService } from './Fields.service';
 
@@ -34,13 +32,15 @@ type IBrandFieldProps = ICommonProps & {
 type IStockUnitFieldProps = ICommonProps & {
     onCreateStockUnit: (value: string) => void;
 };
-type ICategorySelectButtonProps = Pick<IProductSliderModalProps, 'onInvokeCategoryChoice'> &
-    ICommonProps;
-type ISelectedCategoryViewProps = Pick<
-    IProductSliderModalProps,
-    'selectedCategory' | 'onInvokeCategoryChoice' | 'treeData' | 'onCancelCategoryChoice'
-> &
-    ICommonProps;
+type ICategorySelectButtonProps = ICommonProps & {
+    onInvokeCategoryChoice: () => void;
+};
+type ISelectedCategoryViewProps = ICommonProps & {
+    onCancelCategoryChoice: () => void;
+    onInvokeCategoryChoice: () => void;
+    treeData: TreeItem[];
+    selectedCategory: TreeItem;
+};
 
 const ProductNameField = (props: IProductNameFieldProps): ReactElement => {
     // props

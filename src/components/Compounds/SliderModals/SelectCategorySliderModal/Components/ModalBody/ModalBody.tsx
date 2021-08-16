@@ -4,9 +4,8 @@ import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/unive
 import { CategoryView, ICategoryViewProps } from 'components/Compounds/CategoryView/CategoryView';
 import { CategoryViewHandlersService } from 'components/Compounds/CategoryView/CategoryViewHandlers.service';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
-import { CategoryService } from 'pages/Catalogue/Category/Category.service';
-import React, { ReactElement, useEffect } from 'react';
-import { TreeItem } from 'react-sortable-tree';
+import { ISelectCategorySliderModalState } from 'components/Compounds/SliderModals/SelectCategorySliderModal/SelectCategorySliderModal';
+import React, { ReactElement } from 'react';
 import { rawClone } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import { ISelectCategorySubSliderModalState } from '../../SelectCategorySliderModal.types';
@@ -14,16 +13,12 @@ import styles from './ModalBody.module.scss';
 
 interface IModalBodyProps {
     categorySliderModalState: State<ISelectCategorySubSliderModalState['categorySliderModal']>;
-    treeDataState: State<TreeItem[]>;
-}
-
-interface ICategoryViewState {
-    selectedCategory: TreeItem;
-    isLoading: boolean;
+    sliderModalState: State<ISelectCategorySliderModalState>;
 }
 
 interface IModalBodyState {
     searchQuery: string;
+    isLoading: boolean;
 }
 
 type ISearchFieldProps = {
@@ -55,42 +50,32 @@ const SearchField = (props: ISearchFieldProps) => {
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { categorySliderModalState, treeDataState } = props;
+    const { categorySliderModalState, sliderModalState } = props;
 
     // state
-    const categoryViewState = useState<ICategoryViewState>({
-        selectedCategory: null,
-        isLoading: true,
-    });
     const modalBodyState = useState<IModalBodyState>({
         searchQuery: '',
+        isLoading: false,
     });
 
     // hooks
     const confirmDialog = useConfirmDialog();
 
     // handlers
-    const getAllCategories = async () => {
-        const allCategories = await CategoryService.getAllCategories();
-        categoryViewState.merge({
-            isLoading: false,
-        });
-        treeDataState.set(allCategories);
-    };
     const onSelectNodeHandler: ICategoryViewProps['onSelectNodeCallback'] = (node) => () => {
-        categoryViewState.selectedCategory.set(node);
+        sliderModalState.selectedCategory.set(node);
     };
     const categoryViewHandlers = new CategoryViewHandlersService({
         confirmDialogHook: confirmDialog,
         sliderModalState: categorySliderModalState,
-        treeDataState,
+        treeDataState: sliderModalState.treeData,
     });
 
     // component props
     const categoryViewProps: ICategoryViewProps = {
-        treeData: rawClone(treeDataState.get()),
-        isLoading: categoryViewState.isLoading.get(),
-        selectedNode: rawClone(categoryViewState.selectedCategory.get()),
+        treeData: rawClone(sliderModalState.treeData.get()),
+        isLoading: sliderModalState.isLoading.get(),
+        selectedNode: rawClone(sliderModalState.selectedCategory.get()),
         canDragNodes: true,
         canDrop: categoryViewHandlers.canDropHandler,
         createCategoryCallback: categoryViewHandlers.createCategoryHandler,
@@ -101,11 +86,6 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
         searchQuery: rawClone(modalBodyState.searchQuery.get()),
         onSelectNodeCallback: onSelectNodeHandler,
     };
-
-    // effects
-    useEffect(() => {
-        getAllCategories();
-    }, []);
 
     // draw
     return (

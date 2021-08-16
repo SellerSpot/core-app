@@ -4,10 +4,12 @@ import {
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
+import { SelectCategorySubSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/Components/SubSliderModals/SelectCategorySubSliderModal/SelectCategorySubSliderModal';
 import { StockUnitSubSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/Components/SubSliderModals/StockUnitSubSliderModal/StockUnitSubSliderModal';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { SelectCategorySliderModal } from '../SelectCategorySliderModal/SelectCategorySliderModal';
+import { TreeItem } from 'react-sortable-tree';
+import { rawClone } from 'utilities/general';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
@@ -20,6 +22,11 @@ import {
     IProductSliderModalSubSliderModalState,
 } from './ProductSliderModal.types';
 
+export interface IProductSliderModalState {
+    selectedCategory: TreeItem;
+    categoryTreeData: TreeItem[];
+}
+
 export const ProductSliderModal = (props: IProductSliderModalProps): ReactElement => {
     // props
     const {
@@ -28,13 +35,8 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         showModal,
         onClose,
         onSubmit,
-        onInvokeCategoryChoice,
-        onCancelCategoryChoice,
         prefillData,
-        treeData,
         formRef,
-        selectedCategory,
-        selectCategorySliderModalProps,
     } = props;
     const sliderModalWidth = '35%';
 
@@ -54,6 +56,12 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
     });
 
     // state
+    const sliderModalState = useState<IProductSliderModalState>({
+        categoryTreeData: [],
+        selectedCategory: null,
+    });
+
+    // state
     const subSliderModalState = useState<IProductSliderModalSubSliderModalState>({
         brandSliderModal: {
             showModal: false,
@@ -64,6 +72,9 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
             showModal: false,
             prefillData: null,
             mode: 'create',
+        },
+        selectCategorySliderModal: {
+            showModal: false,
         },
     });
 
@@ -102,6 +113,15 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
             },
         });
     };
+    const onInvokeCategoryChoice = () => {
+        subSliderModalState.selectCategorySliderModal.set({
+            showModal: true,
+        });
+    };
+    const onCancelCategoryChoice = () => {
+        sliderModalState.selectedCategory.set(null);
+        formRef.current.change('category', '');
+    };
 
     // draw
     return (
@@ -137,10 +157,10 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
                         showModal,
                         submitting,
                         onCancelCategoryChoice,
-                        treeData,
+                        treeData: rawClone(sliderModalState.categoryTreeData.get()),
                         onCreateStockUnit: onCreateStockUnitHandler,
                         onInvokeCategoryChoice,
-                        selectedCategory,
+                        selectedCategory: rawClone(sliderModalState.selectedCategory.get()),
                         onCreateBrand: onCreateBrandHandler,
                     };
                     const modalFooterProps: IModalFooterProps = {
@@ -170,7 +190,11 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
                 productSliderModalFormRef={formRef}
                 sliderModalState={subSliderModalState.stockUnitSliderModal}
             />
-            <SelectCategorySliderModal {...selectCategorySliderModalProps} />
+            <SelectCategorySubSliderModal
+                productSliderModalFormRef={formRef}
+                sliderModalState={subSliderModalState.selectCategorySliderModal}
+                productSliderModalState={sliderModalState}
+            />
         </SliderModal>
     );
 };
