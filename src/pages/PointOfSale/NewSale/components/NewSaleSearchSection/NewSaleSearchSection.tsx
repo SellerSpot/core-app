@@ -1,16 +1,16 @@
-import { State, useState } from '@hookstate/core';
-import React, { forwardRef, ReactElement, useEffect, MutableRefObject, useRef } from 'react';
+import { Dummies } from 'dummies/Dummies';
+import { debounce, times } from 'lodash';
+import React, { MutableRefObject, ReactElement, forwardRef, useEffect, useRef } from 'react';
 import { ICONS } from 'utilities/utilities';
+import { State, useState } from '@hookstate/core';
+import Icon from '@iconify/react';
 import { Button, IInputFieldProps, InputField, Skeleton } from '@sellerspot/universal-components';
 import { IStockUnitData } from '@sellerspot/universal-types';
-import styles from './NewSaleSearchSection.module.scss';
-import Icon from '@iconify/react';
-import SaleSearchResultCard from './components/SaleSearchResultCard/SaleSearchResultCard';
-import { debounce, times } from 'lodash';
-import { NewSaleSearchSectionService } from './NewSaleSearchSection.service';
-import { Dummies } from 'dummies/Dummies';
-import { NewSaleService } from '../../NewSale.service';
 import { newSaleState } from '../../NewSale';
+import { NewSaleService } from '../../NewSale.service';
+import styles from './NewSaleSearchSection.module.scss';
+import { NewSaleSearchSectionService } from './NewSaleSearchSection.service';
+import SaleSearchResultCard from './components/SaleSearchResultCard/SaleSearchResultCard';
 
 export const NewSaleSearchSectionComponent = (
     _: unknown,
@@ -68,7 +68,7 @@ export const NewSaleSearchSectionComponent = (
             <InputField
                 ref={searchFieldRef}
                 autoFocus={true}
-                label="Search for producst"
+                label="Search for products"
                 placeHolder="Start typing or scaning"
                 theme="primary"
                 size="medium"

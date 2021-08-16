@@ -1,13 +1,14 @@
-import { Button, Card, IInputFieldProps, InputField } from '@sellerspot/universal-components';
-import React, { ReactElement } from 'react';
 import cn from 'classnames';
+import React, { ReactElement } from 'react';
+import { useRef } from 'react';
 import { numberFormatINRCurrency } from 'utilities/general';
+import { useState } from '@hookstate/core';
+import { Button, Card, IInputFieldProps, InputField } from '@sellerspot/universal-components';
+import { EPaymentMethods } from '@sellerspot/universal-types';
+import { newSaleState } from '../../NewSale';
 import styles from './CheckoutSaleSummaryView.module.scss';
 import { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
-import { newSaleState } from '../../NewSale';
-import { useState } from '@hookstate/core';
-import { EPaymentMethods } from '@sellerspot/universal-types';
-import { useRef } from 'react';
+
 export { ICheckoutSaleSummaryViewProps } from './CheckoutSaleSummaryView.types';
 
 export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): ReactElement => {
@@ -139,7 +140,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                         )}
                         {viewMode === 'print' && (
                             <div className={cn(styles.actionButton, styles.cartButton)}>
-                                <h2>Print SALE</h2>
+                                <h2>PRINT SALE</h2>
                             </div>
                         )}
                     </>
