@@ -6,14 +6,11 @@ import { CategoryService } from 'pages/Catalogue/Category/Category.service';
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { rawClone } from 'utilities/general';
 import { IProductPageState } from '../../Product.types';
-import StockUnitSubSliderModalData from './SubSliderModals/StockUnitSubSliderModalData';
 
 interface IProductSliderBaseProps {
     sliderModalState: State<IProductPageState['sliderModal']>;
     getAllProduct: () => void;
 }
-
-type IStockUnitSubSliderModalProps = IProductSliderModalProps['stockUnitSliderModalProps'];
 
 export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement => {
     // props
@@ -24,13 +21,6 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
 
     // refs
     const productFormRef: IProductSliderModalProps['formRef'] = useRef(null);
-    const stockUnitFormRef: IStockUnitSubSliderModalProps['formRef'] = useRef(null);
-
-    const stockUnitSubSliderModalData = new StockUnitSubSliderModalData({
-        productFormRef,
-        sliderModalState: localSliderModalState,
-        stockUnitFormRef,
-    });
 
     // product slider modalhandlers
     const productSliderOnCloseHandler: IProductSliderModalProps['onClose'] = (props) => {
@@ -86,11 +76,9 @@ export const ProductSliderBase = (props: IProductSliderBaseProps): ReactElement 
         level: 1,
         onClose: productSliderOnCloseHandler,
         onSubmit: onSubmitHandler,
-        onCreateStockUnit: stockUnitSubSliderModalData.onCreateStockUnitHandler,
         onInvokeCategoryChoice: null,
         onCancelCategoryChoice: onCancelCategoryChoiceHandler,
         selectCategorySliderModalProps: null,
-        stockUnitSliderModalProps: stockUnitSubSliderModalData.getSliderModalProps(),
     };
 
     // handlers

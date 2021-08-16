@@ -37,7 +37,6 @@ export interface IProductSliderModalProps {
     >;
     onSubmit: (props: IProductSliderModalOnSubmit) => Promise<void>;
     onClose: (props: IProductSliderModalOnClose) => void;
-    onCreateStockUnit: (name: string) => void;
     onInvokeCategoryChoice: () => void;
     /** after making the choice, the user decides to cancel it in the main form */
     onCancelCategoryChoice: () => void;
@@ -47,9 +46,9 @@ export interface IProductSliderModalProps {
     level: 1 | 2;
     prefillData?: IPrefillData;
     selectCategorySliderModalProps: ISelectCategorySliderModalProps;
-    stockUnitSliderModalProps: IStockUnitSliderModalProps;
 }
 
 export interface IProductSliderModalSubSliderModalState {
     brandSliderModal: Pick<IBrandSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
+    stockUnitSliderModal: Pick<IStockUnitSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
 }

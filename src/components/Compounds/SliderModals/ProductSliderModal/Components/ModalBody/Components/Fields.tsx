@@ -31,7 +31,9 @@ type IDescriptionFieldProps = ICommonProps;
 type IBrandFieldProps = ICommonProps & {
     onCreateBrand: (value: string) => void;
 };
-type IStockUnitFieldProps = Pick<IProductSliderModalProps, 'onCreateStockUnit'> & ICommonProps;
+type IStockUnitFieldProps = ICommonProps & {
+    onCreateStockUnit: (value: string) => void;
+};
 type ICategorySelectButtonProps = Pick<IProductSliderModalProps, 'onInvokeCategoryChoice'> &
     ICommonProps;
 type ISelectedCategoryViewProps = Pick<

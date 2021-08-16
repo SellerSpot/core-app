@@ -11,13 +11,13 @@ export type IModalBodyProps = Pick<IProductSliderModalOnClose, 'submitting'> &
     Pick<
         IProductSliderModalProps,
         | 'showModal'
-        | 'onCreateStockUnit'
         | 'onInvokeCategoryChoice'
         | 'selectedCategory'
         | 'treeData'
         | 'onCancelCategoryChoice'
     > & {
         onCreateBrand: (value: string) => void;
+        onCreateStockUnit: (value: string) => void;
     };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {

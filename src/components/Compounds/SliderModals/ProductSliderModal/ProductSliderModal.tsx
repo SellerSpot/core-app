@@ -4,14 +4,14 @@ import {
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
-import { BrandSubSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/Components/SubSliderModals/BrandSubSliderModal/BrandSubSliderModal';
+import { StockUnitSubSliderModal } from 'components/Compounds/SliderModals/ProductSliderModal/Components/SubSliderModals/StockUnitSubSliderModal/StockUnitSubSliderModal';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
 import { SelectCategorySliderModal } from '../SelectCategorySliderModal/SelectCategorySliderModal';
-import { StockUnitSliderModal } from '../StockUnitSliderModal/StockUnitSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
+import { BrandSubSliderModal } from './Components/SubSliderModals/BrandSubSliderModal/BrandSubSliderModal';
 import styles from './ProductSliderModal.module.scss';
 import { ProductSliderModalService } from './ProductSliderModal.service';
 import {
@@ -28,7 +28,6 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         showModal,
         onClose,
         onSubmit,
-        onCreateStockUnit,
         onInvokeCategoryChoice,
         onCancelCategoryChoice,
         prefillData,
@@ -36,7 +35,6 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
         formRef,
         selectedCategory,
         selectCategorySliderModalProps,
-        stockUnitSliderModalProps,
     } = props;
     const sliderModalWidth = '35%';
 
@@ -58,6 +56,11 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
     // state
     const subSliderModalState = useState<IProductSliderModalSubSliderModalState>({
         brandSliderModal: {
+            showModal: false,
+            prefillData: null,
+            mode: 'create',
+        },
+        stockUnitSliderModal: {
             showModal: false,
             prefillData: null,
             mode: 'create',
@@ -87,6 +90,15 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
             mode: 'create',
             prefillData: {
                 name: brandName,
+            },
+        });
+    };
+    const onCreateStockUnitHandler = (stockUnitName: string) => {
+        subSliderModalState.stockUnitSliderModal.set({
+            showModal: true,
+            mode: 'create',
+            prefillData: {
+                name: stockUnitName,
             },
         });
     };
@@ -126,7 +138,7 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
                         submitting,
                         onCancelCategoryChoice,
                         treeData,
-                        onCreateStockUnit,
+                        onCreateStockUnit: onCreateStockUnitHandler,
                         onInvokeCategoryChoice,
                         selectedCategory,
                         onCreateBrand: onCreateBrandHandler,
@@ -154,8 +166,11 @@ export const ProductSliderModal = (props: IProductSliderModalProps): ReactElemen
                 sliderModalState={subSliderModalState.brandSliderModal}
                 productSliderModalFormRef={formRef}
             />
+            <StockUnitSubSliderModal
+                productSliderModalFormRef={formRef}
+                sliderModalState={subSliderModalState.stockUnitSliderModal}
+            />
             <SelectCategorySliderModal {...selectCategorySliderModalProps} />
-            <StockUnitSliderModal {...stockUnitSliderModalProps} />
         </SliderModal>
     );
 };
