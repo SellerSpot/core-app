@@ -1,17 +1,22 @@
+import { useState } from '@hookstate/core';
 import {
     ISliderModalProps,
     SliderModal,
     SliderModalLayoutWrapper,
 } from '@sellerspot/universal-components';
+import { TaxBracketSubSliderModal } from 'components/Compounds/SliderModals/TaxGroupSliderModal/Components/SubSliderModals/TaxBracketSubSliderModal/TaxBracketSubSliderModal';
 import React, { ReactElement } from 'react';
 import { Form } from 'react-final-form';
-import { TaxBracketSliderModal } from '../TaxBracketSliderModal/TaxBracketSliderModal';
 import { IModalBodyProps, ModalBody } from './Components/ModalBody/ModalBody';
 import { IModalFooterProps, ModalFooter } from './Components/ModalFooter/ModalFooter';
 import { IModalHeaderProps, ModalHeader } from './Components/ModalHeader/ModalHeader';
 import styles from './TaxGroupSliderModal.module.scss';
 import { TaxGroupSliderModalService } from './TaxGroupSliderModal.service';
-import { ITaxGroupSliderForm, ITaxGroupSliderModalProps } from './TaxGroupSliderModal.types';
+import {
+    ITaxGroupSliderForm,
+    ITaxGroupSliderModalProps,
+    ITaxGroupSliderModalSubSliderModalState,
+} from './TaxGroupSliderModal.types';
 
 export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElement => {
     // props
@@ -20,11 +25,9 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
         mode,
         onClose,
         onSubmit,
+        postTaxBracketCreation,
         showModal,
-        taxBracketSliderModalProps,
-        onCreateTaxBracket,
         prefillData,
-        allTaxBrackets,
         isPageOnStandby,
         formRef,
     } = props;
@@ -45,6 +48,15 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
         width: sliderModalWidth,
     });
 
+    // state
+    const subSliderModalState = useState<ITaxGroupSliderModalSubSliderModalState>({
+        taxBracketSliderModal: {
+            showModal: false,
+            mode: 'create',
+            prefillData: null,
+        },
+    });
+
     // handlers
     const onSubmitHandler = async (values: ITaxGroupSliderForm) => {
         await onSubmit({ values });
@@ -58,6 +70,19 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
             submitting: formState?.submitting,
             source: 'backdrop',
             event,
+        });
+    };
+
+    // sub slider modal handlers
+    const onCreateTaxBracketHandler = (value: string) => {
+        subSliderModalState.taxBracketSliderModal.set({
+            showModal: true,
+            mode: 'create',
+            prefillData: {
+                id: null,
+                name: value,
+                rate: 0,
+            },
         });
     };
 
@@ -95,8 +120,7 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
                             isPageOnStandby,
                             showModal,
                             submitting,
-                            allTaxBrackets,
-                            onCreateTaxBracket,
+                            onCreateTaxBracket: onCreateTaxBracketHandler,
                         };
                         const modalFooterProps: IModalFooterProps = {
                             isPageOnStandby,
@@ -118,7 +142,11 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
                         );
                     }}
                 </Form>
-                <TaxBracketSliderModal {...taxBracketSliderModalProps} />
+                <TaxBracketSubSliderModal
+                    taxBracketSliderModalState={subSliderModalState.taxBracketSliderModal}
+                    taxGroupSliderModalFormRef={formRef}
+                    postTaxBracketCreation={postTaxBracketCreation}
+                />
             </SliderModal>
         </>
     );

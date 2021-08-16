@@ -1,11 +1,13 @@
 import {
-    CreatableSelect,
+    AsyncCreatableSelect,
+    IAsyncCreatableSelectProps,
     ICreatableSelectProps,
     IInputFieldProps,
     InputField,
     ISelectOption,
     SliderModalBody,
 } from '@sellerspot/universal-components';
+import { TaxBracketSectionService } from 'pages/Catalogue/TaxSetting/Components/TaxBracketSection/TaxBracketSection.service';
 import React, { ReactElement } from 'react';
 import { Field, useField } from 'react-final-form';
 import { TaxGroupSliderModalService } from '../../TaxGroupSliderModal.service';
@@ -17,19 +19,18 @@ import {
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
-    Pick<
-        ITaxGroupSliderModalProps,
-        'showModal' | 'allTaxBrackets' | 'onCreateTaxBracket' | 'isPageOnStandby'
-    >;
+    Pick<ITaxGroupSliderModalProps, 'showModal' | 'isPageOnStandby'> & {
+        onCreateTaxBracket: (value: string) => void;
+    };
 
-interface ITaxGroupNameFieldProps {
+type ITaxGroupNameFieldProps = Pick<IModalBodyProps, 'submitting' | 'isPageOnStandby'> & {
     autoFocus: boolean;
-    submitting: boolean;
-    isPageOnStandby: boolean;
-}
+};
 
-type ITaxGroupSelectProps = Pick<ITaxGroupSliderModalOnClose, 'submitting'> &
-    Pick<ITaxGroupSliderModalProps, 'allTaxBrackets' | 'onCreateTaxBracket' | 'isPageOnStandby'>;
+type ITaxBracketSelectProps = Pick<
+    IModalBodyProps,
+    'submitting' | 'isPageOnStandby' | 'onCreateTaxBracket'
+>;
 
 const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     // props
@@ -72,18 +73,10 @@ const TaxGroupNameField = (props: ITaxGroupNameFieldProps) => {
     );
 };
 
-const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
+const TaxBracketSelect = (props: ITaxBracketSelectProps) => {
     // props
-    const { submitting, allTaxBrackets, onCreateTaxBracket, isPageOnStandby } = props;
+    const { submitting, onCreateTaxBracket, isPageOnStandby } = props;
     const fieldName: keyof ITaxGroupSliderForm = 'bracket';
-
-    // compute
-    const allOptions = TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
-        brackets: allTaxBrackets,
-    });
-    const getFormatCreateLabel: ICreatableSelectProps['formatCreateLabel'] = (value) => {
-        return `Create a new tax Group "${value}"`;
-    };
 
     // draw
     return (
@@ -101,18 +94,47 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
                     type: specialInputFieldProps.type,
                 };
 
+                // handlers
+                const loadOptionsHandler: IAsyncCreatableSelectProps['loadOptions'] = async (
+                    loadQuery,
+                ): Promise<ISelectOption[]> => {
+                    const searchResults = await TaxBracketSectionService.searchTaxBracket(
+                        loadQuery,
+                    );
+                    return TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
+                        brackets: searchResults,
+                    });
+                };
+                const formatOptionLabelHandler: IAsyncCreatableSelectProps['formatOptionLabel'] = (
+                    option,
+                ) => {
+                    const { label, meta } = option as ISelectOption<number>;
+                    // used to modify label when meta is not available for the create
+                    if (!!meta) {
+                        return `${label} (${meta})%`;
+                    } else {
+                        return label;
+                    }
+                };
+                const formatCreateLabelHandler: IAsyncCreatableSelectProps['formatCreateLabel'] = (
+                    label,
+                ) => {
+                    return `Create a new tax bracket "${label}"`;
+                };
+
                 // draw
                 return (
-                    <CreatableSelect
+                    <AsyncCreatableSelect
+                        loadOptions={loadOptionsHandler}
                         closeMenuOnSelect={false}
                         label={'Tax Groups'}
+                        formatOptionLabel={formatOptionLabelHandler}
                         placeholder={'Choose the Tax Groups'}
                         isDisabled={submitting || isPageOnStandby}
-                        value={value as ISelectOption[]}
+                        value={value as ISelectOption<number>[]}
                         helperMessage={helperMessage}
-                        formatCreateLabel={getFormatCreateLabel}
+                        formatCreateLabel={formatCreateLabelHandler}
                         onChange={onChange}
-                        options={allOptions}
                         onCreateOption={onCreateTaxBracket}
                         isMulti
                     />
@@ -124,7 +146,7 @@ const TaxGroupSelect = (props: ITaxGroupSelectProps) => {
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
-    const { showModal, submitting, allTaxBrackets, onCreateTaxBracket, isPageOnStandby } = props;
+    const { showModal, submitting, onCreateTaxBracket, isPageOnStandby } = props;
 
     // compiling data
     const taxGroupNameFieldProps: ITaxGroupNameFieldProps = {
@@ -132,8 +154,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
         isPageOnStandby,
         submitting,
     };
-    const taxGroupSelectProps: ITaxGroupSelectProps = {
-        allTaxBrackets,
+    const taxBracketSelectProps: ITaxBracketSelectProps = {
         isPageOnStandby,
         onCreateTaxBracket,
         submitting,
@@ -144,7 +165,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
         <SliderModalBody>
             <div className={styles.modalBody}>
                 <TaxGroupNameField {...taxGroupNameFieldProps} />
-                <TaxGroupSelect {...taxGroupSelectProps} />
+                <TaxBracketSelect {...taxBracketSelectProps} />
             </div>
         </SliderModalBody>
     );

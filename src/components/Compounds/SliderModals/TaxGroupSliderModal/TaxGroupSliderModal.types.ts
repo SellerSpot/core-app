@@ -22,16 +22,17 @@ export interface ITaxGroupSliderModalProps {
     isPageOnStandby: boolean;
     onSubmit: (props: ITaxGroupSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxGroupSliderModalOnClose) => void;
-    onCreateTaxBracket: (value: string) => void;
+    /**
+     * Hook called when after a new tax bracket has been created
+     */
+    postTaxBracketCreation?: () => void;
     mode: 'edit' | 'create';
     level: 1 | 2;
-    allTaxBrackets: ITaxBracketData[];
-    taxBracketSliderModalProps?: ITaxBracketSliderModalProps;
     prefillData?: ITaxBracketData;
 }
 
 export type ITaxGroupSliderForm = Pick<ITaxBracketData, 'name'> & {
-    bracket: Omit<ISelectOption, 'key'>[];
+    bracket: ISelectOption<number>[];
 };
 
 export interface ITaxGroupSliderModalDynamicValues {
@@ -41,4 +42,8 @@ export interface ITaxGroupSliderModalDynamicValues {
     modalFooterPrimaryButtonLabel: string;
     modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
     initialFormValues: ITaxGroupSliderForm;
+}
+
+export interface ITaxGroupSliderModalSubSliderModalState {
+    taxBracketSliderModal: Pick<ITaxBracketSliderModalProps, 'mode' | 'showModal' | 'prefillData'>;
 }

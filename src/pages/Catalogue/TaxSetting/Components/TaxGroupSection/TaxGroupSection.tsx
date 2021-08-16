@@ -4,7 +4,6 @@ import { Button } from '@sellerspot/universal-components';
 import { PageHeader } from 'components/Compounds/PageHeader/PageHeader';
 import React, { ReactElement, useEffect } from 'react';
 import { ICONS } from 'utilities/utilities';
-import { ITaxBracketData } from '@sellerspot/universal-types';
 import { ITaxSettingPageState } from '../../TaxSetting.types';
 import { TaxGroupSliderBase } from './Components/TaxGroupSliderBase/TaxGroupSliderBase';
 import { TaxGroupTable } from './Components/TaxGroupTable/TaxGroupTable';
@@ -14,7 +13,6 @@ import { TaxGroupSectionService } from './TaxGroupSection.service';
 interface ITaxGroupSectionProps {
     sectionState: State<ITaxSettingPageState['taxGroupSection']>;
     getAllTaxBracket: () => Promise<void>;
-    allTaxBrackets: ITaxBracketData[];
 }
 
 interface IPageHeaderComponentProps {
@@ -58,7 +56,7 @@ const PageHeaderComponent = (props: IPageHeaderComponentProps) => {
 
 export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
     // props
-    const { sectionState: sectionStateOriginal, getAllTaxBracket, allTaxBrackets } = props;
+    const { sectionState: sectionStateOriginal, getAllTaxBracket } = props;
 
     // state
     const sectionState = useState(sectionStateOriginal);
@@ -87,7 +85,6 @@ export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
                 taxGroupSliderModalState={sectionState.sliderModal}
                 getAllTaxGroup={getAllTaxGroups}
                 getAllTaxBracket={getAllTaxBracket}
-                allTaxBrackets={allTaxBrackets}
             />
         </div>
     );

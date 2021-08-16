@@ -1,6 +1,5 @@
 import { useState } from '@hookstate/core';
 import React, { ReactElement } from 'react';
-import { rawClone } from 'utilities/general';
 import { TaxBracketSection } from './Components/TaxBracketSection/TaxBracketSection';
 import { TaxGroupSection } from './Components/TaxGroupSection/TaxGroupSection';
 import styles from './TaxSetting.module.scss';
@@ -10,8 +9,8 @@ import { ITaxSettingPageState } from './TaxSetting.types';
 export const TaxSetting = (): ReactElement => {
     // state
     const pageState = useState<ITaxSettingPageState>({
-        allTaxBrackets: [],
         taxBracketSection: {
+            allTaxBrackets: [],
             isTableLoading: true,
             sliderModal: {
                 showModal: false,
@@ -40,7 +39,7 @@ export const TaxSetting = (): ReactElement => {
         // request
         const allTaxBrackets = await TaxSettingService.getAllTaxBracket();
         // state update
-        pageState.allTaxBrackets.set(allTaxBrackets);
+        pageState.taxBracketSection.allTaxBrackets.set(allTaxBrackets);
         // reset loading if necessary
         pageState.taxBracketSection.isTableLoading.get() &&
             pageState.taxBracketSection.isTableLoading.set(false);
@@ -53,14 +52,12 @@ export const TaxSetting = (): ReactElement => {
                 <TaxBracketSection
                     sectionState={pageState.taxBracketSection}
                     getAllTaxBracket={getAllTaxBracket}
-                    allTaxBrackets={rawClone(pageState.allTaxBrackets.get())}
                 />
             </div>
             <div className={styles.taxGroupSection}>
                 <TaxGroupSection
                     sectionState={pageState.taxGroupSection}
                     getAllTaxBracket={getAllTaxBracket}
-                    allTaxBrackets={rawClone(pageState.allTaxBrackets.get())}
                 />
             </div>
         </div>

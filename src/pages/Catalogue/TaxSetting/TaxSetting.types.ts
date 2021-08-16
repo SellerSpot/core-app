@@ -3,8 +3,8 @@ import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/T
 import { ITaxGroupSliderModalProps } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
 
 export interface ITaxSettingPageState {
-    allTaxBrackets: ITaxBracketData[];
     taxBracketSection: {
+        allTaxBrackets: ITaxBracketData[];
         isTableLoading: boolean;
         sliderModal: Pick<ITaxBracketSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
     };
