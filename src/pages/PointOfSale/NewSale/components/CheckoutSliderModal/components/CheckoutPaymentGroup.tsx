@@ -19,7 +19,7 @@ export const CheckoutPaymentGroup = (): ReactElement => {
         payment.method.set(method);
     };
 
-    if (saleStatus.get() === ESaleStatus.PARKED) return null; // do not display payment information if the sale is parked
+    if ([ESaleStatus.PARKED, ESaleStatus.QUOTED].includes(saleStatus.get())) return null; // do not display payment information if the sale is parked
 
     return (
         <div className={styles.settingsGroup}>

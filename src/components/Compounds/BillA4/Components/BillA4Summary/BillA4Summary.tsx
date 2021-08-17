@@ -19,7 +19,7 @@ export const BillA4Summary = (props: IBillA4ChildProps): ReactElement => {
     return (
         <div className={mainStyles.advertisementAndGrandTotalWrapper}>
             <div className={styles.advertisementHolder}>
-                {remarkMessage.show && (dataBillSettings.remarkMessage ?? remarkMessage.data)}
+                {remarkMessage.show && (dataBillSettings.remarkMessage || remarkMessage.data)}
             </div>
             <div className={mainStyles.grandTotalWrapper}>
                 {isTotalDiscountEnabled && (
