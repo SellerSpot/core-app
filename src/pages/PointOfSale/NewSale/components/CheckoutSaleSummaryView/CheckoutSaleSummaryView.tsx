@@ -82,31 +82,50 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
     };
 
     const Action = () => {
+        const customer = saleData.customer.get();
+
         // handlers
+        const checkIsCustomerDetailsValid = () => {
+            if (!customer.isAnonymous) {
+                // for advanced validatoin check the mobile number here as well as on inputField onChange
+                if (customer.mobile?.length && customer.name?.length) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        };
+
         const checkIsDisabled = () => {
             let isDisabled = false;
             if (viewMode === 'checkout') {
-                const customer = saleData.customer.get();
                 // check if customer details entered in case of non anonymous entry
-                if (!customer.isAnonymous) {
-                    if (!(customer.mobile?.length && customer.name?.length)) {
-                        // for advanced validatoin check the mobile number here as well as on inputField onChange
-                        isDisabled = true;
-                    }
+                if (!checkIsCustomerDetailsValid()) {
+                    isDisabled = true;
                 }
+                // check is amount paid, when payment method is cash
                 if (method === EPaymentMethods.CASH) {
                     if (amountPaid < grandTotal) {
                         isDisabled = true;
                     }
                 }
             } else if (viewMode === 'cart') {
+                // only allow checkout if something in the cart
                 if (newSaleState.saleData.cart.length <= 0) {
                     isDisabled = true;
                 }
             } else if (viewMode === 'park') {
                 // ask customer details
+                if (!checkIsCustomerDetailsValid()) {
+                    isDisabled = true;
+                }
             } else if (viewMode === 'quote') {
                 // if customer details - on , and customer details not entered disable button
+                if (!checkIsCustomerDetailsValid()) {
+                    isDisabled = true;
+                }
             }
             return isDisabled;
         };
@@ -139,7 +158,7 @@ export const CheckoutSaleSummaryView = (props: ICheckoutSaleSummaryViewProps): R
                         )}
                         {viewMode === 'print' && (
                             <div className={cn(styles.actionButton, styles.cartButton)}>
-                                <h2>Print SALE</h2>
+                                <h2>PRINT SALE</h2>
                             </div>
                         )}
                     </>

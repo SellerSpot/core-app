@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactElement } from 'react';
-import { EPaymentMethods } from '@sellerspot/universal-types';
+import { EPaymentMethods, ESaleStatus } from '@sellerspot/universal-types';
 import { Button } from '@sellerspot/universal-components';
 import { useState } from '@hookstate/core';
 import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
@@ -9,6 +9,7 @@ import styles from '../CheckoutSliderModal.module.scss';
 export const CheckoutPaymentGroup = (): ReactElement => {
     // state
     const payment = useState(newSaleState.saleData.payment);
+    const saleStatus = useState(newSaleState.saleData.status);
 
     // globals
     const paymentMethods: EPaymentMethods[] = [EPaymentMethods.CASH, EPaymentMethods.CARD];
@@ -17,6 +18,8 @@ export const CheckoutPaymentGroup = (): ReactElement => {
     const onPaymentModeClickHanlder = (method: EPaymentMethods) => () => {
         payment.method.set(method);
     };
+
+    if (saleStatus.get() === ESaleStatus.PARKED) return null; // do not display payment information if the sale is parked
 
     return (
         <div className={styles.settingsGroup}>
