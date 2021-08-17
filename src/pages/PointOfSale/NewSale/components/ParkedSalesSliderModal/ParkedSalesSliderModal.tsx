@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {
@@ -22,32 +21,34 @@ import { rawClone } from 'utilities/general';
 import { SalesHistoryService } from '../../../SalesHistory/SalesHistory.service';
 import { ICONS } from 'utilities/utilities';
 import Icon from '@iconify/react';
-import { ROUTES } from 'config/routes';
 import { ParkedSaleExpandedView } from './components/ParkedSaleExpandedView/ParkedSaleExpandedView';
 import styles from './ParkedSalesSliderModal.module.scss';
 import { newSaleState } from '../../NewSale';
+import { NewSaleService } from '../../NewSale.service';
 
 // for using fromNow api we need relativeTime plugin to be extended
 dayjs.extend(relativeTime);
 
-export const ParkedSalesSliderModal = (): ReactElement => {
+interface IParkedSalesSliderModalProps {
+    searchFieldFocusTriggerer: () => void;
+}
+
+export const ParkedSalesSliderModal = (props: IParkedSalesSliderModalProps): ReactElement => {
     // props
-    const parkedSalesModal = useState(newSaleState.modals.parkedSales);
+    const { searchFieldFocusTriggerer } = props;
 
     // state
+    const parkedSalesModal = useState(newSaleState.modals.parkedSales);
     const isLoading = useState(true);
     const isError = useState(false);
-    const saleData = useState<ISaleData[]>([]);
-
-    // hooks
-    const history = useHistory();
+    const parkedSales = useState<ISaleData[]>([]);
 
     // effects
     // fetch table data on mount
     useEffect(() => {
         SalesHistoryService.fetchSalesHistory()
             .then((saleDataResponse) => {
-                saleData.set(saleDataResponse);
+                parkedSales.set(saleDataResponse);
                 isLoading.set(false);
             })
             .catch((error) => {
@@ -60,19 +61,24 @@ export const ParkedSalesSliderModal = (): ReactElement => {
     const modalGoBackHandler = () => {
         // go back handler
         parkedSalesModal.set(false);
+        searchFieldFocusTriggerer();
     };
 
     const retrieveSaleHandler = (saleData: ISaleData) => () => {
-        // set the parked sale slider to false
-        // tell the server that we are retrieving the sale
         // fill the newSale slider with the sale data
-        console.log(saleData);
+        // tell the server that we are retrieving the sale
+        NewSaleService.retrieveSale(saleData); // async
+        showNotify('Parked sale has been retrieved!');
+        searchFieldFocusTriggerer();
     };
 
-    const deleteRetrievedSaleHandler = (saleData: ISaleData) => () => {
-        // set the parked sale slider to false
+    const deleteRetrievedSaleHandler = (saleData: ISaleData, rowIndex: number) => () => {
         // tell the server that we are deleting the retrieved sale
-        console.log(saleData);
+        NewSaleService.deleteParkedSale(saleData.id); // async
+        const parkedSalesData = rawClone(parkedSales.get());
+        parkedSalesData.splice(rowIndex, 1); // removing the item from the array in-place
+        parkedSales.set(parkedSalesData);
+        showNotify('Parked sale has been deleted!');
     };
 
     // render helpers
@@ -108,7 +114,7 @@ export const ParkedSalesSliderModal = (): ReactElement => {
 
     const actionsRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
         // props
-        const { rowData } = props;
+        const { rowData, rowIndex } = props;
         // draw
         return (
             <div className={styles.mainTableActionsWrapper}>
@@ -123,7 +129,7 @@ export const ParkedSalesSliderModal = (): ReactElement => {
                 <IconButton
                     theme={'danger'}
                     icon={<Icon icon={ICONS.outlineDeleteOutline} />}
-                    onClick={deleteRetrievedSaleHandler(rowData)}
+                    onClick={deleteRetrievedSaleHandler(rowData, rowIndex)}
                 />
             </div>
         );
@@ -131,7 +137,7 @@ export const ParkedSalesSliderModal = (): ReactElement => {
 
     const emptyTableCTA = () => {
         // handlers
-        const onClickHandler = () => history.push(ROUTES.POINT_OF_SALE__SALES__NEW_SALE);
+        const onClickHandler = () => modalGoBackHandler();
 
         return (
             <Button
@@ -146,12 +152,12 @@ export const ParkedSalesSliderModal = (): ReactElement => {
     };
 
     const collapsedContentRenderer: ITableCollapsedCustomRenderer<ISaleData> = (props) => {
-        const { rowData } = props;
+        const { rowData, rowIndex } = props;
         return (
             <ParkedSaleExpandedView
                 rowData={rowData}
-                onDeleteSaleClickHandler={deleteRetrievedSaleHandler(rowData)}
                 onRetrieveSaleClickHandler={retrieveSaleHandler(rowData)}
+                onDeleteSaleClickHandler={deleteRetrievedSaleHandler(rowData, rowIndex)}
             />
         );
     };
@@ -162,7 +168,7 @@ export const ParkedSalesSliderModal = (): ReactElement => {
         isLoading: isLoading.get(),
         emptyStateMessage: 'No parked sales History found',
         emptyStatePrimaryCallToAction: emptyTableCTA(),
-        data: rawClone(saleData.get()),
+        data: rawClone(parkedSales.get()),
         shape: [
             {
                 columnName: 'Sno',

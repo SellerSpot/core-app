@@ -365,4 +365,24 @@ export class NewSaleService {
             throw error;
         }
     };
+
+    static retrieveSale = async (retrievedSaleData: ISaleData): Promise<void> => {
+        const saleId = retrievedSaleData.id;
+        // change the status of the retrieved sale to denote that the sale is not completed yet
+        retrievedSaleData.status = null;
+        retrievedSaleData.id = null;
+        newSaleState.batch((state) => {
+            state.saleData.set(retrievedSaleData);
+            state.search.set(NewSaleService.getSearchInitialState());
+            state.modals.set(NewSaleService.getModalsInitialState());
+        });
+
+        // tell the server that we are retrieving the sale - server will remove the sale from the database
+        requests.pos.salesRequest.retrieveSale(saleId); // no need to catch the response, it can be run on background
+    };
+
+    static deleteParkedSale = async (parkedSaleId: string): Promise<void> => {
+        // tell the server that we are removing a parked sale - server will remove the sale from the database
+        requests.pos.salesRequest.deleteParkedSale(parkedSaleId); // no need to catch the response, it can be run on background
+    };
 }

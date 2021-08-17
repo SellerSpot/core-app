@@ -69,7 +69,7 @@ export const NewSale = (): ReactElement => {
             </div>
             {/* modals */}
             <CheckoutSliderModal searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
-            <ParkedSalesSliderModal />
+            <ParkedSalesSliderModal searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
         </>
     );
 };

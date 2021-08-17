@@ -23,6 +23,7 @@ import { ESaleStatus } from '@sellerspot/universal-types';
 interface ICheckoutSliderModalProps {
     searchFieldFocusTriggerer: () => void;
 }
+
 export const CheckoutSliderModal = (props: ICheckoutSliderModalProps): ReactElement => {
     // props
     const { searchFieldFocusTriggerer } = props;

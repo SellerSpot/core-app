@@ -91,7 +91,7 @@ export const CheckoutCustomerDetailsGroup = (): ReactElement => {
                             <InputField
                                 type="text"
                                 label="GST Number"
-                                placeHolder="john@gmail.com"
+                                placeHolder="234234098234236"
                                 theme="primary"
                                 maxLength={10}
                                 disableHelperTextPlaceholderPadding
