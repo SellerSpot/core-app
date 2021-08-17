@@ -23,15 +23,7 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
         // sending request
         const searchResults = await InventoryModalSearchFieldService.searchInventory({ query });
 
-        if (searchResults.searchStatus) {
-            return InventoryModalSearchFieldService.convertSearchResultToISelect(
-                searchResults.products,
-            );
-        } else {
-            return InventoryModalSearchFieldService.convertSearchResultToISelect(
-                searchResults.products,
-            );
-        }
+        return InventoryModalSearchFieldService.convertSearchResultToISelect(searchResults);
     };
     const onChangeHandler: IAsyncCreatableSelectProps['onChange'] = (option) => {
         const currentOption = option as ISelectOption<ISearchInventorySelectMeta>;

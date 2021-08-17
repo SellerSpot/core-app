@@ -40,6 +40,7 @@ export const NewSaleSearchSectionComponent = (
         const { passedQuery, results } = await NewSaleSearchSectionService.searchInventoryProducts(
             searchQuery,
         );
+        // restricting race conditions
         if (search.query.get() === passedQuery) {
             search.merge({
                 results,

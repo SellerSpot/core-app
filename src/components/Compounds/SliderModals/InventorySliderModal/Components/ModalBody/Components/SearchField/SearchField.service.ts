@@ -10,33 +10,33 @@ interface ISearchInventoryProps {
 
 export class InventoryModalSearchFieldService {
     static convertSearchResultToISelect = (
-        items: ISearchInventoryProductsResponse['data']['products'],
+        items: ISearchInventoryProductsResponse['data'],
     ): ISelectOption<ISearchInventorySelectMeta>[] => {
-        const { catalogueProducts, inventoryProducts } = items;
+        const { catalogue, inventory } = items;
         let options: ISelectOption<ISearchInventorySelectMeta>[] = [];
         // adding products from inventory first
-        if (!isEmpty(inventoryProducts)) {
-            const inventoryOptions = inventoryProducts.map<
-                ISelectOption<ISearchInventorySelectMeta>
-            >((inventoryItem) => {
-                return {
-                    label: inventoryItem.name,
-                    value: inventoryItem.id,
-                    meta: {
-                        type: 'inventoryProduct',
-                    },
-                };
-            });
+        if (!isEmpty(inventory)) {
+            const inventoryOptions = inventory.map<ISelectOption<ISearchInventorySelectMeta>>(
+                (inventoryItem) => {
+                    return {
+                        label: inventoryItem.name,
+                        value: inventoryItem.id,
+                        meta: {
+                            type: 'inventoryProduct',
+                        },
+                    };
+                },
+            );
             options = options.concat(inventoryOptions);
         }
         // adding products from catalogue
-        if (!isEmpty(catalogueProducts)) {
-            const catalogueProductsOptions = catalogueProducts.map<
+        if (!isEmpty(catalogue)) {
+            const catalogueProductsOptions = catalogue.map<
                 ISelectOption<ISearchInventorySelectMeta>
-            >((catalogueProductItem) => {
+            >((catalogueItem) => {
                 return {
-                    label: `Add product "${catalogueProductItem.name}" to inventory`,
-                    value: catalogueProductItem.id,
+                    label: `Add product "${catalogueItem.name}" to inventory`,
+                    value: catalogueItem.id,
                     meta: {
                         type: 'catalogueProduct',
                     },
@@ -53,11 +53,16 @@ export class InventoryModalSearchFieldService {
         // props
         const { query } = props;
         // request
-        const { status, data } = await requests.pos.inventoryRequest.searchProduct(query);
+        const { status, data } = await requests.pos.inventoryRequest.searchProduct({
+            searchQuery: query,
+        });
         if (status) {
             return data;
         }
         // compute
-        return null;
+        return {
+            inventory: [],
+            catalogue: [],
+        };
     };
 }

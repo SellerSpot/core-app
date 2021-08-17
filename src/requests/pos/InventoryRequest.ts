@@ -4,10 +4,12 @@ import {
     IInventoryData,
     IInventoryResourcePathParam,
     ISearchInventoryProductsResponse,
-    ISearchResourceQueryParam,
+    ISearchInventoryQueryParam,
     ROUTES,
 } from '@sellerspot/universal-types';
 import { IGetAllInventoryProductResponse } from '@sellerspot/universal-types';
+import { introduceDelay } from '../../../.yalc/@sellerspot/universal-components/dist';
+import { Dummies } from 'dummies/Dummies';
 
 export default class InventoryRequest extends BaseRequest {
     constructor() {
@@ -21,18 +23,31 @@ export default class InventoryRequest extends BaseRequest {
         });
     };
 
-    searchProduct = async (
-        searchQuery: string,
-        /**
-         * if not passed it will fetch results from all outlets
-         */
+    /**
+     * if outletId not passed it will fetch results from all outlets
+     */
+    searchProduct = async ({
+        searchQuery = '',
         outletid = '',
-    ): Promise<ISearchInventoryProductsResponse> => {
-        const query: ISearchResourceQueryParam = {
+        lookup = 'all',
+    }: {
+        searchQuery: string;
+        outletid?: IInventoryResourcePathParam['outletid'];
+        lookup?: ISearchInventoryQueryParam['lookup'];
+    }): Promise<ISearchInventoryProductsResponse> => {
+        const query: ISearchInventoryQueryParam = {
             query: searchQuery,
+            lookup,
         };
         const param: IInventoryResourcePathParam = {
             outletid,
+        };
+        await introduceDelay(500);
+        return {
+            status: true,
+            data: {
+                inventory: Dummies.newSale.getInventoryProducts(),
+            },
         };
         return <ISearchInventoryProductsResponse>await this.request({
             url: ROUTES.POS.INVENTORY.SEARCH,
