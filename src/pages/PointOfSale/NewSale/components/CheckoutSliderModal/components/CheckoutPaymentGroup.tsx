@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactElement } from 'react';
-import { EPaymentMethods, ESaleStatus } from '@sellerspot/universal-types';
+import { EPaymentMethods } from '@sellerspot/universal-types';
 import { Button } from '@sellerspot/universal-components';
 import { useState } from '@hookstate/core';
 import { newSaleState } from 'pages/PointOfSale/NewSale/NewSale';
@@ -19,7 +19,9 @@ export const CheckoutPaymentGroup = (): ReactElement => {
         payment.method.set(method);
     };
 
-    if ([ESaleStatus.PARKED, ESaleStatus.QUOTED].includes(saleStatus.get())) return null; // do not display payment information if the sale is parked
+    // only for uncompleted sale display payment option,
+    // and uncompleted sale can be predicted throguht the sateStatus is when null
+    if (saleStatus.get() !== null) return null;
 
     return (
         <div className={styles.settingsGroup}>
