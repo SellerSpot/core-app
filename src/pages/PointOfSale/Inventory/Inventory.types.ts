@@ -3,8 +3,5 @@ import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/In
 export interface IInventoryPageState {
     products: IInventoryData[];
     tableIsLoading: boolean;
-    sliderModal: Pick<
-        IInventorySliderModalProps,
-        'mode' | 'prefillData' | 'showModal' | 'allOutlets'
-    >;
+    sliderModal: Pick<IInventorySliderModalProps, 'prefillData' | 'showModal'>;
 }

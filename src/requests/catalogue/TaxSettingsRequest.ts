@@ -13,6 +13,8 @@ import {
     IGetAllTaxBracketResponse,
     IGetAllTaxGroupResponse,
     IResponse,
+    ISearchResourceQueryParam,
+    ISearchTaxBracketResponse,
     ROUTES,
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
@@ -26,6 +28,15 @@ export default class TaxSettingsRequest extends BaseRequest {
         return <IGetAllTaxBracketResponse>await this.request({
             url: ROUTES.CATALOGUE.TAX_BRACKET.GET_ALL_BRACKET,
             method: 'GET',
+        });
+    };
+
+    searchTaxBracket = async (query: string): Promise<ISearchTaxBracketResponse> => {
+        const queryParams: ISearchResourceQueryParam = { query };
+        return <ISearchTaxBracketResponse>await this.request({
+            url: ROUTES.CATALOGUE.TAX_BRACKET.SEARCH_BRACKET,
+            method: 'GET',
+            query: queryParams,
         });
     };
 

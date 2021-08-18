@@ -10,16 +10,15 @@ export type IModalHeaderProps = Pick<ITaxGroupSliderModalOnClose, 'dirty' | 'sub
     closeButtonType: ITaxGroupSliderModalDynamicValues['closeButtonType'];
     modalTitle: ITaxGroupSliderModalDynamicValues['modalTitle'];
     onClose: ITaxGroupSliderModalProps['onClose'];
-    isPageOnStandby: boolean;
 };
 
 export const ModalHeader = (props: IModalHeaderProps): ReactElement => {
     // props
-    const { closeButtonType, dirty, modalTitle, onClose, submitting, isPageOnStandby } = props;
+    const { closeButtonType, dirty, modalTitle, onClose, submitting } = props;
 
     // handlers
     const handleModalCloseCallback: ISliderModalHeaderProps['modalCloseCallback'] = (event) => {
-        if (!isPageOnStandby && !submitting) {
+        if (!submitting) {
             onClose({
                 source: 'close',
                 dirty,
@@ -30,7 +29,7 @@ export const ModalHeader = (props: IModalHeaderProps): ReactElement => {
     };
 
     const handleModalGoBackCallback: ISliderModalHeaderProps['modalGoBackCallback'] = (event) => {
-        if (!isPageOnStandby && !submitting) {
+        if (!submitting) {
             onClose({
                 source: 'back',
                 dirty,

@@ -29,7 +29,7 @@ export interface ICategorySliderModalProps {
     formRef: React.MutableRefObject<FormApi<ICategorySliderForm, Partial<ICategorySliderForm>>>;
     onSubmit: (props: ICategorySliderModalOnSubmit) => Promise<void>;
     onClose: (props: ICategorySliderModalOnClose) => void;
-    mode: 'edit' | 'create' | 'select';
+    mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
     /**

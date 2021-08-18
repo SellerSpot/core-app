@@ -1,6 +1,6 @@
-import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
 import { useField } from 'react-final-form';
+import { IInputFieldProps, InputField, SliderModalBody } from '@sellerspot/universal-components';
 import { CategorySliderModalService } from '../../CategorySliderModal.service';
 import {
     ICategorySliderForm,
@@ -52,7 +52,7 @@ const CategoryNameField = (props: ICategoryNameFieldProps) => {
             fullWidth
             size="medium"
             theme={specialInputFieldProps.theme}
-            label="Bracket Name"
+            label="Category Name"
             helperMessage={helperMessage}
             placeHolder="Bracket Name"
         />

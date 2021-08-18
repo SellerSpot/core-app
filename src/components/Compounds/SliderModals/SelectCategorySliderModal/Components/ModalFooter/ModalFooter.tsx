@@ -3,12 +3,16 @@ import React, { ReactElement } from 'react';
 import { ICONS } from 'utilities/utilities';
 import { Button, IButtonProps, SliderModalFooter } from '@sellerspot/universal-components';
 import { ISelectCategorySliderModalProps } from '../../SelectCategorySliderModal.types';
+import { TreeItem } from 'react-sortable-tree';
 
-type IModalFooterProps = Pick<ISelectCategorySliderModalProps, 'onClose' | 'onSubmit'>;
+type IModalFooterProps = Pick<ISelectCategorySliderModalProps, 'onClose' | 'onSubmit'> & {
+    selectedCategory: TreeItem;
+    treeData: TreeItem[];
+};
 
 export const ModalFooter = (props: IModalFooterProps): ReactElement => {
     // props
-    const { onClose, onSubmit } = props;
+    const { onClose, onSubmit, selectedCategory, treeData } = props;
 
     // handlers
     const handleSecondaryButtonOnClick: IButtonProps['onClick'] = (event) => {
@@ -18,7 +22,7 @@ export const ModalFooter = (props: IModalFooterProps): ReactElement => {
         });
     };
     const handleSubmit: IButtonProps['onClick'] = () => {
-        onSubmit();
+        onSubmit({ selectedCategory, treeData });
     };
 
     // draw

@@ -53,7 +53,7 @@ export default class BaseRequest {
             if (index === 0) {
                 resultString += '?';
             } else {
-                resultString = '&';
+                resultString += '&';
             }
             if (payload[payloadKey]) {
                 resultString += `${payloadKey}=${<string>payload[payloadKey]}`;

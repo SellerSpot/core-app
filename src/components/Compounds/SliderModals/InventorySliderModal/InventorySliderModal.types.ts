@@ -1,25 +1,27 @@
-import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { IconifyIcon } from '@iconify/react';
+import { ISelectOption } from '@sellerspot/universal-components';
+import { IInventoryData, IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
+import { IProductSliderModalProps } from 'components/Compounds/SliderModals/ProductSliderModal/ProductSliderModal.types';
 import { ITaxBracketSliderModalProps } from 'components/Compounds/SliderModals/TaxBracketSliderModal/TaxBracketSliderModal.types';
 import { ITaxGroupSliderModalProps } from 'components/Compounds/SliderModals/TaxGroupSliderModal/TaxGroupSliderModal.types';
 import { FormApi } from 'final-form';
-import { ISelectOption } from '@sellerspot/universal-components';
-import { IInventoryData, IOutletData, ITaxBracketData } from '@sellerspot/universal-types';
 import { IOnClickEvents } from '../../../../typings/common.types';
-import { IProductSliderModalProps } from '../ProductSliderModal/ProductSliderModal.types';
 
 export type IInventorySliderModalFormFields = Pick<
     IInventoryData['outlets'][0],
-    'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock'
+    'landingCost' | 'markup' | 'sellingPrice' | 'mrp' | 'stock' | 'isActive' | 'isTrack'
 > & {
-    taxSetting: ISelectOption<ITaxBracketData>;
+    taxBracket: ISelectOption<ITaxBracketData>;
 };
 
 export type IInventorySliderModalForm = {
-    [key: string]: IInventorySliderModalFormFields;
+    [key: string]: Partial<IInventorySliderModalFormFields>;
 };
 
 export interface IInventorySliderModalOnSubmit {
-    values: IInventorySliderModalForm;
+    formValues: IInventorySliderModalForm;
+    currentProduct: IInventoryData;
+    mode: IInventorySliderModalState['mode'];
 }
 
 export interface IInventorySliderModalOnClose {
@@ -31,7 +33,6 @@ export interface IInventorySliderModalOnClose {
 
 type IPrefillData = {
     product: IInventoryData;
-    prefillData: IInventoryData['outlets'];
 };
 
 export interface IInventorySliderModalProps {
@@ -39,13 +40,34 @@ export interface IInventorySliderModalProps {
     formRef: React.MutableRefObject<
         FormApi<IInventorySliderModalForm, Partial<IInventorySliderModalForm>>
     >;
-    allOutlets: IOutletData[];
-    mode: 'edit' | 'create';
     prefillData: IPrefillData;
-    isLoadingBody: boolean;
-    searchValue: ISelectOption<ISearchInventorySelectMeta>;
     onSubmit: (props: IInventorySliderModalOnSubmit) => Promise<void>;
     onClose: (props: IInventorySliderModalOnClose) => void;
+}
+
+export interface ISearchInventorySelectMeta {
+    type: 'inventoryProduct' | 'catalogueProduct';
+}
+
+export interface IInventorySliderModalDynamicValues {
+    modalTitle: string;
+    modalFooterPrimaryButtonLabel: string;
+    modalFooterPrimaryButtonIcon: IconifyIcon['icon'];
+}
+export interface IInventorySliderModalState {
+    searchOption: ISelectOption;
+    mode: 'edit' | 'create';
+    dynamicValues: IInventorySliderModalDynamicValues;
+    outletsToShow: IOutletData[];
+    currentInventoryProduct: IInventoryData;
+    /**
+     * Used to record the current focused outlet (where required)
+     * For example to know which field to change after tax creation
+     */
+    focussedOutletId: string;
+}
+
+export interface IInventorySubSliderHandlers {
     /**
      * When a new catalogue product is created from the search field
      */
@@ -58,7 +80,18 @@ export interface IInventorySliderModalProps {
      * When an already existing inventory product is selected
      */
     onSelectInventoryProduct: (options: ISelectOption<ISearchInventorySelectMeta>) => void;
-    productSliderModalProps: IProductSliderModalProps;
-    taxBracketSliderModalProps: ITaxBracketSliderModalProps;
-    taxGroupSliderModalProps: ITaxGroupSliderModalProps;
+    /**
+     * When a user wants to create a new Tax Bracket from the outlets cards
+     */
+    onCreateTaxBracket: (outletId: string, value: string) => void;
+    /**
+     * When a user wants to create a new Tax Group from the outlets cards
+     */
+    onCreateTaxGroup: (outletId: string, value: string) => void;
+}
+
+export interface IInventorySliderModalSubSliderModalState {
+    productSliderModal: Pick<IProductSliderModalProps, 'showModal' | 'prefillData' | 'mode'>;
+    taxBracketSliderModal: Pick<ITaxBracketSliderModalProps, 'showModal' | 'prefillData' | 'mode'>;
+    taxGroupSliderModal: Pick<ITaxGroupSliderModalProps, 'showModal' | 'prefillData' | 'mode'>;
 }

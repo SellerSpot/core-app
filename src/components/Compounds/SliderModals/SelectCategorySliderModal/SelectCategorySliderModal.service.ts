@@ -1,8 +1,7 @@
 import { State } from '@hookstate/core';
+import { ISliderModalProps } from '@sellerspot/universal-components/dist';
 import { accessConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { IConfirmDialogProps } from 'components/Compounds/ConfirmDialog/ConfirmDialog.types';
-import { TreeItem } from 'react-sortable-tree';
-import { ISliderModalProps } from '@sellerspot/universal-components/dist';
 import {
     ISelectCategorySliderModalDynamicProps,
     ISelectCategorySliderModalOnClose,
@@ -15,7 +14,6 @@ interface IHandleOnCloseSelectCategorySliderModalProps {
     onCloseProps: ISelectCategorySliderModalOnClose;
     sliderModalState: {
         showModal: State<ISelectCategorySliderModalProps['showModal']>;
-        selectedCategory: State<TreeItem>;
     };
 }
 
@@ -28,6 +26,7 @@ export class SelectCategorySliderModalService {
         let type: ISliderModalProps['type'] = 'fixed';
         let width: ISliderModalProps['width'] = '30%';
         let closeButtonType: ISelectCategorySliderModalDynamicProps['closeButtonType'] = 'close';
+        let showBackdrop: ISliderModalProps['showBackdrop'] = true;
 
         // setting type
         if (level === 2) {
@@ -44,11 +43,17 @@ export class SelectCategorySliderModalService {
             closeButtonType = 'back';
         }
 
+        // setting showBackdrop
+        if (level === 2) {
+            showBackdrop = false;
+        }
+
         // return
         return {
             type,
             width,
             closeButtonType,
+            showBackdrop,
         };
     };
 
@@ -85,7 +90,6 @@ export class SelectCategorySliderModalService {
         const confirmResult = await confirm(dialogProps);
         closeDialog();
         if (confirmResult && sliderModalState) {
-            sliderModalState.selectedCategory.set(null);
             sliderModalState.showModal.set(false);
         }
     };

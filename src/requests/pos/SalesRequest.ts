@@ -49,7 +49,6 @@ export default class SalesRequest extends BaseRequest {
         const payload: ICreateNewSaleRequest = {
             payload: saleData,
         };
-        await introduceDelay(1000);
         return <ICreateNewSaleResponse>{
             status: true,
             data: saleData,
