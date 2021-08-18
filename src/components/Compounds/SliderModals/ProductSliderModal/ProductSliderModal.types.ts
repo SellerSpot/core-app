@@ -15,7 +15,7 @@ export interface IProductSliderModalForm {
 }
 
 type IPrefillData = IProductSliderModalForm & {
-    id: string;
+    id?: string;
 };
 
 export interface IProductSliderModalOnSubmit {

@@ -81,7 +81,6 @@ export const TaxGroupSection = (props: ITaxGroupSectionProps): ReactElement => {
             <PageHeaderComponent sectionState={sectionState} />
             <TaxGroupTable sectionState={sectionState} getAllTaxGroups={getAllTaxGroups} />
             <TaxGroupSliderBase
-                taxBracketSliderModalState={sectionState.taxBracketSliderModal}
                 taxGroupSliderModalState={sectionState.sliderModal}
                 getAllTaxGroup={getAllTaxGroups}
                 getAllTaxBracket={getAllTaxBracket}

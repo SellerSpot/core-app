@@ -13,10 +13,6 @@ import { showErrorHelperMessage } from 'utilities/general';
 import { ICONS } from 'utilities/utilities';
 import * as yup from 'yup';
 import {
-    IHandleOnCloseTaxBracketSliderModalProps,
-    TaxBracketSliderModalService,
-} from '../TaxBracketSliderModal/TaxBracketSliderModal.service';
-import {
     ITaxGroupSliderForm,
     ITaxGroupSliderModalDynamicValues,
     ITaxGroupSliderModalOnClose,
@@ -31,7 +27,6 @@ export interface IHandleOnCloseTaxGroupSliderModalProps {
     sliderModalState: {
         showModal: State<ITaxGroupSliderModalProps['showModal']>;
     };
-    taxBracketSliderModal: IHandleOnCloseTaxBracketSliderModalProps;
 }
 
 interface IConvertTaxBracketDataToISelectOptionProps {
@@ -51,7 +46,7 @@ export class TaxGroupSliderModalService {
         // propss
         const { brackets } = props;
 
-        return brackets.map((bracket) => {
+        return brackets?.map((bracket) => {
             // props
             const { name, rate, id } = bracket;
             // return
@@ -102,14 +97,12 @@ export class TaxGroupSliderModalService {
         if (mode === 'edit') modalFooterPrimaryButtonIcon = ICONS.check;
 
         // initialFormValues
-        if (mode === 'edit') {
-            initialFormValues = {
-                name: prefillData?.name,
-                bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
-                    brackets: prefillData?.group as ITaxBracketData[],
-                }),
-            };
-        }
+        initialFormValues = {
+            name: prefillData?.name,
+            bracket: TaxGroupSliderModalService.convertTaxBracketDataToISelectOption({
+                brackets: prefillData?.group as ITaxBracketData[],
+            }),
+        };
 
         // return
         return {
@@ -247,7 +240,7 @@ export class TaxGroupSliderModalService {
         props: IHandleOnCloseTaxGroupSliderModalProps,
     ): Promise<void> => {
         // props
-        const { onCloseProps, sliderModalState, taxBracketSliderModal } = props;
+        const { onCloseProps, sliderModalState } = props;
         const { dirty, event, submitting } = onCloseProps;
 
         // confirm dialog actions
@@ -274,20 +267,14 @@ export class TaxGroupSliderModalService {
 
         // logic
         if (!submitting) {
-            if (taxBracketSliderModal.sliderModalState.showModal.get()) {
-                await TaxBracketSliderModalService.handleOnCloseTaxBracketSliderModal(
-                    taxBracketSliderModal,
-                );
-            } else {
-                if (dirty) {
-                    const confirmResult = await confirm(dialogProps);
-                    closeDialog();
-                    if (confirmResult) {
-                        sliderModalState && sliderModalState.showModal.set(false);
-                    }
-                } else {
+            if (dirty) {
+                const confirmResult = await confirm(dialogProps);
+                closeDialog();
+                if (confirmResult) {
                     sliderModalState && sliderModalState.showModal.set(false);
                 }
+            } else {
+                sliderModalState && sliderModalState.showModal.set(false);
             }
         }
     };

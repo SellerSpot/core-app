@@ -1,62 +1,77 @@
-import {
-    ISearchInventorySelectMeta,
-    InventorySliderModal,
-} from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
+import { State, useState } from '@hookstate/core';
+import { InventorySliderModal } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 import React, { ReactElement, useRef } from 'react';
-import { State, useState } from '@hookstate/core';
-import { ISelectOption } from '@sellerspot/universal-components';
 import { IInventoryPageState } from '../../Inventory.types';
+import { IAddProductToInventoryRequest } from '@sellerspot/universal-types';
+import { InventorySliderModalService } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.service';
 
 interface IInventorySliderModalBaseProps {
     sliderModalState: State<IInventoryPageState['sliderModal']>;
+    getAllInventoryProducts: () => Promise<void>;
 }
 
 export const InventorySliderModalBase = (props: IInventorySliderModalBaseProps): ReactElement => {
     // props
-    const { sliderModalState } = props;
+    const { sliderModalState, getAllInventoryProducts } = props;
 
     // state
     const localSliderModalState = useState(sliderModalState);
-    const searchFieldValue = useState<ISelectOption<ISearchInventorySelectMeta>>(null);
 
     // refs
     const inventoryFormRef: IInventorySliderModalProps['formRef'] = useRef(null);
 
     // handlers
-    const onCloseHandler: IInventorySliderModalProps['onClose'] = (props) => {
+    const onCloseHandler: IInventorySliderModalProps['onClose'] = () => {
         // props
-        const {} = props;
         localSliderModalState.showModal.set(false);
     };
-    const onAddProductToInventoryHandler: IInventorySliderModalProps['onAddProductToInventory'] = (
-        props,
-    ) => {
-        // props
-        const { label } = props;
-        // settting search field value
-        props.label = label.replace(`Add product "`, '').replace(`" to inventory`, '');
-        searchFieldValue.set(props);
-        // fetching relevant inventory data from server
+    const onSubmitHandler: IInventorySliderModalProps['onSubmit'] = async (values) => {
+        const { currentProduct, formValues, mode } = values;
+        // structuring and compiling data in request format
+        const requestObject: IAddProductToInventoryRequest = {
+            productId: currentProduct.id,
+            outlets: Object.keys(formValues).map((outletId) => {
+                const {
+                    isActive,
+                    isTrack,
+                    landingCost,
+                    markup,
+                    mrp,
+                    sellingPrice,
+                    stock,
+                    taxBracket,
+                } = formValues[outletId];
+                return {
+                    isActive,
+                    isTrack,
+                    landingCost,
+                    markup,
+                    mrp,
+                    outlet: outletId,
+                    sellingPrice,
+                    stock,
+                    taxBracket: taxBracket.value,
+                };
+            }),
+        };
+        // sending request
+        if (mode === 'edit') {
+            await InventorySliderModalService.editProductInInventory(requestObject);
+        } else {
+            await InventorySliderModalService.addProductToInventory(requestObject);
+        }
+        await getAllInventoryProducts();
+        localSliderModalState.showModal.set(false);
     };
 
     // slider modal props
     const inventorySliderModalProps: IInventorySliderModalProps = {
         formRef: inventoryFormRef,
-        mode: localSliderModalState.mode.get(),
         prefillData: localSliderModalState.prefillData.get(),
         showModal: localSliderModalState.showModal.get(),
-        allOutlets: localSliderModalState.allOutlets.get(),
         onClose: onCloseHandler,
-        onCreateProduct: null,
-        onSubmit: null,
-        onAddProductToInventory: onAddProductToInventoryHandler,
-        isLoadingBody: false,
-        onSelectInventoryProduct: null,
-        searchValue: searchFieldValue.get(),
-        productSliderModalProps: null,
-        taxBracketSliderModalProps: null,
-        taxGroupSliderModalProps: null,
+        onSubmit: onSubmitHandler,
     };
 
     // draw

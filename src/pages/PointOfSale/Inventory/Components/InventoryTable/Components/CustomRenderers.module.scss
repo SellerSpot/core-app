@@ -19,7 +19,7 @@
 
         .metaDetails {
             width: 80%;
-            height: 95px;
+            height: 100px;
             @include flex(flex-start, flex-start, column, 5px);
 
             .metaDetailsMainRow {
@@ -28,7 +28,14 @@
             }
 
             .metaDetailsSecondRow {
-                width: 100%;
+                display: -webkit-box;
+                overflow: hidden;
+                max-width: 100%;
+                -webkit-box-orient: vertical;
+                font-size: 18px;
+                font-weight: 600;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
             }
         }
         .actions {

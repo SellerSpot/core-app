@@ -1,8 +1,8 @@
-import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
 import { isEmpty } from 'lodash';
 import { requests } from 'requests/requests';
 import { ISelectOption } from '@sellerspot/universal-components';
-import { ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
+import { IProductData, ISearchInventoryProductsResponse } from '@sellerspot/universal-types';
+import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 
 interface ISearchInventoryProps {
     query: string;
@@ -45,6 +45,18 @@ export class InventoryModalSearchFieldService {
             options = options.concat(catalogueProductsOptions);
         }
         return options;
+    };
+
+    static convertIProductDataToISelectOption = (
+        productData: IProductData,
+    ): ISelectOption<ISearchInventorySelectMeta> => {
+        return {
+            label: productData.name,
+            value: productData.id,
+            meta: {
+                type: 'catalogueProduct',
+            },
+        };
     };
 
     static searchInventory = async (

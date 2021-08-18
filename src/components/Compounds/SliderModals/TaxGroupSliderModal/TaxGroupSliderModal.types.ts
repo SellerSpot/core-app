@@ -19,7 +19,6 @@ export interface ITaxGroupSliderModalOnClose {
 export interface ITaxGroupSliderModalProps {
     showModal: boolean;
     formRef: React.MutableRefObject<FormApi<ITaxGroupSliderForm, Partial<ITaxGroupSliderForm>>>;
-    isPageOnStandby: boolean;
     onSubmit: (props: ITaxGroupSliderModalOnSubmit) => Promise<void>;
     onClose: (props: ITaxGroupSliderModalOnClose) => void;
     /**

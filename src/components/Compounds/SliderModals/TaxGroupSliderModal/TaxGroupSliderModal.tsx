@@ -28,7 +28,6 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
         postTaxBracketCreation,
         showModal,
         prefillData,
-        isPageOnStandby,
         formRef,
     } = props;
     const sliderModalWidth = '30%';
@@ -114,16 +113,13 @@ export const TaxGroupSliderModal = (props: ITaxGroupSliderModalProps): ReactElem
                             modalTitle,
                             onClose,
                             submitting,
-                            isPageOnStandby,
                         };
                         const modalBodyProps: IModalBodyProps = {
-                            isPageOnStandby,
                             showModal,
                             submitting,
                             onCreateTaxBracket: onCreateTaxBracketHandler,
                         };
                         const modalFooterProps: IModalFooterProps = {
-                            isPageOnStandby,
                             dirty,
                             modalFooterPrimaryButtonIcon,
                             modalFooterPrimaryButtonLabel,

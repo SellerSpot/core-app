@@ -1,22 +1,30 @@
 import { useState } from '@hookstate/core';
 import { ExpandableCard } from '@sellerspot/universal-components';
 import { IOutletData } from '@sellerspot/universal-types';
-import { DetailsContentView } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/ExpandingPanels/Components/DetailsContentView/DetailsContentView';
-import { SummaryContentView } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/ExpandingPanels/Components/SummaryContentView/SummaryContentView';
+import { DetailsContentView } from './Components/DetailsContentView/DetailsContentView';
+import { SummaryContentView } from './Components/SummaryContentView/SummaryContentView';
+import {
+    IInventorySliderModalProps,
+    IInventorySubSliderHandlers,
+} from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
 import React, { ReactElement } from 'react';
 import styles from './ExpandingPanels.module.scss';
 
-interface IExpandingPanelsProps {
+type IExpandingPanelsProps = {
     outletsToShow: IOutletData[];
-}
+    stockUnit: string;
+    formRef: IInventorySliderModalProps['formRef'];
+} & Pick<IInventorySubSliderHandlers, 'onCreateTaxBracket' | 'onCreateTaxGroup'>;
 
-interface IPanelProps {
+type IPanelProps = {
     outlet: IOutletData;
-}
+    stockUnit: string;
+    formRef: IInventorySliderModalProps['formRef'];
+} & Pick<IInventorySubSliderHandlers, 'onCreateTaxBracket' | 'onCreateTaxGroup'>;
 
 const Panel = (props: IPanelProps) => {
     // props
-    const { outlet } = props;
+    const { outlet, onCreateTaxBracket, onCreateTaxGroup, formRef, stockUnit } = props;
 
     // localstate
     const isPanelExpanded = useState(false);
@@ -33,7 +41,15 @@ const Panel = (props: IPanelProps) => {
                 summaryContent: (
                     <SummaryContentView isPanelExpandedState={isPanelExpanded} outlet={outlet} />
                 ),
-                detailsContent: <DetailsContentView outlet={outlet} />,
+                detailsContent: (
+                    <DetailsContentView
+                        formRef={formRef}
+                        stockUnit={stockUnit}
+                        outlet={outlet}
+                        onCreateTaxBracket={onCreateTaxBracket}
+                        onCreateTaxGroup={onCreateTaxGroup}
+                    />
+                ),
             }}
         />
     );
@@ -41,7 +57,7 @@ const Panel = (props: IPanelProps) => {
 
 export const ExpandingPanels = (props: IExpandingPanelsProps): ReactElement => {
     // props
-    const { outletsToShow } = props;
+    const { outletsToShow, onCreateTaxBracket, onCreateTaxGroup, formRef, stockUnit } = props;
 
     // draw
     return (
@@ -51,7 +67,16 @@ export const ExpandingPanels = (props: IExpandingPanelsProps): ReactElement => {
             </div>
             {outletsToShow.map((outlet, index) => {
                 // draw
-                return <Panel key={index} outlet={outlet} />;
+                return (
+                    <Panel
+                        formRef={formRef}
+                        key={index}
+                        stockUnit={stockUnit}
+                        outlet={outlet}
+                        onCreateTaxBracket={onCreateTaxBracket}
+                        onCreateTaxGroup={onCreateTaxGroup}
+                    />
+                );
             })}
         </div>
     );
