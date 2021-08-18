@@ -12,6 +12,8 @@ import {
     IRetrieveSaleResponse,
     IDeleteParkedSalePathParams,
     IDeleteParkedSaleResponse,
+    IVoidSalePathParams,
+    IVoidSaleResponse,
 } from '@sellerspot/universal-types';
 import { introduceDelay } from '@sellerspot/universal-components';
 import { Dummies } from 'dummies/Dummies';
@@ -89,6 +91,22 @@ export default class SalesRequest extends BaseRequest {
         return <IRetrieveSaleResponse>await this.request({
             url: ROUTES.POS.SALES.RETRIEVE_SALE,
             method: 'GET',
+            param,
+        });
+    };
+
+    voidSale = async (voidSaleId?: IVoidSalePathParams['id']): Promise<IVoidSaleResponse> => {
+        const param: IVoidSalePathParams = {
+            id: voidSaleId,
+        };
+        await introduceDelay(1000);
+        return <IVoidSaleResponse>{
+            status: true,
+            data: Dummies.salesHistory.getSalesData()[0],
+        };
+        return <IVoidSaleResponse>await this.request({
+            url: ROUTES.POS.SALES.VOID_SALE,
+            method: 'PUT',
             param,
         });
     };

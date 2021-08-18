@@ -6,11 +6,12 @@ import {
     Button,
     ITableCollapsedCustomRenderer,
     ITableProps,
+    numberFormatINRCurrency,
     showNotify,
     Table,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
-import { ISaleData } from '@sellerspot/universal-types';
+import { ESaleStatus, ISaleData } from '@sellerspot/universal-types';
 import { useState } from '@hookstate/core';
 import { rawClone } from 'utilities/general';
 import { SalesHistoryService } from '../../SalesHistory.service';
@@ -27,7 +28,7 @@ export const SalesHistoryTable = (): ReactElement => {
     // state
     const isLoading = useState(true);
     const isError = useState(false);
-    const saleData = useState<ISaleData[]>([]);
+    const salesHistory = useState<ISaleData[]>([]);
 
     // hooks
     const history = useHistory();
@@ -37,7 +38,7 @@ export const SalesHistoryTable = (): ReactElement => {
     useEffect(() => {
         SalesHistoryService.fetchSalesHistory()
             .then((saleDataResponse) => {
-                saleData.set(saleDataResponse);
+                salesHistory.set(saleDataResponse);
                 isLoading.set(false);
             })
             .catch((error) => {
@@ -47,6 +48,10 @@ export const SalesHistoryTable = (): ReactElement => {
     }, []);
 
     // handlers
+    const voidSaleClickHanlder = (saleData: ISaleData, saleIndex: number) => () => {
+        SalesHistoryService.voidSale(saleData.id);
+        salesHistory[saleIndex].status.set(ESaleStatus.VOIDED); // update the server, but no need to wait for ping back from server
+    };
 
     // render helpers
     const serialNumberRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
@@ -76,7 +81,7 @@ export const SalesHistoryTable = (): ReactElement => {
         // props
         const { rowData } = props;
         // draw
-        return rowData.payment.grandTotal; // later we'll be having  a link to the customer, which displays chart for the particular customer
+        return numberFormatINRCurrency(rowData.payment.grandTotal); // later we'll be having  a link to the customer, which displays chart for the particular customer
     };
 
     const saleStatusRenderer: TTableCellCustomRenderer<ISaleData> = (props) => {
@@ -103,8 +108,13 @@ export const SalesHistoryTable = (): ReactElement => {
     };
 
     const collapsedContentRenderer: ITableCollapsedCustomRenderer<ISaleData> = (props) => {
-        const { rowData } = props;
-        return <SaleHistoryExpandedView rowData={rowData} />;
+        const { rowData, rowIndex } = props;
+        return (
+            <SaleHistoryExpandedView
+                onVoidSaleClick={voidSaleClickHanlder(rowData, rowIndex)}
+                rowData={rowData}
+            />
+        );
     };
 
     const tableProps: ITableProps<ISaleData> = {
@@ -113,7 +123,7 @@ export const SalesHistoryTable = (): ReactElement => {
         isLoading: isLoading.get(),
         emptyStateMessage: 'No Sales History found',
         emptyStatePrimaryCallToAction: emptyTableCTA(),
-        data: rawClone(saleData.get()),
+        data: rawClone(salesHistory.get()),
         shape: [
             {
                 columnName: 'Sno',

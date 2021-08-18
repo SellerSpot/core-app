@@ -9,4 +9,12 @@ export class SalesHistoryService {
         }
         throw new Error(response.error.message ?? 'Something went wrong!');
     };
+
+    static voidSale = async (saleId: string): Promise<ISaleData> => {
+        const response = await requests.pos.salesRequest.voidSale(saleId);
+        if (response.status) {
+            return response.data;
+        }
+        throw new Error(response.error.message ?? 'Something went wrong!');
+    };
 }

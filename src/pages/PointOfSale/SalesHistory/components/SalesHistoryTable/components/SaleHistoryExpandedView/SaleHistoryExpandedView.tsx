@@ -1,18 +1,25 @@
 import React, { ReactElement } from 'react';
-import { ICartDetails, ISaleData } from '@sellerspot/universal-types';
+import { ESaleStatus, ICartDetails, ISaleData } from '@sellerspot/universal-types';
 import styles from './SaleHistoryExpandedView.module.scss';
 import {
     Button,
     ITableProps,
+    numberFormatINRCurrency,
     Table,
     TTableCellCustomRenderer,
 } from '@sellerspot/universal-components';
 
-export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactElement => {
+interface ISaleHistoryExpandedViewProps {
+    rowData: ISaleData;
+    onVoidSaleClick: () => void;
+}
+
+export const SaleHistoryExpandedView = (props: ISaleHistoryExpandedViewProps): ReactElement => {
     // props
     const {
         rowData: {
             cart,
+            status,
             payment: {
                 totalDiscount,
                 totalTax,
@@ -24,17 +31,23 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
             },
             customer: { name: customerName },
         },
+        onVoidSaleClick,
     } = props;
 
     // handlers
-    const onEditSaleClickHandler = () => {
-        // do onEditSaleClickHandler action
-    };
+    // const onEditSaleClickHandler = () => {
+    //     // do onEditSaleClickHandler action
+    // };
     const onPrintReceiptClickHandler = () => {
         // do onPrintReceiptClickHandler action
     };
     const onVoidSaleClickHandler = () => {
         // do onVoidSaleClickHandler action
+        onVoidSaleClick();
+    };
+
+    const onRetrieveSaleClickHandler = () => {
+        // do onRetrieveSaleClickHandler action
     };
 
     // table render helpers
@@ -46,17 +59,21 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
         const { rowData } = props;
         return rowData.product.name;
     };
+    const sellingPriceRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
+        const { rowData } = props;
+        return numberFormatINRCurrency(rowData.sellingPrice);
+    };
     const taxAmountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.totalTax;
+        return numberFormatINRCurrency(rowData.totalTax);
     };
     const discountRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.totalDiscount;
+        return numberFormatINRCurrency(rowData.totalDiscount);
     };
     const subTotalRenderer: TTableCellCustomRenderer<ICartDetails> = (props) => {
         const { rowData } = props;
-        return rowData.grandTotal;
+        return numberFormatINRCurrency(rowData.grandTotal);
     };
 
     const tableProps: ITableProps<ICartDetails> = {
@@ -78,7 +95,7 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                 columnName: 'Unit price',
                 align: 'right',
                 width: '15%',
-                dataKey: 'sellingPrice',
+                customRenderer: sellingPriceRenderer,
             },
             {
                 columnName: 'Quantity',
@@ -135,29 +152,29 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                         <div className={styles.salesTotalHolder}>
                             <div className={styles.saleSummaryGroup}>
                                 <div>Sub-total</div>
-                                <div>{subTotal}</div>
+                                <div>{numberFormatINRCurrency(subTotal)}</div>
                             </div>
                             <div className={styles.saleSummaryGroup}>
                                 <div>Total tax</div>
-                                <div>{totalTax}</div>
+                                <div>{numberFormatINRCurrency(totalTax)}</div>
                             </div>
                             <div className={styles.saleSummaryGroup}>
                                 <div>Total discount</div>
-                                <div>{totalDiscount}</div>
+                                <div>{numberFormatINRCurrency(totalDiscount)}</div>
                             </div>
                             <div className={styles.summaryGroupHorizontalRule} />
                             <div className={styles.saleSummaryGroup}>
                                 <h6>Grand total</h6>
-                                <h6>{grandTotal}</h6>
+                                <h6>{numberFormatINRCurrency(grandTotal)}</h6>
                             </div>
                             <div className={styles.summaryGroupHorizontalRule} />
                             <div className={styles.saleSummaryGroup}>
                                 <div>Amount paid</div>
-                                <div>{amountPaid}</div>
+                                <div>{numberFormatINRCurrency(amountPaid)}</div>
                             </div>
                             <div className={styles.saleSummaryGroup}>
                                 <div>Balance</div>
-                                <div>{balanceGiven}</div>
+                                <div>{numberFormatINRCurrency(balanceGiven)}</div>
                             </div>
                         </div>
                     </div>
@@ -166,13 +183,13 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
             <div className={styles.actionsHolder}>
                 <h5 className={styles.actionsTextHolder}>Actions</h5>
                 <div className={styles.actions}>
-                    <Button
+                    {/* <Button
                         variant="contained"
                         theme="primary"
                         label="Edit Sale"
                         fullWidth={true}
                         onClick={onEditSaleClickHandler}
-                    />
+                    /> */}
                     <Button
                         variant="outlined"
                         theme="primary"
@@ -180,13 +197,24 @@ export const SaleHistoryExpandedView = (props: { rowData: ISaleData }): ReactEle
                         fullWidth={true}
                         onClick={onPrintReceiptClickHandler}
                     />
-                    <Button
-                        variant="outlined"
-                        theme="danger"
-                        label="Void Sale"
-                        fullWidth={true}
-                        onClick={onVoidSaleClickHandler}
-                    />
+                    {status === ESaleStatus.COMPLETED && (
+                        <Button
+                            variant="outlined"
+                            theme="danger"
+                            label="Void Sale"
+                            fullWidth={true}
+                            onClick={onVoidSaleClickHandler}
+                        />
+                    )}
+                    {status === ESaleStatus.PARKED && (
+                        <Button
+                            variant="outlined"
+                            theme="danger"
+                            label="Retrieve Sale"
+                            fullWidth={true}
+                            onClick={onRetrieveSaleClickHandler}
+                        />
+                    )}
                 </div>
             </div>
         </div>
