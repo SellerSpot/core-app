@@ -1,24 +1,24 @@
+import { TBillHolderRefProps } from 'components/Compounds/BillHolder/BillHolder.types';
 import React, { ReactElement } from 'react';
+import { useRef } from 'react';
 import { useState } from '@hookstate/core';
 import {
-    showNotify,
     SliderModal,
     SliderModalBody,
     SliderModalHeader,
     SliderModalLayoutWrapper,
+    showNotify,
 } from '@sellerspot/universal-components';
+import { ESaleStatus } from '@sellerspot/universal-types';
 import { newSaleState } from '../../NewSale';
+import { NewSaleService } from '../../NewSale.service';
 import { CheckoutSaleSummaryView } from '../CheckoutSaleSummaryView/CheckoutSaleSummaryView';
 import styles from './CheckoutSliderModal.module.scss';
 import { CheckoutSliderModalService } from './CheckoutSliderModal.service';
-import { CheckoutCustomerDetailsGroup } from './components/CheckoutCustomerDetailsGroup';
-import { CheckoutSliderBillPreview } from './components/CheckoutSliderBillPreview';
 import { CheckoutBillSettingsGroup } from './components/CheckoutBillSettingsGroup';
+import { CheckoutCustomerDetailsGroup } from './components/CheckoutCustomerDetailsGroup';
 import { CheckoutPaymentGroup } from './components/CheckoutPaymentGroup';
-import { NewSaleService } from '../../NewSale.service';
-import { useRef } from 'react';
-import { TBillHolderRefProps } from 'components/Compounds/BillHolder/BillHolder.types';
-import { ESaleStatus } from '@sellerspot/universal-types';
+import { CheckoutSliderBillPreview } from './components/CheckoutSliderBillPreview';
 
 interface ICheckoutSliderModalProps {
     searchFieldFocusTriggerer: () => void;

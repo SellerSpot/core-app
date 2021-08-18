@@ -1,15 +1,22 @@
-import BaseRequest from 'requests/BaseRequest';
 import {
+    IAddProductToInventoryRequest,
     IAddProductToInventoryResponse,
-    IInventoryData,
+    IEditProductInInventoryRequest,
+    IEditProductInInventoryResponse,
+    IGetAllInventoryProductResponse,
+    IGetInventoryByProductIdResponse,
     IInventoryResourcePathParam,
     ISearchInventoryProductsResponse,
     ISearchInventoryQueryParam,
     ROUTES,
 } from '@sellerspot/universal-types';
-import { IGetAllInventoryProductResponse } from '@sellerspot/universal-types';
-import { introduceDelay } from '../../../.yalc/@sellerspot/universal-components/dist';
-import { Dummies } from 'dummies/Dummies';
+import BaseRequest from 'requests/BaseRequest';
+
+interface ISearchInventoryProps {
+    searchQuery: string;
+    outletid?: IInventoryResourcePathParam['outletid'];
+    lookup?: ISearchInventoryQueryParam['lookup'];
+}
 
 export default class InventoryRequest extends BaseRequest {
     constructor() {
@@ -23,31 +30,30 @@ export default class InventoryRequest extends BaseRequest {
         });
     };
 
+    getInventoryByProductId = async (
+        productId: string,
+    ): Promise<IGetInventoryByProductIdResponse> => {
+        return <IGetInventoryByProductIdResponse>await this.request({
+            url: ROUTES.POS.INVENTORY.GET_BY_PRODUCT_ID,
+            method: 'GET',
+            param: { productid: productId },
+        });
+    };
+
     /**
      * if outletId not passed it will fetch results from all outlets
      */
-    searchProduct = async ({
-        searchQuery = '',
-        outletid = '',
-        lookup = 'all',
-    }: {
-        searchQuery: string;
-        outletid?: IInventoryResourcePathParam['outletid'];
-        lookup?: ISearchInventoryQueryParam['lookup'];
-    }): Promise<ISearchInventoryProductsResponse> => {
+    searchInventory = async (
+        props: ISearchInventoryProps,
+    ): Promise<ISearchInventoryProductsResponse> => {
+        const { searchQuery = '', outletid = '', lookup = 'all' } = props;
+
         const query: ISearchInventoryQueryParam = {
             query: searchQuery,
             lookup,
         };
         const param: IInventoryResourcePathParam = {
             outletid,
-        };
-        await introduceDelay(500);
-        return {
-            status: true,
-            data: {
-                inventory: Dummies.newSale.getInventoryProducts(),
-            },
         };
         return <ISearchInventoryProductsResponse>await this.request({
             url: ROUTES.POS.INVENTORY.SEARCH,
@@ -58,11 +64,21 @@ export default class InventoryRequest extends BaseRequest {
     };
 
     addProductToInventory = async (
-        values: IInventoryData,
+        values: IAddProductToInventoryRequest,
     ): Promise<IAddProductToInventoryResponse> => {
         return <IAddProductToInventoryResponse>await this.request({
             url: ROUTES.POS.INVENTORY.CREATE,
             method: 'POST',
+            payload: values,
+        });
+    };
+
+    editProductInInventory = async (
+        values: IEditProductInInventoryRequest,
+    ): Promise<IEditProductInInventoryResponse> => {
+        return <IEditProductInInventoryResponse>await this.request({
+            url: ROUTES.POS.INVENTORY.EDIT,
+            method: 'PUT',
             payload: values,
         });
     };

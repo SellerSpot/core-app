@@ -1,22 +1,26 @@
-import { InventoryModalSearchFieldService } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField.service';
-import { ISearchInventorySelectMeta } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal';
-import { IInventorySliderModalProps } from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
-import React, { ReactElement } from 'react';
 import {
     AsyncCreatableSelect,
     IAsyncCreatableSelectProps,
     ISelectOption,
 } from '@sellerspot/universal-components';
+import { InventoryModalSearchFieldService } from 'components/Compounds/SliderModals/InventorySliderModal/Components/ModalBody/Components/SearchField/SearchField.service';
+import {
+    IInventorySubSliderHandlers,
+    ISearchInventorySelectMeta,
+} from 'components/Compounds/SliderModals/InventorySliderModal/InventorySliderModal.types';
+import React, { ReactElement } from 'react';
 import styles from './SearchField.module.scss';
 
 export type IInventoryModalSearchFieldProps = Pick<
-    IInventorySliderModalProps,
-    'onAddProductToInventory' | 'onCreateProduct' | 'onSelectInventoryProduct' | 'searchValue'
->;
+    IInventorySubSliderHandlers,
+    'onAddProductToInventory' | 'onCreateProduct' | 'onSelectInventoryProduct'
+> & {
+    searchOption: ISelectOption;
+};
 
 export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps): ReactElement => {
     // props
-    const { onAddProductToInventory, onCreateProduct, onSelectInventoryProduct, searchValue } =
+    const { onAddProductToInventory, onCreateProduct, onSelectInventoryProduct, searchOption } =
         props;
     // handlers
     const loadOptionsHandler: IAsyncCreatableSelectProps['loadOptions'] = async (query) => {
@@ -46,7 +50,7 @@ export const InventoryModalSearchField = (props: IInventoryModalSearchFieldProps
                 autoFocus
                 label="Search for Products"
                 loadOptions={loadOptionsHandler}
-                value={searchValue}
+                value={searchOption}
                 formatCreateLabel={formatCreateLabelHandler}
                 onCreateOption={onCreateProduct}
                 onChange={onChangeHandler}

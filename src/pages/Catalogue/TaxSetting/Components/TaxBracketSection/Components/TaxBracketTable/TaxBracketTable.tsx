@@ -4,17 +4,17 @@ import { ITaxBracketData } from '@sellerspot/universal-types';
 import { useConfirmDialog } from 'components/Compounds/ConfirmDialog/ConfirmDialog';
 import { ITaxSettingPageState } from 'pages/Catalogue/TaxSetting/TaxSetting.types';
 import React, { ReactElement } from 'react';
+import { rawClone } from 'utilities/general';
 import { TaxBracketTableService } from './TaxBracketTable.service';
 
 interface ITaxBracketTableProps {
     sectionState: State<ITaxSettingPageState['taxBracketSection']>;
     getAllTaxBracket: () => Promise<void>;
-    allTaxBrackets: ITaxBracketData[];
 }
 
 export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
     // props
-    const { sectionState, getAllTaxBracket, allTaxBrackets } = props;
+    const { sectionState, getAllTaxBracket } = props;
 
     // hooks
     const confirmDialog = useConfirmDialog();
@@ -55,7 +55,7 @@ export const TaxBracketTable = (props: ITaxBracketTableProps): ReactElement => {
 
     // compile table data
     const tableProps = TaxBracketTableService.getTableProps({
-        allTaxBrackets,
+        allTaxBrackets: rawClone(sectionState.allTaxBrackets.get()),
         deleteItemClickHandler,
         editItemClickHandler,
         isTableLoading: sectionState.isTableLoading.get(),

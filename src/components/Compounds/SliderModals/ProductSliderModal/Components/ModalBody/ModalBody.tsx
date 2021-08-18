@@ -1,5 +1,6 @@
 import { SliderModalBody } from '@sellerspot/universal-components';
 import React, { ReactElement } from 'react';
+import { TreeItem } from 'react-sortable-tree';
 import {
     IProductSliderModalOnClose,
     IProductSliderModalProps,
@@ -8,28 +9,26 @@ import Fields from './Components/Fields';
 import styles from './ModalBody.module.scss';
 
 export type IModalBodyProps = Pick<IProductSliderModalOnClose, 'submitting'> &
-    Pick<
-        IProductSliderModalProps,
-        | 'showModal'
-        | 'onCreateBrand'
-        | 'onCreateStockUnit'
-        | 'onInvokeCategoryChoice'
-        | 'selectedCategory'
-        | 'treeData'
-        | 'onCancelCategoryChoice'
-    >;
+    Pick<IProductSliderModalProps, 'showModal'> & {
+        onCreateBrand: (value: string) => void;
+        onCreateStockUnit: (value: string) => void;
+        onInvokeCategoryChoice: () => void;
+        onCancelCategoryChoice: () => void;
+        selectedCategory: TreeItem;
+        treeData: TreeItem[];
+    };
 
 export const ModalBody = (props: IModalBodyProps): ReactElement => {
     // props
     const {
         showModal,
         submitting,
-        onCreateBrand,
         onCreateStockUnit,
         selectedCategory,
         treeData,
         onCancelCategoryChoice,
         onInvokeCategoryChoice,
+        onCreateBrand,
     } = props;
 
     // draw
@@ -39,7 +38,7 @@ export const ModalBody = (props: IModalBodyProps): ReactElement => {
                 <Fields.ProductNameField autoFocus={showModal} submitting={submitting} />
                 <Fields.BarcodeField submitting={submitting} />
                 <Fields.DescriptionField submitting={submitting} />
-                <Fields.BrandField onCreateBrand={onCreateBrand} submitting={submitting} />
+                <Fields.BrandField submitting={submitting} onCreateBrand={onCreateBrand} />
                 <Fields.StockUnitField
                     onCreateStockUnit={onCreateStockUnit}
                     submitting={submitting}

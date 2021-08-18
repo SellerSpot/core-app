@@ -95,4 +95,25 @@ export default class SaleService {
             unitPriceAfterDiscount,
         };
     };
+
+    /**
+     * used to compute selling price depending on landing cost and markup
+     * @param props
+     * @returns number (selling price)
+     */
+    public computeSellingPrice = (props: {
+        landingCost: number;
+        markupPercentage: number;
+    }): number => {
+        // props
+        const { landingCost, markupPercentage } = props;
+
+        // compute
+        const makrupAmount = xPercentofY({
+            x: markupPercentage,
+            y: landingCost,
+        });
+
+        return +(landingCost + makrupAmount).toFixed(2);
+    };
 }

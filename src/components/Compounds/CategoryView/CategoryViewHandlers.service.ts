@@ -32,20 +32,23 @@ interface ICategoryViewHandlersServiceProps {
     sliderModalState: State<
         Pick<ICategorySliderModalProps, 'showModal' | 'prefillData' | 'mode' | 'contextData'>
     >;
-    confirmHook: IConfirmDialogStateActions;
+    /**
+     * Pass the hook function for invoking the confirm dialog box
+     */
+    confirmDialogHook: IConfirmDialogStateActions;
 }
 
 export class CategoryViewHandlersService {
     private treeDataState: ICategoryViewHandlersServiceProps['treeDataState'];
     private sortableTreeNodeTracker: ISortableTreeNodeTracker;
     private sliderModalState: ICategoryViewHandlersServiceProps['sliderModalState'];
-    private confirmHook: ICategoryViewHandlersServiceProps['confirmHook'];
+    private confirmDialogHook: ICategoryViewHandlersServiceProps['confirmDialogHook'];
 
     constructor(props: ICategoryViewHandlersServiceProps) {
-        const { treeDataState, confirmHook, sliderModalState } = props;
+        const { treeDataState, confirmDialogHook, sliderModalState } = props;
         this.treeDataState = treeDataState;
         this.sliderModalState = sliderModalState;
-        this.confirmHook = confirmHook;
+        this.confirmDialogHook = confirmDialogHook;
         this.sortableTreeNodeTracker = {
             nextParent: null,
             previousParent: null,
@@ -112,7 +115,7 @@ export class CategoryViewHandlersService {
         const treeData = rawClone<TreeItem[]>(this.treeDataState && this.treeDataState.get());
 
         // getting confirmation
-        const confirmResult = await this.confirmHook.confirm({
+        const confirmResult = await this.confirmDialogHook.confirm({
             title: 'Are you sure?',
             theme: 'warning',
             content: `This will permanentaly delete category "${title}"`,
@@ -126,7 +129,7 @@ export class CategoryViewHandlersService {
             },
         });
         if (confirmResult) {
-            this.confirmHook.setLoading({ isLoading: true });
+            this.confirmDialogHook.setLoading({ isLoading: true });
             await this.deleteCategory({
                 categoryId: id,
             });
@@ -147,9 +150,9 @@ export class CategoryViewHandlersService {
                         ignoreCollapsed: false,
                     }),
                 );
-            this.confirmHook.setLoading({ isLoading: false });
+            this.confirmDialogHook.setLoading({ isLoading: false });
         }
-        this.confirmHook.closeDialog();
+        this.confirmDialogHook.closeDialog();
     };
 
     // used when the edit button is clicked on the node
@@ -192,7 +195,7 @@ export class CategoryViewHandlersService {
     };
 
     // called everytime a node is in motion when dragging
-    onMoveNode: ICategoryViewProps['onMoveNode'] = (props) => {
+    onMoveNodeHandler: ICategoryViewProps['onMoveNode'] = (props) => {
         // props
         const { node } = props;
         const nextParentId = this.sortableTreeNodeTracker.nextParent?.id ?? null;

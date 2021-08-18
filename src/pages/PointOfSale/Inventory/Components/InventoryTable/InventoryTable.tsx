@@ -39,15 +39,10 @@ export const InventoryTable = (props: IInventoryTableProps): ReactElement => {
                 };
             });
             pageState.sliderModal.merge({
-                mode: 'edit',
                 showModal: true,
-                // prefillData: {
-                //     prefillData: prefillData,
-                //     product: {
-                //         label: rowData.name,
-                //         value: rowData.id,
-                //     },
-                // },
+                prefillData: {
+                    product: rowData,
+                },
             });
         };
     const deleteItemClickHandler =

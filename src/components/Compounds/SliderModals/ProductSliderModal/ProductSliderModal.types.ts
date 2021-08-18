@@ -1,8 +1,7 @@
 import { ISelectOption } from '@sellerspot/universal-components';
+import { IBrandSliderModalProps } from 'components/Compounds/SliderModals/BrandSliderModal/BrandSliderModal.types';
 import { FormApi } from 'final-form';
-import { TreeItem } from 'react-sortable-tree';
 import { IOnClickEvents } from 'typings/common.types';
-import { IBrandSliderModalProps } from '../BrandSliderModal/BrandSliderModal.types';
 import { ISelectCategorySliderModalProps } from '../SelectCategorySliderModal/SelectCategorySliderModal.types';
 import { IStockUnitSliderModalProps } from '../StockUnitSliderModal/StockUnitSliderModal.types';
 
@@ -16,7 +15,7 @@ export interface IProductSliderModalForm {
 }
 
 type IPrefillData = IProductSliderModalForm & {
-    id: string;
+    id?: string;
 };
 
 export interface IProductSliderModalOnSubmit {
@@ -37,17 +36,13 @@ export interface IProductSliderModalProps {
     >;
     onSubmit: (props: IProductSliderModalOnSubmit) => Promise<void>;
     onClose: (props: IProductSliderModalOnClose) => void;
-    onCreateBrand: (name: string) => void;
-    onCreateStockUnit: (name: string) => void;
-    onInvokeCategoryChoice: () => void;
-    /** after making the choice, the user decides to cancel it in the main form */
-    onCancelCategoryChoice: () => void;
-    selectedCategory: TreeItem;
-    treeData: TreeItem[];
     mode: 'edit' | 'create';
     level: 1 | 2;
     prefillData?: IPrefillData;
-    brandSliderModalProps: IBrandSliderModalProps;
-    selectCategorySliderModalProps: ISelectCategorySliderModalProps;
-    stockUnitSliderModalProps: IStockUnitSliderModalProps;
+}
+
+export interface IProductSliderModalSubSliderModalState {
+    brandSliderModal: Pick<IBrandSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
+    stockUnitSliderModal: Pick<IStockUnitSliderModalProps, 'showModal' | 'mode' | 'prefillData'>;
+    selectCategorySliderModal: Pick<ISelectCategorySliderModalProps, 'showModal'>;
 }
