@@ -51,6 +51,7 @@ export const SalesHistoryTable = (): ReactElement => {
     const voidSaleClickHanlder = (saleData: ISaleData, saleIndex: number) => () => {
         SalesHistoryService.voidSale(saleData.id);
         salesHistory[saleIndex].status.set(ESaleStatus.VOIDED); // update the server, but no need to wait for ping back from server
+        showNotify('Sale has been voided!');
     };
 
     // render helpers
