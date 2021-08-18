@@ -12,6 +12,12 @@ import {
 } from '@sellerspot/universal-types';
 import BaseRequest from 'requests/BaseRequest';
 
+interface ISearchInventoryProps {
+    searchQuery: string;
+    outletid?: IInventoryResourcePathParam['outletid'];
+    lookup?: ISearchInventoryQueryParam['lookup'];
+}
+
 export default class InventoryRequest extends BaseRequest {
     constructor() {
         super('POS');
@@ -37,15 +43,11 @@ export default class InventoryRequest extends BaseRequest {
     /**
      * if outletId not passed it will fetch results from all outlets
      */
-    searchProduct = async ({
-        searchQuery = '',
-        outletid = '',
-        lookup = 'all',
-    }: {
-        searchQuery: string;
-        outletid?: IInventoryResourcePathParam['outletid'];
-        lookup?: ISearchInventoryQueryParam['lookup'];
-    }): Promise<ISearchInventoryProductsResponse> => {
+    searchInventory = async (
+        props: ISearchInventoryProps,
+    ): Promise<ISearchInventoryProductsResponse> => {
+        const { searchQuery = '', outletid = '', lookup = 'all' } = props;
+
         const query: ISearchInventoryQueryParam = {
             query: searchQuery,
             lookup,

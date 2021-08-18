@@ -17,7 +17,7 @@ export class NewSaleSearchSectionService {
                 throw new Error('Invalid query');
             }
             await introduceDelay(500);
-            const { data, status, error } = await requests.pos.inventoryRequest.searchProduct({
+            const { data, status, error } = await requests.pos.inventoryRequest.searchInventory({
                 searchQuery,
                 lookup: 'inventory',
                 outletid: '', // pass user's default outletId

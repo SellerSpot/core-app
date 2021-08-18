@@ -65,7 +65,7 @@ export class InventoryModalSearchFieldService {
         // props
         const { query } = props;
         // request
-        const { status, data } = await requests.pos.inventoryRequest.searchProduct({
+        const { status, data } = await requests.pos.inventoryRequest.searchInventory({
             searchQuery: query,
         });
         if (status) {
