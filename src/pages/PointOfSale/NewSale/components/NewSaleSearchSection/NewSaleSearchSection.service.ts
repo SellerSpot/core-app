@@ -1,6 +1,6 @@
 import { introduceDelay } from '@sellerspot/universal-components';
 import { IInventoryData } from '@sellerspot/universal-types';
-import { Dummies } from 'dummies/Dummies';
+import { requests } from 'requests/requests';
 
 export class NewSaleSearchSectionService {
     static searchInventoryProducts = async (
@@ -17,7 +17,19 @@ export class NewSaleSearchSectionService {
                 throw new Error('Invalid query');
             }
             await introduceDelay(500);
-            return { passedQuery: searchQuery, results: Dummies.newSale.getInventoryProducts() };
+            const { data, status, error } = await requests.pos.inventoryRequest.searchProduct({
+                searchQuery,
+                lookup: 'inventory',
+                outletid: '', // pass user's default outletId
+            });
+            if (status) {
+                return {
+                    passedQuery: searchQuery,
+                    results: data.inventory || [],
+                };
+            } else {
+                throw error;
+            }
         } catch (error) {
             return { passedQuery: searchQuery, results: [] };
         }

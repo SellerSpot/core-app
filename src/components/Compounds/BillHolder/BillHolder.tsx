@@ -2,7 +2,7 @@ import React, { forwardRef, ReactElement, useCallback, useEffect, useRef, useSta
 import { CSSProperties } from '@material-ui/styles';
 import { clamp } from 'lodash';
 import { useReactToPrint } from 'react-to-print';
-import { useWindowSize } from '@sellerspot/universal-components';
+import { showNotify, useWindowSize } from '@sellerspot/universal-components';
 
 import styles from './BillHolder.module.scss';
 import { IBillHolderProps, TBillHolderRef } from './BillHolder.types';
@@ -14,12 +14,13 @@ const BillHolderComponent = (props: IBillHolderProps, ref: TBillHolderRef): Reac
     // hooks
     const targetContainerRef = useRef<HTMLDivElement>(null);
     const zoomableWrapperRef = useRef<HTMLDivElement>(null);
+    const printPromiseResolveReferene =
+        useRef<(value: boolean | PromiseLike<boolean>) => void>(null);
     const dimension = useWindowSize();
     const handlePrint = useReactToPrint({
         content: () => targetContainerRef.current,
-        onAfterPrint: () => {
-            // resolve promise
-        },
+        onAfterPrint: () => handleOnAfterPrint(),
+        onPrintError: () => showNotify('Something went wrong! try again later.'),
     });
 
     // state
@@ -47,10 +48,22 @@ const BillHolderComponent = (props: IBillHolderProps, ref: TBillHolderRef): Reac
 
     // on mount attach print reference to the parent
     useEffect(() => {
-        if (ref?.current !== undefined) ref.current = { triggerPrint: handlePrint };
+        if (ref?.current !== undefined) ref.current = { triggerPrint: onPrintTrigger };
     }, []);
 
     // handlers
+    const onPrintTrigger = () => {
+        handlePrint();
+        return new Promise<boolean>((resolve) => {
+            printPromiseResolveReferene.current = resolve;
+        });
+    };
+
+    const handleOnAfterPrint = () => {
+        printPromiseResolveReferene.current?.call(null, true);
+        printPromiseResolveReferene.current = null;
+    };
+
     const scale = (up: boolean) => {
         setBillScale((state) => {
             let newScale = state;

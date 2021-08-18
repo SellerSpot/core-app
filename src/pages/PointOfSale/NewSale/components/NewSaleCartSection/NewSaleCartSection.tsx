@@ -38,7 +38,7 @@ export const NewSaleCartSection = (props: INewSaleCartSectionProps): ReactElemen
 
     const onDiscardSaleClickHanlder = () => {
         // reset the cart table state, get confirmations from the user before clearing
-        NewSaleService.resetSale();
+        NewSaleService.resetDynamicStateData();
         searchFieldFocusTriggerer();
     };
 

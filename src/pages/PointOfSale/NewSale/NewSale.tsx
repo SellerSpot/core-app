@@ -68,7 +68,7 @@ export const NewSale = (): ReactElement => {
                 </div>
             </div>
             {/* modals */}
-            <CheckoutSliderModal />
+            <CheckoutSliderModal searchFieldFocusTriggerer={searchFieldFocusTriggerer} />
             <ParkedSalesSliderModal />
         </>
     );

@@ -12,7 +12,7 @@ export interface IBillHolderProps {
 }
 
 export interface TBillHolderRefProps {
-    triggerPrint: () => void;
+    triggerPrint: () => Promise<boolean>;
 }
 
 export type TBillHolderRef = MutableRefObject<TBillHolderRefProps>;

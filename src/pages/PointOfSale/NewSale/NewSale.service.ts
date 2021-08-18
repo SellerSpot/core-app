@@ -18,21 +18,29 @@ import { rawClone } from 'utilities/general';
 import { showNotify } from '../../../../.yalc/@sellerspot/universal-components/dist';
 import { ICartTableFormValues } from './components/NewSaleCartSection/components/CartTable/CartTable.types';
 import { newSaleState } from './NewSale';
-import { INewSaleState } from './NewSale.types';
+import { INewSaleModals, INewSaleState, ISearchState } from './NewSale.types';
 
 export class NewSaleService {
+    static getModalsInitialState(): INewSaleModals {
+        return {
+            checkout: false,
+            parkedSales: false,
+        };
+    }
+
+    static getSearchInitialState(): ISearchState {
+        return {
+            query: '',
+            results: [],
+            searching: false,
+        };
+    }
+
     static getNewSaleInitialState = (): INewSaleState => {
         return {
-            modals: {
-                checkout: false,
-                parkedSales: false,
-            },
+            modals: NewSaleService.getModalsInitialState(),
             saleData: NewSaleService.getInitialSaleDataState(),
-            search: {
-                query: '',
-                results: [],
-                searching: false,
-            },
+            search: NewSaleService.getSearchInitialState(),
             billSettings: Dummies.billSettings.getBillSettings(),
         };
     };
@@ -82,6 +90,16 @@ export class NewSaleService {
                 reference: null,
             },
         };
+    };
+
+    static resetDynamicStateData = (): void => {
+        newSaleState.batch((state) => {
+            state.modals.set(NewSaleService.getModalsInitialState());
+            state.search.set(NewSaleService.getSearchInitialState());
+            state.saleData.set(NewSaleService.getInitialSaleDataState());
+            // billSettings don't need to clear the billSettings State,
+            // as it will cause the  billsetting to be fetched again from the server
+        });
     };
 
     static addProductToCart = (productToBeAdded: IInventoryData, outletId: string): void => {

@@ -20,7 +20,12 @@ import { CheckoutCustomerDetailsGroup } from './components/CheckoutCustomerDetai
 import { CheckoutPaymentGroup } from './components/CheckoutPaymentGroup';
 import { CheckoutSliderBillPreview } from './components/CheckoutSliderBillPreview';
 
-export const CheckoutSliderModal = (): ReactElement => {
+interface ICheckoutSliderModalProps {
+    searchFieldFocusTriggerer: () => void;
+}
+export const CheckoutSliderModal = (props: ICheckoutSliderModalProps): ReactElement => {
+    // props
+    const { searchFieldFocusTriggerer } = props;
     // state
     const checkoutModal = useState(newSaleState.modals.checkout);
     const saleData = useState(newSaleState.saleData);
@@ -29,9 +34,15 @@ export const CheckoutSliderModal = (): ReactElement => {
     const billHolderRef = useRef<TBillHolderRefProps>(null);
 
     // handlers
-    const modalGoBackHandler = () => {
+    const modalGoBackHandler = (clearNewSaleState = false) => {
         // go back logic
-        checkoutModal.set(false);
+        if (clearNewSaleState) {
+            // ask confirmation if the status of the sale is not fulfulled
+            NewSaleService.resetDynamicStateData();
+            searchFieldFocusTriggerer();
+        } else {
+            checkoutModal.set(false);
+        }
     };
 
     const onCheckoutClickHandler = () => {
@@ -50,16 +61,16 @@ export const CheckoutSliderModal = (): ReactElement => {
             // trigger the loader until the checkout process completion
             NewSaleService.completeParkSale().then(() => {
                 showNotify('Sale has been parked!');
-                modalGoBackHandler();
+                modalGoBackHandler(true);
             });
         } catch (error) {
             showNotify(error?.message ?? 'Something went wrong!');
         }
     };
 
-    const onPrintBillClickHandler = () => {
-        billHolderRef.current.triggerPrint();
-        // modalGoBackHandler();
+    const onPrintBillClickHandler = async () => {
+        const isPrintComplete = await billHolderRef.current.triggerPrint();
+        if (isPrintComplete) modalGoBackHandler(true);
     };
 
     const getOnProceedClickHandler = () => {
@@ -82,7 +93,7 @@ export const CheckoutSliderModal = (): ReactElement => {
         <SliderModal showModal={checkoutModal.get()} type="fixed" width="70%">
             <SliderModalLayoutWrapper>
                 <SliderModalHeader
-                    modalGoBackCallback={modalGoBackHandler}
+                    modalGoBackCallback={() => modalGoBackHandler()}
                     modalGoBackText="Go back to cart"
                     title={sliderTitle}
                     titlePlacement="center"
