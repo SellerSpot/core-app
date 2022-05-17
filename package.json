@@ -93,7 +93,7 @@
         "@sellerspot/universal-components": "^1.17.0",
         "@sellerspot/universal-types": "^1.8.8",
         "@types/react-transition-group": "^4.4.1",
-        "axios": "^0.21.1",
+        "axios": "^0.21.2",
         "classnames": "^2.3.1",
         "dayjs": "^1.10.6",
         "dotenv": "^8.2.0",
